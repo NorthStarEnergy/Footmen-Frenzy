@@ -1,0 +1,20 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-channel\\base.w3x",
+  "base_sha256": "217ec32327657bdce184e422f00f161d6dafc307b971523e051cb71c642b43af",
+  "changed_functions": [
+    "GDB_Hit",
+    "GDV_Dome",
+    "GD_Stop",
+    "GD_Tick",
+    "GD_Cast",
+    "GTW_Remove",
+    "GTW_Tick",
+    "GTW_Cast"
+  ],
+  "added_functions": [
+    "GD_ClearActivationCooldown",
+    "GD_ReadyActive",
+    "GTW_Eligible",
+    "GTW_Explode"
+  ]
+}

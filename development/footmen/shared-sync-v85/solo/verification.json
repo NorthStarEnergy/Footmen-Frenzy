@@ -1,0 +1,22 @@
+{
+  "variant": "solo",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\shared-sync-v85\\release\\Solo_Foots_v1.8_4P_SHARED_FIXES_UPDATE09.w3x",
+  "sha256": "3c993c529d0e3ce26eea11a3c5cf405526cd2acb3518eb14745470cb1b08fa66",
+  "base": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Solo Foots\\Solo Tests\\Solo_Foots_v1.8_4P_799X_UPDATE08.w3x",
+  "base_sha256": "7529c5a174b2ee98fc5e0b90bdd20276a0ec14f0850501962907722a28415300",
+  "changed_functions": [
+    "Trig_HERO_Alchemist_Chemical_Rage_Bounty_Actions",
+    "Trig_HERO_Jaina_Ulti_Actions",
+    "Trig_ITEM_limits_Actions",
+    "config"
+  ],
+  "added_functions": [
+    "FFR9_ApplyAlchemistBounty"
+  ],
+  "added_globals": [],
+  "preserved_functions": 2956,
+  "unrelated_archive_entries_preserved": 1259,
+  "runtime_compiled": true,
+  "editor_compiled": false,
+  "engine_playtested": false
+}

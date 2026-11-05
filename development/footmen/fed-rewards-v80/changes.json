@@ -1,0 +1,29 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\colo-lag-v79\\release\\FF799X_Rx_Colo_Lag_v79_TEST.w3x",
+  "base_sha256": "66934e06571fe8b2d702fea8e949be6817b32bb685d777455009cedd9e7e5600",
+  "changed_functions": [
+    "P67_Refresh",
+    "P67_AddSupplement",
+    "P67_Start",
+    "Trig_Multiboard_Update_Actions",
+    "Trig_Unit_Experience_System_Func004Func012A",
+    "Trig_Unit_Experience_System_Func005Func012A",
+    "Trig_Unit_Experience_System_Func006Func012A",
+    "Trig_Foot_Exp_system_Func002Func011A",
+    "Trig_MH_shop_click_Actions",
+    "Trig_HERO_Blademaster_Illusions_Actions",
+    "InitTrig_FF_Runtime"
+  ],
+  "added_functions": [
+    "P80_BaseXP",
+    "P80_Curve",
+    "P80_Factor",
+    "P80_Gold",
+    "P80_Init",
+    "P80_OnDeath",
+    "P80_Receiver",
+    "P80_Start",
+    "P80_Sync",
+    "P80_TeamLevel"
+  ]
+}

@@ -1,0 +1,655 @@
+{
+  "source": "source.j / source.w3a / source.w3t / source.w3u; custom_v1 game ability defaults",
+  "status": "Static script audit complete for item-specific runtime handlers; no in-game execution performed. Direct abilities and recipes are integrated separately by the main audit.",
+  "items": [
+    {
+      "id": "IGs1",
+      "effects": [
+        "Suppresses enemy non-item spellcasting across the map for 120 seconds. Native silence radius 99999; refreshed every 0.25 seconds with 0.6-second buff. Newly spawned/revived or dispelled enemies are affected again on the next pulse.",
+        "Repeated use by the same player refreshes their 120-second timer. Different players have independent timers; cleanup removes buffs only when no opposing source remains. Item abilities bypass the script guard."
+      ],
+      "abilities": [
+        "AGs1",
+        "AGs2",
+        "AGs3"
+      ],
+      "evidence": [
+        {
+          "function": "GSI_Init",
+          "line": 5134
+        },
+        {
+          "function": "GSI_Start",
+          "line": 5106
+        },
+        {
+          "function": "GSI_Guard",
+          "line": 5056
+        },
+        {
+          "function": "GSI_Pulse",
+          "line": 5066
+        },
+        {
+          "function": "GSI_Expire",
+          "line": 5079
+        }
+      ],
+      "tooltip_correction": "Name and text must describe Global Silence rather than Scroll of the Beast.",
+      "qualification": null
+    },
+    {
+      "id": "I024",
+      "effects": [
+        "Applies a 90-second Sleep to a nonhero enemy; Sleep invulnerability field is also 90 seconds.",
+        "Removes ACmi spell immunity before the cast; restores ACmi only for unit types n01P and n00U."
+      ],
+      "abilities": [
+        "A0I8",
+        "A0GE"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Null_Rod_Actions",
+          "line": 49741
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": null
+    },
+    {
+      "id": "I017",
+      "effects": [
+        "Selects non-enemies within 500 of the target point and attempts level-2 A06B invisibility: 55 seconds on normal units, 50 seconds on heroes. Organic allied/neutral ground and air target filter applies."
+      ],
+      "abilities": [
+        "A06E",
+        "A06B"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scroll_of_Invisibility_Actions",
+          "line": 49893
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_Invisibility_Func007A",
+          "line": 49884
+        }
+      ],
+      "tooltip_correction": "Use 500 radius, 55 seconds normal / 50 seconds heroes.",
+      "qualification": null
+    },
+    {
+      "id": "I02P",
+      "effects": [
+        "Gives living allied nonmechanical, nonstructure, non-magic-immune units within 1000 +150% movement speed and +150% attack speed for 20 seconds; damage-taken bonus is 0%.",
+        "Separately heals eligible allied organic units within 600 for 200 HP through a dummy item. No mana restoration.",
+        "Removes the scroll on cast, regardless of remaining displayed charges. Starts A07C cooldown for 25 seconds on the caster."
+      ],
+      "abilities": [
+        "A0KZ",
+        "A0LS",
+        "A09V"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scroll_of_Frenzy_Actions",
+          "line": 49967
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_Frenzy_Func008Func001Func001C",
+          "line": 49923
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_Frenzy_Func013A",
+          "line": 49960
+        }
+      ],
+      "tooltip_correction": "One use; 1000 radius frenzy, +150% movement/+150% attack for 20s, plus 200 HP heal within 600.",
+      "qualification": null
+    },
+    {
+      "id": "I02T",
+      "effects": [
+        "Attempts to remove dead nonhero nonstructure corpses within 800 of the target point."
+      ],
+      "abilities": [
+        "A0O8"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Purge_the_Dead_Actions",
+          "line": 50038
+        },
+        {
+          "function": "Trig_ITEM_Purge_the_Dead_Func002002003",
+          "line": 50005
+        },
+        {
+          "function": "Trig_ITEM_Purge_the_Dead_Func005A",
+          "line": 50029
+        }
+      ],
+      "tooltip_correction": "Describe corpse-removal attempt with implementation caveat; do not promise reliable removal.",
+      "qualification": "The GroupEnum filter uses GetEnumUnit() rather than GetFilterUnit(). Its result depends on unrelated enumeration context; intended corpse cleanup is not reliable from static analysis. Gameplay code is unchanged."
+    },
+    {
+      "id": "I01P",
+      "effects": [
+        "Randomly selects up to 26 non-enemy units within 400 of the target point and attempts Anti-Magic Shell on each. Shell lasts 40 seconds and has a 200 spell-damage absorption field."
+      ],
+      "abilities": [
+        "A07T",
+        "Aams"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scroll_of_AntiMagic_Actions",
+          "line": 50075
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_AntiMagic_Func008A",
+          "line": 50066
+        }
+      ],
+      "tooltip_correction": "Use up to 26 units, 400 radius, 200 spell damage for 40 seconds.",
+      "qualification": null
+    },
+    {
+      "id": "I021",
+      "effects": [
+        "Selects non-enemies within 600 of the target point and attempts Inner Fire: +5% attack damage and +1 armor for 60 seconds."
+      ],
+      "abilities": [
+        "A0CM",
+        "A0CN"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scroll_of_Inner_Fire_Actions",
+          "line": 50115
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_Inner_Fire_Func007A",
+          "line": 50106
+        }
+      ],
+      "tooltip_correction": "Use +5% damage, +1 armor, 60 seconds, 600 radius.",
+      "qualification": null
+    },
+    {
+      "id": "I022",
+      "effects": [
+        "Selects non-enemies within 400 of the target point and uses dummy Wand of Illusion I023 on each. I023 inherits AIil: 60-second illusion, 0% outgoing damage and 200% incoming damage."
+      ],
+      "abilities": [
+        "A0D8",
+        "AIil"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scroll_of_Illusion_Actions",
+          "line": 50204
+        },
+        {
+          "function": "Trig_ITEM_Scroll_of_Illusion_Func007A",
+          "line": 50195
+        }
+      ],
+      "tooltip_correction": "Use 400 radius and 60-second harmless illusions taking 200% damage.",
+      "qualification": null
+    },
+    {
+      "id": "I005",
+      "effects": [
+        "Creates one o002 Healing Ward of the Gods for 90 seconds: 4000 HP, 75 fortified armor. Regeneration aura heals 30% maximum HP per second within 1600, targeting organic ground/air allies and neutrals."
+      ],
+      "abilities": [
+        "A0GB",
+        "A00N"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_God_Wards_Actions",
+          "line": 50229
+        }
+      ],
+      "tooltip_correction": "Use 90-second duration, 30% maximum HP/s within 1600; ward 4000 HP and 75 fortified armor.",
+      "qualification": null
+    },
+    {
+      "id": "rat6",
+      "effects": [
+        "On an attack-start event by a hero carrying Forked Fury against a nonstructure, non-magic-immune target, rolls 1..16; 3,7,12,15 trigger (25%). Requires A0HZ cooldown expired.",
+        "Proc casts ACfl forked lightning for 250 damage to up to 8 targets; 900 cast range, 945 maximum length, 400 maximum spread, 165 area field. Starts a 10-second A0HZ cooldown."
+      ],
+      "abilities": [
+        "A0HZ",
+        "ACfl"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Forked_Fury_NEW_Conditions",
+          "line": 50326
+        },
+        {
+          "function": "Trig_ITEM_Forked_Fury_NEW_Func006C",
+          "line": 50356
+        },
+        {
+          "function": "Trig_ITEM_Forked_Fury_NEW_Func006Func003Func010C",
+          "line": 50333
+        },
+        {
+          "function": "Trig_ITEM_Forked_Fury_NEW_Actions",
+          "line": 50372
+        }
+      ],
+      "tooltip_correction": "25% chance on starting an attack, 250 damage to up to 8 targets, 10-second cooldown.",
+      "qualification": "Trigger uses EVENT_PLAYER_UNIT_ATTACKED, so proc does not require attack damage to land."
+    },
+    {
+      "id": "ofro",
+      "effects": [
+        "Whenever a unit already carrying buff B00L is attacked, a dummy casts A06R Frost Nova: 0 primary and 0 area damage; 175 radius and 1-second normal/hero slow duration."
+      ],
+      "abilities": [
+        "AIob",
+        "A06R"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Orb_of_Frost_Conditions",
+          "line": 50403
+        },
+        {
+          "function": "Trig_ITEM_Orb_of_Frost_Actions",
+          "line": 50410
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": "This supplementary trigger checks the target buff, not whether the attacker currently carries Orb of Frost. Direct AIob cold values remain separate."
+    },
+    {
+      "id": "tcas",
+      "effects": [
+        "Constructs the selected wall orientation. After construction completes, wall lives for 40 seconds.",
+        "Wall taunt orders enemy units within 550 to attack the wall."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Wall_Actions",
+          "line": 50537
+        },
+        {
+          "function": "Trig_ITEM_Wall_taunt_Actions",
+          "line": 50621
+        }
+      ],
+      "tooltip_correction": "Wall duration is 40 seconds; taunt radius 550.",
+      "qualification": null
+    },
+    {
+      "id": "tgrh",
+      "effects": [
+        "Constructs the selected wall orientation. After construction completes, wall lives for 40 seconds.",
+        "Wall taunt orders enemy units within 550 to attack the wall."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Wall_Actions",
+          "line": 50537
+        },
+        {
+          "function": "Trig_ITEM_Wall_taunt_Actions",
+          "line": 50621
+        }
+      ],
+      "tooltip_correction": "Wall duration is 40 seconds; taunt radius 550.",
+      "qualification": null
+    },
+    {
+      "id": "I02F",
+      "effects": [
+        "AIil cast-finish handler checks whether the caster carries rat6 (Forked Fury). If so, kills all nonhero units owned by that player with the caster's unit type."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Illusion_Actions",
+          "line": 50683
+        },
+        {
+          "function": "Trig_ITEM_Illusion_Func005Func004A",
+          "line": 50668
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": "This anti-illusion handler matches AIil, not custom A0PP. It does not expressly test IsUnitIllusion; it kills matching nonheroes."
+    },
+    {
+      "id": "I01H",
+      "effects": [
+        "Casting A08I also creates a dummy Flame Strike A08H at the target point: 350 radius, 17 full damage per 0.1-second interval, 2-second full-damage duration; 10 half damage per 0.25-second interval with 4-second duration field; building damage factor 0.1; maximum-damage cap 0.",
+        "Dummy exists for 5 seconds. Ground enemies and neutrals only."
+      ],
+      "abilities": [
+        "A08I",
+        "A08H"
+      ],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_Scepter_Actions",
+          "line": 50721
+        }
+      ],
+      "tooltip_correction": "Include triggered Flame Strike using actual interval/duration values, not the old prose damage total.",
+      "qualification": null
+    },
+    {
+      "id": "tkno",
+      "effects": [
+        "Pickup automatically uses the Tome of Power only below hero level 18. At level 18 or above the item is dropped. Nonhero purchases are replaced with a ground item."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_tomes_on_lv18_Actions",
+          "line": 49699
+        },
+        {
+          "function": "Trig_ITEM_packhorse_buy_Actions",
+          "line": 49646
+        }
+      ],
+      "tooltip_correction": "Cannot be used at level 18 or above.",
+      "qualification": null
+    },
+    {
+      "id": "stel",
+      "effects": [
+        "Nonhero purchases are removed from the buyer and recreated on the ground. Packhorses cannot pick this up; an attempted pickup within integer distance 200 removes the ground item."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_packhorse_buy_Actions",
+          "line": 49646
+        },
+        {
+          "function": "Trig_ITEM_packhorse_pickup_Actions",
+          "line": 49590
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": null
+    },
+    {
+      "id": "tgxp",
+      "effects": [
+        "Nonhero purchases are removed from the buyer and recreated on the ground. Packhorses cannot pick this up; an attempted pickup within integer distance 200 removes the ground item."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_ITEM_packhorse_buy_Actions",
+          "line": 49646
+        },
+        {
+          "function": "Trig_ITEM_packhorse_pickup_Actions",
+          "line": 49590
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": null
+    },
+    {
+      "id": "tret",
+      "effects": [
+        "Use while tracked by Guardian Energy Chamber removes the unit from that tracked group. Packhorses cannot pick this up."
+      ],
+      "abilities": [],
+      "evidence": [
+        {
+          "function": "Trig_Guardian_Energy_Chamber_Tome_Of_Retraining_Actions",
+          "line": 40375
+        },
+        {
+          "function": "Trig_ITEM_packhorse_pickup_Actions",
+          "line": 49590
+        }
+      ],
+      "tooltip_correction": null,
+      "qualification": null
+    }
+  ],
+  "pickup_limits": [
+    {
+      "id": "rat9",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [
+        "O003"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "stwa",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [
+        "O003",
+        "O00X"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "mcou",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I02J",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "rwiz",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "ofro",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I042",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "ratf",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "ckng",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I03C",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "belv",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "tmmt",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "rde3",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "bgst",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "cnob",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I006",
+      "maximum_copies": 2,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I009",
+      "maximum_copies": 2,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "ciri",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "rlif",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "desc",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "H01I",
+        "E005",
+        "E007",
+        "H02G",
+        "E00U",
+        "N01L",
+        "E00Z"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I01H",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "H01I",
+        "E005",
+        "E007",
+        "H02G",
+        "E00U",
+        "N01L",
+        "E00Z"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "evtl",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "O00X",
+        "O003",
+        "E00F",
+        "N00C",
+        "N00I"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "I04A",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "O00X",
+        "O003",
+        "E00A",
+        "E00U",
+        "E00O",
+        "H036"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "tret",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "H02I",
+        "N00Z",
+        "H01H",
+        "H00A"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "modt",
+      "maximum_copies": null,
+      "prohibited_unit_ids": [
+        "H02D"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    },
+    {
+      "id": "nspi",
+      "maximum_copies": 1,
+      "prohibited_unit_ids": [
+        "O003"
+      ],
+      "evidence": "Trig_ITEM_limits_Actions:48866"
+    }
+  ],
+  "mutually_exclusive_items": [
+    "rag1",
+    "hval",
+    "evtl"
+  ],
+  "unbound_handlers": [
+    {
+      "ability": "A0QM",
+      "effect": "Thunderfury Staff selects A0QN purge for enemies (450 triggered normal/normal damage plus 1000 summoned-unit damage; 5s normal/1s hero duration) or A0QE for friends. No item has A0QM in its iabi list.",
+      "evidence": "Trig_ITEM_Thunderfury_Staff_Actions:49778"
+    },
+    {
+      "ability": "A0DA",
+      "effect": "Interchange swaps caster and target positions and starts 60-second cooldown. I01D pickup preserves player timer, but I01D currently has no A0DA in its ability list; do not list this as a Ring of Titans cast ability.",
+      "evidence": "Trig_ITEM_Interchange_Actions:50275"
+    },
+    {
+      "ability": "A0EH",
+      "effect": "Starts 5-second A0EH cooldown on all allied heroes; belongs to starting I01C, not shop sror.",
+      "evidence": "Trig_ITEM_Scroll_of_Beast_start_Actions:49858"
+    }
+  ],
+  "qualifications": [
+    "Target enumeration is followed by the native ability target filter and casting rules; a selected unit is not guaranteed a successful native cast.",
+    "No scripted effect is inferred merely from a trigger name. Unbound handlers are excluded from advertised item benefits."
+  ]
+}

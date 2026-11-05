@@ -1,0 +1,79 @@
+{
+  "format": 800,
+  "invalid_animation_bounds_repaired": 53,
+  "removed_sequence": "Spell",
+  "sequences": [
+    "Walk",
+    "Stand - 3",
+    "Stand - 2",
+    "Attack",
+    "Stand - 1",
+    "Death - 1",
+    "Death - 2"
+  ],
+  "attachments": [
+    {
+      "name": "origin",
+      "parent": null,
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "chest",
+      "parent": 39,
+      "pivot": [
+        0,
+        0,
+        48
+      ]
+    },
+    {
+      "name": "weapon",
+      "parent": 39,
+      "pivot": [
+        12,
+        0,
+        69
+      ]
+    },
+    {
+      "name": "overhead",
+      "parent": 39,
+      "pivot": [
+        0,
+        0,
+        112
+      ]
+    }
+  ],
+  "muzzle_model_coordinates": [
+    12,
+    0,
+    69
+  ],
+  "model_scale": 1,
+  "missile_launch_fields": {
+    "ulpx": 0,
+    "ulpy": 12,
+    "ulpz": 69
+  },
+  "portrait": "portrait",
+  "texture_dimensions": [
+    512,
+    512
+  ],
+  "custom_texture": "Units\\Stalker\\Stalker.blp",
+  "native_texture_dependencies": [
+    "Textures\\Clouds8x8Fire.blp",
+    "Textures\\Flare.blp",
+    "Textures\\Clouds8x8Grey.blp",
+    "Textures\\star4.blp",
+    "Textures\\GenericGlow64.blp",
+    "Doodads\\Cinematic\\Lightningbolt\\Lightning4b.blp"
+  ],
+  "team_color": true,
+  "roundtrip_passed": true
+}

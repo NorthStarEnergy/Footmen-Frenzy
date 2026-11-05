@@ -1,0 +1,25 @@
+{
+  "passed": 19,
+  "checks": [
+    "unit kill adds exactly 1",
+    "hero kill adds exactly 5, not 6",
+    "illusion victim excluded",
+    "structure victim excluded",
+    "friendly excluded",
+    "illusion killer excluded",
+    "enemy summoned unit counts",
+    "multiple Veigars independent",
+    "no killer safe",
+    "counter reflects latest kill",
+    "no INT reward",
+    "stack write only on kill",
+    "no stack key removal",
+    "rank 1 applies exact flat bonus",
+    "rank 2 applies exact flat bonus",
+    "rank 3 applies exact flat bonus",
+    "rank 4 applies exact flat bonus",
+    "rank 5 applies exact flat bonus",
+    "rank 6 applies exact flat bonus"
+  ],
+  "scope": "Translated kill handler with mocked natives; damage expression evaluated directly. No Warcraft engine test."
+}

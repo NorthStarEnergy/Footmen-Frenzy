@@ -1,0 +1,36 @@
+{
+  "Stalker": {
+    "format": 800,
+    "sequences": 7,
+    "samples": 63,
+    "attachment_count": 4,
+    "collision_shapes": 1
+  },
+  "Disruptor": {
+    "format": 800,
+    "sequences": 2,
+    "samples": 18,
+    "attachment_count": 0,
+    "collision_shapes": 0
+  },
+  "Units/Stalker/Stalker.blp": {
+    "width": 512,
+    "height": 512,
+    "mipmaps": 10
+  },
+  "Units/Stalker/Plasma.blp": {
+    "width": 64,
+    "height": 64,
+    "mipmaps": 7
+  },
+  "Units/Stalker/BTNStalker.blp": {
+    "width": 64,
+    "height": 64,
+    "mipmaps": 7
+  },
+  "ReplaceableTextures/CommandButtonsDisabled/DISBTNStalker.blp": {
+    "width": 64,
+    "height": 64,
+    "mipmaps": 7
+  }
+}

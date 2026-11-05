@@ -1,0 +1,85 @@
+"""A genuinely standalone, script-free HTML report with all content pre-rendered."""
+from pathlib import Path
+from html import escape
+import json,base64,re
+
+ROOT=Path(__file__).resolve().parents[2]
+DIST=ROOT/'799x-backport/item-wiki/dist'
+model=json.loads((DIST/'item-value-model.json').read_text(encoding='utf-8'))
+wiki=json.loads((DIST/'data.json').read_text(encoding='utf-8'))
+audited={i['id']:i for i in wiki['items']}
+items=sorted(model['items'],key=lambda i:(i['cost'],i['name'],i['id']))
+def clean(v):return str(v).replace('Frosty\ufffds','Frosty’s')
+def e(v):return escape(clean(v),quote=True)
+def f(v):return f'{v:,.2f}'.rstrip('0').rstrip('.') if isinstance(v,(int,float)) else e(v)
+def table(head,rows):return '<div class="table-wrap"><table><thead><tr>'+''.join('<th>'+e(x)+'</th>' for x in head)+'</tr></thead><tbody>'+''.join('<tr>'+''.join('<td>'+str(x)+'</td>' for x in row)+'</tr>' for row in rows)+'</tbody></table></div>'
+def ul(xs):return '<ul>'+''.join('<li>'+e(x)+'</li>' for x in xs)+'</ul>'
+def icon(i):
+ p=DIST/i['icon'] if i.get('icon') else None
+ return '<img class="icon" alt="" src="data:image/png;base64,'+base64.b64encode(p.read_bytes()).decode()+'">' if p and p.exists() else ''
+
+css='''
+:root{color-scheme:dark;--bg:#101a1b;--card:#192728;--line:#35494a;--ink:#f1f0e5;--muted:#b8c4bf;--gold:#ebc985;--green:#87cdb7}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,Segoe UI,sans-serif}main{max-width:1320px;margin:auto;padding:35px 4%}a{color:var(--gold)}header{padding:25px 0 38px;border-bottom:1px solid var(--line)}h1{font:52px/1.1 Georgia;margin:20px 0}h2{font:34px/1.2 Georgia;margin:48px 0 18px}h3{font:24px Georgia;margin:15px 0}h4{margin-bottom:8px}nav{display:flex;gap:20px;flex-wrap:wrap}.eyebrow{letter-spacing:3px;color:var(--gold);font-size:12px}.muted,small{color:var(--muted)}small{display:block}code{font-size:12px;color:var(--green)}.lead{font-size:20px;max-width:930px}.notice{border-left:4px solid var(--gold);padding:16px 22px;background:#eac8840b}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:25px 0}.metric,.item,.hero{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}.metric b{font-size:30px;color:var(--gold);display:block}.table-wrap{overflow-x:auto;margin:15px 0}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:11px}th{color:var(--gold)}td.num{white-space:nowrap}.item{margin:28px 0;scroll-margin-top:20px}.item-header{display:flex;gap:18px;align-items:center}.item-header h3{margin:0}.icon{width:64px;height:64px;object-fit:contain}.price{margin-left:auto;text-align:right;color:var(--gold);font-size:25px}.pill{font-size:12px;border:1px solid var(--line);border-radius:12px;padding:3px 10px}.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:28px}.totals{display:flex;gap:25px;flex-wrap:wrap;padding:12px 0}.totals strong{display:block;color:var(--green);font-size:23px}.bar-row{display:grid;grid-template-columns:230px 1fr 200px;align-items:center;gap:18px;margin:14px 0}.track{height:16px;background:#354342;border-radius:4px;overflow:hidden}.fill{height:100%;background:var(--green)}.heroes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.hero{padding:20px}.hero-chart{display:flex;gap:10px;height:150px;align-items:end;padding-top:25px}.column{background:var(--green);position:relative;flex:1;border-radius:3px 3px 0 0}.column span{position:absolute;bottom:100%;font-size:12px;white-space:nowrap}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px}.text-block{white-space:pre-wrap;overflow-wrap:anywhere;background:#101c1d;padding:15px;border:1px solid var(--line)}details{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}summary{cursor:pointer;color:var(--gold)}.back{font-size:12px;display:block;text-align:right}footer{padding:35px 0;color:var(--muted)}@media(max-width:800px){h1{font-size:38px}.grid,.comparison,.heroes{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.bar-row{grid-template-columns:130px 1fr}.bar-row small{grid-column:2}.price{font-size:20px}.icon{width:46px;height:46px}td,th{padding:8px}}@media print{body{background:white;color:#111;font-size:10pt}main{max-width:none;padding:0}a,th,h1,h2,h3,small,code,.price,.metric b,.totals strong{color:#111}.item,.metric,.hero,.text-block{background:white;border-color:#aaa}.item{break-inside:avoid}.notice{background:#eee}.table-wrap{overflow:visible}nav,.back{display:none}.fill,.column{background:#555}details{display:none}h2{break-after:avoid}}
+'''
+out=['<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>799X Complete Item Values & Findings</title><style>'+css+'</style></head><body><main>']
+out.append('<header id="top"><p class="eyebrow">FOOTMEN FRENZY · 799X · COMPLETE STATIC REPORT</p><h1>Item values, base rates<br>and cleave findings</h1><p class="lead">Every item’s price, actual bonuses, gold-value calculation and unpriced effects. All text, tables, charts and icons are inside this HTML file.</p><p class="muted">No JavaScript, server, internet connection or companion files required. Use your browser’s Find command (Ctrl+F) to locate an item.</p><nav><a href="#rates">Base rates</a><a href="#targets">Your balance targets</a><a href="#heroes">Cleave findings</a><a href="#index">Cost-sorted index</a><a href="#all-items">All item breakdowns</a><a href="#method">Method & limitations</a></nav></header>')
+out.append('<section id="balance"><h2>Applied v41 balance changes</h2><p>Crafted totals include all ingredients and the recipe. Chaos Cloak is exactly +500g overall: gauntlets +250g, cloak +100g, recipe +150g. Frosty now gives +150 total damage and 50% self-only melee lifesteal. Blink scepter’s recipe rises by 500g, plus 25g from its belt ingredient.</p>')
+crafted_ids={x['id'] for x in model['craftedCostChanges']}
+out.append(table(['Shop item / recipe','Before','Now','Increase'],[(e(x['name']),f(x['before'])+'g',f(x['after'])+'g','+'+f(x['after']-x['before'])+'g') for x in model['balanceChanges'] if x['id'] not in crafted_ids]))
+out.append('<h3>Complete crafted costs, including ingredient knock-ons</h3>'+table(['Crafted item','Before total','Now total','Increase','Recipe now'],[(e(by['name']),f(x['before'])+'g',f(x['after'])+'g','+'+f(x['after']-x['before'])+'g',f(x['recipeAfter'])+'g') for x in model['craftedCostChanges'] for by in [next(i for i in items if i['id']==x['id'])]])+'<p>The old Chaos Cloak result object listed 3,500g, but its actual component cost was 3,350g. Its new complete purchase cost is 3,850g.</p></section>')
+out.append('<div class="metrics">'+''.join('<div class="metric"><b>'+str(n)+'</b>'+label+'</div>' for n,label in [(222,'catalogue entries'),(108,'fixed-stock entries'),(96,'Custom Hero spell tokens'),(17,'crafted results')])+'</div>')
+out.append('<p class="notice"><b>What these values mean:</b> reference gold measures what the stats cost using the selected shop benchmarks. It is not a fair-price verdict. Immunity, crowd control, army coverage, uptime and fitting more benefits into one inventory slot can be worth much more than the raw stats. The additional starting amulet is included as a free recipe ingredient.</p>')
+out.append('<section id="rates"><h2>1. Base rates and their derivation</h2><p>Direct anchors buy a single stat. Derived anchors subtract a separately priced bonus from a mixed item. Each percentage rate is per <b>percentage point</b>, not per fraction.</p>')
+for secondary,title in [(False,'Core stats'),(True,'Secondary effect benchmarks')]:
+ rs=[r for r in model['rates'] if r['kind'].startswith('secondary')==secondary]
+ out.append('<h3>'+title+'</h3>'+table(['Stat','Gold per unit','Base item','Calculation / qualification'],[(e(r['label'])+'<small>'+e(r['kind'])+'</small>',f(r['rate'])+'g / '+e(r['unit']),e(r['anchor']),e(r['formula'])) for r in rs]))
+out.append('<p class="notice"><b>Two important assumptions:</b> armor uses (225g − 4 STR × 27.5g) ÷ 5 = <b>23g per armor</b>. Medaillon of Glim implies 12.5g per armor instead, so this is a selected benchmark, not a universal market law. Sobi’s +50 mana is worth 50g, leaving 50g for +125% regeneration: <b>0.4g per percentage point</b>.</p></section>')
+targets=['I00W','I00D','I00F','hval','I04A','clfm','I01R','I00V','stwa','I00X'];byid={i['id']:i for i in items}
+out.append('<section id="targets"><h2>2. Your balance targets</h2><p>Core value excludes secondary lifesteal, evasion, cleave and aura benchmarks. Expanded reference value includes them. Unallocated gold is cost minus expanded value; it is <b>not</b> an independently measured price for the remaining abilities.</p>')
+out.append(table(['Item','Full cost','Core stat value','Expanded reference value','Unallocated gold'],[('<a href="#item-'+uid+'">'+e(byid[uid]['name'])+'</a>',f(byid[uid]['cost']),f(byid[uid]['coreGold']),f(byid[uid]['referenceGold']),f(byid[uid]['residual'])) for uid in targets]))
+for uid in targets:
+ i=byid[uid];ratio=i['referenceGold']/i['cost']*100
+ out.append('<div class="bar-row"><a href="#item-'+uid+'">'+e(i['name'])+'</a><div class="track"><div class="fill" style="width:'+str(max(0,min(100,ratio)))+'%"></div></div><small>'+f(i['referenceGold'])+' / '+f(i['cost'])+'g · '+f(ratio)+'%</small></div>')
+out.append('<p><b>Frosty example:</b> 150 damage × 13g = 1,950g; 20% attack speed × 13.75g = 275g; 50% self-only lifesteal × 7.5g = 375g. Expanded subtotal: <b>2,600g</b>. Its frost effects remain unpriced. That does not establish that 4,500g is balanced for a hero with native cleave.</p><p><b>Do not double-count attributes:</b> STR, AGI and INT already include their inherent benefits in their benchmark. Only separately attached HP, mana, armor, attack speed and damage bonuses are added.</p></section>')
+out.append('<section id="heroes"><h2>3. Hero cleave and related findings</h2><p>Actual ability ranks and numeric fields from '+e(model.get('heroSourceMap',model['sourceMap']))+'. Graphs share a 190% scale. These are ability ranks, not hero levels.</p><div class="heroes">')
+for hero in model['heroes']:
+ out.append('<article class="hero"><h3>'+e(hero['name'])+'</h3><p><code>'+e(hero['id'])+' / '+e(hero['ability'])+'</code> · '+('Temporary scripted state' if hero['temporary'] else 'Learned native passive')+'</p><div class="hero-chart">'+''.join('<div class="column" style="height:'+str(v/190*110)+'px"><span>'+f(v)+'%</span></div>' for v in hero['cleave'])+'</div>'+table(['Rank','Cleave factor','Area'],[(str(n+1),f(v)+'%',f(hero['area'][n])) for n,v in enumerate(hero['cleave'])])+'</article>')
+out.append('</div>'+ul(model['heroNotes'])+'<p class="notice"><b>Balance implication:</b> Myrmidon’s 190% cleave is a materially different damage multiplier from 80% cleave. Yeti covers a larger maximum area. Demon Knight and Mundo combine cleave with scripted spell immunity and attack speed. Evaluate item changes against these different kits instead of treating all melee heroes equally.</p></section>')
+out.append('<section id="index"><h2>4. Complete cost-sorted index</h2><p>Click an item to jump to its full breakdown. Crafted result costs include all ingredients and the recipe scroll.</p>')
+out.append(table(['Gold','Item','Category','Core value','Expanded value'],[(f(i['cost']),'<a href="#item-'+e(i['id'])+'">'+e(i['name'])+'</a><small>'+e(i['id'])+'</small>',e(i['category']),f(i['coreGold']),f(i['referenceGold'])) for i in items]))
+out.append('</section><section id="all-items"><h2>5. Every item’s full breakdown</h2>')
+for i in items:
+ uid=i['id'];w=audited[uid]
+ out.append('<article class="item" id="item-'+e(uid)+'"><div class="item-header">'+icon(i)+'<div><h3>'+e(i['name'])+'</h3><small>'+e(uid)+' · '+e(i['category'])+'</small></div><div class="price">'+f(i['cost'])+'g<small>'+('full crafting cost' if i['category']=='Crafted' else 'purchase cost' if i['category']!='Starting item' else 'granted free')+'</small></div></div><p>'+e(i['summary'])+'</p>')
+ if i['terms']:
+  out.append(table(['Stat / effect','Amount','Gold per unit','Reference gold','Scope / source'],[(e(t['label'])+'<small>'+('Core' if t['core'] else 'Secondary benchmark')+'</small>',f(t['quantity']),f(t['rate']),f(t['gold']),'<code>'+e(t['ability'])+'</code><small>'+e(t['note'])+'</small>') for t in i['terms']]))
+ else:out.append('<p class="notice">No permanent carried stats are priced by this model. This item’s purchase buys its active effect, summon, spell access or information entry; zero stat subtotal does not mean zero gameplay value.</p>')
+ out.append('<div class="totals"><span><small>Core stats</small><strong>'+f(i['coreGold'])+'g</strong></span><span><small>Expanded reference value</small><strong>'+f(i['referenceGold'])+'g</strong></span><span><small>Unallocated gold</small><strong>'+f(i['residual'])+'g</strong></span><span><small>Expanded value / cost</small><strong>'+(f(i['coveragePercent'])+'%' if i['coveragePercent'] is not None else '—')+'</strong></span></div>')
+ out.append('<div class="grid"><div><h4>Effects, restrictions and script findings</h4>'+ul(i['details'] or ['No additional effect notes recorded.'])+'</div><div><h4>What the valuation does not fully price</h4>'+ul(i['unpriced'] or ['No additional unpriced effects identified.'])+'</div></div>')
+ if i.get('recipe'):
+  r=i['recipe'];out.append('<h4>Recipe and acquisition</h4>'+table(['Ingredient','Gold'],[('<a href="#item-'+e(x['id'])+'">'+e(x['name'])+'</a>',f(x['cost'])) for x in r['ingredients']])+'<p>Result: <a href="#item-'+e(r['result']['id'])+'">'+e(r['result']['name'])+'</a>. Total acquisition cost: <b>'+f(r['totalCost'])+'g</b>.</p>')
+  if 'combineStatGainGold' in i:out.append('<p class="muted">Ingredients including the scroll have '+f(i['ingredientReferenceGold'])+'g of reference bonuses. The result changes that subtotal by '+f(i['combineStatGainGold'])+'g. Active effects and inventory-slot compression are excluded from this comparison.</p>')
+ if w.get('changes'):
+  out.append('<details><summary>Original tooltip versus audited description</summary>')
+  for ch in w['changes']:
+   after=i['summary'] if uid=='I001' else ch['after']
+   out.append('<p>'+e(ch['reason'])+'</p><div class="comparison"><div><h4>Original</h4><div class="text-block">'+e(ch['before'])+'</div></div><div><h4>Audited description</h4><div class="text-block">'+e(after)+'</div></div></div>')
+  out.append('</details>')
+ if w.get('abilities'):
+  out.append('<details><summary>Actual ability fields and source evidence</summary>')
+  for a in w['abilities']:
+   out.append('<h4>'+e(a['name'])+' <code>'+e(a['id'])+'</code></h4>'+table(['Field','Level','Value','Raw field','Source'],[(e(v['label']),str(v['level']),e(v['value']),'<code>'+e(v['raw'])+'</code>',e(v['source'])) for v in a['fields']]))
+  out.append(ul(w.get('evidence',[]))+'</details>')
+ out.append('<a class="back" href="#index">Back to cost-sorted index ↑</a></article>')
+out.append('</section><section id="method"><h2>6. Method, scope and limitations</h2>'+ul(model['notes'])+'<p>Verified map: <b>'+e(model['sourceMap'])+'</b><br><code>'+e(model['sourceSha256'])+'</code></p><p>All 222 model entries are included. The 16 selected benchmark items reconstruct to their observed purchase prices. The v41 release applies the requested prices and Frosty damage/lifesteal changes to v40. All 1,333 unrelated archive members were preserved. Recipe totals and all 16 price benchmarks were checked. No live game playtest was performed.</p><p><b>Correction:</b> the starting amulet’s actual movement bonus is +60, not the earlier +80 summary. Crafted amulets give +80. The item data and prices in this report reflect the v41 map release. Cleave areas and damage ranks reflect the v44 map; other hero-state notes retain their earlier audit.</p></section><footer>Complete standalone HTML · 222 items · 16 benchmarks · six native/scripted cleave hero entries plus related area-attack findings. No JavaScript or external resources.</footer></main></body></html>')
+html=''.join(out)
+path=ROOT/'799X-Complete-Item-Report.html';path.write_text(html,encoding='utf-8')
+(DIST/'complete-item-report.html').write_text(html,encoding='utf-8')
+assert '<script' not in html and 'src="http' not in html
+assert len(re.findall(r'<article class="item" id="item-',html))==222
+ids=set(re.findall(r'\bid="([^"]+)"',html));links=re.findall(r'href="#([^"]+)"',html)
+assert all(link in ids for link in links),set(links)-ids
+assert len(ids)==len(re.findall(r'\bid="([^"]+)"',html))
+assert all('item-'+i['id'] in ids for i in items)
+assert len(re.findall(r'<img class="icon"',html))==222
+print(json.dumps({'output':str(path),'bytes':path.stat().st_size,'items':len(items),'benchmarks':len(model['rates']),'heroEntries':len(model['heroes']),'internalLinks':len(links),'validation':'All items/icons present; all internal links resolve; no JavaScript or external assets.'},indent=2))

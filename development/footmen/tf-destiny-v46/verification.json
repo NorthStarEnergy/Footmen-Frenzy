@@ -1,0 +1,10 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-destiny-v46\\release\\FF799X_Rx_TF_Destiny_v46.w3x",
+  "sha256": "3603a8c36d280fcb7a235c8937c1ce435eb816ff674e115c518509b7f3e1b4f0",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orbs-v45c\\release\\FF799X_Rx_TF_Orbs_v45c.w3x",
+  "preserved_payloads": 1339,
+  "tf_behavior_checks": 110,
+  "range_checks": 18,
+  "compiler": "passed",
+  "live_test": "pending"
+}

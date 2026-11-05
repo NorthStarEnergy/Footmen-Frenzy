@@ -1,0 +1,38 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\colo-lag-v79\\release\\FF799X_Rx_Colo_Lag_v79_TEST.w3x",
+  "sha256": "66934e06571fe8b2d702fea8e949be6817b32bb685d777455009cedd9e7e5600",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\level10-catchup-v78\\release\\FF799X_Rx_Level10_Catchup_v78_TEST.w3x",
+  "changed_functions": [
+    "P67_Refresh",
+    "Trig_colossal_spawn_Actions"
+  ],
+  "added_functions": [
+    "P79_Extra",
+    "P79_FieldAhead",
+    "P79_FractionalLevel",
+    "P79_LevelXP",
+    "P79_NextTarget",
+    "P79_OnDeath",
+    "P79_Pay",
+    "P79_Refresh",
+    "P79_Tag",
+    "P79_TeamPresent",
+    "P79_TeamReached"
+  ],
+  "checks": {
+    "two_opposing_majorities_and_continuous_90s": "passed",
+    "fractional_entry_and_individual_exit": "passed",
+    "10_13_16_and_deferred_colo_only_awards": "passed",
+    "half_level_budget_per_spawn_wave": "passed",
+    "live_shortfall_and_no_bonus_overshoot": "passed",
+    "participation_identity_and_no_untagged_awards": "passed",
+    "duplicates_anticheat_and_mode_exclusions": "passed",
+    "payout_cap_cases": 1920
+  },
+  "unrelated_entries_preserved": 1400,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "post7_xp_percent": 70,
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

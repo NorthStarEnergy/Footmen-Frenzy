@@ -1,0 +1,37 @@
+{
+  "base_maps": {
+    "common": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_Clean_v39.w3x",
+    "item": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_ItemBalance_v41.w3x",
+    "unit": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Test\\FF799X_Rx_Unit_Balance_v41.w3x"
+  },
+  "base_hashes": {
+    "common": "c2e7cbeb33108727b0f9c1ed2a52da75c15fa0d0e1b90cb014cef08b357b7757",
+    "item": "0c3ccfdee6fda99009501a4344d8e99624fad831a0630c97f283673925847e0e",
+    "unit": "570d0ddabe5cb04d7e486bb5c4eca76e5d2bf616c26f163664bbc82e8a6ddc57"
+  },
+  "unit_functions": [
+    "FFGS_ApplyUnit",
+    "FF_gr_Poll",
+    "FF_kl_OnDeath",
+    "FF_st_IsFeedUnit",
+    "Trig_GM_set_messages_Actions",
+    "Trig_Unit_Experience_System_Func004Func014C",
+    "Trig_set_base_Actions",
+    "Trig_set_spawn_variables_Actions",
+    "Trig_swap_execute_Actions"
+  ],
+  "imports": [
+    "ReplaceableTextures\\CommandButtons\\BTNMundoUndying.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMundoUndying.blp"
+  ],
+  "payloads": [
+    "war3map.j",
+    "war3map.w3u",
+    "war3mapSkin.w3u",
+    "war3map.w3a",
+    "war3map.wts",
+    "war3map.imp",
+    "ReplaceableTextures\\CommandButtons\\BTNMundoUndying.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMundoUndying.blp"
+  ]
+}

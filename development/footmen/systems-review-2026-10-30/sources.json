@@ -1,0 +1,47 @@
+[
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\src\\systems\\profile_persistence_v27.jass",
+    "copy": "profile-v27.jass",
+    "sha256": "d562d2e3b803e4acec7859c3d9f4b49dbc22ab8c27109b66051ed5f35c63d972"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\src\\systems\\ranked_session_adapter.jass",
+    "copy": "ranked.jass",
+    "sha256": "74900191ce399dd81c710533ca83ae80ce05cfdc20bfce4db305fa4bf59a8f53"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\services\\ranked\\rating-engine.mjs",
+    "copy": "rating-engine.mjs",
+    "sha256": "c3e4c38f74dcc44bac52ca0fd119c9be2b26ce98d8636691689acddf6e0652c6"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\services\\ranked\\rating-engine.test.mjs",
+    "copy": "rating-engine.test.mjs",
+    "sha256": "93c64b987927b28873a7e8a50fc52d6ed0c4275908b931a27801a790fd1cdaa3"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\outputs\\v42-protected-profiles\\profile.j",
+    "copy": "profile-v42.j",
+    "sha256": "b8bc278ac83fc0750d4be6bcf45a70a9dd9b1102c913e00e062614e5b65506e9"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\outputs\\v42-account-gold\\economy.j",
+    "copy": "economy-v42.j",
+    "sha256": "d693ef26df072346022df016697cefe38169687256aca4bd19cc5f8390bfc52b"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Footmen Frenzy Development\\outputs\\rx-detailed-stats-v1\\stats.j",
+    "copy": "stats.j",
+    "sha256": "3e25608d6c13ce6eb7562b6921e5a4435ad5f73974ba7432d44faebe089e654f"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Solo Foots Development\\rc3-observer-sub-migration\\src\\ObsCasino_block.jass",
+    "copy": "ObsCasino.jass",
+    "sha256": "9fe48008aa03ad30f049c3bba116cf13b33f78d0a2ab4501ba05edcfae90c210"
+  },
+  {
+    "source": "\\\\10.0.0.106\\Users\\Ryan1\\Documents\\Solo Foots Development\\rc3-observer-sub-migration\\src\\ObsDraft_block.jass",
+    "copy": "ObsDraft.jass",
+    "sha256": "53c8079489544bc3b847091bfd16038f660bc9a1a1733a85b36dfe8a04180a7a"
+  }
+]

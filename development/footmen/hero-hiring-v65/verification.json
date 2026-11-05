@@ -1,0 +1,19 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-hiring-v65\\release\\FF799X_Rx_Hero_Hiring_v65.w3x",
+  "sha256": "3ae78df2a3f080c6705a624b452dac778841c96dcccb737192343797813f68da",
+  "before_bytes": 26559413,
+  "after_bytes": 26553746,
+  "saved_bytes": 5667,
+  "removed_functions": 0,
+  "removed_objects": 0,
+  "preserved_payloads": 1357,
+  "runtime_jass": "passed",
+  "editor_function_body_syntax": "JassHelper regeneration and compiled pjass passed",
+  "editor_save_and_live_game_test": "pending",
+  "changed_files": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.wct",
+    "war3map.wts"
+  ]
+}

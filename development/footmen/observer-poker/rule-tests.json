@@ -1,0 +1,16 @@
+{
+  "hand_rank_categories": 9,
+  "independent_seven_card_comparisons": 1000,
+  "simulated_hands": 1000,
+  "edge_cases": [
+    "wheel",
+    "kickers",
+    "short blinds",
+    "effective all-in",
+    "short raise reopening",
+    "table isolation",
+    "duplicate action",
+    "bot hidden-card independence"
+  ],
+  "engine_tested": false
+}

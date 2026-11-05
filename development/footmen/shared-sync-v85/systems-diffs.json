@@ -1,0 +1,478 @@
+[
+  {
+    "name": "Trig_autorevive_Func004A",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     call DisplayTextToForce(udg_temp_playergroup, ( \"Your Hero \" + ( GetUnitName(udg_temp_unit) + \" will be automatically revived.\" ) ))\n+     call SoloFootsDisplayMessageToForce(udg_temp_playergroup, ( \"Your Hero \" + ( GetUnitName(udg_temp_unit) + \" will be automatically revived.\" ) ))"
+  },
+  {
+    "name": "Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001Func002C",
+    "lines": 5,
+    "main_locals": 2,
+    "solo_locals": 2,
+    "diff": "+     set dx=GetUnitX(udg_herO[udg_X]) - sf_glaive_x[udg_X]\n+     set dy=GetUnitY(udg_herO[udg_X]) - sf_glaive_y[udg_X]\n-     // GetUnitLoc here leaked one location on every evaluation of a 0.02s loop.\n-     set dx=GetLocationX(udg_glaive_location[udg_X]) - GetUnitX(udg_herO[udg_X])\n-     set dy=GetLocationY(udg_glaive_location[udg_X]) - GetUnitY(udg_herO[udg_X])"
+  },
+  {
+    "name": "Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001C",
+    "lines": 5,
+    "main_locals": 2,
+    "solo_locals": 2,
+    "diff": "+     local real dx=GetUnitX(udg_herO[udg_X]) - sf_glaive_x[udg_X]\n+     local real dy=GetUnitY(udg_herO[udg_X]) - sf_glaive_y[udg_X]\n-     local real dx= GetLocationX(udg_glaive_location[udg_X]) - GetUnitX(udg_herO[udg_X])\n-     local real dy= GetLocationY(udg_glaive_location[udg_X]) - GetUnitY(udg_herO[udg_X])\n-     // GetUnitLoc here leaked one location on every evaluation of a 0.02s loop."
+  },
+  {
+    "name": "Trig_HERO_Throw_Glaive_Loop_Actions",
+    "lines": 14,
+    "main_locals": 1,
+    "solo_locals": 0,
+    "diff": "-     local location oldLoc\n-             set oldLoc=udg_glaive_location[udg_X]\n-                 set udg_glaive_location[udg_X]=GetUnitLoc(udg_herO[udg_X])\n+                 set sf_glaive_x[udg_X]=GetUnitX(udg_herO[udg_X])\n+                 set sf_glaive_y[udg_X]=GetUnitY(udg_herO[udg_X])\n-                 set udg_glaive_location[udg_X]=PolarProjectionBJ(oldLoc, 20.00, udg_glaive_degree[udg_X])\n+                 set sf_glaive_x[udg_X]=sf_glaive_x[udg_X] + 20.00 * Cos(udg_glaive_degree[udg_X] * bj_DEGTORAD)\n+                 set sf_glaive_y[udg_X]=sf_glaive_y[udg_X] + 20.00 * Sin(udg_glaive_degree[udg_X] * bj_DEGTORAD)\n-             call RemoveLocation(oldLoc)\n-             set oldLoc=null\n-             call SetUnitPositionLocFacingBJ(udg_dummy_glaive[udg_X], udg_glaive_location[udg_X], 0.00)\n+             call SetUnitPosition(udg_dummy_glaive[udg_X], sf_glaive_x[udg_X], sf_glaive_y[udg_X])\n+             call SetUnitFacing(udg_dummy_glaive[udg_X], 0.00)\n-                 call RemoveLocation(udg_glaive_location[udg_X])"
+  },
+  {
+    "name": "Trig_HERO_Shattering_Strike_Action_Actions",
+    "lines": 6,
+    "main_locals": 1,
+    "solo_locals": 1,
+    "diff": "-     set udg_Wrath_Damage[1]=250.00\n+     set udg_Wrath_Damage[1]=300.00\n-     set udg_Wrath_Damage[2]=350.00\n+     set udg_Wrath_Damage[2]=400.00\n-     set udg_Wrath_Damage[3]=500.00\n+     set udg_Wrath_Damage[3]=550.00"
+  },
+  {
+    "name": "Trig_Cripple_Wave_Actions",
+    "lines": 14,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         set udg_QS_Damage_Copy[2]=175.00\n+         set udg_QS_Damage_Copy[2]=160.00\n-         set udg_QS_Damage_Copy[3]=275.00\n+         set udg_QS_Damage_Copy[3]=250.00\n-         set udg_QS_Damage_Copy[4]=325.00\n+         set udg_QS_Damage_Copy[4]=300.00\n-         set udg_QS_Damage_Copy[5]=425.00\n+         set udg_QS_Damage_Copy[5]=400.00\n-         set udg_QS_Damage_Copy[6]=525.00\n+         set udg_QS_Damage_Copy[6]=500.00\n-     call RemoveLocation(udg_QS_Point[0])\n+     call RemoveLocation(udg_QS_Point_Copy[0])\n-     call RemoveLocation(udg_QS_Point[1])\n+     call RemoveLocation(udg_QS_Point_Copy[1])"
+  },
+  {
+    "name": "Trig_HERO_Monkey_Staff_of_the_Jungle_Loop_Func001Func001Func007C",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( not ( DistanceBetweenPoints(udg_StaffJungle_start_location[udg_X], udg_StaffJungle_location[udg_X]) >= 950.00 ) ) then\n+     if ( not ( DistanceBetweenPoints(udg_StaffJungle_start_location[udg_X], udg_StaffJungle_location[udg_X]) >= 900.00 ) ) then"
+  },
+  {
+    "name": "Trig_Staff_of_the_River_Actions",
+    "lines": 16,
+    "main_locals": 0,
+    "solo_locals": 1,
+    "diff": "+     local location jungleCastOrigin\n-     set udg_Jungle_Heal[1]=85.00\n+     set udg_Jungle_Heal[1]=80.00\n-     set udg_Jungle_Heal[2]=125.00\n+     set udg_Jungle_Heal[2]=120.00\n-     set udg_Jungle_Heal[3]=180.00\n+     set udg_Jungle_Heal[3]=175.00\n-     set udg_Jungle_Heal[6]=375.00\n+     set udg_Jungle_Heal[6]=350.00\n+     set jungleCastOrigin=GetUnitLoc(GetTriggerUnit())\n-     set udg_MissileStart=PolarProjectionBJ(GetUnitLoc(GetTriggerUnit()), 150.00, udg_Jungle_Angle)\n+     set udg_MissileStart=PolarProjectionBJ(jungleCastOrigin, 150.00, udg_Jungle_Angle)\n+     call RemoveLocation(jungleCastOrigin)\n+     set jungleCastOrigin=null\n-     set udg_MissileSpeed=1300.00\n+     set udg_MissileSpeed=1200.00"
+  },
+  {
+    "name": "Trig_Staff_of_the_River_OnHit_Actions",
+    "lines": 6,
+    "main_locals": 0,
+    "solo_locals": 1,
+    "diff": "+     local location jungleEnumOrigin\n+     set jungleEnumOrigin=GetUnitLoc(udg_MissileSource)\n-     call ForGroupBJ(GetUnitsInRangeOfLocAll(425.00, GetUnitLoc(udg_MissileSource)), function Trig_Staff_of_the_River_OnHit_Func009A)\n+     call ForGroupBJ(GetUnitsInRangeOfLocAll(425.00, jungleEnumOrigin), function Trig_Staff_of_the_River_OnHit_Func009A)\n+     call RemoveLocation(jungleEnumOrigin)\n+     set jungleEnumOrigin=null"
+  },
+  {
+    "name": "Trig_Searing_Bullet_Actions",
+    "lines": 10,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         set udg_QS_Damage[3]=325.00\n+         set udg_QS_Damage[3]=350.00\n-         set udg_QS_Damage[4]=400.00\n+         set udg_QS_Damage[4]=450.00\n-         set udg_QS_Damage[5]=500.00\n+         set udg_QS_Damage[5]=550.00\n-         set udg_QS_Damage[6]=700.00\n+         set udg_QS_Damage[6]=750.00\n-     set udg_MissileFinish=PolarProjectionBJ(udg_QS_Point[0], 1350.00, udg_QS_Angle)\n+     set udg_MissileFinish=PolarProjectionBJ(udg_QS_Point[0], 1500.00, udg_QS_Angle)"
+  },
+  {
+    "name": "Trig_Thunder_Axe_Actions",
+    "lines": 12,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         set udg_NS_Damage_Copy[3]=135.00\n+         set udg_NS_Damage_Copy[3]=140.00\n-         set udg_NS_Damage_Copy[4]=215.00\n+         set udg_NS_Damage_Copy[4]=220.00\n-         set udg_NS_Damage_Copy[5]=270.00\n+         set udg_NS_Damage_Copy[5]=275.00\n-         set udg_NS_Damage_Copy[6]=370.00\n+         set udg_NS_Damage_Copy[6]=375.00\n-     set udg_MissileFinish=PolarProjectionBJ(udg_NS_Point_Copy[0], 1100.00, udg_NS_Angle_Copy)\n+     set udg_MissileFinish=PolarProjectionBJ(udg_NS_Point_Copy[0], 1200.00, udg_NS_Angle_Copy)\n-     set udg_MissileSpeed=1100.00\n+     set udg_MissileSpeed=1175.00"
+  },
+  {
+    "name": "Trig_Hammer_Cast_Actions",
+    "lines": 4,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_MissileFinish=PolarProjectionBJ(udg_NS_Point[0], 1150.00, udg_NS_Angle)\n+     set udg_MissileFinish=PolarProjectionBJ(udg_NS_Point[0], 1200.00, udg_NS_Angle)\n-     set udg_MissileSpeed=1200.00\n+     set udg_MissileSpeed=1300.00"
+  },
+  {
+    "name": "Trig_Hammer_OnHit_Actions",
+    "lines": 4,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-             set udg_NS_Damage[0]=( udg_NS_Damage[0] * ( 1 + ( udg_MissileTravelled / 1150.00 ) ) )\n+             set udg_NS_Damage[0]=( udg_NS_Damage[0] * ( 1 + ( udg_MissileTravelled / 1200.00 ) ) )\n-             set udg_NS_Damage[0]=( udg_NS_Damage[0] * ( 1 + ( udg_MissileTravelled / 1150.00 ) ) )\n+             set udg_NS_Damage[0]=( udg_NS_Damage[0] * ( 1 + ( udg_MissileTravelled / 1200.00 ) ) )"
+  },
+  {
+    "name": "Trig_Mirror_Image_Finish_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-             set udg_MissileFinish=udg_MIC_Point[udg_MIC_Loop]\n+             set udg_MissileFinish=OffsetLocation(udg_MIC_Point[udg_MIC_Loop], 0, 0)"
+  },
+  {
+    "name": "Trig_HERO_Alchemist_Chemical_Rage_Bounty_Actions",
+    "lines": 19,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     call FFR9_ApplyAlchemistBounty(GetTriggerUnit())\n+     // SET BASE VARIABLE\n+     set udg_temp_unit=GetTriggerUnit()\n+     set udg_temp_player=GetOwningPlayer(udg_temp_unit)\n+     set udg_temp_point_caster=GetUnitLoc(udg_temp_unit)\n+     set udg_temp_point=GetSpellTargetLoc()\n+     set udg_temp_playernumber=GetConvertedPlayerId(udg_temp_player)\n+     set udg_abilitylevel=GetUnitAbilityLevelSwapped(GetSpellAbilityId(), udg_temp_unit)\n+     set udg_temp_degree=AngleBetweenPoints(udg_temp_point_caster, udg_temp_point)\n+     // start action\n+     set udg_X=udg_temp_playernumber\n+     set udg_temp_level=GetHeroLevel(udg_herO[udg_X])\n+     set udg_hero_bounty_multiplier=1.00\n+     set udg_temp_real=( I2R(udg_hero_bounty_base[udg_temp_level]) * udg_hero_bounty_multiplier )\n+     call BlzSetUnitIntegerFieldBJ(udg_temp_unit, UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, R2I(udg_temp_real))\n+     call BlzSetUnitIntegerFieldBJ(udg_temp_unit, UNIT_IF_GOLD_BOUNTY_AWARDED_NUMBER_OF_DICE, 8)\n+     call BlzSetUnitIntegerFieldBJ(udg_temp_unit, UNIT_IF_GOLD_BOUNTY_AWARDED_SIDES_PER_DIE, 3)\n+     call RemoveLocation(udg_temp_point_caster)\n+     call RemoveLocation(udg_temp_point)"
+  },
+  {
+    "name": "Trig_HERO_Architect_Recruit_Actions",
+    "lines": 2,
+    "main_locals": 1,
+    "solo_locals": 1,
+    "diff": "-         call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_1763\")\n+         call SoloFootsDisplayMessageToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_1763\")"
+  },
+  {
+    "name": "Trig_HERO_Architect_tower_build_Actions",
+    "lines": 3,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( ( udg_tower_ID == 20 ) ) then // INLINED!!\n+     if ( (udg_tower_ID == 20) ) then // INLINED!!\n+     call RemoveLocation(udg_temp_point)"
+  },
+  {
+    "name": "Trig_HERO_Architect_tower_countdown_Actions",
+    "lines": 26,
+    "main_locals": 0,
+    "solo_locals": 3,
+    "diff": "-     set udg_temp_X[50]=1\n+     local integer i=1\n+     local real remaining\n+     local boolean anyActive=false\n+ \n-         exitwhen udg_temp_X[50] > 20\n-         call SetTextTagTextBJ(udg_tower_timer_text[udg_temp_X[50]], R2SW(TimerGetRemaining(udg_timer_tower[udg_temp_X[50]]), 2, 0), 9.00)\n-         if ( ( TimerGetRemaining(udg_timer_tower[udg_temp_X[50]]) < 1.00 ) ) then // INLINED!!\n+         exitwhen i > 20\n+         set remaining=TimerGetRemaining(udg_timer_tower[i])\n+         if ( remaining > 0.00 ) then\n+             set anyActive=true\n+             if ( udg_tower_timer_text[i] != null ) then\n+                 call SetTextTagTextBJ(udg_tower_timer_text[i], R2SW(remaining, 2, 0), 9.00)\n+             endif\n+         elseif ( udg_tower_timer_text[i] != null ) then\n-             call DestroyTextTagBJ(udg_tower_timer_text[udg_temp_X[50]])\n+             call DestroyTextTagBJ(udg_tower_timer_text[i])\n+             set udg_tower_timer_text[i]=null\n-         else\n-             call DoNothing()\n-         set udg_temp_X[50]=udg_temp_X[50] + 1\n+         set i=i + 1\n+     if ( not anyActive ) then\n+         call DisableTrigger(GetTriggeringTrigger())\n+     endif"
+  },
+  {
+    "name": "Trig_HERO_Architect_raise_morale_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     call UnitApplyTimedLifeBJ(60.00, 'Bhwd', udg_dummy_flag[udg_temp_playernumber])\n+     call UnitApplyTimedLifeBJ(45.00, 'Bhwd', udg_dummy_flag[udg_temp_playernumber])"
+  },
+  {
+    "name": "Trig_HERO_Blooddancer_Bloodrush_periodic_Actions",
+    "lines": 31,
+    "main_locals": 0,
+    "solo_locals": 4,
+    "diff": "-     set udg_X=1\n+     local integer i=1\n+     local integer level\n+     local unit hero=null\n+     local boolean anyActive=false\n+ \n-         exitwhen udg_X > 12\n+         exitwhen i > 12\n-         if ( Trig_HERO_Blooddancer_Bloodrush_periodic_Func001Func001C() ) then\n-             if ( Trig_HERO_Blooddancer_Bloodrush_periodic_Func001Func001Func002C() ) then\n-                 set udg_abilitylevel=GetUnitAbilityLevelSwapped('A07X', udg_herO[udg_X])\n+         set hero=udg_herO[i]\n+         if ( GetUnitTypeId(hero) == 'O00G' ) then\n+             if ( GetUnitAbilityLevel(hero, 'B00O') > 0 ) then\n+                 set anyActive=true\n+                 set level=GetUnitAbilityLevel(hero, 'A07X')\n-                 call UnitAddAbilityBJ('A068', udg_herO[udg_X])\n+                 call UnitAddAbility(hero, 'A068')\n-                 call SetUnitAbilityLevelSwapped('A068', udg_herO[udg_X], udg_abilitylevel)\n+                 call SetUnitAbilityLevel(hero, 'A068', level)\n-                 call UnitRemoveAbilityBJ('A068', udg_herO[udg_X])\n+                 call UnitRemoveAbility(hero, 'A068')\n-                 call EnableTrigger(GetTriggeringTrigger())\n-         else\n-             call DoNothing()\n-         set udg_X=udg_X + 1\n+         set i=i + 1\n+     if ( not anyActive ) then\n+         call DisableTrigger(GetTriggeringTrigger())\n+     endif\n+     set hero=null"
+  },
+  {
+    "name": "Trig_HERO_Blooddancer_Illusions_die_Actions",
+    "lines": 14,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-             call DisplayTextToForce(GetPlayersAll(), ( \"killer: \" + GetPlayerName(ConvertedPlayer(udg_temp_playernumber)) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"killer: \" + GetPlayerName(ConvertedPlayer(udg_temp_playernumber)) ))\n-             call DisplayTextToForce(GetPlayersAll(), ( \"killing unit type: \" + UnitId2StringBJ(GetUnitTypeId(GetKillingUnitBJ())) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"killing unit type: \" + UnitId2StringBJ(GetUnitTypeId(GetKillingUnitBJ())) ))\n-             call DisplayTextToForce(GetPlayersAll(), ( \"hero of owner: \" + GetUnitName(udg_herO[udg_temp_playernumber]) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"hero of owner: \" + GetUnitName(udg_herO[udg_temp_playernumber]) ))\n-             call DisplayTextToForce(GetPlayersAll(), ( \"owner of dying unit: \" + GetPlayerName(GetOwningPlayer(GetDyingUnit())) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"owner of dying unit: \" + GetPlayerName(GetOwningPlayer(GetDyingUnit())) ))\n-             call DisplayTextToForce(GetPlayersAll(), ( \"dying unit type:\" + UnitId2StringBJ(GetUnitTypeId(GetDyingUnit())) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"dying unit type:\" + UnitId2StringBJ(GetUnitTypeId(GetDyingUnit())) ))\n-             call DisplayTextToForce(GetPlayersAll(), ( \"dying unit lvl\" + I2S(udg_temp_level) ))\n+             call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"dying unit lvl\" + I2S(udg_temp_level) ))\n-             call DisplayTextToForce(GetForceOfPlayer(udg_temp_player), \"TRIGSTR_1764\")\n+             call SoloFootsDisplayMessageToForce(GetForceOfPlayer(udg_temp_player), \"TRIGSTR_1764\")"
+  },
+  {
+    "name": "Trig_HERO_BM_Illusion_Bounty_adjust_Func007A",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         set udg_temp_int=( 1 + ( 2 * udg_temp_level ) )\n+         set udg_temp_int=( 10 + ( 2 * udg_temp_level ) )"
+  },
+  {
+    "name": "Trig_HERO_Blademaster_Illusions_Actions",
+    "lines": 6,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         if P67_Enabled() then\n-             call P67_AddSupplement(udg_herO[udg_temp_playernumber], I2R(udg_temp_int), GetDyingUnit())\n-         else\n-             call AddHeroXPSwapped(udg_temp_int, udg_herO[udg_temp_playernumber], true)\n+         call AddHeroXPSwapped(udg_temp_int, udg_herO[udg_temp_playernumber], true)\n-         endif"
+  },
+  {
+    "name": "Trig_HERO_Corruptor_Defile_Action_Actions",
+    "lines": 12,
+    "main_locals": 1,
+    "solo_locals": 1,
+    "diff": "-     set udg_Defile_Damage[1]=45.00\n+     set udg_Defile_Damage[1]=50.00\n-     set udg_Defile_Damage[2]=85.00\n+     set udg_Defile_Damage[2]=90.00\n-     set udg_Defile_Damage[3]=160.00\n+     set udg_Defile_Damage[3]=175.00\n-     set udg_Defile_Damage[4]=225.00\n+     set udg_Defile_Damage[4]=250.00\n-     set udg_Defile_Damage[5]=275.00\n-     set udg_Defile_Damage[6]=350.00\n+     set udg_Defile_Damage[5]=300.00\n+     set udg_Defile_Damage[6]=400.00"
+  },
+  {
+    "name": "Trig_HERO_Death_Wards_Actions",
+    "lines": 23,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_ward_hp[1]=50\n+     set udg_ward_hp[1]=20\n+     set udg_ward_hp[2]=40\n-     set udg_ward_hp[2]=100\n+     set udg_ward_hp[3]=100\n-     set udg_ward_hp[3]=125\n-     set udg_ward_hp[4]=175\n+     set udg_ward_hp[4]=150\n+     set udg_ward_hp[5]=175\n-     set udg_ward_hp[5]=200\n+     set udg_ward_hp[6]=200\n-     set udg_ward_hp[6]=250\n-     set udg_death_ward_bounty[1]=5\n-     set udg_death_ward_bounty[2]=8\n-     set udg_death_ward_bounty[3]=12\n-     set udg_death_ward_bounty[4]=15\n-     set udg_death_ward_bounty[5]=17\n-     set udg_death_ward_bounty[6]=20\n-     call SetUnitAbilityLevelSwapped('A0IP', udg_deathward[udg_temp_playernumber], udg_abilitylevel)\n+     call SetUnitAbilityLevelSwapped('A0F1', udg_deathward[udg_temp_playernumber], udg_abilitylevel)\n-     call BlzSetUnitIntegerFieldBJ(udg_deathward[udg_temp_playernumber], UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, udg_death_ward_bounty[udg_abilitylevel])\n-     call UnitApplyTimedLifeBJ(8.50, 'Bhwd', udg_deathward[udg_temp_playernumber])\n+     call UnitApplyTimedLifeBJ(9.50, 'Bhwd', udg_deathward[udg_temp_playernumber])"
+  },
+  {
+    "name": "Trig_HERO_Summon_Brewer_Stats_Actions",
+    "lines": 39,
+    "main_locals": 2,
+    "solo_locals": 2,
+    "diff": "-     // Event responses are not reliable after a wait: if this trigger fires again while this\n-     // thread sleeps, the natives below return the NEWER event. Locals are per-thread, so the\n-     // values are captured up front and the shared globals rebuilt from them after the wait.\n-     set udg_summon_hp[3]=1500\n+     set udg_summon_hp[3]=1400\n-     set udg_summon_hp[4]=2000\n+     set udg_summon_hp[4]=1900\n-     set udg_summon_hp[5]=2400\n+     set udg_summon_hp[5]=2250\n-     set udg_summon_hp[6]=3000\n+     set udg_summon_hp[6]=2600\n-     set udg_summon_att_base[2]=25\n+     set udg_summon_att_base[2]=30\n-     set udg_summon_att_base[3]=40\n+     set udg_summon_att_base[3]=45\n-     set udg_summon_att_base[4]=50\n+     set udg_summon_att_base[4]=55\n-     set udg_summon_att_base[5]=65\n+     set udg_summon_att_base[5]=75\n-     set udg_summon_att_base[6]=95\n+     set udg_summon_att_base[6]=85\n-     set udg_summon_bounty[6]=60\n+     set udg_summon_bounty[6]=75\n-     set udg_summon_armor[2]=5.00\n+     set udg_summon_armor[2]=4.00\n-     set udg_summon_armor[4]=9.00\n+     set udg_summon_armor[4]=8.00\n-     set udg_summon_armor[6]=13.00\n+     set udg_summon_armor[6]=12.00\n-         call BlzSetUnitAttackCooldown(udg_spawned_unit[udg_temp_int], 1.25, 1)\n+         call BlzSetUnitAttackCooldown(udg_spawned_unit[udg_temp_int], 1.30, 1)\n-         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.40)\n+         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.25)\n-         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.70)\n+         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.50)\n-         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.85)\n+         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 1.60)\n-         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 2.25)\n+         call BlzSetUnitRealFieldBJ(udg_spawned_unit[udg_temp_int], UNIT_RF_SCALING_VALUE, 2.50)"
+  },
+  {
+    "name": "Trig_HERO_Exophate_summon_Actions",
+    "lines": 35,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( Trig_HERO_Exophate_summon_Func013C() ) then\n-         set udg_temp_int=GetRandomInt(0, 29)\n+     set udg_temp_int=GetRandomInt(0, 30)\n-         set udg_temp_int=GetRandomInt(0, 29)\n-     else\n-         set udg_temp_int=GetRandomInt(0, 28)\n-         set udg_temp_int=GetRandomInt(0, 28)\n-     endif\n-     set udg_random_creep[22]='h000'\n+     set udg_random_creep[0]='n00A'\n-     set udg_random_creep[21]='h000'\n-     set udg_random_creep[25]='h00R'\n-     set udg_random_creep[24]='uobs'\n-     set udg_random_creep[18]='uobs'\n-     set udg_random_creep[29]='n005'\n-     set udg_random_creep[20]='n011'\n-     set udg_random_creep[6]='n00S'\n-     set udg_random_creep[0]='n00A'\n-     set udg_random_creep[30]='o00K'\n-     set udg_random_creep[11]='n00Q'\n-     set udg_random_creep[27]='n052'\n-     set udg_random_creep[17]='n033'\n+     set udg_random_creep[6]='n00S'\n+     set udg_random_creep[11]='n00Q'\n+     set udg_random_creep[17]='n033'\n+     set udg_random_creep[18]='uobs'\n+     set udg_random_creep[20]='n011'\n+     set udg_random_creep[21]='h000'\n+     set udg_random_creep[22]='h000'\n+     set udg_random_creep[24]='uobs'\n+     set udg_random_creep[25]='h00R'\n+     set udg_random_creep[27]='n052'\n-     set udg_random_creep[29]='n00U'\n+     set udg_random_creep[29]='n005'\n+     set udg_random_creep[30]='o00K'"
+  },
+  {
+    "name": "Trig_HERO_Grim_Ulti_Actions",
+    "lines": 20,
+    "main_locals": 3,
+    "solo_locals": 3,
+    "diff": "-     // GetTriggerPlayer() was re-read after every wait, so a second cast in that window sent the\n-     // heal to the other caster. The slot is resolved once, up front, into a per-thread local.\n-     local integer pn= GetConvertedPlayerId(GetTriggerPlayer())\n+     local integer playerNumber= GetConvertedPlayerId(GetTriggerPlayer())\n-     local location pt\n+     local location point\n-     set udg_casting_hero[pn]=hero\n+     set udg_casting_hero[playerNumber]=hero\n-         set pt=GetUnitLoc(hero)\n+         set point=GetUnitLoc(hero)\n-         set udg_temp_point=pt\n+         set udg_temp_point=point\n-         call CreateNUnitsAtLoc(1, 'h01K', Player(PLAYER_NEUTRAL_AGGRESSIVE), pt, bj_UNIT_FACING)\n+         call CreateNUnitsAtLoc(1, 'h01K', Player(PLAYER_NEUTRAL_AGGRESSIVE), point, bj_UNIT_FACING)\n-         call TriggerSleepAction(GetRandomReal(0.20, 0.30))\n+         call TriggerSleepAction(GetRandomReal(0.20, 0.50))\n-         call RemoveLocation(pt)\n+         call RemoveLocation(point)\n-     set pt=null\n+     set point=null"
+  },
+  {
+    "name": "Trig_HERO_Guardian_Purification_Nova_Actions",
+    "lines": 18,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     // Replaced by GTW travelling disruption orb.\n+     set udg_temp_unit=GetTriggerUnit()\n+     set udg_temp_player=GetOwningPlayer(udg_temp_unit)\n+     set udg_temp_playernumber=GetConvertedPlayerId(udg_temp_player)\n+     set udg_temp_point_caster=GetUnitLoc(udg_temp_unit)\n+     set udg_ship_destination_Copy[udg_temp_playernumber]=GetSpellTargetLoc()\n+     set udg_abilitylevel=GetUnitAbilityLevelSwapped(GetSpellAbilityId(), udg_temp_unit)\n+     set udg_temp_real=( 522.00 * ( DistanceBetweenPoints(udg_temp_point_caster, udg_ship_destination_Copy[udg_temp_playernumber]) / 900.00 ) )\n+     call CreateNUnitsAtLocFacingLocBJ(1, 'h044', udg_temp_player, udg_temp_point_caster, udg_temp_point)\n+     set udg_dummy_nova[udg_temp_playernumber]=GetLastCreatedUnit()\n+     call SetUnitMoveSpeed(udg_dummy_nova[udg_temp_playernumber], udg_temp_real)\n+     call UnitAddAbilityBJ('A0FY', udg_dummy_nova[udg_temp_playernumber])\n+     call SetUnitAbilityLevelSwapped('A0FY', udg_dummy_nova[udg_temp_playernumber], udg_abilitylevel)\n+     call IssuePointOrderLocBJ(udg_dummy_nova[udg_temp_playernumber], \"move\", udg_ship_destination_Copy[udg_temp_playernumber])\n+     call RemoveLocation(udg_temp_point_caster)\n+     call RemoveLocation(udg_ship_destination_Copy[udg_temp_playernumber])\n+     call StartTimerBJ(udg_timer_purificationNova[udg_temp_playernumber], false, 2.10)\n+     call UnitApplyTimedLifeBJ(3.00, 'BTLF', udg_dummy_nova[udg_temp_playernumber])"
+  },
+  {
+    "name": "Trig_HERO_Guardian_Purification_Nova_Explode_Actions",
+    "lines": 15,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     // Replaced by GTW travelling disruption orb.\n+     set udg_X=1\n+     loop\n+         exitwhen udg_X > 12\n+         if ( Trig_HERO_Guardian_Purification_Nova_Explode_Func001Func001C() ) then\n+             call IssueImmediateOrderBJ(udg_dummy_nova[udg_X], \"thunderclap\")\n+             call UnitApplyTimedLifeBJ(0.10, 'BTLF', udg_dummy_nova[udg_X])\n+             set udg_unitgroup_kill=GetUnitsOfPlayerAndTypeId(ConvertedPlayer(udg_X), 'h044')\n+             call ForGroupBJ(udg_unitgroup_kill, function Trig_HERO_Guardian_Purification_Nova_Explode_Func001Func001Func005002)\n+             call DestroyGroup(udg_unitgroup_kill)\n+         else\n+             call DoNothing()\n+         endif\n+         set udg_X=udg_X + 1\n+     endloop"
+  },
+  {
+    "name": "Trig_HERO_Jaina_Ulti_Actions",
+    "lines": 115,
+    "main_locals": 9,
+    "solo_locals": 5,
+    "diff": "+     // This action sleeps three times, so every handle it owns is held in a\n+     // local. The shared udg_temp_point / udg_temp_point_caster globals cannot\n+     // be used across a TriggerSleepAction: another trigger overwrites them\n+     // during the sleep, and the original cleanup then released that trigger's\n+     // location instead of this one's.\n+     local location casterPoint=null\n-     // The three orbs and both points used to live in globals across 4s of waits, so a second\n-     // Jaina ult in that window made this thread order and remove the OTHER cast's orbs and free\n-     // its locations. udg_orb[3] is still published because the enum filter below reads it.\n-     // Two of the three creation points were also overwritten without being removed.\n-     local unit caster= GetTriggerUnit()\n-     local player owner= GetOwningPlayer(caster)\n-     local location center= GetSpellTargetLoc()\n-     local integer lvl= GetUnitAbilityLevelSwapped('A048', caster)\n-     local unit orb1\n-     local unit orb2\n-     local unit orb3\n-     local location pt\n+     local location orbPoint=null\n-     local group targets\n+     local location lightningPoint=null\n+     local group chainCandidates=null\n+     local unit chainTarget=null\n+ \n-     set udg_temp_unit=caster\n+     set udg_temp_unit=GetTriggerUnit()\n-     set udg_temp_player=owner\n-     set udg_tripple_level=lvl\n+     set udg_temp_player=GetOwningPlayer(udg_temp_unit)\n+     set casterPoint=GetSpellTargetLoc()\n+     set udg_tripple_level=GetUnitAbilityLevelSwapped('A048', udg_temp_unit)\n-     set pt=PolarProjectionBJ(center, 80.00, 0)\n+     set orbPoint=PolarProjectionBJ(casterPoint, 80.00, 0)\n-     call CreateNUnitsAtLoc(1, 'h01L', owner, pt, bj_UNIT_FACING)\n+     call CreateNUnitsAtLoc(1, 'h01L', udg_temp_player, orbPoint, bj_UNIT_FACING)\n-     set orb1=GetLastCreatedUnit()\n+     set udg_orb[1]=GetLastCreatedUnit()\n-     call RemoveLocation(pt)\n+     call RemoveLocation(orbPoint)\n-     set pt=PolarProjectionBJ(center, 80.00, 120.00)\n+     set orbPoint=PolarProjectionBJ(casterPoint, 80.00, 120.00)\n-     call CreateNUnitsAtLoc(1, 'h01M', owner, pt, bj_UNIT_FACING)\n+     call CreateNUnitsAtLoc(1, 'h01M', udg_temp_player, orbPoint, bj_UNIT_FACING)\n-     set orb2=GetLastCreatedUnit()\n+     set udg_orb[2]=GetLastCreatedUnit()\n-     call RemoveLocation(pt)\n+     call RemoveLocation(orbPoint)\n-     set pt=PolarProjectionBJ(center, 80.00, 240.00)\n+     set orbPoint=PolarProjectionBJ(casterPoint, 80.00, 240.00)\n-     call CreateNUnitsAtLoc(1, 'h01N', owner, pt, bj_UNIT_FACING)\n+     call CreateNUnitsAtLoc(1, 'h01N', udg_temp_player, orbPoint, bj_UNIT_FACING)\n-     set orb3=GetLastCreatedUnit()\n+     set udg_orb[3]=GetLastCreatedUnit()\n-     call RemoveLocation(pt)\n+     call RemoveLocation(orbPoint)\n+     set orbPoint=null\n-     set udg_orb[1]=orb1\n-     set udg_orb[2]=orb2\n-     set udg_orb[3]=orb3\n-     call UnitAddAbilityBJ('A063', orb1)\n+     call UnitAddAbilityBJ('A063', udg_orb[1])\n-     call UnitAddAbilityBJ('A064', orb2)\n+     call UnitAddAbilityBJ('A064', udg_orb[2])\n-     call UnitAddAbilityBJ('A065', orb3)\n+     call UnitAddAbilityBJ('A065', udg_orb[3])\n-     call SetUnitAbilityLevelSwapped('A063', orb1, lvl)\n+     call SetUnitAbilityLevelSwapped('A063', udg_orb[1], udg_tripple_level)\n-     call SetUnitAbilityLevelSwapped('A064', orb2, lvl)\n+     call SetUnitAbilityLevelSwapped('A064', udg_orb[2], udg_tripple_level)\n-     call SetUnitAbilityLevelSwapped('A065', orb3, lvl)\n+     call SetUnitAbilityLevelSwapped('A065', udg_orb[3], udg_tripple_level)\n-     call IssueImmediateOrderBJ(orb1, \"stomp\")\n+     call IssueImmediateOrderBJ(udg_orb[1], \"stomp\")\n+     call IssuePointOrder(udg_orb[2], \"rainoffire\", GetUnitX(udg_orb[2]), GetUnitY(udg_orb[2]))\n-     set pt=GetUnitLoc(orb2)\n-     call IssuePointOrderLocBJ(orb2, \"rainoffire\", pt)\n-     call RemoveLocation(pt)\n-     set udg_orb[3]=orb3\n-     set pt=GetUnitLoc(orb3)\n+     // The enumeration is left exactly as it was - same radius, same location,\n+     // same filter - so GroupPickRandomUnit consumes the random state in the\n+     // same order and picks the same target. Only the group is now released.\n+     set lightningPoint=GetUnitLoc(udg_orb[3])\n-     set targets=GetUnitsInRangeOfLocMatching(512, pt, Condition(function Trig_HERO_Jaina_Ulti_Func030003001003))\n+     set chainCandidates=GetUnitsInRangeOfLocMatching(512, lightningPoint, Condition(function Trig_HERO_Jaina_Ulti_Func030003001003))\n+     set chainTarget=GroupPickRandomUnit(chainCandidates)\n+     call DestroyGroup(chainCandidates)\n+     call RemoveLocation(lightningPoint)\n+     set chainCandidates=null\n+     set lightningPoint=null\n-     call IssueTargetOrderBJ(orb3, \"chainlightning\", GroupPickRandomUnit(targets))\n+     call IssueTargetOrderBJ(udg_orb[3], \"chainlightning\", chainTarget)\n-     call DestroyGroup(targets)\n-     call RemoveLocation(pt)\n+     set udg_X=1\n+     loop\n+         exitwhen udg_X > 3\n-     call RemoveUnit(orb1)\n+         call RemoveUnit(udg_orb[udg_X])\n-     call RemoveUnit(orb2)\n-     call RemoveUnit(orb3)\n+         set udg_X=udg_X + 1\n+     endloop\n-     call RemoveLocation(center)\n+     call RemoveLocation(casterPoint)\n-     set caster=null\n+     set casterPoint=null\n-     set owner=null\n-     set center=null\n-     set orb1=null\n-     set orb2=null\n-     set orb3=null\n-     set pt=null\n-     set targets=null\n+     set chainTarget=null"
+  },
+  {
+    "name": "Trig_HERO_Myrmidon_Sinkhole_start_Actions",
+    "lines": 50,
+    "main_locals": 0,
+    "solo_locals": 5,
+    "diff": "-     set udg_temp_playernumber=GetConvertedPlayerId(GetTriggerPlayer())\n-     set udg_temp_player=ConvertedPlayer(udg_temp_playernumber)\n+     local integer playerNumber=GetPlayerId(GetTriggerPlayer()) + 1\n+     local player owner=GetTriggerPlayer()\n+     local location center=GetSpellTargetLoc()\n+     local real centerX=GetLocationX(center)\n+     local real centerY=GetLocationY(center)\n+ \n+     if ( udg_sinkhole_active[playerNumber] or udg_waterfall_mid[playerNumber] != null ) then\n+         call SoloFootsEndSinkhole(playerNumber)\n+     endif\n+     call SoloFootsClearSinkholeDummies(playerNumber)\n+     set udg_waterfall_mid[playerNumber]=center\n-     set udg_sinkhole_active[udg_temp_playernumber]=true\n+     set udg_sinkhole_active[playerNumber]=true\n+     set udg_sinkhole_time[playerNumber]=0\n+ \n-     set udg_temp_point=GetSpellTargetLoc()\n-     set udg_waterfall_mid[udg_temp_playernumber]=GetSpellTargetLoc()\n-     set udg_waterfall_point[1]=OffsetLocation(udg_temp_point, - 75.00, 0)\n-     set udg_waterfall_point[2]=OffsetLocation(udg_temp_point, - 50.00, - 50.00)\n-     set udg_waterfall_point[3]=OffsetLocation(udg_temp_point, 0.00, - 75.00)\n-     set udg_waterfall_point[4]=OffsetLocation(udg_temp_point, 50.00, - 50.00)\n-     set udg_waterfall_point[5]=OffsetLocation(udg_temp_point, 75.00, 0.00)\n-     set udg_waterfall_point[6]=OffsetLocation(udg_temp_point, 50.00, 50.00)\n-     set udg_waterfall_point[7]=OffsetLocation(udg_temp_point, 0.00, 75.00)\n-     set udg_waterfall_point[8]=OffsetLocation(udg_temp_point, - 50.00, 50.00)\n-     call TerrainDeformationCraterBJ(0.5, false, udg_waterfall_mid[udg_temp_playernumber], 250.00, 100.00)\n+     call TerrainDeformationCraterBJ(0.50, false, center, 250.00, 100.00)\n-     set udg_X=1\n-     loop\n-         exitwhen udg_X > 8\n-         call CreateNUnitsAtLocFacingLocBJ(1, 'h029', udg_temp_player, udg_waterfall_point[udg_X], udg_temp_point)\n-         call GroupAddUnitSimple(GetLastCreatedUnit(), udg_waterfall[udg_temp_playernumber])\n-         call RemoveLocation(udg_waterfall_point[udg_X])\n-         set udg_X=udg_X + 1\n-     endloop\n-     call RemoveLocation(udg_temp_point)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, -75.00, 0.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, -50.00, -50.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, 0.00, -75.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, 50.00, -50.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, 75.00, 0.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, 50.00, 50.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, 0.00, 75.00)\n+     call SoloFootsCreateSinkholeDummy(owner, udg_waterfall[playerNumber], centerX, centerY, -50.00, 50.00)\n+     call EnableTrigger(gg_trg_HERO_Myrmidon_Sinkhole_suck)\n+ \n+     set center=null\n+     set owner=null"
+  },
+  {
+    "name": "Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func007A",
+    "lines": 8,
+    "main_locals": 3,
+    "solo_locals": 0,
+    "diff": "+     set udg_temp_degree=AngleBetweenPoints(GetUnitLoc(GetEnumUnit()), udg_waterfall_mid[udg_X])\n+     call SetUnitPositionLoc(GetEnumUnit(), PolarProjectionBJ(GetUnitLoc(GetEnumUnit()), 1.00, udg_temp_degree))\n-     local unit suckedUnit= GetEnumUnit()\n-     local real unitX= GetUnitX(suckedUnit)\n-     local real unitY= GetUnitY(suckedUnit)\n-     set udg_temp_degree=bj_RADTODEG * Atan2(GetLocationY(udg_waterfall_mid[udg_X]) - unitY, GetLocationX(udg_waterfall_mid[udg_X]) - unitX)\n-     call SetUnitPosition(suckedUnit, unitX + 1.00 * Cos(udg_temp_degree * bj_DEGTORAD), unitY + 1.00 * Sin(udg_temp_degree * bj_DEGTORAD))\n-     set suckedUnit=null"
+  },
+  {
+    "name": "Trig_HERO_Myrmidon_Sinkhole_suck_Actions",
+    "lines": 81,
+    "main_locals": 1,
+    "solo_locals": 10,
+    "diff": "-     local group enumGroup\n-     set udg_X=1\n+     local integer playerNumber=1\n+     local integer abilityLevel\n+     local player owner=null\n+     local unit picked=null\n+     local real centerX\n+     local real centerY\n+     local real unitX\n+     local real unitY\n+     local real angle\n+     local real area\n+ \n-         exitwhen udg_X > 12\n+         exitwhen playerNumber > 12\n+         if ( udg_sinkhole_active[playerNumber] ) then\n+             if ( udg_waterfall_mid[playerNumber] == null ) then\n+                 call SoloFootsEndSinkhole(playerNumber)\n-         if ( Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001C() ) then\n-             set enumGroup=GetUnitsOfPlayerMatching(ConvertedPlayer(udg_X), Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func001001002))\n-             call ForGroup(enumGroup, function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func001A)\n-             call DestroyGroup(enumGroup)\n-             set udg_temp_AoE=( 300.00 + ( 100.00 * I2R(udg_temp_int) ) )\n-             set udg_waterfall_units[udg_X]=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_waterfall_mid[udg_X], Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func004002003))\n-             set enumGroup=GetUnitsOfPlayerMatching(ConvertedPlayer(udg_X), Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func005001002))\n-             call GroupRemoveGroup(enumGroup, udg_waterfall_units[udg_X])\n-             call DestroyGroup(enumGroup)\n-             set enumGroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_waterfall_mid[udg_X], Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func006001003))\n-             call GroupRemoveGroup(enumGroup, udg_waterfall_units[udg_X])\n-             call DestroyGroup(enumGroup)\n-             call ForGroup(udg_waterfall_units[udg_X], function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func007A)\n-             call DestroyGroup(udg_waterfall_units[udg_X])\n-             set udg_waterfall_units[udg_X]=null\n-             set enumGroup=null\n-             set udg_sinkhole_time[udg_X]=( udg_sinkhole_time[udg_X] + 1 )\n-             if ( Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func009C() ) then\n-                 set enumGroup=GetUnitsOfPlayerMatching(ConvertedPlayer(udg_X), Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func009Func001001002))\n-                 call ForGroup(enumGroup, function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func009Func001A)\n-                 call DestroyGroup(enumGroup)\n-                 call PlaySoundAtPointBJ(gg_snd_ThunderClapCaster, 100, udg_waterfall_point[udg_X], 0)\n-                 call CreateNUnitsAtLoc(1, 'h02B', ConvertedPlayer(udg_X), udg_waterfall_mid[udg_X], bj_UNIT_FACING)\n-                 call UnitApplyTimedLifeBJ(0.50, 'BTLF', GetLastCreatedUnit())\n-                 set enumGroup=GetUnitsOfPlayerMatching(ConvertedPlayer(udg_X), Condition(function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func009Func005001002))\n-                 call ForGroup(enumGroup, function Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func009Func005A)\n-                 call DestroyGroup(enumGroup)\n-                 set enumGroup=null\n-                 set udg_sinkhole_time[udg_X]=0\n-                 call RemoveLocation(udg_waterfall_mid[udg_X])\n-                 call ConditionalTriggerExecute(gg_trg_HERO_Myrmidon_Sinkhole_end)\n+                 set owner=Player(playerNumber - 1)\n+                 set abilityLevel=GetUnitAbilityLevel(udg_herO[playerNumber], 'A05Y')\n+                 if ( abilityLevel < 1 ) then\n+                     set abilityLevel=1\n+                 endif\n+                 set centerX=GetLocationX(udg_waterfall_mid[playerNumber])\n+                 set centerY=GetLocationY(udg_waterfall_mid[playerNumber])\n+                 set area=300.00 + ( 100.00 * I2R(abilityLevel) )\n+ \n+                 call GroupClear(sf_sinkhole_enum_group)\n+                 call GroupEnumUnitsInRange(sf_sinkhole_enum_group, centerX, centerY, area, null)\n+                 loop\n+                     set picked=FirstOfGroup(sf_sinkhole_enum_group)\n+                     exitwhen picked == null\n+                     call GroupRemoveUnit(sf_sinkhole_enum_group, picked)\n+                     if ( GetWidgetLife(picked) > 0.405 and not IsUnitType(picked, UNIT_TYPE_STRUCTURE) and not ( GetOwningPlayer(picked) == owner and IsUnitType(picked, UNIT_TYPE_HERO) ) ) then\n+                         set unitX=GetUnitX(picked)\n+                         set unitY=GetUnitY(picked)\n+                         set angle=Atan2(( centerY - unitY ), ( centerX - unitX ))\n+                         call SetUnitPosition(picked, ( unitX + Cos(angle) ), ( unitY + Sin(angle) ))\n+                     endif\n+                 endloop\n+ \n+                 set udg_sinkhole_time[playerNumber]=udg_sinkhole_time[playerNumber] + 1\n+                 if ( udg_sinkhole_time[playerNumber] >= 60 ) then\n+                     call SoloFootsFinishSinkhole(playerNumber, abilityLevel, centerX, centerY)\n+                 endif\n-         else\n-         set udg_X=udg_X + 1\n+         set playerNumber=playerNumber + 1\n+     set picked=null\n+     set owner=null"
+  },
+  {
+    "name": "Trig_HERO_Myrmidon_Sinkhole_end_Actions",
+    "lines": 7,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     call SoloFootsEndSinkhole(GetPlayerId(GetTriggerPlayer()) + 1)\n-     set udg_temp_playernumber=GetConvertedPlayerId(GetTriggerPlayer())\n-     set udg_sinkhole_active[udg_temp_playernumber]=false\n-     set udg_waterfall[udg_temp_playernumber]=GetUnitsOfPlayerAndTypeId(ConvertedPlayer(udg_temp_playernumber), 'h029')\n-     call ForGroupBJ(udg_waterfall[udg_temp_playernumber], function Trig_HERO_Myrmidon_Sinkhole_end_Func005A)\n-     call RemoveLocation(udg_waterfall_mid[udg_temp_playernumber])\n-     call DestroyGroup(udg_waterfall[udg_temp_playernumber])"
+  },
+  {
+    "name": "Trig_HERO_Pandero_Preserve_Actions",
+    "lines": 1,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+         set udg_dummy_hook[udg_temp_playernumber]=null"
+  },
+  {
+    "name": "Trig_HERO_Pirate_Send_Ship_Actions",
+    "lines": 4,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(udg_all_players, ( \"temp real = \" + R2S(udg_temp_real) ))\n+         call SoloFootsDisplayMessageToForce(udg_all_players, ( \"temp real = \" + R2S(udg_temp_real) ))\n-         call DisplayTextToForce(udg_all_players, ( \"distance = \" + R2S(DistanceBetweenPoints(udg_temp_point_caster, udg_ship_destination[udg_temp_playernumber])) ))\n+         call SoloFootsDisplayMessageToForce(udg_all_players, ( \"distance = \" + R2S(DistanceBetweenPoints(udg_temp_point_caster, udg_ship_destination[udg_temp_playernumber])) ))"
+  },
+  {
+    "name": "Trig_HERO_Santa_Snowball_Actions",
+    "lines": 4,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(udg_all_players, ( \"temp real = \" + R2S(udg_temp_real) ))\n+         call SoloFootsDisplayMessageToForce(udg_all_players, ( \"temp real = \" + R2S(udg_temp_real) ))\n-         call DisplayTextToForce(udg_all_players, ( \"distance = \" + R2S(DistanceBetweenPoints(udg_temp_point_caster, udg_ship_destination[udg_temp_playernumber])) ))\n+         call SoloFootsDisplayMessageToForce(udg_all_players, ( \"distance = \" + R2S(DistanceBetweenPoints(udg_temp_point_caster, udg_ship_destination[udg_temp_playernumber])) ))"
+  },
+  {
+    "name": "Trig_HERO_Thor_Mjolnir_Loop_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-             set udg_mjolnir_target[udg_X]=GetUnitsInRangeOfLocMatching(120.00, udg_mjolnir_location[udg_X], Condition(function Trig_HERO_Thor_Mjolnir_Loop_Func001Func001Func005002003))\n+             set udg_mjolnir_target[udg_X]=GetUnitsInRangeOfLocMatching(110.00, udg_mjolnir_location[udg_X], Condition(function Trig_HERO_Thor_Mjolnir_Loop_Func001Func001Func005002003))"
+  },
+  {
+    "name": "Trig_HERO_Thor_Powerhit_Actions",
+    "lines": 40,
+    "main_locals": 0,
+    "solo_locals": 4,
+    "diff": "+     // Every location this action creates is now owned by a local. The step\n+     // point is still mirrored into udg_temp_point on every write, because\n+     // Trig_HERO_Thor_Powerhit_Func009Func005C reads that global and its\n+     // pathability test must stay byte-for-byte the same. The mirror is a\n+     // borrowed reference only - the local frees the handle, and the previous\n+     // step location is released as soon as the next one exists, so the loop\n+     // holds at most one step location at a time instead of leaking one (or\n+     // two) per iteration.\n+     local location casterPoint=null\n+     local location stepPoint=null\n+     local location nextPoint=null\n+ \n-     set udg_temp_point_caster=GetUnitLoc(udg_temp_unit)\n+     set casterPoint=GetUnitLoc(udg_temp_unit)\n+     set udg_temp_point_caster=casterPoint\n-     set udg_temp_point=GetUnitLoc(udg_temp_target)\n+     set stepPoint=GetUnitLoc(udg_temp_target)\n+     set udg_temp_point=stepPoint\n-         set udg_temp_point=PolarProjectionBJ(udg_temp_point, 15.00, udg_temp_degree)\n+         set nextPoint=PolarProjectionBJ(stepPoint, 15.00, udg_temp_degree)\n+         call RemoveLocation(stepPoint)\n+         set stepPoint=nextPoint\n+         set nextPoint=null\n+         set udg_temp_point=stepPoint\n-             set udg_temp_point=PolarProjectionBJ(udg_temp_point, - 16.50, udg_temp_degree)\n+             set nextPoint=PolarProjectionBJ(stepPoint, - 16.50, udg_temp_degree)\n+             call RemoveLocation(stepPoint)\n+             set stepPoint=nextPoint\n+             set nextPoint=null\n+             set udg_temp_point=stepPoint\n-     call RemoveLocation(udg_temp_point_caster)\n+     call RemoveLocation(casterPoint)\n-     call RemoveLocation(udg_temp_point)\n+     call RemoveLocation(stepPoint)\n+     // The globals only ever borrowed these handles; clear the borrowed\n+     // references so nothing downstream can read or re-release a dead location.\n+     set udg_temp_point_caster=null\n+     set udg_temp_point=null\n+     set casterPoint=null\n+     set stepPoint=null"
+  },
+  {
+    "name": "Trig_HERO_Prison_Func029A",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call SetUnitPositionLoc(GetEnumUnit(), GetRectCenter(gg_rct_EXILE))\n+         call SetUnitPosition(GetEnumUnit(), ( ( GetRectMinX(gg_rct_EXILE) + GetRectMaxX(gg_rct_EXILE) ) * 0.50 ), ( ( GetRectMinY(gg_rct_EXILE) + GetRectMaxY(gg_rct_EXILE) ) * 0.50 ))"
+  },
+  {
+    "name": "Trig_HERO_Prison_Actions",
+    "lines": 24,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     // Re-casting before the previous wall expired would overwrite these four\n+     // slots and strand the old locations: the countdown only ever frees what\n+     // the array currently points at. Every in-function consumer of the\n+     // previous cast (unit creation, text tags) has already finished by now,\n+     // and restarting udg_prison_timer below supersedes that countdown, so the\n+     // old points are released here. Mirrors the countdown's own guarded block.\n+     if ( udg_prison_wall_point_1[udg_temp_playernumber] != null ) then\n+         call RemoveLocation(udg_prison_wall_point_1[udg_temp_playernumber])\n+         call RemoveLocation(udg_prison_wall_point_2[udg_temp_playernumber])\n+         call RemoveLocation(udg_prison_wall_point_3[udg_temp_playernumber])\n+         call RemoveLocation(udg_prison_wall_point_4[udg_temp_playernumber])\n+         set udg_prison_wall_point_1[udg_temp_playernumber]=null\n+         set udg_prison_wall_point_2[udg_temp_playernumber]=null\n+         set udg_prison_wall_point_3[udg_temp_playernumber]=null\n+         set udg_prison_wall_point_4[udg_temp_playernumber]=null\n+     endif\n+     call RemoveLocation(udg_prison_block_point_1[udg_temp_playernumber])\n+     call RemoveLocation(udg_prison_block_point_2[udg_temp_playernumber])\n+     call RemoveLocation(udg_prison_block_point_3[udg_temp_playernumber])\n+     call RemoveLocation(udg_prison_block_point_4[udg_temp_playernumber])\n+     set udg_prison_block_point_1[udg_temp_playernumber]=null\n+     set udg_prison_block_point_2[udg_temp_playernumber]=null\n+     set udg_prison_block_point_3[udg_temp_playernumber]=null\n+     set udg_prison_block_point_4[udg_temp_playernumber]=null"
+  },
+  {
+    "name": "Trig_HERO_Prison_Wall_countdown_Actions",
+    "lines": 68,
+    "main_locals": 0,
+    "solo_locals": 3,
+    "diff": "-     set udg_temp_playernumber=1\n+     local integer i=1\n+     local real remaining\n+     local boolean anyActive=false\n+ \n+         exitwhen i > 12\n+         set remaining=TimerGetRemaining(udg_prison_timer[i])\n+         if ( remaining >= 1.00 ) then\n+             set anyActive=true\n+             if ( udg_prison_wall_text_1[i] != null ) then\n+                 call SetTextTagTextBJ(udg_prison_wall_text_1[i], R2SW(remaining, 2, 0), 9.00)\n+                 call SetTextTagTextBJ(udg_prison_wall_text_2[i], R2SW(remaining, 2, 0), 9.00)\n+                 call SetTextTagTextBJ(udg_prison_wall_text_3[i], R2SW(remaining, 2, 0), 9.00)\n+                 call SetTextTagTextBJ(udg_prison_wall_text_4[i], R2SW(remaining, 2, 0), 9.00)\n+             endif\n-         exitwhen udg_temp_playernumber > 12\n-         if ( Trig_HERO_Prison_Wall_countdown_Func001Func001C() ) then\n-             call DestroyTextTagBJ(udg_prison_wall_text_1[udg_temp_playernumber])\n-             call DestroyTextTagBJ(udg_prison_wall_text_2[udg_temp_playernumber])\n-             call DestroyTextTagBJ(udg_prison_wall_text_3[udg_temp_playernumber])\n-             call DestroyTextTagBJ(udg_prison_wall_text_4[udg_temp_playernumber])\n-             call RemoveLocation(udg_prison_wall_point_1[udg_temp_playernumber])\n-             call RemoveLocation(udg_prison_wall_point_2[udg_temp_playernumber])\n-             call RemoveLocation(udg_prison_wall_point_3[udg_temp_playernumber])\n-             call RemoveLocation(udg_prison_wall_point_4[udg_temp_playernumber])\n-             call RemoveDestructable(udg_prison_block_1[udg_temp_playernumber])\n-             call RemoveDestructable(udg_prison_block_2[udg_temp_playernumber])\n-             call RemoveDestructable(udg_prison_block_3[udg_temp_playernumber])\n-             call RemoveDestructable(udg_prison_block_4[udg_temp_playernumber])\n-             call SetTextTagTextBJ(udg_prison_wall_text_1[udg_temp_playernumber], R2SW(TimerGetRemaining(udg_prison_timer[udg_temp_playernumber]), 2, 0), 9.00)\n-             call SetTextTagTextBJ(udg_prison_wall_text_2[udg_temp_playernumber], R2SW(TimerGetRemaining(udg_prison_timer[udg_temp_playernumber]), 2, 0), 9.00)\n-             call SetTextTagTextBJ(udg_prison_wall_text_3[udg_temp_playernumber], R2SW(TimerGetRemaining(udg_prison_timer[udg_temp_playernumber]), 2, 0), 9.00)\n-             call SetTextTagTextBJ(udg_prison_wall_text_4[udg_temp_playernumber], R2SW(TimerGetRemaining(udg_prison_timer[udg_temp_playernumber]), 2, 0), 9.00)\n+             if ( udg_prison_wall_text_1[i] != null ) then\n+                 call DestroyTextTagBJ(udg_prison_wall_text_1[i])\n+                 call DestroyTextTagBJ(udg_prison_wall_text_2[i])\n+                 call DestroyTextTagBJ(udg_prison_wall_text_3[i])\n+                 call DestroyTextTagBJ(udg_prison_wall_text_4[i])\n+                 set udg_prison_wall_text_1[i]=null\n+                 set udg_prison_wall_text_2[i]=null\n+                 set udg_prison_wall_text_3[i]=null\n+                 set udg_prison_wall_text_4[i]=null\n+             endif\n+             if ( udg_prison_wall_point_1[i] != null ) then\n+                 call RemoveLocation(udg_prison_wall_point_1[i])\n+                 call RemoveLocation(udg_prison_wall_point_2[i])\n+                 call RemoveLocation(udg_prison_wall_point_3[i])\n+                 call RemoveLocation(udg_prison_wall_point_4[i])\n+                 set udg_prison_wall_point_1[i]=null\n+                 set udg_prison_wall_point_2[i]=null\n+                 set udg_prison_wall_point_3[i]=null\n+                 set udg_prison_wall_point_4[i]=null\n+             endif\n+             if ( udg_prison_block_1[i] != null ) then\n+                 call RemoveDestructable(udg_prison_block_1[i])\n+                 call RemoveDestructable(udg_prison_block_2[i])\n+                 call RemoveDestructable(udg_prison_block_3[i])\n+                 call RemoveDestructable(udg_prison_block_4[i])\n+                 set udg_prison_block_1[i]=null\n+                 set udg_prison_block_2[i]=null\n+                 set udg_prison_block_3[i]=null\n+                 set udg_prison_block_4[i]=null\n+             endif\n-         set udg_temp_playernumber=udg_temp_playernumber + 1\n+         set i=i + 1\n+     if ( not anyActive ) then\n+         call DisableTrigger(GetTriggeringTrigger())\n+     endif"
+  },
+  {
+    "name": "Trig_HERO_Hook_Throw_Actions",
+    "lines": 4,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     // Preserve the former A0L3 copy trigger's SoloFoots experience registration.\n+     if GetSpellAbilityId() == 'A0L3' then\n+         call GroupAddUnit(sf_foot_exp_group, udg_temp_unit)\n+     endif"
+  },
+  {
+    "name": "Trig_HERO_Hook_Loop_Finish",
+    "lines": 1,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     set udg_dummy_hook[udg_X]=null"
+  },
+  {
+    "name": "Trig_HERO_Hook_Loop_Actions",
+    "lines": 11,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-                     set udg_hook_location[udg_X]=PolarProjectionBJ(udg_hook_start_location[udg_X], 65.00, udg_hook_degree[udg_X])\n+                     set udg_hook_location[udg_X]=PolarProjectionBJ(udg_hook_start_location[udg_X], 62.00, udg_hook_degree[udg_X])\n-                     set udg_temp_point=PolarProjectionBJ(udg_hook_location[udg_X], 65.00, udg_hook_degree[udg_X])\n+                     set udg_temp_point=PolarProjectionBJ(udg_hook_location[udg_X], 62.00, udg_hook_degree[udg_X])\n-                     set udg_hook_target_group[udg_X]=GetUnitsInRangeOfLocMatching(120.00, udg_hook_location[udg_X], Condition(function Trig_HERO_Hook_Loop_Func001Func001Func003Func005Func003002003))\n+                     set udg_hook_target_group[udg_X]=GetUnitsInRangeOfLocMatching(110.00, udg_hook_location[udg_X], Condition(function Trig_HERO_Hook_Loop_Func001Func001Func003Func005Func003002003))\n-                         call ForGroupBJ(GetRandomSubGroup(1, udg_hook_target_group[udg_X]), function Trig_HERO_Hook_Loop_Func001Func001Func003Func005Func005Func005A)\n+                         set udg_hook_target[udg_X]=GroupPickRandomUnit(udg_hook_target_group[udg_X])\n+                     set udg_hook_target_group[udg_X]=null\n-                 set udg_temp_point=PolarProjectionBJ(udg_hook_location[udg_X], - 40.00, udg_hook_degree[udg_X])\n+                 set udg_temp_point=PolarProjectionBJ(udg_hook_location[udg_X], - 45.00, udg_hook_degree[udg_X])"
+  },
+  {
+    "name": "Trig_HERO_break_loop_if_tp_Actions",
+    "lines": 1,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     set udg_dummy_hook[udg_temp_playernumber]=null"
+  },
+  {
+    "name": "Trig_ITEM_limits_Actions",
+    "lines": 558,
+    "main_locals": 0,
+    "solo_locals": 5,
+    "diff": "+     local unit hero= GetTriggerUnit()\n+     local item picked= GetManipulatedItem()\n+     local integer itemTypeId= GetItemTypeId(picked)\n+     local integer maxCopies= ItemLimit_MaxCopies(itemTypeId)\n+     local player owner\n+     // Shared GUI globals are still written so this trigger leaves the same\n+     // residual state as the generated original (see the doc's ownership table).\n-     set udg_temp_unit=GetTriggerUnit()\n+     set udg_temp_unit=hero\n-     set udg_temp_item=GetManipulatedItem()\n+     set udg_temp_item=picked\n-     // Critical Katana\n-     set udg_temp_item_type='rat9'\n-     if ( Trig_ITEM_limits_Func007C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func007Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n+     set owner=ConvertedPlayer(udg_temp_playernumber)\n+     // Count rules. Unrestricted items skip the inventory scan completely, and a\n+     // restricted pickup scans the six slots exactly once.\n+     if maxCopies > 0 then\n+         set udg_temp_int=ItemLimit_CountInInventory(hero, itemTypeId)\n+         if udg_temp_int > maxCopies then\n+             if itemTypeId == 'I009' then\n+                 // Special rule: destroys up to three copies outright and shows no\n+                 // message, unlike every other limit, which ejects a single copy.\n+                 // Each call re-scans, so fewer than three held copies is safe.\n+                 call RemoveItem(GetItemOfTypeFromUnitBJ(hero, 'I009'))\n+                 call RemoveItem(GetItemOfTypeFromUnitBJ(hero, 'I009'))\n+                 call RemoveItem(GetItemOfTypeFromUnitBJ(hero, 'I009'))\n-                 call DoNothing()\n+                 call ItemLimit_DropHeldCopy(hero, itemTypeId)\n+                 call ItemLimit_WarnOwner(owner, ( \"|cffff0000Only 1x |r\" + ( GetItemName(picked) + \"|cffff0000 per hero allowed!|r\" ) ))\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func007Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         if ( Trig_ITEM_limits_Func007Func005C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n+     // Hero restrictions. For 'rat9' and 'stwa' this runs in ADDITION to the count\n+     // branch above -- the original used two sibling ifs, not an if/else, so a\n+     // blocked hero holding a duplicate drops two copies and gets two messages.\n+     if ItemLimit_HeroTypeBlocked(itemTypeId, GetUnitTypeId(hero)) then\n+         call ItemLimit_DropHeldCopy(hero, itemTypeId)\n+         call ItemLimit_WarnOwner(owner, ItemLimit_HeroRejectMessage(itemTypeId, hero))\n-     // Tusk of Pitlord\n-     set udg_temp_item_type='stwa'\n-     if ( Trig_ITEM_limits_Func010C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func010Func002Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func010Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-         if ( Trig_ITEM_limits_Func010Func005C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n+     // The original assigned all 25 item types unconditionally as it walked the\n+     // rule list, so this global always ended a run holding the last of them.\n-     // Medallion of Glim\n-     set udg_temp_item_type='mcou'\n-     if ( Trig_ITEM_limits_Func013C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func013Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func013Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Ring of Resilience\n-     set udg_temp_item_type='I02J'\n-     if ( Trig_ITEM_limits_Func016C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func016Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func016Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Sobi Mask\n-     set udg_temp_item_type='rwiz'\n-     if ( Trig_ITEM_limits_Func019C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func019Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func019Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Orb of Frost\n-     set udg_temp_item_type='ofro'\n-     if ( Trig_ITEM_limits_Func022C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func022Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func022Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Khadgar Gem\n-     set udg_temp_item_type='I042'\n-     if ( Trig_ITEM_limits_Func025C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func025Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func025Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Claws of Attack\n-     set udg_temp_item_type='ratf'\n-     if ( Trig_ITEM_limits_Func028C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func028Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func028Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Crown of Kings\n-     set udg_temp_item_type='ckng'\n-     if ( Trig_ITEM_limits_Func031C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func031Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func031Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Gloves of Haste\n-     set udg_temp_item_type='I03C'\n-     if ( Trig_ITEM_limits_Func034C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func034Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func034Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Boots of Quel'Thalas\n-     set udg_temp_item_type='belv'\n-     if ( Trig_ITEM_limits_Func037C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func037Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func037Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Totem of Might\n-     set udg_temp_item_type='tmmt'\n-     if ( Trig_ITEM_limits_Func040C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func040Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func040Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Ring of Protection\n-     set udg_temp_item_type='rde3'\n-     if ( Trig_ITEM_limits_Func043C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func043Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func043Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Belt of Giant Strength\n-     set udg_temp_item_type='bgst'\n-     if ( Trig_ITEM_limits_Func046C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func046Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func046Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Circlet\n-     set udg_temp_item_type='cnob'\n-     if ( Trig_ITEM_limits_Func049C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func049Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func049Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Cursed Axe\n-     set udg_temp_item_type='I006'\n-     if ( Trig_ITEM_limits_Func052C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func052Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func052Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 2x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     set udg_temp_item_type='I009'\n-     if ( Trig_ITEM_limits_Func054C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func054Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func054Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 2x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Robe of the Magi\n-     set udg_temp_item_type='ciri'\n-     if ( Trig_ITEM_limits_Func057C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func057Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func057Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Ring of Regeneration\n-     set udg_temp_item_type='rlif'\n-     if ( Trig_ITEM_limits_Func060C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func060Func003Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func060Func004C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Escape Dagger\n-     set udg_temp_item_type='desc'\n-     if ( Trig_ITEM_limits_Func063C() ) then\n-         if ( Trig_ITEM_limits_Func063Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_1706\")\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Scepter\n-     set udg_temp_item_type='I01H'\n-     if ( Trig_ITEM_limits_Func066C() ) then\n-         if ( Trig_ITEM_limits_Func066Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_1759\")\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Talisman of Evasion\n-     set udg_temp_item_type='evtl'\n-     if ( Trig_ITEM_limits_Func069C() ) then\n-         if ( Trig_ITEM_limits_Func069Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     set udg_temp_item_type='I04A'\n-     if ( Trig_ITEM_limits_Func071C() ) then\n-         if ( Trig_ITEM_limits_Func071Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Tome of Retrain\n-     set udg_temp_item_type='tret'\n-     if ( Trig_ITEM_limits_Func074C() ) then\n-         if ( Trig_ITEM_limits_Func074Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n+     set hero=null\n+     set picked=null\n+     set owner=null\n-     if ( Trig_ITEM_limits_Func076C() ) then\n-         if ( Trig_ITEM_limits_Func076Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_510\")\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif\n-     // Necklace\n-     set udg_temp_item_type='nspi'\n-     if ( Trig_ITEM_limits_Func079C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_limits_Func079Func002Func001C() ) then\n-                 set udg_temp_int=( udg_temp_int + 1 )\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-         if ( Trig_ITEM_limits_Func079Func003C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Only 1x |r\" + ( GetItemName(udg_temp_item) + \"|cffff0000 per hero allowed!|r\" ) ))\n-         else\n-             call DoNothing()\n-         endif\n-         if ( Trig_ITEM_limits_Func079Func005C() ) then\n-             call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-             call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), ( \"|cffff0000Cannot use this item with \" + GetUnitName(udg_temp_unit) ))\n-         else\n-             call DoNothing()\n-         endif\n-     else\n-         call DoNothing()\n-     endif"
+  },
+  {
+    "name": "Trig_ITEM_combo_limits_Actions",
+    "lines": 61,
+    "main_locals": 0,
+    "solo_locals": 1,
+    "diff": "+     local integer itemTypeId\n+     // Shared GUI globals are still written so this trigger leaves the same\n+     // residual state as the generated original. udg_temp_int is set to 0 and\n+     // never read by this trigger, exactly as before.\n-     // Slippers\n+     // Hoisted out of the three guards. The three rawcodes are distinct, so at\n+     // most one rule body runs, and no rule body writes udg_temp_item or can\n+     // change the picked item's type, so this is constant across all three tests.\n+     set itemTypeId=GetItemTypeId(udg_temp_item)\n+     // The original assigned udg_temp_item_type unconditionally before each\n+     // guard, so the global always ends a run holding the last of the three.\n+     if itemTypeId == 'rag1' then            // Slippers\n+         call ItemCombo_Enforce('hval', 'evtl', \"TRIGSTR_8259\")\n-     if ( Trig_ITEM_combo_limits_Func007C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_combo_limits_Func007Func003Func001C() ) then\n-                 call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-                 call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_8259\")\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-     else\n-         call DoNothing()\n-     // Soldiers Mask\n+     if itemTypeId == 'hval' then            // Soldiers Mask\n+         call ItemCombo_Enforce('rag1', 'evtl', \"TRIGSTR_10260\")\n-     if ( Trig_ITEM_combo_limits_Func010C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_combo_limits_Func010Func003Func001C() ) then\n-                 call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-                 call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_10260\")\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-     else\n-         call DoNothing()\n-     // Talisman of Evasion\n+     if itemTypeId == 'evtl' then            // Talisman of Evasion\n+         call ItemCombo_Enforce('hval', 'rag1', \"TRIGSTR_10343\")\n-     if ( Trig_ITEM_combo_limits_Func013C() ) then\n-         set udg_X=1\n-         loop\n-             exitwhen udg_X > 6\n-             if ( Trig_ITEM_combo_limits_Func013Func003Func001C() ) then\n-                 call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(udg_temp_unit, GetItemTypeId(udg_temp_item)), udg_temp_unit)\n-                 call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_10343\")\n-             else\n-                 call DoNothing()\n-             endif\n-             set udg_X=udg_X + 1\n-         endloop\n-     else\n-         call DoNothing()"
+  },
+  {
+    "name": "Trig_ITEM_packhorse_pickup_Func007Func004C",
+    "lines": 6,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     if ( ( GetItemTypeId(udg_temp_item) == 'I041' ) ) then\n+         return true\n+     endif\n+     if ( ( GetItemTypeId(udg_temp_item) == 'scav' ) ) then\n+         return true\n+     endif"
+  },
+  {
+    "name": "Trig_ITEM_packhorse_pickup_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(udg_temp_unit)), \"TRIGSTR_1844\")\n+         call ItemLimit_WarnOwner(GetOwningPlayer(udg_temp_unit), \"TRIGSTR_1844\")"
+  },
+  {
+    "name": "Trig_ITEM_packhorse_buy_Actions",
+    "lines": 12,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(udg_temp_unit)), \"TRIGSTR_11286\")\n+         call ItemLimit_WarnOwner(GetOwningPlayer(udg_temp_unit), \"TRIGSTR_11286\")\n-         call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(udg_temp_unit)), \"TRIGSTR_10346\")\n+         call ItemLimit_WarnOwner(GetOwningPlayer(udg_temp_unit), \"TRIGSTR_10346\")\n-         call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(udg_temp_unit)), \"TRIGSTR_708\")\n+         call ItemLimit_WarnOwner(GetOwningPlayer(udg_temp_unit), \"TRIGSTR_708\")\n+     if ( Trig_ITEM_packhorse_buy_Func012C() ) then\n+         call ItemLimit_WarnOwner(GetOwningPlayer(udg_temp_unit), \"TRIGSTR_776\")\n+         call RemoveItem(udg_temp_item)\n+     else\n+         call DoNothing()\n+     endif"
+  },
+  {
+    "name": "Trig_ITEM_Scroll_of_Invisibility_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Scroll_of_Invisibility_Func006002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function ItemScroll_FilterNotEnemy))"
+  },
+  {
+    "name": "Trig_ITEM_Purge_the_Dead_Actions",
+    "lines": 5,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "+     // The second GetSpellTargetLoc() call allocated a location that was never\n+     // released; udg_temp_point already holds the same coordinates and the enum\n+     // native only reads x/y from it, so reusing it is equivalent.\n-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(800.00, GetSpellTargetLoc(), Condition(function Trig_ITEM_Purge_the_Dead_Func002002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(800.00, udg_temp_point, Condition(function Trig_ITEM_Purge_the_Dead_Func002002003))"
+  },
+  {
+    "name": "Trig_ITEM_Scroll_of_AntiMagic_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Scroll_of_AntiMagic_Func006002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function ItemScroll_FilterNotEnemy))"
+  },
+  {
+    "name": "Trig_ITEM_Scroll_of_Inner_Fire_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Scroll_of_Inner_Fire_Func006002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function ItemScroll_FilterNotEnemy))"
+  },
+  {
+    "name": "Trig_ITEM_Rune_of_Inner_Fire_Actions",
+    "lines": 6,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetPlayersAll(), \"TRIGSTR_11005\")\n+         call SoloFootsDisplayMessageToForce(GetPlayersAll(), \"TRIGSTR_11005\")\n-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Rune_of_Inner_Fire_Func007002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function ItemScroll_FilterNotEnemy))\n-     call ForGroupBJ(udg_temp_unitgroup, function Trig_ITEM_Rune_of_Inner_Fire_Func008A)\n+     call ForGroupBJ(udg_temp_unitgroup, function Trig_ITEM_Scroll_of_Inner_Fire_Func007A)"
+  },
+  {
+    "name": "Trig_ITEM_Scroll_of_Illusion_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Scroll_of_Illusion_Func006002003))\n+     set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function ItemScroll_FilterNotEnemy))"
+  },
+  {
+    "name": "Trig_ITEM_Forked_Fury_NEW_Actions",
+    "lines": 14,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     set udg_forked_fury_cd=BlzGetUnitAbilityCooldownRemaining(udg_temp_unit, 'A0HZ')\n+     set udg_forked_fury_cd=BlzGetUnitAbilityCooldownRemaining(udg_temp_unit, 'A0DT')\n-             call DisplayTextToForce(udg_temp_playergroup, ( \"Target: \" + GetUnitName(udg_targeted_unit) ))\n+             call SoloFootsDisplayMessageToForce(udg_temp_playergroup, ( \"Target: \" + GetUnitName(udg_targeted_unit) ))\n-             call BlzStartUnitAbilityCooldown(udg_temp_unit, 'A0HZ', 10.00)\n+             call BlzStartUnitAbilityCooldown(udg_temp_unit, 'A0DT', 9.00)\n-         else\n-             call DoNothing()\n+             // The generated body never released this location. On an\n+             // EVENT_PLAYER_UNIT_ATTACKED trigger that leaked one handle per\n+             // proc. Every other trigger in this subsystem already ends by\n+             // releasing udg_temp_point, so the residual left behind here -- a\n+             // stale handle in that global -- matches what they all leave.\n+             call RemoveLocation(udg_temp_point)"
+  },
+  {
+    "name": "Trig_ITEM_Wall_Actions",
+    "lines": 3,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( ( udg_wall_ID == 20 ) ) then // INLINED!!\n+     if ( (udg_wall_ID == 20) ) then // INLINED!!\n+     call RemoveLocation(udg_temp_point)"
+  },
+  {
+    "name": "Trig_ITEM_Wall_countdown_Actions",
+    "lines": 27,
+    "main_locals": 0,
+    "solo_locals": 3,
+    "diff": "-     set bj_forLoopAIndex=1\n-     set bj_forLoopAIndexEnd=20\n+     local integer i=1\n+     local real remaining\n+     local boolean anyActive=false\n+ \n-         exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd\n-         call SetTextTagTextBJ(udg_wall_timer_text[GetForLoopIndexA()], R2SW(TimerGetRemaining(udg_wall_timer[GetForLoopIndexA()]), 2, 0), 9.00)\n-         if ( ( TimerGetRemaining(udg_wall_timer[GetForLoopIndexA()]) < 1.00 ) ) then // INLINED!!\n+         exitwhen i > 20\n+         set remaining=TimerGetRemaining(udg_wall_timer[i])\n+         if ( remaining > 0.00 ) then\n+             set anyActive=true\n+             if ( udg_wall_timer_text[i] != null ) then\n+                 call SetTextTagTextBJ(udg_wall_timer_text[i], R2SW(remaining, 2, 0), 9.00)\n+             endif\n+         elseif ( udg_wall_timer_text[i] != null ) then\n-             call DestroyTextTagBJ(udg_wall_timer_text[GetForLoopIndexA()])\n+             call DestroyTextTagBJ(udg_wall_timer_text[i])\n+             set udg_wall_timer_text[i]=null\n-         else\n-             call DoNothing()\n-         set bj_forLoopAIndex=bj_forLoopAIndex + 1\n+         set i=i + 1\n+     if ( not anyActive ) then\n+         call DisableTrigger(GetTriggeringTrigger())\n+     endif"
+  },
+  {
+    "name": "Trig_ITEM_Wall_taunt_Func007A",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetPlayersAll(), ( \"|cffff0000[DEBUG]|r - \" + ( \"Enemy Unit: \" + GetUnitName(GetEnumUnit()) ) ))\n+         call SoloFootsDisplayMessageToForce(GetPlayersAll(), ( \"|cffff0000[DEBUG]|r - \" + ( \"Enemy Unit: \" + GetUnitName(GetEnumUnit()) ) ))"
+  },
+  {
+    "name": "Trig_ITEM_Wall_taunt_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetPlayersAll(), \"TRIGSTR_10771\")\n+         call SoloFootsDisplayMessageToForce(GetPlayersAll(), \"TRIGSTR_10771\")"
+  },
+  {
+    "name": "Trig_ITEM_Illusion_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-         call DisplayTextToForce(GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber)), \"TRIGSTR_1701\")\n+         call ItemLimit_WarnOwner(ConvertedPlayer(udg_temp_playernumber), \"TRIGSTR_1701\")"
+  },
+  {
+    "name": "Trig_ITEM_Scepter_Actions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     call UnitApplyTimedLifeBJ(5.00, 'BTLF', udg_dummy)\n+     call UnitApplyTimedLifeBJ(10.00, 'BTLF', udg_dummy)"
+  },
+  {
+    "name": "Trig_UNIT_Tower_of_Terror_Nuke_Conditions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( not ( GetSpellAbilityId() == 'A0K3' ) ) then\n+     if ( not ( GetSpellAbilityId() == 'A09X' ) ) then"
+  },
+  {
+    "name": "Trig_Staff_of_Sanctuary_Conditions",
+    "lines": 2,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     if ( not Trig_Staff_of_Sanctuary_Func009C() ) then\n+     if ( not Trig_Staff_of_Sanctuary_Func008C() ) then"
+  },
+  {
+    "name": "Trig_Staff_of_Sanctuary_Actions",
+    "lines": 3,
+    "main_locals": 0,
+    "solo_locals": 0,
+    "diff": "-     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02J'))\n-     call DisplayTextToForce(udg_temp_playergroup, ( \"You successfully created: \" + GetItemName(GetLastCreatedItem()) ))\n+     call SoloFootsDisplayMessageToForce(udg_temp_playergroup, ( \"You successfully created: \" + GetItemName(GetLastCreatedItem()) ))"
+  }
+]

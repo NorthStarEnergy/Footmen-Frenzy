@@ -1,0 +1,10 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orb-v51\\release\\FF799X_Rx_TF_Guardian_Orbs_v51.w3x",
+  "sha256": "d38c4a56f0832b247dcc24ea1a5e1ea0e7f723c910f2a6de671b9177f80ccb84",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-wc3-icons-v50\\release\\FF799X_Rx_TF_Guardian_WC3Icons_v50.w3x",
+  "unchanged_entries": 1353,
+  "jass": "passed",
+  "tf_behavior_checks": 101,
+  "model": "MDX roundtrip passed",
+  "live_test": "pending"
+}

@@ -1,0 +1,151 @@
+{
+  "reference": "U003 (map Lich, roster index 10)",
+  "runtime": {
+    "STR_base": 17.0,
+    "STR_inc": 1.7,
+    "AGI_base": 17.0,
+    "AGI_inc": 1.6,
+    "INT_base": 22.0,
+    "INT_inc": 2.5,
+    "move_base": 310.0,
+    "turnrate": 0.6
+  },
+  "fields": {
+    "ustr": {
+      "type": 0,
+      "value": 17
+    },
+    "ustp": {
+      "type": 2,
+      "value": 1.7
+    },
+    "uagi": {
+      "type": 0,
+      "value": 17
+    },
+    "uagp": {
+      "type": 2,
+      "value": 1.6
+    },
+    "uint": {
+      "type": 0,
+      "value": 22
+    },
+    "uinp": {
+      "type": 2,
+      "value": 2.5
+    },
+    "upra": {
+      "type": 3,
+      "value": "INT"
+    },
+    "uhpm": {
+      "type": 0,
+      "value": 100
+    },
+    "uhpr": {
+      "type": 2,
+      "value": 2.0
+    },
+    "uhrt": {
+      "type": 3,
+      "value": "always"
+    },
+    "umpm": {
+      "type": 0,
+      "value": 0
+    },
+    "umpi": {
+      "type": 0,
+      "value": 100
+    },
+    "umpr": {
+      "type": 2,
+      "value": 0.01
+    },
+    "udef": {
+      "type": 0,
+      "value": 0
+    },
+    "udup": {
+      "type": 0,
+      "value": 0
+    },
+    "udty": {
+      "type": 3,
+      "value": "hero"
+    },
+    "umvs": {
+      "type": 0,
+      "value": 310
+    },
+    "umvr": {
+      "type": 2,
+      "value": 0.6
+    },
+    "usid": {
+      "type": 0,
+      "value": 1800
+    },
+    "usin": {
+      "type": 0,
+      "value": 800
+    },
+    "ua1b": {
+      "type": 0,
+      "value": 0
+    },
+    "ua1d": {
+      "type": 0,
+      "value": 2
+    },
+    "ua1s": {
+      "type": 0,
+      "value": 6
+    },
+    "ua1c": {
+      "type": 2,
+      "value": 1.7999999523162842
+    },
+    "ua1r": {
+      "type": 0,
+      "value": 650
+    },
+    "ua1t": {
+      "type": 3,
+      "value": "hero"
+    },
+    "ua1w": {
+      "type": 3,
+      "value": "missile"
+    },
+    "ua1g": {
+      "type": 3,
+      "value": "ground,structure,debris,air,item,ward"
+    },
+    "uaen": {
+      "type": 0,
+      "value": 1
+    },
+    "udp1": {
+      "type": 2,
+      "value": 0.20000000298023224
+    },
+    "ubs1": {
+      "type": 2,
+      "value": 0.4000000059604645
+    },
+    "uacq": {
+      "type": 2,
+      "value": 600.0
+    },
+    "ua1z": {
+      "type": 0,
+      "value": 900
+    },
+    "ua1m": {
+      "type": 3,
+      "value": "Abilities\\Weapons\\NecromancerMissile\\NecromancerMissile.mdl"
+    }
+  }
+}

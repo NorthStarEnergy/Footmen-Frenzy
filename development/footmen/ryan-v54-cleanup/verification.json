@@ -1,0 +1,23 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ryan-v54-cleanup\\source\\FF799X_Rx_UI_Startup_v54.w3x",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ryan-v54-cleanup\\release\\FF799X_Rx_UI_Startup_Clean_v55.w3x",
+  "sha256": "3ee25796f4faf0515f1f53f2ff7ec841c2d61a4143e9841de3fcc787828cd720",
+  "before_bytes": 26547067,
+  "after_bytes": 25920149,
+  "saved_bytes": 626918,
+  "removed_imports": [
+    "war3mapImported\\healspray.PNG",
+    "war3mapImported\\warstomp.PNG",
+    "war3mapImported\\Windwalk.PNG",
+    "war3mapImported\\Wight.png",
+    "war3mapImported\\BTNHeroTrollGodSlayer.png",
+    "war3mapImported\\WightScythe.png",
+    "war3mapImported\\WightSpirits.png",
+    "ReplaceableTextures\\CommandButtons\\BTNLoadedDice.tga",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLoadedDice.tga"
+  ],
+  "excluded_metadata": "optional MPQ (attributes) metadata, encrypted with offset-dependent key",
+  "verified_preserved_payloads": 1351,
+  "live_game_test": "pending",
+  "stormlib_named_files_verified": 1315
+}

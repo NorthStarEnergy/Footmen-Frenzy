@@ -1,0 +1,27 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-health-kit\\release\\FF799X_Rx_Mundo_HealthKit_Test.w3x",
+  "base_sha256": "0ba178e4d29d6aae3ee4950982b264dc76a07394e213d6ffad9a62053cd275de",
+  "changed_functions": [
+    "MU_OnCleaverHit",
+    "MU_Init"
+  ],
+  "new_functions": [
+    "MW_Clear",
+    "MW_Control",
+    "MW_Impact",
+    "MW_Start",
+    "MW_Tick"
+  ],
+  "changed_abilities": [
+    "AMu1"
+  ],
+  "new_abilities": [
+    "AMwR",
+    "AMwS"
+  ],
+  "new_buffs": [
+    "BMwR",
+    "BMwS"
+  ],
+  "runtime_editor_synchronized": true
+}

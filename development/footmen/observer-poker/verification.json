@@ -1,0 +1,12 @@
+{
+  "baseline": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Orianna_v4.w3x",
+  "baseline_sha256": "bba6964619cc3955fe041d8ba1135cc35a1b1975523aa1f8c34fa28cf0da14e2",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\observer-poker\\release\\FF799X_Observer_Poker_v2.w3x",
+  "sha256": "13877c9fc1625f566c186bd6c06acfb55b2022448b867748940f08b5fff8393b",
+  "preserved_entries": 1314,
+  "art_textures": 60,
+  "pjass": true,
+  "script_scope": true,
+  "roundtrip": true,
+  "engine_tested": false
+}

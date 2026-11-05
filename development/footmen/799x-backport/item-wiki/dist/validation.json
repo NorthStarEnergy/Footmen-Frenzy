@@ -1,0 +1,18 @@
+{
+  "map": "FF799X_Rx_ItemBalance_v41.w3x",
+  "sha256": "0c3ccfdee6fda99009501a4344d8e99624fad831a0630c97f283673925847e0e",
+  "unchangedArchiveMembers": 1333,
+  "changedMembers": [
+    "war3map.w3t",
+    "war3mapSkin.w3t",
+    "war3map.w3a",
+    "war3mapSkin.w3a"
+  ],
+  "checks": [
+    "Object round-trip and permitted field edits",
+    "All changed prices and complete recipe totals",
+    "Frosty damage 140 plus orb 10; dedicated lifesteal ability 50%; original shared ability 60%",
+    "16 baseline anchors reconstruct prices"
+  ],
+  "livePlaytest": false
+}

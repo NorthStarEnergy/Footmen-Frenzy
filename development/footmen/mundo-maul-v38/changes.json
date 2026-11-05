@@ -1,0 +1,22 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_StatsUI_v37.w3x",
+  "base_sha256": "4aeaf9241f43271257e7fd5bf5607f39c451f23381524915a6b00e37381fa74d",
+  "changed_functions": [
+    "MD_Reject",
+    "MD_OnOrder",
+    "MD_OnChannel",
+    "MU_OnCast",
+    "MU_Init"
+  ],
+  "added_functions": [
+    "MM_CanCast",
+    "MM_CanFlip",
+    "MM_Cast",
+    "MM_DevourReady",
+    "MM_ExecuteDevour",
+    "MM_IsFlipTarget",
+    "MM_Timeout",
+    "MU_Fling",
+    "MU_FlingTick"
+  ]
+}

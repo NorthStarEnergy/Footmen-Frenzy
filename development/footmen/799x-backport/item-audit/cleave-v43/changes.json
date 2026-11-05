@@ -1,0 +1,305 @@
+{
+  "source": "FF799X_Rx_Consolidated_Undying_v42.w3x",
+  "map": "FF799X_Rx_CleaveRanges_v43.w3x",
+  "sha256": "611f6ab3c6dab0a3986c1d1fc6d3da9d2336f9182eb50c18dda18925eb4f7442",
+  "area": 250,
+  "abilities": [
+    "A05W",
+    "ANca",
+    "A08O",
+    "ADrc",
+    "AMuc"
+  ],
+  "edits": [
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 2,
+      "before": 225.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 4,
+      "before": 275.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 5,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 6,
+      "before": 350.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 1,
+      "before": null,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A05W",
+      "field": "aare",
+      "level": 3,
+      "before": null,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 2,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 3,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 4,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 5,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 6,
+      "before": 325.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "ANca",
+      "field": "aare",
+      "level": 1,
+      "before": 275.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 2,
+      "before": 300.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 3,
+      "before": 325.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 4,
+      "before": 375.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 5,
+      "before": 400.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 6,
+      "before": 400.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3map.w3a",
+      "ability": "A08O",
+      "field": "aare",
+      "level": 1,
+      "before": 275.0,
+      "after": 250.0
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 4,
+      "before": "TRIGSTR_2191",
+      "after": "Basic attacks also deal 120% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 5,
+      "before": "TRIGSTR_2224",
+      "after": "Basic attacks also deal 150% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 6,
+      "before": "TRIGSTR_2225",
+      "after": "Basic attacks also deal 190% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 1,
+      "before": "TRIGSTR_2227",
+      "after": "Basic attacks also deal 30% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 2,
+      "before": "TRIGSTR_2228",
+      "after": "Basic attacks also deal 60% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A05W",
+      "field": "aub1",
+      "level": 3,
+      "before": "TRIGSTR_2264",
+      "after": "Basic attacks also deal 90% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 4,
+      "before": "TRIGSTR_255",
+      "after": "Basic attacks also deal 60% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 5,
+      "before": "TRIGSTR_256",
+      "after": "Basic attacks also deal 70% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 6,
+      "before": "TRIGSTR_257",
+      "after": "Basic attacks also deal 80% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 1,
+      "before": "TRIGSTR_259",
+      "after": "Basic attacks also deal 30% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 2,
+      "before": "TRIGSTR_260",
+      "after": "Basic attacks also deal 40% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "ANca",
+      "field": "aub1",
+      "level": 3,
+      "before": "TRIGSTR_261",
+      "after": "Basic attacks also deal 50% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 4,
+      "before": "TRIGSTR_2304",
+      "after": "Basic attacks also deal 60% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 5,
+      "before": "TRIGSTR_2305",
+      "after": "Basic attacks also deal 70% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 6,
+      "before": "TRIGSTR_2306",
+      "after": "Basic attacks also deal 80% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 1,
+      "before": "TRIGSTR_3620",
+      "after": "Basic attacks also deal 30% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 2,
+      "before": "TRIGSTR_3636",
+      "after": "Basic attacks also deal 40% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    },
+    {
+      "file": "war3mapSkin.w3a",
+      "ability": "A08O",
+      "field": "aub1",
+      "level": 3,
+      "before": "TRIGSTR_3664",
+      "after": "Basic attacks also deal 50% of the damage dealt to other eligible ground enemies within 250 range of the attacked unit."
+    }
+  ],
+  "preservedMembers": 1336,
+  "livePlaytest": false
+}

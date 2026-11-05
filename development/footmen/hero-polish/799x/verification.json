@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-polish\\release\\FF799X_Rx_HeroPolish_v26.w3x",
+  "sha256": "2b7642b52d56b3bde1c034726770e47f7a04de784cdba6ef3d4f52fe38f618bf",
+  "changed_payloads": [
+    "Spells\\Orianna\\Feedback\\AttackGround.blp",
+    "Spells\\Orianna\\Feedback\\MoveGround.blp",
+    "Spells\\Orianna\\Feedback\\ProtectGround.blp",
+    "Spells\\Orianna\\Feedback\\ShockGround.blp",
+    "Spells\\Orianna\\Feedback\\ShockImpact.blp",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1343,
+  "preserved_functions": 3589,
+  "engine_test": "Pending"
+}

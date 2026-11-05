@@ -1,0 +1,33 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\taverns-v66\\release\\FF799X_Rx_Team_Taverns_v66.w3x",
+  "changed_functions": [
+    "Trig_Foot_Exp_system_Actions",
+    "Trig_Foot_Exp_system_Func002Func011A",
+    "Trig_Footy_Bounty_Increase_Delay_Actions",
+    "Trig_HERO_Blademaster_Illusions_Actions",
+    "Trig_Mass_END_Actions",
+    "Trig_Set_Exp_Bonus_Rate_Upon_Leveling_Actions",
+    "Trig_Start_game_Actions",
+    "Trig_Unit_Experience_System_Func004Func012A",
+    "Trig_Unit_Experience_System_Func005Func012A",
+    "Trig_Unit_Experience_System_Func006Func012A",
+    "Trig_colossal_spawn_Actions"
+  ],
+  "added_functions": [
+    "P67_AddSupplement",
+    "P67_ColoSpawn",
+    "P67_Enabled",
+    "P67_HeroRate",
+    "P67_MassFinished",
+    "P67_OnLevel",
+    "P67_Rate",
+    "P67_Refresh",
+    "P67_Start",
+    "P67_ValidHero"
+  ],
+  "rates": {
+    "approach6": 150,
+    "catchup": 200,
+    "level7plus": 70
+  }
+}

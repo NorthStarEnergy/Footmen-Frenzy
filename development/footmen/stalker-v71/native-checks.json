@@ -1,0 +1,13 @@
+{
+  "Textures\\Clouds8x8Fire.blp": "Textures\\Clouds8x8Fire.dds",
+  "Textures\\Flare.blp": "Textures\\Flare.dds",
+  "Textures\\Clouds8x8Grey.blp": "Textures\\Clouds8x8Grey.dds",
+  "Textures\\star4.blp": "Textures\\star4.dds",
+  "Textures\\GenericGlow64.blp": "Textures\\GenericGlow64.dds",
+  "Doodads\\Cinematic\\Lightningbolt\\Lightning4b.blp": "Doodads\\Cinematic\\Lightningbolt\\Lightning4b.dds",
+  "Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdx": "Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdx",
+  "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdx": "Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdx",
+  "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdx": "Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdx",
+  "ReplaceableTextures\\CommandButtons\\BTNDefend.blp": "ReplaceableTextures\\CommandButtons\\BTNDefend.dds",
+  "ReplaceableTextures\\CommandButtons\\BTNBlink.blp": "ReplaceableTextures\\CommandButtons\\BTNBlink.dds"
+}

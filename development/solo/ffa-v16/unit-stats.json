@@ -1,0 +1,302 @@
+[
+  {
+    "name": "Archer",
+    "id": "earc",
+    "stats": {
+      "HP": 540.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 35.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 4.0,
+      "att_CD": 1.2,
+      "bounty_base": 38.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 560.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  },
+  {
+    "name": "Raider",
+    "id": "orai",
+    "stats": {
+      "HP": 975.0,
+      "armor_type": 2.0,
+      "armor": 3.0,
+      "att_base": 43.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.2,
+      "bounty_base": 42.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 150.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Banshee",
+    "id": "uban",
+    "stats": {
+      "HP": 540.0,
+      "armor_type": 1.0,
+      "armor": 1.0,
+      "att_base": 36.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 4.0,
+      "att_CD": 1.2,
+      "bounty_base": 38.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 655.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  },
+  {
+    "name": "Warlock",
+    "id": "n04X",
+    "stats": {
+      "HP": 625.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 34.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.2,
+      "bounty_base": 42.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 685.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Crypt Fiend",
+    "id": "ucry",
+    "stats": {
+      "HP": 700.0,
+      "armor_type": 1.0,
+      "armor": 2.0,
+      "att_base": 48.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.2,
+      "bounty_base": 40.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 710.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Spellbreaker",
+    "id": "hspt",
+    "stats": {
+      "HP": 680.0,
+      "armor_type": 7.0,
+      "armor": 1.0,
+      "att_base": 39.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.2,
+      "bounty_base": 42.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 475.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Druid of Talon",
+    "id": "e00H",
+    "stats": {
+      "HP": 790.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 47.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.0,
+      "bounty_base": 42.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 570.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Berserker",
+    "id": "otbk",
+    "stats": {
+      "HP": 690.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 41.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.2,
+      "bounty_base": 39.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 690.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Burning Archer",
+    "id": "nskf",
+    "stats": {
+      "HP": 555.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 36.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.1,
+      "bounty_base": 37.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 640.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  },
+  {
+    "name": "Milita",
+    "id": "hmil",
+    "stats": {
+      "HP": 975.0,
+      "armor_type": 1.0,
+      "armor": 3.0,
+      "att_base": 34.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.1,
+      "bounty_base": 40.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 2.0,
+      "range": 130.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  },
+  {
+    "name": "Skeletal Mage",
+    "id": "uskm",
+    "stats": {
+      "HP": 815.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 46.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.1,
+      "bounty_base": 42.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 800.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Wraith",
+    "id": "ngh2",
+    "stats": {
+      "HP": 680.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 44.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.2,
+      "bounty_base": 39.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 700.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Riflemen",
+    "id": "hrif",
+    "stats": {
+      "HP": 540.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 23.0,
+      "att_num_dice": 3.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.2,
+      "bounty_base": 39.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 600.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  },
+  {
+    "name": "Huntress",
+    "id": "esen",
+    "stats": {
+      "HP": 680.0,
+      "armor_type": 1.0,
+      "armor": 0.0,
+      "att_base": 31.0,
+      "att_num_dice": 1.0,
+      "att_dice_sides": 2.0,
+      "att_CD": 1.2,
+      "bounty_base": 40.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 585.0,
+      "level": 3.0
+    },
+    "old_base_xp": 60,
+    "new_base_xp": 57
+  },
+  {
+    "name": "Headhunter",
+    "id": "ohun",
+    "stats": {
+      "HP": 540.0,
+      "armor_type": 1.0,
+      "armor": 1.0,
+      "att_base": 24.0,
+      "att_num_dice": 2.0,
+      "att_dice_sides": 3.0,
+      "att_CD": 1.1,
+      "bounty_base": 38.0,
+      "bounty_num_dice": 1.0,
+      "bounty_dice_sides": 3.0,
+      "range": 610.0,
+      "level": 2.0
+    },
+    "old_base_xp": 40,
+    "new_base_xp": 38
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\colo-xp-v76\\release\\FF799X_Rx_Colo_XP_v76_TEST.w3x",
+  "sha256": "4b9eeeac32c146a45abdc15b6a040e22547607ccf223c07527a638c8dc2197c4",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\spawn-level-v75\\release\\FF799X_Rx_Spawn_Levels_v75_TEST.w3x",
+  "changed_functions": [
+    "Trig_colossal_spawn_Actions"
+  ],
+  "wave_boundary_cases": 324,
+  "unrelated_entries_preserved": 1402,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "post7_xp_percent": 70,
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

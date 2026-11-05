@@ -1,0 +1,7 @@
+{
+  "models": 21,
+  "max_rgb_step": 18,
+  "texture": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+  "imported_from_actual_base": true,
+  "in_game_visual_check": false
+}

@@ -1,0 +1,12 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "changed_functions": [
+    "MU_Register",
+    "MU_GasExpire",
+    "MU_OnCast",
+    "MU_TickHero",
+    "MU_ZeroResources"
+  ],
+  "runtime_editor_synchronized": true,
+  "integration": "Apply prepare.py logic to latest combined baseline; do not replace whole map script when merging with other agents."
+}

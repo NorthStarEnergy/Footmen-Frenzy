@@ -1,0 +1,1681 @@
+[
+  {
+    "path": "AbyssAura.mdx",
+    "bytes": 4620,
+    "references": []
+  },
+  {
+    "path": "Akama02.mdx",
+    "bytes": 177981,
+    "references": []
+  },
+  {
+    "path": "Akama02_Portrait.mdx",
+    "bytes": 77130,
+    "references": []
+  },
+  {
+    "path": "AuraCapitalism.mdx",
+    "bytes": 6491,
+    "references": []
+  },
+  {
+    "path": "BarrelRollImpact.mdx",
+    "bytes": 6185,
+    "references": []
+  },
+  {
+    "path": "BattlePriest.MDX",
+    "bytes": 326417,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "BattlePriest_Portrait.mdx",
+    "bytes": 43801,
+    "references": []
+  },
+  {
+    "path": "BlackTemplarInquisitorGrandMasterHelmetV2.mdx",
+    "bytes": 249697,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "BlinkTargetPurple.mdx",
+    "bytes": 8218,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "BoneArmorCasterTC.mdx",
+    "bytes": 11259,
+    "references": []
+  },
+  {
+    "path": "BonefireArrow1.mdx",
+    "bytes": 14652,
+    "references": []
+  },
+  {
+    "path": "Cannonball D Rain.mdx",
+    "bytes": 21145,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "CelestialAssault.mdx",
+    "bytes": 88538,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "ChainElement.mdx",
+    "bytes": 1784,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "CheeseItem.mdx",
+    "bytes": 12205,
+    "references": []
+  },
+  {
+    "path": "DarknessMeteor.mdx",
+    "bytes": 9580,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "DeathWave.mdx",
+    "bytes": 12691,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "Deathwing_Portrait.mdx",
+    "bytes": 19307,
+    "references": []
+  },
+  {
+    "path": "DrunkenRageBuff.mdx",
+    "bytes": 1423,
+    "references": [
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "DrunkenRageDmgReduction.mdx",
+    "bytes": 1607,
+    "references": []
+  },
+  {
+    "path": "Ember Knight_opt2.mdx",
+    "bytes": 322581,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "EnergyShield_Full.mdx",
+    "bytes": 18422,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "EntanglingRootsNorthrend.mdx",
+    "bytes": 55171,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "Ephemeral Cut Red.mdx",
+    "bytes": 15174,
+    "references": []
+  },
+  {
+    "path": "ExplosiveCask.mdx",
+    "bytes": 6740,
+    "references": []
+  },
+  {
+    "path": "FarseerMissileYellow.mdx",
+    "bytes": 33839,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "FemaleCaptain.mdx",
+    "bytes": 123839,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "FemaleCaptain_Portrait.mdx",
+    "bytes": 41653,
+    "references": []
+  },
+  {
+    "path": "FemaleNecromancer.mdx",
+    "bytes": 98705,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "FemaleNecromancer_Portrait.mdx",
+    "bytes": 44912,
+    "references": []
+  },
+  {
+    "path": "FieldBASE.mdx",
+    "bytes": 33562,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "FireKegMissle.mdx",
+    "bytes": 7648,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(1385640495, 990606806, 0, 0)"
+    ]
+  },
+  {
+    "path": "FireworksDragonHead.mdx",
+    "bytes": 17611,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "Fountainhead 242.mdx",
+    "bytes": 401912,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "FrostStomp.mdx",
+    "bytes": 19294,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "FrostWyrmV2.01.mdx",
+    "bytes": 131128,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Gogota Goodness Ball.mdx",
+    "bytes": 7093,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "war3mapSkin.w3u",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "GreatElderHydraAcidSpewV.153.mdx",
+    "bytes": 16785,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "GreaterShadowWard.mdx",
+    "bytes": 11067,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "HeroArchangel.mdx",
+    "bytes": 225733,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "HeroCleric.mdx",
+    "bytes": 123061,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "HeroTigerianSlicer.mdx",
+    "bytes": 190000,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "HeroTigerianSlicer_Portrait.mdx",
+    "bytes": 34643,
+    "references": []
+  },
+  {
+    "path": "Hero_Antonidas.mdx",
+    "bytes": 184850,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Hero_FelOrc_General.mdx",
+    "bytes": 148137,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Hero_FelOrc_General_Portrait.mdx",
+    "bytes": 61881,
+    "references": []
+  },
+  {
+    "path": "HighSpeedProjectile_ByEpsilon.mdx",
+    "bytes": 4026,
+    "references": []
+  },
+  {
+    "path": "Horadric Malus.mdx",
+    "bytes": 8670,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Hormagaunt.mdx",
+    "bytes": 50107,
+    "references": []
+  },
+  {
+    "path": "HotWheelsv2.mdx",
+    "bytes": 132413,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Illusion.mdx",
+    "bytes": 10251,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "InfernalGragas.mdx",
+    "bytes": 268513,
+    "references": [
+      "war3map.w3u"
+    ]
+  },
+  {
+    "path": "InfernalGragas_Portrait.mdx",
+    "bytes": 61234,
+    "references": []
+  },
+  {
+    "path": "Items\\FullMug.MDX",
+    "bytes": 7553,
+    "references": []
+  },
+  {
+    "path": "Items\\PotionBlue.mdx",
+    "bytes": 17347,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\PotionGreen.mdx",
+    "bytes": 17347,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\PotionOfInvulnerability.mdx",
+    "bytes": 9179,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\PotionPurple.mdx",
+    "bytes": 17339,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\ScrolRed.mdx",
+    "bytes": 9510,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\ScrollOfHealing.mdx",
+    "bytes": 15043,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\ScrollOfTownPortal.mdx",
+    "bytes": 15319,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Items\\SpellShieldAmulet.mdx",
+    "bytes": 22733,
+    "references": [
+      "war3mapSkin.w3t"
+    ]
+  },
+  {
+    "path": "Konstrukt_SniperMissile01.MDX",
+    "bytes": 4088,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "LifeBloom.mdx",
+    "bytes": 5305,
+    "references": []
+  },
+  {
+    "path": "LightningShieldBuffYellow.mdx",
+    "bytes": 6712,
+    "references": []
+  },
+  {
+    "path": "Lo-Gosh.mdx",
+    "bytes": 243757,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Lo-Gosh_portrait.mdx",
+    "bytes": 82317,
+    "references": []
+  },
+  {
+    "path": "LoadingScreen.mdx",
+    "bytes": 1296,
+    "references": []
+  },
+  {
+    "path": "LootEFFECT.mdx",
+    "bytes": 4207,
+    "references": []
+  },
+  {
+    "path": "Marauder.mdx",
+    "bytes": 166226,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "MjolnirTossMissile.mdx",
+    "bytes": 38650,
+    "references": []
+  },
+  {
+    "path": "Models\\OriannaEnchantress\\BlackLegionEnchantressMissileV2.mdx",
+    "bytes": 4397,
+    "references": []
+  },
+  {
+    "path": "Models\\OriannaEnchantress\\BlackLegionEnchantressV2.mdx",
+    "bytes": 160166,
+    "references": []
+  },
+  {
+    "path": "Models\\OriannaGuldan\\Guldan.mdx",
+    "bytes": 311568,
+    "references": [
+      "war3map.w3u"
+    ]
+  },
+  {
+    "path": "Models\\OriannaLich\\Lich.mdx",
+    "bytes": 91161,
+    "references": []
+  },
+  {
+    "path": "MonsoonBoltTarget_Fel.mdx",
+    "bytes": 12150,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "NuclearExplosion.mdx",
+    "bytes": 20571,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "ObsidianGolem.mdx",
+    "bytes": 121839,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "OrbOfCorruption.mdx",
+    "bytes": 12587,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "PNZealot.mdx",
+    "bytes": 69030,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "PandaWukong_v3.mdx",
+    "bytes": 352564,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "PestilantPrince.mdx",
+    "bytes": 197477,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "PestilantPrince_Portrait.mdx",
+    "bytes": 106506,
+    "references": []
+  },
+  {
+    "path": "PresentMissile.mdx",
+    "bytes": 3690,
+    "references": [
+      "war3mapSkin.w3u",
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "PrismaticWave.mdx",
+    "bytes": 10478,
+    "references": []
+  },
+  {
+    "path": "Psionic Shot Green.mdx",
+    "bytes": 10058,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Radiance Crimson.mdx",
+    "bytes": 4328,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "Reapers Claws Red.mdx",
+    "bytes": 17477,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "Rifleman Lordaeron_HD_TC.mdx",
+    "bytes": 339184,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "RollingBarrelMissile.mdx",
+    "bytes": 6740,
+    "references": []
+  },
+  {
+    "path": "RunicAura.mdx",
+    "bytes": 8376,
+    "references": []
+  },
+  {
+    "path": "Runical-Holy Aura.mdx",
+    "bytes": 2840,
+    "references": []
+  },
+  {
+    "path": "SC2ForceField_ByEpsilon.mdx",
+    "bytes": 11593,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "SantaClaus.mdx",
+    "bytes": 79344,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "SantaClaus2017.mdx",
+    "bytes": 105103,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "SantaHat.mdx",
+    "bytes": 4925,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "ShadowOrbMissile_v1.2.mdx",
+    "bytes": 26805,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "Ships_Doctor_Kul-Tiras_HD_TC.mdx",
+    "bytes": 352575,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "ShotGunBullet.mdx",
+    "bytes": 8292,
+    "references": []
+  },
+  {
+    "path": "SkeletonBerserker.mdx",
+    "bytes": 197564,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "SkeletonBerserker_Portrait.mdx",
+    "bytes": 39906,
+    "references": []
+  },
+  {
+    "path": "Snipe Target.mdx",
+    "bytes": 2452,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Spell_Marker_TC.mdx",
+    "bytes": 111945,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Spells\\FrostEruption\\BlizzardEruption.mdx",
+    "bytes": 10172,
+    "references": []
+  },
+  {
+    "path": "Spells\\FrostEruption\\FreezingRing.mdx",
+    "bytes": 10372,
+    "references": []
+  },
+  {
+    "path": "Spells\\FrostEruption\\Frost2.mdx",
+    "bytes": 2293,
+    "references": []
+  },
+  {
+    "path": "Spells\\FrostEruption\\FrozenOrb.mdx",
+    "bytes": 14072,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackGround.mdx",
+    "bytes": 1332,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackRing.mdx",
+    "bytes": 16212,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\DenseOrb.mdx",
+    "bytes": 15081,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\EnchantressOrb.mdx",
+    "bytes": 18415,
+    "references": [
+      "Models\\OriannaEnchantress\\Credits.txt"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\EnchantressOrbBlue.mdx",
+    "bytes": 18415,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\EnchantressTrail.mdx",
+    "bytes": 3240,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\MoveGround.mdx",
+    "bytes": 1332,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Power_Orb.mdx",
+    "bytes": 8447,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ProtectGround.mdx",
+    "bytes": 1332,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ProtectRing.mdx",
+    "bytes": 16212,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockGround.mdx",
+    "bytes": 1332,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockImpact.mdx",
+    "bytes": 1332,
+    "references": [
+      "war3map.j"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockwaveRing.mdx",
+    "bytes": 25380,
+    "references": [
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\SoftOrb.mdx",
+    "bytes": 15081,
+    "references": []
+  },
+  {
+    "path": "Spells\\Orianna\\RxCrimsonGroundNova.mdx",
+    "bytes": 3559,
+    "references": []
+  },
+  {
+    "path": "Storm Bolt.mdx",
+    "bytes": 62514,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Sumo.mdx",
+    "bytes": 166764,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Sumo_Portrait.mdx",
+    "bytes": 64540,
+    "references": []
+  },
+  {
+    "path": "Thor.mdx",
+    "bytes": 203392,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Thor_Portrait.mdx",
+    "bytes": 121755,
+    "references": []
+  },
+  {
+    "path": "Thrall_Warchief.mdx",
+    "bytes": 193049,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "Tiger.mdx",
+    "bytes": 120290,
+    "references": []
+  },
+  {
+    "path": "TimberChainHead.mdx",
+    "bytes": 3160,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "TownHallWC1.mdx",
+    "bytes": 96862,
+    "references": []
+  },
+  {
+    "path": "Void Disc.mdx",
+    "bytes": 10653,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Void Teleport Caster.mdx",
+    "bytes": 9153,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "WarpStrike.mdx",
+    "bytes": 3368,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "WarpStrikeUp.mdx",
+    "bytes": 3368,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "Windmill House.mdx",
+    "bytes": 119169,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "WitchDoctor.mdx",
+    "bytes": 97193,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "WitchDoctor_Portrait.mdx",
+    "bytes": 30645,
+    "references": []
+  },
+  {
+    "path": "dummy.mdx",
+    "bytes": 35040,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "gormissile.mdx",
+    "bytes": 4029,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "ice cube.mdx",
+    "bytes": 8165,
+    "references": [
+      "war3mapSkin.w3u",
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "leopardess.mdx",
+    "bytes": 114293,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "leopardess_Portrait.mdx",
+    "bytes": 24154,
+    "references": []
+  },
+  {
+    "path": "liz_assasin43_glow.mdx",
+    "bytes": 159146,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "liz_pyro_new15hero.mdx",
+    "bytes": 171741,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "snowball.mdx",
+    "bytes": 5133,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "war3mapSkin.w3u",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Arcane Explosion.mdx",
+    "bytes": 5410,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\ArcaneFlameBlue.mdx",
+    "bytes": 2813,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\ArcaneMissileComplete.mdx",
+    "bytes": 18429,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ArcaneWave.mdx",
+    "bytes": 12967,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Axe Missile-Small.mdx",
+    "bytes": 6447,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Axe Missile.mdx",
+    "bytes": 6447,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bandit Dog.mdx",
+    "bytes": 81765,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Bandit Throwing Axe.mdx",
+    "bytes": 3589,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\BeamMissile.mdx",
+    "bytes": 5108,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\BlackArcaneMissile004.mdx",
+    "bytes": 15748,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\BlackHoleSpell.mdx",
+    "bytes": 10608,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Bleed.mdx",
+    "bytes": 3587,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\BloodelfWizard.mdx",
+    "bytes": 414466,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\BloodelfWizard_Portrait.mdx",
+    "bytes": 84555,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow Bloodless.mdx",
+    "bytes": 14648,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow LSD 2.mdx",
+    "bytes": 16006,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow LSD.mdx",
+    "bytes": 15343,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow-Deadeye.mdx",
+    "bytes": 15007,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow.mdx",
+    "bytes": 15295,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\BoundlessStrike.mdx",
+    "bytes": 42478,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Bullet.mdx",
+    "bytes": 7674,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Container_Blue.mdx",
+    "bytes": 2072,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\CorpseBombV2.mdx",
+    "bytes": 11625,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Culling Slash.mdx",
+    "bytes": 7864,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DaggerOfTime.mdx",
+    "bytes": 12481,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarkLightning.mdx",
+    "bytes": 11035,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarkLightningNova.mdx",
+    "bytes": 2712,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarkNova.mdx",
+    "bytes": 19018,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarkRanger.mdx",
+    "bytes": 364157,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DarkSoldier_Hero.mdx",
+    "bytes": 124391,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarkSoldier_Hero_Portrait.mdx",
+    "bytes": 121370,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DarknessBomb.mdx",
+    "bytes": 6376,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Deadly Plumage HD Gold.mdx",
+    "bytes": 28380,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DeathCurse.mdx",
+    "bytes": 13044,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DeathWave.mdx",
+    "bytes": 12691,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Deathwing.mdx",
+    "bytes": 227499,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DemonKnight.mdx",
+    "bytes": 186303,
+    "references": [
+      "war3map.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DemonKnight_Portrait.mdx",
+    "bytes": 33863,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\DiskOfScythes.mdx",
+    "bytes": 58643,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DragonboneGolem.mdx",
+    "bytes": 317953,
+    "references": [
+      "FF_SOURCE_MANIFEST.json",
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\DragonboneGolem_Portrait.mdx",
+    "bytes": 93309,
+    "references": [
+      "FF_SOURCE_MANIFEST.json",
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\EMPBomb.mdx",
+    "bytes": 5942,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Electric Spark.mdx",
+    "bytes": 18242,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Explosion.mdx",
+    "bytes": 3595,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Faerie Missile.mdx",
+    "bytes": 9272,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\FireArrow.mdx",
+    "bytes": 10919,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ForestTrollWarlord.mdx",
+    "bytes": 138167,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\FrostBoltRainV.mdx",
+    "bytes": 45638,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\GeneralHeroGlow.mdx",
+    "bytes": 4052,
+    "references": [
+      "war3map.w3a",
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Great Lightning.mdx",
+    "bytes": 23934,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\GreenArcaneMissile004.mdx",
+    "bytes": 13588,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\HQGrenadeByStonneashExplosive.mdx",
+    "bytes": 18111,
+    "references": [
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\HealthStone.mdx",
+    "bytes": 18692,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\HeroAbomination.mdx",
+    "bytes": 235598,
+    "references": [
+      "war3map.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\HeroNerubianWidow.mdx",
+    "bytes": 108814,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\HeroNerubianWidow_Portrait.mdx",
+    "bytes": 86919,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\HeroTrollGodslayer.mdx",
+    "bytes": 273732,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\HeroTrollGodslayer_Portrait.mdx",
+    "bytes": 55045,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\HiveForceShield.mdx",
+    "bytes": 33858,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Hydra.mdx",
+    "bytes": 296396,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\IceImpaleHitTarget.mdx",
+    "bytes": 5524,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\IllidanMissile.mdx",
+    "bytes": 8119,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\LaserStrike.mdx",
+    "bytes": 6250,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\LightningArrow1.mdx",
+    "bytes": 4861,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\LightningBolt.mdx",
+    "bytes": 9943,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\LightningNova.mdx",
+    "bytes": 2522,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Lightning_egg.mdx",
+    "bytes": 15297,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Lightnings Long.mdx",
+    "bytes": 20526,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\MonsoonBoltTarget_Fel.mdx",
+    "bytes": 12150,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\MonsoonRain_Fel.mdx",
+    "bytes": 2214,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\OrbDragonX.mdx",
+    "bytes": 28345,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\OrbLightX.mdx",
+    "bytes": 28605,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\OrbLightningX.mdx",
+    "bytes": 29189,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\OrbOfFire.mdx",
+    "bytes": 8438,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\OrbOfFrost.mdx",
+    "bytes": 8438,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\OrbOfLightning.mdx",
+    "bytes": 8438,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\OtherShinyMagicOrb017.mdx",
+    "bytes": 14110,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Pillar of Flame Green.mdx",
+    "bytes": 6562,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Poison Spider.mdx",
+    "bytes": 3009,
+    "references": [
+      "unnamed:(328079053, 1200225877, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Possesed_Tome.mdx",
+    "bytes": 47069,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Punishment_Missle.mdx",
+    "bytes": 3703,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\RagnarosMinion.mdx",
+    "bytes": 159668,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Raven.mdx",
+    "bytes": 63215,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Scepter of the Tides.mdx",
+    "bytes": 15825,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "war3mapSkin.w3u",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ShadowGOLEM.mdx",
+    "bytes": 257921,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ShadowOrbMissile v1.2.mdx",
+    "bytes": 26805,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SheepMarine.mdx",
+    "bytes": 67048,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\SheepMarine_Portrait.mdx",
+    "bytes": 19075,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SkeletonJuggernaut.mdx",
+    "bytes": 226469,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\SkeletonJuggernaut_Portrait.mdx",
+    "bytes": 40915,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Soul Beam Blue.mdx",
+    "bytes": 7669,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SpiritArrow_ByEpsilon.mdx",
+    "bytes": 6043,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SporeCloud025_Priority005.mdx",
+    "bytes": 11363,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Square_wo_middle3.mdx",
+    "bytes": 2208,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Storm Bolt Green.mdx",
+    "bytes": 62838,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Storm Bolt Red.mdx",
+    "bytes": 62838,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Sun.mdx",
+    "bytes": 13943,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SunWukong.mdx",
+    "bytes": 180213,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\SunWukong_portrait.mdx",
+    "bytes": 62045,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\SuperLightningBall.mdx",
+    "bytes": 38311,
+    "references": [
+      "war3map.j",
+      "war3map.w3u",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\VengeanceNoSpin.mdx",
+    "bytes": 3079,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Void Arrow.mdx",
+    "bytes": 11063,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Void Rain Missile.mdx",
+    "bytes": 8995,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\VoidSkullAura_v5.mdx",
+    "bytes": 5531,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\Wight.mdx",
+    "bytes": 673107,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\WukongTotem.mdx",
+    "bytes": 14760,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ZerglingUpgrade_CollectionSkin_Webby.mdx",
+    "bytes": 426516,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\Zeus.mdx",
+    "bytes": 258882,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ZeusLBolt.mdx",
+    "bytes": 5492,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\ZeusMissile.mdx",
+    "bytes": 11600,
+    "references": [
+      "war3mapSkin.w3u",
+      "unnamed:(487597398, 2476926847, 0, 0)"
+    ]
+  },
+  {
+    "path": "war3mapImported\\deadeyefixed.mdx",
+    "bytes": 303886,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\dummy.mdx",
+    "bytes": 35040,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\instantdummy.mdx",
+    "bytes": 35040,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\ratling_hero.mdx",
+    "bytes": 276538,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "war3mapImported\\reward_gold.mdx",
+    "bytes": 13288,
+    "references": []
+  },
+  {
+    "path": "war3mapImported\\spiderworker-with-web1.mdx",
+    "bytes": 381833,
+    "references": [
+      "war3mapSkin.w3u"
+    ]
+  },
+  {
+    "path": "warpimpact.mdx",
+    "bytes": 3188,
+    "references": [
+      "war3map.j",
+      "war3map.wct",
+      "unnamed:(424145478, 1694220718, 0, 0)"
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "source": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Orianna_v10.w3x",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Orianna_v10_ItemsAudited.w3x",
+  "sha256": "ededb76c9183be1404bd2ec5647a7cab755584ea759ca64b4eeea2de5b189e12",
+  "archiveMembers": 1338,
+  "unchangedArchiveMembers": 1336,
+  "changedMembers": [
+    "war3map.w3t",
+    "war3mapSkin.w3t"
+  ],
+  "validation": "All other decompressed archive member bytes identical; only utub/ides/utip item string fields changed; object binary round-trip passed."
+}

@@ -1,0 +1,579 @@
+{
+  "source": "v75 before unapproved v76 reduction; v76 set aside",
+  "unit_level_xp": {
+    "1": 25,
+    "2": 40,
+    "3": 60,
+    "4": 85,
+    "5": 115,
+    "6": 150,
+    "7": 190,
+    "8": 235,
+    "9": 285,
+    "10": 340,
+    "11": 400,
+    "12": 465,
+    "13": 535,
+    "14": 610,
+    "15": 690,
+    "16": 775,
+    "17": 865,
+    "18": 960
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "units": [
+        {
+          "name": "Ogre Magi",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Evil Lord",
+          "count": 1,
+          "level": 9,
+          "xp_each": 285,
+          "xp_total": 285
+        },
+        {
+          "name": "Hydra",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Demolisher",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        }
+      ],
+      "base_pack_xp": 1390,
+      "at70": 972.9999999999999,
+      "three_heroes_each": 324.3333333333333,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 5900
+    },
+    {
+      "wave": 2,
+      "units": [
+        {
+          "name": "Naga Siren",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Naga Snapdragon",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 2",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Naga Summoner",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        }
+      ],
+      "base_pack_xp": 1260,
+      "at70": 882.0,
+      "three_heroes_each": 294.0,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 5380
+    },
+    {
+      "wave": 3,
+      "units": [
+        {
+          "name": "Dalaran Mutant",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Overseer",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 3",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Meat wagon",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1570,
+      "at70": 1099.0,
+      "three_heroes_each": 366.3333333333333,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 6620
+    },
+    {
+      "wave": 4,
+      "units": [
+        {
+          "name": "Gnoll Asassin",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Warden",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 4",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Glaive thrower",
+          "count": 1,
+          "level": 6,
+          "xp_each": 150,
+          "xp_total": 150
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1765,
+      "at70": 1235.5,
+      "three_heroes_each": 411.8333333333333,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7400
+    },
+    {
+      "wave": 5,
+      "units": [
+        {
+          "name": "Grunts",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Warden",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Mountain Giant",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        },
+        {
+          "name": "Gnoll Asssassin 5",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1805,
+      "at70": 1263.5,
+      "three_heroes_each": 421.1666666666667,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7560
+    },
+    {
+      "wave": 6,
+      "units": [
+        {
+          "name": "Ogre Magi",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Evil Lord",
+          "count": 1,
+          "level": 9,
+          "xp_each": 285,
+          "xp_total": 285
+        },
+        {
+          "name": "Hydra",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Demolisher",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 2200,
+      "at70": 1540.0,
+      "three_heroes_each": 513.3333333333334,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 9140
+    },
+    {
+      "wave": 7,
+      "units": [
+        {
+          "name": "Naga Siren",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Naga Snapdragon",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 2",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Naga Summoner",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1730,
+      "at70": 1211.0,
+      "three_heroes_each": 403.6666666666667,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7260
+    },
+    {
+      "wave": 8,
+      "units": [
+        {
+          "name": "Dalaran Mutant",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Overseer",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 3",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Meat wagon",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1805,
+      "at70": 1263.5,
+      "three_heroes_each": 421.1666666666667,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7560
+    },
+    {
+      "wave": 9,
+      "units": [
+        {
+          "name": "Gnoll Asassin",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Warden",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Gnoll Asssassin 4",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Glaive thrower",
+          "count": 1,
+          "level": 6,
+          "xp_each": 150,
+          "xp_total": 150
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1765,
+      "at70": 1235.5,
+      "three_heroes_each": 411.8333333333333,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7400
+    },
+    {
+      "wave": 10,
+      "units": [
+        {
+          "name": "Grunts",
+          "count": 5,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 575
+        },
+        {
+          "name": "Gnoll Warden",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Mountain Giant",
+          "count": 1,
+          "level": 7,
+          "xp_each": 190,
+          "xp_total": 190
+        },
+        {
+          "name": "Gnoll Asssassin 5",
+          "count": 1,
+          "level": 5,
+          "xp_each": 115,
+          "xp_total": 115
+        },
+        {
+          "name": "Ogron",
+          "count": 1,
+          "level": 10,
+          "xp_each": 340,
+          "xp_total": 340
+        },
+        {
+          "name": "Fire Turtle",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        },
+        {
+          "name": "Troll",
+          "count": 1,
+          "level": 8,
+          "xp_each": 235,
+          "xp_total": 235
+        }
+      ],
+      "base_pack_xp": 1805,
+      "at70": 1263.5,
+      "three_heroes_each": 421.1666666666667,
+      "center_boss_xp": 340,
+      "map_total_four_packs_and_boss": 7560
+    }
+  ],
+  "notes": [
+    "Direct spawned units only; excludes subsequently summoned/split units.",
+    "All four team packs assume four undefeated teams.",
+    "Sharing and engine rounding may change actual hero receipt.",
+    "Extra Fire Turtle and Troll use object level 8, not configured levels 10 and 7."
+  ]
+}

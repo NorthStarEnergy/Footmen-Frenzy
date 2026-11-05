@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-no-detonate\\release\\FF799X_Rx_Guardian_v28.w3x",
+  "sha256": "217ec32327657bdce184e422f00f161d6dafc307b971523e051cb71c642b43af",
+  "changed_payloads": [
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1349,
+  "preserved_functions": 3605,
+  "live_test": "Pending"
+}

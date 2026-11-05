@@ -1,0 +1,11 @@
+{
+  "Sound\\Units\\Combat\\MetalMediumChopFlesh1.wav": null,
+  "Sound\\Units\\Combat\\MetalMediumChopFlesh1.flac": null,
+  "Units\\AbilityBuffMetaData.slk": {
+    "bytes": 5926,
+    "header": "49443b5057584c3b"
+  },
+  "sound_label": "MetalMediumChopFlesh",
+  "label_verified_in": "Installed Warcraft III UI/SoundInfo/UnitCombatSounds.slk; local copy UnitCombatSounds.slk, row 33",
+  "implementation": "CreateSoundFromLabel uses the verified native label. Direct audio file extraction was unsuccessful; audible engine verification remains pending."
+}

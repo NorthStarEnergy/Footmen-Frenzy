@@ -1,0 +1,492 @@
+{
+  "map_bytes": 58679435,
+  "sha256": "b2ae4e62182c33fedd285c20d8f8f16ae503b7289ef3d6fc0568ea8ec279d3c2",
+  "archive_count": 1361,
+  "known": 1333,
+  "unknown": 28,
+  "imports": 1303,
+  "missing": 5,
+  "candidate_count": 842,
+  "candidate_stored_sum": 7021546,
+  "by_type": {
+    ".blp": [
+      1010,
+      12199930,
+      17289940
+    ],
+    ".mdx": [
+      253,
+      8102238,
+      17224869
+    ],
+    ".wts": [
+      1,
+      672655,
+      2787308
+    ],
+    ".png": [
+      7,
+      596708,
+      599630
+    ],
+    ".j": [
+      1,
+      586772,
+      2798812
+    ],
+    ".wct": [
+      1,
+      519707,
+      2480811
+    ],
+    ".w3a": [
+      2,
+      369548,
+      1755482
+    ],
+    ".w3t": [
+      2,
+      207665,
+      207665
+    ],
+    ".wav": [
+      8,
+      194240,
+      218646
+    ],
+    ".mp3": [
+      3,
+      146108,
+      154415
+    ],
+    ".w3u": [
+      2,
+      127019,
+      454984
+    ],
+    ".tga": [
+      11,
+      60514,
+      104154
+    ]
+  },
+  "largest_files": [
+    {
+      "path": "war3map.wts",
+      "bytes": 2787308,
+      "stored": 672655
+    },
+    {
+      "path": "war3map.j",
+      "bytes": 2798812,
+      "stored": 586772
+    },
+    {
+      "path": "EmberKnight.blp",
+      "bytes": 578273,
+      "stored": 578148
+    },
+    {
+      "path": "war3map.wct",
+      "bytes": 2480811,
+      "stored": 519707
+    },
+    {
+      "path": "war3mapImported\\ZerglingUpgrade_CollectionSkin_Webby.mdx",
+      "bytes": 426516,
+      "stored": 335335
+    },
+    {
+      "path": "LoGoshTexture.blp",
+      "bytes": 294128,
+      "stored": 292710
+    },
+    {
+      "path": "zerglingupgrade_collectionskin_webby_diff.blp",
+      "bytes": 290866,
+      "stored": 289225
+    },
+    {
+      "path": "war3mapImported\\spiderworker-with-web1.mdx",
+      "bytes": 381833,
+      "stored": 273663
+    },
+    {
+      "path": "Spells\\Orianna\\Feedback\\ShockImpact.blp",
+      "bytes": 700230,
+      "stored": 256636
+    },
+    {
+      "path": "war3map.w3a",
+      "bytes": 1222913,
+      "stored": 256366
+    },
+    {
+      "path": "Spells\\Orianna\\Feedback\\AttackGround.blp",
+      "bytes": 700230,
+      "stored": 250221
+    },
+    {
+      "path": "Spells\\Orianna\\Feedback\\ProtectGround.blp",
+      "bytes": 700230,
+      "stored": 238826
+    },
+    {
+      "path": "war3mapImported\\Wight.mdx",
+      "bytes": 673107,
+      "stored": 237586
+    },
+    {
+      "path": "war3mapImported\\HeroAbomination.mdx",
+      "bytes": 235598,
+      "stored": 235598
+    },
+    {
+      "path": "war3mapImported\\warstomp.PNG",
+      "bytes": 229992,
+      "stored": 230079
+    },
+    {
+      "path": "war3mapImported\\healspray.PNG",
+      "bytes": 224580,
+      "stored": 224583
+    },
+    {
+      "path": "war3mapImported\\Zap2x4.blp",
+      "bytes": 224822,
+      "stored": 220014
+    },
+    {
+      "path": "AtlanteanBTex.blp",
+      "bytes": 219439,
+      "stored": 216890
+    },
+    {
+      "path": "war3mapImported\\Hydra.mdx",
+      "bytes": 296396,
+      "stored": 212592
+    },
+    {
+      "path": "war3mapImported\\BloodelfWizard.mdx",
+      "bytes": 414466,
+      "stored": 210677
+    }
+  ],
+  "candidates": [
+    {
+      "path": "war3mapImported\\warstomp.PNG",
+      "status": "no direct reference found",
+      "stored": 230079,
+      "raw": 229992,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\healspray.PNG",
+      "status": "no direct reference found",
+      "stored": 224583,
+      "raw": 224580,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\Hydra.mdx",
+      "status": "no direct reference found",
+      "stored": 212592,
+      "raw": 296396,
+      "refs": []
+    },
+    {
+      "path": "BlackArmour.blp",
+      "status": "no direct reference found",
+      "stored": 187825,
+      "raw": 190334,
+      "refs": []
+    },
+    {
+      "path": "Blackclouds_anim1_bw.blp",
+      "status": "no direct reference found",
+      "stored": 151970,
+      "raw": 166440,
+      "refs": []
+    },
+    {
+      "path": "Akama02.mdx",
+      "status": "no direct reference found",
+      "stored": 103854,
+      "raw": 177981,
+      "refs": []
+    },
+    {
+      "path": "sword_1h_turalyon_d_01.blp",
+      "status": "no direct reference found",
+      "stored": 97474,
+      "raw": 100494,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\Windwalk.PNG",
+      "status": "no direct reference found",
+      "stored": 97409,
+      "raw": 97352,
+      "refs": []
+    },
+    {
+      "path": "Custom\\Spells\\Frost Eruption\\fe_start.mp3",
+      "status": "no direct reference found",
+      "stored": 82730,
+      "raw": 85782,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\DarkSoldier_Hero.mdx",
+      "status": "no direct reference found",
+      "stored": 80391,
+      "raw": 124391,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\Hydra.blp",
+      "status": "no direct reference found",
+      "stored": 77945,
+      "raw": 79744,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\DarkSoldier_Hero_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 76270,
+      "raw": 121370,
+      "refs": []
+    },
+    {
+      "path": "Units\\EnlightenedTide\\HeroMursophEmperor\\SeaGiantRed.blp",
+      "status": "no direct reference found",
+      "stored": 67302,
+      "raw": 69338,
+      "refs": []
+    },
+    {
+      "path": "DarkChampion_by67chrome.blp",
+      "status": "no direct reference found",
+      "stored": 67204,
+      "raw": 67953,
+      "refs": []
+    },
+    {
+      "path": "BrutalLord.blp",
+      "status": "no direct reference found",
+      "stored": 64609,
+      "raw": 175942,
+      "refs": []
+    },
+    {
+      "path": "Tiger.mdx",
+      "status": "no direct reference found",
+      "stored": 64421,
+      "raw": 120290,
+      "refs": []
+    },
+    {
+      "path": "InfantryRussian.blp",
+      "status": "no direct reference found",
+      "stored": 61491,
+      "raw": 63765,
+      "refs": []
+    },
+    {
+      "path": "InfernalGragas_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 61234,
+      "raw": 61234,
+      "refs": []
+    },
+    {
+      "path": "Textures\\DragonboneReaper.blp",
+      "status": "no direct reference found",
+      "stored": 57224,
+      "raw": 175942,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\HeroNerubianWidow.mdx",
+      "status": "no direct reference found",
+      "stored": 52349,
+      "raw": 108814,
+      "refs": []
+    },
+    {
+      "path": "MirkwoodSpinner.blp",
+      "status": "no direct reference found",
+      "stored": 48801,
+      "raw": 48884,
+      "refs": []
+    },
+    {
+      "path": "FF_SOURCE_MANIFEST.json",
+      "status": "no direct reference found",
+      "stored": 46815,
+      "raw": 46815,
+      "refs": []
+    },
+    {
+      "path": "PestilantPrince_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 46752,
+      "raw": 106506,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\BloodelfWizard_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 39738,
+      "raw": 84555,
+      "refs": []
+    },
+    {
+      "path": "Lo-Gosh_portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 38856,
+      "raw": 82317,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\HeroNerubianWidow_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 37777,
+      "raw": 86919,
+      "refs": []
+    },
+    {
+      "path": "TownHallWC1.mdx",
+      "status": "no direct reference found",
+      "stored": 36597,
+      "raw": 96862,
+      "refs": []
+    },
+    {
+      "path": "Thor_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 35842,
+      "raw": 121755,
+      "refs": []
+    },
+    {
+      "path": "Sumo_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 33772,
+      "raw": 64540,
+      "refs": []
+    },
+    {
+      "path": "Custom\\Spells\\Frost Eruption\\fe_explode1.mp3",
+      "status": "no direct reference found",
+      "stored": 32818,
+      "raw": 35625,
+      "refs": []
+    },
+    {
+      "path": "Akama02_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 31611,
+      "raw": 77130,
+      "refs": []
+    },
+    {
+      "path": "Spells\\TwistedFate\\Chains.blp",
+      "status": "no direct reference found",
+      "stored": 30658,
+      "raw": 30658,
+      "refs": []
+    },
+    {
+      "path": "Custom\\Spells\\Frost Eruption\\fe_explode2.mp3",
+      "status": "no direct reference found",
+      "stored": 30560,
+      "raw": 33008,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\SunWukong_portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 28948,
+      "raw": 62045,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\HeroTrollGodslayer_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 27644,
+      "raw": 55045,
+      "refs": []
+    },
+    {
+      "path": "Hero_FelOrc_General_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 23101,
+      "raw": 61881,
+      "refs": []
+    },
+    {
+      "path": "Hormagaunt.mdx",
+      "status": "no direct reference found",
+      "stored": 22478,
+      "raw": 50107,
+      "refs": []
+    },
+    {
+      "path": "BattlePriest_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 22142,
+      "raw": 43801,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\BoundlessStrike.mdx",
+      "status": "no direct reference found",
+      "stored": 20341,
+      "raw": 42478,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\Storm Bolt Green.mdx",
+      "status": "no direct reference found",
+      "stored": 19361,
+      "raw": 62838,
+      "refs": []
+    },
+    {
+      "path": "war3mapImported\\Storm Bolt Red.mdx",
+      "status": "no direct reference found",
+      "stored": 19335,
+      "raw": 62838,
+      "refs": []
+    },
+    {
+      "path": "SkeletonBerserker_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 18117,
+      "raw": 39906,
+      "refs": []
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtons\\BTNgoblinBOOM.blp",
+      "status": "no direct reference found",
+      "stored": 18021,
+      "raw": 20038,
+      "refs": []
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtons\\BTNBlink Strike.blp",
+      "status": "no direct reference found",
+      "stored": 17978,
+      "raw": 20083,
+      "refs": []
+    },
+    {
+      "path": "FemaleNecromancer_Portrait.mdx",
+      "status": "no direct reference found",
+      "stored": 17676,
+      "raw": 44912,
+      "refs": []
+    }
+  ]
+}

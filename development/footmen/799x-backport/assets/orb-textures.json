@@ -1,0 +1,12 @@
+{
+  "Textures\\CrystalOpaque.blp": "Spells\\Orianna\\BallTextures\\CrystalOpaque.blp",
+  "ui\\Glues\\SinglePlayer\\NightElfCampaign3D\\NightElfFemaleEyeGlow1.blp": "Spells\\Orianna\\BallTextures\\NightElfFemaleEyeGlow1.blp",
+  "Textures\\GenericGlow64.blp": "Spells\\Orianna\\BallTextures\\GenericGlow64.blp",
+  "Textures\\Blue_Star.blp": "Spells\\Orianna\\BallTextures\\Blue_Star.blp",
+  "Textures\\snowflake2.blp": "Spells\\Orianna\\BallTextures\\snowflake2.blp",
+  "Doodads\\Cinematic\\ArthasIllidanFight\\snowflake4.blp": "Spells\\Orianna\\BallTextures\\snowflake4.blp",
+  "Textures\\LightningBall.blp": "Spells\\Orianna\\BallTextures\\LightningBall.blp",
+  "Textures\\GenericGlow2c.blp": "Spells\\Orianna\\BallTextures\\GenericGlow2c.blp",
+  "Textures\\Yellow_Star.blp": "Spells\\Orianna\\BallTextures\\Yellow_Star.blp",
+  "Textures\\Yellow_Glow.blp": "Spells\\Orianna\\BallTextures\\Yellow_Glow.blp"
+}

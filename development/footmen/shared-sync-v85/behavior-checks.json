@@ -1,0 +1,20 @@
+{
+  "assertion_groups": 13,
+  "differential_and_rank_cases": 42548,
+  "checks": [
+    "799X item limits preserve all tested original rejection/removal/messages",
+    "Solo item rules preserved except correct 2x warning and non-destructive Shockwave overflow",
+    "Solo slots, game modes, roster, Gragus/Guldan, camera and spawn systems preserved",
+    "Item combination rules match original for mixed six-slot inventories",
+    "Creep restriction lookup preserves original 799X cap decisions",
+    "Observer purchase ownership fix precedes team counting",
+    "Personal-shop u01C selector preserved",
+    "Thor Powerhit releases every allocation at every rank and terrain branch",
+    "main Jaina simultaneous casts keep separate orbs and clean all handles",
+    "solo Jaina simultaneous casts keep separate orbs and clean all handles",
+    "main Alchemist correct caster level and preserved dice rules",
+    "solo Alchemist correct caster level and preserved dice rules",
+    "799X custom heroes, rewards, balance, observer substitutions and game-mode/player functions preserved"
+  ],
+  "engine_playtested": false
+}

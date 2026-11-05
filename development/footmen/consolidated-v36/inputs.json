@@ -1,0 +1,34 @@
+{
+  "tf": {
+    "path": "C:\\Users\\User\\Documents\\Codex\\2026-10-29\\i\\outputs\\FF799X_Rx_Twisted_Fate_v33.w3x",
+    "sha256": "75023f7ddef780d652467aab96527060b80fcb926b611c5a5dd6ea87ee237aa6"
+  },
+  "v30": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-lantern\\release\\FF799X_Rx_GuardianLantern_v30.w3x",
+    "sha256": "b735db3cbfb98d3cde710ef686840e43803317a89c21b6fe30492c44d4f33b72"
+  },
+  "tooltips": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-tooltips\\release\\FF799X_Rx_HeroTooltips_v31.w3x",
+    "sha256": "18e6e58a00568a35bba039837ce364d0f91985f41a9fc4c5f5566a7747d15d97"
+  },
+  "gas": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-gas\\release\\FF799X_Rx_Mundo_v32.w3x",
+    "sha256": "05962d9ecbf9f3482b41b8d9e138ab2d5c3647403945bba0b31604969b1c9950"
+  },
+  "requiem": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\requiem-fix\\release\\FF799X_Rx_RequiemFix_v33.w3x",
+    "sha256": "a587a86e32577c5e7d31b0089a9915ece1bfaa1e13b097b8e787d29260ab80ce"
+  },
+  "guldan": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\orianna-guldan\\release\\FF799X_Rx_OriannaGuldan_v34.w3x",
+    "sha256": "7389d29dc66db66479a4d2cdc09d6cb0f30de37cbedd878125ca8117f1c60b28"
+  },
+  "rename": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Guldan_v35.w3x",
+    "sha256": "b84600a7296e54aca9f28b5936092383f5c0193fc5f997be40e8645eed718e76"
+  },
+  "veigar": {
+    "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-prototype\\release\\FF799X_Rx_Veigar_v33.w3x",
+    "sha256": "d3c0ec5e56a072a92771d84f1cd7d4587acc87a7a9129e448ed8ba3d14560ffd"
+  }
+}

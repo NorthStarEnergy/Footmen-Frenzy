@@ -1,0 +1,49 @@
+{
+  "FormatVersion": 7,
+  "SubVersion": -2147483644,
+  "GameVersion": 2,
+  "GuiVariables": 0,
+  "Items": [
+    {
+      "Name": "\u003CDELETED\u003E",
+      "Id": 1,
+      "ParentId": -1,
+      "Type": 4,
+      "Enabled": null,
+      "Custom": null,
+      "Comment": null,
+      "RunOnMapInit": null
+    },
+    {
+      "Name": "799X Hotfix",
+      "Id": 0,
+      "ParentId": -1,
+      "Type": 1,
+      "Enabled": null,
+      "Custom": null,
+      "Comment": null,
+      "RunOnMapInit": null
+    },
+    {
+      "Name": "Gameplay - authoritative JASS",
+      "Id": 33554434,
+      "ParentId": 0,
+      "Type": 4,
+      "Enabled": null,
+      "Custom": null,
+      "Comment": null,
+      "RunOnMapInit": null
+    },
+    {
+      "Name": "FF Runtime",
+      "Id": 50331648,
+      "ParentId": 33554434,
+      "Type": 8,
+      "Enabled": true,
+      "Custom": true,
+      "Comment": false,
+      "RunOnMapInit": false
+    }
+  ],
+  "HeaderComment": "v68: Classic Veigar complete. User stats STR/AGI/INT 15/16/20, gains 1.5/1.5/3. Hero Killer roster 97; Lich model; Q last-hit INT, W scaled meteor, E ranked stun, R target-INT burst, Equilibrium. Custom bordered BLP icons. Static-validated candidate; engine playtest pending."
+}

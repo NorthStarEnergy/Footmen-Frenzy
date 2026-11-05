@@ -1,0 +1,21 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-polish-v45\\release\\FF799X_Rx_Mundo_TF_Polish_v45a.w3x",
+  "sha256": "0ce93a3bfa682d7c7683ff345b3e28680d856e9eb93f5ab535a6a7a8f42ea828",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Myrmidon_Cleave_v44.w3x",
+  "preserved_payloads": 1331,
+  "checks": 296,
+  "compiler": "passed",
+  "live_test": "pending",
+  "dice": {
+    "cooldown": 60,
+    "minimum_gold": 50,
+    "win": 50,
+    "loss": -50,
+    "base_percent": 50,
+    "alive_cap_seconds": 900,
+    "alive_bonus_percent": 10,
+    "kill_bonus_percent": 2,
+    "kill_cap": 5,
+    "death_resets": true
+  }
+}

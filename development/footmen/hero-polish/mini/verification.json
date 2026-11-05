@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-polish\\release\\Mini Foots v10.w3x",
+  "sha256": "1f8835cfd66458964caa57ed097571f29386f606bbc1d612be6b98e921393f3b",
+  "changed_payloads": [
+    "Spells\\Orianna\\Feedback\\AttackGround.blp",
+    "Spells\\Orianna\\Feedback\\MoveGround.blp",
+    "Spells\\Orianna\\Feedback\\ProtectGround.blp",
+    "Spells\\Orianna\\Feedback\\ShockGround.blp",
+    "Spells\\Orianna\\Feedback\\ShockImpact.blp",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3i",
+    "war3map.w3u",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1342,
+  "preserved_functions": 3598,
+  "engine_test": "Pending"
+}

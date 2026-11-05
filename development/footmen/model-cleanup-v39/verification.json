@@ -1,0 +1,41 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\model-cleanup-v39\\release\\FF799X_Rx_Consolidated_Clean_v39.w3x",
+  "sha256": "c2e7cbeb33108727b0f9c1ed2a52da75c15fa0d0e1b90cb014cef08b357b7757",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_Maul_v38.w3x",
+  "removed_models": [
+    "BarrelRollImpact.mdx",
+    "DrunkenRageDmgReduction.mdx",
+    "ExplosiveCask.mdx",
+    "Models\\OriannaEnchantress\\BlackLegionEnchantressMissileV2.mdx",
+    "Models\\OriannaEnchantress\\BlackLegionEnchantressV2.mdx",
+    "Models\\OriannaLich\\Lich.mdx",
+    "RollingBarrelMissile.mdx",
+    "Spells\\Orianna\\Feedback\\EnchantressOrb.mdx",
+    "Spells\\Orianna\\Feedback\\EnchantressOrbBlue.mdx",
+    "Spells\\Orianna\\Feedback\\EnchantressTrail.mdx",
+    "Spells\\Orianna\\Feedback\\Power_Orb.mdx",
+    "Spells\\Orianna\\Feedback\\ProtectRing.mdx",
+    "Spells\\Orianna\\Feedback\\SoftOrb.mdx",
+    "Spells\\Orianna\\RxCrimsonGroundNova.mdx"
+  ],
+  "removed_exclusive_textures": [
+    "Spells\\Orianna\\CrimsonTexture0.blp",
+    "Spells\\Orianna\\CrimsonTexture1.blp",
+    "Spells\\Orianna\\CrimsonTexture2.blp",
+    "Spells\\Orianna\\CrimsonTexture3.blp",
+    "Spells\\Orianna\\Feedback\\OrbCore.blp",
+    "Spells\\Orianna\\Feedback\\OrbCoreBlue.blp",
+    "Spells\\Orianna\\Feedback\\ProtectRingColor.blp",
+    "Spells\\Orianna\\Feedback\\SoftOrb.blp"
+  ],
+  "retained_shared_textures": [
+    "Textures\\Skeleton.blp"
+  ],
+  "removed_uncompressed_bytes": 602077,
+  "previous_map_bytes": 43909136,
+  "map_bytes": 44592072,
+  "saved_map_bytes": -682936,
+  "preserved_archive_entries": 1330,
+  "gameplay_script": "byte-identical to v38",
+  "live_test": "not performed; asset reference and archive checks passed"
+}

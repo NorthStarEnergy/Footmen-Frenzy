@@ -1,0 +1,551 @@
+{
+  "entries": 222,
+  "fixedShopEntries": 108,
+  "recipes": 17,
+  "dynamicSpells": 96,
+  "itemsWithTextUpdates": 219,
+  "textFieldsUpdated": 536,
+  "icons": 111,
+  "iconErrors": [
+    [
+      "I000",
+      "ReplaceableTextures\\CommandButtons\\BTNScrollUber.blp",
+      "cannot identify image file <_io.BytesIO object at 0x000002059184A070>"
+    ],
+    [
+      "I002",
+      "ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A4BA10>"
+    ],
+    [
+      "I003",
+      "ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp",
+      "Unsupported compression type."
+    ],
+    [
+      "I005",
+      "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A5BD30>"
+    ],
+    [
+      "I006",
+      "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A5E250>"
+    ],
+    [
+      "I008",
+      "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A5F420>"
+    ],
+    [
+      "I009",
+      "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A6C310>"
+    ],
+    [
+      "I00B",
+      "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A6C540>"
+    ],
+    [
+      "I00C",
+      "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A6D2B0>"
+    ],
+    [
+      "I00D",
+      "ReplaceableTextures\\CommandButtons\\BTNThoriumArmor.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A6ED40>"
+    ],
+    [
+      "I00E",
+      "ReplaceableTextures\\CommandButtons\\BTNHammer.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A6FBF0>"
+    ],
+    [
+      "I00F",
+      "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A78AE0>"
+    ],
+    [
+      "I00G",
+      "ReplaceableTextures\\CommandButtons\\BTNSeigeEngineWithMissles.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A79B70>"
+    ],
+    [
+      "I00I",
+      "ReplaceableTextures\\CommandButtons\\BTNStone.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A7B8D0>"
+    ],
+    [
+      "I00K",
+      "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A7BB50>"
+    ],
+    [
+      "I00L",
+      "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A7BD80>"
+    ],
+    [
+      "I00M",
+      "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A7BFB0>"
+    ],
+    [
+      "I00N",
+      "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A8C220>"
+    ],
+    [
+      "I00O",
+      "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A8C450>"
+    ],
+    [
+      "I00Q",
+      "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A8C680>"
+    ],
+    [
+      "I00S",
+      "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A8D4E0>"
+    ],
+    [
+      "I00Z",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A8D710>"
+    ],
+    [
+      "I017",
+      "ReplaceableTextures\\CommandButtons\\BTNScroll.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A9C090>"
+    ],
+    [
+      "I01I",
+      "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+      "Unsupported compression type."
+    ],
+    [
+      "I01Y",
+      "ReplaceableTextures\\CommandButtons\\BTNEnsnare.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591A9D3A0>"
+    ],
+    [
+      "I020",
+      "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591AB4450>"
+    ],
+    [
+      "I02F",
+      "ReplaceableTextures\\CommandButtons\\BTNWand.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591AB6430>"
+    ],
+    [
+      "I02L",
+      "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+      "Unsupported compression type."
+    ],
+    [
+      "I02P",
+      "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ACE8E0>"
+    ],
+    [
+      "I03C",
+      "ReplaceableTextures\\CommandButtons\\BTNGlove.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADD030>"
+    ],
+    [
+      "I04B",
+      "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADD0D0>"
+    ],
+    [
+      "IGs1",
+      "ReplaceableTextures\\CommandButtons\\BTNSilence.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADD3F0>"
+    ],
+    [
+      "ankh",
+      "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADDA30>"
+    ],
+    [
+      "belv",
+      "ReplaceableTextures\\CommandButtons\\BTNBoots.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADE660>"
+    ],
+    [
+      "bgst",
+      "ReplaceableTextures\\CommandButtons\\BTNBelt.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADEDE0>"
+    ],
+    [
+      "brac",
+      "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591ADF560>"
+    ],
+    [
+      "ciri",
+      "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591AFD030>"
+    ],
+    [
+      "ckng",
+      "ReplaceableTextures\\CommandButtons\\BTNHelmutPurple.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591AFDFD0>"
+    ],
+    [
+      "clfm",
+      "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B0D350>"
+    ],
+    [
+      "clsd",
+      "ReplaceableTextures\\CommandButtons\\BTNCloak.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B0E4D0>"
+    ],
+    [
+      "cnob",
+      "ReplaceableTextures\\CommandButtons\\BTNCirclet.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B18130>"
+    ],
+    [
+      "crys",
+      "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B19CB0>"
+    ],
+    [
+      "desc",
+      "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B1AF20>"
+    ],
+    [
+      "dust",
+      "ReplaceableTextures\\CommandButtons\\BTNDustOfAppearance.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B1BE20>"
+    ],
+    [
+      "evtl",
+      "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B30F40>"
+    ],
+    [
+      "frhg",
+      "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B336A0>"
+    ],
+    [
+      "gobm",
+      "ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B3C720>"
+    ],
+    [
+      "hval",
+      "ReplaceableTextures\\CommandButtons\\BTNHelmOfValor.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B3E430>"
+    ],
+    [
+      "lgdh",
+      "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B3F470>"
+    ],
+    [
+      "mcou",
+      "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B3F6F0>"
+    ],
+    [
+      "modt",
+      "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B50630>"
+    ],
+    [
+      "nams",
+      "ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B51620>"
+    ],
+    [
+      "nspi",
+      "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B52570>"
+    ],
+    [
+      "ofro",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B53FB0>"
+    ],
+    [
+      "olig",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B5DF30>"
+    ],
+    [
+      "oven",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfVenom.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B5FC40>"
+    ],
+    [
+      "pghe",
+      "ReplaceableTextures\\CommandButtons\\BTNPotionGreen.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B68C70>"
+    ],
+    [
+      "pgma",
+      "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B69C60>"
+    ],
+    [
+      "pinv",
+      "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B6AB60>"
+    ],
+    [
+      "pmna",
+      "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B6BA10>"
+    ],
+    [
+      "pnvl",
+      "ReplaceableTextures\\CommandButtons\\BTNLesserInvulneralbility.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B74A90>"
+    ],
+    [
+      "pnvu",
+      "ReplaceableTextures\\CommandButtons\\BTNGreaterInvulneralbility.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B75A80>"
+    ],
+    [
+      "pres",
+      "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B76AC0>"
+    ],
+    [
+      "prvt",
+      "ReplaceableTextures\\CommandButtons\\BTNPeriapt.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B77970>"
+    ],
+    [
+      "rag1",
+      "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B82340>"
+    ],
+    [
+      "ratf",
+      "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8CB80>"
+    ],
+    [
+      "rde3",
+      "ReplaceableTextures\\CommandButtons\\BTNRingGreen.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8CB80>"
+    ],
+    [
+      "rin1",
+      "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8CB80>"
+    ],
+    [
+      "rlif",
+      "ReplaceableTextures\\CommandButtons\\BTNRingSkull.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8E340>"
+    ],
+    [
+      "rst1",
+      "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8E340>"
+    ],
+    [
+      "rwiz",
+      "ReplaceableTextures\\CommandButtons\\BTNSobiMask.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591B8EF70>"
+    ],
+    [
+      "sand",
+      "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BA4360>"
+    ],
+    [
+      "sbch",
+      "ReplaceableTextures\\CommandButtons\\BTNBoneChimes.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BA5260>"
+    ],
+    [
+      "shas",
+      "ReplaceableTextures\\CommandButtons\\BTNScrollOfHaste.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BA60C0>"
+    ],
+    [
+      "sreg",
+      "ReplaceableTextures\\CommandButtons\\BTNScrollOfRegenerationGreen.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BA71A0>"
+    ],
+    [
+      "sres",
+      "ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BB0040>"
+    ],
+    [
+      "sror",
+      "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BB12B0>"
+    ],
+    [
+      "srrc",
+      "ReplaceableTextures\\CommandButtons\\BTNSnazzyScroll.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BB22A0>"
+    ],
+    [
+      "ssil",
+      "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BB34C0>"
+    ],
+    [
+      "stel",
+      "ReplaceableTextures\\CommandButtons\\BTNStaffOfTeleportation.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BBC630>"
+    ],
+    [
+      "tgxp",
+      "ReplaceableTextures\\CommandButtons\\BTNManual3.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BC7650>"
+    ],
+    [
+      "tkno",
+      "ReplaceableTextures\\CommandButtons\\BTNTomeRed.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BC7DD0>"
+    ],
+    [
+      "tmmt",
+      "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BC7DD0>"
+    ],
+    [
+      "tret",
+      "ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BDCBD0>"
+    ],
+    [
+      "ward",
+      "ReplaceableTextures\\CommandButtons\\BTNDrum.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BDD2B0>"
+    ],
+    [
+      "whwd",
+      "ReplaceableTextures\\CommandButtons\\BTNHealingWard.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BDDFD0>"
+    ],
+    [
+      "wneg",
+      "ReplaceableTextures\\CommandButtons\\BTNRodOfNecromancy.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BDEF20>"
+    ],
+    [
+      "I012",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BF2110>"
+    ],
+    [
+      "I00Y",
+      "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591BF2110>"
+    ],
+    [
+      "I04A",
+      "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C07F60>"
+    ],
+    [
+      "I00W",
+      "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C21A80>"
+    ],
+    [
+      "I00T",
+      "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C21A80>"
+    ],
+    [
+      "I010",
+      "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C21A80>"
+    ],
+    [
+      "I01H",
+      "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+      "Unsupported compression type."
+    ],
+    [
+      "I00A",
+      "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C37150>"
+    ],
+    [
+      "I02M",
+      "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+      "Unsupported compression type."
+    ],
+    [
+      "I00U",
+      "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C4B380>"
+    ],
+    [
+      "I00V",
+      "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C58D60>"
+    ],
+    [
+      "I00X",
+      "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591C64310>"
+    ],
+    [
+      "Z018",
+      "ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591CBCC70>"
+    ],
+    [
+      "C057",
+      "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerationAura.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D33100>"
+    ],
+    [
+      "C064",
+      "ReplaceableTextures\\CommandButtons\\BTNCarrionScarabs.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D51DA0>"
+    ],
+    [
+      "C066",
+      "ReplaceableTextures\\CommandButtons\\BTNEnt.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D53BF0>"
+    ],
+    [
+      "C071",
+      "ReplaceableTextures\\PassiveButtons\\PASBTNResistantSkin.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D68EA0>"
+    ],
+    [
+      "V073",
+      "ReplaceableTextures\\CommandButtons\\BTNChimaera.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D6B010>"
+    ],
+    [
+      "V081",
+      "ReplaceableTextures\\PassiveButtons\\PASBTNHumanArtilleryUpOne.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591D8A9D0>"
+    ],
+    [
+      "V089",
+      "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591DB9DF0>"
+    ],
+    [
+      "V093",
+      "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp",
+      "cannot identify image file <_io.BytesIO object at 0x0000020591DBB470>"
+    ]
+  ]
+}

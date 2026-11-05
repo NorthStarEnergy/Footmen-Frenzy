@@ -1,0 +1,15 @@
+{
+  "passed": 10,
+  "checks": [
+    "Item INT 0 canceled and mana zero",
+    "Item INT 1 canceled and mana zero",
+    "Item INT 5 canceled and mana zero",
+    "Item INT 10 canceled and mana zero",
+    "Item INT 37 canceled and mana zero",
+    "Item INT 255 canceled and mana zero",
+    "Item INT 1024 canceled and mana zero",
+    "Item INT 65535 canceled and mana zero",
+    "Removing item bonus recalculates despite zero-clamped total",
+    "Removing last INT item removes offsets"
+  ]
+}

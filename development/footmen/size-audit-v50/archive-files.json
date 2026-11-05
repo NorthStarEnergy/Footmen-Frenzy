@@ -1,0 +1,6667 @@
+[
+  {
+    "path": "war3map.wts",
+    "bytes": 2787308,
+    "stored": 672655
+  },
+  {
+    "path": "war3map.j",
+    "bytes": 2798812,
+    "stored": 586772
+  },
+  {
+    "path": "EmberKnight.blp",
+    "bytes": 578273,
+    "stored": 578148
+  },
+  {
+    "path": "war3map.wct",
+    "bytes": 2480811,
+    "stored": 519707
+  },
+  {
+    "path": "war3mapImported\\ZerglingUpgrade_CollectionSkin_Webby.mdx",
+    "bytes": 426516,
+    "stored": 335335
+  },
+  {
+    "path": "LoGoshTexture.blp",
+    "bytes": 294128,
+    "stored": 292710
+  },
+  {
+    "path": "zerglingupgrade_collectionskin_webby_diff.blp",
+    "bytes": 290866,
+    "stored": 289225
+  },
+  {
+    "path": "war3mapImported\\spiderworker-with-web1.mdx",
+    "bytes": 381833,
+    "stored": 273663
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockImpact.blp",
+    "bytes": 700230,
+    "stored": 256636
+  },
+  {
+    "path": "war3map.w3a",
+    "bytes": 1222913,
+    "stored": 256366
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackGround.blp",
+    "bytes": 700230,
+    "stored": 250221
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ProtectGround.blp",
+    "bytes": 700230,
+    "stored": 238826
+  },
+  {
+    "path": "war3mapImported\\Wight.mdx",
+    "bytes": 673107,
+    "stored": 237586
+  },
+  {
+    "path": "war3mapImported\\HeroAbomination.mdx",
+    "bytes": 235598,
+    "stored": 235598
+  },
+  {
+    "path": "war3mapImported\\warstomp.PNG",
+    "bytes": 229992,
+    "stored": 230079
+  },
+  {
+    "path": "war3mapImported\\healspray.PNG",
+    "bytes": 224580,
+    "stored": 224583
+  },
+  {
+    "path": "war3mapImported\\Zap2x4.blp",
+    "bytes": 224822,
+    "stored": 220014
+  },
+  {
+    "path": "AtlanteanBTex.blp",
+    "bytes": 219439,
+    "stored": 216890
+  },
+  {
+    "path": "war3mapImported\\Hydra.mdx",
+    "bytes": 296396,
+    "stored": 212592
+  },
+  {
+    "path": "war3mapImported\\BloodelfWizard.mdx",
+    "bytes": 414466,
+    "stored": 210677
+  },
+  {
+    "path": "BlackTemplarSKIN.blp",
+    "bytes": 208991,
+    "stored": 207550
+  },
+  {
+    "path": "Warchief.blp",
+    "bytes": 194498,
+    "stored": 193297
+  },
+  {
+    "path": "Guldan.blp",
+    "bytes": 193756,
+    "stored": 193003
+  },
+  {
+    "path": "war3mapImported\\DarkRanger.mdx",
+    "bytes": 364157,
+    "stored": 188345
+  },
+  {
+    "path": "BlackArmour.blp",
+    "bytes": 190334,
+    "stored": 187825
+  },
+  {
+    "path": "HeroAbomination.blp",
+    "bytes": 186409,
+    "stored": 186409
+  },
+  {
+    "path": "war3mapImported\\DemonKnight.mdx",
+    "bytes": 186303,
+    "stored": 186303
+  },
+  {
+    "path": "war3mapSkin.w3t",
+    "bytes": 180006,
+    "stored": 180006
+  },
+  {
+    "path": "DemonKnight.blp",
+    "bytes": 175942,
+    "stored": 175942
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockGround.blp",
+    "bytes": 700230,
+    "stored": 175254
+  },
+  {
+    "path": "Models\\OriannaGuldan\\Guldan.mdx",
+    "bytes": 311568,
+    "stored": 168597
+  },
+  {
+    "path": "BattlePriest.MDX",
+    "bytes": 326417,
+    "stored": 163305
+  },
+  {
+    "path": "Ships_Doctor_Kul-Tiras_HD_TC.mdx",
+    "bytes": 352575,
+    "stored": 156770
+  },
+  {
+    "path": "Textures\\Skeleton.blp",
+    "bytes": 164749,
+    "stored": 156657
+  },
+  {
+    "path": "war3mapImported\\deadeyefixed.mdx",
+    "bytes": 303886,
+    "stored": 156091
+  },
+  {
+    "path": "Blackclouds_anim1_bw.blp",
+    "bytes": 166440,
+    "stored": 151970
+  },
+  {
+    "path": "war3mapImported\\DragonboneGolem.mdx",
+    "bytes": 317953,
+    "stored": 145002
+  },
+  {
+    "path": "PandaWukong_v3.mdx",
+    "bytes": 352564,
+    "stored": 140882
+  },
+  {
+    "path": "Sumo.blp",
+    "bytes": 143478,
+    "stored": 139081
+  },
+  {
+    "path": "Rifleman Lordaeron_HD_TC.mdx",
+    "bytes": 339184,
+    "stored": 138228
+  },
+  {
+    "path": "Lo-Gosh.mdx",
+    "bytes": 243757,
+    "stored": 137297
+  },
+  {
+    "path": "Ember Knight_opt2.mdx",
+    "bytes": 322581,
+    "stored": 137105
+  },
+  {
+    "path": "war3mapImported\\ShadowGOLEM.mdx",
+    "bytes": 257921,
+    "stored": 129266
+  },
+  {
+    "path": "war3mapImported\\HeroTrollGodslayer.mdx",
+    "bytes": 273732,
+    "stored": 127391
+  },
+  {
+    "path": "ratling.blp",
+    "bytes": 126297,
+    "stored": 125964
+  },
+  {
+    "path": "InfernalGragas.mdx",
+    "bytes": 268513,
+    "stored": 123963
+  },
+  {
+    "path": "Thief.blp",
+    "bytes": 124185,
+    "stored": 121067
+  },
+  {
+    "path": "DeathWings.blp",
+    "bytes": 124313,
+    "stored": 117935
+  },
+  {
+    "path": "war3mapImported\\Zeus.mdx",
+    "bytes": 258882,
+    "stored": 114227
+  },
+  {
+    "path": "war3mapSkin.w3a",
+    "bytes": 532569,
+    "stored": 113182
+  },
+  {
+    "path": "BlackTemplarInquisitorGrandMasterHelmetV2.mdx",
+    "bytes": 249697,
+    "stored": 112744
+  },
+  {
+    "path": "war3mapImported\\ratling_hero.mdx",
+    "bytes": 276538,
+    "stored": 111579
+  },
+  {
+    "path": "Thrall_Warchief.mdx",
+    "bytes": 193049,
+    "stored": 108430
+  },
+  {
+    "path": "Fountainhead 242.mdx",
+    "bytes": 401912,
+    "stored": 107013
+  },
+  {
+    "path": "Deathwing.blp",
+    "bytes": 110794,
+    "stored": 106662
+  },
+  {
+    "path": "Thor.mdx",
+    "bytes": 203392,
+    "stored": 103864
+  },
+  {
+    "path": "Akama02.mdx",
+    "bytes": 177981,
+    "stored": 103854
+  },
+  {
+    "path": "Dagger.blp",
+    "bytes": 118719,
+    "stored": 103187
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\MoveGround.blp",
+    "bytes": 700230,
+    "stored": 102196
+  },
+  {
+    "path": "BattlePriest.blp",
+    "bytes": 100113,
+    "stored": 98528
+  },
+  {
+    "path": "war3mapImported\\Deathwing.mdx",
+    "bytes": 227499,
+    "stored": 98524
+  },
+  {
+    "path": "sword_1h_turalyon_d_01.blp",
+    "bytes": 100494,
+    "stored": 97474
+  },
+  {
+    "path": "war3mapImported\\Windwalk.PNG",
+    "bytes": 97352,
+    "stored": 97409
+  },
+  {
+    "path": "HeroArchangel.mdx",
+    "bytes": 225733,
+    "stored": 93147
+  },
+  {
+    "path": "gor_spear.blp",
+    "bytes": 91129,
+    "stored": 90846
+  },
+  {
+    "path": "PNZealot.blp",
+    "bytes": 92383,
+    "stored": 90545
+  },
+  {
+    "path": "Sumo.mdx",
+    "bytes": 166764,
+    "stored": 90545
+  },
+  {
+    "path": "Textures\\Clouds8x8_Fel.blp",
+    "bytes": 88211,
+    "stored": 88165
+  },
+  {
+    "path": "war3mapImported\\SkeletonJuggernaut.mdx",
+    "bytes": 226469,
+    "stored": 86687
+  },
+  {
+    "path": "Custom\\Spells\\Frost Eruption\\fe_start.mp3",
+    "bytes": 85782,
+    "stored": 82730
+  },
+  {
+    "path": "war3map.w3u",
+    "bytes": 281009,
+    "stored": 80953
+  },
+  {
+    "path": "war3mapImported\\DarkSoldier_Hero.mdx",
+    "bytes": 124391,
+    "stored": 80391
+  },
+  {
+    "path": "war3mapImported\\SunWukong.mdx",
+    "bytes": 180213,
+    "stored": 79898
+  },
+  {
+    "path": "newboom1.blp",
+    "bytes": 82497,
+    "stored": 79749
+  },
+  {
+    "path": "HeroTigerianSlicer.mdx",
+    "bytes": 190000,
+    "stored": 78125
+  },
+  {
+    "path": "war3mapImported\\Hydra.blp",
+    "bytes": 79744,
+    "stored": 77945
+  },
+  {
+    "path": "war3mapImported\\DarkSoldier_Hero_Portrait.mdx",
+    "bytes": 121370,
+    "stored": 76270
+  },
+  {
+    "path": "SantaClaus256X256.blp",
+    "bytes": 77872,
+    "stored": 76101
+  },
+  {
+    "path": "SkeletonBerserker.mdx",
+    "bytes": 197564,
+    "stored": 75755
+  },
+  {
+    "path": "liz_pyro_new15hero.mdx",
+    "bytes": 171741,
+    "stored": 73929
+  },
+  {
+    "path": "war3mapImported\\RagnarosMinion.mdx",
+    "bytes": 159668,
+    "stored": 73499
+  },
+  {
+    "path": "Hero_Antonidas.mdx",
+    "bytes": 184850,
+    "stored": 72806
+  },
+  {
+    "path": "S2.blp",
+    "bytes": 73098,
+    "stored": 72358
+  },
+  {
+    "path": "liz_assasin43_glow.mdx",
+    "bytes": 159146,
+    "stored": 72262
+  },
+  {
+    "path": "Hero_FelOrc_General.mdx",
+    "bytes": 148137,
+    "stored": 72106
+  },
+  {
+    "path": "PestilantPrince.mdx",
+    "bytes": 197477,
+    "stored": 69700
+  },
+  {
+    "path": "TBSFRaven.blp",
+    "bytes": 72168,
+    "stored": 69131
+  },
+  {
+    "path": "Marauder.mdx",
+    "bytes": 166226,
+    "stored": 68854
+  },
+  {
+    "path": "Units\\EnlightenedTide\\HeroMursophEmperor\\SeaGiantRed.blp",
+    "bytes": 69338,
+    "stored": 67302
+  },
+  {
+    "path": "DarkChampion_by67chrome.blp",
+    "bytes": 67953,
+    "stored": 67204
+  },
+  {
+    "path": "Deadeye.blp",
+    "bytes": 68406,
+    "stored": 66595
+  },
+  {
+    "path": "BrutalLord.blp",
+    "bytes": 175942,
+    "stored": 64609
+  },
+  {
+    "path": "Tiger.mdx",
+    "bytes": 120290,
+    "stored": 64421
+  },
+  {
+    "path": "liz_asasen.blp",
+    "bytes": 62273,
+    "stored": 62078
+  },
+  {
+    "path": "war3mapImported\\FlamingRaven.mdx",
+    "bytes": 112737,
+    "stored": 61824
+  },
+  {
+    "path": "HotWheelsv2.mdx",
+    "bytes": 132413,
+    "stored": 61562
+  },
+  {
+    "path": "InfantryRussian.blp",
+    "bytes": 63765,
+    "stored": 61491
+  },
+  {
+    "path": "InfernalGragas_Portrait.mdx",
+    "bytes": 61234,
+    "stored": 61234
+  },
+  {
+    "path": "war3mapImported\\gold.blp",
+    "bytes": 63290,
+    "stored": 60506
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\CrystalOpaque.blp",
+    "bytes": 175942,
+    "stored": 58396
+  },
+  {
+    "path": "FrostWyrmV2.01.mdx",
+    "bytes": 131128,
+    "stored": 57818
+  },
+  {
+    "path": "Textures\\DragonboneReaper.blp",
+    "bytes": 175942,
+    "stored": 57224
+  },
+  {
+    "path": "ObsidianGolem.mdx",
+    "bytes": 121839,
+    "stored": 56431
+  },
+  {
+    "path": "EmberGlow7.blp",
+    "bytes": 56328,
+    "stored": 56134
+  },
+  {
+    "path": "FemaleNecromancer.mdx",
+    "bytes": 98705,
+    "stored": 54837
+  },
+  {
+    "path": "Tiger.blp",
+    "bytes": 55933,
+    "stored": 54548
+  },
+  {
+    "path": "SantaClaus2017.mdx",
+    "bytes": 105103,
+    "stored": 54267
+  },
+  {
+    "path": "dragonpriest.blp",
+    "bytes": 53905,
+    "stored": 53846
+  },
+  {
+    "path": "war3mapImported\\HeroNerubianWidow.mdx",
+    "bytes": 108814,
+    "stored": 52349
+  },
+  {
+    "path": "HeroCleric.mdx",
+    "bytes": 123061,
+    "stored": 52201
+  },
+  {
+    "path": "WitchDoctor.blp",
+    "bytes": 54769,
+    "stored": 51982
+  },
+  {
+    "path": "WitchDoctor.mdx",
+    "bytes": 97193,
+    "stored": 50824
+  },
+  {
+    "path": "Hormagaunt.blp",
+    "bytes": 52229,
+    "stored": 50101
+  },
+  {
+    "path": "MirkwoodSpinner.blp",
+    "bytes": 48884,
+    "stored": 48801
+  },
+  {
+    "path": "S1.blp",
+    "bytes": 48489,
+    "stored": 47757
+  },
+  {
+    "path": "war3mapImported\\ForestTrollWarlord.mdx",
+    "bytes": 138167,
+    "stored": 47126
+  },
+  {
+    "path": "FF_SOURCE_MANIFEST.json",
+    "bytes": 46815,
+    "stored": 46815
+  },
+  {
+    "path": "PestilantPrince_Portrait.mdx",
+    "bytes": 106506,
+    "stored": 46752
+  },
+  {
+    "path": "Jiasha.blp",
+    "bytes": 48324,
+    "stored": 46508
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Shockwave.wav",
+    "bytes": 52964,
+    "stored": 46372
+  },
+  {
+    "path": "S3.blp",
+    "bytes": 46531,
+    "stored": 46087
+  },
+  {
+    "path": "war3mapSkin.w3u",
+    "bytes": 173975,
+    "stored": 46066
+  },
+  {
+    "path": "FemaleCaptain.mdx",
+    "bytes": 123839,
+    "stored": 44922
+  },
+  {
+    "path": "Spell_Marker_TC.mdx",
+    "bytes": 111945,
+    "stored": 44235
+  },
+  {
+    "path": "war3mapImported\\DragonboneGolem_Portrait.mdx",
+    "bytes": 93309,
+    "stored": 43515
+  },
+  {
+    "path": "leopardess.mdx",
+    "bytes": 114293,
+    "stored": 41481
+  },
+  {
+    "path": "CelestialAssault.mdx",
+    "bytes": 88538,
+    "stored": 40715
+  },
+  {
+    "path": "war3mapImported\\AzureGlow4.blp",
+    "bytes": 41081,
+    "stored": 40135
+  },
+  {
+    "path": "war3mapImported\\BloodelfWizard_Portrait.mdx",
+    "bytes": 84555,
+    "stored": 39738
+  },
+  {
+    "path": "SantaClaus.mdx",
+    "bytes": 79344,
+    "stored": 39372
+  },
+  {
+    "path": "war3mapImported\\shockwavewarp01_bw.blp",
+    "bytes": 46910,
+    "stored": 39360
+  },
+  {
+    "path": "Lo-Gosh_portrait.mdx",
+    "bytes": 82317,
+    "stored": 38856
+  },
+  {
+    "path": "war3mapImported\\HeroNerubianWidow_Portrait.mdx",
+    "bytes": 86919,
+    "stored": 37777
+  },
+  {
+    "path": "TownHallWC1.mdx",
+    "bytes": 96862,
+    "stored": 36597
+  },
+  {
+    "path": "Thor_Portrait.mdx",
+    "bytes": 121755,
+    "stored": 35842
+  },
+  {
+    "path": "PNZealot.mdx",
+    "bytes": 69030,
+    "stored": 35812
+  },
+  {
+    "path": "war3mapImported\\Bandit Dog.mdx",
+    "bytes": 81765,
+    "stored": 34916
+  },
+  {
+    "path": "Windmill House.mdx",
+    "bytes": 119169,
+    "stored": 34495
+  },
+  {
+    "path": "war3mapImported\\DemonKnight_Portrait.mdx",
+    "bytes": 33863,
+    "stored": 33863
+  },
+  {
+    "path": "war3mapImported\\HiveForceShield.mdx",
+    "bytes": 33858,
+    "stored": 33858
+  },
+  {
+    "path": "Sumo_Portrait.mdx",
+    "bytes": 64540,
+    "stored": 33772
+  },
+  {
+    "path": "Custom\\Spells\\Frost Eruption\\fe_explode1.mp3",
+    "bytes": 35625,
+    "stored": 32818
+  },
+  {
+    "path": "Marauder.blp",
+    "bytes": 35970,
+    "stored": 32538
+  },
+  {
+    "path": "Akama02_Portrait.mdx",
+    "bytes": 77130,
+    "stored": 31611
+  },
+  {
+    "path": "Spells\\TwistedFate\\Chains.blp",
+    "bytes": 30658,
+    "stored": 30658
+  },
+  {
+    "path": "Custom\\Spells\\Frost Eruption\\fe_explode2.mp3",
+    "bytes": 33008,
+    "stored": 30560
+  },
+  {
+    "path": "AbyssAura2.blp",
+    "bytes": 29496,
+    "stored": 29412
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Attack.wav",
+    "bytes": 33118,
+    "stored": 29189
+  },
+  {
+    "path": "war3mapImported\\SunWukong_portrait.mdx",
+    "bytes": 62045,
+    "stored": 28948
+  },
+  {
+    "path": "war3mapImported\\SheepMarine.mdx",
+    "bytes": 67048,
+    "stored": 28933
+  },
+  {
+    "path": "war3map.w3t",
+    "bytes": 27659,
+    "stored": 27659
+  },
+  {
+    "path": "war3mapImported\\HeroTrollGodslayer_Portrait.mdx",
+    "bytes": 55045,
+    "stored": 27644
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Heal.wav",
+    "bytes": 30914,
+    "stored": 27282
+  },
+  {
+    "path": "war3mapImported\\dust3.blp",
+    "bytes": 25429,
+    "stored": 23986
+  },
+  {
+    "path": "war3mapImported\\Raven.mdx",
+    "bytes": 63215,
+    "stored": 23689
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Protect.wav",
+    "bytes": 26504,
+    "stored": 23246
+  },
+  {
+    "path": "Hero_FelOrc_General_Portrait.mdx",
+    "bytes": 61881,
+    "stored": 23101
+  },
+  {
+    "path": "Hormagaunt.mdx",
+    "bytes": 50107,
+    "stored": 22478
+  },
+  {
+    "path": "BattlePriest_Portrait.mdx",
+    "bytes": 43801,
+    "stored": 22142
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Windup.wav",
+    "bytes": 22094,
+    "stored": 21243
+  },
+  {
+    "path": "war3mapImported\\BoundlessStrike.mdx",
+    "bytes": 42478,
+    "stored": 20341
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPixieDust.blp",
+    "bytes": 20321,
+    "stored": 19962
+  },
+  {
+    "path": "Zap1_yellow.blp",
+    "bytes": 21548,
+    "stored": 19856
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Move.wav",
+    "bytes": 22094,
+    "stored": 19576
+  },
+  {
+    "path": "war3mapImported\\DiskOfScythes.mdx",
+    "bytes": 58643,
+    "stored": 19439
+  },
+  {
+    "path": "Storm Bolt.mdx",
+    "bytes": 62514,
+    "stored": 19382
+  },
+  {
+    "path": "war3mapImported\\Storm Bolt Green.mdx",
+    "bytes": 62838,
+    "stored": 19361
+  },
+  {
+    "path": "war3mapImported\\Storm Bolt Red.mdx",
+    "bytes": 62838,
+    "stored": 19335
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDemonForgedAtlas.blp",
+    "bytes": 19564,
+    "stored": 19276
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTreantHide.blp",
+    "bytes": 19540,
+    "stored": 19243
+  },
+  {
+    "path": "war3mapImported\\SuperLightningBall.mdx",
+    "bytes": 38311,
+    "stored": 18493
+  },
+  {
+    "path": "SkeletonBerserker_Portrait.mdx",
+    "bytes": 39906,
+    "stored": 18117
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNgoblinBOOM.blp",
+    "bytes": 20038,
+    "stored": 18021
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBlink Strike.blp",
+    "bytes": 20083,
+    "stored": 17978
+  },
+  {
+    "path": "FemaleNecromancer_Portrait.mdx",
+    "bytes": 44912,
+    "stored": 17676
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHolyHammerSwing.blp",
+    "bytes": 17837,
+    "stored": 17577
+  },
+  {
+    "path": "ring.blp",
+    "bytes": 22027,
+    "stored": 17505
+  },
+  {
+    "path": "war3mapImported\\ring.blp",
+    "bytes": 22027,
+    "stored": 17505
+  },
+  {
+    "path": "war3mapMap.blp",
+    "bytes": 18571,
+    "stored": 17475
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDragonFly.blp",
+    "bytes": 17749,
+    "stored": 17423
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBTNgoblinBOOM.blp",
+    "bytes": 18774,
+    "stored": 17055
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp",
+    "bytes": 17259,
+    "stored": 16961
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNANGreenNikeyShoes.blp",
+    "bytes": 17179,
+    "stored": 16954
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDoombringer.blp",
+    "bytes": 18273,
+    "stored": 16922
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSkull.blp",
+    "bytes": 17022,
+    "stored": 16846
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDeadProphetStaff.blp",
+    "bytes": 17029,
+    "stored": 16811
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpell_Holy_HolyNova.BLP",
+    "bytes": 18609,
+    "stored": 16708
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+    "bytes": 18374,
+    "stored": 16626
+  },
+  {
+    "path": "EntanglingRootsNorthrend.mdx",
+    "bytes": 55171,
+    "stored": 16546
+  },
+  {
+    "path": "FemaleCaptain_Portrait.mdx",
+    "bytes": 41653,
+    "stored": 16414
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSoul Rune.blp",
+    "bytes": 17685,
+    "stored": 16409
+  },
+  {
+    "path": "war3mapImported\\BTNSoul Rune.blp",
+    "bytes": 17685,
+    "stored": 16409
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWavesOfIceBolts2.blp",
+    "bytes": 16589,
+    "stored": 16381
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNElemental Shield.blp",
+    "bytes": 17684,
+    "stored": 16379
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLaptop.blp",
+    "bytes": 18683,
+    "stored": 16372
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNIronFist.blp",
+    "bytes": 17705,
+    "stored": 16371
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp",
+    "bytes": 17967,
+    "stored": 16157
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHeroRiflemanElite.blp",
+    "bytes": 17999,
+    "stored": 16150
+  },
+  {
+    "path": "HeroTigerianSlicer_Portrait.mdx",
+    "bytes": 34643,
+    "stored": 15872
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWavesOfIceBolts2.blp",
+    "bytes": 15988,
+    "stored": 15790
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScrollOfInferno.blp",
+    "bytes": 17062,
+    "stored": 15767
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASElemental Shield.blp",
+    "bytes": 17006,
+    "stored": 15690
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGebo.BLP",
+    "bytes": 17470,
+    "stored": 15674
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Return.wav",
+    "bytes": 17684,
+    "stored": 15607
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSonOfAnubis.blp",
+    "bytes": 16873,
+    "stored": 15589
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_LifeIntoMana.blp",
+    "bytes": 16876,
+    "stored": 15567
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPunish.blp",
+    "bytes": 16773,
+    "stored": 15465
+  },
+  {
+    "path": "WitchDoctor_Portrait.mdx",
+    "bytes": 30645,
+    "stored": 15321
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCEnvenomed_ArrowOn.blp",
+    "bytes": 16883,
+    "stored": 15150
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHolyRestorationAura.BLP",
+    "bytes": 16821,
+    "stored": 15143
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSylvanasWindrunner.blp",
+    "bytes": 16057,
+    "stored": 15123
+  },
+  {
+    "path": "war3mapImported\\SkeletonJuggernaut_Portrait.mdx",
+    "bytes": 40915,
+    "stored": 15090
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGWavesOfIceBolts2.blp",
+    "bytes": 15214,
+    "stored": 15017
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNReindeer.blp",
+    "bytes": 15899,
+    "stored": 14946
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNecro.blp",
+    "bytes": 17645,
+    "stored": 14804
+  },
+  {
+    "path": "FarseerMissileYellow.mdx",
+    "bytes": 33839,
+    "stored": 14788
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome2.blp",
+    "bytes": 16533,
+    "stored": 14652
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNVR.blp",
+    "bytes": 15169,
+    "stored": 14641
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBad Omen.blp",
+    "bytes": 15750,
+    "stored": 14545
+  },
+  {
+    "path": "war3mapImported\\PASSoul Rune.blp",
+    "bytes": 15867,
+    "stored": 14543
+  },
+  {
+    "path": "MjolnirTossMissile.mdx",
+    "bytes": 38650,
+    "stored": 14515
+  },
+  {
+    "path": "ShadowOrbMissile_v1.2.mdx",
+    "bytes": 26805,
+    "stored": 14451
+  },
+  {
+    "path": "war3mapImported\\ShadowOrbMissile v1.2.mdx",
+    "bytes": 26805,
+    "stored": 14451
+  },
+  {
+    "path": "FieldBASE.mdx",
+    "bytes": 33562,
+    "stored": 14434
+  },
+  {
+    "path": "war3map.doo",
+    "bytes": 99546,
+    "stored": 14372
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGuardianWispSpirits.blp",
+    "bytes": 14582,
+    "stored": 14079
+  },
+  {
+    "path": "war3mapMap_ingame.blp",
+    "bytes": 15143,
+    "stored": 13998
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWavesOfIceBolts2.blp",
+    "bytes": 14101,
+    "stored": 13895
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNfireStaff.blp",
+    "bytes": 15793,
+    "stored": 13860
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDoombringer.blp",
+    "bytes": 15024,
+    "stored": 13682
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOfficerhat.blp",
+    "bytes": 15863,
+    "stored": 13642
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPixieDust.blp",
+    "bytes": 13787,
+    "stored": 13634
+  },
+  {
+    "path": "FF_MAINTENANCE.md",
+    "bytes": 13619,
+    "stored": 13619
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNKnightCharge.blp",
+    "bytes": 15566,
+    "stored": 13551
+  },
+  {
+    "path": "Abilities\\Spells\\Other\\HealingSpray\\HealingSprayDeath1.flac",
+    "bytes": 47716,
+    "stored": 13450
+  },
+  {
+    "path": "Abilities\\Weapons\\AncestralGuardianMissile\\AncestralGuardianHit1.flac",
+    "bytes": 47716,
+    "stored": 13450
+  },
+  {
+    "path": "Abilities\\Weapons\\AncestralGuardianMissile\\AncestralGuardianMissileLaunch.flac",
+    "bytes": 47716,
+    "stored": 13450
+  },
+  {
+    "path": "Units\\Orc\\AncestralGuardian\\AncestralGuardianAttack1.flac",
+    "bytes": 47716,
+    "stored": 13450
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTreantHide.blp",
+    "bytes": 13524,
+    "stored": 13380
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWavesOfIceBolts2.blp",
+    "bytes": 13522,
+    "stored": 13371
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMagicMissile.blp",
+    "bytes": 14788,
+    "stored": 13261
+  },
+  {
+    "path": "war3mapImported\\OrbLightningX.mdx",
+    "bytes": 29189,
+    "stored": 13084
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNElemental Shield.blp",
+    "bytes": 14337,
+    "stored": 12951
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASElemental Shield.blp",
+    "bytes": 14337,
+    "stored": 12951
+  },
+  {
+    "path": "war3mapImported\\FrostBoltRainV.mdx",
+    "bytes": 45638,
+    "stored": 12927
+  },
+  {
+    "path": "war3mapImported\\OrbDragonX.mdx",
+    "bytes": 28345,
+    "stored": 12900
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNIronFist.blp",
+    "bytes": 14275,
+    "stored": 12888
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDemonForgedAtlas.blp",
+    "bytes": 12999,
+    "stored": 12874
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDeadProphetStaff.blp",
+    "bytes": 12893,
+    "stored": 12775
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBlink Strike.blp",
+    "bytes": 14686,
+    "stored": 12708
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSoul Rune.blp",
+    "bytes": 14102,
+    "stored": 12702
+  },
+  {
+    "path": "war3mapImported\\DISBTNSoul Rune.blp",
+    "bytes": 14102,
+    "stored": 12702
+  },
+  {
+    "path": "war3mapImported\\DISPASSoul Rune.blp",
+    "bytes": 14102,
+    "stored": 12702
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCrimsonEdge.blp",
+    "bytes": 13132,
+    "stored": 12637
+  },
+  {
+    "path": "war3mapImported\\SBL_Constellation.blp",
+    "bytes": 13772,
+    "stored": 12610
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHolyHammerSwing.blp",
+    "bytes": 12746,
+    "stored": 12438
+  },
+  {
+    "path": "war3mapImported\\Wight.png",
+    "bytes": 13950,
+    "stored": 12352
+  },
+  {
+    "path": "Gnomefire.blp",
+    "bytes": 13650,
+    "stored": 12294
+  },
+  {
+    "path": "war3mapImported\\OrbLightX.mdx",
+    "bytes": 28605,
+    "stored": 12255
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNScrollOfInferno.blp",
+    "bytes": 13646,
+    "stored": 12248
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNANGreenNikeyShoes.blp",
+    "bytes": 12363,
+    "stored": 12246
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDragonFly.blp",
+    "bytes": 12278,
+    "stored": 12152
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNoTP.tga",
+    "bytes": 12350,
+    "stored": 12128
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_LifeIntoMana.blp",
+    "bytes": 13482,
+    "stored": 12094
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSkull.blp",
+    "bytes": 12116,
+    "stored": 11988
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNgoblinBOOM.blp",
+    "bytes": 13901,
+    "stored": 11954
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBTNgoblinBOOM.blp",
+    "bytes": 13901,
+    "stored": 11954
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPunish.blp",
+    "bytes": 13300,
+    "stored": 11905
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRottenAura.blp",
+    "bytes": 12343,
+    "stored": 11768
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\Arrival.wav",
+    "bytes": 13274,
+    "stored": 11725
+  },
+  {
+    "path": "war3mapImported\\Possesed_Tome.mdx",
+    "bytes": 47069,
+    "stored": 11707
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDeathCurse.blp",
+    "bytes": 12201,
+    "stored": 11653
+  },
+  {
+    "path": "war3mapImported\\ChillStar.blp",
+    "bytes": 12133,
+    "stored": 11607
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBlackArrows.blp",
+    "bytes": 11629,
+    "stored": 11512
+  },
+  {
+    "path": "BlackBox.blp",
+    "bytes": 11420,
+    "stored": 11420
+  },
+  {
+    "path": "Items\\SpellShieldAmulet.mdx",
+    "bytes": 22733,
+    "stored": 11403
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLoadedDice.tga",
+    "bytes": 16428,
+    "stored": 11358
+  },
+  {
+    "path": "war3mapImported\\WightScythe.png",
+    "bytes": 11992,
+    "stored": 11266
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCAC_ArcaneProtection.blp",
+    "bytes": 12606,
+    "stored": 11078
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNecro.blp",
+    "bytes": 13995,
+    "stored": 11056
+  },
+  {
+    "path": "Textures\\LightningRed_1.blp",
+    "bytes": 44874,
+    "stored": 11054
+  },
+  {
+    "path": "war3map.imp",
+    "bytes": 63885,
+    "stored": 11025
+  },
+  {
+    "path": "war3mapImported\\WightSpirits.png",
+    "bytes": 11742,
+    "stored": 10981
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWavesOfIceBolts2.blp",
+    "bytes": 10971,
+    "stored": 10841
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWavesOfIceBolts2.blp",
+    "bytes": 10971,
+    "stored": 10841
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWavesOfIceBolts2.blp",
+    "bytes": 10971,
+    "stored": 10841
+  },
+  {
+    "path": "Textures\\LightningRed_2.blp",
+    "bytes": 44874,
+    "stored": 10815
+  },
+  {
+    "path": "war3mapImported\\TFGateway.mdx",
+    "bytes": 37224,
+    "stored": 10462
+  },
+  {
+    "path": "EnergyShield_Full.mdx",
+    "bytes": 18422,
+    "stored": 10408
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBattlepriest.blp",
+    "bytes": 11748,
+    "stored": 10349
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEyeOfTheStorm.blp",
+    "bytes": 10444,
+    "stored": 10337
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_ArcaneProtection.blp",
+    "bytes": 12032,
+    "stored": 10192
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp",
+    "bytes": 12147,
+    "stored": 10146
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpell_Holy_HolyNova.BLP",
+    "bytes": 12073,
+    "stored": 10122
+  },
+  {
+    "path": "war3mapImported\\BTNHeroTrollGodSlayer.png",
+    "bytes": 10022,
+    "stored": 10038
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PAS_ArcaneProtection.blp",
+    "bytes": 11864,
+    "stored": 10009
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDeadeye.BLP",
+    "bytes": 11824,
+    "stored": 9963
+  },
+  {
+    "path": "Deathwing_Portrait.mdx",
+    "bytes": 19307,
+    "stored": 9929
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNKoboldTeleport.blp",
+    "bytes": 11793,
+    "stored": 9925
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOrbOfWinds.blp",
+    "bytes": 10015,
+    "stored": 9911
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritParticleBeam.blp",
+    "bytes": 10398,
+    "stored": 9907
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCharge2.blp",
+    "bytes": 11774,
+    "stored": 9887
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_BlueParticleBeam.blp",
+    "bytes": 10380,
+    "stored": 9872
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueParticleBeam.blp",
+    "bytes": 10380,
+    "stored": 9872
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAncientAmulet.blp",
+    "bytes": 11758,
+    "stored": 9871
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThunderload.blp",
+    "bytes": 9993,
+    "stored": 9864
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHolyRestorationAura.BLP",
+    "bytes": 11676,
+    "stored": 9756
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSonOfAnubis.blp",
+    "bytes": 11159,
+    "stored": 9753
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNbackstab6.blp",
+    "bytes": 11596,
+    "stored": 9718
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticParticleBeam.blp",
+    "bytes": 10162,
+    "stored": 9717
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCAC_BloodCurseV2.blp",
+    "bytes": 11480,
+    "stored": 9628
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryParticleBeam.blp",
+    "bytes": 10117,
+    "stored": 9627
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGoldClaw.blp",
+    "bytes": 11542,
+    "stored": 9605
+  },
+  {
+    "path": "war3mapImported\\SBL_RedParticleBeam.blp",
+    "bytes": 10132,
+    "stored": 9548
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+    "bytes": 11083,
+    "stored": 9529
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCCharge (2).blp",
+    "bytes": 11410,
+    "stored": 9526
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCEnvenomed_ArrowOn.blp",
+    "bytes": 11409,
+    "stored": 9464
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPD3WizIllusion.BLP",
+    "bytes": 11322,
+    "stored": 9442
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowParticleBeam.blp",
+    "bytes": 9892,
+    "stored": 9423
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSumo.blp",
+    "bytes": 10776,
+    "stored": 9407
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenParticleBeam.blp",
+    "bytes": 9952,
+    "stored": 9397
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLoadedDice.tga",
+    "bytes": 16428,
+    "stored": 9348
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNIncreaseIncome2.blp",
+    "bytes": 11345,
+    "stored": 9337
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHeroRiflemanElite.blp",
+    "bytes": 11300,
+    "stored": 9311
+  },
+  {
+    "path": "(attributes)",
+    "bytes": 16340,
+    "stored": 9308
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_BloodCurseV2.blp",
+    "bytes": 11150,
+    "stored": 9287
+  },
+  {
+    "path": "Textures\\LightningRed_3.blp",
+    "bytes": 44874,
+    "stored": 9285
+  },
+  {
+    "path": "war3mapImported\\Scepter of the Tides.mdx",
+    "bytes": 15825,
+    "stored": 9226
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFireImpact.blp",
+    "bytes": 11098,
+    "stored": 9224
+  },
+  {
+    "path": "Anims\\NorthrendRoots\\EntanglingRootsNorthrend.blp",
+    "bytes": 9965,
+    "stored": 9167
+  },
+  {
+    "path": "war3mapImported\\SBL_HealingFlux.blp",
+    "bytes": 88562,
+    "stored": 9154
+  },
+  {
+    "path": "leopardess_Portrait.mdx",
+    "bytes": 24154,
+    "stored": 9150
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHarbingerHelm.blp",
+    "bytes": 10780,
+    "stored": 8954
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_BlueSleekBeam.blp",
+    "bytes": 9455,
+    "stored": 8677
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAdvancedMoonGlaive.blp",
+    "bytes": 9311,
+    "stored": 8667
+  },
+  {
+    "path": "war3mapImported\\SheepMarine_Portrait.mdx",
+    "bytes": 19075,
+    "stored": 8661
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritSleekBeam.blp",
+    "bytes": 9344,
+    "stored": 8630
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteParticleBeam.blp",
+    "bytes": 9999,
+    "stored": 8573
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTigerLook.blp",
+    "bytes": 9139,
+    "stored": 8542
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFireTornado.blp",
+    "bytes": 9768,
+    "stored": 8527
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpell_Frost_IceShard.blp",
+    "bytes": 9999,
+    "stored": 8460
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGrenade.blp",
+    "bytes": 10313,
+    "stored": 8431
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCloseFireCrush.blp",
+    "bytes": 8525,
+    "stored": 8424
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteChainAlt.blp",
+    "bytes": 10962,
+    "stored": 8412
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFireNovaIcon.blp",
+    "bytes": 8428,
+    "stored": 8356
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Gift_01.blp",
+    "bytes": 9912,
+    "stored": 8348
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PAS_BloodCurseV2.blp",
+    "bytes": 10102,
+    "stored": 8276
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNoTrading.tga",
+    "bytes": 12306,
+    "stored": 8225
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASAdvancedMoonGlaive.blp",
+    "bytes": 8839,
+    "stored": 8202
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScepterOfTheTides.blp",
+    "bytes": 8832,
+    "stored": 8188
+  },
+  {
+    "path": "war3mapImported\\HealthStone.mdx",
+    "bytes": 18692,
+    "stored": 8174
+  },
+  {
+    "path": "FireworksDragonHead.mdx",
+    "bytes": 17611,
+    "stored": 8165
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_MysticSleekBeam.blp",
+    "bytes": 8939,
+    "stored": 8133
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticSleekBeam.blp",
+    "bytes": 8939,
+    "stored": 8133
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNReplicate.BLP",
+    "bytes": 10013,
+    "stored": 8129
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHoly.blp",
+    "bytes": 9991,
+    "stored": 8084
+  },
+  {
+    "path": "war3mapImported\\DaggerOfTime.mdx",
+    "bytes": 12481,
+    "stored": 8033
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGFireImpact.blp",
+    "bytes": 9873,
+    "stored": 8026
+  },
+  {
+    "path": "Abilities\\Spells\\Human\\Banish\\GenericGlow2bA.blp",
+    "bytes": 10929,
+    "stored": 8023
+  },
+  {
+    "path": "war3mapImported\\GenericGlow2bA.blp",
+    "bytes": 10929,
+    "stored": 8023
+  },
+  {
+    "path": "ReplaceableTextures\\ATTFireImpact.blp",
+    "bytes": 9848,
+    "stored": 7993
+  },
+  {
+    "path": "Items\\PotionPurple.mdx",
+    "bytes": 17339,
+    "stored": 7986
+  },
+  {
+    "path": "Items\\PotionGreen.mdx",
+    "bytes": 17347,
+    "stored": 7975
+  },
+  {
+    "path": "Items\\PotionBlue.mdx",
+    "bytes": 17347,
+    "stored": 7974
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Coin_01.blp",
+    "bytes": 9495,
+    "stored": 7970
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASAncientAmulet.blp",
+    "bytes": 9987,
+    "stored": 7943
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueChainAlt.blp",
+    "bytes": 9556,
+    "stored": 7940
+  },
+  {
+    "path": "war3mapImported\\Deadly Plumage HD Gold.mdx",
+    "bytes": 28380,
+    "stored": 7930
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Mug.blp",
+    "bytes": 9555,
+    "stored": 7917
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNoTP.tga",
+    "bytes": 12306,
+    "stored": 7916
+  },
+  {
+    "path": "war3map.w3e",
+    "bytes": 33885,
+    "stored": 7908
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAbility_Hunter_SniperShot.blp",
+    "bytes": 9596,
+    "stored": 7898
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGenericProtoss.blp",
+    "bytes": 8495,
+    "stored": 7858
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFemaleCaptain.blp",
+    "bytes": 8479,
+    "stored": 7824
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueChain.blp",
+    "bytes": 10384,
+    "stored": 7822
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGebo.BLP",
+    "bytes": 9840,
+    "stored": 7818
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOfficerhat.blp",
+    "bytes": 9873,
+    "stored": 7789
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_FierySleekBeam.blp",
+    "bytes": 8624,
+    "stored": 7776
+  },
+  {
+    "path": "war3mapImported\\SBL_FierySleekBeam.blp",
+    "bytes": 8624,
+    "stored": 7776
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCBad Omen.blp",
+    "bytes": 8560,
+    "stored": 7751
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASFireTornado.blp",
+    "bytes": 8968,
+    "stored": 7732
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGBad Omen.blp",
+    "bytes": 8425,
+    "stored": 7715
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASFireImpact.blp",
+    "bytes": 9549,
+    "stored": 7691
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenSleekBeam.blp",
+    "bytes": 8622,
+    "stored": 7679
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGoblinZeppelin1.BLP",
+    "bytes": 9518,
+    "stored": 7659
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_CR_GREENstaf.blp",
+    "bytes": 8294,
+    "stored": 7657
+  },
+  {
+    "path": "FireKegMissle.mdx",
+    "bytes": 7648,
+    "stored": 7648
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCrate.blp",
+    "bytes": 9213,
+    "stored": 7639
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGUPGFireTornado.blp",
+    "bytes": 8870,
+    "stored": 7629
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAbility_Warrior_InnerRage.blp",
+    "bytes": 9141,
+    "stored": 7597
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowSleekBeam.blp",
+    "bytes": 8723,
+    "stored": 7579
+  },
+  {
+    "path": " ReplaceableTextures\\CommandButtons\\BTNBK_Black_Book.blp",
+    "bytes": 9625,
+    "stored": 7560
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpell_Nature_SpiritArmor.blp",
+    "bytes": 9069,
+    "stored": 7528
+  },
+  {
+    "path": "ultralisk_emissive.blp",
+    "bytes": 12923,
+    "stored": 7470
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSumo.blp",
+    "bytes": 8899,
+    "stored": 7436
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLifeSteal.blp",
+    "bytes": 9299,
+    "stored": 7358
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKnightCharge.blp",
+    "bytes": 9362,
+    "stored": 7347
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_BlueNewLightning.blp",
+    "bytes": 7823,
+    "stored": 7289
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueNewLightning.blp",
+    "bytes": 7823,
+    "stored": 7289
+  },
+  {
+    "path": "ReplaceableTextures\\ATTBad Omen.blp",
+    "bytes": 8126,
+    "stored": 7280
+  },
+  {
+    "path": "ReplaceableTextures\\Weather\\SBL_RedSleekBeam.blp",
+    "bytes": 8322,
+    "stored": 7271
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAxeMaster.blp",
+    "bytes": 9118,
+    "stored": 7258
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBloodLustAmulet.blp",
+    "bytes": 8687,
+    "stored": 7145
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteSleekBeam.blp",
+    "bytes": 9215,
+    "stored": 7145
+  },
+  {
+    "path": "war3mapImported\\SBL_RedChainAlt.blp",
+    "bytes": 8836,
+    "stored": 7132
+  },
+  {
+    "path": "ReplaceableTextures\\ATTFireTornado.blp",
+    "bytes": 8439,
+    "stored": 7106
+  },
+  {
+    "path": "Black_Star.blp",
+    "bytes": 9800,
+    "stored": 7088
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEnvenomed_Arrow.BLP",
+    "bytes": 8921,
+    "stored": 7051
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCLifeSteal.blp",
+    "bytes": 8954,
+    "stored": 7046
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp",
+    "bytes": 7734,
+    "stored": 7039
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow LSD 2.mdx",
+    "bytes": 16006,
+    "stored": 7033
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpeedUp.blp",
+    "bytes": 8954,
+    "stored": 7014
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRifle-Ak47.blp",
+    "bytes": 8875,
+    "stored": 6999
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNChainArmor.blp",
+    "bytes": 7462,
+    "stored": 6989
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow-Deadeye.mdx",
+    "bytes": 15007,
+    "stored": 6988
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow LSD.mdx",
+    "bytes": 15343,
+    "stored": 6983
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLightningRed.blp",
+    "bytes": 8872,
+    "stored": 6977
+  },
+  {
+    "path": "war3mapImported\\WukongTotem.mdx",
+    "bytes": 14760,
+    "stored": 6956
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBloodElfSorceress.blp",
+    "bytes": 7613,
+    "stored": 6939
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow.mdx",
+    "bytes": 15295,
+    "stored": 6939
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRing_of_Roaring_Thunder.blp",
+    "bytes": 6990,
+    "stored": 6910
+  },
+  {
+    "path": "war3mapImported\\Bloodstone Arrow Bloodless.mdx",
+    "bytes": 14648,
+    "stored": 6887
+  },
+  {
+    "path": "war3mapImported\\SBL_RedChain.blp",
+    "bytes": 9462,
+    "stored": 6880
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp",
+    "bytes": 7467,
+    "stored": 6790
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNscope.blp",
+    "bytes": 8883,
+    "stored": 6783
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticChain.blp",
+    "bytes": 9166,
+    "stored": 6751
+  },
+  {
+    "path": "war3mapImported\\flarecross_bw.blp",
+    "bytes": 10365,
+    "stored": 6743
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryChainAlt.blp",
+    "bytes": 8378,
+    "stored": 6714
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOgronIconYellow.blp",
+    "bytes": 6779,
+    "stored": 6694
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSphereOfNature.blp",
+    "bytes": 7338,
+    "stored": 6666
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticChainAlt.blp",
+    "bytes": 8319,
+    "stored": 6650
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaAttack.blp",
+    "bytes": 6641,
+    "stored": 6641
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxOriannaAttack.blp",
+    "bytes": 6641,
+    "stored": 6641
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRayofHope.blp",
+    "bytes": 6710,
+    "stored": 6617
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryChain.blp",
+    "bytes": 9033,
+    "stored": 6617
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteChain.blp",
+    "bytes": 11751,
+    "stored": 6612
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNShockStorm.blp",
+    "bytes": 6724,
+    "stored": 6604
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThunderfury2.blp",
+    "bytes": 7236,
+    "stored": 6565
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWebWard.blp",
+    "bytes": 7257,
+    "stored": 6564
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThunderArrows.blp",
+    "bytes": 6611,
+    "stored": 6533
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritNewLightning.blp",
+    "bytes": 7116,
+    "stored": 6527
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOneRing.blp",
+    "bytes": 7195,
+    "stored": 6518
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWizardStaff.blp",
+    "bytes": 6546,
+    "stored": 6489
+  },
+  {
+    "path": "war3mapImported\\DarkNova.mdx",
+    "bytes": 19018,
+    "stored": 6485
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHoly Ban.blp",
+    "bytes": 7097,
+    "stored": 6421
+  },
+  {
+    "path": "BonefireArrow1.mdx",
+    "bytes": 14652,
+    "stored": 6418
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCAC_ArcaneProtection.blp",
+    "bytes": 8365,
+    "stored": 6390
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_ArcaneProtection.blp",
+    "bytes": 8365,
+    "stored": 6390
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPAS_ArcaneProtection.blp",
+    "bytes": 8365,
+    "stored": 6390
+  },
+  {
+    "path": "war3mapImported\\ArcaneMissileComplete.mdx",
+    "bytes": 18429,
+    "stored": 6337
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAmulet.blp",
+    "bytes": 6385,
+    "stored": 6305
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowChainAlt.blp",
+    "bytes": 8020,
+    "stored": 6299
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAcolyte.blp",
+    "bytes": 6979,
+    "stored": 6289
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMonkeyKing.blp",
+    "bytes": 6970,
+    "stored": 6286
+  },
+  {
+    "path": "FrostStomp.mdx",
+    "bytes": 19294,
+    "stored": 6282
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCThunderfury2.blp",
+    "bytes": 6964,
+    "stored": 6276
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticNewLightning.blp",
+    "bytes": 6840,
+    "stored": 6268
+  },
+  {
+    "path": "war3mapImported\\Great Lightning.mdx",
+    "bytes": 23934,
+    "stored": 6265
+  },
+  {
+    "path": "war3mapImported\\BTNCRFrostShock.blp",
+    "bytes": 6924,
+    "stored": 6243
+  },
+  {
+    "path": "war3mapImported\\ATCWorgenMoon.blp",
+    "bytes": 6347,
+    "stored": 6238
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritBeam.blp",
+    "bytes": 8143,
+    "stored": 6232
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSuperiorMageRobe.blp",
+    "bytes": 6289,
+    "stored": 6221
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCharge.blp",
+    "bytes": 8294,
+    "stored": 6203
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRodofEnvy.blp",
+    "bytes": 6866,
+    "stored": 6197
+  },
+  {
+    "path": "war3mapImported\\GreenArcaneMissile004.mdx",
+    "bytes": 13588,
+    "stored": 6188
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotato.blp",
+    "bytes": 8282,
+    "stored": 6179
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteNewLightning.blp",
+    "bytes": 7420,
+    "stored": 6176
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStatic Lightning.blp",
+    "bytes": 6853,
+    "stored": 6162
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaff of Destruction.blp",
+    "bytes": 6793,
+    "stored": 6136
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticBeam.blp",
+    "bytes": 7732,
+    "stored": 6129
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCABTNCharge.blp",
+    "bytes": 8250,
+    "stored": 6127
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSkullWand.blp",
+    "bytes": 6800,
+    "stored": 6127
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWorgenMoon.blp",
+    "bytes": 6240,
+    "stored": 6114
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN6v6.blp",
+    "bytes": 6192,
+    "stored": 6112
+  },
+  {
+    "path": "war3mapImported\\SBL_RedNewLightning.blp",
+    "bytes": 6709,
+    "stored": 6088
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowChain.blp",
+    "bytes": 8711,
+    "stored": 6083
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpell_Frost_IceShard.blp",
+    "bytes": 7930,
+    "stored": 6080
+  },
+  {
+    "path": "NuclearExplosion.mdx",
+    "bytes": 20571,
+    "stored": 6077
+  },
+  {
+    "path": "Cannonball D Rain.mdx",
+    "bytes": 21145,
+    "stored": 6063
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritChainAlt.blp",
+    "bytes": 7765,
+    "stored": 6054
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxGragasCask.blp",
+    "bytes": 12102,
+    "stored": 6043
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 6042
+  },
+  {
+    "path": "war3mapImported\\BlackArcaneMissile004.mdx",
+    "bytes": 15748,
+    "stored": 6028
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaShockwave.blp",
+    "bytes": 12102,
+    "stored": 6019
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNbackstab6.blp",
+    "bytes": 8160,
+    "stored": 5998
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAdvancedMoonGlaive.blp",
+    "bytes": 6672,
+    "stored": 5996
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASAdvancedMoonGlaive.blp",
+    "bytes": 6672,
+    "stored": 5996
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGuardianGuardianShield.blp",
+    "bytes": 12102,
+    "stored": 5991
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp",
+    "bytes": 8169,
+    "stored": 5991
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFOrbRed.blp",
+    "bytes": 12102,
+    "stored": 5988
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaticLightningOff.blp",
+    "bytes": 6059,
+    "stored": 5987
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFOrbGold.blp",
+    "bytes": 12102,
+    "stored": 5983
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLich.blp",
+    "bytes": 7616,
+    "stored": 5981
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCVR.blp",
+    "bytes": 6052,
+    "stored": 5980
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOriannaLich.blp",
+    "bytes": 7616,
+    "stored": 5980
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFLoadedDice.blp",
+    "bytes": 12102,
+    "stored": 5950
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaProtect.blp",
+    "bytes": 12102,
+    "stored": 5947
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGuardianTimeWarp.blp",
+    "bytes": 12102,
+    "stored": 5945
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGuardianForceField.blp",
+    "bytes": 12102,
+    "stored": 5944
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFOrbGreen.blp",
+    "bytes": 12102,
+    "stored": 5933
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLightningBolt.blp",
+    "bytes": 6214,
+    "stored": 5926
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaAttackRed.blp",
+    "bytes": 12102,
+    "stored": 5921
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDragonFire.blp",
+    "bytes": 6596,
+    "stored": 5918
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueBeam.blp",
+    "bytes": 7735,
+    "stored": 5914
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGuardianLantern.blp",
+    "bytes": 12102,
+    "stored": 5906
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenChainAlt.blp",
+    "bytes": 7642,
+    "stored": 5906
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDeadeye.BLP",
+    "bytes": 8077,
+    "stored": 5897
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGnollFurySlash.blp",
+    "bytes": 6546,
+    "stored": 5896
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowNewLightning.blp",
+    "bytes": 6509,
+    "stored": 5891
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBattlepriest.blp",
+    "bytes": 8183,
+    "stored": 5888
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTreantKeepSeed.blp",
+    "bytes": 6016,
+    "stored": 5887
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxGragasBarrel.blp",
+    "bytes": 12102,
+    "stored": 5880
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxGragasFortitude.blp",
+    "bytes": 12102,
+    "stored": 5880
+  },
+  {
+    "path": "Items\\ScrollOfHealing.mdx",
+    "bytes": 15043,
+    "stored": 5875
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFOrbFork.blp",
+    "bytes": 12102,
+    "stored": 5875
+  },
+  {
+    "path": "war3mapImported\\Lightning_egg.mdx",
+    "bytes": 15297,
+    "stored": 5875
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFFOrbChoice.blp",
+    "bytes": 12102,
+    "stored": 5874
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHookChain.blp",
+    "bytes": 12102,
+    "stored": 5874
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMundoUndying.blp",
+    "bytes": 12102,
+    "stored": 5874
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCEnsnareSeaCreatures.blp",
+    "bytes": 5915,
+    "stored": 5851
+  },
+  {
+    "path": "Items\\ScrollOfTownPortal.mdx",
+    "bytes": 15319,
+    "stored": 5845
+  },
+  {
+    "path": "Reapers Claws Red.mdx",
+    "bytes": 17477,
+    "stored": 5837
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaMove.blp",
+    "bytes": 12102,
+    "stored": 5834
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenBeam.blp",
+    "bytes": 7668,
+    "stored": 5819
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenChain.blp",
+    "bytes": 8269,
+    "stored": 5811
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNProductionOff.blp",
+    "bytes": 5869,
+    "stored": 5800
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryNewLightning.blp",
+    "bytes": 6398,
+    "stored": 5794
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAncientAmulet.blp",
+    "bytes": 7987,
+    "stored": 5783
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASAncientAmulet.blp",
+    "bytes": 7987,
+    "stored": 5783
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTigerLook.blp",
+    "bytes": 6488,
+    "stored": 5770
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFire Meteor.blp",
+    "bytes": 5819,
+    "stored": 5753
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNoTrading.tga",
+    "bytes": 12306,
+    "stored": 5745
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp",
+    "bytes": 7992,
+    "stored": 5726
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNoTransmute.blp",
+    "bytes": 5788,
+    "stored": 5726
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBulletPiercing.blp",
+    "bytes": 7704,
+    "stored": 5725
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAbility_Hibernation.blp",
+    "bytes": 7584,
+    "stored": 5724
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTrollConjurer.blp",
+    "bytes": 5819,
+    "stored": 5719
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMundoCleaver.blp",
+    "bytes": 12102,
+    "stored": 5718
+  },
+  {
+    "path": "war3mapImported\\instantdummy.mdx",
+    "bytes": 35040,
+    "stored": 5717
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWightFingerOfDeath.blp",
+    "bytes": 12102,
+    "stored": 5715
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWightScythe.blp",
+    "bytes": 12102,
+    "stored": 5715
+  },
+  {
+    "path": "war3mapImported\\BTNWightScythe.blp",
+    "bytes": 12102,
+    "stored": 5715
+  },
+  {
+    "path": "dummy.mdx",
+    "bytes": 35040,
+    "stored": 5709
+  },
+  {
+    "path": "war3mapImported\\dummy.mdx",
+    "bytes": 35040,
+    "stored": 5709
+  },
+  {
+    "path": "war3mapImported\\MidnightGlow.blp",
+    "bytes": 7958,
+    "stored": 5704
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 5697
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNObjection.blp",
+    "bytes": 5784,
+    "stored": 5693
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritChain.blp",
+    "bytes": 8135,
+    "stored": 5693
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowBeam.blp",
+    "bytes": 7407,
+    "stored": 5674
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCharge2.blp",
+    "bytes": 7843,
+    "stored": 5642
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRxGragasSlam.blp",
+    "bytes": 12102,
+    "stored": 5636
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThunderKnightHelm.blp",
+    "bytes": 5710,
+    "stored": 5632
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNProductionON.blp",
+    "bytes": 5690,
+    "stored": 5623
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNratling.blp",
+    "bytes": 5679,
+    "stored": 5612
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCQuickMobility.blp",
+    "bytes": 5666,
+    "stored": 5591
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOdin.blp",
+    "bytes": 5670,
+    "stored": 5589
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN2020.blp",
+    "bytes": 5659,
+    "stored": 5588
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEnsnareSeaCreatures.blp",
+    "bytes": 5624,
+    "stored": 5560
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNINV_Misc_Coin_01.blp",
+    "bytes": 7390,
+    "stored": 5548
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSharpenedCleaver.blp",
+    "bytes": 5612,
+    "stored": 5545
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryBeam.blp",
+    "bytes": 7210,
+    "stored": 5533
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGenericProtoss.blp",
+    "bytes": 6216,
+    "stored": 5528
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHaste.BLP",
+    "bytes": 7677,
+    "stored": 5515
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\snowflake2.blp",
+    "bytes": 12102,
+    "stored": 5510
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 5496
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStormforgerIcon.blp",
+    "bytes": 6641,
+    "stored": 5489
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWizardStaff.blp",
+    "bytes": 5525,
+    "stored": 5469
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCCharge (2).blp",
+    "bytes": 7640,
+    "stored": 5465
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWizardStaff.blp",
+    "bytes": 6641,
+    "stored": 5455
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASThunderfury2.blp",
+    "bytes": 6133,
+    "stored": 5447
+  },
+  {
+    "path": "war3mapImported\\reward_gold.mdx",
+    "bytes": 13288,
+    "stored": 5445
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCElektroShock.blp",
+    "bytes": 5506,
+    "stored": 5434
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRifleman Lordaeron.blp",
+    "bytes": 5530,
+    "stored": 5434
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\GenericGlow2c.blp",
+    "bytes": 44870,
+    "stored": 5422
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNdragonpriest.blp",
+    "bytes": 5484,
+    "stored": 5421
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPD3WizIllusion.BLP",
+    "bytes": 7598,
+    "stored": 5406
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPoisoning Shield.blp",
+    "bytes": 5462,
+    "stored": 5395
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTentacles.blp",
+    "bytes": 6641,
+    "stored": 5390
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTychusPortrait.blp",
+    "bytes": 5463,
+    "stored": 5390
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBarrel_Roll.blp",
+    "bytes": 5387,
+    "stored": 5387
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHeartAmulet.blp",
+    "bytes": 5436,
+    "stored": 5369
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCallHelp.blp",
+    "bytes": 6300,
+    "stored": 5361
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLightningBash.blp",
+    "bytes": 5434,
+    "stored": 5360
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNElektroShock.blp",
+    "bytes": 5412,
+    "stored": 5354
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNShips_Doctor_Kul-Tiras_HD.blp",
+    "bytes": 5435,
+    "stored": 5352
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbThingy.blp",
+    "bytes": 5428,
+    "stored": 5345
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenNewLightning.blp",
+    "bytes": 5959,
+    "stored": 5343
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASLifeSteal.blp",
+    "bytes": 7540,
+    "stored": 5341
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNdwarvenhammer3.blp",
+    "bytes": 6300,
+    "stored": 5317
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWight.blp",
+    "bytes": 12102,
+    "stored": 5308
+  },
+  {
+    "path": "LifeBloom.mdx",
+    "bytes": 5305,
+    "stored": 5305
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWizardStaff.blp",
+    "bytes": 5449,
+    "stored": 5295
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp",
+    "bytes": 5371,
+    "stored": 5287
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRing.blp",
+    "bytes": 5397,
+    "stored": 5279
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNQuickMobility.blp",
+    "bytes": 5354,
+    "stored": 5278
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteBeam.blp",
+    "bytes": 7580,
+    "stored": 5276
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGWizardStaff.blp",
+    "bytes": 5402,
+    "stored": 5274
+  },
+  {
+    "path": "abilities\\Spells\\Other\\Monsoon\\Lightning4b_Fel.blp",
+    "bytes": 5441,
+    "stored": 5273
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMundoMaul.blp",
+    "bytes": 12102,
+    "stored": 5268
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFireFrostRing.blp",
+    "bytes": 6641,
+    "stored": 5253
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGVoid.blp",
+    "bytes": 5355,
+    "stored": 5237
+  },
+  {
+    "path": "war3mapImported\\BTNNOMass.blp",
+    "bytes": 5305,
+    "stored": 5235
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSylvanasWindrunner.blp",
+    "bytes": 5984,
+    "stored": 5226
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCGuardianWispSpirits.blp",
+    "bytes": 5283,
+    "stored": 5219
+  },
+  {
+    "path": "war3mapImported\\ArcaneWave.mdx",
+    "bytes": 12967,
+    "stored": 5215
+  },
+  {
+    "path": "DeathWave.mdx",
+    "bytes": 12691,
+    "stored": 5195
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSeaGiantTaunt2.blp",
+    "bytes": 5262,
+    "stored": 5195
+  },
+  {
+    "path": "war3mapImported\\DeathWave.mdx",
+    "bytes": 12691,
+    "stored": 5195
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnailJudgeIcon64.blp",
+    "bytes": 5285,
+    "stored": 5190
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxGragasCask.blp",
+    "bytes": 12102,
+    "stored": 5190
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnowBall.blp",
+    "bytes": 6300,
+    "stored": 5189
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNExplosive_Cask.blp",
+    "bytes": 5184,
+    "stored": 5184
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWinged-Clock.blp",
+    "bytes": 6300,
+    "stored": 5181
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPander.blp",
+    "bytes": 5250,
+    "stored": 5180
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWarriorStrength.blp",
+    "bytes": 5251,
+    "stored": 5179
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 5178
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWorgenLeap.blp",
+    "bytes": 5865,
+    "stored": 5168
+  },
+  {
+    "path": "war3mapImported\\SBL_RedBeam.blp",
+    "bytes": 7208,
+    "stored": 5167
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCZeratulBlink.blp",
+    "bytes": 5258,
+    "stored": 5158
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp",
+    "bytes": 5247,
+    "stored": 5157
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianTimeWarp.blp",
+    "bytes": 12102,
+    "stored": 5155
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFireImpact.blp",
+    "bytes": 7321,
+    "stored": 5153
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNReindeer.blp",
+    "bytes": 5886,
+    "stored": 5151
+  },
+  {
+    "path": "war3mapImported\\UPGSoul Rune.blp",
+    "bytes": 5291,
+    "stored": 5145
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBody_Slam.blp",
+    "bytes": 5144,
+    "stored": 5144
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDarknessVersusLight.blp",
+    "bytes": 5895,
+    "stored": 5139
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASLightningRed.blp",
+    "bytes": 7274,
+    "stored": 5105
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianGuardianShield.blp",
+    "bytes": 12102,
+    "stored": 5103
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNthrall_foot.blp",
+    "bytes": 6641,
+    "stored": 5096
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFOrbGold.blp",
+    "bytes": 12102,
+    "stored": 5095
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWendigo_Custom.blp",
+    "bytes": 5173,
+    "stored": 5087
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 5083
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 5083
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 5083
+  },
+  {
+    "path": "war3mapImported\\Lightnings Long.mdx",
+    "bytes": 20526,
+    "stored": 5080
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNInfernoStaff.blp",
+    "bytes": 5137,
+    "stored": 5071
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxOriannaShockwave.blp",
+    "bytes": 12102,
+    "stored": 5071
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxOriannaProtect.blp",
+    "bytes": 12102,
+    "stored": 5060
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNwarrior.blp",
+    "bytes": 5145,
+    "stored": 5058
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGQuickMobility.blp",
+    "bytes": 5207,
+    "stored": 5057
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianForceField.blp",
+    "bytes": 12102,
+    "stored": 5057
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGreenDeath.blp",
+    "bytes": 6641,
+    "stored": 5048
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMagicAnchor.blp",
+    "bytes": 6641,
+    "stored": 5043
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp",
+    "bytes": 6300,
+    "stored": 5041
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFLoadedDice.blp",
+    "bytes": 12102,
+    "stored": 5038
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNatureRestore.blp",
+    "bytes": 5777,
+    "stored": 5034
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianLantern.blp",
+    "bytes": 12102,
+    "stored": 5033
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFOrbFork.blp",
+    "bytes": 12102,
+    "stored": 5032
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASAcolyte.blp",
+    "bytes": 5767,
+    "stored": 5031
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\DenseOrb.mdx",
+    "bytes": 15081,
+    "stored": 5029
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBarrel_Roll_2.blp",
+    "bytes": 5014,
+    "stored": 5014
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFOrbChoice.blp",
+    "bytes": 12102,
+    "stored": 5010
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSoulGrab1.blp",
+    "bytes": 12102,
+    "stored": 5004
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWarpPortal.blp",
+    "bytes": 6641,
+    "stored": 5000
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCrate.blp",
+    "bytes": 6857,
+    "stored": 4991
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWightFingerOfDeath.blp",
+    "bytes": 12102,
+    "stored": 4988
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4988
+  },
+  {
+    "path": "war3mapImported\\PASWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4988
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMountainKing.blp",
+    "bytes": 5080,
+    "stored": 4986
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 4978
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 4977
+  },
+  {
+    "path": "war3mapImported\\PASWorgenMoon.blp",
+    "bytes": 5100,
+    "stored": 4972
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASVR.blp",
+    "bytes": 5054,
+    "stored": 4969
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGlaringBeam.blp",
+    "bytes": 5070,
+    "stored": 4956
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNmonkeyking1.blp",
+    "bytes": 5050,
+    "stored": 4955
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHeroKingTerenas.blp",
+    "bytes": 6300,
+    "stored": 4953
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpearOfJustice.blp",
+    "bytes": 5070,
+    "stored": 4953
+  },
+  {
+    "path": "ReplaceableTextures\\ATTQuickMobility.blp",
+    "bytes": 5136,
+    "stored": 4952
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxGragasFortitude.blp",
+    "bytes": 12102,
+    "stored": 4952
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockwaveRing.mdx",
+    "bytes": 25380,
+    "stored": 4952
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFOrbGreen.blp",
+    "bytes": 12102,
+    "stored": 4945
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxOriannaAttackRed.blp",
+    "bytes": 12102,
+    "stored": 4942
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHookChain.blp",
+    "bytes": 12102,
+    "stored": 4940
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHoly.blp",
+    "bytes": 7156,
+    "stored": 4929
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFFOrbRed.blp",
+    "bytes": 12102,
+    "stored": 4927
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPurification.blp",
+    "bytes": 6641,
+    "stored": 4926
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNprison_cell.blp",
+    "bytes": 5010,
+    "stored": 4921
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp",
+    "bytes": 5015,
+    "stored": 4917
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKoboldTeleport.blp",
+    "bytes": 7105,
+    "stored": 4907
+  },
+  {
+    "path": "war3mapUnits.doo",
+    "bytes": 28443,
+    "stored": 4900
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTuralyon.blp",
+    "bytes": 4991,
+    "stored": 4898
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFemaleCaptain.blp",
+    "bytes": 5582,
+    "stored": 4895
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGhostHammer.blp",
+    "bytes": 6641,
+    "stored": 4891
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxOriannaMove.blp",
+    "bytes": 12102,
+    "stored": 4877
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCEnergyPotion.blp",
+    "bytes": 4964,
+    "stored": 4868
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGoblinZeppelin1.BLP",
+    "bytes": 7035,
+    "stored": 4865
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxGragasBarrel.blp",
+    "bytes": 12102,
+    "stored": 4862
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDrunken_Rage.blp",
+    "bytes": 4861,
+    "stored": 4861
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASEnsnareSeaCreatures.blp",
+    "bytes": 4944,
+    "stored": 4860
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMr.Steampunk.blp",
+    "bytes": 4987,
+    "stored": 4853
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASFireImpact.blp",
+    "bytes": 7024,
+    "stored": 4838
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGAnimalWarTraining.blp",
+    "bytes": 4972,
+    "stored": 4829
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSanta.blp",
+    "bytes": 4968,
+    "stored": 4828
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNcrowstorm.blp",
+    "bytes": 4939,
+    "stored": 4823
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 4798
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNReplicate.BLP",
+    "bytes": 7037,
+    "stored": 4788
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGSpearOfJustice.blp",
+    "bytes": 4932,
+    "stored": 4779
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAKamault.blp",
+    "bytes": 4876,
+    "stored": 4775
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASFireTornado.blp",
+    "bytes": 6345,
+    "stored": 4772
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFireTornado.blp",
+    "bytes": 6346,
+    "stored": 4767
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWightSpirits.blp",
+    "bytes": 6641,
+    "stored": 4764
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGrenade.blp",
+    "bytes": 6969,
+    "stored": 4760
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNZeratulBlink.blp",
+    "bytes": 4893,
+    "stored": 4759
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNINV_Misc_Mug.blp",
+    "bytes": 6697,
+    "stored": 4755
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 4753
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLWall.blp",
+    "bytes": 4902,
+    "stored": 4753
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAbility_Warrior_InnerRage.blp",
+    "bytes": 6617,
+    "stored": 4746
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMundoUndying.blp",
+    "bytes": 12102,
+    "stored": 4743
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCarrionSwarm1.blp",
+    "bytes": 4843,
+    "stored": 4740
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCup.blp",
+    "bytes": 4833,
+    "stored": 4738
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPoisonTeeth.blp",
+    "bytes": 6300,
+    "stored": 4738
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWightFingerOfDeath.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWightFingerOfDeath.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "war3mapImported\\DISATCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "war3mapImported\\DISBTNWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "war3mapImported\\DISPASWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCSpearOfJustice.blp",
+    "bytes": 4829,
+    "stored": 4735
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOceanStorm.blp",
+    "bytes": 4821,
+    "stored": 4735
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4715
+  },
+  {
+    "path": "war3mapImported\\ATCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4715
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWrapPortal.blp",
+    "bytes": 6300,
+    "stored": 4713
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSans Style.blp",
+    "bytes": 6300,
+    "stored": 4713
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFuryLeap.blp",
+    "bytes": 4816,
+    "stored": 4710
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRWall.blp",
+    "bytes": 4868,
+    "stored": 4709
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 4709
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 4709
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGcrowstorm.blp",
+    "bytes": 4875,
+    "stored": 4695
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCapture1.blp",
+    "bytes": 4800,
+    "stored": 4694
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDrunken_Rage_2.blp",
+    "bytes": 4685,
+    "stored": 4685
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASLightningBash.blp",
+    "bytes": 4776,
+    "stored": 4682
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCapture.blp",
+    "bytes": 4812,
+    "stored": 4673
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGZeratulBlink.blp",
+    "bytes": 4817,
+    "stored": 4671
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHeroFemaleNecromancer.blp",
+    "bytes": 4783,
+    "stored": 4667
+  },
+  {
+    "path": "ReplaceableTextures\\ATTEnergyPotion.blp",
+    "bytes": 4816,
+    "stored": 4659
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNForceField.blp",
+    "bytes": 6641,
+    "stored": 4656
+  },
+  {
+    "path": "ReplaceableTextures\\ATTcrowstorm.blp",
+    "bytes": 4849,
+    "stored": 4654
+  },
+  {
+    "path": "GreatElderHydraAcidSpewV.153.mdx",
+    "bytes": 16785,
+    "stored": 4643
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+    "bytes": 6641,
+    "stored": 4639
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpiders.blp",
+    "bytes": 6300,
+    "stored": 4639
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNUltralisk.blp",
+    "bytes": 4734,
+    "stored": 4623
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCoD.blp",
+    "bytes": 4694,
+    "stored": 4604
+  },
+  {
+    "path": "ReplaceableTextures\\SSCSSHSylvanasWindrunner.blp",
+    "bytes": 5315,
+    "stored": 4600
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBloodElfSorceress.blp",
+    "bytes": 5278,
+    "stored": 4598
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNassasin_noob.blp",
+    "bytes": 4749,
+    "stored": 4597
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRxGragasSlam.blp",
+    "bytes": 12102,
+    "stored": 4589
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPandaAura.blp",
+    "bytes": 4751,
+    "stored": 4588
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 4586
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNProtection.blp",
+    "bytes": 4695,
+    "stored": 4583
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNgust.blp",
+    "bytes": 6300,
+    "stored": 4581
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEmberKnight.blp",
+    "bytes": 6300,
+    "stored": 4564
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASQuickMobility.blp",
+    "bytes": 4670,
+    "stored": 4563
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWight.blp",
+    "bytes": 12102,
+    "stored": 4559
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASCharge.blp",
+    "bytes": 6725,
+    "stored": 4543
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWight.blp",
+    "bytes": 6641,
+    "stored": 4538
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAbility_Hunter_SniperShot.blp",
+    "bytes": 6497,
+    "stored": 4525
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBoomBox.blp",
+    "bytes": 4644,
+    "stored": 4514
+  },
+  {
+    "path": "Lightning_07.blp",
+    "bytes": 6025,
+    "stored": 4498
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWight.blp",
+    "bytes": 12102,
+    "stored": 4492
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWight.blp",
+    "bytes": 12102,
+    "stored": 4492
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWight.blp",
+    "bytes": 12102,
+    "stored": 4492
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWarpPortal.blp",
+    "bytes": 6300,
+    "stored": 4480
+  },
+  {
+    "path": "ReplaceableTextures\\ATTSpearOfJustice.blp",
+    "bytes": 4631,
+    "stored": 4459
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASElektroShock.blp",
+    "bytes": 4529,
+    "stored": 4447
+  },
+  {
+    "path": "Horadric Malus.mdx",
+    "bytes": 8670,
+    "stored": 4444
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNUnholyfrenzy1.blp",
+    "bytes": 6300,
+    "stored": 4443
+  },
+  {
+    "path": "war3mapImported\\BTNNoKOTH.blp",
+    "bytes": 4560,
+    "stored": 4441
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGEnergyPotion.blp",
+    "bytes": 4654,
+    "stored": 4431
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMundoCleaver.blp",
+    "bytes": 12102,
+    "stored": 4431
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAlienOrbs.blp",
+    "bytes": 4522,
+    "stored": 4429
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWaterAttack.blp",
+    "bytes": 12102,
+    "stored": 4427
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWrapPortal.blp",
+    "bytes": 6300,
+    "stored": 4427
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWarpPortal.blp",
+    "bytes": 6300,
+    "stored": 4427
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWarpPortal.blp",
+    "bytes": 6300,
+    "stored": 4427
+  },
+  {
+    "path": "ReplaceableTextures\\ATTZeratulBlink.blp",
+    "bytes": 4650,
+    "stored": 4426
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHoly-Thunder.blp",
+    "bytes": 4561,
+    "stored": 4422
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNProwl.blp",
+    "bytes": 4538,
+    "stored": 4422
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 4422
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNElementalBolts.blp",
+    "bytes": 5158,
+    "stored": 4411
+  },
+  {
+    "path": "war3mapImported\\ATCWorgenLeap.blp",
+    "bytes": 4494,
+    "stored": 4400
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBTNHeroTrollGodSlayer.blp",
+    "bytes": 6641,
+    "stored": 4397
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCBTNHeroTrollGodSlayer.blp",
+    "bytes": 6641,
+    "stored": 4391
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWebWard.blp",
+    "bytes": 5075,
+    "stored": 4385
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTiger Strike.blp",
+    "bytes": 6300,
+    "stored": 4382
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\PASHappy_Hour.blp",
+    "bytes": 4365,
+    "stored": 4365
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGBerserk.blp",
+    "bytes": 4521,
+    "stored": 4361
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPurify.blp",
+    "bytes": 5276,
+    "stored": 4350
+  },
+  {
+    "path": "war3mapImported\\BlackHoleSpell.mdx",
+    "bytes": 10608,
+    "stored": 4350
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdwarvenhammer3.blp",
+    "bytes": 6300,
+    "stored": 4338
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCGhostHammer.blp",
+    "bytes": 6300,
+    "stored": 4328
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMagicAnchor.blp",
+    "bytes": 6641,
+    "stored": 4322
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNscope.blp",
+    "bytes": 6589,
+    "stored": 4308
+  },
+  {
+    "path": "war3mapImported\\HQGrenadeByStonneashExplosive.mdx",
+    "bytes": 18111,
+    "stored": 4306
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOgronIconYellow.blp",
+    "bytes": 4406,
+    "stored": 4297
+  },
+  {
+    "path": "Lightning_04.blp",
+    "bytes": 5823,
+    "stored": 4292
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMAYBE.blp",
+    "bytes": 4405,
+    "stored": 4285
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNForkOfLightning.blp",
+    "bytes": 6300,
+    "stored": 4275
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCallHelp.blp",
+    "bytes": 6300,
+    "stored": 4269
+  },
+  {
+    "path": "CheeseItem.mdx",
+    "bytes": 12205,
+    "stored": 4266
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_cr_LEFTbooK.blp",
+    "bytes": 4964,
+    "stored": 4263
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCSpiders.blp",
+    "bytes": 6300,
+    "stored": 4258
+  },
+  {
+    "path": "abilities\\Spells\\Other\\Monsoon\\Lightning2b_Fel.blp",
+    "bytes": 4492,
+    "stored": 4242
+  },
+  {
+    "path": "Lightning_02.blp",
+    "bytes": 5762,
+    "stored": 4237
+  },
+  {
+    "path": "Lightning_03.blp",
+    "bytes": 5772,
+    "stored": 4237
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRing_of_Roaring_Thunder.blp",
+    "bytes": 4338,
+    "stored": 4233
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWindwhirl.blp",
+    "bytes": 4956,
+    "stored": 4233
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGreenDeath.blp",
+    "bytes": 6300,
+    "stored": 4232
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThunderspark.blp",
+    "bytes": 5010,
+    "stored": 4230
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBlackTemplar.blp",
+    "bytes": 6300,
+    "stored": 4228
+  },
+  {
+    "path": "war3mapImported\\AzureTail4Faded.blp",
+    "bytes": 5636,
+    "stored": 4213
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBinding.blp",
+    "bytes": 4336,
+    "stored": 4207
+  },
+  {
+    "path": "BoneArmorCasterTC.mdx",
+    "bytes": 11259,
+    "stored": 4204
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRayofHope.blp",
+    "bytes": 4322,
+    "stored": 4194
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCGhostHammer.blp",
+    "bytes": 6300,
+    "stored": 4192
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGhostHammer.blp",
+    "bytes": 6300,
+    "stored": 4192
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASGhostHammer.blp",
+    "bytes": 6300,
+    "stored": 4192
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNetherSwap.blp",
+    "bytes": 4311,
+    "stored": 4190
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTentacles.blp",
+    "bytes": 4275,
+    "stored": 4190
+  },
+  {
+    "path": "war3mapImported\\UPGratlingicpn.blp",
+    "bytes": 4339,
+    "stored": 4190
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_CR_GREENstaf.blp",
+    "bytes": 4886,
+    "stored": 4189
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNdog.blp",
+    "bytes": 4385,
+    "stored": 4186
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 4185
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFire_Siege.blp",
+    "bytes": 4926,
+    "stored": 4184
+  },
+  {
+    "path": "ice cube.mdx",
+    "bytes": 8165,
+    "stored": 4160
+  },
+  {
+    "path": "Lightning_Ball_02.blp",
+    "bytes": 6335,
+    "stored": 4157
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASOceanStorm.blp",
+    "bytes": 4256,
+    "stored": 4154
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBK_Black_Book.blp",
+    "bytes": 6465,
+    "stored": 4148
+  },
+  {
+    "path": "Lightning_Ball_04.blp",
+    "bytes": 6313,
+    "stored": 4145
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAbility_Hibernation.blp",
+    "bytes": 6024,
+    "stored": 4142
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASGhostHammer.blp",
+    "bytes": 6300,
+    "stored": 4140
+  },
+  {
+    "path": "Lightning_05.blp",
+    "bytes": 5676,
+    "stored": 4130
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOneRing.blp",
+    "bytes": 4852,
+    "stored": 4130
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNnewratling.blp",
+    "bytes": 4222,
+    "stored": 4129
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNForceField.blp",
+    "bytes": 6300,
+    "stored": 4129
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMedalPower.blp",
+    "bytes": 4233,
+    "stored": 4125
+  },
+  {
+    "path": "Lightning_01.blp",
+    "bytes": 5666,
+    "stored": 4121
+  },
+  {
+    "path": "Lightning_08.blp",
+    "bytes": 5672,
+    "stored": 4113
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNdeathwingfly.blp",
+    "bytes": 4224,
+    "stored": 4110
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 4097
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 4097
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 4097
+  },
+  {
+    "path": "ReplaceableTextures\\ATTBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 4091
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGreenBook.blp",
+    "bytes": 6300,
+    "stored": 4090
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLich.blp",
+    "bytes": 5678,
+    "stored": 4088
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOriannaLich.blp",
+    "bytes": 5678,
+    "stored": 4087
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCCrimsonEdge.blp",
+    "bytes": 4182,
+    "stored": 4086
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNFireCleave.blp",
+    "bytes": 4190,
+    "stored": 4083
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSanctuary2.blp",
+    "bytes": 4177,
+    "stored": 4083
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASRing.blp",
+    "bytes": 4215,
+    "stored": 4079
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 4076
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASZeratulBlink.blp",
+    "bytes": 4167,
+    "stored": 4073
+  },
+  {
+    "path": "Spells\\FrostEruption\\FrozenOrb.mdx",
+    "bytes": 14072,
+    "stored": 4063
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 4058
+  },
+  {
+    "path": "war3mapImported\\PASBodyReplacement.blp",
+    "bytes": 6300,
+    "stored": 4058
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_FireArrowIcon.blp",
+    "bytes": 4196,
+    "stored": 4056
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNJudgmentOff.blp",
+    "bytes": 4168,
+    "stored": 4056
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNReptile.blp",
+    "bytes": 4169,
+    "stored": 4056
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASGuardianWispSpirits.blp",
+    "bytes": 4143,
+    "stored": 4055
+  },
+  {
+    "path": "war3mapImported\\ZeusMissile.mdx",
+    "bytes": 11600,
+    "stored": 4051
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN6v6.blp",
+    "bytes": 4123,
+    "stored": 4036
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCUnholyfrenzy1.blp",
+    "bytes": 6300,
+    "stored": 4035
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_cr_RIGHTbooK.blp",
+    "bytes": 4732,
+    "stored": 4024
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCPurify.blp",
+    "bytes": 5276,
+    "stored": 4023
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\LightningBall.blp",
+    "bytes": 12102,
+    "stored": 4020
+  },
+  {
+    "path": "Lightning_06.blp",
+    "bytes": 5570,
+    "stored": 4018
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNratlingicpn.blp",
+    "bytes": 4109,
+    "stored": 4017
+  },
+  {
+    "path": "war3mapImported\\ATTratlingicpn.blp",
+    "bytes": 4233,
+    "stored": 4016
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNScepterOfTheTides.blp",
+    "bytes": 4796,
+    "stored": 4012
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMundoMaul.blp",
+    "bytes": 12102,
+    "stored": 4011
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSphereOfNature.blp",
+    "bytes": 4780,
+    "stored": 4009
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCThunderfury2.blp",
+    "bytes": 4822,
+    "stored": 4007
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThunderfury2.blp",
+    "bytes": 4822,
+    "stored": 4007
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASThunderfury2.blp",
+    "bytes": 4822,
+    "stored": 4007
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCLightningBolt.blp",
+    "bytes": 6300,
+    "stored": 4005
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4002
+  },
+  {
+    "path": "war3mapImported\\ATTWightScythe.blp",
+    "bytes": 12102,
+    "stored": 4002
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHornedSword.blp",
+    "bytes": 6300,
+    "stored": 3994
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSoulGrab1.blp",
+    "bytes": 12102,
+    "stored": 3985
+  },
+  {
+    "path": "war3mapImported\\flaresimple_bw.blp",
+    "bytes": 4544,
+    "stored": 3985
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNatureRestore.blp",
+    "bytes": 6300,
+    "stored": 3962
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHellSheep.blp",
+    "bytes": 6191,
+    "stored": 3950
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGWightScythe.blp",
+    "bytes": 12102,
+    "stored": 3947
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PAScrowstorm.blp",
+    "bytes": 4048,
+    "stored": 3947
+  },
+  {
+    "path": "war3mapImported\\UPGWightScythe.blp",
+    "bytes": 12102,
+    "stored": 3947
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHarvest.blp",
+    "bytes": 5276,
+    "stored": 3940
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCEnsnareSeaCreatures.blp",
+    "bytes": 4034,
+    "stored": 3936
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASEnsnareSeaCreatures.blp",
+    "bytes": 4034,
+    "stored": 3936
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHeroKingTerenas.blp",
+    "bytes": 6300,
+    "stored": 3931
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCAC_BloodCurseV2.blp",
+    "bytes": 6109,
+    "stored": 3929
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_BloodCurseV2.blp",
+    "bytes": 6109,
+    "stored": 3929
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBloodLustAmulet.blp",
+    "bytes": 5804,
+    "stored": 3929
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCharm Heal.blp",
+    "bytes": 4042,
+    "stored": 3926
+  },
+  {
+    "path": "war3mapImported\\BTNCharm Heal.blp",
+    "bytes": 4042,
+    "stored": 3926
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDeathCurse.blp",
+    "bytes": 4674,
+    "stored": 3921
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThunderArrows.blp",
+    "bytes": 4009,
+    "stored": 3918
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASEnergyPotion.blp",
+    "bytes": 4001,
+    "stored": 3914
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 3908
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTemplarAssassinPsiBlades.blp",
+    "bytes": 4032,
+    "stored": 3907
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGCrimsonEdge.blp",
+    "bytes": 4119,
+    "stored": 3906
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWizardStaff.blp",
+    "bytes": 4005,
+    "stored": 3905
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWizardStaff.blp",
+    "bytes": 4005,
+    "stored": 3905
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWizardStaff.blp",
+    "bytes": 4005,
+    "stored": 3905
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASPurify.blp",
+    "bytes": 5276,
+    "stored": 3900
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCUnholyfrenzy1.blp",
+    "bytes": 6300,
+    "stored": 3894
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUnholyfrenzy1.blp",
+    "bytes": 6300,
+    "stored": 3894
+  },
+  {
+    "path": "ReplaceableTextures\\ATTSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 3893
+  },
+  {
+    "path": "Lightning_Ball_03.blp",
+    "bytes": 6057,
+    "stored": 3886
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNbrood2.blp",
+    "bytes": 3994,
+    "stored": 3880
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNObjection.blp",
+    "bytes": 6300,
+    "stored": 3867
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAcolyte.blp",
+    "bytes": 4649,
+    "stored": 3859
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASAcolyte.blp",
+    "bytes": 4649,
+    "stored": 3859
+  },
+  {
+    "path": "war3mapImported\\DeathCurse.mdx",
+    "bytes": 13044,
+    "stored": 3857
+  },
+  {
+    "path": "ReplaceableTextures\\ATTCrimsonEdge.blp",
+    "bytes": 4041,
+    "stored": 3852
+  },
+  {
+    "path": "Lightning_Ball_05.blp",
+    "bytes": 6031,
+    "stored": 3848
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBaldie.blp",
+    "bytes": 3999,
+    "stored": 3845
+  },
+  {
+    "path": "PrismaticWave.mdx",
+    "bytes": 10478,
+    "stored": 3843
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 3842
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 3841
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 3841
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPestilantPrince.blp",
+    "bytes": 3995,
+    "stored": 3833
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStatic Lightning.blp",
+    "bytes": 4626,
+    "stored": 3833
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDrunken_Rage.blp",
+    "bytes": 3830,
+    "stored": 3830
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGWight.blp",
+    "bytes": 12102,
+    "stored": 3821
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASSpearOfJustice.blp",
+    "bytes": 3906,
+    "stored": 3817
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNShockStorm.blp",
+    "bytes": 4007,
+    "stored": 3809
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRodofEnvy.blp",
+    "bytes": 4576,
+    "stored": 3790
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNnightterror.blp",
+    "bytes": 3884,
+    "stored": 3783
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWight.blp",
+    "bytes": 12102,
+    "stored": 3780
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAxeMaster.blp",
+    "bytes": 5988,
+    "stored": 3779
+  },
+  {
+    "path": "war3mapImported\\UPGDamnifierTraining2.blp",
+    "bytes": 12102,
+    "stored": 3773
+  },
+  {
+    "path": "Textures\\star6_Fel.blp",
+    "bytes": 4294,
+    "stored": 3769
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLifeSteal.blp",
+    "bytes": 5988,
+    "stored": 3757
+  },
+  {
+    "path": "ReplaceableTextures\\SSCSSHAcolyte.blp",
+    "bytes": 4504,
+    "stored": 3750
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCPurify.blp",
+    "bytes": 5276,
+    "stored": 3744
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPurify.blp",
+    "bytes": 5276,
+    "stored": 3744
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASPurify.blp",
+    "bytes": 5276,
+    "stored": 3744
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHoly Ban.blp",
+    "bytes": 4538,
+    "stored": 3738
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThrowing Axe.blp",
+    "bytes": 6300,
+    "stored": 3736
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLightningRed.blp",
+    "bytes": 5930,
+    "stored": 3733
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASLightningRed.blp",
+    "bytes": 5930,
+    "stored": 3733
+  },
+  {
+    "path": "Illusion.mdx",
+    "bytes": 10251,
+    "stored": 3715
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHeroFemaleNecromancer.blp",
+    "bytes": 6300,
+    "stored": 3711
+  },
+  {
+    "path": "Items\\Potions1.blp",
+    "bytes": 12102,
+    "stored": 3707
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEnvenomed_Arrow.BLP",
+    "bytes": 5918,
+    "stored": 3705
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWaterAttack.blp",
+    "bytes": 12102,
+    "stored": 3701
+  },
+  {
+    "path": "Lightning_Ball_01.blp",
+    "bytes": 5881,
+    "stored": 3700
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSuperiorMageRobe.blp",
+    "bytes": 3809,
+    "stored": 3700
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCVR.blp",
+    "bytes": 3786,
+    "stored": 3697
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNVR.blp",
+    "bytes": 3786,
+    "stored": 3697
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASVR.blp",
+    "bytes": 3786,
+    "stored": 3697
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLand.blp",
+    "bytes": 3815,
+    "stored": 3690
+  },
+  {
+    "path": "Splats\\LightningData.slk",
+    "bytes": 3689,
+    "stored": 3689
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDarknessVersusLight.blp",
+    "bytes": 6300,
+    "stored": 3685
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASLightningBolt.blp",
+    "bytes": 6300,
+    "stored": 3685
+  },
+  {
+    "path": "Spells\\FrostEruption\\FreezingRing.mdx",
+    "bytes": 10372,
+    "stored": 3684
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMonkeyKing.blp",
+    "bytes": 4383,
+    "stored": 3660
+  },
+  {
+    "path": "war3mapImported\\Dust3x_Fel.blp",
+    "bytes": 3872,
+    "stored": 3655
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCLifeSteal.blp",
+    "bytes": 5884,
+    "stored": 3652
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASLifeSteal.blp",
+    "bytes": 5884,
+    "stored": 3652
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBinding.blp",
+    "bytes": 6300,
+    "stored": 3651
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBarrel_Roll.blp",
+    "bytes": 3648,
+    "stored": 3648
+  },
+  {
+    "path": "war3mapImported\\Faerie Missile.mdx",
+    "bytes": 9272,
+    "stored": 3646
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStaticLightningOff.blp",
+    "bytes": 3750,
+    "stored": 3636
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASSpiders.blp",
+    "bytes": 6300,
+    "stored": 3631
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMedalPower.blp",
+    "bytes": 6300,
+    "stored": 3630
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPAS_BloodCurseV2.blp",
+    "bytes": 5813,
+    "stored": 3630
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRifle-Ak47.blp",
+    "bytes": 5818,
+    "stored": 3604
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNImprovedBows.blp",
+    "bytes": 6300,
+    "stored": 3579
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNnightterror.blp",
+    "bytes": 6300,
+    "stored": 3571
+  },
+  {
+    "path": "war3mapImported\\DISPASBodyReplacement.blp",
+    "bytes": 6300,
+    "stored": 3571
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp",
+    "bytes": 6300,
+    "stored": 3556
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\Yellow_Star.blp",
+    "bytes": 12102,
+    "stored": 3554
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEyeOfTheStorm.blp",
+    "bytes": 3631,
+    "stored": 3539
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOdin.blp",
+    "bytes": 3627,
+    "stored": 3539
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\Blue_Star.blp",
+    "bytes": 12102,
+    "stored": 3530
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHarbingerHelm.blp",
+    "bytes": 3627,
+    "stored": 3526
+  },
+  {
+    "path": "ReplaceableTextures\\ATTLightningBolt.blp",
+    "bytes": 11420,
+    "stored": 3515
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDragonFire.blp",
+    "bytes": 4230,
+    "stored": 3510
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBody_Slam.blp",
+    "bytes": 3504,
+    "stored": 3504
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCFireSword.blp",
+    "bytes": 6300,
+    "stored": 3502
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAmulet.blp",
+    "bytes": 3600,
+    "stored": 3502
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNassasin_noob.blp",
+    "bytes": 6300,
+    "stored": 3502
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStaff of Destruction.blp",
+    "bytes": 4287,
+    "stored": 3499
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNKultirasTowerArcane.blp",
+    "bytes": 3673,
+    "stored": 3496
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFire_Siege.blp",
+    "bytes": 6300,
+    "stored": 3495
+  },
+  {
+    "path": "MonsoonBoltTarget_Fel.mdx",
+    "bytes": 12150,
+    "stored": 3493
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWorgenMoon.blp",
+    "bytes": 3706,
+    "stored": 3493
+  },
+  {
+    "path": "war3mapImported\\DISATCWorgenMoon.blp",
+    "bytes": 3706,
+    "stored": 3493
+  },
+  {
+    "path": "war3mapImported\\DISPASWorgenMoon.blp",
+    "bytes": 3706,
+    "stored": 3493
+  },
+  {
+    "path": "war3mapImported\\MonsoonBoltTarget_Fel.mdx",
+    "bytes": 12150,
+    "stored": 3493
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEnsnareSeaCreatures.blp",
+    "bytes": 3569,
+    "stored": 3487
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNExplosive_Cask.blp",
+    "bytes": 3476,
+    "stored": 3476
+  },
+  {
+    "path": "ReplaceableTextures\\ATTWeb2-Spiderless.blp",
+    "bytes": 11420,
+    "stored": 3475
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThunderload.blp",
+    "bytes": 3571,
+    "stored": 3463
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFireFrostRing.blp",
+    "bytes": 3561,
+    "stored": 3461
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNratling.blp",
+    "bytes": 3547,
+    "stored": 3454
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNElementalBolts.blp",
+    "bytes": 6300,
+    "stored": 3453
+  },
+  {
+    "path": "GreaterShadowWard.mdx",
+    "bytes": 11067,
+    "stored": 3451
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStormforgerIcon.blp",
+    "bytes": 3547,
+    "stored": 3450
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRottenAura.blp",
+    "bytes": 6300,
+    "stored": 3446
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTychusPortrait.blp",
+    "bytes": 3541,
+    "stored": 3443
+  },
+  {
+    "path": "war3mapImported\\UPGZergling.blp",
+    "bytes": 11420,
+    "stored": 3441
+  },
+  {
+    "path": "war3mapImported\\Axe Missile-Small.mdx",
+    "bytes": 6447,
+    "stored": 3440
+  },
+  {
+    "path": "war3mapImported\\PASratlingicpn.blp",
+    "bytes": 3524,
+    "stored": 3438
+  },
+  {
+    "path": "PsionicGlow.blp",
+    "bytes": 4861,
+    "stored": 3437
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCQuickMobility.blp",
+    "bytes": 3523,
+    "stored": 3435
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNQuickMobility.blp",
+    "bytes": 3523,
+    "stored": 3435
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASQuickMobility.blp",
+    "bytes": 3523,
+    "stored": 3435
+  },
+  {
+    "path": "war3mapImported\\Axe Missile.mdx",
+    "bytes": 6447,
+    "stored": 3426
+  },
+  {
+    "path": "Items\\PotionOfInvulnerability.mdx",
+    "bytes": 9179,
+    "stored": 3420
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTreantKeepSeed.blp",
+    "bytes": 3632,
+    "stored": 3415
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWarriorStrength.blp",
+    "bytes": 3499,
+    "stored": 3414
+  },
+  {
+    "path": "war3mapImported\\PASWorgenLeap.blp",
+    "bytes": 3506,
+    "stored": 3414
+  },
+  {
+    "path": "Ephemeral Cut Red.mdx",
+    "bytes": 15174,
+    "stored": 3403
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGLightningBolt.blp",
+    "bytes": 11420,
+    "stored": 3399
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTiger Strike.blp",
+    "bytes": 6300,
+    "stored": 3397
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNChainArmor.blp",
+    "bytes": 6300,
+    "stored": 3392
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSkullWand.blp",
+    "bytes": 4198,
+    "stored": 3391
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCABTNCharge.blp",
+    "bytes": 5590,
+    "stored": 3389
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLightningBash.blp",
+    "bytes": 3486,
+    "stored": 3388
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASLightningBash.blp",
+    "bytes": 3486,
+    "stored": 3388
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCharge.blp",
+    "bytes": 5590,
+    "stored": 3385
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASCharge.blp",
+    "bytes": 5590,
+    "stored": 3385
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+    "bytes": 6300,
+    "stored": 3375
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNProductionOff.blp",
+    "bytes": 3459,
+    "stored": 3375
+  },
+  {
+    "path": "war3mapImported\\DISBTNCRFrostShock.blp",
+    "bytes": 4120,
+    "stored": 3374
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASgust.blp",
+    "bytes": 6300,
+    "stored": 3348
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_CW_Death_Guard.blp",
+    "bytes": 5648,
+    "stored": 3345
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\GenericGlow64.blp",
+    "bytes": 12102,
+    "stored": 3345
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCLightningBolt.blp",
+    "bytes": 6300,
+    "stored": 3343
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLightningBolt.blp",
+    "bytes": 6300,
+    "stored": 3343
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASLightningBolt.blp",
+    "bytes": 6300,
+    "stored": 3343
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPander.blp",
+    "bytes": 3434,
+    "stored": 3342
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 3333
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSeaGiantTaunt2.blp",
+    "bytes": 3421,
+    "stored": 3330
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCFireSword.blp",
+    "bytes": 6300,
+    "stored": 3327
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBarrel_Roll_2.blp",
+    "bytes": 3306,
+    "stored": 3306
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdragonpriest.blp",
+    "bytes": 3385,
+    "stored": 3296
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFire Meteor.blp",
+    "bytes": 3380,
+    "stored": 3295
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBoomBox.blp",
+    "bytes": 3416,
+    "stored": 3294
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackRing.mdx",
+    "bytes": 16212,
+    "stored": 3292
+  },
+  {
+    "path": "war3mapImported\\DarkLightning.mdx",
+    "bytes": 11035,
+    "stored": 3291
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGUPGWeb2-Spiderless.blp",
+    "bytes": 11420,
+    "stored": 3288
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRifleman Lordaeron.blp",
+    "bytes": 3388,
+    "stored": 3286
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMountainKing.blp",
+    "bytes": 3377,
+    "stored": 3284
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMoonAmulet.blp",
+    "bytes": 3401,
+    "stored": 3281
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASWindwhirl.blp",
+    "bytes": 4065,
+    "stored": 3281
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCoD.blp",
+    "bytes": 6300,
+    "stored": 3275
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPoisoning Shield.blp",
+    "bytes": 3352,
+    "stored": 3265
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTrollConjurer.blp",
+    "bytes": 3378,
+    "stored": 3264
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\DenseOrb.blp",
+    "bytes": 12102,
+    "stored": 3263
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASHappy_Hour.blp",
+    "bytes": 3252,
+    "stored": 3252
+  },
+  {
+    "path": "SC2ForceField_ByEpsilon.mdx",
+    "bytes": 11593,
+    "stored": 3248
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSnailJudgeIcon64.blp",
+    "bytes": 3356,
+    "stored": 3241
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSanta.blp",
+    "bytes": 3338,
+    "stored": 3228
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCHarvest.blp",
+    "bytes": 5276,
+    "stored": 3226
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCSpiders.blp",
+    "bytes": 6300,
+    "stored": 3218
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpiders.blp",
+    "bytes": 6300,
+    "stored": 3218
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASSpiders.blp",
+    "bytes": 6300,
+    "stored": 3218
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBad Omen.blp",
+    "bytes": 7393,
+    "stored": 3209
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNoTransmute.blp",
+    "bytes": 3293,
+    "stored": 3204
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHoly-Thunder.blp",
+    "bytes": 6300,
+    "stored": 3182
+  },
+  {
+    "path": "FelGlow.blp",
+    "bytes": 4596,
+    "stored": 3180
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNTuralyon.blp",
+    "bytes": 3271,
+    "stored": 3180
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNProductionON.blp",
+    "bytes": 3271,
+    "stored": 3178
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdeathwingfly.blp",
+    "bytes": 6300,
+    "stored": 3172
+  },
+  {
+    "path": "OrbOfCorruption.mdx",
+    "bytes": 12587,
+    "stored": 3168
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGlaringBeam.blp",
+    "bytes": 3263,
+    "stored": 3163
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHeartAmulet.blp",
+    "bytes": 3234,
+    "stored": 3149
+  },
+  {
+    "path": "war3mapImported\\Void Arrow.mdx",
+    "bytes": 11063,
+    "stored": 3124
+  },
+  {
+    "path": "war3mapImported\\Electric Spark.mdx",
+    "bytes": 18242,
+    "stored": 3118
+  },
+  {
+    "path": "Items\\FullMug.MDX",
+    "bytes": 7553,
+    "stored": 3113
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASHarvest.blp",
+    "bytes": 5276,
+    "stored": 3112
+  },
+  {
+    "path": "war3mapImported\\FireArrow.mdx",
+    "bytes": 10919,
+    "stored": 3099
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\UPGImprovedBows.blp",
+    "bytes": 11420,
+    "stored": 3097
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASCrimsonEdge.blp",
+    "bytes": 3179,
+    "stored": 3095
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBaldie.blp",
+    "bytes": 6300,
+    "stored": 3093
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNwarrior.blp",
+    "bytes": 3170,
+    "stored": 3085
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWendigo_Custom.blp",
+    "bytes": 3184,
+    "stored": 3085
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNprison_cell.blp",
+    "bytes": 3171,
+    "stored": 3083
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASMAYBE.blp",
+    "bytes": 3177,
+    "stored": 3077
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCElektroShock.blp",
+    "bytes": 3158,
+    "stored": 3075
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNElektroShock.blp",
+    "bytes": 3158,
+    "stored": 3075
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASElektroShock.blp",
+    "bytes": 3158,
+    "stored": 3075
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN2020.blp",
+    "bytes": 3153,
+    "stored": 3065
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThunderKnightHelm.blp",
+    "bytes": 3164,
+    "stored": 3063
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLand.blp",
+    "bytes": 6300,
+    "stored": 3061
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCharm Heal.blp",
+    "bytes": 6300,
+    "stored": 3057
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHaste.BLP",
+    "bytes": 5259,
+    "stored": 3056
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOceanStorm.blp",
+    "bytes": 3130,
+    "stored": 3033
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASOceanStorm.blp",
+    "bytes": 3130,
+    "stored": 3033
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSharpenedCleaver.blp",
+    "bytes": 3167,
+    "stored": 3029
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPoisonTeeth.blp",
+    "bytes": 6300,
+    "stored": 3001
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCZeratulBlink.blp",
+    "bytes": 3084,
+    "stored": 2987
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNZeratulBlink.blp",
+    "bytes": 3084,
+    "stored": 2987
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASZeratulBlink.blp",
+    "bytes": 3084,
+    "stored": 2987
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSans Style.blp",
+    "bytes": 6300,
+    "stored": 2986
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLWall.blp",
+    "bytes": 3083,
+    "stored": 2980
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPotato.blp",
+    "bytes": 5242,
+    "stored": 2972
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRWall.blp",
+    "bytes": 3077,
+    "stored": 2960
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNobleSword.blp",
+    "bytes": 3058,
+    "stored": 2953
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGnollFurySlash.blp",
+    "bytes": 3037,
+    "stored": 2944
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\ATCMagicMissile.blp",
+    "bytes": 6641,
+    "stored": 2930
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOrbThingy.blp",
+    "bytes": 3024,
+    "stored": 2911
+  },
+  {
+    "path": "war3mapImported\\OrbOfFire.mdx",
+    "bytes": 8438,
+    "stored": 2911
+  },
+  {
+    "path": "war3mapImported\\OrbOfLightning.mdx",
+    "bytes": 8438,
+    "stored": 2907
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNInfernoStaff.blp",
+    "bytes": 2990,
+    "stored": 2896
+  },
+  {
+    "path": "war3mapImported\\OrbOfFrost.mdx",
+    "bytes": 8438,
+    "stored": 2893
+  },
+  {
+    "path": "abilities\\Spells\\Other\\Monsoon\\Lightning1b_Fel.blp",
+    "bytes": 3328,
+    "stored": 2877
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNthrall_foot.blp",
+    "bytes": 2964,
+    "stored": 2876
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSnowBall.blp",
+    "bytes": 6300,
+    "stored": 2872
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASNetherSwap.blp",
+    "bytes": 2979,
+    "stored": 2870
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNcrowstorm.blp",
+    "bytes": 2968,
+    "stored": 2869
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPAScrowstorm.blp",
+    "bytes": 2968,
+    "stored": 2869
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCGuardianWispSpirits.blp",
+    "bytes": 2947,
+    "stored": 2856
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianWispSpirits.blp",
+    "bytes": 2947,
+    "stored": 2856
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASGuardianWispSpirits.blp",
+    "bytes": 2947,
+    "stored": 2856
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASDeathGrin.blp",
+    "bytes": 6300,
+    "stored": 2851
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\snowflake4.blp",
+    "bytes": 12102,
+    "stored": 2849
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCEnergyPotion.blp",
+    "bytes": 2935,
+    "stored": 2848
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEnergyPotion.blp",
+    "bytes": 2935,
+    "stored": 2848
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASEnergyPotion.blp",
+    "bytes": 2935,
+    "stored": 2848
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PAS_FireArrowIcon.blp",
+    "bytes": 2933,
+    "stored": 2837
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNmonkeyking1.blp",
+    "bytes": 2909,
+    "stored": 2804
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNShips_Doctor_Kul-Tiras_HD.blp",
+    "bytes": 2910,
+    "stored": 2797
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAlienOrbs.blp",
+    "bytes": 2883,
+    "stored": 2792
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBulletPiercing.blp",
+    "bytes": 4807,
+    "stored": 2789
+  },
+  {
+    "path": "Items\\ScrolRed.mdx",
+    "bytes": 9510,
+    "stored": 2783
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDrunken_Rage_2.blp",
+    "bytes": 2774,
+    "stored": 2774
+  },
+  {
+    "path": "war3mapImported\\CorpseBombV2.mdx",
+    "bytes": 11625,
+    "stored": 2773
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAKamault.blp",
+    "bytes": 2844,
+    "stored": 2753
+  },
+  {
+    "path": "war3mapImported\\OtherShinyMagicOrb017.mdx",
+    "bytes": 14110,
+    "stored": 2753
+  },
+  {
+    "path": "war3mapImported\\Culling Slash.mdx",
+    "bytes": 7864,
+    "stored": 2752
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCSpearOfJustice.blp",
+    "bytes": 2833,
+    "stored": 2746
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSpearOfJustice.blp",
+    "bytes": 2833,
+    "stored": 2746
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASSpearOfJustice.blp",
+    "bytes": 2833,
+    "stored": 2746
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRing.blp",
+    "bytes": 2902,
+    "stored": 2737
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASRing.blp",
+    "bytes": 2902,
+    "stored": 2737
+  },
+  {
+    "path": "war3mapImported\\LightningBolt.mdx",
+    "bytes": 9943,
+    "stored": 2726
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCapture.blp",
+    "bytes": 2809,
+    "stored": 2718
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNThunderspark.blp",
+    "bytes": 3585,
+    "stored": 2704
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHornedSword.blp",
+    "bytes": 6300,
+    "stored": 2703
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCHarvest.blp",
+    "bytes": 5276,
+    "stored": 2701
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFuryLeap.blp",
+    "bytes": 2787,
+    "stored": 2701
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHarvest.blp",
+    "bytes": 5276,
+    "stored": 2701
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASHarvest.blp",
+    "bytes": 5276,
+    "stored": 2701
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStatDown.blp",
+    "bytes": 6300,
+    "stored": 2696
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltralisk.blp",
+    "bytes": 2804,
+    "stored": 2692
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNProtection.blp",
+    "bytes": 2804,
+    "stored": 2686
+  },
+  {
+    "path": "LightningShieldBuffYellow.mdx",
+    "bytes": 6712,
+    "stored": 2678
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCloseFireCrush.blp",
+    "bytes": 2764,
+    "stored": 2675
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPestilantPrince.blp",
+    "bytes": 6300,
+    "stored": 2672
+  },
+  {
+    "path": "SantaHat.mdx",
+    "bytes": 4925,
+    "stored": 2669
+  },
+  {
+    "path": "ReplaceableTextures\\PassiveButtons\\PASImprovedBows.blp",
+    "bytes": 6300,
+    "stored": 2662
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNnewratling.blp",
+    "bytes": 2763,
+    "stored": 2661
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMr.Steampunk.blp",
+    "bytes": 2756,
+    "stored": 2657
+  },
+  {
+    "path": "ReplaceableTextures\\SSHHeroKingTerenas.blp",
+    "bytes": 11420,
+    "stored": 2656
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBlackArrows.blp",
+    "bytes": 2732,
+    "stored": 2643
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 2626
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 2626
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWeb2-Spiderless.blp",
+    "bytes": 6300,
+    "stored": 2626
+  },
+  {
+    "path": "war3mapImported\\Sun.mdx",
+    "bytes": 13943,
+    "stored": 2615
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCarrionSwarm1.blp",
+    "bytes": 2702,
+    "stored": 2613
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNratlingicpn.blp",
+    "bytes": 2694,
+    "stored": 2605
+  },
+  {
+    "path": "war3mapImported\\DISPASratlingicpn.blp",
+    "bytes": 2694,
+    "stored": 2605
+  },
+  {
+    "path": "ReplaceableTextures\\SSCSSHTrollConjurer.blp",
+    "bytes": 11420,
+    "stored": 2604
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPurification.blp",
+    "bytes": 2695,
+    "stored": 2602
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNgust.blp",
+    "bytes": 6300,
+    "stored": 2592
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASgust.blp",
+    "bytes": 6300,
+    "stored": 2592
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCMagicMissile.blp",
+    "bytes": 6641,
+    "stored": 2576
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMagicMissile.blp",
+    "bytes": 6641,
+    "stored": 2576
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCup.blp",
+    "bytes": 2661,
+    "stored": 2574
+  },
+  {
+    "path": "ReplaceableTextures\\SSCWightSpirits.blp",
+    "bytes": 12102,
+    "stored": 2572
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNProwl.blp",
+    "bytes": 2684,
+    "stored": 2570
+  },
+  {
+    "path": "war3mapImported\\SBL_BlueTargetingLaser.blp",
+    "bytes": 7382,
+    "stored": 2558
+  },
+  {
+    "path": "ReplaceableTextures\\SSCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 2552
+  },
+  {
+    "path": "war3mapImported\\SSCWightScythe.blp",
+    "bytes": 12102,
+    "stored": 2552
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEmberKnight.blp",
+    "bytes": 2638,
+    "stored": 2542
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 2541
+  },
+  {
+    "path": "ReplaceableTextures\\SSCSentryAmuletTier3.blp",
+    "bytes": 12102,
+    "stored": 2541
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKultirasTowerArcane.blp",
+    "bytes": 6300,
+    "stored": 2516
+  },
+  {
+    "path": "ReplaceableTextures\\SSCBTNHeroTrollGodSlayer.blp",
+    "bytes": 12102,
+    "stored": 2514
+  },
+  {
+    "path": "ReplaceableTextures\\SSCWight.blp",
+    "bytes": 12102,
+    "stored": 2512
+  },
+  {
+    "path": "war3mapImported\\TFOrb.mdx",
+    "bytes": 8749,
+    "stored": 2508
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCBad Omen.blp",
+    "bytes": 6137,
+    "stored": 2505
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBad Omen.blp",
+    "bytes": 6137,
+    "stored": 2505
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBad Omen.blp",
+    "bytes": 6137,
+    "stored": 2505
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNImprovedBows.blp",
+    "bytes": 6300,
+    "stored": 2499
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASImprovedBows.blp",
+    "bytes": 6300,
+    "stored": 2499
+  },
+  {
+    "path": "zerglingupgrade_collectionskin_webby_emis.blp",
+    "bytes": 67320,
+    "stored": 2499
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdog.blp",
+    "bytes": 2649,
+    "stored": 2496
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCapture1.blp",
+    "bytes": 2573,
+    "stored": 2482
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNdeathwing.blp",
+    "bytes": 2568,
+    "stored": 2466
+  },
+  {
+    "path": "Abilities\\Spells\\Other\\Monsoon\\HitBase_Fel.blp",
+    "bytes": 2682,
+    "stored": 2465
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWindwhirl.blp",
+    "bytes": 3190,
+    "stored": 2414
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASWindwhirl.blp",
+    "bytes": 3190,
+    "stored": 2414
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFireNovaIcon.blp",
+    "bytes": 2477,
+    "stored": 2389
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSanctuary2.blp",
+    "bytes": 2472,
+    "stored": 2389
+  },
+  {
+    "path": "war3mapImported\\Arcane Explosion.mdx",
+    "bytes": 5410,
+    "stored": 2377
+  },
+  {
+    "path": "war3mapImported\\SBL_MysticTargetingLaser.blp",
+    "bytes": 7562,
+    "stored": 2376
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBlackTemplar.blp",
+    "bytes": 6300,
+    "stored": 2374
+  },
+  {
+    "path": "war3mapImported\\IllidanMissile.mdx",
+    "bytes": 8119,
+    "stored": 2367
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWorgenLeap.blp",
+    "bytes": 2453,
+    "stored": 2360
+  },
+  {
+    "path": "war3mapImported\\DISATCWorgenLeap.blp",
+    "bytes": 2453,
+    "stored": 2360
+  },
+  {
+    "path": "war3mapImported\\DISPASWorgenLeap.blp",
+    "bytes": 2453,
+    "stored": 2360
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBoomBox.blp",
+    "bytes": 2452,
+    "stored": 2335
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBoomBox.blp",
+    "bytes": 2452,
+    "stored": 2335
+  },
+  {
+    "path": "ShotGunBullet.mdx",
+    "bytes": 8292,
+    "stored": 2327
+  },
+  {
+    "path": "Void Teleport Caster.mdx",
+    "bytes": 9153,
+    "stored": 2319
+  },
+  {
+    "path": "war3mapImported\\SBL_SpiritTargetingLaser.blp",
+    "bytes": 7239,
+    "stored": 2236
+  },
+  {
+    "path": "war3mapImported\\SporeCloud025_Priority005.mdx",
+    "bytes": 11363,
+    "stored": 2220
+  },
+  {
+    "path": "war3mapImported\\IceImpaleHitTarget.mdx",
+    "bytes": 5524,
+    "stored": 2209
+  },
+  {
+    "path": "Spells\\FrostEruption\\BlizzardEruption.mdx",
+    "bytes": 10172,
+    "stored": 2204
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNetherSwap.blp",
+    "bytes": 2324,
+    "stored": 2202
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASNetherSwap.blp",
+    "bytes": 2324,
+    "stored": 2202
+  },
+  {
+    "path": "BlinkTargetPurple.mdx",
+    "bytes": 8218,
+    "stored": 2176
+  },
+  {
+    "path": "Void Disc.mdx",
+    "bytes": 10653,
+    "stored": 2173
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKatana.blp",
+    "bytes": 6300,
+    "stored": 2154
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCCrimsonEdge.blp",
+    "bytes": 2241,
+    "stored": 2148
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCrimsonEdge.blp",
+    "bytes": 2241,
+    "stored": 2148
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASCrimsonEdge.blp",
+    "bytes": 2241,
+    "stored": 2148
+  },
+  {
+    "path": "Yellow_Glow3_Darker.blp",
+    "bytes": 4293,
+    "stored": 2146
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMAYBE.blp",
+    "bytes": 2245,
+    "stored": 2141
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASMAYBE.blp",
+    "bytes": 2245,
+    "stored": 2141
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFireCleave.blp",
+    "bytes": 2217,
+    "stored": 2116
+  },
+  {
+    "path": "war3mapImported\\DISBTNOrbOfWinds.blp",
+    "bytes": 2174,
+    "stored": 2084
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNJudgmentOff.blp",
+    "bytes": 2174,
+    "stored": 2083
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTN_FireArrowIcon.blp",
+    "bytes": 2150,
+    "stored": 2058
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPAS_FireArrowIcon.blp",
+    "bytes": 2150,
+    "stored": 2058
+  },
+  {
+    "path": "Psionic Shot Green.mdx",
+    "bytes": 10058,
+    "stored": 2051
+  },
+  {
+    "path": "war3map.w3h",
+    "bytes": 7367,
+    "stored": 2016
+  },
+  {
+    "path": "war3mapImported\\SBL_GreenTargetingLaser.blp",
+    "bytes": 6996,
+    "stored": 2016
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNDeathGrin.blp",
+    "bytes": 6300,
+    "stored": 2014
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISPASDeathGrin.blp",
+    "bytes": 6300,
+    "stored": 2014
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLoadedDice.blp",
+    "bytes": 12102,
+    "stored": 1997
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNReptile.blp",
+    "bytes": 2105,
+    "stored": 1995
+  },
+  {
+    "path": "war3mapImported\\Bullet.mdx",
+    "bytes": 7674,
+    "stored": 1967
+  },
+  {
+    "path": "war3mapImported\\Void Rain Missile.mdx",
+    "bytes": 8995,
+    "stored": 1950
+  },
+  {
+    "path": "war3mapImported\\SBL_YellowTargetingLaser.blp",
+    "bytes": 7554,
+    "stored": 1921
+  },
+  {
+    "path": "war3mapImported\\ChillGlow.blp",
+    "bytes": 2740,
+    "stored": 1912
+  },
+  {
+    "path": "war3mapImported\\SBL_FieryTargetingLaser.blp",
+    "bytes": 7251,
+    "stored": 1910
+  },
+  {
+    "path": "AuraCapitalism.mdx",
+    "bytes": 6491,
+    "stored": 1901
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\SD.tga",
+    "bytes": 6591,
+    "stored": 1898
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNbrood2.blp",
+    "bytes": 1995,
+    "stored": 1884
+  },
+  {
+    "path": "war3mapImported\\VoidSkullAura_v5.mdx",
+    "bytes": 5531,
+    "stored": 1848
+  },
+  {
+    "path": "war3mapImported\\Dust5A_Fel.blp",
+    "bytes": 2132,
+    "stored": 1839
+  },
+  {
+    "path": "war3map.w3q",
+    "bytes": 10771,
+    "stored": 1836
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\AR.tga",
+    "bytes": 6698,
+    "stored": 1830
+  },
+  {
+    "path": "war3map.w3r",
+    "bytes": 5603,
+    "stored": 1754
+  },
+  {
+    "path": "war3mapImported\\SBL_WhiteTargetingLaser.blp",
+    "bytes": 7856,
+    "stored": 1712
+  },
+  {
+    "path": "war3mapImported\\Soul Beam Blue.mdx",
+    "bytes": 7669,
+    "stored": 1695
+  },
+  {
+    "path": "gormissile.mdx",
+    "bytes": 4029,
+    "stored": 1645
+  },
+  {
+    "path": "abilities\\Spells\\Other\\Monsoon\\lensflare1A_Fel.blp",
+    "bytes": 1891,
+    "stored": 1579
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtons\\AP.tga",
+    "bytes": 5988,
+    "stored": 1571
+  },
+  {
+    "path": "AbyssAura.mdx",
+    "bytes": 4620,
+    "stored": 1561
+  },
+  {
+    "path": "war3mapImported\\Pillar of Flame Green.mdx",
+    "bytes": 6562,
+    "stored": 1553
+  },
+  {
+    "path": "snowball.mdx",
+    "bytes": 5133,
+    "stored": 1528
+  },
+  {
+    "path": "war3mapImported\\SBL_RedTargetingLaser.blp",
+    "bytes": 7459,
+    "stored": 1528
+  },
+  {
+    "path": "DarknessMeteor.mdx",
+    "bytes": 9580,
+    "stored": 1526
+  },
+  {
+    "path": "TimberChainHead.mdx",
+    "bytes": 3160,
+    "stored": 1516
+  },
+  {
+    "path": "war3map.wpm",
+    "bytes": 65552,
+    "stored": 1513
+  },
+  {
+    "path": "NightElfFemaleEyeGlow1.blp",
+    "bytes": 3122,
+    "stored": 1497
+  },
+  {
+    "path": "RunicAura.mdx",
+    "bytes": 8376,
+    "stored": 1491
+  },
+  {
+    "path": "Gogota Goodness Ball.mdx",
+    "bytes": 7093,
+    "stored": 1475
+  },
+  {
+    "path": "war3map.w3s",
+    "bytes": 7508,
+    "stored": 1426
+  },
+  {
+    "path": "war3mapImported\\SpiritArrow_ByEpsilon.mdx",
+    "bytes": 6043,
+    "stored": 1425
+  },
+  {
+    "path": "DrunkenRageBuff.mdx",
+    "bytes": 1423,
+    "stored": 1423
+  },
+  {
+    "path": "war3mapImported\\ZeusLBolt.mdx",
+    "bytes": 5492,
+    "stored": 1377
+  },
+  {
+    "path": "war3mapImported\\LightningArrow1.mdx",
+    "bytes": 4861,
+    "stored": 1337
+  },
+  {
+    "path": "war3mapImported\\Bandit Throwing Axe.mdx",
+    "bytes": 3589,
+    "stored": 1274
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStatDown.blp",
+    "bytes": 6300,
+    "stored": 1243
+  },
+  {
+    "path": "Konstrukt_SniperMissile01.MDX",
+    "bytes": 4088,
+    "stored": 1190
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\Yellow_Glow.blp",
+    "bytes": 3910,
+    "stored": 1181
+  },
+  {
+    "path": "war3mapImported\\Bleed.mdx",
+    "bytes": 3587,
+    "stored": 1180
+  },
+  {
+    "path": "war3mapImported\\DarknessBomb.mdx",
+    "bytes": 6376,
+    "stored": 1149
+  },
+  {
+    "path": "PresentMissile.mdx",
+    "bytes": 3690,
+    "stored": 1111
+  },
+  {
+    "path": "Radiance Crimson.mdx",
+    "bytes": 4328,
+    "stored": 1048
+  },
+  {
+    "path": "war3mapImported\\GeneralHeroGlow.mdx",
+    "bytes": 4052,
+    "stored": 1044
+  },
+  {
+    "path": "Spells\\Orianna\\BallTextures\\NightElfFemaleEyeGlow1.blp",
+    "bytes": 3910,
+    "stored": 1025
+  },
+  {
+    "path": "war3mapImported\\LaserStrike.mdx",
+    "bytes": 6250,
+    "stored": 1002
+  },
+  {
+    "path": "war3mapMisc.txt",
+    "bytes": 3092,
+    "stored": 1002
+  },
+  {
+    "path": "war3mapSkin.txt",
+    "bytes": 3605,
+    "stored": 993
+  },
+  {
+    "path": "LootEFFECT.mdx",
+    "bytes": 4207,
+    "stored": 983
+  },
+  {
+    "path": "war3mapImported\\Explosion.mdx",
+    "bytes": 3595,
+    "stored": 946
+  },
+  {
+    "path": "HighSpeedProjectile_ByEpsilon.mdx",
+    "bytes": 4026,
+    "stored": 921
+  },
+  {
+    "path": "Textures\\Blue_Glow2_Fel.blp",
+    "bytes": 1067,
+    "stored": 842
+  },
+  {
+    "path": "war3mapImported\\BeamMissile.mdx",
+    "bytes": 5108,
+    "stored": 821
+  },
+  {
+    "path": "Runical-Holy Aura.mdx",
+    "bytes": 2840,
+    "stored": 790
+  },
+  {
+    "path": "WarpStrike.mdx",
+    "bytes": 3368,
+    "stored": 705
+  },
+  {
+    "path": "WarpStrikeUp.mdx",
+    "bytes": 3368,
+    "stored": 703
+  },
+  {
+    "path": "war3mapImported\\EMPBomb.mdx",
+    "bytes": 5942,
+    "stored": 686
+  },
+  {
+    "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLoadedDice.blp",
+    "bytes": 12102,
+    "stored": 681
+  },
+  {
+    "path": "warpimpact.mdx",
+    "bytes": 3188,
+    "stored": 661
+  },
+  {
+    "path": "war3mapImported\\Square_wo_middle3.mdx",
+    "bytes": 2208,
+    "stored": 597
+  },
+  {
+    "path": "war3mapImported\\Container_Blue.mdx",
+    "bytes": 2072,
+    "stored": 580
+  },
+  {
+    "path": "war3mapImported\\VengeanceNoSpin.mdx",
+    "bytes": 3079,
+    "stored": 575
+  },
+  {
+    "path": "war3map.w3i",
+    "bytes": 1926,
+    "stored": 566
+  },
+  {
+    "path": "war3mapImported\\DarkLightningNova.mdx",
+    "bytes": 2712,
+    "stored": 563
+  },
+  {
+    "path": "war3mapImported\\ArcaneFlameBlue.mdx",
+    "bytes": 2813,
+    "stored": 562
+  },
+  {
+    "path": "Snipe Target.mdx",
+    "bytes": 2452,
+    "stored": 537
+  },
+  {
+    "path": "war3mapImported\\Punishment_Missle.mdx",
+    "bytes": 3703,
+    "stored": 529
+  },
+  {
+    "path": "war3map.shd",
+    "bytes": 65536,
+    "stored": 500
+  },
+  {
+    "path": "war3mapImported\\MonsoonRain_Fel.mdx",
+    "bytes": 2214,
+    "stored": 494
+  },
+  {
+    "path": "war3mapImported\\TFCard.mdx",
+    "bytes": 3080,
+    "stored": 493
+  },
+  {
+    "path": "ChainElement.mdx",
+    "bytes": 1784,
+    "stored": 488
+  },
+  {
+    "path": "Models\\OriannaEnchantress\\Credits.txt",
+    "bytes": 794,
+    "stored": 479
+  },
+  {
+    "path": "war3mapImported\\LightningNova.mdx",
+    "bytes": 2522,
+    "stored": 457
+  },
+  {
+    "path": "Black32.blp",
+    "bytes": 2880,
+    "stored": 410
+  },
+  {
+    "path": "war3mapImported\\Poison Spider.mdx",
+    "bytes": 3009,
+    "stored": 397
+  },
+  {
+    "path": "MiniFootsUI.fdf",
+    "bytes": 1443,
+    "stored": 373
+  },
+  {
+    "path": "Spells\\FrostEruption\\Frost2.mdx",
+    "bytes": 2293,
+    "stored": 342
+  },
+  {
+    "path": "war3map.mmp",
+    "bytes": 1160,
+    "stored": 328
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ProtectGround.mdx",
+    "bytes": 1332,
+    "stored": 324
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockImpact.mdx",
+    "bytes": 1332,
+    "stored": 323
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackGround.mdx",
+    "bytes": 1332,
+    "stored": 322
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockGround.mdx",
+    "bytes": 1332,
+    "stored": 322
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\MoveGround.mdx",
+    "bytes": 1332,
+    "stored": 321
+  },
+  {
+    "path": "war3mapImported\\hk_pool.tga",
+    "bytes": 1767,
+    "stored": 307
+  },
+  {
+    "path": "war3map.wtg",
+    "bytes": 477,
+    "stored": 300
+  },
+  {
+    "path": "LoadingScreen.mdx",
+    "bytes": 1296,
+    "stored": 280
+  },
+  {
+    "path": "Models\\OriannaLich\\Credits.txt",
+    "bytes": 301,
+    "stored": 220
+  },
+  {
+    "path": "war3mapImported\\hk_test.tga",
+    "bytes": 986,
+    "stored": 188
+  },
+  {
+    "path": "war3mapImported\\templates.toc",
+    "bytes": 118,
+    "stored": 118
+  },
+  {
+    "path": "war3map.w3c",
+    "bytes": 166,
+    "stored": 86
+  },
+  {
+    "path": "war3mapImported\\TFWhite.blp",
+    "bytes": 1350,
+    "stored": 78
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\AttackRingColor.blp",
+    "bytes": 1222,
+    "stored": 72
+  },
+  {
+    "path": "Spells\\Orianna\\Feedback\\ShockwaveRingColor.blp",
+    "bytes": 1222,
+    "stored": 71
+  },
+  {
+    "path": "MiniFootsUI.toc",
+    "bytes": 54,
+    "stored": 62
+  },
+  {
+    "path": "war3mapExtra.txt",
+    "bytes": 38,
+    "stored": 46
+  },
+  {
+    "path": "war3map.w3d",
+    "bytes": 56,
+    "stored": 43
+  },
+  {
+    "path": "war3map.w3b",
+    "bytes": 48,
+    "stored": 40
+  }
+]

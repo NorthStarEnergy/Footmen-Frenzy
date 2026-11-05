@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "source_sha256": "ca55bf08034a5a8cfe4b37c374dd87f68f4fd358d73a57e0c95266188b467b35",
+  "output_sha256": "f311fd6821d1746504a6cbfb93fdc0a23937758c3b6ff4843bff7b05f076fd9b",
+  "changed_members": [
+    "FF_MAINTENANCE.md",
+    "FF_SOURCE_MANIFEST.json",
+    "war3map.imp",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3map.wct",
+    "war3map.wtg",
+    "war3map.wts",
+    "source_roundtrip\\FF_Runtime.j",
+    "source_roundtrip\\globals.j",
+    "source_roundtrip\\trigger_structure.json"
+  ],
+  "changed_functions": [
+    "DK_Free",
+    "DK_Tick",
+    "DK_OnCast",
+    "DK_Init"
+  ],
+  "new_functions": [
+    "DK_HookCast",
+    "DK_HookCatch",
+    "DK_HookChain",
+    "DK_HookStun"
+  ],
+  "globals_unchanged": true,
+  "engine_tested": false
+}

@@ -1,0 +1,17 @@
+{
+  "revision": "UPDATE09",
+  "runtime_authoritative": true,
+  "editor_source_not_authoritative": true,
+  "base_sha256": "7529c5a174b2ee98fc5e0b90bdd20276a0ec14f0850501962907722a28415300",
+  "script_sha256": "64c8a8a43cc3e241d732bc84be9a291b781212e75f5ef0b586f1bc9b023fb129",
+  "changed_functions": [
+    "Trig_HERO_Jaina_Ulti_Actions",
+    "Trig_HERO_Alchemist_Chemical_Rage_Bounty_Actions",
+    "Trig_ITEM_limits_Actions",
+    "config"
+  ],
+  "added_functions": [
+    "FFR9_ApplyAlchemistBounty"
+  ],
+  "preserved": "All object data, players, modes, terrain, economy rules and balance. Alchemist bounty retains Solo 8x3 dice."
+}

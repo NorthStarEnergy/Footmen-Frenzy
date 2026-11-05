@@ -1,0 +1,4300 @@
+{
+  "AVge": {
+    "oldId": "ANcl",
+    "newId": "AVge",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Event Horizon",
+        "end": "41566765"
+      },
+      {
+        "id": "ahky",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "E",
+        "end": "41566765"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarE.blp",
+        "end": "41566765"
+      },
+      {
+        "id": "aani",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "spell",
+        "end": "41566765"
+      },
+      {
+        "id": "atat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "acat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "aeat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 6,
+        "end": "41566765"
+      },
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "aite",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "arhk",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "E",
+        "end": "41566765"
+      },
+      {
+        "id": "arar",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarE.blp",
+        "end": "41566765"
+      },
+      {
+        "id": "arpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "arpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "alsk",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566765"
+      },
+      {
+        "id": "arlv",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "aret",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Learn Event Horizon [|cffffcc00E|r]",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 1",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 22 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 80,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 22.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 1,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 1,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 1,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 1,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 1,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 1,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 2",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 85 | Cooldown: 21 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 2,
+        "ptr": 0,
+        "value": 85,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 21.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 2,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 2,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 2,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 2,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 2,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 2,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 3",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 20 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 3,
+        "ptr": 0,
+        "value": 90,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 20.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 3,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 3,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 3,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 3,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 3,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 3,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 4",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.25 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 95 | Cooldown: 19 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 4,
+        "ptr": 0,
+        "value": 95,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 19.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 4,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 4,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 4,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 4,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 4,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 4,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 5",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 18 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 5,
+        "ptr": 0,
+        "value": 100,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 18.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 5,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 5,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 5,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 5,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 5,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 5,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "Event Horizon [|cffffcc00E|r] - Rank 6",
+        "end": "41566765"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 17 sec | Range: 1100.",
+        "end": "41566765"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 6,
+        "ptr": 0,
+        "value": 110,
+        "end": "41566765"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 17.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566765"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 300.0,
+        "end": "41566765"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "",
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 6,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 6,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 6,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 6,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 6,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566765"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 6,
+        "ptr": 6,
+        "value": "cloudoffog",
+        "end": "41566765"
+      },
+      {
+        "id": "arut",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "|cffffcc00Rank 1|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 22 sec | Range: 1100.|n|n|cffffcc00Rank 2|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 85 | Cooldown: 21 sec | Range: 1100.|n|n|cffffcc00Rank 3|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 20 sec | Range: 1100.|n|n|cffffcc00Rank 4|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.25 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 95 | Cooldown: 19 sec | Range: 1100.|n|n|cffffcc00Rank 5|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 18 sec | Range: 1100.|n|n|cffffcc00Rank 6|r: Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 17 sec | Range: 1100.",
+        "end": "41566765"
+      }
+    ]
+  },
+  "AVgw": {
+    "oldId": "ANcl",
+    "newId": "AVgw",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Dark Matter",
+        "end": "41566777"
+      },
+      {
+        "id": "ahky",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "W",
+        "end": "41566777"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarW.blp",
+        "end": "41566777"
+      },
+      {
+        "id": "aani",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "spell",
+        "end": "41566777"
+      },
+      {
+        "id": "atat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "acat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "aeat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 6,
+        "end": "41566777"
+      },
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "aite",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "arhk",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "W",
+        "end": "41566777"
+      },
+      {
+        "id": "arar",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarW.blp",
+        "end": "41566777"
+      },
+      {
+        "id": "arpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "arpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "alsk",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566777"
+      },
+      {
+        "id": "arlv",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "aret",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Learn Dark Matter [|cffffcc00W|r]",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 1",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 190 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 12 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 80,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 12.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 1,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 1,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 1,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 1,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 1,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 1,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 2",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 280 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 12 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 2,
+        "ptr": 0,
+        "value": 90,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 12.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 2,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 2,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 2,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 2,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 2,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 2,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 3",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 370 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 11.5 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 3,
+        "ptr": 0,
+        "value": 100,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 11.5,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 3,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 3,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 3,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 3,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 3,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 3,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 4",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 460 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 11 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 4,
+        "ptr": 0,
+        "value": 110,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 11.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 4,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 4,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 4,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 4,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 4,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 4,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 5",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 550 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 125 | Cooldown: 10.5 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 5,
+        "ptr": 0,
+        "value": 125,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 10.5,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 5,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 5,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 5,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 5,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 5,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 5,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "Dark Matter [|cffffcc00W|r] - Rank 6",
+        "end": "41566777"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "After 1.25 seconds, a dark meteor deals 640 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 140 | Cooldown: 10 sec | Range: 1100.",
+        "end": "41566777"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 6,
+        "ptr": 0,
+        "value": 140,
+        "end": "41566777"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 10.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 1100.0,
+        "end": "41566777"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 225.0,
+        "end": "41566777"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "",
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 6,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 6,
+        "ptr": 2,
+        "value": 2,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 6,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 6,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 6,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566777"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 6,
+        "ptr": 6,
+        "value": "flamestrike",
+        "end": "41566777"
+      },
+      {
+        "id": "arut",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "|cffffcc00Rank 1|r: After 1.25 seconds, a dark meteor deals 190 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 12 sec | Range: 1100.|n|n|cffffcc00Rank 2|r: After 1.25 seconds, a dark meteor deals 280 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 12 sec | Range: 1100.|n|n|cffffcc00Rank 3|r: After 1.25 seconds, a dark meteor deals 370 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 11.5 sec | Range: 1100.|n|n|cffffcc00Rank 4|r: After 1.25 seconds, a dark meteor deals 460 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 11 sec | Range: 1100.|n|n|cffffcc00Rank 5|r: After 1.25 seconds, a dark meteor deals 550 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 125 | Cooldown: 10.5 sec | Range: 1100.|n|n|cffffcc00Rank 6|r: After 1.25 seconds, a dark meteor deals 640 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 140 | Cooldown: 10 sec | Range: 1100.",
+        "end": "41566777"
+      }
+    ]
+  },
+  "AVgs": {
+    "oldId": "AHtb",
+    "newId": "AVgs",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "aite",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566773"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": -11,
+        "end": "41566773"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566773"
+      },
+      {
+        "id": "aani",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 1,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 6,
+        "end": "41566773"
+      },
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Event Horizon stun",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 1.5,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 1.5,
+        "end": "41566773"
+      },
+      {
+        "id": "amsp",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 10000,
+        "end": "41566773"
+      },
+      {
+        "id": "amat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 2,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 2,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 1.75,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 1.75,
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 3,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 3,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 2.0,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 2.0,
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 4,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 4,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 2.25,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 2.25,
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 5,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 5,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 2.5,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 2.5,
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 6,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566773"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 1200.0,
+        "end": "41566773"
+      },
+      {
+        "id": "Htb1",
+        "type": 2,
+        "level": 6,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566773"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "ground,air,enemies,vulnerable",
+        "end": "41566773"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 2.75,
+        "end": "41566773"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 2.75,
+        "end": "41566773"
+      },
+      {
+        "id": "abuf",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "BPSE",
+        "end": "41566773"
+      }
+    ]
+  },
+  "AVgq": {
+    "oldId": "ANcl",
+    "newId": "AVgq",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Baleful Strike",
+        "end": "41566771"
+      },
+      {
+        "id": "ahky",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Q",
+        "end": "41566771"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarQ.blp",
+        "end": "41566771"
+      },
+      {
+        "id": "aani",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "spell",
+        "end": "41566771"
+      },
+      {
+        "id": "atat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566771"
+      },
+      {
+        "id": "acat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566771"
+      },
+      {
+        "id": "aeat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566771"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 6,
+        "end": "41566771"
+      },
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "aite",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566771"
+      },
+      {
+        "id": "arhk",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Q",
+        "end": "41566771"
+      },
+      {
+        "id": "arar",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarQ.blp",
+        "end": "41566771"
+      },
+      {
+        "id": "arpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "arpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "alsk",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566771"
+      },
+      {
+        "id": "arlv",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566771"
+      },
+      {
+        "id": "aret",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Learn Baleful Strike [|cffffcc00Q|r]",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 1",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Targeted bolt: 150 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +1 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 60 | Cooldown: 7 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 60,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 7.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 1,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 1,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 1,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 1,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 1,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 1,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 2",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Targeted bolt: 220 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +2 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 65 | Cooldown: 7 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 2,
+        "ptr": 0,
+        "value": 65,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 7.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 2,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 2,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 2,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 2,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 2,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 2,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 3",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Targeted bolt: 290 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +3 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 70 | Cooldown: 6.5 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 3,
+        "ptr": 0,
+        "value": 70,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 6.5,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 3,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 3,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 3,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 3,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 3,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 3,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 4",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "Targeted bolt: 360 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +4 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 75 | Cooldown: 6 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 4,
+        "ptr": 0,
+        "value": 75,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 6.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 4,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 4,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 4,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 4,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 4,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 4,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 4,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 4,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 5",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "Targeted bolt: 430 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +5 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 5.5 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 5,
+        "ptr": 0,
+        "value": 80,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 5.5,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 5,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 5,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 5,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 5,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 5,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 5,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 5,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 5,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "Baleful Strike [|cffffcc00Q|r] - Rank 6",
+        "end": "41566771"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "Targeted bolt: 500 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +6 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 5 sec | Range: 900.",
+        "end": "41566771"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 6,
+        "ptr": 0,
+        "value": 90,
+        "end": "41566771"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 5.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 900.0,
+        "end": "41566771"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 6,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 6,
+        "ptr": 0,
+        "value": "air,ground,enemy,vulnerable",
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 6,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 6,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 6,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 6,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 6,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566771"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 6,
+        "ptr": 6,
+        "value": "thunderbolt",
+        "end": "41566771"
+      },
+      {
+        "id": "arut",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "|cffffcc00Rank 1|r: Targeted bolt: 150 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +1 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 60 | Cooldown: 7 sec | Range: 900.|n|n|cffffcc00Rank 2|r: Targeted bolt: 220 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +2 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 65 | Cooldown: 7 sec | Range: 900.|n|n|cffffcc00Rank 3|r: Targeted bolt: 290 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +3 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 70 | Cooldown: 6.5 sec | Range: 900.|n|n|cffffcc00Rank 4|r: Targeted bolt: 360 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +4 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 75 | Cooldown: 6 sec | Range: 900.|n|n|cffffcc00Rank 5|r: Targeted bolt: 430 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +5 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 5.5 sec | Range: 900.|n|n|cffffcc00Rank 6|r: Targeted bolt: 500 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +6 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 5 sec | Range: 900.",
+        "end": "41566771"
+      }
+    ]
+  },
+  "AVgr": {
+    "oldId": "ANcl",
+    "newId": "AVgr",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Primordial Burst",
+        "end": "41566772"
+      },
+      {
+        "id": "ahky",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "R",
+        "end": "41566772"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarR.blp",
+        "end": "41566772"
+      },
+      {
+        "id": "aani",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "spell",
+        "end": "41566772"
+      },
+      {
+        "id": "atat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566772"
+      },
+      {
+        "id": "acat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566772"
+      },
+      {
+        "id": "aeat",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566772"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566772"
+      },
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "aite",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566772"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566772"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 2,
+        "end": "41566772"
+      },
+      {
+        "id": "arhk",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "R",
+        "end": "41566772"
+      },
+      {
+        "id": "arar",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarR.blp",
+        "end": "41566772"
+      },
+      {
+        "id": "arpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 3,
+        "end": "41566772"
+      },
+      {
+        "id": "arpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566772"
+      },
+      {
+        "id": "alsk",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 5,
+        "end": "41566772"
+      },
+      {
+        "id": "arlv",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 6,
+        "end": "41566772"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566772"
+      },
+      {
+        "id": "aret",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Learn Primordial Burst [|cffffcc00R|r]",
+        "end": "41566772"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Primordial Burst [|cffffcc00R|r] - Rank 1",
+        "end": "41566772"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Blasts an enemy hero for 550 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 150 | Cooldown: 100 sec | Range: 850.",
+        "end": "41566772"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 150,
+        "end": "41566772"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 100.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 850.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 1,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "air,ground,enemy,hero,vulnerable",
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 1,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 1,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 1,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 1,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 1,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 1,
+        "ptr": 6,
+        "value": "fingerofdeath",
+        "end": "41566772"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Primordial Burst [|cffffcc00R|r] - Rank 2",
+        "end": "41566772"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "Blasts an enemy hero for 850 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 200 | Cooldown: 85 sec | Range: 850.",
+        "end": "41566772"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 2,
+        "ptr": 0,
+        "value": 200,
+        "end": "41566772"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 85.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 850.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 2,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 2,
+        "ptr": 0,
+        "value": "air,ground,enemy,hero,vulnerable",
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 2,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 2,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 2,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 2,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 2,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 2,
+        "ptr": 6,
+        "value": "fingerofdeath",
+        "end": "41566772"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Primordial Burst [|cffffcc00R|r] - Rank 3",
+        "end": "41566772"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "Blasts an enemy hero for 1150 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 250 | Cooldown: 70 sec | Range: 850.",
+        "end": "41566772"
+      },
+      {
+        "id": "amcs",
+        "type": 0,
+        "level": 3,
+        "ptr": 0,
+        "value": 250,
+        "end": "41566772"
+      },
+      {
+        "id": "acdn",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 70.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aran",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 850.0,
+        "end": "41566772"
+      },
+      {
+        "id": "aare",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "adur",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "ahdu",
+        "type": 2,
+        "level": 3,
+        "ptr": 0,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "atar",
+        "type": 3,
+        "level": 3,
+        "ptr": 0,
+        "value": "air,ground,enemy,hero,vulnerable",
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl1",
+        "type": 2,
+        "level": 3,
+        "ptr": 1,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl2",
+        "type": 0,
+        "level": 3,
+        "ptr": 2,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl3",
+        "type": 0,
+        "level": 3,
+        "ptr": 3,
+        "value": 1,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl4",
+        "type": 2,
+        "level": 3,
+        "ptr": 4,
+        "value": 0.0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl5",
+        "type": 0,
+        "level": 3,
+        "ptr": 5,
+        "value": 0,
+        "end": "41566772"
+      },
+      {
+        "id": "Ncl6",
+        "type": 3,
+        "level": 3,
+        "ptr": 6,
+        "value": "fingerofdeath",
+        "end": "41566772"
+      },
+      {
+        "id": "arut",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "|cffffcc00Rank 1|r: Blasts an enemy hero for 550 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 150 | Cooldown: 100 sec | Range: 850.|n|n|cffffcc00Rank 2|r: Blasts an enemy hero for 850 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 200 | Cooldown: 85 sec | Range: 850.|n|n|cffffcc00Rank 3|r: Blasts an enemy hero for 1150 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 250 | Cooldown: 70 sec | Range: 850.",
+        "end": "41566772"
+      }
+    ]
+  },
+  "AVgp": {
+    "oldId": "Aamk",
+    "newId": "AVgp",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "anam",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "Equilibrium",
+        "end": "41566770"
+      },
+      {
+        "id": "aher",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566770"
+      },
+      {
+        "id": "alev",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566770"
+      },
+      {
+        "id": "aart",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "ReplaceableTextures\\PassiveButtons\\PASVeigarHero.blp",
+        "end": "41566770"
+      },
+      {
+        "id": "abpx",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566770"
+      },
+      {
+        "id": "abpy",
+        "type": 0,
+        "level": 0,
+        "ptr": 0,
+        "value": 1,
+        "end": "41566770"
+      },
+      {
+        "id": "areq",
+        "type": 3,
+        "level": 0,
+        "ptr": 0,
+        "value": "",
+        "end": "41566770"
+      },
+      {
+        "id": "atp1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Equilibrium",
+        "end": "41566770"
+      },
+      {
+        "id": "aub1",
+        "type": 3,
+        "level": 1,
+        "ptr": 0,
+        "value": "Restores extra mana each second based on missing mana: +1 mana/sec at 50% missing, up to +2 mana/sec when empty. Always active while alive. This Warcraft adaptation adds to normal regeneration.",
+        "end": "41566770"
+      },
+      {
+        "id": "Istr",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566770"
+      },
+      {
+        "id": "Iagi",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566770"
+      },
+      {
+        "id": "Iint",
+        "type": 0,
+        "level": 1,
+        "ptr": 0,
+        "value": 0,
+        "end": "41566770"
+      }
+    ]
+  },
+  "hgr1": {
+    "oldId": "hfoo",
+    "newId": "hgr1",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "unam",
+        "type": 3,
+        "value": "Spell Dummy",
+        "end": "68677231"
+      },
+      {
+        "id": "uabi",
+        "type": 3,
+        "value": "Aloc,Avul",
+        "end": "68677231"
+      },
+      {
+        "id": "uhab",
+        "type": 3,
+        "value": "",
+        "end": "68677231"
+      },
+      {
+        "id": "uhpm",
+        "type": 0,
+        "value": 500,
+        "end": "68677231"
+      },
+      {
+        "id": "uhpr",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "umpm",
+        "type": 0,
+        "value": 1000,
+        "end": "68677231"
+      },
+      {
+        "id": "umpi",
+        "type": 0,
+        "value": 1000,
+        "end": "68677231"
+      },
+      {
+        "id": "umpr",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "ucbs",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "ucpt",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "uacq",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "umvs",
+        "type": 2,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "udef",
+        "type": 0,
+        "value": 0,
+        "end": "68677231"
+      },
+      {
+        "id": "udty",
+        "type": 3,
+        "value": "normal",
+        "end": "68677231"
+      },
+      {
+        "id": "ua1b",
+        "type": 0,
+        "value": 0,
+        "end": "68677231"
+      },
+      {
+        "id": "ua1d",
+        "type": 0,
+        "value": 1,
+        "end": "68677231"
+      },
+      {
+        "id": "ua1s",
+        "type": 0,
+        "value": 1,
+        "end": "68677231"
+      },
+      {
+        "id": "uaen",
+        "type": 0,
+        "value": 0,
+        "end": "68677231"
+      },
+      {
+        "id": "umdl",
+        "type": 3,
+        "value": "",
+        "end": "68677231"
+      },
+      {
+        "id": "ushd",
+        "type": 3,
+        "value": "",
+        "end": "68677231"
+      },
+      {
+        "id": "ushu",
+        "type": 3,
+        "value": "",
+        "end": "68677231"
+      },
+      {
+        "id": "usca",
+        "type": 1,
+        "value": 1.0,
+        "end": "68677231"
+      },
+      {
+        "id": "umvt",
+        "type": 3,
+        "value": "fly",
+        "end": "68677231"
+      },
+      {
+        "id": "ucol",
+        "type": 1,
+        "value": 0.0,
+        "end": "68677231"
+      },
+      {
+        "id": "umvh",
+        "type": 1,
+        "value": 0.0,
+        "end": "68677231"
+      }
+    ]
+  },
+  "HVg1": {
+    "oldId": "Ulic",
+    "newId": "HVg1",
+    "flags": 1,
+    "extra": 0,
+    "mods": [
+      {
+        "id": "unam",
+        "type": 3,
+        "value": "Veigar",
+        "end": "48566731"
+      },
+      {
+        "id": "upro",
+        "type": 3,
+        "value": "The Tiny Master of Evil",
+        "end": "48566731"
+      },
+      {
+        "id": "uhab",
+        "type": 3,
+        "value": "AVgq,AVgw,AVge,AVgr",
+        "end": "48566731"
+      },
+      {
+        "id": "uabi",
+        "type": 3,
+        "value": "AInv,AVgp",
+        "end": "48566731"
+      },
+      {
+        "id": "upgr",
+        "type": 3,
+        "value": "",
+        "end": "48566731"
+      },
+      {
+        "id": "urac",
+        "type": 3,
+        "value": "creeps",
+        "end": "48566731"
+      },
+      {
+        "id": "utub",
+        "type": 3,
+        "value": "|cff808080Category:|r Hero Killer|n|nA slow, fragile Intelligence mage. Baleful Strike farms permanent Intelligence; Event Horizon catches enemies for Dark Matter. Primordial Burst punishes high-Intelligence heroes.|n|nSTR 15 +1.5/lvl | AGI 16 +1.5/lvl | INT 20 +3/lvl|nMovement: 270. Low base health. Equilibrium restores up to 2 extra mana/sec as mana falls.",
+        "end": "48566731"
+      },
+      {
+        "id": "ufoo",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "umpm",
+        "type": 0,
+        "value": 150,
+        "end": "48566731"
+      },
+      {
+        "id": "umpi",
+        "type": 0,
+        "value": 150,
+        "end": "48566731"
+      },
+      {
+        "id": "uhpm",
+        "type": 0,
+        "value": 100,
+        "end": "48566731"
+      },
+      {
+        "id": "umvs",
+        "type": 0,
+        "value": 270,
+        "end": "48566731"
+      },
+      {
+        "id": "upru",
+        "type": 0,
+        "value": 1,
+        "end": "48566731"
+      },
+      {
+        "id": "umpr",
+        "type": 1,
+        "value": 1.0,
+        "end": "48566731"
+      },
+      {
+        "id": "utip",
+        "type": 3,
+        "value": "Summon Veigar",
+        "end": "48566731"
+      },
+      {
+        "id": "utpr",
+        "type": 3,
+        "value": "Revive Veigar",
+        "end": "48566731"
+      },
+      {
+        "id": "uawt",
+        "type": 3,
+        "value": "Revive Veigar",
+        "end": "48566731"
+      },
+      {
+        "id": "ustr",
+        "type": 0,
+        "value": 15,
+        "end": "48566731"
+      },
+      {
+        "id": "ustp",
+        "type": 1,
+        "value": 1.5,
+        "end": "48566731"
+      },
+      {
+        "id": "uagi",
+        "type": 0,
+        "value": 16,
+        "end": "48566731"
+      },
+      {
+        "id": "uagp",
+        "type": 1,
+        "value": 1.5,
+        "end": "48566731"
+      },
+      {
+        "id": "uint",
+        "type": 0,
+        "value": 20,
+        "end": "48566731"
+      },
+      {
+        "id": "uinp",
+        "type": 1,
+        "value": 3.0,
+        "end": "48566731"
+      },
+      {
+        "id": "upra",
+        "type": 3,
+        "value": "INT",
+        "end": "48566731"
+      },
+      {
+        "id": "uhpr",
+        "type": 1,
+        "value": 0.25,
+        "end": "48566731"
+      },
+      {
+        "id": "umdl",
+        "type": 3,
+        "value": "units\\undead\\HeroLich\\HeroLich.mdl",
+        "end": "48566731"
+      },
+      {
+        "id": "usca",
+        "type": 1,
+        "value": 0.800000011920929,
+        "end": "48566731"
+      },
+      {
+        "id": "ussc",
+        "type": 1,
+        "value": 0.800000011920929,
+        "end": "48566731"
+      },
+      {
+        "id": "uico",
+        "type": 3,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarHero.blp",
+        "end": "48566731"
+      },
+      {
+        "id": "ussi",
+        "type": 3,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNVeigarHero.blp",
+        "end": "48566731"
+      },
+      {
+        "id": "usnd",
+        "type": 3,
+        "value": "HeroLich",
+        "end": "48566731"
+      },
+      {
+        "id": "ua1b",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "ua1d",
+        "type": 0,
+        "value": 2,
+        "end": "48566731"
+      },
+      {
+        "id": "ua1s",
+        "type": 0,
+        "value": 4,
+        "end": "48566731"
+      },
+      {
+        "id": "ua1c",
+        "type": 1,
+        "value": 2.0999999046325684,
+        "end": "48566731"
+      },
+      {
+        "id": "ua1r",
+        "type": 0,
+        "value": 600,
+        "end": "48566731"
+      },
+      {
+        "id": "ua1t",
+        "type": 3,
+        "value": "hero",
+        "end": "48566731"
+      },
+      {
+        "id": "ua1w",
+        "type": 3,
+        "value": "missile",
+        "end": "48566731"
+      },
+      {
+        "id": "udef",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "ugol",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "ulum",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "ufor",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "ureq",
+        "type": 3,
+        "value": "",
+        "end": "48566731"
+      },
+      {
+        "id": "urqc",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "urq1",
+        "type": 3,
+        "value": "",
+        "end": "48566731"
+      },
+      {
+        "id": "urq2",
+        "type": 3,
+        "value": "",
+        "end": "48566731"
+      },
+      {
+        "id": "usst",
+        "type": 0,
+        "value": 0,
+        "end": "48566731"
+      },
+      {
+        "id": "usrg",
+        "type": 0,
+        "value": 3600,
+        "end": "48566731"
+      },
+      {
+        "id": "usma",
+        "type": 0,
+        "value": 3,
+        "end": "48566731"
+      },
+      {
+        "id": "ubba",
+        "type": 0,
+        "value": 250,
+        "end": "48566731"
+      },
+      {
+        "id": "ubpx",
+        "type": 0,
+        "value": 3,
+        "end": "48566731"
+      },
+      {
+        "id": "ubpy",
+        "type": 0,
+        "value": 1,
+        "end": "48566731"
+      },
+      {
+        "id": "ucpt",
+        "type": 1,
+        "value": 0.25,
+        "end": "48566731"
+      },
+      {
+        "id": "ucbs",
+        "type": 1,
+        "value": 0.3499999940395355,
+        "end": "48566731"
+      }
+    ]
+  }
+}

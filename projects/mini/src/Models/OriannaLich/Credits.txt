@@ -1,0 +1,5 @@
+Lich model and BTNLich icon by HappyTauren.
+Model: https://www.hiveworkshop.com/threads/lich.88135/
+Icon: https://www.hiveworkshop.com/threads/btnlich.88137/
+Animations and textures by Blizzard, according to the author's supplied readme.
+Imported from the user's Downloads/Lich.zip, October 28, 2026.

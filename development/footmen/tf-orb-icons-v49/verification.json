@@ -1,0 +1,18 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orb-icons-v49\\release\\FF799X_Rx_TF_Guardian_OrbIcons_v49.w3x",
+  "sha256": "825b24bb76d22be8a6d9d108dc1f7066bb6c0be7c1581ccf7466b53aab9a27b3",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-dice-v48\\release\\FF799X_Rx_TF_Guardian_Dice_v48.w3x",
+  "untouched_entries": 1347,
+  "ability_icon_mapping": {
+    "ATf1": "Fork",
+    "ATf2": "Choice",
+    "ATf3": "Green",
+    "ATf4": "Red",
+    "ATf5": "Gold",
+    "ATf6": "Green",
+    "ATf7": "Red",
+    "ATf8": "Gold"
+  },
+  "checks": "BLP1 active and disabled icons decoded, ability data validated, archive readback passed",
+  "live_test": "pending"
+}

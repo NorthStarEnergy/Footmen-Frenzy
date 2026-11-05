@@ -1,0 +1,11 @@
+{
+  "built_in_models_verified": [
+    "Abilities\\Spells\\Undead\\UnholyFrenzy\\UnholyFrenzyTarget.mdx",
+    "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodLarge0.mdx",
+    "Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdx",
+    "Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.mdx",
+    "buildings\\other\\CircleOfPower\\CircleOfPower.mdx"
+  ],
+  "custom_model_search": "Igneous Cleaver by Solu9 / Epimetheus found at https://www.hiveworkshop.com/threads/igneous-cleaver.274500/ ; download blocked by Cloudflare. Existing Axe Missile-Small retained and enlarged.",
+  "icons": "Generated via imagegen; standard Button Manager active/disabled frames; BLP1 mipmaps."
+}

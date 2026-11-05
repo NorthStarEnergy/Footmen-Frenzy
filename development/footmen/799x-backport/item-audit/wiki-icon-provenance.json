@@ -1,0 +1,2666 @@
+[
+  {
+    "id": "dust",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDustOfAppearance.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited dust)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNDustOfAppearance.dds",
+    "sha256": "2d30eef7ead27fce6de79d7b9aa19e014f96cbc12126971ed932ebd1a6e0a4b2",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I013",
+    "path": "ReplaceableTextures\\CommandButtons\\PASBTNEngineeringUpgrade.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\PASBTNEngineeringUpgrade.dds",
+    "sha256": "b31127c8dc552e2665429482196e076358d879d14141841d72bea6c117f6ef72",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I014",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.dds",
+    "sha256": "22cea636d53e6bec7882de7e007599b2862de866be06b0eaace3477a6d875ae9",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I016",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.dds",
+    "sha256": "bffa5d73218fec844a3e49a0f463fd5c2e6db1af1bb17485bfde35b5fd94bcc8",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pinv",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pinv)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.dds",
+    "sha256": "ab1ac88c4f3144c3db5297ef860815e7a59df5e9c6fd15d87eea19ccc13b0190",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I001",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHeartAmulet.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNHeartAmulet.blp",
+    "sha256": "2a04f6cd2db88a3cc7d94ffaeb7e8638f05f305a13a427b080b2cf40a30ca712",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01O",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+    "sha256": "67fcdf637bae92ac7407380ca6c49828d31c9b338b885badc4a0847aca967111",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "clsd",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCloak.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited clsd)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNCloak.dds",
+    "sha256": "2730016ebcc50f63b4075300711ec2676c0cf3e5f95c21cda9cf79535b16f808",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02F",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWand.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited will)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNWand.dds",
+    "sha256": "30ca7ba1c0e368cad1233e68a9529ca923d6267c76f359edae32e333e2ca5f57",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "nams",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pams)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.dds",
+    "sha256": "81453c7c4da61877d0feb65073d9646c3ac19ae973f403449773de9269db5802",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "sreg",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScrollOfRegenerationGreen.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited sreg)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScrollOfRegenerationGreen.dds",
+    "sha256": "f109cf2c678a88be5eea9abae4a54b122696a7adf8d834640cad9bed67592b54",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "shas",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScrollOfHaste.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited shas)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScrollOfHaste.dds",
+    "sha256": "a3f0b382e334891e6f66c10dcd9792147e2f6ee63e8e4e616de60ea9ff3bcbef",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ssil",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ssil)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.dds",
+    "sha256": "84e9acc11b87da96575ecae6877054b5fc6b591109da39f0582677bc1bf89809",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02X",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp",
+    "sha256": "0ad146cea818b4b8744b81354582b58c3a23edc446cb44986b0a47daca79d74d",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02O",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAmulet.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNAmulet.blp",
+    "sha256": "35881056fa56e889fcc792bbbe18151228feb0cdcfda7e65b6695e0e94939a19",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pghe",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionGreen.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pghe)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionGreen.dds",
+    "sha256": "cceb7cfa58d66ea8a5b2deaba86d69ae27c2f73c0da929e9c5e9b203a3013638",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pgma",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rlif",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRingSkull.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rlif)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRingSkull.dds",
+    "sha256": "ae7052544f7d14a53ba2a1518779dcc6e736e6615900d140bed65620b3541bf4",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ciri",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ciri)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.dds",
+    "sha256": "bb35fdf04b0a3d2a373984537e77ff7b91e3fbec54566a912c7a190660fb233e",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rwiz",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSobiMask.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rwiz)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSobiMask.dds",
+    "sha256": "9d4c588b365cc465f1d231ef2b80082dbdf0f810e544b72ce1e18f61f104fd7c",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tret",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited tret)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.dds",
+    "sha256": "002235feebb78e6735f2991d2c68ba58cf75455ca4367bce0ef9349f565e2899",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tcas",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRWall.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNRWall.blp",
+    "sha256": "27665d47166a79ca30acc6be5796a8902e261c80514981d28d27616cdfd87462",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tgrh",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLWall.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNLWall.blp",
+    "sha256": "90880625e69e6846325a949a1741511801ba79d74589b4ebe2e494d3f3ec8034",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "gobm",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStasisTrap.dds",
+    "sha256": "8c994d81fca665063a06586f0dbbf530895cbda6d9d48a9bb686e026a607b492",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z015",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "mcou",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited mcou)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.dds",
+    "sha256": "22cea636d53e6bec7882de7e007599b2862de866be06b0eaace3477a6d875ae9",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pnvl",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNLesserInvulneralbility.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pnvl)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNLesserInvulneralbility.dds",
+    "sha256": "46ac7829172df9017f5723ae55a1fa0b55891b6ea7a13bf7ba9bec1ce6d8a2b4",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I000",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScrollUber.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited stwp)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScrollUber.dds",
+    "sha256": "201acf074c365f0927b9218af969bc5a35fea2d4645585304ddbb7ed0fcbd29e",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01Y",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEnsnare.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNEnsnare.dds",
+    "sha256": "8ede1e8e4db211edf664483515e30b5e7188761d7c47b47a90d11183734f3b8d",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02N",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp",
+    "sha256": "0ad146cea818b4b8744b81354582b58c3a23edc446cb44986b0a47daca79d74d",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "crys",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited crys)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNCrystalBall.dds",
+    "sha256": "c8b8af6d73de516ccdc933b028d643649d1820f9bf330b13b2fb5ac42b3a802e",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ofro",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ofro)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.dds",
+    "sha256": "688b4f31e8731658c8195e44cc57aa19a59182e95772a06dec061647bb4fbd18",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pres",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pres)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.dds",
+    "sha256": "fa97a9ec35aa1dfe8335e22955c337285fd0b6239647736ec49e0be70d6ea886",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rde3",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRingGreen.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rde3)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRingGreen.dds",
+    "sha256": "286da9256c00e1bf3ec0c4033e3adbacb3197603da2de4519672ae0ea12683cf",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I020",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMassTeleport.dds",
+    "sha256": "3a8b2f1cb1a2fd495b0ec05032aa20d1a1d103e4d1aa7efc7e3b639aff693f6c",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z024",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "sres",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.dds",
+    "sha256": "1752d2e40941500422bca0e95849d4372d9a55860856e0a2d09b29f1169f04ba",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z021",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C063",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "bgst",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBelt.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited bgst)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNBelt.dds",
+    "sha256": "4a88ea037151884a0b4f524e6ed5f12bd78cd172df4b94d6e5e01c90091095f2",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X032",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z020",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C059",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I03C",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGlove.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited gcel)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGlove.dds",
+    "sha256": "c1a4ba3a77961b69809a7e2354d5c025cebeaddd38d666b594f8f18883ae32a0",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "whwd",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHealingWard.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited whwd)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNHealingWard.dds",
+    "sha256": "9891e7c87462c2cc94900f3b4e5b96143a169f90c80dbee8bf00cb455f81b6b7",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X030",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pnvu",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGreaterInvulneralbility.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pnvu)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGreaterInvulneralbility.dds",
+    "sha256": "28a78c756613d5cadba78746490c05cc001f456b0b52300ed01aee5e537d7313",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "stel",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaffOfTeleportation.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited stel)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStaffOfTeleportation.dds",
+    "sha256": "a6f24cca7fbc3be4f604dc48599e456ee2b76a1354c858ced66613806025b251",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C062",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z019",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C064",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X027",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C065",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01P",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGebo.BLP",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNGebo.BLP",
+    "sha256": "a442353afe029551a4cdd690adfaedbea769e7c1d801c55659e3f58035902d51",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C058",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z008",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X036",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X045",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z013",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X047",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z012",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X033",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "belv",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBoots.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited belv)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNBoots.dds",
+    "sha256": "259bbf456237c7a501d28ec691f2a3dd0d647d1ef38be3872fdc94748907bba8",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z002",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ratf",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ratf)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.dds",
+    "sha256": "c75bfda7fb197fe7f13f6344354421fe3d52b2d00e8d08455d5fb756cea33f80",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C050",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I030",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAmulet.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNAmulet.blp",
+    "sha256": "35881056fa56e889fcc792bbbe18151228feb0cdcfda7e65b6695e0e94939a19",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C066",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z006",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X028",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X034",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X046",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "modt",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited modt)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.dds",
+    "sha256": "bffa5d73218fec844a3e49a0f463fd5c2e6db1af1bb17485bfde35b5fd94bcc8",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "oven",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbOfVenom.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited oven)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNOrbOfVenom.dds",
+    "sha256": "45cc8dabcb3d553597e6399d207654f2af135d0f32b6d2116280a3b05a7fd5d1",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "pmna",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pmna)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.dds",
+    "sha256": "075f5f60e89d62161ce78793dfdba074c2b142830bf5db6c2d51419ce1e37542",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C060",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C072",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C071",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X037",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z022",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00Z",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.dds",
+    "sha256": "6ca7851411d729c30951b03420190c7860248e4ae34669540d2927065ef09c48",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X039",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z007",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z005",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z001",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C056",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C052",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z003",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C068",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C051",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z014",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X041",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X025",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C061",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X029",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z023",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I03Z",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp",
+    "sha256": "ba725d21d62870c9b912b0dd46d1a31d4a1e196d1ada1daf0c9fdd6661286de2",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X043",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z011",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C053",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X031",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X035",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X042",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X026",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z017",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X048",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "hval",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHelmOfValor.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited hval)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNHelmOfValor.dds",
+    "sha256": "80e9a2379501f97f1782f0922ab5b2b8ff3bba5879348ef26f8b60118306e69a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C067",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "evtl",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited evtl)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNTalisman.dds",
+    "sha256": "23f55fa847d9b1eac807dbf72a81f5f4e66e7e739040a7bd234cee23aa40f0f5",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C054",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C055",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X038",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X044",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C069",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C070",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z004",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C049",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z018",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z009",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z016",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "olig",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited olig)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.dds",
+    "sha256": "97116cd64a852e23552889d6074df6d0b2e723a97bec653f2d57af5674968946",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "X040",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02J",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRing.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNRing.blp",
+    "sha256": "811f57b9358c121135242b8c607a3e773c47e0330081b1f9b9d192d8c27476b2",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "sror",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited sror)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.dds",
+    "sha256": "3622cbeac1eacba9a461345af4c93a30eeeb0b83fda4e28b12f2536c839e1d0a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "C057",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "lgdh",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited lgdh)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.dds",
+    "sha256": "932dff81c346b67f843c7961e9f4ff915709f3becfcc1551af82d677dbe08a9e",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "wneg",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRodOfNecromancy.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRodOfNecromancy.dds",
+    "sha256": "dcbc7089975fac80acc6fb328becc7d8f8b894caa3d517ba00e0414ecf724994",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I03Y",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp",
+    "sha256": "ba725d21d62870c9b912b0dd46d1a31d4a1e196d1ada1daf0c9fdd6661286de2",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "Z010",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ckng",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHelmutPurple.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ckng)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNHelmutPurple.dds",
+    "sha256": "ad4187db7b532bd4b83c1327b05afdba7369a1e7ba65dadab6caa227070610b4",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I017",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScroll.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited spro)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScroll.dds",
+    "sha256": "30e7995cd69a7a1ce92ee380ee42cc397871b79a8737a526f15a0c94cfe76696",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "prvt",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPeriapt.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited prvt)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPeriapt.dds",
+    "sha256": "73cc73486e1957d4e5d5503f4f3698bd55490d6053c87eabc0d8be3113cdc426",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "sbch",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBoneChimes.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited sbch)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNBoneChimes.dds",
+    "sha256": "063738d621b8081ba6304c145e4cc89d39ba2a2d497978e0400342821d3bd347",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I009",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.dds",
+    "sha256": "b10ae264b73df6bef1321f6d584e205df9617fbed8f86b35decb5d23107eca15",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00C",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.dds",
+    "sha256": "07103ad8dc21d2a30cc6c5f2fbadd74b30c384a0ad6e39b69d3ee187ca9687c4",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ward",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDrum.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ward)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNDrum.dds",
+    "sha256": "8798cc53e453461acc54944a050c2ced4fc949c6d6bb84c2f22e81c3d7a1afba",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01S",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCoD.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNCoD.blp",
+    "sha256": "e40ba4f4281b5397900e663dfbdf18cccce6ecdc9dc2b8c98ba9c34fe595c0e6",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00E",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHammer.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited mlst)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNHammer.dds",
+    "sha256": "c2b0b7cfc3a63c4a48e777d036cb3b8415954aa413a7a434ac63e6999be79f22",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00N",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPriestAdept.dds",
+    "sha256": "b5c228b3b8dd65648d4774ed182f42abc7a1b83711972289d649a15c8e3170ec",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00D",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNThoriumArmor.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNThoriumArmor.dds",
+    "sha256": "3d596c49bb2c188459324d89cf3104fae246adfe8f01b0c40717fbefc245850f",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tmmt",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited tmmt)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.dds",
+    "sha256": "f35a2ce6379d025ffbbd22a34ad298fe821f4b5b3865b646bb1ff512f667a08a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00F",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited spsh)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.dds",
+    "sha256": "adef392270910b50363b3194731d3bfdc8f31e156daef5173ebc7f08a35945c5",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V084",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V085",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V078",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V079",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V086",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "ankh",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ankh)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNAnkh.dds",
+    "sha256": "287ad18472d68c0880e12a74146498a6f151f926aa824bc2666535f9859081c1",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V091",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V075",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V094",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V074",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V076",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I04B",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.dds",
+    "sha256": "ae526fa6dccdff75e664a94d17af24a8d2724e86febc62918a3d196460cc0315",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V073",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V077",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V092",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V095",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V088",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V093",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V087",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V082",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V080",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "clfm",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited clfm)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.dds",
+    "sha256": "188002d996d3745b32ed3130199b3b30e824333d30c3c3f4da749b1d54e36371",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rat9",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+    "sha256": "5d1cd323b4a4065f1fffe73ced62dce1cc607eae80247eb62111cc97ae5b7a4c",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "frhg",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited frhg)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.dds",
+    "sha256": "dcc5837ad865ff43264809a8526f0891fca36e0ce90087103456ddd99eb9a6e0",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V089",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V090",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V081",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "stwa",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNHornedSword.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNHornedSword.blp",
+    "sha256": "7a14e7314ca92f69b115c58210f8f65b1c0d708756bb73d4b93e9f4265c0071e",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02T",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPurify.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNPurify.blp",
+    "sha256": "57d7da6954ae903bb79dbc05f42c0a28d48e412d9b7f152ae41dc3eafe0f52bd",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V083",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "V096",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited pgma)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.dds",
+    "sha256": "64ab3c5836828226d9b44dcf55ac7469a0283e142ac56f56698e665e00ff5832",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00G",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSeigeEngineWithMissles.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSeigeEngineWithMissles.dds",
+    "sha256": "45da3dc349a55a81e1d0e604f26abe5351417dcd237dd4c355c0782eef541654",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02U",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp",
+    "sha256": "e345fb7de5059f1a9d48faad69ef507215bf9dc3847d8436fdeb4674d5019c91",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00K",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNShamanMaster.dds",
+    "sha256": "05f6644247b721bfcde485523fbce8ddd315f3b868d8beca37feb31c01994bb5",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00Q",
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.dds",
+    "sha256": "9163ea158d5401a867fec5926249fe6ca321b1e60504bba4b38fed6a594a18fc",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00S",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.dds",
+    "sha256": "9acfe50a8ac3c1c6396560f535761cabef52a57fd999a1c6db8478d4f6f4c9b8",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01I",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+    "sha256": "083d19488814d4d807302e3457bc2191b73c3fa37a28ed1f2d31cf9648bf9f6a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I024",
+    "path": "ReplaceableTextures\\CommandButtons\\BTN_CR_GREENstaf.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTN_CR_GREENstaf.blp",
+    "sha256": "b4cce4117858686a7896012767e86f124961881eae99982f08cd218bd22fd007",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00O",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGoldRing.dds",
+    "sha256": "7655e2b00f16470c578baed529925a0dcf9a5abdb887d11c609fd1cf89931138",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "brac",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited brac)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRunedBracers.dds",
+    "sha256": "f1e61d1e67873f181180492a49eac15df9d267e323d7ba2fdbd0692192b84947",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00Y",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNPriestAdept.dds",
+    "sha256": "b5c228b3b8dd65648d4774ed182f42abc7a1b83711972289d649a15c8e3170ec",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "IGs1",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSilence.blp",
+    "field": "iico",
+    "fieldSource": "war3map.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSilence.dds",
+    "sha256": "5c591d6cf59ac89a453ed4e2a4051c27f9308714a5dbb58846205e39061fed48",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tgxp",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNManual3.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited tgxp)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNManual3.dds",
+    "sha256": "9c94e45ca0b14e3b41fbdc1c82d3ed3ade0796733147f27c8af28cb19eca2f7f",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02L",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+    "sha256": "def440046c77053351a800beb978b1e5a1b95600a53d5857ef980205a7be4933",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I012",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.dds",
+    "sha256": "6ca7851411d729c30951b03420190c7860248e4ae34669540d2927065ef09c48",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rin1",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rin1)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.dds",
+    "sha256": "b4757c06d4b24b40d0bc5a55fe43a1753f3dee726ae93263320b00554d03bfd9",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I008",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited sror)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.dds",
+    "sha256": "3622cbeac1eacba9a461345af4c93a30eeeb0b83fda4e28b12f2536c839e1d0a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00H",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSkullWand.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNSkullWand.blp",
+    "sha256": "fe5383f84fed78cabaa40133da6d86f998595b856dcb5adaaca030f0aa5fb058",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "tkno",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNTomeRed.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited tkno)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNTomeRed.dds",
+    "sha256": "f884888701669b93449df2a0964e350080c476d4bdea3687bc2778bb35049614",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00M",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.dds",
+    "sha256": "50511e4c6cc0ca3ada5917446a7090143e24b01d18f3f5627b8b83f2dc2e980a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I006",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited klmm)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.dds",
+    "sha256": "a57b180c4a187a271a6ad7db0a8c253bfa9d13f2659a78cd1b198d81cf735299",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rat6",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp",
+    "sha256": "e345fb7de5059f1a9d48faad69ef507215bf9dc3847d8436fdeb4674d5019c91",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00L",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGhostMage.dds",
+    "sha256": "4e8b4fef526e01e5506fa60bcce531cb92ee049fe7423473727753b58c2afb75",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "desc",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited desc)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.dds",
+    "sha256": "e34bc6d1f438d5f6d7e6c82a83d162ee66d3d40835de29e6e05f456ef6edd422",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I004",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRodofEnvy.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNRodofEnvy.blp",
+    "sha256": "b1c7cbe6de61963dca33c14c5b6c4a8c2aaa637509b11857e3d0f681c06a4709",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01Q",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGlaringBeam.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNGlaringBeam.blp",
+    "sha256": "b4e4d9b3af5798ba37be33ebfedaff6aa5b4aae66ba22a1b29fd4d22f3c16f17",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00B",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.dds",
+    "sha256": "c9544e7eb2d8a019061b3d060c1019b65808ee3c730474e1f4420eb211cc1b36",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rst1",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rst1)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower.dds",
+    "sha256": "debc62f3f9afa908018b320b21753a83653e0e68db1c05e177d6f3282eecf57c",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02M",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp",
+    "sha256": "def440046c77053351a800beb978b1e5a1b95600a53d5857ef980205a7be4933",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00V",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGhostMage.dds",
+    "sha256": "4e8b4fef526e01e5506fa60bcce531cb92ee049fe7423473727753b58c2afb75",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I003",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp",
+    "sha256": "5d03255ed9503585f942d27351d73cd4676bcb89c4c75215fdc4e5625435f432",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00X",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.dds",
+    "sha256": "c9544e7eb2d8a019061b3d060c1019b65808ee3c730474e1f4420eb211cc1b36",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00A",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rnsp)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNGoldRing.dds",
+    "sha256": "7655e2b00f16470c578baed529925a0dcf9a5abdb887d11c609fd1cf89931138",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "sand",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited sand)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.dds",
+    "sha256": "6623b049565b79ebe705ec1a13e4e13c95fcf68a03913da097986ee3b2ef2bd3",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "srrc",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScroll.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited srrc)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSnazzyScroll.dds",
+    "sha256": "c1cda670193702a0c35d21de710efb6288b25df22bed15c86e02bbfe8a029fec",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01H",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp",
+    "sha256": "083d19488814d4d807302e3457bc2191b73c3fa37a28ed1f2d31cf9648bf9f6a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00T",
+    "path": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.dds",
+    "sha256": "9163ea158d5401a867fec5926249fe6ca321b1e60504bba4b38fed6a594a18fc",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "rag1",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited rag1)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility.dds",
+    "sha256": "dfa25f540b1c02c116b0036e0cf52a557ee83767010e066dece3cc5577e7e1cd",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00U",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.dds",
+    "sha256": "50511e4c6cc0ca3ada5917446a7090143e24b01d18f3f5627b8b83f2dc2e980a",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I02P",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.dds",
+    "sha256": "e4127537239150517ef706e98b9964a5562da85e8fd73b5fa8e346683af7a9ef",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I010",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.dds",
+    "sha256": "9acfe50a8ac3c1c6396560f535761cabef52a57fd999a1c6db8478d4f6f4c9b8",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "cnob",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCirclet.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited cnob)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNCirclet.dds",
+    "sha256": "208418fca445aa2fa7b8962d2d3e1c4770a243d015c480b66b254500c5839bef",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01R",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNCoD.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNCoD.blp",
+    "sha256": "e40ba4f4281b5397900e663dfbdf18cccce6ecdc9dc2b8c98ba9c34fe595c0e6",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I04A",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.dds",
+    "sha256": "ae526fa6dccdff75e664a94d17af24a8d2724e86febc62918a3d196460cc0315",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00W",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNShamanMaster.dds",
+    "sha256": "05f6644247b721bfcde485523fbce8ddd315f3b868d8beca37feb31c01994bb5",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I005",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.dds",
+    "sha256": "9bf9bd5364895a16c2fb15e08ea138c65a0f3f28a8da33cab33a02a0ce1c7361",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I01Z",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp",
+    "field": "iico",
+    "fieldSource": "war3mapSkin.w3t",
+    "assetSource": "map:ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp",
+    "sha256": "8d7b8f42fa4454aee73099520b2832449286aee1465cd82f7fb9dcdf1ae2222c",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "nspi",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited nspi)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNNecklace.dds",
+    "sha256": "bdabdf805134d2ebd5f42788277ec68853bfddd6c50453365482651f38194ade",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I00I",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNStone.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited totw)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNStone.dds",
+    "sha256": "204b41fcdf35fddbf595c261f37ec98045a31f00ff3771a0d56e330bd0db8110",
+    "dimensions": [
+      64,
+      64
+    ]
+  },
+  {
+    "id": "I002",
+    "path": "ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.blp",
+    "field": "iico",
+    "fieldSource": "custom-itemfunc.txt (inherited ram4)",
+    "assetSource": "game:ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.dds",
+    "sha256": "6df8e0c8db45286d9496aa599e5b38851bbe1237ae6ceab5ab642ba8b63eb6e9",
+    "dimensions": [
+      64,
+      64
+    ]
+  }
+]

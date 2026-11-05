@@ -1,0 +1,9 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-guardian-v47\\release\\FF799X_Rx_TF_Guardian_v47.w3x",
+  "sha256": "d79553ee0b3ea254a257e7ed2f90f06d4d8eac73ba3e936f2b83f81eff40129e",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-destiny-v46\\release\\FF799X_Rx_TF_Destiny_v46.w3x",
+  "unchanged_archive_entries": 1344,
+  "jass_compilation": "passed",
+  "tf_behavior_checks": 101,
+  "live_engine_test": "pending"
+}

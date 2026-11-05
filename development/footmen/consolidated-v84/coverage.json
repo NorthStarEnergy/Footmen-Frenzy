@@ -1,0 +1,242 @@
+{
+  "function_count": 3808,
+  "v83_functions_unchanged": 3804,
+  "missing_predecessor_functions": 0,
+  "recent_builds": [
+    {
+      "branch": "veigar-range-v74",
+      "all_functions_retained": true,
+      "identical_functions": 3759,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "FFGS_ApplyUnit",
+        "P67_HeroRate",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_colossal_spawn_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "spawn-level-v75",
+      "all_functions_retained": true,
+      "identical_functions": 3760,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "P67_HeroRate",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_colossal_spawn_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "colo-xp-v76",
+      "all_functions_retained": true,
+      "identical_functions": 3760,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "P67_HeroRate",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_colossal_spawn_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "colo-curve-v77",
+      "all_functions_retained": true,
+      "identical_functions": 3762,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "P67_HeroRate",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_colossal_spawn_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "level10-catchup-v78",
+      "all_functions_retained": true,
+      "identical_functions": 3764,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_colossal_spawn_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "colo-lag-v79",
+      "all_functions_retained": true,
+      "identical_functions": 3776,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "P67_Refresh",
+        "P67_AddSupplement",
+        "P67_Start",
+        "Trig_Multiboard_Update_Actions",
+        "Trig_Unit_Experience_System_Func004Func012A",
+        "Trig_Unit_Experience_System_Func005Func012A",
+        "Trig_Unit_Experience_System_Func006Func012A",
+        "Trig_Foot_Exp_system_Func002Func011A",
+        "Trig_MH_shop_click_Actions",
+        "Trig_HERO_Blademaster_Illusions_Actions",
+        "Trig_set_spawn_variables_Actions",
+        "InitTrig_FF_Runtime",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "fed-rewards-v80",
+      "all_functions_retained": true,
+      "identical_functions": 3797,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "Trig_set_spawn_variables_Actions",
+        "VG_DarkImpact",
+        "VG_Tick",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "veigar-visuals-v81",
+      "all_functions_retained": true,
+      "identical_functions": 3800,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "Trig_set_spawn_variables_Actions",
+        "VG_ClassicKill",
+        "VG_Equilibrium",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "veigar-stacks-v82",
+      "all_functions_retained": true,
+      "identical_functions": 3801,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "Trig_set_spawn_variables_Actions",
+        "VG82_UpdateCounter",
+        "VG_ClassicKill",
+        "VG_ClassicCast"
+      ]
+    },
+    {
+      "branch": "veigar-ultimate-v83",
+      "all_functions_retained": true,
+      "identical_functions": 3804,
+      "changed_in_later_revisions": [
+        "TFP_FFDP_OnCast",
+        "GD_Cast",
+        "FFGS_InitSettings",
+        "Trig_set_spawn_variables_Actions"
+      ]
+    }
+  ],
+  "unit_field_changes": 6,
+  "new_units": [
+    "hGpy"
+  ],
+  "imported_assets_verified": 10,
+  "unchanged_objects_terrain_roster": true,
+  "casino_profile_prototypes_excluded": true,
+  "engine_playtested": false
+}

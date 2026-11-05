@@ -1,0 +1,394 @@
+{
+  "ancestor": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "donor": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-cloud-ramp\\release\\FF799X_Rx_Mundo_Cloud_Ramp_Test.w3x",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ui-label-repair\\release\\FF799X_Rx_v71_UI_Labels_Icons_Fixed.w3x",
+  "base_sha256": "f382c0c30a08d78d195e8444a831bd621f88f57c7f63188976bb0260fafa28ac",
+  "changed_functions": [
+    "MU_BurnOff",
+    "MU_Register",
+    "MU_OnCleaverHit",
+    "MU_PoisonTick",
+    "MU_GasExpire",
+    "MU_GasSpawn",
+    "MU_OnCast",
+    "MU_TickHero",
+    "MU_Init"
+  ],
+  "new_functions": [
+    "MC_Now",
+    "MC_Heat",
+    "MC_Integral",
+    "MC_Drain",
+    "MC_Model",
+    "MU_ZeroResources",
+    "MW_Clear",
+    "MW_Tick",
+    "MW_Control",
+    "MW_Start",
+    "MW_Impact"
+  ],
+  "object_changes": {
+    "war3map.w3a": [
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          2,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "arut",
+          0,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          3,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          4,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          6,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          1,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu1"
+        ],
+        "field": [
+          "aub1",
+          5,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          2,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "arut",
+          0,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          3,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          4,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          6,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          1,
+          0
+        ]
+      },
+      {
+        "object": [
+          "ANcl",
+          "AMu2"
+        ],
+        "field": [
+          "aub1",
+          5,
+          0
+        ]
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi0"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi1"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi2"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi3"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi4"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi5"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi6"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi7"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi8"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMi9"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj0"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj1"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj2"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj3"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj4"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj5"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj6"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj7"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj8"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aamk",
+          "AMj9"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aens",
+          "AMwR"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Aslo",
+          "AMwS"
+        ],
+        "added": true
+      }
+    ],
+    "war3map.w3u": [
+      {
+        "object": [
+          "Npbm",
+          "HMu1"
+        ],
+        "field": [
+          "uint",
+          null,
+          null
+        ]
+      }
+    ],
+    "war3map.w3h": [
+      {
+        "object": [
+          "Beng",
+          "BMwR"
+        ],
+        "added": true
+      },
+      {
+        "object": [
+          "Bslo",
+          "BMwS"
+        ],
+        "added": true
+      }
+    ]
+  },
+  "imports": [
+    "Spells\\Mundo\\Cloud0.mdx",
+    "Spells\\Mundo\\Cloud1.mdx",
+    "Spells\\Mundo\\Cloud2.mdx",
+    "Spells\\Mundo\\Cloud3.mdx",
+    "Spells\\Mundo\\Cloud4.mdx",
+    "Spells\\Mundo\\Cloud5.mdx",
+    "Spells\\Mundo\\Cloud6.mdx",
+    "Spells\\Mundo\\Cloud7.mdx",
+    "Spells\\Mundo\\Cloud8.mdx",
+    "Spells\\Mundo\\Cloud9.mdx",
+    "Spells\\Mundo\\Cloud10.mdx",
+    "Spells\\Mundo\\Cloud11.mdx",
+    "Spells\\Mundo\\Cloud12.mdx",
+    "Spells\\Mundo\\Cloud13.mdx",
+    "Spells\\Mundo\\Cloud14.mdx",
+    "Spells\\Mundo\\Cloud15.mdx",
+    "Spells\\Mundo\\Cloud16.mdx",
+    "Spells\\Mundo\\Cloud17.mdx",
+    "Spells\\Mundo\\Cloud18.mdx",
+    "Spells\\Mundo\\Cloud19.mdx",
+    "Spells\\Mundo\\Cloud20.mdx"
+  ]
+}

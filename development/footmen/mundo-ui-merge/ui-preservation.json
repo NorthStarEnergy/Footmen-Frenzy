@@ -1,0 +1,14 @@
+{
+  "repaired_members_preserved": {
+    "war3map.wts": "09a7aeebd783d4e9c80b60ea5525a75b3e1d99bcde4b0be7e2d2b38f8e195ab6",
+    "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp": "67fcdf637bae92ac7407380ca6c49828d31c9b338b885badc4a0847aca967111",
+    "ReplaceableTextures\\CommandButtons\\ATCLightningBolt.blp": "84b74436b6883d220a70350fad2f7fc4e9a32e4f8b714535083b3e4eff666bac",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISATCUnholyfrenzy1.blp": "155514672d49d13b1a98d1ea142d3288b1f2644c11b4f7095e58d1372379256a",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRottenAura.blp": "ce53abcb7eeb7129a1a084862773f004a01dc33a0afdd5d13107504863a52291",
+    "ReplaceableTextures\\CommandButtons\\BTNKatana.blp": "5d1cd323b4a4065f1fffe73ced62dce1cc607eae80247eb62111cc97ae5b7a4c",
+    "war3mapImported\\DISBTNCRFrostShock.blp": "963ab66989ac2f43e472a7aa059ef580ac4d9f337207a27f704828d46fa05bd7",
+    "war3mapImported\\Void Arrow.mdx": "5519ada18f084cc6a3bb7e8696991d5aa68913bcf12dd6b1a9cc47ee2e6ab9c7",
+    "AbyssAura.mdx": "c76d0368a61d390f9043407aea7a0c9df24eb96300b14067826abb2743f1aa1d"
+  },
+  "line_endings_clean": true
+}

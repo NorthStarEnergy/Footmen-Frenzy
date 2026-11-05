@@ -1,0 +1,33 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\pub-xp-v67\\release\\FF799X_Rx_Pub_XP_v67.w3x",
+  "base_sha256": "f51fd7d74d2977d8f20c005c79a7ae14678c717167f63c8983e1503cba91150f",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ui-label-repair\\release\\FF799X_Rx_v67_UI_Labels_Icons_Fixed.w3x",
+  "sha256": "a3b35ca5adf9e3d37d0f12cf77669308807bd265ac0c0e0cfdff48fe2a572b0d",
+  "restored_assets": [
+    "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+    "ReplaceableTextures\\CommandButtons\\ATCLightningBolt.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISATCUnholyfrenzy1.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRottenAura.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+    "war3mapImported\\DISBTNCRFrostShock.blp",
+    "war3mapImported\\Void Arrow.mdx",
+    "AbyssAura.mdx"
+  ],
+  "changed_payloads": [
+    "war3map.wts",
+    "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+    "ReplaceableTextures\\CommandButtons\\ATCLightningBolt.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISATCUnholyfrenzy1.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRottenAura.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+    "war3mapImported\\DISBTNCRFrostShock.blp",
+    "war3mapImported\\Void Arrow.mdx",
+    "AbyssAura.mdx"
+  ],
+  "repaired_string_line_endings": 105701,
+  "string_records_preserved": 16692,
+  "readable_payloads_reverified": 1334,
+  "unchanged_archive_entries": 1352,
+  "runtime_and_editor_scripts_byte_identical": true,
+  "engine_playtested": false
+}

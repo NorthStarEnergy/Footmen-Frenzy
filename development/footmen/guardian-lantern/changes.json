@@ -1,0 +1,17 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-lantern\\base.w3x",
+  "base_sha256": "0e22724bf79fa52c8e674e7e5ed870e545063991cac866fab25a961851157b5a",
+  "changed_functions": [
+    "TFP_FFDP_Destroy",
+    "TFP_FFDP_Tick",
+    "TFP_FFDP_OnCast",
+    "TFP_Init"
+  ],
+  "added_functions": [
+    "TFP_LinkDistanceSquared",
+    "TFP_LinkEffect",
+    "TFP_LinkEnemy",
+    "TFP_LinkGround",
+    "TFP_LinkRide"
+  ]
+}

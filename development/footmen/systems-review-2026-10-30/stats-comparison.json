@@ -1,0 +1,9 @@
+{
+  "DPS_OnDamage": "identical",
+  "DPS_OnDeath": "identical",
+  "DPS_Text": "modified",
+  "DPS_Toggle": "modified",
+  "DPS_Create": "modified",
+  "DPS_Refresh": "modified",
+  "DPS_Init": "identical"
+}

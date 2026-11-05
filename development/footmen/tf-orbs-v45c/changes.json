@@ -1,0 +1,27 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-raven-v45b\\release\\FF799X_Rx_Mundo_TF_Raven_v45b.w3x",
+  "payloads": [
+    "war3map.j",
+    "war3map.w3u",
+    "war3mapSkin.w3u",
+    "war3map.w3a",
+    "war3mapSkin.w3a",
+    "war3map.wts",
+    "war3map.imp",
+    "war3mapImported\\TFOrb.mdx"
+  ],
+  "changed_functions": [
+    "TF33_Close",
+    "TF33_Show",
+    "TF33_Cast",
+    "TFP_Init"
+  ],
+  "ranges": [
+    1000,
+    1025,
+    1050,
+    1075,
+    1100,
+    1150
+  ]
+}

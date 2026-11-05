@@ -1,0 +1,10 @@
+/build/
+/tools.local.json
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+.vs/
+.idea/
+*.pending

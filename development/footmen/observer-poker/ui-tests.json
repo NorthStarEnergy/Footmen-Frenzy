@@ -1,0 +1,8 @@
+{
+  "card_visibility_checks": 144,
+  "hidden_opponent_and_future_cards": true,
+  "local_table_visibility": true,
+  "renderer_preserves_rules_state": true,
+  "zero_stack_and_chip_tiers": true,
+  "engine_tested": false
+}

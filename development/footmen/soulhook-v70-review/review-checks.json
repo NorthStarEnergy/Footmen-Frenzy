@@ -1,0 +1,48 @@
+{
+  "engine_tested": false,
+  "results": [
+    {
+      "name": "All six ranks: one damage hit, 150-unit drag at initial distance 300, complete state/effect/group/tether cleanup",
+      "passed": true
+    },
+    {
+      "name": "New target caught on return, despite outbound-only README description",
+      "reproduced": true
+    },
+    {
+      "name": "Second caster rank-6 hook deals no damage and no stun to an already dragged target",
+      "reproduced": true,
+      "expected_second_damage": 320,
+      "actual_second_damage": 0
+    },
+    {
+      "name": "Reaping Axe pull and Soul Hook drag both own the same victim concurrently",
+      "reproduced": true
+    },
+    {
+      "name": "Concurrent axe/hook pulls move victim 68.125 units in one 31.25ms tick, exceeding hook step 40",
+      "reproduced": true
+    },
+    {
+      "name": "Stationary target at x=84.375, y=149 missed on both passes",
+      "reproduced": true,
+      "perpendicular_distance": 149
+    },
+    {
+      "name": "Collision snap over 8 units cancels drag and restores original position",
+      "passed": true
+    },
+    {
+      "name": "Caster death during an active catch cleans drag/head/claim, flash expires",
+      "passed": true
+    },
+    {
+      "name": "Synchronous reflected-damage caster death inside catch cleans owned resources",
+      "passed": true
+    },
+    {
+      "name": "100 sequential casts leave no active DK states, groups, effects, tethers or hash claims",
+      "passed": true
+    }
+  ]
+}

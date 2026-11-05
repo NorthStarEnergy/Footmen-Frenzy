@@ -1,0 +1,52 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\lux-final-spark\\release\\FF799X_Rx_Lux_FinalSpark_v70.w3x",
+  "sha256": "52442f79d40eac423be3ccde0906cafa8e068dbbf0b87cfc42f0976a27da902f",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "base_sha256": "ca55bf08034a5a8cfe4b37c374dd87f68f4fd358d73a57e0c95266188b467b35",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "Spells\\Lux\\FinalSparkBeam.blp",
+    "Spells\\Lux\\FinalSparkBeam.mdx",
+    "Spells\\Lux\\FinalSparkBlast.wav",
+    "Spells\\Lux\\FinalSparkCharge.wav",
+    "Spells\\Lux\\FinalSparkFlare.blp",
+    "Spells\\Lux\\FinalSparkFlare.mdx",
+    "war3map.imp",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3map.wct",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1366,
+  "existing_object_records_preserved": {
+    "war3map.w3a": 1900,
+    "war3map.w3u": 749
+  },
+  "changed_functions": [
+    "InitTrig_FF_Runtime"
+  ],
+  "new_functions": [
+    "LX_Cast",
+    "LX_Cleanup",
+    "LX_Damage",
+    "LX_Enemy",
+    "LX_InBeam",
+    "LX_Init",
+    "LX_Release",
+    "LX_Sound",
+    "LX_Style",
+    "LX_Summon",
+    "LX_TestAllowed",
+    "LX_Tick",
+    "LX_Visual",
+    "LX_Z"
+  ],
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "behavior_checks": 73,
+  "random_geometry_cases": 2000,
+  "new_asset_bytes": 100624,
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

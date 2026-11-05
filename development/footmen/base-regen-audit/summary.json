@@ -1,0 +1,38 @@
+{
+  "source_map": "fed-rewards-v80/release/FF799X_Rx_Fed_Rewards_v80_TEST.w3x",
+  "changed_game_files": false,
+  "aura_carrier": "h01S",
+  "radius": 500,
+  "targets": "hero,player (owning player heroes)",
+  "health": {
+    "ability": "ACnr",
+    "research": "R006",
+    "starting_research_level": 1,
+    "percent_max_hp_per_second": [
+      1.5,
+      2.5,
+      5.0
+    ]
+  },
+  "mana": {
+    "ability": "A05M",
+    "research": "R007",
+    "starting_research_level": 0,
+    "percent_max_mana_per_second": [
+      2.0,
+      3.0,
+      4.0
+    ],
+    "starting_aura_bonus": 0
+  },
+  "research_shared_with_allies": true,
+  "distinct_unused_health_variant": {
+    "ability": "A059",
+    "level3_percent": 4.0,
+    "note": "Actual upgrade trigger and base carrier use ACnr, whose level 3 is 5 percent."
+  },
+  "early_regen_boost_present": false,
+  "separate_fortification_armor_disable_seconds": 330,
+  "new_early_boost_rates": "not specified",
+  "new_seven_minute_clock_origin": "not specified"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "Selected artwork; not yet installed in map",
+  "tool": "built-in image_gen",
+  "icons": [
+    {
+      "name": "Z-Baleful-Strike",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a18bda-8628-77c2-a7cd-a7838e94d9a3\\exec-b57ccb87-4a5f-4c71-898c-c9d542048e84.png",
+      "prompt": "Edit supplied Veigar Primordial Burst ultimate icon. Keep the single blue-purple magical orb, bright white core, square borderless framing and soft Warcraft III painted style. Make it a little more menacing: deepen the outer sphere to midnight blue and near-black violet, compress the white core into a smaller fiercely burning center, and curve three broad dark violet claw-like energy shadows inward around the core, suggesting violent implosion. These are abstract energy shapes, not literal hands or added objects. Uneven sinister purple halo, restrained blue highlights. Strong dark/light silhouette and heavy ominous power, not a pretty luminous pearl. Keep simple with broad soft blended brushwork readable at 64x64. No face, eyes, skulls, gold hooks, sharp intricate filaments, sparks, debris, text, frame or complex background."
+    },
+    {
+      "name": "X-Event-Horizon",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a18bda-8628-77c2-a7cd-a7838e94d9a3\\exec-b1cd50b9-4384-4de8-ba7d-2f61057659d3.png",
+      "prompt": "Edit target: supplied Veigar Event Horizon icon. Preserve the existing five-post pentagonal luminous light-purple cage, its shape, position, scale, brightness and softly hand-painted appearance. Change ONLY the plain black background: give it a very subtle dark desaturated indigo-violet atmospheric haze, a few broad softly blended smoky tonal variations, slightly lighter behind and within the cage, darkest at the corners. Background should be visible but quiet, low contrast, and much darker than cage. No stars, speckles, runes, objects, scenery, sharp details or added effects. Maintain simple Warcraft III spell icon readability at 64x64. Square, no text, no frame."
+    },
+    {
+      "name": "C-Dark-Matter",
+      "source": "C:/Users/User/AppData/Local/Temp/codex-clipboard-3c65e879-2e95-4ad4-96a3-2c22efdada9b.png",
+      "prompt": "Exact user attachment. Preserve original resolution and pixels. Do not resize or regenerate."
+    },
+    {
+      "name": "V-Primordial-Burst",
+      "source": "C:\\Users\\User\\.codex\\generated_images\\01a18bda-8628-77c2-a7cd-a7838e94d9a3\\exec-2c293c96-6d99-4a9f-8ba1-8c80ffe66fad.png",
+      "prompt": "Edit this Veigar ultimate spell icon. Make it visually DISTINCT from a blue swirling Z orb. Dominant palette is DARK PURPLE, plum and almost-black violet, virtually no blue or cyan. A menacing compact purple electrical sphere surrounds a substantially LARGER blazing pure WHITE core, occupying roughly one third of the sphere diameter. Three thick irregular white-to-lavender lightning strokes radiate from the core through dark purple masses; keep them angular, NOT spiraling. Strong white center against deep dark purple body, restrained violet outer glow. Preserve simple soft hand-painted Warcraft III icon style, broad shapes readable at 64x64, no tiny lightning branches, sparks, particles, gold, faces, extra objects, text or frame. Quiet smoky dark-purple backdrop. Keep composition focused on a single electrical burst."
+    }
+  ]
+}

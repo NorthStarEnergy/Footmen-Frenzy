@@ -1,0 +1,18 @@
+{
+  "source": "FF799X_Rx_CleaveRanges_v43.w3x",
+  "map": "FF799X_Rx_Myrmidon_Cleave_v44.w3x",
+  "sha256": "86c10ccb41110442db5435afa05e3d0e3bb4fa5eab534c58ae62dfb440f0f788",
+  "hero": "Myrmidon",
+  "ability": "A05W",
+  "cleavePercent": [
+    30,
+    40,
+    50,
+    60,
+    70,
+    80
+  ],
+  "range": 250,
+  "preservedMembers": 1336,
+  "livePlaytest": false
+}

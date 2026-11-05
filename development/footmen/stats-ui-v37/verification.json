@@ -1,0 +1,24 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\stats-ui-v37\\release\\FF799X_Rx_Consolidated_StatsUI_v37.w3x",
+  "sha256": "4aeaf9241f43271257e7fd5bf5607f39c451f23381524915a6b00e37381fa74d",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_InstaMass_v36.w3x",
+  "base_sha256": "b27ec8b1bc951b555e2a6f7088ce2c5094f0427cce99e4d699422c25ac2f5bf4",
+  "changed_functions": [
+    "DPS_Create"
+  ],
+  "preserved_archive_entries": 1352,
+  "button_before": [
+    0.0625,
+    0.02
+  ],
+  "button_after": [
+    0.075,
+    0.028
+  ],
+  "panel_top_before": 0.51,
+  "panel_top_after": 0.58,
+  "panel_bottom_after": 0.187,
+  "close_button": "unchanged",
+  "compiler": "passed",
+  "live_visual_test": "pending"
+}

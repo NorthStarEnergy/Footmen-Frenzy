@@ -1,0 +1,30 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orbs-v45c\\release\\FF799X_Rx_TF_Orbs_v45c.w3x",
+  "payloads": [
+    "war3map.j",
+    "war3map.w3u",
+    "war3mapSkin.w3u",
+    "war3map.w3a",
+    "war3mapSkin.w3a",
+    "war3map.wts",
+    "war3map.imp",
+    "ReplaceableTextures\\CommandButtons\\BTNLoadedDice.tga",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLoadedDice.tga"
+  ],
+  "changed_functions": [
+    "TFP_wildCards___p",
+    "TFP_wildCards___c",
+    "TFP_destiny___c",
+    "TFP_destiny___gateC",
+    "TF45_GateStart",
+    "TFP_Init"
+  ],
+  "ranges": [
+    700,
+    750,
+    800,
+    850,
+    900,
+    950
+  ]
+}

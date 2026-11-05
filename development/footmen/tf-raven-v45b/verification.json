@@ -1,0 +1,20 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-raven-v45b\\release\\FF799X_Rx_Mundo_TF_Raven_v45b.w3x",
+  "sha256": "4d4866f04d8e8dc349bdf7f7dc44c90521640fe3db7037584c134e1fa1bdc63a",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-polish-v45\\release\\FF799X_Rx_Mundo_TF_Polish_v45a.w3x",
+  "model": "Flaming Raven by UgoUgo",
+  "textures_verified": [
+    "Textures\\clouds_anim1_bw.blp",
+    "Textures\\Clouds8x8Fire.blp",
+    "Textures\\GenericGlowX.blp",
+    "Abilities\\Spells\\Undead\\VampiricAura\\AuraRune6.blp",
+    "TBSFRaven.blp",
+    "Textures\\ShockwaveWater1.blp",
+    "UI\\MiniMap\\ping4.blp",
+    "Textures\\Red_Glow1.blp",
+    "Textures\\LavaLump.blp"
+  ],
+  "preserved_payloads": 1339,
+  "script": "identical to verified v45a",
+  "live_test": "pending"
+}

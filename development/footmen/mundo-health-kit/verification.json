@@ -1,0 +1,19 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-health-kit\\release\\FF799X_Rx_Mundo_HealthKit_Test.w3x",
+  "sha256": "0ba178e4d29d6aae3ee4950982b264dc76a07394e213d6ffad9a62053cd275de",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "changed_files": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3map.wct"
+  ],
+  "preserved_archive_entries": 1368,
+  "runtime_jass": "passed",
+  "editor_jasshelper_and_jass": "passed",
+  "mocked_jass_checks": 18,
+  "engine_playtest": "pending",
+  "integration": "standalone test based on v68; not merged with parallel Lux or other work",
+  "installed": false
+}

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "rate_boundary_cases": 41,
+  "alternate_mode_guards": 11,
+  "scenarios": [
+    "individual level-4 expiry",
+    "first-level-5 does not revoke catch-up",
+    "slot-order-independent milestones",
+    "mass/colo transitions",
+    "level-7 slowdown",
+    "fractional shared rewards",
+    "anti-cheat penalty",
+    "illusion/inactive/replaced hero exclusion",
+    "idempotent start",
+    "no automatic XP grants"
+  ],
+  "editor_runtime_synchronized": true,
+  "preserved_functions": 3714,
+  "engine_native_ordering_and_balance": "Not tested; Warcraft playtest required"
+}

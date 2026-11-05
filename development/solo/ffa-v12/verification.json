@@ -1,0 +1,61 @@
+{
+  "shop_pages": {
+    "creeps": [
+      [
+        "hrdh",
+        "n00Q",
+        "uobs",
+        "n00S",
+        "h00R",
+        "n005",
+        "o00H",
+        "o00A",
+        "h000",
+        "n006"
+      ],
+      [
+        "n00A",
+        "n052",
+        "o00K",
+        "n011",
+        "n00T",
+        "n033",
+        "h03B",
+        "nws1",
+        "n001",
+        "ushd"
+      ],
+      [
+        "n03M"
+      ]
+    ],
+    "recipes": [
+      [
+        "I00B",
+        "I02L",
+        "I00Z",
+        "I00L",
+        "I00M",
+        "I00Q",
+        "I00O",
+        "I00N",
+        "I02O",
+        "I02X"
+      ],
+      [
+        "I03Z",
+        "I015",
+        "I04B",
+        "I00S",
+        "I00K",
+        "I01I",
+        "I01S"
+      ]
+    ]
+  },
+  "maximum_purchases_per_page": 10,
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy (Solo)\\ffa-v12\\release\\Solo_Foots_8P_FFA_v12.w3x",
+  "sha256": "94f3c5c402f7365a6074b64bf0f7516889c5129698e621140c33449f9a29d154",
+  "verified_entries": 1298,
+  "live_test": "Pending"
+}

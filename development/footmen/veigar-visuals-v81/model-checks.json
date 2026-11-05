@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "models": [
+    {
+      "name": "BalefulOrb",
+      "bytes": 2441,
+      "emitters": 3,
+      "sequences": [
+        "Stand",
+        "Death"
+      ],
+      "textures": [
+        "Textures\\Clouds8x8FadeWhite.blp",
+        "Textures\\GenericGlowFaded.blp",
+        "Textures\\GenericGlowX_Mod2.blp"
+      ]
+    },
+    {
+      "name": "PrimordialOrb",
+      "bytes": 2441,
+      "emitters": 3,
+      "sequences": [
+        "Stand",
+        "Death"
+      ],
+      "textures": [
+        "Textures\\Clouds8x8FadeWhite.blp",
+        "Textures\\GenericGlowFaded.blp",
+        "Textures\\GenericGlowX_Mod2.blp"
+      ]
+    },
+    {
+      "name": "Meteor",
+      "bytes": 6368,
+      "emitters": 12,
+      "sequences": [
+        "Birth",
+        "Stand",
+        "Death"
+      ],
+      "textures": [
+        "Textures\\Clouds8x8Black.blp",
+        "Textures\\Clouds8x8Fire.blp",
+        "Textures\\GenericGlow2_64.blp",
+        "Textures\\Flare.blp"
+      ]
+    },
+    {
+      "name": "MeteorImpact",
+      "bytes": 19018,
+      "emitters": 6,
+      "sequences": [
+        "Birth"
+      ],
+      "textures": [
+        "Textures\\Shockwave10.blp",
+        "Abilities\\Spells\\Human\\Banish\\GenericGlow2bA.blp",
+        "Textures\\GenericGlowFaded.blp",
+        "Textures\\GenericGlowX_Mod2.blp",
+        "Textures\\Dust5ABlack.blp"
+      ]
+    }
+  ],
+  "engine_tested": false
+}

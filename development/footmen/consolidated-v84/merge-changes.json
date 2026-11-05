@@ -1,0 +1,63 @@
+{
+  "functions": [
+    "FFGS_InitSettings",
+    "Trig_set_spawn_variables_Actions",
+    "TFP_FFDP_OnCast",
+    "GD_Cast"
+  ],
+  "unit_fields": [
+    [
+      "ogru",
+      "udef",
+      2,
+      3
+    ],
+    [
+      "ogru",
+      "ua1b",
+      24,
+      27
+    ],
+    [
+      "ogru",
+      "uhpm",
+      800,
+      900
+    ],
+    [
+      "ugho",
+      "udef",
+      1,
+      2
+    ],
+    [
+      "ugho",
+      "ua1b",
+      14,
+      16
+    ],
+    [
+      "ugho",
+      "uhpm",
+      675,
+      750
+    ]
+  ],
+  "new_unit": "hGpy",
+  "assets": [
+    "war3mapImported\\GuardianPentagonDome.mdx",
+    "war3mapImported\\GuardianPylon.mdx",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianGuardianShield.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianGuardianShield.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianForceField.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianForceField.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianLantern.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianLantern.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNVeigarW.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNVeigarW.blp"
+  ],
+  "imports_added": [
+    "war3mapImported\\GuardianPentagonDome.mdx",
+    "war3mapImported\\GuardianPylon.mdx"
+  ]
+}

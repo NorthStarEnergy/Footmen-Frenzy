@@ -1,0 +1,49 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-cleaver-wound\\release\\FF799X_Rx_Mundo_Cleaver_Wound_Test.w3x",
+  "base_sha256": "d45a7ab25281b6c1609ccf08ca8780780d8fd24720ec30ddf54b62552ab28a92",
+  "changed_functions": [
+    "MU_BurnOff",
+    "MU_OnCast",
+    "MU_TickHero",
+    "MU_GasSpawn",
+    "MU_GasExpire",
+    "MU_PoisonTick",
+    "MU_Init"
+  ],
+  "new_functions": [
+    "MC_Drain",
+    "MC_Heat",
+    "MC_Integral",
+    "MC_Model",
+    "MC_Now"
+  ],
+  "changed_abilities": [
+    "AMu2"
+  ],
+  "new_abilities": [],
+  "new_buffs": [],
+  "imports": [
+    "Spells\\Mundo\\Cloud0.mdx",
+    "Spells\\Mundo\\Cloud1.mdx",
+    "Spells\\Mundo\\Cloud2.mdx",
+    "Spells\\Mundo\\Cloud3.mdx",
+    "Spells\\Mundo\\Cloud4.mdx",
+    "Spells\\Mundo\\Cloud5.mdx",
+    "Spells\\Mundo\\Cloud6.mdx",
+    "Spells\\Mundo\\Cloud7.mdx",
+    "Spells\\Mundo\\Cloud8.mdx",
+    "Spells\\Mundo\\Cloud9.mdx",
+    "Spells\\Mundo\\Cloud10.mdx",
+    "Spells\\Mundo\\Cloud11.mdx",
+    "Spells\\Mundo\\Cloud12.mdx",
+    "Spells\\Mundo\\Cloud13.mdx",
+    "Spells\\Mundo\\Cloud14.mdx",
+    "Spells\\Mundo\\Cloud15.mdx",
+    "Spells\\Mundo\\Cloud16.mdx",
+    "Spells\\Mundo\\Cloud17.mdx",
+    "Spells\\Mundo\\Cloud18.mdx",
+    "Spells\\Mundo\\Cloud19.mdx",
+    "Spells\\Mundo\\Cloud20.mdx"
+  ],
+  "runtime_editor_synchronized": true
+}

@@ -1,0 +1,257 @@
+{
+  "e00G": {
+    "parent": "edos",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "e013": {
+    "parent": "edos",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h002": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h003": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h00B": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h00C": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h00D": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h00G": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h00H": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h00I": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h00J": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h00L": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h00M": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h00N": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h00O": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h00V": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h00W": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h00X": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h00Z": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h011": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h012": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h013": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h016": {
+    "parent": "hgra",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h017": {
+    "parent": "hgra",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h022": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h023": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h024": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h025": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h026": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h027": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h028": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h02K": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h02L": {
+    "parent": "htow",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h02M": {
+    "parent": "hkee",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h02N": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h02O": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "h03J": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h03K": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h03L": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h03W": {
+    "parent": "hcas",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h03X": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "h040": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": "R00E"
+  },
+  "h041": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h042": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": null
+  },
+  "h04C": {
+    "parent": "hgra",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "h04G": {
+    "parent": "hgra",
+    "equivalent": null,
+    "requirements": ""
+  },
+  "hbar": {
+    "parent": "hbar",
+    "equivalent": null,
+    "requirements": null
+  },
+  "n01M": {
+    "parent": "nshr",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "n01N": {
+    "parent": "nshr",
+    "equivalent": null,
+    "requirements": "R00G"
+  },
+  "u00B": {
+    "parent": "uslh",
+    "equivalent": null,
+    "requirements": "R00D"
+  },
+  "u011": {
+    "parent": "uslh",
+    "equivalent": null,
+    "requirements": "R00D"
+  }
+}

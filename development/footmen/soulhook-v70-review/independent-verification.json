@@ -1,0 +1,19 @@
+{
+  "map_sha256": "f311fd6821d1746504a6cbfb93fdc0a23937758c3b6ff4843bff7b05f076fd9b",
+  "baseline_sha256": "ca55bf08034a5a8cfe4b37c374dd87f68f4fd358d73a57e0c95266188b467b35",
+  "changed_functions": [
+    "DK_Free",
+    "DK_Tick",
+    "DK_OnCast",
+    "DK_Init"
+  ],
+  "new_functions": [
+    "DK_HookCast",
+    "DK_HookCatch",
+    "DK_HookChain",
+    "DK_HookStun"
+  ],
+  "globals_identical": true,
+  "supplied_hook_functions_match_packaged": true,
+  "engine_tested": false
+}

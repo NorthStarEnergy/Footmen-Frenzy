@@ -1,0 +1,8 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orb-v53\\release\\FF799X_Rx_TF_Guardian_HealOrbs_v53.w3x",
+  "sha256": "a9c26ba4c5ef4bbc309ff0da663df1c10fa0cf1c15a7fac87a2161c885430c8f",
+  "preserved_entries": 1360,
+  "jass": "passed",
+  "behavior_checks": 110,
+  "live_test": "pending"
+}

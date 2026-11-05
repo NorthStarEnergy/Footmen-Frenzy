@@ -1,0 +1,15 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\dark-matter-icon-v68\\FF799X_Rx_Veigar_Classic_v68_DarkMatterIcon.w3x",
+  "sha256": "6934bc2de10a779165fc584603011664d71acde1d172f8b8b6d4e768f7e8268c",
+  "artwork_dimensions": [
+    1278,
+    1231
+  ],
+  "source_sha256": "dfa3c9962a6d64ad376f29184da0fd0e45662878ce802e2153048a648e1863d7",
+  "replaced_members": [
+    "ReplaceableTextures\\CommandButtons\\BTNVeigarW.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNVeigarW.blp"
+  ],
+  "unrelated_entries_preserved": 1371,
+  "engine_tested": false
+}

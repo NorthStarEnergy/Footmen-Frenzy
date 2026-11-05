@@ -1,0 +1,50 @@
+{
+  "readable": 1324,
+  "failed": [
+    {
+      "path": "(attributes)",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtons\\ATCLightningBolt.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISATCUnholyfrenzy1.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRottenAura.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "ReplaceableTextures\\CommandButtons\\BTNKatana.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "war3mapImported\\DISBTNCRFrostShock.blp",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "war3mapImported\\Void Arrow.mdx",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    },
+    {
+      "path": "AbyssAura.mdx",
+      "error": "Array length must be >= 0, not -1",
+      "recoverable": true
+    }
+  ]
+}

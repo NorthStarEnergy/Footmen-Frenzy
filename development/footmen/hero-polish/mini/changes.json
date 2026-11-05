@@ -1,0 +1,31 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-polish\\mini\\base.w3x",
+  "base_sha256": "31b5bb2f47338df8b144e152ca81aa8679c289af732d51c4c336d3c9d158557f",
+  "title": "Mini Foots v10",
+  "filename": "Mini Foots v10.w3x",
+  "changed_functions": [
+    "OM_AttackRadius",
+    "OM_CommandGroundTick",
+    "OM_CommandGround",
+    "OM_UpdateShockGround",
+    "OM_WindupFX",
+    "OM_ArrivalFX",
+    "OM_GroundRing",
+    "OM_PulseTick",
+    "OM_StartPulse",
+    "OM_Tick",
+    "OM_OnCast",
+    "FF_HeroTooltips_Init",
+    "FS_OnCast",
+    "FS_Init",
+    "Trig_set_hero_stats_Actions",
+    "GFW_Create",
+    "Trig_Guardian_Force_Field_Loop_Actions",
+    "config"
+  ],
+  "added_functions": [
+    "FS_DrinkAnimation",
+    "FS_DrinkDeferred",
+    "FS_OnChannel"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "normal_xp_levels_1_to_4": [
+    25,
+    38,
+    57,
+    85
+  ],
+  "affected_troop_types": 15,
+  "bonus_multiplier": 0.95,
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy (Solo)\\ffa-v16\\release\\Solo_Foots_8P_FFA_v16.w3x",
+  "sha256": "cb42af39469c963e3a813fb3c360d90e7de042cbf967ba2e3257fca9506c6828",
+  "verified_entries": 1298,
+  "live_test": "Pending"
+}

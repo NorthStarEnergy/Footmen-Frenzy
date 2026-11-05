@@ -1,0 +1,2327 @@
+{
+  "ADk1": {
+    "base": "ANcl",
+    "mods": [
+      {
+        "field": "anam",
+        "level": 0,
+        "value": "Reaping Axe"
+      },
+      {
+        "field": "alev",
+        "level": 0,
+        "value": 6
+      },
+      {
+        "field": "aher",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "aite",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "arac",
+        "level": 0,
+        "value": "other"
+      },
+      {
+        "field": "areq",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "ahky",
+        "level": 0,
+        "value": "Z"
+      },
+      {
+        "field": "arhk",
+        "level": 0,
+        "value": "Q"
+      },
+      {
+        "field": "abpx",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "abpy",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "arpx",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "arpy",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "aart",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp"
+      },
+      {
+        "field": "arar",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp"
+      },
+      {
+        "field": "aani",
+        "level": 0,
+        "value": "spell"
+      },
+      {
+        "field": "atat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "acat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aeat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "alsk",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "arlv",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "atp1",
+        "level": 1,
+        "value": "Reaping Axe - Level 1 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 1,
+        "value": 70
+      },
+      {
+        "field": "acdn",
+        "level": 1,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 1,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 1,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 1,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 1,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 1,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 1,
+        "value": "shockwave"
+      },
+      {
+        "field": "aret",
+        "level": 0,
+        "value": "Learn Reaping Axe [|cffffcc00Q|r] - Level 1"
+      },
+      {
+        "field": "atp1",
+        "level": 2,
+        "value": "Reaping Axe - Level 2 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 2,
+        "value": 75
+      },
+      {
+        "field": "acdn",
+        "level": 2,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 2,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 2,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 2,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 2,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 2,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 2,
+        "value": "shockwave"
+      },
+      {
+        "field": "atp1",
+        "level": 3,
+        "value": "Reaping Axe - Level 3 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 3,
+        "value": 80
+      },
+      {
+        "field": "acdn",
+        "level": 3,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 3,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 3,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 3,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 3,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 3,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 3,
+        "value": "shockwave"
+      },
+      {
+        "field": "atp1",
+        "level": 4,
+        "value": "Reaping Axe - Level 4 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 4,
+        "value": 85
+      },
+      {
+        "field": "acdn",
+        "level": 4,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 4,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 4,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 4,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 4,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 4,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 4,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 4,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 4,
+        "value": "shockwave"
+      },
+      {
+        "field": "atp1",
+        "level": 5,
+        "value": "Reaping Axe - Level 5 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 5,
+        "value": 90
+      },
+      {
+        "field": "acdn",
+        "level": 5,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 5,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 5,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 5,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 5,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 5,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 5,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 5,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 5,
+        "value": "shockwave"
+      },
+      {
+        "field": "atp1",
+        "level": 6,
+        "value": "Reaping Axe - Level 6 [|cffffcc00Z|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 6,
+        "value": 95
+      },
+      {
+        "field": "acdn",
+        "level": 6,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 6,
+        "value": 1600.0
+      },
+      {
+        "field": "aare",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 6,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 6,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 6,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 6,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 6,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 6,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 6,
+        "value": "shockwave"
+      },
+      {
+        "field": "acas",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "aub1",
+        "level": 1,
+        "value": "Throw a massive axe 1200 distance. Deals 110 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 100 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 70. Cooldown: 10 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 2,
+        "value": "Throw a massive axe 1200 distance. Deals 150 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 150 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 75. Cooldown: 10 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 3,
+        "value": "Throw a massive axe 1200 distance. Deals 190 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 200 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 80. Cooldown: 10 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 4,
+        "value": "Throw a massive axe 1200 distance. Deals 230 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 350 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 85. Cooldown: 10 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 5,
+        "value": "Throw a massive axe 1200 distance. Deals 270 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 450 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 90. Cooldown: 10 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 6,
+        "value": "Throw a massive axe 1200 distance. Deals 310 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 550 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 95. Cooldown: 10 sec."
+      },
+      {
+        "field": "arut",
+        "level": 0,
+        "value": "Throw a massive axe 1200 distance. Deals 110 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 100 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 70. Cooldown: 10 sec."
+      }
+    ]
+  },
+  "ADk4": {
+    "base": "ANcl",
+    "mods": [
+      {
+        "field": "alev",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "aher",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "aite",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "arac",
+        "level": 0,
+        "value": "other"
+      },
+      {
+        "field": "areq",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "ahky",
+        "level": 0,
+        "value": "V"
+      },
+      {
+        "field": "arhk",
+        "level": 0,
+        "value": "R"
+      },
+      {
+        "field": "abpx",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "abpy",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "arpx",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "arpy",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "aart",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNDeathCoil.blp"
+      },
+      {
+        "field": "arar",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNDeathCoil.blp"
+      },
+      {
+        "field": "atat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "acat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aeat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "alsk",
+        "level": 0,
+        "value": 5
+      },
+      {
+        "field": "arlv",
+        "level": 0,
+        "value": 6
+      },
+      {
+        "field": "amcs",
+        "level": 1,
+        "value": 150
+      },
+      {
+        "field": "acdn",
+        "level": 1,
+        "value": 180.0
+      },
+      {
+        "field": "aran",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "aare",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "amcs",
+        "level": 2,
+        "value": 175
+      },
+      {
+        "field": "acdn",
+        "level": 2,
+        "value": 150.0
+      },
+      {
+        "field": "aran",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "aare",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "amcs",
+        "level": 3,
+        "value": 200
+      },
+      {
+        "field": "acdn",
+        "level": 3,
+        "value": 120.0
+      },
+      {
+        "field": "aran",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "aare",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "amat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "asat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aefs",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aefl",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aeff",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "aeff",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "aeff",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "acas",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl6",
+        "level": 1,
+        "value": "channel"
+      },
+      {
+        "field": "acas",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl6",
+        "level": 2,
+        "value": "channel"
+      },
+      {
+        "field": "acas",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl6",
+        "level": 3,
+        "value": "channel"
+      },
+      {
+        "field": "anam",
+        "level": 0,
+        "value": "Demon Ascension"
+      },
+      {
+        "field": "aani",
+        "level": 0,
+        "value": "spell"
+      },
+      {
+        "field": "Ncl1",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl2",
+        "level": 1,
+        "value": 0
+      },
+      {
+        "field": "Ncl3",
+        "level": 1,
+        "value": 1
+      },
+      {
+        "field": "Ncl4",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 1,
+        "value": 0
+      },
+      {
+        "field": "atp1",
+        "level": 1,
+        "value": "Demon Ascension - Level 1 [|cffffcc00V|r]"
+      },
+      {
+        "field": "Ncl1",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl2",
+        "level": 2,
+        "value": 0
+      },
+      {
+        "field": "Ncl3",
+        "level": 2,
+        "value": 1
+      },
+      {
+        "field": "Ncl4",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 2,
+        "value": 0
+      },
+      {
+        "field": "atp1",
+        "level": 2,
+        "value": "Demon Ascension - Level 2 [|cffffcc00V|r]"
+      },
+      {
+        "field": "Ncl1",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl2",
+        "level": 3,
+        "value": 0
+      },
+      {
+        "field": "Ncl3",
+        "level": 3,
+        "value": 1
+      },
+      {
+        "field": "Ncl4",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 3,
+        "value": 0
+      },
+      {
+        "field": "atp1",
+        "level": 3,
+        "value": "Demon Ascension - Level 3 [|cffffcc00V|r]"
+      },
+      {
+        "field": "aub1",
+        "level": 1,
+        "value": "Transform for 15 sec: magic immunity, 3% maximum health regeneration/sec, 60% attack speed, 25% movement speed, and 40% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 150. Cooldown: 180 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 2,
+        "value": "Transform for 18 sec: magic immunity, 4% maximum health regeneration/sec, 80% attack speed, 30% movement speed, and 50% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 175. Cooldown: 150 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 3,
+        "value": "Transform for 21 sec: magic immunity, 5% maximum health regeneration/sec, 100% attack speed, 35% movement speed, and 60% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 200. Cooldown: 120 sec."
+      },
+      {
+        "field": "arut",
+        "level": 0,
+        "value": "Transform for 15 sec: magic immunity, 3% maximum health regeneration/sec, 60% attack speed, 25% movement speed, and 40% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 150. Cooldown: 180 sec."
+      },
+      {
+        "field": "aret",
+        "level": 0,
+        "value": "Learn Demon Ascension [|cffffcc00R|r]"
+      }
+    ]
+  },
+  "ADk5": {
+    "base": "ANcl",
+    "mods": [
+      {
+        "field": "anam",
+        "level": 0,
+        "value": "Soul Hook"
+      },
+      {
+        "field": "alev",
+        "level": 0,
+        "value": 6
+      },
+      {
+        "field": "aher",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "aite",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "arac",
+        "level": 0,
+        "value": "other"
+      },
+      {
+        "field": "areq",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "ahky",
+        "level": 0,
+        "value": "C"
+      },
+      {
+        "field": "arhk",
+        "level": 0,
+        "value": "E"
+      },
+      {
+        "field": "abpx",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "abpy",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "arpx",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "arpy",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "aart",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNChainLightning.blp"
+      },
+      {
+        "field": "arar",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNChainLightning.blp"
+      },
+      {
+        "field": "aani",
+        "level": 0,
+        "value": "spell"
+      },
+      {
+        "field": "atat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "acat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aeat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "alsk",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "arlv",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "atp1",
+        "level": 1,
+        "value": "Soul Hook - Level 1 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 1,
+        "value": 60
+      },
+      {
+        "field": "acdn",
+        "level": 1,
+        "value": 12.0
+      },
+      {
+        "field": "aran",
+        "level": 1,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 1,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 1,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 1,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 1,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 1,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 1,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "aret",
+        "level": 0,
+        "value": "Learn Soul Hook [|cffffcc00E|r]"
+      },
+      {
+        "field": "atp1",
+        "level": 2,
+        "value": "Soul Hook - Level 2 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 2,
+        "value": 70
+      },
+      {
+        "field": "acdn",
+        "level": 2,
+        "value": 11.600000381469727
+      },
+      {
+        "field": "aran",
+        "level": 2,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 2,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 2,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 2,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 2,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 2,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 2,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "atp1",
+        "level": 3,
+        "value": "Soul Hook - Level 3 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 3,
+        "value": 80
+      },
+      {
+        "field": "acdn",
+        "level": 3,
+        "value": 11.199999809265137
+      },
+      {
+        "field": "aran",
+        "level": 3,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 3,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 3,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 3,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 3,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 3,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 3,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "atp1",
+        "level": 4,
+        "value": "Soul Hook - Level 4 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 4,
+        "value": 90
+      },
+      {
+        "field": "acdn",
+        "level": 4,
+        "value": 10.800000190734863
+      },
+      {
+        "field": "aran",
+        "level": 4,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 4,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 4,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 4,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 4,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 4,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 4,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 4,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "atp1",
+        "level": 5,
+        "value": "Soul Hook - Level 5 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 5,
+        "value": 100
+      },
+      {
+        "field": "acdn",
+        "level": 5,
+        "value": 10.399999618530273
+      },
+      {
+        "field": "aran",
+        "level": 5,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 5,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 5,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 5,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 5,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 5,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 5,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 5,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "atp1",
+        "level": 6,
+        "value": "Soul Hook - Level 6 [|cffffcc00C|r]"
+      },
+      {
+        "field": "amcs",
+        "level": 6,
+        "value": 110
+      },
+      {
+        "field": "acdn",
+        "level": 6,
+        "value": 10.0
+      },
+      {
+        "field": "aran",
+        "level": 6,
+        "value": 450.0
+      },
+      {
+        "field": "aare",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "adur",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "ahdu",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "atar",
+        "level": 6,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 6,
+        "value": ""
+      },
+      {
+        "field": "Ncl1",
+        "level": 6,
+        "value": 0.0010000000474974513
+      },
+      {
+        "field": "Ncl2",
+        "level": 6,
+        "value": 2
+      },
+      {
+        "field": "Ncl3",
+        "level": 6,
+        "value": 17
+      },
+      {
+        "field": "Ncl4",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "Ncl5",
+        "level": 6,
+        "value": 0
+      },
+      {
+        "field": "Ncl6",
+        "level": 6,
+        "value": "carrionswarm"
+      },
+      {
+        "field": "acas",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "acas",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "aub1",
+        "level": 1,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 120 magic damage and stunning for 0.5 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 60   |cffffcc00Cooldown:|r 12 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 2,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 160 magic damage and stunning for 0.6 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 70   |cffffcc00Cooldown:|r 11.6 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 3,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 200 magic damage and stunning for 0.7 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 80   |cffffcc00Cooldown:|r 11.2 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 4,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 240 magic damage and stunning for 0.8 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 90   |cffffcc00Cooldown:|r 10.8 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 5,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 280 magic damage and stunning for 0.9 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 100   |cffffcc00Cooldown:|r 10.4 sec."
+      },
+      {
+        "field": "aub1",
+        "level": 6,
+        "value": "Fire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 320 magic damage and stunning for 1.0 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 110   |cffffcc00Cooldown:|r 10 sec."
+      },
+      {
+        "field": "arut",
+        "level": 0,
+        "value": "|cffffcc00Requires hero level 1|r|n|nFire a soul hook 450 distance. Catches every ground enemy within 150 radius, damaging and stunning them, then drags each one partway back toward you. Excludes buildings, flying units and magic-immune targets.|n|n|cffffcc00Mana:|r 60/70/80/90/100/110   |cffffcc00Cooldown:|r 12 sec, down to 10 sec."
+      }
+    ]
+  },
+  "ADk6": {
+    "base": "AHtb",
+    "mods": [
+      {
+        "field": "aher",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "aite",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "areq",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "abpx",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "abpy",
+        "level": 0,
+        "value": -11
+      },
+      {
+        "field": "aart",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "aani",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "amcs",
+        "level": 1,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 1,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 1,
+        "value": 0.0
+      },
+      {
+        "field": "amsp",
+        "level": 0,
+        "value": 10000
+      },
+      {
+        "field": "amat",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "abuf",
+        "level": 1,
+        "value": "BGr2"
+      },
+      {
+        "field": "anam",
+        "level": 0,
+        "value": "Soul Hook stun"
+      },
+      {
+        "field": "alev",
+        "level": 0,
+        "value": 6
+      },
+      {
+        "field": "amcs",
+        "level": 2,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 2,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 2,
+        "value": 0.0
+      },
+      {
+        "field": "abuf",
+        "level": 2,
+        "value": "BGr2"
+      },
+      {
+        "field": "amcs",
+        "level": 3,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 3,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 3,
+        "value": 0.0
+      },
+      {
+        "field": "abuf",
+        "level": 3,
+        "value": "BGr2"
+      },
+      {
+        "field": "amcs",
+        "level": 4,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 4,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 4,
+        "value": 0.0
+      },
+      {
+        "field": "abuf",
+        "level": 4,
+        "value": "BGr2"
+      },
+      {
+        "field": "amcs",
+        "level": 5,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 5,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 5,
+        "value": 0.0
+      },
+      {
+        "field": "abuf",
+        "level": 5,
+        "value": "BGr2"
+      },
+      {
+        "field": "amcs",
+        "level": 6,
+        "value": 0
+      },
+      {
+        "field": "acdn",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "aran",
+        "level": 6,
+        "value": 1200.0
+      },
+      {
+        "field": "Htb1",
+        "level": 6,
+        "value": 0.0
+      },
+      {
+        "field": "abuf",
+        "level": 6,
+        "value": "BGr2"
+      },
+      {
+        "field": "adur",
+        "level": 1,
+        "value": 0.5
+      },
+      {
+        "field": "ahdu",
+        "level": 1,
+        "value": 0.5
+      },
+      {
+        "field": "atar",
+        "level": 1,
+        "value": "ground,air,enemies,vulnerable"
+      },
+      {
+        "field": "adur",
+        "level": 2,
+        "value": 0.6000000238418579
+      },
+      {
+        "field": "ahdu",
+        "level": 2,
+        "value": 0.6000000238418579
+      },
+      {
+        "field": "atar",
+        "level": 2,
+        "value": "ground,air,enemies,vulnerable"
+      },
+      {
+        "field": "adur",
+        "level": 3,
+        "value": 0.699999988079071
+      },
+      {
+        "field": "ahdu",
+        "level": 3,
+        "value": 0.699999988079071
+      },
+      {
+        "field": "atar",
+        "level": 3,
+        "value": "ground,air,enemies,vulnerable"
+      },
+      {
+        "field": "adur",
+        "level": 4,
+        "value": 0.800000011920929
+      },
+      {
+        "field": "ahdu",
+        "level": 4,
+        "value": 0.800000011920929
+      },
+      {
+        "field": "atar",
+        "level": 4,
+        "value": "ground,air,enemies,vulnerable"
+      },
+      {
+        "field": "adur",
+        "level": 5,
+        "value": 0.8999999761581421
+      },
+      {
+        "field": "ahdu",
+        "level": 5,
+        "value": 0.8999999761581421
+      },
+      {
+        "field": "atar",
+        "level": 5,
+        "value": "ground,air,enemies,vulnerable"
+      },
+      {
+        "field": "adur",
+        "level": 6,
+        "value": 1.0
+      },
+      {
+        "field": "ahdu",
+        "level": 6,
+        "value": 1.0
+      },
+      {
+        "field": "atar",
+        "level": 6,
+        "value": "ground,air,enemies,vulnerable"
+      }
+    ]
+  },
+  "hgr1": {
+    "base": "hfoo",
+    "mods": [
+      {
+        "field": "unam",
+        "level": 0,
+        "value": "Spell Dummy"
+      },
+      {
+        "field": "uabi",
+        "level": 0,
+        "value": "Aloc,Avul"
+      },
+      {
+        "field": "uhab",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "uhpm",
+        "level": 0,
+        "value": 500
+      },
+      {
+        "field": "uhpr",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "umpm",
+        "level": 0,
+        "value": 1000
+      },
+      {
+        "field": "umpi",
+        "level": 0,
+        "value": 1000
+      },
+      {
+        "field": "umpr",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "ucbs",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "ucpt",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "uacq",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "umvs",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "udef",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "udty",
+        "level": 0,
+        "value": "normal"
+      },
+      {
+        "field": "ua1b",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "ua1d",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "ua1s",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "uaen",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "umdl",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "ushd",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "ushu",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "usca",
+        "level": 0,
+        "value": 1.0
+      },
+      {
+        "field": "umvt",
+        "level": 0,
+        "value": "fly"
+      },
+      {
+        "field": "ucol",
+        "level": 0,
+        "value": 0.0
+      },
+      {
+        "field": "umvh",
+        "level": 0,
+        "value": 0.0
+      }
+    ]
+  },
+  "HDk1": {
+    "base": "Npbm",
+    "mods": [
+      {
+        "field": "unam",
+        "level": 0,
+        "value": "Demon Knight"
+      },
+      {
+        "field": "upro",
+        "level": 0,
+        "value": "Varkhul"
+      },
+      {
+        "field": "upru",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "umdl",
+        "level": 0,
+        "value": "war3mapImported\\DemonKnight.mdx"
+      },
+      {
+        "field": "urac",
+        "level": 0,
+        "value": "undead"
+      },
+      {
+        "field": "uhab",
+        "level": 0,
+        "value": "ADk1,ADk2,ADk5,ADk4"
+      },
+      {
+        "field": "umvs",
+        "level": 0,
+        "value": 310
+      },
+      {
+        "field": "ua1c",
+        "level": 0,
+        "value": 1.7999999523162842
+      },
+      {
+        "field": "uabi",
+        "level": 0,
+        "value": "AInv"
+      },
+      {
+        "field": "ufle",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "uico",
+        "level": 0,
+        "value": "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp"
+      },
+      {
+        "field": "ucbs",
+        "level": 0,
+        "value": 0.30000001192092896
+      },
+      {
+        "field": "umpm",
+        "level": 0,
+        "value": 300
+      },
+      {
+        "field": "umpi",
+        "level": 0,
+        "value": 300
+      },
+      {
+        "field": "umpr",
+        "level": 0,
+        "value": 0.699999988079071
+      },
+      {
+        "field": "uhpm",
+        "level": 0,
+        "value": 700
+      },
+      {
+        "field": "uhpr",
+        "level": 0,
+        "value": 1.0
+      },
+      {
+        "field": "ucpt",
+        "level": 0,
+        "value": 0.30000001192092896
+      },
+      {
+        "field": "utub",
+        "level": 0,
+        "value": "|cff808080Category:|r Same as Monkey King (8)|n|nStrength bruiser. Reaping Axe damages a line and pulls enemies on its return. Pulverize triggers on attacks with a short cooldown. Soul Hook fires a fast short-range hook that damages, stuns and drags every enemy it catches partway back. Demon Ascension grants magic immunity, regeneration, speed, cleave and a final ten seconds of life after lethal damage."
+      },
+      {
+        "field": "ugol",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "ulum",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "ufor",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "ureq",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "urqc",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "urq1",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "urq2",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "usst",
+        "level": 0,
+        "value": 0
+      },
+      {
+        "field": "usrg",
+        "level": 0,
+        "value": 3600
+      },
+      {
+        "field": "usma",
+        "level": 0,
+        "value": 3
+      },
+      {
+        "field": "ubba",
+        "level": 0,
+        "value": 250
+      },
+      {
+        "field": "uhot",
+        "level": 0,
+        "value": ""
+      },
+      {
+        "field": "utip",
+        "level": 0,
+        "value": "Hire Demon Knight"
+      },
+      {
+        "field": "ustr",
+        "level": 0,
+        "value": 24
+      },
+      {
+        "field": "ustp",
+        "level": 0,
+        "value": 2.799999952316284
+      },
+      {
+        "field": "uagi",
+        "level": 0,
+        "value": 15
+      },
+      {
+        "field": "uagp",
+        "level": 0,
+        "value": 1.5
+      },
+      {
+        "field": "uint",
+        "level": 0,
+        "value": 17
+      },
+      {
+        "field": "uinp",
+        "level": 0,
+        "value": 1.7999999523162842
+      },
+      {
+        "field": "upra",
+        "level": 0,
+        "value": "STR"
+      },
+      {
+        "field": "ua1b",
+        "level": 0,
+        "value": 25
+      },
+      {
+        "field": "ua1d",
+        "level": 0,
+        "value": 2
+      },
+      {
+        "field": "ua1s",
+        "level": 0,
+        "value": 6
+      },
+      {
+        "field": "ua1r",
+        "level": 0,
+        "value": 128
+      },
+      {
+        "field": "usca",
+        "level": 0,
+        "value": 1.0
+      },
+      {
+        "field": "usnd",
+        "level": 0,
+        "value": "HeroDreadLord"
+      },
+      {
+        "field": "ubpx",
+        "level": 0,
+        "value": 1
+      },
+      {
+        "field": "ubpy",
+        "level": 0,
+        "value": 1
+      }
+    ]
+  }
+}

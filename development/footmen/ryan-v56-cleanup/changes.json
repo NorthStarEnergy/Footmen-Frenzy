@@ -1,0 +1,2608 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ryan-v54-cleanup\\release\\FF799X_Rx_UI_Startup_Clean_v55.w3x",
+  "removed_functions": [
+    "CreateMissileGroup",
+    "FFGS_CountLivingSpawns",
+    "FFGS_LivingSpawnFilter",
+    "FFMode_ShowPrivateColos",
+    "FF_IsMember",
+    "FF_SideCount",
+    "FF_kl_LocalClientIsBot",
+    "FF_kl_OwnerName",
+    "FileIO_Read",
+    "FileIO_Write",
+    "FirstOfMissileGroup",
+    "GSI_Cast",
+    "GST_DestroyTimerById",
+    "GST_Int",
+    "GST_IntInt",
+    "GST_IntIntInt",
+    "GST_IntIntInt_Expire",
+    "GST_IntInt_Expire",
+    "GST_IntReal",
+    "GST_IntReal_Expire",
+    "GST_Int_Expire",
+    "GST_Item",
+    "GST_Item_Expire",
+    "GST_Real",
+    "GST_RealReal",
+    "GST_RealRealReal",
+    "GST_RealRealReal_Expire",
+    "GST_RealReal_Expire",
+    "GST_Real_Expire",
+    "GST_Simple",
+    "GST_Simple_Expire",
+    "GST_UnitInt",
+    "GST_UnitInt_Expire",
+    "GST_UnitReal",
+    "GST_UnitReal_Expire",
+    "GST_UnitUnit",
+    "GST_UnitUnitUnit",
+    "GST_UnitUnitUnit_Expire",
+    "GST_UnitUnit_Expire",
+    "GetTimerData",
+    "GroupPickRandomMissile",
+    "InitTrig_Camera_Zoom",
+    "InitTrig_Guardian_Force_Field_Detonate",
+    "InitTrig_MODE_1v1",
+    "InitTrig_MODE_1v1_check",
+    "InitTrig_Overdrive",
+    "InitTrig_newzoom",
+    "IsMissileInGroup",
+    "MMD_DefineEvent0",
+    "MMD_DefineEvent1",
+    "MMD_DefineEvent2",
+    "MMD_DefineEvent3",
+    "MMD_DefineValue",
+    "MMD_LogCustom",
+    "MMD_LogEvent0",
+    "MMD_LogEvent1",
+    "MMD_LogEvent2",
+    "MMD_LogEvent3",
+    "MMD_UpdateValueInt",
+    "MMD_UpdateValueReal",
+    "MMD_UpdateValueString",
+    "MMD__DefineEvent",
+    "MMD__LogEvent",
+    "MMD__time",
+    "MMD__update_value",
+    "MissileDestroyGroup",
+    "MissileGroupAdd",
+    "MissileGroupAddGroup",
+    "MissileGroupClear",
+    "MissileGroupRemove",
+    "MissileGroupRemoveGroup",
+    "Missiles___GetMapCliffLevel",
+    "Missiles___GetUnitZ",
+    "NewTimer",
+    "NewTimerEx",
+    "OM_AttackGroundCleanup",
+    "OM_AttackGroundFX",
+    "PickedMissile",
+    "ReleaseTimer",
+    "SetTimerData",
+    "TFP_destiny___flusher",
+    "TFP_destiny___move",
+    "TFP_destiny___p",
+    "TFP_pickACard___c",
+    "TFP_pickACard___dummyP",
+    "TFP_pickACard___p",
+    "TFP_pickACard___secondC",
+    "TFP_s__destiny___destinyDat__allocate",
+    "TFP_s__destiny___destinyDat_deallocate",
+    "TFP_s__destiny___target__allocate",
+    "TFP_s__destiny___target_deallocate",
+    "TFP_s__pickACard___dummyCardDat__allocate",
+    "TFP_s__pickACard___dummyCardDat_deallocate",
+    "TFP_s__pickACard___pickDat__allocate",
+    "TFP_s__pickACard___pickDat_deallocate",
+    "Trig_AFK_Host_Timer_Expires_Func002C",
+    "Trig_AFK_Host_Timer_Expires_Func002Func005A",
+    "Trig_Arcane_Tower_limit_2_Func004002002001",
+    "Trig_Arcane_Tower_limit_2_Func004002002002",
+    "Trig_Foot_Exp_system_Func002Func008002003001",
+    "Trig_Foot_Exp_system_Func002Func008002003002",
+    "Trig_Guardian_Force_Field_Cast_Func028C",
+    "Trig_Guardian_Force_Field_Cast_Func031C",
+    "Trig_Guardian_Force_Field_Detonate_Actions",
+    "Trig_Guardian_Force_Field_Detonate_Conditions",
+    "Trig_Guardian_Force_Field_Detonate_Func002Func001C",
+    "Trig_Guardian_Force_Field_Loop_Func001Func003Func003C",
+    "Trig_Guardian_Force_Field_Loop_Func001Func003Func013C",
+    "Trig_Guardian_Force_Field_Loop_Func001Func003Func013Func001C",
+    "Trig_HERO_Architect_tower_build_Func007001",
+    "Trig_HERO_Architect_tower_countdown_Func001Func002001",
+    "Trig_HERO_Guardian_Purification_Nova_Explode_Func001Func001C",
+    "Trig_HERO_Guardian_Purification_Nova_Explode_Func001Func001Func005002",
+    "Trig_HERO_Hook_Loop_Func001Func001Func003Func005Func003002003001",
+    "Trig_HERO_Hook_Loop_Func001Func001Func003Func005Func003002003002",
+    "Trig_HERO_Mad_Wizard_Bomb_detonate_Func004002002001",
+    "Trig_HERO_Mad_Wizard_Bomb_detonate_Func004002002002",
+    "Trig_HERO_Mad_Wizard_Bomb_plant_Func006Func002002002001",
+    "Trig_HERO_Mad_Wizard_Bomb_plant_Func006Func002002002002",
+    "Trig_HERO_Mad_Wizard_Bomb_plant_Func023002002001",
+    "Trig_HERO_Mad_Wizard_Bomb_plant_Func023002002002",
+    "Trig_HERO_Mad_Wizard_Bomb_show_Func003002002001",
+    "Trig_HERO_Mad_Wizard_Bomb_show_Func003002002002",
+    "Trig_HERO_Monkey_Staff_of_the_Jungle_Loop_Func001Func001Func005002003001",
+    "Trig_HERO_Monkey_Staff_of_the_Jungle_Loop_Func001Func001Func005002003002",
+    "Trig_HERO_Monkey_Staff_of_the_Jungle_Loop_Func001Func001Func005002003002001",
+    "Trig_HERO_Monkey_Staff_of_the_Jungle_Loop_Func001Func001Func005002003002002",
+    "Trig_HERO_Thor_Mjolnir_Loop_Func001Func001Func005002003001",
+    "Trig_HERO_Thor_Mjolnir_Loop_Func001Func001Func005002003002",
+    "Trig_ITEM_Scroll_of_Beast_start_Func003002002001",
+    "Trig_ITEM_Scroll_of_Beast_start_Func003002002002",
+    "Trig_ITEM_Wall_Func006001",
+    "Trig_ITEM_Wall_countdown_Func001Func002001",
+    "Trig_MODE_1v1_Actions",
+    "Trig_MODE_1v1_Conditions",
+    "Trig_MODE_1v1_Func013A",
+    "Trig_MODE_1v1_check_Actions",
+    "Trig_MODE_1v1_check_Func002Func001C",
+    "Trig_MODE_1v1_check_Func003C",
+    "Trig_MODE_GUI_execute_Func004C",
+    "Trig_MODE_GUI_execute_Func005C",
+    "Trig_MODE_GUI_execute_Func006C",
+    "Trig_MODE_GUI_execute_Func007C",
+    "Trig_MODE_GUI_execute_Func008C",
+    "Trig_MODE_GUI_show_Conditions",
+    "Trig_MODE_GUI_show_Func001C",
+    "Trig_MODE_GUI_show_Func004C",
+    "Trig_MODE_GUI_show_Func006C",
+    "Trig_MODE_GUI_show_Func008C",
+    "Trig_MODE_GUI_show_Func008Func015C",
+    "Trig_MODE_GUI_show_Func008Func015Func007C",
+    "Trig_MODE_colossal_GUI_execute_Func002C",
+    "Trig_MODE_colossal_GUI_execute_Func003C",
+    "Trig_MODE_colossal_amount_GUI_execute_Func002C",
+    "Trig_MODE_colossal_amount_GUI_execute_Func003Func001C",
+    "Trig_MODE_set_inhouse_Func010C",
+    "Trig_Multishot_Tower_doubleup_Func004002002001",
+    "Trig_Multishot_Tower_doubleup_Func004002002002",
+    "Trig_No_double_tech_Func003C",
+    "Trig_No_double_tech_Func004C",
+    "Trig_No_double_tech_Func005C",
+    "Trig_Overdrive_Actions",
+    "Trig_Overdrive_Func003A",
+    "Trig_Shockwave_Loop_Func001Func008001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func002001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func003001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func001001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func001002",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func002001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func002002",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func003001",
+    "Trig_Shockwave_Loop_Func001Func010Func002Func007Func003002",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func001001",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func002001",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func001001",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func001002",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func002001",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func002002",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func003001",
+    "Trig_Shockwave_Loop_Func001Func010Func003Func006Func003002",
+    "Trig_SovietSniper_Decoy_Bomb_Create_Bomb_Func021C",
+    "Trig_SovietSniper_Decoy_Bomb_Create_Bomb_Func024C",
+    "Trig_Start_SD_Func022Func041Func001Func001Func001Func002C",
+    "Trig_Start_SD_Func022Func041Func001Func001Func001Func003C",
+    "Trig_Start_SD_Func022Func041Func001Func001Func001Func004C",
+    "Trig_TP_hero_Func012001",
+    "Trig_TP_hero_Func013001",
+    "Trig_TP_hero_Func014001",
+    "Trig_TP_hero_Func015001",
+    "Trig_TP_hero_Func016001",
+    "Trig_TP_hero_Func017001",
+    "Trig_Taunt_Turtle_Upgrade_Func003Func001Func002Func001002",
+    "Trig_Tower_of_Terror_Limit_1_Func004002002001",
+    "Trig_Tower_of_Terror_Limit_1_Func004002002002",
+    "Trig_Tree_Tower_Limit_2_Func004002002001",
+    "Trig_Tree_Tower_Limit_2_Func004002002002",
+    "Trig_Turtle_Level_2_purchase_Func002Func001002",
+    "Trig_Unit_Experience_System_Func004Func009002003001",
+    "Trig_Unit_Experience_System_Func004Func009002003002",
+    "Trig_Unit_Experience_System_Func005Func009002003001",
+    "Trig_Unit_Experience_System_Func005Func009002003002",
+    "Trig_Unit_Experience_System_Func006Func009002003001",
+    "Trig_Unit_Experience_System_Func006Func009002003002",
+    "Trig_eight_mass_bonus_Func005C",
+    "Trig_eight_mass_bonus_Func007Func003C",
+    "Trig_eight_mass_bonus_Func007Func003Func010C",
+    "Trig_eight_mass_bonus_Func007Func003Func010Func001C",
+    "Trig_eight_mass_bonus_Func007Func003Func010Func001Func003C",
+    "Trig_eight_mass_bonus_Func007Func003Func010Func001Func005C",
+    "Trig_eight_mass_bonus_Func007Func003Func010Func003C",
+    "Trig_eight_mass_bonus_Func007Func003Func010Func005C",
+    "Trig_eight_mass_bonus_Func007Func003Func019C",
+    "Trig_eight_mass_bonus_Func007Func003Func019Func003C",
+    "Trig_eight_mass_bonus_Func007Func003Func019Func005C",
+    "Trig_eight_mass_bonus_Func007Func003Func020Func002C",
+    "Trig_eight_mass_bonus_Func007Func003Func020Func021C",
+    "Trig_eight_mass_bonus_Func007Func003Func020Func023C",
+    "Trig_eight_mass_bonus_Func007Func003Func020Func025C",
+    "Trig_eight_mass_bonus_Func007Func003Func020Func026C",
+    "Trig_eight_mass_bonus_Func008Func001C",
+    "Trig_eight_mass_bonus_Func008Func001Func018C",
+    "Trig_eight_mass_bonus_Func008Func001Func018Func001C",
+    "Trig_eight_mass_bonus_Func008Func001Func018Func001Func003C",
+    "Trig_eight_mass_bonus_Func008Func001Func018Func001Func005C",
+    "Trig_eight_mass_bonus_Func008Func001Func018Func003C",
+    "Trig_eight_mass_bonus_Func008Func001Func018Func005C",
+    "Trig_eight_mass_bonus_Func008Func001Func019C",
+    "Trig_eight_mass_bonus_Func008Func001Func019Func003C",
+    "Trig_eight_mass_bonus_Func008Func001Func019Func005C",
+    "Trig_eight_mass_bonus_Func008Func001Func020Func002C",
+    "Trig_eight_mass_bonus_Func008Func001Func020Func021C",
+    "Trig_eight_mass_bonus_Func008Func001Func020Func023C",
+    "Trig_eight_mass_bonus_Func008Func001Func020Func025C",
+    "Trig_eight_mass_bonus_Func008Func001Func020Func026C",
+    "Trig_limit_amount_of_creeps_Func007002002001",
+    "Trig_limit_amount_of_creeps_Func007002002002",
+    "Trig_newzoom_Actions",
+    "Trig_newzoom_Func006C",
+    "Trig_newzoom_Func006Func001Func001C",
+    "Trig_newzoom_Func006Func001Func001Func002C",
+    "Trig_newzoom_Func006Func002C",
+    "Trig_player_destroyed_Func003Func001Func002001001002001",
+    "Trig_player_destroyed_Func003Func001Func002001001002002",
+    "Trig_set_hero_bounty_Func004001",
+    "Trig_set_hero_bounty_Func005001",
+    "Trig_set_hero_bounty_Func006001",
+    "Trig_set_hero_bounty_Func007001",
+    "Trig_set_hero_bounty_update_Func003Func004001",
+    "Trig_set_hero_bounty_update_Func003Func005001",
+    "Trig_set_hero_bounty_update_Func003Func006001",
+    "Trig_set_hero_bounty_update_Func003Func007001",
+    "Trig_set_variables_Func001C",
+    "Trig_status_Func003Func001001",
+    "Trig_status_Func003Func002001",
+    "s__File_appendBuffer",
+    "s__File_clear",
+    "s__File_create",
+    "s__File_read",
+    "s__File_readAndClose",
+    "s__File_readBuffer",
+    "s__File_writeBuffer",
+    "s__MissileEffect___Effect_create",
+    "s__MissileEffect___Effect_pushFront",
+    "s__MissileEffect__get_alpha",
+    "s__MissileEffect__get_animation",
+    "s__MissileEffect__get_playerColor",
+    "s__MissileEffect__get_timeScale",
+    "s__MissileEffect_setColor",
+    "s__MissileUtils___MGroup_create",
+    "s__MissileUtils___MGroup_pushFront",
+    "s__Missiles___Coordinates_destroy",
+    "s__Missiles___Pool__allocate",
+    "s__Missiles___Pool_deallocate",
+    "s__Missiles___Pool_onExpire",
+    "s__Missiles___Pool_recycleTimed",
+    "s__Missiles__get_alpha",
+    "s__Missiles__get_animation",
+    "s__Missiles__get_duration",
+    "s__Missiles__get_model",
+    "s__Missiles__get_playerColor",
+    "s__Missiles__get_scale",
+    "s__Missiles__get_speed",
+    "s__Missiles__get_timeScale",
+    "s__Missiles__get_vision",
+    "s__Missiles__set_alpha",
+    "s__Missiles__set_animation",
+    "s__Missiles__set_playerColor",
+    "s__Missiles__set_timeScale",
+    "s__Missiles_attach",
+    "s__Missiles_color",
+    "s__Missiles_flushAll",
+    "s__Missiles_hitted",
+    "sc__MMD__QueueNode_deallocate",
+    "sc__MMD__QueueNode_onDestroy",
+    "sc___prototype4_evaluate",
+    "sc___prototype4_execute"
+  ],
+  "removed_objects": [],
+  "retained_object_candidates": [
+    {
+      "id": "n01O",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u00D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h00F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n01X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n020",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n021",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n022",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n023",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n024",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n025",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n026",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02C",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n002",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n019",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n028",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n029",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h021",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "e00D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n02P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h02H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u00E",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "o00L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "o00M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "o00N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n03K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h03M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n041",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h044",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h045",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u00H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h046",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h047",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h010",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h04A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h04E",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h04J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h04K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n04Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n05F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n05I",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h04V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n05J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h050",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h051",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "e01A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "e01B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h056",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h057",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h058",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u016",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05C",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u01A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "e01E",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h059",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "e01F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05G",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u01F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "u00J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n06O",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05T",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h05W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "o00J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "o017",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h01P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "h020",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "n0HK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "hor2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I007",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I01A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I01B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I026",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I029",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02C",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02E",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02G",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02I",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02R",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I02S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03T",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I03V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I040",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I041",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I046",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I034",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I048",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I049",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "I01K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00I",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A018",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00R",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A000",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A016",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A024",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A027",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02I",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A01Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A02X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A037",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A035",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03O",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03R",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A045",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A049",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04G",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04T",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A04W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A058",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A002",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A004",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00T",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A033",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A034",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A03S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A043",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A053",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A05D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A060",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A061",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06A",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06D",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A06Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A077",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A069",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07Y",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A084",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A085",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A086",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A087",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08J",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08V",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A095",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "S000",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A099",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A09L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A09N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A09O",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A09S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A09X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0AG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0AI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A067",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0B8",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BD",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0C1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0C3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0C8",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "bash",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0D6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DF",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ASMM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0A9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0E1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0E2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0E4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0F1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0F5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0F3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00E",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FT",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0G4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0G6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0H9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HD",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0I2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0I4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0I5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0I6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ATRA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A00Z",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ARES",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ARSP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "AFOR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "APSW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "AFEE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ARPS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0J5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0J7",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0J8",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0J9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JD",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JF",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0AS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0K0",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0K2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0K4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0K5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0G3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KD",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0L1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0L2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0L4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0L5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LD",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LF",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0L7",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0M4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0M6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0MI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0ML",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0MN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0MR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0MY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0MZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0N0",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0N3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0N4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0N6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0N9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "S005",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NT",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O7",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0O9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0OG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0OV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A011",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "Feru",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "Afre",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PF",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "ATIN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Q1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Q2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Q3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Q9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0PN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0QV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0R3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RT",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0R2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0RZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0R0",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0S1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0S9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0LK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SK",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "S008",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TT",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0TZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0U1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0U2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0U3",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0U5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0U9",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0UA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0UC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0P7",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0S6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0UR",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0UY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0UZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0SZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0V2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0V6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VE",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VH",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VI",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VX",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0VZ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NV",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "S009",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WB",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WC",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0WS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A05G",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CS",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0E6",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0DN",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0HQ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NL",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NO",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0NP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FY",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0GP",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A08L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "scyt",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A07N",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0A5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A05F",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0AU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0BM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0CW",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0EG",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0FJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0H7",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0I1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "S004",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0IU",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0JM",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Z1",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Z2",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Z4",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0Z5",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "A0KJ",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "GF02",
+      "reason": "computed rawcode family"
+    },
+    {
+      "id": "GF03",
+      "reason": "computed rawcode family"
+    },
+    {
+      "id": "GF04",
+      "reason": "computed rawcode family"
+    },
+    {
+      "id": "GF05",
+      "reason": "computed rawcode family"
+    },
+    {
+      "id": "GF06",
+      "reason": "computed rawcode family"
+    },
+    {
+      "id": "ALTc",
+      "reason": "unreadable archive members; nonempty custom object retained"
+    },
+    {
+      "id": "B006",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00K",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00P",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00R",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B00X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B014",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "X001",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B016",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B018",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "X002",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01G",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01H",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01I",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "BBLA",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "BBER",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01L",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01M",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01O",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01R",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01S",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01T",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01W",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B01X",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B022",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "X004",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B020",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B023",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B024",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "B027",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "R00C",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "R00Q",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "R00B",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "R00U",
+      "reason": "archive reference or metadata mention"
+    },
+    {
+      "id": "R00H",
+      "reason": "archive reference or metadata mention"
+    }
+  ],
+  "computed_rawcode_bases": [
+    "BGf1",
+    "GF01"
+  ],
+  "unreadable_archive_members": 104,
+  "runtime_bytes_saved": 102921,
+  "editor_bytes_saved": 102921,
+  "wct_chunks": 2,
+  "changed_files": [
+    "war3map.j",
+    "war3map.wct"
+  ]
+}

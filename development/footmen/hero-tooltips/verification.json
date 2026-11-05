@@ -1,0 +1,14 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-tooltips\\release\\FF799X_Rx_HeroTooltips_v31.w3x",
+  "sha256": "18e6e58a00568a35bba039837ce364d0f91985f41a9fc4c5f5566a7747d15d97",
+  "changed_payloads": [
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3mapSkin.w3u",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1347,
+  "preserved_functions": 3617,
+  "live_test": "Pending"
+}

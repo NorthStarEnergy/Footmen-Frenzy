@@ -1,0 +1,14 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-gas\\release\\FF799X_Rx_Mundo_v32.w3x",
+  "sha256": "05962d9ecbf9f3482b41b8d9e138ab2d5c3647403945bba0b31604969b1c9950",
+  "preserved_archive_entries": 1348,
+  "changed_functions": [
+    "MF_InitHeroPolicy",
+    "MF_HeroDisabled",
+    "MU_OnCast",
+    "MU_TickHero",
+    "MU_Init",
+    "Trig_set_hero_stats_Actions"
+  ],
+  "live_test": "Pending"
+}

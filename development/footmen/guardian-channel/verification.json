@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-channel\\release\\FF799X_Rx_GuardianChannel_v29.w3x",
+  "sha256": "0e22724bf79fa52c8e674e7e5ed870e545063991cac866fab25a961851157b5a",
+  "changed_payloads": [
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1349,
+  "preserved_functions": 3601,
+  "live_test": "Pending"
+}

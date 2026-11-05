@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-lantern\\release\\FF799X_Rx_GuardianLantern_v30.w3x",
+  "sha256": "b735db3cbfb98d3cde710ef686840e43803317a89c21b6fe30492c44d4f33b72",
+  "changed_payloads": [
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.wts"
+  ],
+  "preserved_archive_entries": 1349,
+  "preserved_functions": 3609,
+  "live_test": "Pending"
+}

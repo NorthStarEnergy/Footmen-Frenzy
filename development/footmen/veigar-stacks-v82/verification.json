@@ -1,0 +1,20 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-stacks-v82\\release\\FF799X_Rx_Veigar_Stacks_v82_TEST.w3x",
+  "sha256": "371bd6baeaa9bb116949e4238e8c8e8c926bf2886d5511c59a3945738357f444",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-visuals-v81\\release\\FF799X_Rx_Veigar_Visuals_v81_TEST.w3x",
+  "base_sha256": "3bbd2cb4a64799453f919da292636b79e2b6dcbaecf696b744a79324ce8bc1e4",
+  "changed_functions": [
+    "VG_ClassicKill",
+    "VG_ClassicCast",
+    "VG_Equilibrium"
+  ],
+  "added_functions": [
+    "VG82_UpdateCounter"
+  ],
+  "unrelated_entries_preserved": 1403,
+  "per_hero_stacks": true,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

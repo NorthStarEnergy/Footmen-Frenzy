@@ -1,0 +1,39 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\stalker-movement-merge\\release\\FF799X_Rx_UI_Mundo_Stalker_Fixed_Test.w3x",
+  "sha256": "1351c99d23d0ab37707db856d83119ddaf651c5222ac4e7ea236b1831d344dc7",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-ui-merge\\release\\FF799X_Rx_UI_Repair_Mundo_Combined_Test.w3x",
+  "base_sha256": "76b42ed473f11bbd5d7e8c59836031d67f84c41e69eeabb864bffafd3054defd",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.w3u",
+    "war3map.wct"
+  ],
+  "changed_functions": [
+    "ST_Space",
+    "ST_Move",
+    "ST_Cast"
+  ],
+  "new_functions": [
+    "ST_HideProbeItem"
+  ],
+  "changed_unit_fields": {
+    "ucol": {
+      "before": 32.0,
+      "after": 16.0
+    }
+  },
+  "preserved_archive_entries": 1402,
+  "decoded_files": 1379,
+  "existing_unit_records": 751,
+  "ui_members_verified": 9,
+  "all_non_stalker_functions_unchanged": true,
+  "runtime_editor_synchronized": true,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "stalker_behavior_checks": 54,
+  "formation_cases": 36,
+  "random_cases": 1000,
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

@@ -1,0 +1,29 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-visuals-v68\\FF799X_Rx_Veigar_GuardianVisuals_v68.w3x",
+  "sha256": "19f21747cecc390fe96b01c5f660ecebe9eed1851838c2f33e04140d033168f2",
+  "changed_members": [
+    "war3mapImported\\GuardianPentagonDome.mdx",
+    "war3mapImported\\GuardianPylon.mdx",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianGuardianShield.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianGuardianShield.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianForceField.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianForceField.blp",
+    "ReplaceableTextures\\CommandButtons\\BTNGuardianLantern.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGuardianLantern.blp",
+    "war3map.j",
+    "war3map.wct",
+    "war3map.w3u",
+    "war3map.imp"
+  ],
+  "changed_functions": [
+    "TFP_FFDP_OnCast",
+    "GD_Cast"
+  ],
+  "editor_changes": [
+    1,
+    1
+  ],
+  "unrelated_members_preserved": 1363,
+  "jass_compiled": true,
+  "engine_tested": false
+}

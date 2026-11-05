@@ -1,0 +1,20 @@
+{
+  "unit": {
+    "objects": 751,
+    "added": [
+      "nStk"
+    ]
+  },
+  "launch_metadata": {
+    "ulpx": "launchX",
+    "ulpy": "launchY",
+    "ulpz": "launchZ"
+  },
+  "ability": {
+    "objects": 1903,
+    "added": [
+      "AStB",
+      "AStS"
+    ]
+  }
+}

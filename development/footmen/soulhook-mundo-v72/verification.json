@@ -1,0 +1,39 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\soulhook-mundo-v72\\release\\FF799X_Rx_SoulHook_Mundo_v72_TEST.w3x",
+  "sha256": "b9efcb334419d88f6ad96da70f868cf22c0d121297cc4f2d37facb5c11aff780",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\Transfer\\UI_Mundo_Stalker_Fixed\\FF799X_Rx_UI_Mundo_Stalker_Fixed_Test.w3x",
+  "base_sha256": "1351c99d23d0ab37707db856d83119ddaf651c5222ac4e7ea236b1831d344dc7",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "FF_SOURCE_MANIFEST.json",
+    "source_roundtrip\\FF_Runtime.j",
+    "source_roundtrip\\globals.j",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3u",
+    "war3map.wct"
+  ],
+  "changed_functions": [
+    "DK_Free",
+    "DK_Tick",
+    "DK_OnCast",
+    "DK_Init",
+    "DK_AxeArea"
+  ],
+  "new_functions": [
+    "DK_HookStun",
+    "DK_HookChain",
+    "DK_HookCatch",
+    "DK_HookCast"
+  ],
+  "verified_preserved_entries": 1398,
+  "decoded_preserved_files": 1379,
+  "soulhook_checks": 19,
+  "mundo_cloud_checks": 65,
+  "mundo_resource_checks": 10,
+  "gas_particle_models": 21,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

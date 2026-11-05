@@ -1,0 +1,21 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\taverns-v66\\release\\FF799X_Rx_Team_Taverns_v66.w3x",
+  "sha256": "74e5e3cee187688c6167890ef85773f146ecd55cf11390c43e99907394dc45d9",
+  "before_bytes": 26553746,
+  "after_bytes": 26550847,
+  "saved_bytes": 2899,
+  "removed_functions": 0,
+  "removed_objects": 0,
+  "preserved_payloads": 1355,
+  "runtime_jass": "passed",
+  "editor_function_body_syntax": "JassHelper regeneration and compiled pjass passed",
+  "editor_save_and_live_game_test": "pending",
+  "changed_files": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.w3u",
+    "war3map.wct",
+    "war3map.wts",
+    "war3mapSkin.w3u"
+  ]
+}

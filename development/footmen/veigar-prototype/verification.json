@@ -1,0 +1,9 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-prototype\\release\\FF799X_Rx_Veigar_v33.w3x",
+  "sha256": "d3c0ec5e56a072a92771d84f1cd7d4587acc87a7a9129e448ed8ba3d14560ffd",
+  "preserved_archive_entries": 1348,
+  "changed_functions": [
+    "main"
+  ],
+  "live_test": "Pending"
+}

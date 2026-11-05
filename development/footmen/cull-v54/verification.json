@@ -1,0 +1,23 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\tf-orb-v53\\release\\FF799X_Rx_TF_Guardian_HealOrbs_v53.w3x",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\cull-v54\\release\\FF799X_Rx_TF_Guardian_Culled_v54.w3x",
+  "sha256": "92e370fea5fc54ae2aacb7bcc1301cdf92aa245c5b22f6cadb0d8f55bc83c0fc",
+  "before_bytes": 60554818,
+  "after_bytes": 25925841,
+  "saved_bytes": 34628977,
+  "removed_imports": [
+    "war3mapImported\\healspray.PNG",
+    "war3mapImported\\warstomp.PNG",
+    "war3mapImported\\Windwalk.PNG",
+    "war3mapImported\\Wight.png",
+    "war3mapImported\\BTNHeroTrollGodSlayer.png",
+    "war3mapImported\\WightScythe.png",
+    "war3mapImported\\WightSpirits.png",
+    "ReplaceableTextures\\CommandButtons\\BTNLoadedDice.tga",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLoadedDice.tga"
+  ],
+  "excluded_metadata": "optional MPQ (attributes) metadata, encrypted with offset-dependent key",
+  "verified_preserved_payloads": 1351,
+  "live_game_test": "pending",
+  "stormlib_named_files_verified": 1323
+}

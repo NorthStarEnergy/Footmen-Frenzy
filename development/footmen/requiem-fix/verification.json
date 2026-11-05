@@ -1,0 +1,12 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\requiem-fix\\release\\FF799X_Rx_RequiemFix_v33.w3x",
+  "sha256": "a587a86e32577c5e7d31b0089a9915ece1bfaa1e13b097b8e787d29260ab80ce",
+  "changed_functions": [
+    "DK_Free",
+    "DK_EndRequiem",
+    "DK_OnCast"
+  ],
+  "preserved_archive_entries": 1349,
+  "compiler": "passed",
+  "live_test": "Pending Warcraft III playtest"
+}

@@ -1,0 +1,21 @@
+{
+  "actual_jass_random_blackjack_rounds": 600,
+  "continuous_shoe_rounds": 100,
+  "two_deck_shoe": true,
+  "soft_aces": true,
+  "natural_and_push_payouts": true,
+  "split_aces_and_double": true,
+  "community_turn_isolation": true,
+  "exhaustion_refunds": true,
+  "odds_movement_and_locked_tickets": true,
+  "cutoff_exact": true,
+  "any_base_kill_and_first_base_loss": true,
+  "ffa_and_draw_settlement": true,
+  "principal_and_debt_accounting": true,
+  "house_liability_backing": true,
+  "challenge_acceptance_expiry_settlement": true,
+  "ticket_capacity_and_batched_payouts": 4095,
+  "renderer_pure_and_hole_card_hidden": true,
+  "engine_tested": false,
+  "colored_poker_check_call_transition": true
+}

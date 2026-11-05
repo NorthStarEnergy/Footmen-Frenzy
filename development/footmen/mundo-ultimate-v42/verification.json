@@ -1,0 +1,27 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-ultimate-v42\\release\\FF799X_Rx_Consolidated_Undying_v42a.w3x",
+  "sha256": "6f3af626a0503a551ad0935e91e7d38d1cf6c40b233fabbe8bb4b698dd6b4abe",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_ItemBalance_v41.w3x",
+  "unit_balance_donor": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Test\\FF799X_Rx_Unit_Balance_v41.w3x",
+  "unit_functions": [
+    "FFGS_ApplyUnit",
+    "FF_gr_Poll",
+    "FF_kl_OnDeath",
+    "FF_st_IsFeedUnit",
+    "Trig_GM_set_messages_Actions",
+    "Trig_Unit_Experience_System_Func004Func014C",
+    "Trig_set_base_Actions",
+    "Trig_set_spawn_variables_Actions",
+    "Trig_swap_execute_Actions"
+  ],
+  "preserved_item_payloads": 1330,
+  "behavior_checks": 160,
+  "compiler": "passed",
+  "live_test": "User confirmed ability-flags diagnostic loads successfully; release game payloads match that diagnostic",
+  "load_fix": "256 digestion indicator v3 modification-set counts corrected from 0 to 1",
+  "independent_format_validation": "passed; original malformed data rejected",
+  "original_validation_error": "Invalid set count 1835101793 at 1057146",
+  "tested_diagnostic_sha256": "eec2c6d566f1134648c202ff7173471c96b9dbd6463cc80d8da93e2dbd1d4064",
+  "identical_tested_payloads": 1337,
+  "script_unchanged_from_compiled_v42": true
+}

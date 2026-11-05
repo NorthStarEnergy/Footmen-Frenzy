@@ -1,0 +1,18 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-v64\\release\\FF799X_Rx_Mundo_Cloud_v64.w3x",
+  "sha256": "35097d7a8639a1ea6cbff0b75a32b871be4478e7550277c1b9dd187a7dca15f2",
+  "before_bytes": 26552599,
+  "after_bytes": 26559413,
+  "saved_bytes": -6814,
+  "removed_functions": 0,
+  "removed_objects": 0,
+  "preserved_payloads": 1358,
+  "runtime_jass": "passed",
+  "editor_function_body_syntax": "changed functions match runtime; independent editor compilation not performed",
+  "editor_save_and_live_game_test": "pending",
+  "changed_files": [
+    "war3map.j",
+    "war3map.wct",
+    "war3map.wts"
+  ]
+}

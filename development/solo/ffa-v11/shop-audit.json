@@ -1,0 +1,883 @@
+[
+  {
+    "kind": "nFHT",
+    "sector": 0,
+    "position": [
+      -2489.0158690628755,
+      3454.8963881457507
+    ],
+    "wall_gap": 128,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 0,
+    "position": [
+      -2613.4666625799973,
+      3307.8181776828865
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 0,
+    "position": [
+      -2749.231164593928,
+      3172.053675721183
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 0,
+    "position": [
+      -2873.6819581110503,
+      3024.9754652583188
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 0,
+    "position": [
+      -2998.132751628172,
+      2877.8972547954545
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 0,
+    "position": [
+      -3258.348047106998,
+      2866.58354634652
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 0,
+    "position": [
+      -3541.190759579441,
+      2877.8972548999086
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 0,
+    "position": [
+      -3665.641553096563,
+      2730.819044437044
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 0,
+    "position": [
+      -3801.4060551104935,
+      2595.0545424753404
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 0,
+    "position": [
+      -3971.1116826148505,
+      2493.23116601712
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 4,
+    "position": [
+      3710.896388656257,
+      2233.015868301758
+    ],
+    "wall_gap": 128,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 4,
+    "position": [
+      3563.8181782189176,
+      2357.4666618490464
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 4,
+    "position": [
+      3428.0536762850597,
+      2493.2311638908227
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 4,
+    "position": [
+      3280.9754658477204,
+      2617.681957438111
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 4,
+    "position": [
+      3133.8972554103816,
+      2742.1327509853995
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 4,
+    "position": [
+      3122.583547014819,
+      3002.348046466546
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 4,
+    "position": [
+      3133.897255626219,
+      3285.190758936668
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 4,
+    "position": [
+      2986.8190451888804,
+      3409.6415524839563
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 4,
+    "position": [
+      2851.0545432550225,
+      3545.4060545257325
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 4,
+    "position": [
+      2749.231166831609,
+      3715.1116820509737
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 7,
+    "position": [
+      2489.0158712515367,
+      -3966.8963866777467
+    ],
+    "wall_gap": 128,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 7,
+    "position": [
+      2613.4666646819132,
+      -3819.8181761414817
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 7,
+    "position": [
+      2749.231166615771,
+      -3684.0536740997054
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 7,
+    "position": [
+      2873.6819600461477,
+      -3536.9754635634404
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 7,
+    "position": [
+      2998.1327534765237,
+      -3389.8972530271762
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 7,
+    "position": [
+      3258.348048948677,
+      -3378.583544424769
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 7,
+    "position": [
+      3541.1907614277925,
+      -3389.8972528113386
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 7,
+    "position": [
+      3665.641554858169,
+      -3242.8190422750736
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 7,
+    "position": [
+      3801.406056792027,
+      -3107.0545402332973
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 7,
+    "position": [
+      3971.111684236328,
+      -3005.231163674985
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 11,
+    "position": [
+      -3710.896387188252,
+      -2745.0158704904193
+    ],
+    "wall_gap": 128,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 11,
+    "position": [
+      -3563.8181766775124,
+      -2869.466663950962
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 11,
+    "position": [
+      -3428.0536746635817,
+      -3005.2311659126653
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 11,
+    "position": [
+      -3280.9754641528425,
+      -3129.681959373208
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 11,
+    "position": [
+      -3133.897253642103,
+      -3254.1327528337506
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 11,
+    "position": [
+      -3122.583545093067,
+      -3514.348048308224
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 11,
+    "position": [
+      -3133.897253537649,
+      -3797.1907607850194
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 11,
+    "position": [
+      -2986.819043026909,
+      -3921.6415542455616
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 11,
+    "position": [
+      -2851.0545410129785,
+      -4057.406056207265
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 11,
+    "position": [
+      -2749.231164489474,
+      -4227.111683672451
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 1,
+    "position": [
+      863.9999991008266,
+      4128.00000017721
+    ],
+    "wall_gap": 112,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 1,
+    "position": [
+      671.9999991008266,
+      4128.000000137829
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 1,
+    "position": [
+      479.9999991008266,
+      4128.00000009845
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 1,
+    "position": [
+      287.9999991008266,
+      4128.00000005907
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 1,
+    "position": [
+      95.99999910082657,
+      4128.00000001969
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 1,
+    "position": [
+      -96.00000089917343,
+      4127.99999998031
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 1,
+    "position": [
+      -288.00000097136984,
+      4479.99999994093
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 1,
+    "position": [
+      -480.00000096480653,
+      4447.99999990155
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 1,
+    "position": [
+      -672.0000009713698,
+      4479.999999862171
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 1,
+    "position": [
+      -864.0000009713698,
+      4479.99999982279
+    ],
+    "wall_gap": 144,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -1120.0
+    ],
+    "wall_gap": 112,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -928.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -736.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -544.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -352.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 3,
+    "position": [
+      4384.0,
+      -160.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 3,
+    "position": [
+      4736.0,
+      32.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 3,
+    "position": [
+      4704.0,
+      224.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 3,
+    "position": [
+      4736.0,
+      416.0
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 3,
+    "position": [
+      4720.0,
+      608.0
+    ],
+    "wall_gap": 160,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 6,
+    "position": [
+      -864.0000008991734,
+      -4639.99999982279
+    ],
+    "wall_gap": 112,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 6,
+    "position": [
+      -672.0000008991734,
+      -4639.999999862171
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 6,
+    "position": [
+      -480.0000008991734,
+      -4639.99999990155
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 6,
+    "position": [
+      -288.0000008991734,
+      -4639.99999994093
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 6,
+    "position": [
+      -96.00000089917343,
+      -4639.99999998031
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 6,
+    "position": [
+      95.99999910082657,
+      -4640.00000001969
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 6,
+    "position": [
+      287.99999903191184,
+      -4976.00000005907
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 6,
+    "position": [
+      479.99999903519347,
+      -4960.00000009845
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 6,
+    "position": [
+      671.9999990319118,
+      -4976.000000137829
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 6,
+    "position": [
+      863.9999990253485,
+      -5008.00000017721
+    ],
+    "wall_gap": 128,
+    "runtime": false
+  },
+  {
+    "kind": "nFHT",
+    "sector": 9,
+    "position": [
+      -4384.000000354419,
+      607.9999982016532
+    ],
+    "wall_gap": 112,
+    "runtime": true
+  },
+  {
+    "kind": "n012",
+    "sector": 9,
+    "position": [
+      -4384.000000275659,
+      415.9999982016531
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n007",
+    "sector": 9,
+    "position": [
+      -4384.000000196899,
+      223.9999982016531
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n00R",
+    "sector": 9,
+    "position": [
+      -4384.00000011814,
+      31.999998201653113
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01T",
+    "sector": 9,
+    "position": [
+      -4384.00000003938,
+      -160.0000017983469
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01Y",
+    "sector": 9,
+    "position": [
+      -4383.99999996062,
+      -352.0000017983469
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n02N",
+    "sector": 9,
+    "position": [
+      -4735.99999988186,
+      -544.0000019427397
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n045",
+    "sector": 9,
+    "position": [
+      -4703.999999803101,
+      -736.0000019296131
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n046",
+    "sector": 9,
+    "position": [
+      -4735.999999724341,
+      -928.0000019427397
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n003",
+    "sector": 9,
+    "position": [
+      -4735.999999645581,
+      -1120.0000019427398
+    ],
+    "wall_gap": 144,
+    "runtime": false
+  },
+  {
+    "kind": "n01B",
+    "position": [
+      1539.1488037109375,
+      453.1123962402344
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n004",
+    "position": [
+      536.3123779296875,
+      1407.94873046875
+    ],
+    "wall_gap": 80,
+    "runtime": false
+  },
+  {
+    "kind": "n01B",
+    "position": [
+      -709.1124267578125,
+      1283.1488037109375
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n004",
+    "position": [
+      -1663.94873046875,
+      280.3124084472656
+    ],
+    "wall_gap": 80,
+    "runtime": false
+  },
+  {
+    "kind": "n01B",
+    "position": [
+      -1663.94873046875,
+      -792.3123779296875
+    ],
+    "wall_gap": 80,
+    "runtime": false
+  },
+  {
+    "kind": "n004",
+    "position": [
+      -709.1124267578125,
+      -1795.1488037109375
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n01B",
+    "position": [
+      536.3123779296875,
+      -1919.94873046875
+    ],
+    "wall_gap": 80,
+    "runtime": false
+  },
+  {
+    "kind": "n004",
+    "position": [
+      1539.1488037109375,
+      -965.1124267578125
+    ],
+    "wall_gap": 112,
+    "runtime": false
+  },
+  {
+    "kind": "n000",
+    "position": [
+      1619,
+      213
+    ],
+    "wall_gap": 192,
+    "runtime": false
+  }
+]

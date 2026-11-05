@@ -1,0 +1,27 @@
+name: Verify map repository
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/check_repository.py
+      - name: Parse shared PowerShell tools
+        shell: pwsh
+        run: |
+          foreach ($file in @('Build-Map.ps1','tools/Install-Wc3Map.ps1')) {
+            $tokens=$null; $issues=$null
+            [void][System.Management.Automation.Language.Parser]::ParseFile((Join-Path $PWD $file),[ref]$tokens,[ref]$issues)
+            if ($issues.Count) { throw ($issues | Out-String) }
+          }

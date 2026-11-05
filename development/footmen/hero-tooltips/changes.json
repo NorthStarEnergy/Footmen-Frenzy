@@ -1,0 +1,24 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-tooltips\\base.w3x",
+  "base_sha256": "b735db3cbfb98d3cde710ef686840e43803317a89c21b6fe30492c44d4f33b72",
+  "changed_functions": [
+    "InitTrig_FF_Runtime"
+  ],
+  "added_functions": [
+    "FF_CompactHeroTooltips_Init"
+  ],
+  "skills": [
+    "A0DL",
+    "AFg1",
+    "ATfd",
+    "AZd1",
+    "AOz1",
+    "AOz2",
+    "AOz3",
+    "AOz4",
+    "AGr1",
+    "AGr2",
+    "AGr3",
+    "AGr4"
+  ]
+}

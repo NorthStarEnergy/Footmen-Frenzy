@@ -1,0 +1,128 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\consolidated-v36\\release\\FF799X_Rx_Consolidated_InstaMass_v36.w3x",
+  "sha256": "b27ec8b1bc951b555e2a6f7088ce2c5094f0427cce99e4d699422c25ac2f5bf4",
+  "inputs": {
+    "tf": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-10-29\\i\\outputs\\FF799X_Rx_Twisted_Fate_v33.w3x",
+      "sha256": "75023f7ddef780d652467aab96527060b80fcb926b611c5a5dd6ea87ee237aa6"
+    },
+    "v30": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-lantern\\release\\FF799X_Rx_GuardianLantern_v30.w3x",
+      "sha256": "b735db3cbfb98d3cde710ef686840e43803317a89c21b6fe30492c44d4f33b72"
+    },
+    "tooltips": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-tooltips\\release\\FF799X_Rx_HeroTooltips_v31.w3x",
+      "sha256": "18e6e58a00568a35bba039837ce364d0f91985f41a9fc4c5f5566a7747d15d97"
+    },
+    "gas": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-gas\\release\\FF799X_Rx_Mundo_v32.w3x",
+      "sha256": "05962d9ecbf9f3482b41b8d9e138ab2d5c3647403945bba0b31604969b1c9950"
+    },
+    "requiem": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\requiem-fix\\release\\FF799X_Rx_RequiemFix_v33.w3x",
+      "sha256": "a587a86e32577c5e7d31b0089a9915ece1bfaa1e13b097b8e787d29260ab80ce"
+    },
+    "guldan": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\orianna-guldan\\release\\FF799X_Rx_OriannaGuldan_v34.w3x",
+      "sha256": "7389d29dc66db66479a4d2cdc09d6cb0f30de37cbedd878125ca8117f1c60b28"
+    },
+    "rename": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Guldan_v35.w3x",
+      "sha256": "b84600a7296e54aca9f28b5936092383f5c0193fc5f997be40e8645eed718e76"
+    },
+    "veigar": {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-prototype\\release\\FF799X_Rx_Veigar_v33.w3x",
+      "sha256": "d3c0ec5e56a072a92771d84f1cd7d4587acc87a7a9129e448ed8ba3d14560ffd"
+    }
+  },
+  "preserved_archive_entries": 1347,
+  "preserved_existing_functions": 3636,
+  "changed_functions": [
+    "DK_EndRequiem",
+    "DK_Free",
+    "FFGS_CountLivingOfType",
+    "FFGS_SpawnForPlayer",
+    "FFR7_ApplyMassSpeed",
+    "InitTrig_FF_Runtime",
+    "MF_HeroDisabled",
+    "MF_InitHeroPolicy",
+    "MU_Init",
+    "MU_OnCast",
+    "MU_TickHero",
+    "OM_OnCastAnimation",
+    "OM_WindupFX",
+    "Trig_Mass_START_Actions",
+    "Trig_keep_footy_in_base_Conditions",
+    "Trig_set_hero_stats_Actions",
+    "main"
+  ],
+  "added_functions": [
+    "F35_MassEnabled",
+    "F35_MassPoint",
+    "F35_ReleaseMass",
+    "F35_StageFootman",
+    "FF_CompactHeroTooltips_Init",
+    "MU_GasExpire",
+    "MU_GasSpawn",
+    "VG_CageScan",
+    "VG_Cast",
+    "VG_Cleanup",
+    "VG_Crosses",
+    "VG_Enemy",
+    "VG_Init",
+    "VG_Summon",
+    "VG_Tick",
+    "VG_Z"
+  ],
+  "exact_branch_function_checks": {
+    "tf": 35,
+    "veigar": 9,
+    "tooltips": 1
+  },
+  "object_checks": {
+    "w3a": {
+      "modified": [
+        "A0DL",
+        "AFg1",
+        "AGr1",
+        "AGr2",
+        "AGr3",
+        "AGr4",
+        "AGr8",
+        "AMu2",
+        "AOz1",
+        "AOz2",
+        "AOz3",
+        "AOz4",
+        "ATfd",
+        "AZd1"
+      ],
+      "added": [
+        "AMug",
+        "AVge",
+        "AVgs",
+        "AVgw"
+      ],
+      "preserved": 1620
+    },
+    "w3u": {
+      "modified": [
+        "HGr1",
+        "HOr1"
+      ],
+      "added": [
+        "HVg1"
+      ],
+      "preserved": 743
+    }
+  },
+  "behavior_checks": 213,
+  "walkable_formation_positions": 756,
+  "compiler": "passed",
+  "live_test": "Pending Warcraft III playtest",
+  "resolutions": [
+    "Mundo Devour and Undying supersede Fling and Sadism; gas trail and rank colors integrated with newer kit.",
+    "Demon Ascension supersedes Dread Requiem; applicable legacy cleanup/duplicate-completion fixes retained.",
+    "Pub mass staging port retains 90-second countdown and normal 12-player spawn counts."
+  ]
+}

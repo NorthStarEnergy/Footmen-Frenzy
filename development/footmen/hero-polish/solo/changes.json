@@ -1,0 +1,31 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\hero-polish\\solo\\base.w3x",
+  "base_sha256": "f46fdd268e9c90b84761d5793e5f045e32b4a18dbdd751bb2088255b367f6c86",
+  "title": "Solo Foots 6 Player FFA v3",
+  "filename": "Solo Foots 6 Player FFA v3.w3x",
+  "changed_functions": [
+    "Trig_set_hero_stats_Actions",
+    "GFW_Create",
+    "Trig_Guardian_Force_Field_Loop_Actions",
+    "OM_AttackRadius",
+    "OM_CommandGroundTick",
+    "OM_CommandGround",
+    "OM_UpdateShockGround",
+    "OM_WindupFX",
+    "OM_ArrivalFX",
+    "OM_GroundRing",
+    "OM_PulseTick",
+    "OM_StartPulse",
+    "OM_Tick",
+    "OM_OnCast",
+    "FF_HeroTooltips_Init",
+    "FS_OnCast",
+    "FS_Init",
+    "config"
+  ],
+  "added_functions": [
+    "FS_DrinkAnimation",
+    "FS_DrinkDeferred",
+    "FS_OnChannel"
+  ]
+}

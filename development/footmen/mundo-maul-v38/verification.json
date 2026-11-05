@@ -1,0 +1,17 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-maul-v38\\release\\FF799X_Rx_Consolidated_Maul_v38.w3x",
+  "sha256": "f33c3ac66c18f81f139f19923e65b4f24a167acd69212890a7e43efffccb6993",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_StatsUI_v37.w3x",
+  "changed_functions": [
+    "MD_Reject",
+    "MD_OnOrder",
+    "MD_OnChannel",
+    "MU_OnCast",
+    "MU_Init"
+  ],
+  "preserved_functions": 3664,
+  "preserved_archive_entries": 1350,
+  "checks": 136,
+  "compiler": "passed",
+  "live_test": "Pending Warcraft III playtest"
+}

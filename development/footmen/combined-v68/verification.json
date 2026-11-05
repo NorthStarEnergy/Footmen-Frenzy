@@ -1,0 +1,27 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\pub-xp-v67\\release\\FF799X_Rx_Pub_XP_v67.w3x",
+  "base_sha256": "f51fd7d74d2977d8f20c005c79a7ae14678c717167f63c8983e1503cba91150f",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "output_sha256": "ca55bf08034a5a8cfe4b37c374dd87f68f4fd358d73a57e0c95266188b467b35",
+  "already_combined": true,
+  "unrelated_entries_preserved": 1348,
+  "changed_functions": [
+    "InitTrig_FF_Runtime",
+    "Trig_set_hero_numbers_Actions",
+    "Trig_set_hero_stats_Actions",
+    "VG_CageScan",
+    "VG_Cast",
+    "VG_Init",
+    "VG_Summon",
+    "VG_Tick"
+  ],
+  "new_functions": [
+    "VG_ClassicCast",
+    "VG_ClassicKill",
+    "VG_Equilibrium"
+  ],
+  "changed_members_verified": 25,
+  "new_icon_repaints_included": false,
+  "unfinished_v69_included": false,
+  "engine_tested": false
+}

@@ -1,0 +1,21 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-cleaver-wound\\release\\FF799X_Rx_Mundo_Cleaver_Wound_Test.w3x",
+  "sha256": "d45a7ab25281b6c1609ccf08ca8780780d8fd24720ec30ddf54b62552ab28a92",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-health-kit\\release\\FF799X_Rx_Mundo_HealthKit_Test.w3x",
+  "base_sha256": "0ba178e4d29d6aae3ee4950982b264dc76a07394e213d6ffad9a62053cd275de",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.w3h",
+    "war3map.wct"
+  ],
+  "preserved_archive_entries": 1368,
+  "runtime_pjass": "passed",
+  "editor_jasshelper_pjass": "passed",
+  "behavior_object_checks": 40,
+  "engine_playtested": false,
+  "installed": false,
+  "includes_prior_mundo_health_kit": true,
+  "includes_parallel_lux_stalker_icon_work": false
+}

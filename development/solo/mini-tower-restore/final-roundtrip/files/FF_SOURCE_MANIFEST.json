@@ -1,0 +1,1886 @@
+{
+  "terrain_source": "C:\\Users\\Ryan1\\Documents\\Warcraft III\\Maps\\Download\\Reforged_Footmen_Frenzy_v7.9.9W-rc5.w3x",
+  "terrain_source_sha256": "57df4fbbcc6b8aa2ec7c17b3f3fd30c079635ff03221b361e6d2a67a019d7a92",
+  "gameplay_source": "C:\\Users\\Ryan1\\Documents\\Warcraft III\\Maps\\Random Tests\\Test\\FF799X_Hotfix_TEST_MASS_AND_HOTKEYS_FIXED.w3x",
+  "gameplay_source_sha256": "6f3474f35e412df823c8b043fdd3f3808e5df9d0c4b1031d9dae62dff668e66e",
+  "rc5_members": {
+    "war3map.w3e": "9c35e9c5e42e5cf1909a46b838ae1a5f506e113fd91c27c85f0af4fcae060ebf",
+    "war3map.doo": "321ee61091741b3934be5eaf466071432f760e2633cbdcbcb04a184da4c77a50",
+    "war3map.wpm": "29b261bd7a05a33c35c48feb328b51297836d6bb7766ce351f9893c5db9d2382",
+    "war3map.shd": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+    "war3mapMap.blp": "f9bc2661081f9f56973a40e84f274c56f1ac5d3680af702e3aaecfd67816388a"
+  },
+  "runtime_sha256": "d2ee84edd9fc8bc774e4753608198c03b23febce4b3620592efc4cb8a7b01ff7",
+  "editor_source_synchronized_functions": [
+    "FF_Editor_InitTriggers",
+    "Trig_debugmode_Actions"
+  ],
+  "retained_from_799x": "R1 content except the explicitly recorded R3 rollback changes.",
+  "editor_open_save_test": "not performed",
+  "multiplayer_and_hosting_bot_test": "not performed",
+  "repair_revision": "Rx Hero Tavern v1",
+  "repairs": {
+    "functions": [
+      "FFGS_PlayerEligible",
+      "FFGS_ProcessIndex",
+      "FFGS_MassBonusSpawn",
+      "Trig_HERO_Architect_Recruit_Func014Func001Func013C",
+      "Trig_HERO_Architect_Recruit_Func014Func001Func013Func001C",
+      "Trig_HERO_Architect_Recruit_Actions",
+      "SoloSub_CommandActions",
+      "SoloSub_CommandPlayerNumber (added)"
+    ],
+    "shops": [
+      55,
+      56,
+      57,
+      58
+    ],
+    "regions": [
+      "CENTER",
+      "Phoenixblock"
+    ],
+    "object_data": "All normal and skin object data preserved unchanged from supplied 799X."
+  },
+  "editor_runtime_sha256": "2faa652d094a84a1ba7f9d1f7b16bba250ff0d3573d0015f5c8ad030b2ae3fea",
+  "live_game_and_bot_test": "not performed",
+  "rollback": {
+    "objects": [
+      {
+        "member": "war3map.w3u",
+        "unit": "uban",
+        "field": "ua1t",
+        "before": [],
+        "after": [
+          "pierce"
+        ]
+      },
+      {
+        "member": "war3map.w3u",
+        "unit": "ngh2",
+        "field": "ua1t",
+        "before": [
+          "magic"
+        ],
+        "after": []
+      },
+      {
+        "member": "war3map.w3u",
+        "unit": "n04X",
+        "field": "ua1t",
+        "before": [
+          "magic"
+        ],
+        "after": [
+          "normal"
+        ]
+      },
+      {
+        "member": "war3map.w3u",
+        "unit": "h060",
+        "field": "uhpm",
+        "before": [
+          560
+        ],
+        "after": [
+          460
+        ]
+      },
+      {
+        "member": "war3map.w3u",
+        "unit": "h060",
+        "field": "umvs",
+        "before": [
+          320
+        ],
+        "after": [
+          310
+        ]
+      },
+      {
+        "member": "war3map.w3u",
+        "unit": "h060",
+        "field": "ua1b",
+        "before": [
+          12
+        ],
+        "after": []
+      }
+    ],
+    "runtime": [
+      [
+        "set udg_exp_sys_high_Foot=30",
+        "set udg_exp_sys_high_Foot=32",
+        2
+      ],
+      [
+        "set udg_unit_armor_type[9]=7",
+        "set udg_unit_armor_type[9]=1",
+        1
+      ],
+      [
+        "set udg_unit_armor_type[20]=7",
+        "set udg_unit_armor_type[20]=1",
+        1
+      ],
+      [
+        "call BlzSetUnitIntegerField(u, UNIT_IF_DEFENSE_TYPE, 7)",
+        "call BlzSetUnitIntegerField(u, UNIT_IF_DEFENSE_TYPE, 1)",
+        1
+      ],
+      [
+        "set ffgs_unit_limit=48",
+        "set ffgs_unit_limit=60",
+        1
+      ],
+      [
+        "set ffgs_unit_type_limit=42",
+        "set ffgs_unit_type_limit=60",
+        1
+      ],
+      [
+        "set ffgs_mass_bonus_spawns[1]=5",
+        "set ffgs_mass_bonus_spawns[1]=3",
+        1
+      ],
+      [
+        "set ffgs_mass_bonus_spawns[2]=5",
+        "set ffgs_mass_bonus_spawns[2]=4",
+        1
+      ],
+      [
+        "set ffgs_tech2_seconds=540.00",
+        "set ffgs_tech2_seconds=720.00",
+        1
+      ],
+      [
+        "set ffgs_tech3_seconds=720.00",
+        "set ffgs_tech3_seconds=1000.00",
+        1
+      ],
+      [
+        "R2I(72.00 * 0.90)",
+        "72",
+        1
+      ],
+      [
+        "R2I(57.00 * 0.90)",
+        "57",
+        1
+      ],
+      [
+        "R2I(26.00 * 0.90)",
+        "26",
+        1
+      ],
+      [
+        "R2I(21.00 * 0.90)",
+        "21",
+        1
+      ],
+      [
+        "R2I(22.00 * 0.90)",
+        "22",
+        1
+      ],
+      [
+        "R2I(19.00 * 0.90)",
+        "19",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[3]=6.50",
+        "set ffgs_spawn_interval[3]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[9]=6.50",
+        "set ffgs_spawn_interval[9]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[10]=7.50",
+        "set ffgs_spawn_interval[10]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[13]=7.00",
+        "set ffgs_spawn_interval[13]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[14]=6.00",
+        "set ffgs_spawn_interval[14]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[16]=6.00",
+        "set ffgs_spawn_interval[16]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[18]=6.00",
+        "set ffgs_spawn_interval[18]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[20]=6.00",
+        "set ffgs_spawn_interval[20]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[21]=7.75",
+        "set ffgs_spawn_interval[21]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[22]=8.25",
+        "set ffgs_spawn_interval[22]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[23]=7.75",
+        "set ffgs_spawn_interval[23]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[24]=8.50",
+        "set ffgs_spawn_interval[24]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[25]=8.50",
+        "set ffgs_spawn_interval[25]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[26]=7.75",
+        "set ffgs_spawn_interval[26]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[27]=7.75",
+        "set ffgs_spawn_interval[27]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[28]=8.25",
+        "set ffgs_spawn_interval[28]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[29]=8.50",
+        "set ffgs_spawn_interval[29]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[30]=8.50",
+        "set ffgs_spawn_interval[30]=8.75",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[31]=6.50",
+        "set ffgs_spawn_interval[31]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[36]=7.00",
+        "set ffgs_spawn_interval[36]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[39]=6.50",
+        "set ffgs_spawn_interval[39]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[40]=7.50",
+        "set ffgs_spawn_interval[40]=8.00",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[47]=6.00",
+        "set ffgs_spawn_interval[47]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[48]=6.00",
+        "set ffgs_spawn_interval[48]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[49]=6.00",
+        "set ffgs_spawn_interval[49]=6.25",
+        1
+      ],
+      [
+        "set ffgs_spawn_interval[50]=6.00",
+        "set ffgs_spawn_interval[50]=6.25",
+        1
+      ],
+      [
+        "    if FFGS_CountLivingSpawns(ConvertedPlayer(pn)) + count > ffgs_unit_limit then\n        return false\n    endif\n    if FFGS_CountLivingOfType(FFOD_SpawnType(idx , pn) , ConvertedPlayer(pn)) + count > ffgs_unit_type_limit then",
+        "    // RC5 allows a full wave while existing units of this type are at most 60.\n    if FFGS_CountLivingOfType(FFOD_SpawnType(idx , pn) , ConvertedPlayer(pn)) > ffgs_unit_type_limit then",
+        1
+      ],
+      [
+        "IMaxBJ(1, R2I(I2R(udg_unit_bounty_dice_sides[idx]) * 0.70))",
+        "udg_unit_bounty_dice_sides[idx]",
+        1
+      ],
+      [
+        "IMaxBJ(1, R2I(I2R(udg_unit_bounty_dice_sides[udg_X_base]) * 0.70))",
+        "udg_unit_bounty_dice_sides[udg_X_base]",
+        7
+      ],
+      [
+        "R2I(I2R(udg_unit_bounty_base[idx]) * 0.70)",
+        "udg_unit_bounty_base[idx]",
+        1
+      ],
+      [
+        "R2I(I2R(udg_unit_bounty_base[udg_X_base]) * 0.70)",
+        "udg_unit_bounty_base[udg_X_base]",
+        7
+      ],
+      [
+        "R2I(I2R(udg_temp_int) * 0.70)",
+        "udg_temp_int",
+        1
+      ],
+      [
+        "R2I(I2R(udg_death_ward_bounty[udg_abilitylevel]) * 0.70)",
+        "udg_death_ward_bounty[udg_abilitylevel]",
+        1
+      ],
+      [
+        "R2I(I2R(udg_summon_bounty[udg_abilitylevel]) * 0.70)",
+        "udg_summon_bounty[udg_abilitylevel]",
+        1
+      ],
+      [
+        "R2I(udg_colossal_unit_bounty_actual[udg_colossal_unit_id[udg_X_colo]] * 0.70)",
+        "R2I(udg_colossal_unit_bounty_actual[udg_colossal_unit_id[udg_X_colo]])",
+        3
+      ]
+    ],
+    "colossal": "RC5 bounty restored; XP constants already identical"
+  },
+  "r4": {
+    "changed_functions": [
+      "FFGS_InitSettings",
+      "FFGS_ApplyUnit",
+      "FFGS_SpawnForPlayer",
+      "FFGS_PlayerEligible",
+      "FFGS_SchedulerStart",
+      "FFR4_PoolingAllowed",
+      "FFR4_LockPooling",
+      "FFMode_ForcePub",
+      "FFMode_ShowCustomMenu",
+      "Trig_MODE_GUI_show_Actions",
+      "Trig_MODE_GUI_execute_Actions",
+      "OD_ApplyBonusTavernGate",
+      "Trig_MODE_set_pub_game_default_Actions",
+      "Trig_MODE_set_pub_game_custom_Actions",
+      "Trig_MODE_set_pro_mode_Actions",
+      "Trig_MODE_set_inhouse_Actions",
+      "Trig_Start_game_Actions",
+      "Trig_Overdrive_Actions",
+      "Trig_turn_trading_ON_Actions",
+      "Trig_autopool_command_Conditions",
+      "Trig_autopool_execute_Conditions",
+      "Trig_autopool_execute_Actions",
+      "Trig_autopool_time_Actions",
+      "F3_SendAllGold_Callback",
+      "Trig_Upgrades_level_Func002A",
+      "Trig_Upgrades_level_Actions",
+      "Trig_Update_base_variable_Actions",
+      "Trig_set_spawn_variables_Actions",
+      "FF_Editor_InitTriggers"
+    ],
+    "removed_functions": [
+      "FFOD_AddLiveHP",
+      "FFOD_ApplyLiveResearchForPlayer",
+      "FFOD_ApplyLiveResearchUnit",
+      "FFOD_ApplyUnitTech",
+      "FFOD_ClampRacialForPlayer",
+      "FFOD_ConfigureAllBaseTech",
+      "FFOD_ConfigureBaseTech",
+      "FFOD_CurrentSpawnUnit",
+      "FFOD_HandleSpawnToggle",
+      "FFOD_InstallSpawnToggles",
+      "FFOD_IsRacialTech",
+      "FFOD_RacialAllowed",
+      "FFOD_RacialTechForUnit",
+      "FFOD_SpawnToggleActions",
+      "FFOD_SpawnType",
+      "FFOD_UniqueTechForUnit",
+      "InitTrig_BASE__Overdrive_END",
+      "InitTrig_BASE__Overdrive_Start",
+      "InitTrig_FFOD_SpawnToggles",
+      "InitTrig_OD_BonusTavern_Build",
+      "InitTrig_Overdrive_Windwalk",
+      "OD_BonusTavern_Build_Actions",
+      "OD_BonusTavern_Build_Conditions",
+      "Trig_BASE__Overdrive_END_Actions",
+      "Trig_BASE__Overdrive_END_Func001Func001C",
+      "Trig_BASE__Overdrive_Start_Actions",
+      "Trig_BASE__Overdrive_Start_Conditions",
+      "Trig_Overdrive_Func004C",
+      "Trig_Overdrive_Func004Func001A",
+      "Trig_Overdrive_Windwalk_Actions",
+      "Trig_Overdrive_Windwalk_Conditions",
+      "Trig_Update_base_variable_Func004C",
+      "Trig_Upgrades_level_Func002Func002C"
+    ],
+    "object_changes": [
+      [
+        "war3map.w3u",
+        "hkni",
+        "uabi",
+        "A0D9,A07U,Ahsb,A09Q,A071,A0A2,A0W1",
+        "A0D9,A07U,Ahsb,A09Q,A071,A0A2"
+      ],
+      [
+        "war3map.w3u",
+        "h05H",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3u",
+        "h00D",
+        "ures",
+        "Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00G",
+        "ures",
+        "Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00H",
+        "ures",
+        "Rhme,Rhar,Robs,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar,Robs"
+      ],
+      [
+        "war3map.w3u",
+        "h00I",
+        "ures",
+        "Rugf,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rugf,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00J",
+        "ures",
+        "R004,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "R004,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00L",
+        "ures",
+        "R004,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "R004,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00M",
+        "ures",
+        "Robs,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Robs,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00N",
+        "ures",
+        "Rugf,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rugf,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00O",
+        "ures",
+        "Rhan,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhan,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00V",
+        "ures",
+        "Rhan,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhan,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00W",
+        "ures",
+        "Rhme,Rhar,Rhan,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar,Rhan"
+      ],
+      [
+        "war3map.w3u",
+        "h00Z",
+        "ures",
+        "Rhme,Rhar,Rugf,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar,Rugf"
+      ],
+      [
+        "war3map.w3u",
+        "h00B",
+        "ures",
+        "Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h002",
+        "ures",
+        "Rhme,Rhar,R004,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhme,Rhar,R004"
+      ],
+      [
+        "war3map.w3u",
+        "h003",
+        "ures",
+        "Robs,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Robs,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h00X",
+        "ures",
+        "R004,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "R004,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h011",
+        "ures",
+        "Robs,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Robs,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h012",
+        "ures",
+        "Rugf,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rugf,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h013",
+        "ures",
+        "Rhan,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Rhan,Rhme,Rhar"
+      ],
+      [
+        "war3map.w3u",
+        "h014",
+        "uabi",
+        "A0D9,Ahsb,A0SX,A09P,A0A3,A03T,Afbb,A0W1",
+        "A0D9,Ahsb,A0SX,A09P,A0A3,A03T,Afbb"
+      ],
+      [
+        "war3map.w3u",
+        "n003",
+        "ures",
+        "R003,R001,R002,R005,R006,R007,Rhac,R009",
+        "R003,R001,R002,R005,R006,R007,Rhac"
+      ],
+      [
+        "war3map.w3u",
+        "h02M",
+        "ures",
+        "Robs,Rhme,Rhar,Rr01,Rm01,Rm02,Rm03,Rs01,Rs02,Rk01,Rk02,Rk03,Rk04,Rd01,Rd02,Rd03,Rd04,Rmu1,Rar1,Rhu1,Rhu2,Rdr1,Rdy1,Rdd1,Rgh1,Rfi1,Rmg1,Rab1,Rgr1,Rot1,Rot2,Rot3,Rbn1,Rwr1,Rwl1,Rmo1,Rft1,Rft2,Rrd1,Rrd2,Rbz1,Rbz2,Rbz3,Rbz4,Rba1,Rba2,Rda1,Rda2,Rdm1,Rdm2,Rta1,Rta2,Rdt1,Rdt2,Rsl1,Rsl2,Rcp1,Rcp2",
+        "Robs,Rhme,Rhar"
+      ],
+      [
+        "war3mapSkin.w3u",
+        "h05H",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "R009",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rr01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rm01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rm02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rm03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rs01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rs02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rk01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rk02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rk03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rk04",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rd01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rd02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rd03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rd04",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rmu1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rar1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rhu1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rhu2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdy1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdd1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rgh1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rfi1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rmg1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rab1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rgr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rot1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rot2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rot3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rbn1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rwr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rwl1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rmo1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rft1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rft2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rrd1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rrd2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rbz1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rbz2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rba1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rba2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rda1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rda2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdm1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdm2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rta1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rta2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdt1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rdt2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rsl1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rsl2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rcp1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rcp2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rbz3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3q",
+        "Rbz4",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "R009",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rr01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rm01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rm02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rm03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rs01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rs02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rk01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rk02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rk03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rk04",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rd01",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rd02",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rd03",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rd04",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rmu1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rar1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rhu1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rhu2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdy1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdd1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rgh1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rfi1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rmg1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rab1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rgr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rot1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rot2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rot3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rbn1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rwr1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rwl1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rmo1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rft1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rft2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rrd1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rrd2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rbz1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rbz2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rba1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rba2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rda1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rda2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdm1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdm2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rta1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rta2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdt1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rdt2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rsl1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rsl2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rcp1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rcp2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rbz3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3q",
+        "Rbz4",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A07V",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A082",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A0W1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A0",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A4",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A5",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A6",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A7",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A8",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1A9",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AA",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AB",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AC",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AD",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AE",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AF",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AG",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AH",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AI",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AJ",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AK",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AL",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AM",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AN",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AO",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AP",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AQ",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3a",
+        "A1AR",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A07V",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A082",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A0W1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A0",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A1",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A2",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A3",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A4",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A5",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A6",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A7",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A8",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1A9",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AA",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AB",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AC",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AD",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AE",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AF",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AG",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AH",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AI",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AJ",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AK",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AL",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AM",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AN",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AO",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AP",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AQ",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3a",
+        "A1AR",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3map.w3t",
+        "I01E",
+        "removed Overdrive definition"
+      ],
+      [
+        "war3mapSkin.w3t",
+        "I01E",
+        "removed Overdrive definition"
+      ]
+    ]
+  },
+  "r5": {
+    "source_sha256": "9c20dbecb4df077efa6c177cc9198703093cbd6eb36aa26b32f386108ebe32e3",
+    "all_purchased_abilities_checked": [
+      "A099",
+      "A09B",
+      "A09H",
+      "A0DY",
+      "A0GU",
+      "A0JX",
+      "AEer",
+      "AHhb",
+      "AHtb",
+      "ANso",
+      "AUdc"
+    ],
+    "native_hotkeys": {
+      "A099": "Z",
+      "A09B": "Z",
+      "A09H": "X",
+      "A0DY": "X",
+      "A0GU": "Z",
+      "A0JX": "C",
+      "AEer": "Z",
+      "AEmb": "Z",
+      "AHhb": "Z",
+      "AHtb": "Z",
+      "ANso": "Z",
+      "AOcl": "Z",
+      "AUdc": "Z"
+    },
+    "object_changes": [
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHhb",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHhb",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHhb",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHtb",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHtb",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AHtb",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AOcl",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AUdc",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AUdc",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AUdc",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AEer",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AEer",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AEer",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "AEmb",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "ANso",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "ANso",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "ANso",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A09B",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A09B",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A099",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A099",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A099",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A09H",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "X"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A09H",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0DY",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "X"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0DY",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0GU",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "Z"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0GU",
+        "field": "abpx",
+        "before": [
+          3
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0GU",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0JX",
+        "field": "ahky",
+        "before": [
+          "B"
+        ],
+        "after": [
+          "C"
+        ]
+      },
+      {
+        "member": "war3mapSkin.w3a",
+        "id": "A0JX",
+        "field": "abpy",
+        "before": [
+          1
+        ],
+        "after": []
+      },
+      {
+        "member": "war3mapSkin.w3t",
+        "id": "I01O",
+        "field": "uhot",
+        "before": [
+          "S"
+        ],
+        "after": [
+          "C"
+        ]
+      }
+    ],
+    "spell_item_removal": "Remove purchasable spell-item system per user request; native hero spells preserved",
+    "removed_spell_item_ids": [
+      "I0HK",
+      "I0L1",
+      "I0L2",
+      "I0L3",
+      "I0L4",
+      "I0L5",
+      "I0L6",
+      "I0L7",
+      "I0L8",
+      "I0L9",
+      "I0LA",
+      "I0LB"
+    ],
+    "removed_functions": [
+      "ArchvaultSkillAbility",
+      "InitTrig_HOOK_Merchant",
+      "Trig_HOOK_Merchant_Actions",
+      "Trig_HOOK_Merchant_Conditions",
+      "Trig_archvault_page2_Actions"
+    ]
+  },
+  "r6_portrait_edits": [
+    {
+      "id": "o00A",
+      "old": "Units\\Orc\\Demolisher\\Demolisher_Portrait.mdx",
+      "new": "units\\orc\\catapult\\catapult_V1.mdl"
+    },
+    {
+      "id": "n04C",
+      "old": "war3mapImported\\DragonboneGolem.mdl",
+      "new": "war3mapImported\\DragonboneGolem_Portrait.mdx"
+    }
+  ],
+  "r7_mass_speed": {
+    "multiplier": 1.3,
+    "seconds": 6,
+    "units": [
+      "hfoo",
+      "h060"
+    ]
+  },
+  "engine_playtest": false,
+  "globals_sha256": "34880e5ce8afece8f3d8c99ba44f664735f0fe2b9e89140e981d285aa35de755",
+  "source_map_sha256": "dd5c5b8fdd531b287c884da7ea100177387c169d583b9fedb722d75bcc4e43a9",
+  "donor_map_sha256": "830b60abd5c7cae999b5b562925d7a54c2b5ed96238277f7431eab9660bc409a",
+  "bot_consumer_test": false
+}

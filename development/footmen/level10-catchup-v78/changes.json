@@ -1,0 +1,12 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\colo-curve-v77\\release\\FF799X_Rx_Colo_Curve_v77_TEST.w3x",
+  "base_sha256": "4e62b6167d4079fc55351e00c97d67def1e7eaef544cf33a6be31af56de3b11e",
+  "changed_functions": [
+    "P67_HeroRate",
+    "P67_Refresh",
+    "P67_Start"
+  ],
+  "added_functions": [
+    "P78_Rate"
+  ]
+}

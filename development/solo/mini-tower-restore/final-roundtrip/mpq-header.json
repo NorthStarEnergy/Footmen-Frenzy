@@ -1,0 +1,10 @@
+{
+  "HeaderSize": 32,
+  "ArchiveSize": 26121863,
+  "Version": 0,
+  "SectorSize": 4096,
+  "HashOffset": 26067591,
+  "BlockOffset": 26100359,
+  "HashEntries": 2048,
+  "BlockEntries": 1344
+}

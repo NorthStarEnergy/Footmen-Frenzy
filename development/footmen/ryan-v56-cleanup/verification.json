@@ -1,0 +1,17 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\ryan-v56-cleanup\\release\\FF799X_Rx_UI_Startup_CodeClean_v56.w3x",
+  "sha256": "19f96a6a4666ff0c841eb11dcdebed5e21b1b88af6dc1797c3b9da7c4e7a0801",
+  "before_bytes": 25920149,
+  "after_bytes": 25889049,
+  "saved_bytes": 31100,
+  "removed_functions": 296,
+  "removed_objects": 0,
+  "preserved_payloads": 1350,
+  "runtime_jass": "passed",
+  "editor_function_body_syntax": "passed using generated runtime declarations and wrapper",
+  "editor_save_and_live_game_test": "pending",
+  "changed_files": [
+    "war3map.j",
+    "war3map.wct"
+  ]
+}

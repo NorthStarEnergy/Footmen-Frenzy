@@ -1,0 +1,776 @@
+[
+  {
+    "wave": 1,
+    "target": 1390,
+    "total": 1390,
+    "units": [
+      {
+        "name": "Ogre Magi",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 3
+      },
+      {
+        "name": "Evil Lord",
+        "count": 1,
+        "level": 9,
+        "xp_each": 285,
+        "xp_total": 285,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 8
+      },
+      {
+        "name": "Hydra",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 13
+      },
+      {
+        "name": "Demolisher",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 18
+      }
+    ]
+  },
+  {
+    "wave": 2,
+    "target": 1260,
+    "total": 1260,
+    "units": [
+      {
+        "name": "Naga Siren",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 4
+      },
+      {
+        "name": "Naga Snapdragon",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 9
+      },
+      {
+        "name": "Gnoll Asssassin 2",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 14
+      },
+      {
+        "name": "Naga Summoner",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 19
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      }
+    ]
+  },
+  {
+    "wave": 3,
+    "target": 1386.0,
+    "total": 1390,
+    "units": [
+      {
+        "name": "Dalaran Mutant",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 5
+      },
+      {
+        "name": "Gnoll Overseer",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 4,
+        "new_xp_each": 85,
+        "new_xp_total": 85,
+        "slot": 10
+      },
+      {
+        "name": "Gnoll Asssassin 3",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 15
+      },
+      {
+        "name": "Meat wagon",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 20
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 24
+      }
+    ]
+  },
+  {
+    "wave": 4,
+    "target": 1455.3,
+    "total": 1450,
+    "units": [
+      {
+        "name": "Gnoll Asassin",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 4,
+        "new_xp_each": 85,
+        "new_xp_total": 425,
+        "slot": 6
+      },
+      {
+        "name": "Gnoll Warden",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 11
+      },
+      {
+        "name": "Gnoll Asssassin 4",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 4,
+        "new_xp_each": 85,
+        "new_xp_total": 85,
+        "slot": 16
+      },
+      {
+        "name": "Glaive thrower",
+        "count": 1,
+        "level": 6,
+        "xp_each": 150,
+        "xp_total": 150,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 21
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 5,
+    "target": 1528.065,
+    "total": 1525,
+    "units": [
+      {
+        "name": "Grunts",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 4,
+        "new_xp_each": 85,
+        "new_xp_total": 425,
+        "slot": 7
+      },
+      {
+        "name": "Gnoll Warden",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 12
+      },
+      {
+        "name": "Mountain Giant",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 6,
+        "new_xp_each": 150,
+        "new_xp_total": 150,
+        "slot": 17
+      },
+      {
+        "name": "Gnoll Asssassin 5",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 22
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 6,
+    "target": 1604.4682500000001,
+    "total": 1600,
+    "units": [
+      {
+        "name": "Ogre Magi",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 4,
+        "new_xp_each": 85,
+        "new_xp_total": 425,
+        "slot": 3
+      },
+      {
+        "name": "Evil Lord",
+        "count": 1,
+        "level": 9,
+        "xp_each": 285,
+        "xp_total": 285,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 8
+      },
+      {
+        "name": "Hydra",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 13
+      },
+      {
+        "name": "Demolisher",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 18
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 6,
+        "new_xp_each": 150,
+        "new_xp_total": 150,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 6,
+        "new_xp_each": 150,
+        "new_xp_total": 150,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 7,
+    "target": 1684.6916625000001,
+    "total": 1685,
+    "units": [
+      {
+        "name": "Naga Siren",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 4
+      },
+      {
+        "name": "Naga Snapdragon",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 9
+      },
+      {
+        "name": "Gnoll Asssassin 2",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 14
+      },
+      {
+        "name": "Naga Summoner",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 19
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 8,
+    "target": 1768.926245625,
+    "total": 1765,
+    "units": [
+      {
+        "name": "Dalaran Mutant",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 5
+      },
+      {
+        "name": "Gnoll Overseer",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 10
+      },
+      {
+        "name": "Gnoll Asssassin 3",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 15
+      },
+      {
+        "name": "Meat wagon",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 6,
+        "new_xp_each": 150,
+        "new_xp_total": 150,
+        "slot": 20
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 9,
+    "target": 1857.3725579062502,
+    "total": 1855,
+    "units": [
+      {
+        "name": "Gnoll Asassin",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 6
+      },
+      {
+        "name": "Gnoll Warden",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 11
+      },
+      {
+        "name": "Gnoll Asssassin 4",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 16
+      },
+      {
+        "name": "Glaive thrower",
+        "count": 1,
+        "level": 6,
+        "xp_each": 150,
+        "xp_total": 150,
+        "new_level": 7,
+        "new_xp_each": 190,
+        "new_xp_total": 190,
+        "slot": 21
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 25
+      }
+    ]
+  },
+  {
+    "wave": 10,
+    "target": 1950.2411858015628,
+    "total": 1950,
+    "units": [
+      {
+        "name": "Grunts",
+        "count": 5,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 575,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 575,
+        "slot": 7
+      },
+      {
+        "name": "Gnoll Warden",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 12
+      },
+      {
+        "name": "Mountain Giant",
+        "count": 1,
+        "level": 7,
+        "xp_each": 190,
+        "xp_total": 190,
+        "new_level": 8,
+        "new_xp_each": 235,
+        "new_xp_total": 235,
+        "slot": 17
+      },
+      {
+        "name": "Gnoll Asssassin 5",
+        "count": 1,
+        "level": 5,
+        "xp_each": 115,
+        "xp_total": 115,
+        "new_level": 5,
+        "new_xp_each": 115,
+        "new_xp_total": 115,
+        "slot": 22
+      },
+      {
+        "name": "Ogron",
+        "count": 1,
+        "level": 10,
+        "xp_each": 340,
+        "xp_total": 340,
+        "new_level": 10,
+        "new_xp_each": 340,
+        "new_xp_total": 340,
+        "slot": 23
+      },
+      {
+        "name": "Fire Turtle",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 24
+      },
+      {
+        "name": "Troll",
+        "count": 1,
+        "level": 8,
+        "xp_each": 235,
+        "xp_total": 235,
+        "new_level": 9,
+        "new_xp_each": 285,
+        "new_xp_total": 285,
+        "slot": 25
+      }
+    ]
+  }
+]

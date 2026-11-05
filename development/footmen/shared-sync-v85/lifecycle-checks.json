@@ -1,0 +1,16 @@
+{
+  "passed": 10,
+  "checks": [
+    "Sinkhole recast cleans prior location and all eight owned dummies",
+    "Sinkhole keeps dead units and structures unaffected",
+    "Ending one sinkhole leaves another player active",
+    "Slot-12 sinkhole expires at 60 ticks; pooled groups remain empty and reusable",
+    "tower timer cleanup is repeat-safe and pauses when idle",
+    "wall timer cleanup is repeat-safe and pauses when idle",
+    "Prison countdown cleans text, points and blockers once across slots 1 and 12",
+    "799x player/terrain/unit/ability/item/upgrade data unchanged",
+    "solo player/terrain/unit/ability/item/upgrade data unchanged",
+    "799X mode and KOTH implementations retained"
+  ],
+  "engine_playtested": false
+}

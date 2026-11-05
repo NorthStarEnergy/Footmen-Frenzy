@@ -1,0 +1,14 @@
+{
+  "donor": "C:\\Users\\User\\OneDrive\\Documents\\Warcraft III\\Maps\\Test\\FF799X_Rx_Stalker_v71.w3x",
+  "donor_sha256": "c76bb8429f1df124ffe743354bc81fb9ffc300cd406f64b1fd92823b5c900c88",
+  "ui_assets": [
+    "MiniFootsUI.toc",
+    "MiniFootsUI.fdf",
+    "war3mapImported\\templates.toc"
+  ],
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy (Solo)\\ffa-v11\\release\\Solo_Foots_8P_FFA_v11.w3x",
+  "sha256": "b5d4549efa9e3d9e12336416dfbd3bd2d8c51833b363c12cea0372fbc67f19a1",
+  "verified_entries": 1298,
+  "ui_functions": 27,
+  "live_test": "Pending"
+}

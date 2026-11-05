@@ -1,0 +1,330 @@
+[
+  {
+    "group": "Guardian",
+    "id": "H043",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNHeroBloodElfPrince.blp",
+    "source": "Warcraft SD",
+    "png": "H043.png"
+  },
+  {
+    "group": "Guardian",
+    "id": "A0DL",
+    "label": "Time Warp",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNGuardianTimeWarp.blp",
+    "source": "map",
+    "png": "A0DL.png"
+  },
+  {
+    "group": "Guardian",
+    "id": "AFg1",
+    "label": "Force Field",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNGuardianForceField.blp",
+    "source": "map",
+    "png": "AFg1.png"
+  },
+  {
+    "group": "Guardian",
+    "id": "ATfd",
+    "label": "Dark Passage",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNGuardianLantern.blp",
+    "source": "map",
+    "png": "ATfd.png"
+  },
+  {
+    "group": "Guardian",
+    "id": "AZd1",
+    "label": "Guardian Shield",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNGuardianGuardianShield.blp",
+    "source": "map",
+    "png": "AZd1.png"
+  },
+  {
+    "group": "Guldan",
+    "id": "HOr1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNGuldan.blp",
+    "source": "Warcraft SD",
+    "png": "HOr1.png"
+  },
+  {
+    "group": "Guldan",
+    "id": "AOz1",
+    "label": "Command: Move",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaMove.blp",
+    "source": "map",
+    "png": "AOz1.png"
+  },
+  {
+    "group": "Guldan",
+    "id": "AOz2",
+    "label": "Command: Attack",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaAttackRed.blp",
+    "source": "map",
+    "png": "AOz2.png"
+  },
+  {
+    "group": "Guldan",
+    "id": "AOz3",
+    "label": "Command: Protect",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaProtect.blp",
+    "source": "map",
+    "png": "AOz3.png"
+  },
+  {
+    "group": "Guldan",
+    "id": "AOz4",
+    "label": "Command: Shockwave",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxOriannaShockwave.blp",
+    "source": "map",
+    "png": "AOz4.png"
+  },
+  {
+    "group": "Gragas",
+    "id": "HGr1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFireBrewmaster.tga",
+    "source": "Warcraft SD",
+    "png": "HGr1.png"
+  },
+  {
+    "group": "Gragas",
+    "id": "AGr1",
+    "label": "Barrel Roll",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxGragasBarrel.blp",
+    "source": "map",
+    "png": "AGr1.png"
+  },
+  {
+    "group": "Gragas",
+    "id": "AGr2",
+    "label": "Drunken Fortitude",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxGragasFortitude.blp",
+    "source": "map",
+    "png": "AGr2.png"
+  },
+  {
+    "group": "Gragas",
+    "id": "AGr3",
+    "label": "Body Slam",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxGragasSlam.blp",
+    "source": "map",
+    "png": "AGr3.png"
+  },
+  {
+    "group": "Gragas",
+    "id": "AGr4",
+    "label": "Explosive Cask",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNRxGragasCask.blp",
+    "source": "map",
+    "png": "AGr4.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "HMu1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNAbomination.blp",
+    "source": "Warcraft SD",
+    "png": "HMu1.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "AMu2",
+    "label": "Poison Gas",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNPlagueCloud.blp",
+    "source": "Warcraft SD",
+    "png": "AMu2.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "AMu1",
+    "label": "Infected Cleaver",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNMundoCleaver.blp",
+    "source": "map",
+    "png": "AMu1.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "AMu3",
+    "label": "Maul",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNMundoMaul.blp",
+    "source": "map",
+    "png": "AMu3.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "AMu4",
+    "label": "Undying",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNMundoUndying.blp",
+    "source": "map",
+    "png": "AMu4.png"
+  },
+  {
+    "group": "Mundo",
+    "id": "AMup",
+    "label": "Adrenaline Rush",
+    "icon": "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerate.blp",
+    "source": "Warcraft SD",
+    "png": "AMup.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "HTf1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp",
+    "source": "Warcraft SD",
+    "png": "HTf1.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATf1",
+    "label": "Wild Cards",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFOrbFork.blp",
+    "source": "map",
+    "png": "ATf1.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATf2",
+    "label": "Pick a Card",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFOrbChoice.blp",
+    "source": "map",
+    "png": "ATf2.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATf4",
+    "label": "Lock Red Card",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFOrbRed.blp",
+    "source": "map",
+    "png": "ATf4.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATf5",
+    "label": "Lock Gold Card",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFOrbGold.blp",
+    "source": "map",
+    "png": "ATf5.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATf3",
+    "label": "Lock Green Card",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFOrbGreen.blp",
+    "source": "map",
+    "png": "ATf3.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATfg",
+    "label": "Loaded Dice",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNFFLoadedDice.blp",
+    "source": "map",
+    "png": "ATfg.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATfb",
+    "label": "Destiny",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNDispelMagic.blp",
+    "source": "Warcraft SD",
+    "png": "ATfb.png"
+  },
+  {
+    "group": "Twisted-Fate",
+    "id": "ATfc",
+    "label": "Gate",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNSentinel.blp",
+    "source": "Warcraft SD",
+    "png": "ATfc.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "HVg1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNVeigarHero.blp",
+    "source": "map",
+    "png": "HVg1.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "AVgq",
+    "label": "Baleful Strike",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNVeigarQ.blp",
+    "source": "map",
+    "png": "AVgq.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "AVgw",
+    "label": "Dark Matter",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNVeigarW.blp",
+    "source": "map",
+    "png": "AVgw.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "AVge",
+    "label": "Event Horizon",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNVeigarE.blp",
+    "source": "map",
+    "png": "AVge.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "AVgr",
+    "label": "Primordial Burst",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNVeigarR.blp",
+    "source": "map",
+    "png": "AVgr.png"
+  },
+  {
+    "group": "Veigar",
+    "id": "AVgp",
+    "label": "Equilibrium",
+    "icon": "ReplaceableTextures\\PassiveButtons\\PASVeigarHero.blp",
+    "source": "map",
+    "png": "AVgp.png"
+  },
+  {
+    "group": "Demon-Knight",
+    "id": "HDk1",
+    "label": "Hero portrait",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp",
+    "source": "Warcraft SD",
+    "png": "HDk1.png"
+  },
+  {
+    "group": "Demon-Knight",
+    "id": "ADk1",
+    "label": "Reaping Axe",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "source": "Warcraft SD",
+    "png": "ADk1.png"
+  },
+  {
+    "group": "Demon-Knight",
+    "id": "ADk2",
+    "label": "Pulverize",
+    "icon": "ReplaceableTextures\\PassiveButtons\\PASBTNPulverize.blp",
+    "source": "Unresolved icon path",
+    "png": "ADk2.png"
+  },
+  {
+    "group": "Demon-Knight",
+    "id": "ADk3",
+    "label": "Blood Tithe",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp",
+    "source": "Warcraft SD",
+    "png": "ADk3.png"
+  },
+  {
+    "group": "Demon-Knight",
+    "id": "ADk4",
+    "label": "Demon Ascension",
+    "icon": "ReplaceableTextures\\CommandButtons\\BTNDeathCoil.blp",
+    "source": "Warcraft SD",
+    "png": "ADk4.png"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\orianna-guldan\\release\\FF799X_Rx_OriannaGuldan_v34.w3x",
+  "sha256": "7389d29dc66db66479a4d2cdc09d6cb0f30de37cbedd878125ca8117f1c60b28",
+  "model_author": "Tauer",
+  "model_source": "https://www.hiveworkshop.com/threads/guldan.295598/",
+  "voice": "PitLord",
+  "animations": {
+    "Z": "Spell Throw (12)",
+    "X": "Spell One (10)",
+    "C": "Spell Throw (12)",
+    "V": "Spell Two (11)"
+  },
+  "changed_functions": [
+    "OM_WindupFX",
+    "OM_OnCastAnimation"
+  ],
+  "preserved_archive_entries": 1347,
+  "texture_dependencies": [
+    "Textures\\Red_Glow3.blp",
+    "Guldan.blp",
+    "Textures\\Green_Glow3.blp",
+    "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+    "Textures\\Clouds8x8Black.blp"
+  ],
+  "portrait": "Embedded camera and talking sequences",
+  "compiler": "passed",
+  "live_test": "Pending Warcraft III playtest"
+}

@@ -1,0 +1,15 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\spawn-level-v75\\release\\FF799X_Rx_Spawn_Levels_v75_TEST.w3x",
+  "sha256": "7e2f6ed235b7c03a8b939dc056be92bf66def2280da84b107104b84e225ed970",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-range-v74\\release\\FF799X_Rx_Veigar_Range_v74_TEST.w3x",
+  "changed_functions": [
+    "FFGS_ApplyUnit"
+  ],
+  "spawn_boundary_cases": 510,
+  "unrelated_entries_preserved": 1402,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "post7_xp_percent": 70,
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

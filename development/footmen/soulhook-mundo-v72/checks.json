@@ -1,0 +1,25 @@
+{
+  "passed": 19,
+  "checks": [
+    "rank 1 hits once, pulls, releases all owned state",
+    "rank 2 hits once, pulls, releases all owned state",
+    "rank 3 hits once, pulls, releases all owned state",
+    "rank 4 hits once, pulls, releases all owned state",
+    "rank 5 hits once, pulls, releases all owned state",
+    "rank 6 hits once, pulls, releases all owned state",
+    "turnaround reached",
+    "returning head does not catch newly arrived target",
+    "swept corridor catches target between sampled positions",
+    "swept corridor rejects target beyond 150",
+    "overlapping casts each deal their rank damage and apply stun",
+    "second hook replaces existing hook drag",
+    "hook replaces active axe drag",
+    "returning axe replaces active hook drag",
+    "new pull alone moves victim once per tick",
+    "collision snap cancels drag and restores position",
+    "caster death releases claims and effects",
+    "caster death during damage callback releases resources",
+    "100 sequential casts release all states and resources"
+  ],
+  "engine_tested": false
+}

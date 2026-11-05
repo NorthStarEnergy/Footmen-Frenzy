@@ -1,0 +1,16 @@
+[
+  {
+    "variant": "799x",
+    "path": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Test\\FF799X_Rx_Shared_Fixes_v85_TEST.w3x",
+    "sha256": "553ECC4C667D5639F8EB05864D10DC624BF42CBE332FBF780A7A8483FD7F7DAC",
+    "newest_in_folder": true,
+    "previous_maps_preserved": true
+  },
+  {
+    "variant": "solo",
+    "path": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Solo Foots\\Solo Tests\\Solo_Foots_v1.8_4P_SHARED_FIXES_UPDATE09.w3x",
+    "sha256": "3C993C529D0E3CE26EEA11A3C5CF405526CD2ACB3518EB14745470CB1B08FA66",
+    "newest_in_folder": true,
+    "previous_maps_preserved": true
+  }
+]

@@ -1,0 +1,26 @@
+# Stalker recreation for Footmen Frenzy — v71 test build
+
+Open `release/FF799X_Rx_Stalker_v71.w3x`. In a solo game or Debug mode, type **-stalkers** (or **-stalker**). This creates eight Stalkers and selects them. Select the units you want, press **B**, and click to Blink the selected squad together. Repeating the chat command selects surviving owned Stalkers rather than adding another squad.
+
+Built additively on the local **Lux Final Spark v70** release, which includes combined v68 / completed Veigar / Pub XP v67. This is a separate test map; existing release files and the production roster are preserved. New unit ID **nStk**; Blink **AStB**; shield passive **AStS**. The unit is available in Object Editor for later production integration. No existing troop has been replaced and no automatic troop production has been changed.
+
+| Feature | Implementation |
+| --- | --- |
+| Central weapon | Blue plasma missile from the model's actual central glow: model coordinates `(12, 0, 69)`, launch fields X=0, Y=12, Z=69 at scale 1. Zero projectile arc; homing; 1800 speed. |
+| Particle Disruptor | 13 damage; +5 before mitigation against Warcraft heavy/fortified armor and other Stalkers. Ground and air; 600 range; 1.34 second attack interval; 0.10 second attack point. |
+| Durability | 80 life, 80 shields, 1 Warcraft armor. Mechanical / heavy armor. No passive health regeneration. |
+| Shields | Mana bar represents shields. Incoming positive damage is absorbed after Warcraft's mitigation and previously registered map shields; overflow reaches health. Regenerates 2/second after 7 seconds without positive incoming damage. No mana cost for Blink. |
+| Group Blink | Up to 800 units, 7 seconds per moved unit. Selected, owned, nearby Stalkers within 1200 of the casting unit share its translation. Unselected units and allies stay put. |
+| Landing | Requires current shared vision; walkable terrain, item-based destructible/building pathing and unit collision checks. Searches within 96 units of an obstructed formation slot while enforcing the 800 maximum. If no slot works, that unit stays and spends no cooldown. Engine placement displacement rolls back. |
+| Restrictions | Dead, hidden/transported, illusion, paused, stunned, ensnared, silenced, and cooling-down units are excluded. The originating caster participates even if selection changes before the spell event. |
+| Integration | Calls the existing lantern/tether teleport notification. Gameplay uses synchronized selection events and no local-player branching. WCT and compiled map source are synchronized for editor saves. |
+
+The model was downloaded from [Fingolfin's Stalker](https://www.hiveworkshop.com/threads/stalker.171022/). Author credit is retained here and embedded in the map maintenance file and unit tooltip. It is Fingolfin's custom interpretation of the early SC2 unit, so mesh proportions and animations differ from Blizzard's final SC2 asset.
+
+Model inspection found classic MDX format 800, nine geosets, team color, a built-in portrait camera, eight original animation sequences, no attachment points, and 53 invalid per-sequence geoset bounds. The patched version repairs those bounds, adds origin/chest/weapon/overhead attachments plus a body selection sphere, removes the unfinished Spell sequence, and repaths its custom skin. The obsolete `Textures\Clouds8x8.blp` smoke reference was replaced with the installed game's `Clouds8x8Grey` atlas. Both complete death sequences are retained; unit death is configured **can't raise, does not decay**, with 5.7 seconds for the embedded death/decay animation. Walk, idle and attack geometry remain intact. The command icon is rendered from the model; the imported projectile is an authored blue plasma mesh. `Stalker-model-preview.png` is an offline model rendering, not a game capture.
+
+This recreates the combat and Blink behavior within Warcraft's systems. Warcraft armor uses percentage mitigation; heavy/fortified is the explicit local substitute for SC2's Armored attribute. Movement, ranges and cooldowns are mapped to this map's scale. The mana-bar shield display can interact with Warcraft mana effects. SC2 voice lines, exact SC2 weapon sounds, official icons, tech tree, and weapon/armor research are not included; the unit currently uses Warcraft selection sounds and native Blink/shield effects. These are material differences from a literal SC2 engine port.
+
+Validation: both runtime pjass and authoritative editor JassHelper/pjass compilation; 51 checks executing the actual translated JASS; 1,000 randomized Blink cases; object field/type and set-framing checks against Warcraft metadata; preservation of all existing unit/ability records; native texture/effect dependency lookup in the installed game; MDX/BLP round trips; full archive comparison preserving unrelated members. **Warcraft visual, native targeting, multiplayer and balance playtests have not been performed.**
+
+Rebuild with the bundled Python/Node runtimes, in order: `prepare.py`, `assets.cjs`, `preview.cjs`, `preview.py`, `validate_assets.cjs`, `object_checks.py`, `native_checks.py`, `checks.py`, `compile.py`, `pack.py`. The existing 32-bit compiler requires execution outside the sandbox on this machine. Output remains inside this project and `Transfer/Stalker_v71`.

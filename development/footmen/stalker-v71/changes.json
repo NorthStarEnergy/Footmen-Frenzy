@@ -1,0 +1,36 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\lux-final-spark\\release\\FF799X_Rx_Lux_FinalSpark_v70.w3x",
+  "changed_functions": [
+    "InitTrig_FF_Runtime"
+  ],
+  "new_functions": [
+    "ST_Alive",
+    "ST_Bonus",
+    "ST_Cast",
+    "ST_Damage",
+    "ST_Enter",
+    "ST_FindLanding",
+    "ST_Init",
+    "ST_Move",
+    "ST_Ready",
+    "ST_Register",
+    "ST_Selection",
+    "ST_Space",
+    "ST_Summon",
+    "ST_Tick"
+  ],
+  "unit": "nStk",
+  "abilities": [
+    "AStB",
+    "AStS"
+  ],
+  "runtime_editor_synchronized": true,
+  "imports": [
+    "Units\\Stalker\\Stalker.mdx",
+    "Units\\Stalker\\Stalker.blp",
+    "Units\\Stalker\\Disruptor.mdx",
+    "Units\\Stalker\\Plasma.blp",
+    "Units\\Stalker\\BTNStalker.blp",
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStalker.blp"
+  ]
+}

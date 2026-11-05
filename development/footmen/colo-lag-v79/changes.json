@@ -1,0 +1,21 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\level10-catchup-v78\\release\\FF799X_Rx_Level10_Catchup_v78_TEST.w3x",
+  "base_sha256": "0c09777e1102b6733fa93dff0dacf74790a9f394bb053a64903aefd8ab5d0ad7",
+  "changed_functions": [
+    "P67_Refresh",
+    "Trig_colossal_spawn_Actions"
+  ],
+  "added_functions": [
+    "P79_Extra",
+    "P79_FieldAhead",
+    "P79_FractionalLevel",
+    "P79_LevelXP",
+    "P79_NextTarget",
+    "P79_OnDeath",
+    "P79_Pay",
+    "P79_Refresh",
+    "P79_Tag",
+    "P79_TeamPresent",
+    "P79_TeamReached"
+  ]
+}

@@ -1,0 +1,13 @@
+# UI + Mundo combined map with Stalker movement/Blink fixes
+
+Open `release/FF799X_Rx_UI_Mundo_Stalker_Fixed_Test.w3x`. In solo play or Debug mode type **-stalkers**, select the squad, press **B**, and click. Use short Blinks across the squad's previous positions as well as full-range Blinks when testing.
+
+This is built directly on the exact user-selected `mundo-ui-merge/release/FF799X_Rx_UI_Repair_Mundo_Combined_Test.w3x`. It retains the repaired UI labels/icons, complete Mundo health kit, cleaver wound, 10-second Disease Cloud ramp, and the inherited Lux, Veigar and Stalker assets. The selected original map remains untouched.
+
+The Stalker patch changes three existing functions and adds one item-enumeration helper. Group Blink moves the leading edge first, so selected squad members can use slots vacated by those ahead. Validated landings use `SetUnitX/Y`, avoiding the native placement search and implicit Stop order, and the previous two-unit landing rollback is removed. The walkability probe tolerates small item-placement adjustments and temporarily hides/restores visible loose loot, which should not act as a wall for a walking unit. Actual unit collision is used for blocking checks. Stalker collision is reduced from 32 to 16 to ease squad crowding; that is the only changed object field. Existing terrain/fog/blocker checks, individual cooldowns, readiness filters, shields and lantern notification remain.
+
+These address reproduced script failure paths and crowding. They do not establish the cause of every possible in-engine walking failure. No movement speed, model, ability definition, WTS label, icon or Mundo function is changed. All unrelated map payloads, existing function bodies and object records are compared against the chosen baseline. Runtime and authoritative World Editor source are synchronized.
+
+Validation includes runtime pjass and editor JassHelper/pjass compilation, 54 behavioral checks executing translated JASS, exact eight-unit formations across 36 short/long directional Blink cases, 1,000 randomized range/cleanup cases, native placement/Stop avoidance, loot visibility restoration, and full archive preservation checks. **In-game movement, targeting, multiplayer and visual playtests remain pending.** No installation or deployment was performed.
+
+Rebuild with the bundled Python runtime: `prepare.py`, `checks.py`, `compile.py`, `pack.py`. The existing local 32-bit compilers require execution outside the sandbox. `changes.json` pins the input hash and narrow changes; `verification.json` records the final release hash and preservation checks. The release, notes and source are also delivered under `Transfer/UI_Mundo_Stalker_Fixed`.

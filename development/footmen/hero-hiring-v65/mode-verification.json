@@ -1,0 +1,18 @@
+{
+  "all_12_player_slots": "covered",
+  "ap_taverns": 9,
+  "ap_max_buyer_distance": 172.32527382830412,
+  "ap_activation_radius": 800.0,
+  "sd_main_and_carry_taverns": "covered for each team; no cross-team radius access",
+  "sd_activation_radius": 200.0,
+  "mode_routes": [
+    "Pub -> SD",
+    "Pro -> SD",
+    "Custom 4K -> SD",
+    "Private -> AP/SD/AR",
+    "Debug -> AP",
+    "AFK fallback -> Pub/SD"
+  ],
+  "startup_dialogs_and_original_mode_functions": "byte-equivalent function bodies",
+  "engine_playtest": "pending"
+}

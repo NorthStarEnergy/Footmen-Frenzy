@@ -1,0 +1,18 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\pub-xp-v67\\release\\FF799X_Rx_Pub_XP_v67.w3x",
+  "sha256": "f51fd7d74d2977d8f20c005c79a7ae14678c717167f63c8983e1503cba91150f",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\taverns-v66\\release\\FF799X_Rx_Team_Taverns_v66.w3x",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "war3map.j",
+    "war3map.wct",
+    "war3map.wts"
+  ],
+  "preserved_payloads": 1357,
+  "runtime_pjass": "passed",
+  "editor_jasshelper_and_pjass": "passed",
+  "source_behavior_checks": "passed",
+  "automatic_xp_or_level_grants_added": false,
+  "engine_and_balance_playtest": "pending",
+  "installed_or_deployed": false
+}

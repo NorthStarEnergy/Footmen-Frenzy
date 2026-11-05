@@ -1,0 +1,38 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Guldan_v35.w3x",
+  "changes": [
+    [
+      "war3map.w3u",
+      "unam",
+      "Orianna",
+      "Gul'dan"
+    ],
+    [
+      "war3map.w3u",
+      "upro",
+      "The Ball Controller",
+      "The Warlock"
+    ],
+    [
+      "war3map.w3u",
+      "uawt",
+      "Revive |cffffcc00L|rady of Clockwork",
+      "Revive Gul'dan"
+    ],
+    [
+      "war3map.w3u",
+      "utip",
+      "Hire Orianna",
+      "Hire Gul'dan"
+    ],
+    [
+      "war3map.w3u",
+      "utpr",
+      "Revive |cffffcc00L|rady of Clockwork",
+      "Revive Gul'dan"
+    ]
+  ],
+  "preserved_archive_entries": 1352,
+  "sha256": "b84600a7296e54aca9f28b5936092383f5c0193fc5f997be40e8645eed718e76",
+  "verification": "Archive roundtrip passed; gameplay script unchanged"
+}

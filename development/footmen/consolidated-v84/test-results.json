@@ -1,0 +1,37 @@
+[
+  {
+    "suite": "veigar",
+    "exit_code": 0,
+    "output": "34 checks passed\n"
+  },
+  {
+    "suite": "soulhook",
+    "exit_code": 0,
+    "output": "19 Soul Hook behavioral checks passed\n"
+  },
+  {
+    "suite": "mundo-cloud",
+    "exit_code": 0,
+    "output": "65 cloud ramp behavior/model/object checks passed.\n"
+  },
+  {
+    "suite": "mundo-cleaver",
+    "exit_code": 0,
+    "output": "40 behavior/object checks passed.\n"
+  },
+  {
+    "suite": "mundo-resources",
+    "exit_code": 0,
+    "output": "10 resource checks passed\n"
+  },
+  {
+    "suite": "stalker",
+    "exit_code": 0,
+    "output": "54 behavior checks and 1000 randomized casts passed.\n"
+  },
+  {
+    "suite": "rewards",
+    "exit_code": 0,
+    "output": "{\"assertions\": 60, \"curve_cases\": 18981, \"engine_playtested\": false}\n"
+  }
+]

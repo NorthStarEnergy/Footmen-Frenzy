@@ -1,0 +1,982 @@
+{
+  "sourceMap": "FF799X_Rx_Consolidated_Mundo_v40.w3x",
+  "sourceSha256": "1d6928cc671211dccae1eb6282e4bb01e79a17e630326d87fb42d89f94a7426b",
+  "outputMap": "FF799X_Rx_ItemBalance_v41.w3x",
+  "outputSha256": "0c3ccfdee6fda99009501a4344d8e99624fad831a0630c97f283673925847e0e",
+  "prices": [
+    {
+      "id": "I00B",
+      "name": "Fist of the Titans Recipe",
+      "before": 1650,
+      "after": 1875,
+      "delta": 225
+    },
+    {
+      "id": "I00D",
+      "name": "Shield of the Gods",
+      "before": 600,
+      "after": 650,
+      "delta": 50
+    },
+    {
+      "id": "I00E",
+      "name": "Maul of Corruption",
+      "before": 600,
+      "after": 700,
+      "delta": 100
+    },
+    {
+      "id": "I00F",
+      "name": "Amulet of Spell Shield",
+      "before": 650,
+      "after": 700,
+      "delta": 50
+    },
+    {
+      "id": "I00K",
+      "name": "Frosty\u00b4s Ice Claws Recipe",
+      "before": 950,
+      "after": 1400,
+      "delta": 450
+    },
+    {
+      "id": "I00L",
+      "name": "Heart of the Holy Maiden Recipe",
+      "before": 1500,
+      "after": 1725,
+      "delta": 225
+    },
+    {
+      "id": "I00M",
+      "name": "Chobos' Light Speed Shoes Recipe",
+      "before": 1350,
+      "after": 1500,
+      "delta": 150
+    },
+    {
+      "id": "I00T",
+      "name": "Night Terror Armor",
+      "before": 2750,
+      "after": 2825,
+      "delta": 75
+    },
+    {
+      "id": "I00U",
+      "name": "Chobos' Light Speed Shoes",
+      "before": 2850,
+      "after": 3100,
+      "delta": 250
+    },
+    {
+      "id": "I00V",
+      "name": "Heart of the Holy Maiden",
+      "before": 2300,
+      "after": 2550,
+      "delta": 250
+    },
+    {
+      "id": "I00W",
+      "name": "Frosty\u00b4s Ice Claws",
+      "before": 4000,
+      "after": 4500,
+      "delta": 500
+    },
+    {
+      "id": "I00X",
+      "name": "Fist of the Titans",
+      "before": 2500,
+      "after": 2750,
+      "delta": 250
+    },
+    {
+      "id": "I010",
+      "name": "Staff of Sanctuary",
+      "before": 3000,
+      "after": 3050,
+      "delta": 50
+    },
+    {
+      "id": "I01H",
+      "name": "Demogorgon's Scepter",
+      "before": 2750,
+      "after": 3275,
+      "delta": 525
+    },
+    {
+      "id": "I01I",
+      "name": "Demogorgon's Scepter Recipe",
+      "before": 1000,
+      "after": 1500,
+      "delta": 500
+    },
+    {
+      "id": "I01R",
+      "name": "Chaos Cloak",
+      "before": 3500,
+      "after": 3850,
+      "delta": 350
+    },
+    {
+      "id": "I01S",
+      "name": "Chaos Cloak Recipe",
+      "before": 550,
+      "after": 700,
+      "delta": 150
+    },
+    {
+      "id": "I02M",
+      "name": "Nature's Blessing",
+      "before": 2100,
+      "after": 2150,
+      "delta": 50
+    },
+    {
+      "id": "I03C",
+      "name": "Gloves of Haste",
+      "before": 250,
+      "after": 275,
+      "delta": 25
+    },
+    {
+      "id": "I04A",
+      "name": "Amulet of the Wind",
+      "before": 4000,
+      "after": 4500,
+      "delta": 500
+    },
+    {
+      "id": "I04B",
+      "name": "Amulet of the Wind Recipe",
+      "before": 750,
+      "after": 1000,
+      "delta": 250
+    },
+    {
+      "id": "bgst",
+      "name": "Belt of Giant Strength +10",
+      "before": 250,
+      "after": 275,
+      "delta": 25
+    },
+    {
+      "id": "clfm",
+      "name": "Cloak of Flames",
+      "before": 800,
+      "after": 900,
+      "delta": 100
+    },
+    {
+      "id": "cnob",
+      "name": "Circlet of Nobility",
+      "before": 3250,
+      "after": 3500,
+      "delta": 250
+    },
+    {
+      "id": "evtl",
+      "name": "Talisman of Evasion",
+      "before": 350,
+      "after": 400,
+      "delta": 50
+    },
+    {
+      "id": "hval",
+      "name": "Soldier's Mask",
+      "before": 350,
+      "after": 425,
+      "delta": 75
+    },
+    {
+      "id": "rag1",
+      "name": "Slippers of Agility +25",
+      "before": 2750,
+      "after": 3000,
+      "delta": 250
+    },
+    {
+      "id": "rat6",
+      "name": "Forked Fury",
+      "before": 1500,
+      "after": 1550,
+      "delta": 50
+    },
+    {
+      "id": "ratf",
+      "name": "Claws of Attack +25",
+      "before": 300,
+      "after": 325,
+      "delta": 25
+    },
+    {
+      "id": "rde3",
+      "name": "Ring of Protection +5",
+      "before": 200,
+      "after": 225,
+      "delta": 25
+    },
+    {
+      "id": "rst1",
+      "name": "Gauntlets of Ogre Strength +30",
+      "before": 2000,
+      "after": 2250,
+      "delta": 250
+    },
+    {
+      "id": "stwa",
+      "name": "Tusk of the Pitlord",
+      "before": 800,
+      "after": 900,
+      "delta": 100
+    }
+  ],
+  "frosty": {
+    "damageBefore": 160,
+    "damageAfter": 150,
+    "lifestealBefore": 60,
+    "lifestealAfter": 50,
+    "newLifestealAbility": "AFv1",
+    "sharedOriginalPreserved": true
+  },
+  "changedArchiveMembers": [
+    "war3map.w3t",
+    "war3mapSkin.w3t",
+    "war3map.w3a",
+    "war3mapSkin.w3a"
+  ],
+  "unchangedArchiveMembers": 1333,
+  "edits": [
+    {
+      "file": "war3map.w3t",
+      "id": "rde3",
+      "field": "igol",
+      "level": null,
+      "before": 200,
+      "after": 225
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "bgst",
+      "field": "igol",
+      "level": null,
+      "before": 250,
+      "after": 275
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "ratf",
+      "field": "igol",
+      "level": null,
+      "before": 300,
+      "after": 325
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I03C",
+      "field": "igol",
+      "level": null,
+      "before": 250,
+      "after": 275
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "hval",
+      "field": "igol",
+      "level": null,
+      "before": 350,
+      "after": 425
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "evtl",
+      "field": "igol",
+      "level": null,
+      "before": 350,
+      "after": 400
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00F",
+      "field": "igol",
+      "level": null,
+      "before": 650,
+      "after": 700
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "cnob",
+      "field": "igol",
+      "level": null,
+      "before": 3250,
+      "after": 3500
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I04B",
+      "field": "igol",
+      "level": null,
+      "before": 750,
+      "after": 1000
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "rag1",
+      "field": "igol",
+      "level": null,
+      "before": 2750,
+      "after": 3000
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00D",
+      "field": "igol",
+      "level": null,
+      "before": 600,
+      "after": 650
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "stwa",
+      "field": "igol",
+      "level": null,
+      "before": 800,
+      "after": 900
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "clfm",
+      "field": "igol",
+      "level": null,
+      "before": 800,
+      "after": 900
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I01S",
+      "field": "igol",
+      "level": null,
+      "before": 550,
+      "after": 700
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "rst1",
+      "field": "igol",
+      "level": null,
+      "before": 2000,
+      "after": 2250
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00E",
+      "field": "igol",
+      "level": null,
+      "before": 600,
+      "after": 700
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I01I",
+      "field": "igol",
+      "level": null,
+      "before": 1000,
+      "after": 1500
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I01R",
+      "field": "igol",
+      "level": null,
+      "before": 3500,
+      "after": 3850
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I04A",
+      "field": "igol",
+      "level": null,
+      "before": 4000,
+      "after": 4500
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "rat6",
+      "field": "igol",
+      "level": null,
+      "before": 1500,
+      "after": 1550
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00K",
+      "field": "igol",
+      "level": null,
+      "before": 950,
+      "after": 1400
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00W",
+      "field": "igol",
+      "level": null,
+      "before": 4000,
+      "after": 4500
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00T",
+      "field": "igol",
+      "level": null,
+      "before": 2750,
+      "after": 2825
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I010",
+      "field": "igol",
+      "level": null,
+      "before": 3000,
+      "after": 3050
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I01H",
+      "field": "igol",
+      "level": null,
+      "before": 2750,
+      "after": 3275
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I02M",
+      "field": "igol",
+      "level": null,
+      "before": 2100,
+      "after": 2150
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00M",
+      "field": "igol",
+      "level": null,
+      "before": 1350,
+      "after": 1500
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00U",
+      "field": "igol",
+      "level": null,
+      "before": 2850,
+      "after": 3100
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00L",
+      "field": "igol",
+      "level": null,
+      "before": 1500,
+      "after": 1725
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00V",
+      "field": "igol",
+      "level": null,
+      "before": 2300,
+      "after": 2550
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00B",
+      "field": "igol",
+      "level": null,
+      "before": 1650,
+      "after": 1875
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00X",
+      "field": "igol",
+      "level": null,
+      "before": 2500,
+      "after": 2750
+    },
+    {
+      "file": "war3map.w3a",
+      "id": "AFv1",
+      "field": "Uav1",
+      "level": 1,
+      "before": 0.6000000238418579,
+      "after": 0.5
+    },
+    {
+      "file": "war3map.w3a",
+      "id": "A0KF",
+      "field": "Iatt",
+      "level": 1,
+      "before": 150,
+      "after": 140
+    },
+    {
+      "file": "war3map.w3t",
+      "id": "I00W",
+      "field": "iabi",
+      "level": null,
+      "before": "AIsx,A0B9,A0KF,AIob",
+      "after": "AIsx,AFv1,A0KF,AIob"
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01S",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nRequires: Gauntlets of Ogre Strength +30, Cloak of Flames.|nRecipe: 550 gold. Total acquisition cost: 3350 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nRequires: Gauntlets of Ogre Strength +30, Cloak of Flames.|nRecipe: 700 gold. Total acquisition cost: 3850 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01S",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nRequires: Gauntlets of Ogre Strength +30, Cloak of Flames.|nRecipe: 550 gold. Total acquisition cost: 3350 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nRequires: Gauntlets of Ogre Strength +30, Cloak of Flames.|nRecipe: 700 gold. Total acquisition cost: 3850 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01R",
+      "field": "utub",
+      "level": null,
+      "before": "+30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.",
+      "after": "+30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nTotal acquisition cost: 3850 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01R",
+      "field": "ides",
+      "level": null,
+      "before": "+30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.",
+      "after": "+30 strength, +10 armor, +15 health regeneration per second. Permanent Immolation deals 6 damage every 0.1 seconds (60 per second) to enemy/neutral ground units within 275.|n|nTotal acquisition cost: 3850 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I04B",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nRequires: Circlet of Nobility.|nRecipe: 750 gold. Total acquisition cost: 4000 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Blademaster, Shere-Khan, Jaood, Shadow, Soviet Sniper & Crazy Cat|r",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nRequires: Circlet of Nobility.|nRecipe: 1000 gold. Total acquisition cost: 4500 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Blademaster, Shere-Khan, Jaood, Shadow, Soviet Sniper & Crazy Cat|r"
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I04B",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nRequires: Circlet of Nobility.|nRecipe: 750 gold. Total acquisition cost: 4000 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Blademaster, Shere-Khan, Jaood, Shadow, Soviet Sniper & Crazy Cat|r",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nRequires: Circlet of Nobility.|nRecipe: 1000 gold. Total acquisition cost: 4500 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Blademaster, Shere-Khan, Jaood, Shadow, Soviet Sniper & Crazy Cat|r"
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I04A",
+      "field": "utub",
+      "level": null,
+      "before": "+30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nCannot be carried by: Shere-Khan (O00X), Blademaster (O003), Jaood (E00A), The Craziest Cat Ever (E00U), Shadow (E00O), Soviet Sniper (H036).",
+      "after": "+30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nCannot be carried by: Shere-Khan (O00X), Blademaster (O003), Jaood (E00A), The Craziest Cat Ever (E00U), Shadow (E00O), Soviet Sniper (H036).|n|nTotal acquisition cost: 4500 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I04A",
+      "field": "ides",
+      "level": null,
+      "before": "+30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nCannot be carried by: Shere-Khan (O00X), Blademaster (O003), Jaood (E00A), The Craziest Cat Ever (E00U), Shadow (E00O), Soviet Sniper (H036).",
+      "after": "+30 to all attributes, +20% attack speed, +250 health, +200 mana, +80 movement speed. Wind Walk lasts 20 seconds, grants +10% movement speed and 50 backstab damage, has a 0.6-second transition and 45-second cooldown, and costs no mana.|n|nCannot be carried by: Shere-Khan (O00X), Blademaster (O003), Jaood (E00A), The Craziest Cat Ever (E00U), Shadow (E00O), Soviet Sniper (H036).|n|nTotal acquisition cost: 4500 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02U",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nRequires: Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 1500 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nRequires: Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 1550 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02U",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nRequires: Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 1500 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nRequires: Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 1550 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "rat6",
+      "field": "utub",
+      "level": null,
+      "before": "+20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nScripted effects: On an attack-start event by a hero carrying Forked Fury against a nonstructure, non-magic-immune target, rolls 1..16; 3,7,12,15 trigger (25%). Requires A0HZ cooldown expired. Proc casts ACfl forked lightning for 250 damage to up to 8 targets; 900 cast range, 945 maximum length, 400 maximum spread, 165 area field. Starts a 10-second A0HZ cooldown.|nTrigger uses EVENT_PLAYER_UNIT_ATTACKED, so proc does not require attack damage to land.",
+      "after": "+20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nScripted effects: On an attack-start event by a hero carrying Forked Fury against a nonstructure, non-magic-immune target, rolls 1..16; 3,7,12,15 trigger (25%). Requires A0HZ cooldown expired. Proc casts ACfl forked lightning for 250 damage to up to 8 targets; 900 cast range, 945 maximum length, 400 maximum spread, 165 area field. Starts a 10-second A0HZ cooldown.|nTrigger uses EVENT_PLAYER_UNIT_ATTACKED, so proc does not require attack damage to land.|n|nTotal acquisition cost: 1550 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "rat6",
+      "field": "ides",
+      "level": null,
+      "before": "+20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nScripted effects: On an attack-start event by a hero carrying Forked Fury against a nonstructure, non-magic-immune target, rolls 1..16; 3,7,12,15 trigger (25%). Requires A0HZ cooldown expired. Proc casts ACfl forked lightning for 250 damage to up to 8 targets; 900 cast range, 945 maximum length, 400 maximum spread, 165 area field. Starts a 10-second A0HZ cooldown.|nTrigger uses EVENT_PLAYER_UNIT_ATTACKED, so proc does not require attack damage to land.",
+      "after": "+20% attack speed. On each hero attack start against a non-building, non-magic-immune target: 25% chance to cast Forked Lightning for 250 damage on up to 8 targets; 10-second triggered cooldown. Trigger creates a dummy at the player hero; cast range 900. This trigger does not wait for an attack to hit.|n|nScripted effects: On an attack-start event by a hero carrying Forked Fury against a nonstructure, non-magic-immune target, rolls 1..16; 3,7,12,15 trigger (25%). Requires A0HZ cooldown expired. Proc casts ACfl forked lightning for 250 damage to up to 8 targets; 900 cast range, 945 maximum length, 400 maximum spread, 165 area field. Starts a 10-second A0HZ cooldown.|nTrigger uses EVENT_PLAYER_UNIT_ATTACKED, so proc does not require attack damage to land.|n|nTotal acquisition cost: 1550 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00K",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +160 attack damage (150 damage ability plus 10 from frost orb), +20% attack speed, 60% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nRequires: Claws of Ultimate Devastation, Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 4000 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +150 attack damage (140 damage ability plus 10 from frost orb), +20% attack speed, 50% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nRequires: Claws of Ultimate Devastation, Claws of Attack +25, Gloves of Haste.|nRecipe: 1400 gold. Total acquisition cost: 4500 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00K",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +160 attack damage (150 damage ability plus 10 from frost orb), +20% attack speed, 60% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nRequires: Claws of Ultimate Devastation, Claws of Attack +25, Gloves of Haste.|nRecipe: 950 gold. Total acquisition cost: 4000 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +150 attack damage (140 damage ability plus 10 from frost orb), +20% attack speed, 50% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nRequires: Claws of Ultimate Devastation, Claws of Attack +25, Gloves of Haste.|nRecipe: 1400 gold. Total acquisition cost: 4500 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00W",
+      "field": "utub",
+      "level": null,
+      "before": "+160 attack damage (150 damage ability plus 10 from frost orb), +20% attack speed, 60% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.",
+      "after": "+150 attack damage (140 damage ability plus 10 from frost orb), +20% attack speed, 50% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nTotal acquisition cost: 4500 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00W",
+      "field": "ides",
+      "level": null,
+      "before": "+160 attack damage (150 damage ability plus 10 from frost orb), +20% attack speed, 60% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.",
+      "after": "+150 attack damage (140 damage ability plus 10 from frost orb), +20% attack speed, 50% melee life steal. Frost attack marks targets for 3 seconds (1 second on heroes); attacks against a marked target trigger a zero-damage Frost Nova with 175 radius and 1-second slow duration.|n|nTotal acquisition cost: 4500 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00Q",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +350 health, +25 armor, 33% spell-damage reduction.|n|nRequires: Runed Bracers, Ring of Protection +5, Shield of the Gods.|nRecipe: 950 gold. Total acquisition cost: 2750 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +350 health, +25 armor, 33% spell-damage reduction.|n|nRequires: Runed Bracers, Ring of Protection +5, Shield of the Gods.|nRecipe: 950 gold. Total acquisition cost: 2825 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00Q",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +350 health, +25 armor, 33% spell-damage reduction.|n|nRequires: Runed Bracers, Ring of Protection +5, Shield of the Gods.|nRecipe: 950 gold. Total acquisition cost: 2750 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +350 health, +25 armor, 33% spell-damage reduction.|n|nRequires: Runed Bracers, Ring of Protection +5, Shield of the Gods.|nRecipe: 950 gold. Total acquisition cost: 2825 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00T",
+      "field": "utub",
+      "level": null,
+      "before": "+350 health, +25 armor, 33% spell-damage reduction.",
+      "after": "+350 health, +25 armor, 33% spell-damage reduction.|n|nTotal acquisition cost: 2825 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00T",
+      "field": "ides",
+      "level": null,
+      "before": "+350 health, +25 armor, 33% spell-damage reduction.",
+      "after": "+350 health, +25 armor, 33% spell-damage reduction.|n|nTotal acquisition cost: 2825 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00S",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. +1 armor while carried before combining.|n|nCrafted item: Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nRequires: Amulet of Spell Shield, Runed Bracers, Ring of Resilience.|nRecipe: 950 gold. Total acquisition cost: 3000 gold (starting amulet is free when required).",
+      "after": "Recipe only. +1 armor while carried before combining.|n|nCrafted item: Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nRequires: Amulet of Spell Shield, Runed Bracers, Ring of Resilience.|nRecipe: 950 gold. Total acquisition cost: 3050 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00S",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. +1 armor while carried before combining.|n|nCrafted item: Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nRequires: Amulet of Spell Shield, Runed Bracers, Ring of Resilience.|nRecipe: 950 gold. Total acquisition cost: 3000 gold (starting amulet is free when required).",
+      "after": "Recipe only. +1 armor while carried before combining.|n|nCrafted item: Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nRequires: Amulet of Spell Shield, Runed Bracers, Ring of Resilience.|nRecipe: 950 gold. Total acquisition cost: 3050 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I010",
+      "field": "utub",
+      "level": null,
+      "before": "Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.",
+      "after": "Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nTotal acquisition cost: 3050 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I010",
+      "field": "ides",
+      "level": null,
+      "before": "Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.",
+      "after": "Spell Shield blocks one hostile targeted spell every 15 seconds; 50% spell-damage reduction.|n|nTotal acquisition cost: 3050 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01I",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nRequires: Belt of Giant Strength +10, Dagger of Escape.|nRecipe: 1000 gold. Total acquisition cost: 2750 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Warlock, Akama & Shadow Shifter|r",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nRequires: Belt of Giant Strength +10, Dagger of Escape.|nRecipe: 1500 gold. Total acquisition cost: 3275 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Warlock, Akama & Shadow Shifter|r"
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01I",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nRequires: Belt of Giant Strength +10, Dagger of Escape.|nRecipe: 1000 gold. Total acquisition cost: 2750 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Warlock, Akama & Shadow Shifter|r",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nRequires: Belt of Giant Strength +10, Dagger of Escape.|nRecipe: 1500 gold. Total acquisition cost: 3275 gold (starting amulet is free when required).|n|n|cffff0000Banned on:|r|n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Warlock, Akama & Shadow Shifter|r"
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01H",
+      "field": "utub",
+      "level": null,
+      "before": "+15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nCannot be carried by: Jaina (H01I), Warden (E005), Edge (E007), Pirate (H02G), The Craziest Cat Ever (E00U), Shadow Shifter (N01L), Akama (E00Z).|n|nScripted effects: Casting A08I also creates a dummy Flame Strike A08H at the target point: 350 radius, 17 full damage per 0.1-second interval, 2-second full-damage duration; 10 half damage per 0.25-second interval with 4-second duration field; building damage factor 0.1; maximum-damage cap 0. Dummy exists for 5 seconds. Ground enemies and neutrals only.",
+      "after": "+15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nCannot be carried by: Jaina (H01I), Warden (E005), Edge (E007), Pirate (H02G), The Craziest Cat Ever (E00U), Shadow Shifter (N01L), Akama (E00Z).|n|nScripted effects: Casting A08I also creates a dummy Flame Strike A08H at the target point: 350 radius, 17 full damage per 0.1-second interval, 2-second full-damage duration; 10 half damage per 0.25-second interval with 4-second duration field; building damage factor 0.1; maximum-damage cap 0. Dummy exists for 5 seconds. Ground enemies and neutrals only.|n|nTotal acquisition cost: 3275 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I01H",
+      "field": "ides",
+      "level": null,
+      "before": "+15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nCannot be carried by: Jaina (H01I), Warden (E005), Edge (E007), Pirate (H02G), The Craziest Cat Ever (E00U), Shadow Shifter (N01L), Akama (E00Z).|n|nScripted effects: Casting A08I also creates a dummy Flame Strike A08H at the target point: 350 radius, 17 full damage per 0.1-second interval, 2-second full-damage duration; 10 half damage per 0.25-second interval with 4-second duration field; building damage factor 0.1; maximum-damage cap 0. Dummy exists for 5 seconds. Ground enemies and neutrals only.",
+      "after": "+15 strength. Blink up to 1000 range, 200 minimum range, 60-second cooldown, no mana cost. Blink triggers Flame Strike at the requested target point (350 radius): 17 damage every 0.1 seconds in its full-damage phase and 10 damage every 0.25 seconds in its residual phase. Ability duration fields are 4 seconds normal and 2 seconds hero; dummy lasts 5 seconds.|n|nCannot be carried by: Jaina (H01I), Warden (E005), Edge (E007), Pirate (H02G), The Craziest Cat Ever (E00U), Shadow Shifter (N01L), Akama (E00Z).|n|nScripted effects: Casting A08I also creates a dummy Flame Strike A08H at the target point: 350 radius, 17 full damage per 0.1-second interval, 2-second full-damage duration; 10 half damage per 0.25-second interval with 4-second duration field; building damage factor 0.1; maximum-damage cap 0. Dummy exists for 5 seconds. Ground enemies and neutrals only.|n|nTotal acquisition cost: 3275 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02L",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nRequires: Shield of the Gods, Ring of Resilience.|nRecipe: 1100 gold. Total acquisition cost: 2100 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nRequires: Shield of the Gods, Ring of Resilience.|nRecipe: 1100 gold. Total acquisition cost: 2150 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02L",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nRequires: Shield of the Gods, Ring of Resilience.|nRecipe: 1100 gold. Total acquisition cost: 2100 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nRequires: Shield of the Gods, Ring of Resilience.|nRecipe: 1100 gold. Total acquisition cost: 2150 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02M",
+      "field": "utub",
+      "level": null,
+      "before": "+650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.",
+      "after": "+650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nTotal acquisition cost: 2150 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I02M",
+      "field": "ides",
+      "level": null,
+      "before": "+650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.",
+      "after": "+650 health, +12 armor, +4 health regeneration per second, 20% spell-damage reduction.|n|nTotal acquisition cost: 2150 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00M",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nRequires: Boots of Quel'Thalas +7, Maul of Corruption, Totem of Might.|nRecipe: 1350 gold. Total acquisition cost: 2850 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nRequires: Boots of Quel'Thalas +7, Maul of Corruption, Totem of Might.|nRecipe: 1500 gold. Total acquisition cost: 3100 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00M",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nRequires: Boots of Quel'Thalas +7, Maul of Corruption, Totem of Might.|nRecipe: 1350 gold. Total acquisition cost: 2850 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nRequires: Boots of Quel'Thalas +7, Maul of Corruption, Totem of Might.|nRecipe: 1500 gold. Total acquisition cost: 3100 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00U",
+      "field": "utub",
+      "level": null,
+      "before": "+30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.",
+      "after": "+30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nTotal acquisition cost: 3100 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00U",
+      "field": "ides",
+      "level": null,
+      "before": "+30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.",
+      "after": "+30 agility, +35 attack damage (25 damage ability plus 10 from corruption orb). Attacks reduce target armor by 5 for 3 seconds.|n|nTotal acquisition cost: 3100 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00L",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +750 health, +15 armor, +15 health regeneration per second.|n|nRequires: Ring of Protection +5, Ring of regeneration, Periapt of Vitality.|nRecipe: 1500 gold. Total acquisition cost: 2300 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +750 health, +15 armor, +15 health regeneration per second.|n|nRequires: Ring of Protection +5, Ring of regeneration, Periapt of Vitality.|nRecipe: 1725 gold. Total acquisition cost: 2550 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00L",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +750 health, +15 armor, +15 health regeneration per second.|n|nRequires: Ring of Protection +5, Ring of regeneration, Periapt of Vitality.|nRecipe: 1500 gold. Total acquisition cost: 2300 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +750 health, +15 armor, +15 health regeneration per second.|n|nRequires: Ring of Protection +5, Ring of regeneration, Periapt of Vitality.|nRecipe: 1725 gold. Total acquisition cost: 2550 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00V",
+      "field": "utub",
+      "level": null,
+      "before": "+750 health, +15 armor, +15 health regeneration per second.",
+      "after": "+750 health, +15 armor, +15 health regeneration per second.|n|nTotal acquisition cost: 2550 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00V",
+      "field": "ides",
+      "level": null,
+      "before": "+750 health, +15 armor, +15 health regeneration per second.",
+      "after": "+750 health, +15 armor, +15 health regeneration per second.|n|nTotal acquisition cost: 2550 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00B",
+      "field": "utub",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nRequires: Belt of Giant Strength +10, Ring of regeneration, Crown of Kings.|nRecipe: 1650 gold. Total acquisition cost: 2500 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nRequires: Belt of Giant Strength +10, Ring of regeneration, Crown of Kings.|nRecipe: 1875 gold. Total acquisition cost: 2750 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00B",
+      "field": "ides",
+      "level": null,
+      "before": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nRequires: Belt of Giant Strength +10, Ring of regeneration, Crown of Kings.|nRecipe: 1650 gold. Total acquisition cost: 2500 gold (starting amulet is free when required).",
+      "after": "Recipe only. No stat bonuses before combining.|n|nCrafted item: +30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nRequires: Belt of Giant Strength +10, Ring of regeneration, Crown of Kings.|nRecipe: 1875 gold. Total acquisition cost: 2750 gold (starting amulet is free when required)."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00X",
+      "field": "utub",
+      "level": null,
+      "before": "+30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.",
+      "after": "+30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nTotal acquisition cost: 2750 gold."
+    },
+    {
+      "file": "war3mapSkin.w3t",
+      "id": "I00X",
+      "field": "ides",
+      "level": null,
+      "before": "+30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.",
+      "after": "+30 strength, +20 intelligence, +7 armor, +25 attack damage, +10 health regeneration per second.|n|nTotal acquisition cost: 2750 gold."
+    }
+  ],
+  "craftedCosts": [
+    {
+      "id": "I01R",
+      "name": "Chaos Cloak",
+      "before": 3350,
+      "after": 3850,
+      "recipeId": "I01S",
+      "recipeBefore": 550,
+      "recipeAfter": 700
+    },
+    {
+      "id": "I04A",
+      "name": "Amulet of the Wind",
+      "before": 4000,
+      "after": 4500,
+      "recipeId": "I04B",
+      "recipeBefore": 750,
+      "recipeAfter": 1000
+    },
+    {
+      "id": "rat6",
+      "name": "Forked Fury",
+      "before": 1500,
+      "after": 1550,
+      "recipeId": "I02U",
+      "recipeBefore": 950,
+      "recipeAfter": 950
+    },
+    {
+      "id": "I00W",
+      "name": "Frosty\u00b4s Ice Claws",
+      "before": 4000,
+      "after": 4500,
+      "recipeId": "I00K",
+      "recipeBefore": 950,
+      "recipeAfter": 1400
+    },
+    {
+      "id": "I00T",
+      "name": "Night Terror Armor",
+      "before": 2750,
+      "after": 2825,
+      "recipeId": "I00Q",
+      "recipeBefore": 950,
+      "recipeAfter": 950
+    },
+    {
+      "id": "I010",
+      "name": "Staff of Sanctuary",
+      "before": 3000,
+      "after": 3050,
+      "recipeId": "I00S",
+      "recipeBefore": 950,
+      "recipeAfter": 950
+    },
+    {
+      "id": "I01H",
+      "name": "Demogorgon's Scepter",
+      "before": 2750,
+      "after": 3275,
+      "recipeId": "I01I",
+      "recipeBefore": 1000,
+      "recipeAfter": 1500
+    },
+    {
+      "id": "I02M",
+      "name": "Nature's Blessing",
+      "before": 2100,
+      "after": 2150,
+      "recipeId": "I02L",
+      "recipeBefore": 1100,
+      "recipeAfter": 1100
+    },
+    {
+      "id": "I00U",
+      "name": "Chobos' Light Speed Shoes",
+      "before": 2850,
+      "after": 3100,
+      "recipeId": "I00M",
+      "recipeBefore": 1350,
+      "recipeAfter": 1500
+    },
+    {
+      "id": "I00V",
+      "name": "Heart of the Holy Maiden",
+      "before": 2300,
+      "after": 2550,
+      "recipeId": "I00L",
+      "recipeBefore": 1500,
+      "recipeAfter": 1725
+    },
+    {
+      "id": "I00X",
+      "name": "Fist of the Titans",
+      "before": 2500,
+      "after": 2750,
+      "recipeId": "I00B",
+      "recipeBefore": 1650,
+      "recipeAfter": 1875
+    }
+  ]
+}

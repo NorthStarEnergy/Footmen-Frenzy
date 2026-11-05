@@ -1,0 +1,25 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\mundo-visuals-v40\\release\\FF799X_Rx_Consolidated_Mundo_v40.w3x",
+  "sha256": "1d6928cc671211dccae1eb6282e4bb01e79a17e630326d87fb42d89f94a7426b",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\799x-backport\\release\\FF799X_Rx_Consolidated_Clean_v39.w3x",
+  "changed_functions": [
+    "MD_Clear",
+    "MD_Init",
+    "MD_OnDamage",
+    "MD_Start",
+    "MD_Tick",
+    "MQ_Free",
+    "MQ_GroundTick",
+    "MQ_Land",
+    "MU_Clear",
+    "MU_Init",
+    "MU_Launch",
+    "MU_OnCleaverHit"
+  ],
+  "preserved_functions": 3666,
+  "preserved_archive_entries": 1328,
+  "checks": 160,
+  "compiler": "passed",
+  "live_test": "Pending Warcraft III playtest",
+  "visual_model": "Existing Axe Missile-Small enlarged; external cleaver download unavailable"
+}

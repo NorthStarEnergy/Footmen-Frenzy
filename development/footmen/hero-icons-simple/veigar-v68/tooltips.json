@@ -1,0 +1,31 @@
+{
+  "AVgq": [
+    "Targeted bolt: 150 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +1 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 60 | Cooldown: 7 sec | Range: 700.",
+    "Targeted bolt: 220 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +2 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 65 | Cooldown: 7 sec | Range: 700.",
+    "Targeted bolt: 290 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +3 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 70 | Cooldown: 6.5 sec | Range: 700.",
+    "Targeted bolt: 360 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +4 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 75 | Cooldown: 6 sec | Range: 700.",
+    "Targeted bolt: 430 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +5 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 5.5 sec | Range: 700.",
+    "Targeted bolt: 500 + 0.6 x Intelligence magic damage. Last hits grant +1 permanent Intelligence. While learned, enemy hero kills by Veigar grant +6 Intelligence (stacks with the last-hit bonus). Illusions, summoned units and buildings grant none.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 5 sec | Range: 700."
+  ],
+  "AVgw": [
+    "After 1.25 seconds, a dark meteor deals 190 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 12 sec | Range: 900.",
+    "After 1.25 seconds, a dark meteor deals 280 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 12 sec | Range: 900.",
+    "After 1.25 seconds, a dark meteor deals 370 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 11.5 sec | Range: 900.",
+    "After 1.25 seconds, a dark meteor deals 460 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 11 sec | Range: 900.",
+    "After 1.25 seconds, a dark meteor deals 550 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 125 | Cooldown: 10.5 sec | Range: 900.",
+    "After 1.25 seconds, a dark meteor deals 640 + 1.0 x Intelligence magic damage in a 225 radius. Damage snapshots when cast.|n|nExcludes buildings and magic-immune targets.|nMana: 140 | Cooldown: 10 sec | Range: 900."
+  ],
+  "AVge": [
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 80 | Cooldown: 22 sec | Range: 900.",
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 1.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 85 | Cooldown: 21 sec | Range: 900.",
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 90 | Cooldown: 20 sec | Range: 900.",
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.25 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 95 | Cooldown: 19 sec | Range: 900.",
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.5 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 100 | Cooldown: 18 sec | Range: 900.",
+    "Instantly creates a pentagonal cage for 3 seconds, 300 radius to its corners. Touching or crossing an edge stuns for 2.75 seconds, once per cage. Units inside can move freely. Deals no damage.|n|nExcludes buildings and magic-immune targets.|nMana: 110 | Cooldown: 17 sec | Range: 900."
+  ],
+  "AVgr": [
+    "Blasts an enemy hero for 550 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 150 | Cooldown: 100 sec | Range: 650.",
+    "Blasts an enemy hero for 850 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 200 | Cooldown: 85 sec | Range: 650.",
+    "Blasts an enemy hero for 1150 + 1.2 x your Intelligence + 0.8 x target Intelligence magic damage. Classic anti-mage burst; damage does not depend on missing health.|n|nExcludes buildings and magic-immune targets.|nMana: 250 | Cooldown: 70 sec | Range: 650."
+  ]
+}

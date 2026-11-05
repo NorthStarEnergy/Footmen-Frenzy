@@ -1,0 +1,40 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy (Solo)\\ffa-v4\\release\\Solo_Foots_8P_FFA_v4.w3x",
+  "sha256": "d50370db4d33e4e27f24b0a070c0de405376ce02bd7a792772b6b21b6f6f9adb",
+  "changed_entries": [
+    "war3map.j",
+    "war3map.w3i",
+    "war3map.w3u",
+    "war3map.wct",
+    "war3mapUnits.doo"
+  ],
+  "preserved_entries": 1209,
+  "removed_recipe_page_buildings": 8,
+  "inward_shop_facings": 84,
+  "recipe_pages": [
+    [
+      "I00B",
+      "I02L",
+      "I00Z",
+      "I00L",
+      "I00M",
+      "I00Q",
+      "I00O",
+      "I00N",
+      "I02O",
+      "I02X",
+      "I03Z"
+    ],
+    [
+      "I015",
+      "I04B",
+      "I00S",
+      "I00K",
+      "I01I",
+      "I01S"
+    ]
+  ],
+  "hero_pool": "Existing 24 choices; 10 per page; Next only, wrapping",
+  "compilation": "Runtime and editor wrapper passed pjass",
+  "live_test": "Pending"
+}

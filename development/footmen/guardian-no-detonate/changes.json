@@ -1,0 +1,10 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\guardian-no-detonate\\base.w3x",
+  "base_sha256": "f993479c67fb358efe2cac029272f04b49bcd847ffe9fd3c1f5c42918304e9c9",
+  "changed_functions": [
+    "Trig_Guardian_Force_Field_Learn_Actions",
+    "Trig_Guardian_Force_Field_Cast_Actions",
+    "Trig_Guardian_Force_Field_Loop_Actions",
+    "FF_Editor_InitTriggers"
+  ]
+}

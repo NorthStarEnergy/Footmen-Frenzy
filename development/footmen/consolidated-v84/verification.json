@@ -1,0 +1,20 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\consolidated-v84\\release\\FF799X_Rx_Consolidated_v84_TEST.w3x",
+  "sha256": "e3d36689259eb7d00d8585d45425590b72ac5d8f411c6cd6c056fb11ff5c44b9",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-ultimate-v83\\release\\FF799X_Rx_Veigar_Ultimate_v83_TEST.w3x",
+  "base_sha256": "b1fc41ce3eab559c073c609a057ac673089329d5c94f8d03662f14ff48439f04",
+  "changed_functions": [
+    "FFGS_InitSettings",
+    "Trig_set_spawn_variables_Actions",
+    "TFP_FFDP_OnCast",
+    "GD_Cast"
+  ],
+  "added_functions": [],
+  "unrelated_entries_preserved": 1393,
+  "per_hero_stacks": true,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "engine_playtested": false,
+  "installed_or_deployed": true,
+  "installed_path": "C:\\Users\\User\\Documents\\Warcraft III\\Maps\\Test\\FF799X_Rx_Consolidated_v84_TEST.w3x"
+}

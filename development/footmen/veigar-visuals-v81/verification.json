@@ -1,0 +1,27 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-visuals-v81\\release\\FF799X_Rx_Veigar_Visuals_v81_TEST.w3x",
+  "sha256": "3bbd2cb4a64799453f919da292636b79e2b6dcbaecf696b744a79324ce8bc1e4",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\fed-rewards-v80\\release\\FF799X_Rx_Fed_Rewards_v80_TEST.w3x",
+  "base_sha256": "43d26395ea911fa56cccb43be00b1a4d3ff806ebc03e00c7053e24ccafcefd2c",
+  "changed_functions": [
+    "VG_DarkImpact",
+    "VG_Tick",
+    "VG_ClassicCast"
+  ],
+  "added_functions": [
+    "VG81_OrbImpact"
+  ],
+  "assets": [
+    "Spells\\Veigar69\\BalefulOrb.mdx",
+    "Spells\\Veigar69\\PrimordialOrb.mdx",
+    "Spells\\Veigar69\\Meteor.mdx",
+    "Spells\\Veigar69\\MeteorImpact.mdx"
+  ],
+  "unrelated_entries_preserved": 1399,
+  "gameplay_functions_restored_by_reversing_visual_edits": true,
+  "all_object_data_unchanged": true,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

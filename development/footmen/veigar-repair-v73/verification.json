@@ -1,0 +1,26 @@
+{
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\veigar-repair-v73\\release\\FF799X_Rx_Veigar_Cage_Range_v73_TEST.w3x",
+  "sha256": "2b602b70eb95cd7d3b5549bf0f7b71256983c3171871642f871ed9bd60a61701",
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\soulhook-mundo-v72\\release\\FF799X_Rx_SoulHook_Mundo_v72_TEST.w3x",
+  "base_sha256": "b9efcb334419d88f6ad96da70f868cf22c0d121297cc4f2d37facb5c11aff780",
+  "changed_payloads": [
+    "FF_MAINTENANCE.md",
+    "FF_SOURCE_MANIFEST.json",
+    "source_roundtrip\\FF_Runtime.j",
+    "source_roundtrip\\globals.j",
+    "war3map.j",
+    "war3map.w3a",
+    "war3map.wct"
+  ],
+  "changed_functions": [
+    "VG_StunVisualTick",
+    "VG_CageScan"
+  ],
+  "verified_preserved_entries": 1399,
+  "decoded_preserved_files": 1379,
+  "veigar_checks": 57,
+  "runtime_compiler": "passed",
+  "editor_compiler": "passed",
+  "engine_playtested": false,
+  "installed_or_deployed": false
+}

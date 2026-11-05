@@ -1,0 +1,9 @@
+{
+  "malformed_text": [
+    {
+      "file": "war3map.wts",
+      "bad_runs": 105701
+    }
+  ],
+  "unresolved_item_icons": []
+}

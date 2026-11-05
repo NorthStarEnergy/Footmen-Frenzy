@@ -1,0 +1,8 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\orianna-audio-v27\\base.w3x",
+  "base_sha256": "2b7642b52d56b3bde1c034726770e47f7a04de784cdba6ef3d4f52fe38f618bf",
+  "changed_functions": [
+    "OM_CommandSound",
+    "FF_HeroTooltips_Init"
+  ]
+}

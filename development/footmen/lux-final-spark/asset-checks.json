@@ -1,0 +1,19 @@
+{
+  "models": [
+    {
+      "name": "FinalSparkBeam",
+      "bytes": 1712,
+      "vertices": 8,
+      "textureDecoded": true,
+      "format": 800
+    },
+    {
+      "name": "FinalSparkFlare",
+      "bytes": 1856,
+      "vertices": 12,
+      "textureDecoded": true,
+      "format": 800
+    }
+  ],
+  "engine_tested": false
+}

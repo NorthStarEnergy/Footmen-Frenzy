@@ -1,0 +1,11 @@
+{
+  "input": "C:\\Users\\User\\Downloads\\FF799X_v42_account_gold_TEST_ONLY.w3x",
+  "input_sha256": "9ed936c1e6cd3698e8ffece101f8943c74a2306d6382f2cbae75c34bd743f34d",
+  "output": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\casino-v1\\release\\FF799X_v42_Casino_v1_2_TEST_ONLY.w3x",
+  "sha256": "428fa06cc7dfb097c3477553f980e62ddd19bf685505421ccf102e5bfa02dcb7",
+  "compiler_passed": true,
+  "exact_battle_source_restoration": true,
+  "verified_payloads": 73,
+  "preserved_entries": 1335,
+  "engine_tested": false
+}

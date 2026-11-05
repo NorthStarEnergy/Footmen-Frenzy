@@ -1,0 +1,33 @@
+{
+  "base": "C:\\Users\\User\\Documents\\ChatGPT\\Footmen Frenzy\\combined-v68\\release\\FF799X_Rx_Veigar_Classic_v68.w3x",
+  "changed_functions": [
+    "InitTrig_FF_Runtime"
+  ],
+  "new_functions": [
+    "LX_Cast",
+    "LX_Cleanup",
+    "LX_Damage",
+    "LX_Enemy",
+    "LX_InBeam",
+    "LX_Init",
+    "LX_Release",
+    "LX_Sound",
+    "LX_Style",
+    "LX_Summon",
+    "LX_TestAllowed",
+    "LX_Tick",
+    "LX_Visual",
+    "LX_Z"
+  ],
+  "spell": "ALxR",
+  "test_hero": "HLx1",
+  "runtime_editor_synchronized": true,
+  "imports": [
+    "Spells\\Lux\\FinalSparkBeam.mdx",
+    "Spells\\Lux\\FinalSparkBeam.blp",
+    "Spells\\Lux\\FinalSparkFlare.mdx",
+    "Spells\\Lux\\FinalSparkFlare.blp",
+    "Spells\\Lux\\FinalSparkCharge.wav",
+    "Spells\\Lux\\FinalSparkBlast.wav"
+  ]
+}
