@@ -1,0 +1,8 @@
+.hero-art,.item-art{width:54px;text-align:center}
+.hero-art img,.item-art img{display:block;width:40px;height:40px;object-fit:contain;margin:auto;border:1px solid #405159;border-radius:5px;background:#111b21}
+.hero-detail-title,.item-detail-title{display:flex;align-items:center;gap:12px}
+.hero-detail-icon,.item-detail-icon{width:58px;height:58px;object-fit:contain;border:1px solid #806844;border-radius:6px;background:#101820}
+.spell-icon{width:30px;height:30px;flex:0 0 30px;object-fit:contain;vertical-align:middle;border:1px solid #4c5c5c;border-radius:4px;background:#101820}
+.spell-article-content h3.icon-heading,.spell-snippet h3.icon-heading{display:flex;align-items:center;gap:8px}
+.spell-article-content h3.icon-heading{min-height:34px}
+@media(max-width:600px){.hero-art,.item-art{width:46px}.hero-art img,.item-art img{width:34px;height:34px}.hero-detail-icon,.item-detail-icon{width:48px;height:48px}.spell-icon{width:26px;height:26px;flex-basis:26px}}

@@ -64324,7 +64324,7 @@ Upgrade to Undead Tier 1
 STRING 10342
 // Units: h00Z (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
+|cffffff00Spawned Units:|r Ghoul
 |cff808080Range:|r 625
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
@@ -84793,19 +84793,19 @@ Toggle Dark Tauren automatic spawning on or off.
 }
 
 STRING 13479
-// Abilities: A1AM (Auto-Spawn: Burning Archer
-Toggle Burning Archer automatic spawning on or off.), Name (Name)
+// Abilities: A1AM (Auto-Spawn: Ghoul
+Toggle Ghoul automatic spawning on or off.), Name (Name)
 {
-Auto-Spawn: Burning Archer
-Toggle Burning Archer automatic spawning on or off.
+Auto-Spawn: Ghoul
+Toggle Ghoul automatic spawning on or off.
 }
 
 STRING 13480
-// Abilities: A1AM (Auto-Spawn: Burning Archer
-Toggle Burning Archer automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A1AM (Auto-Spawn: Ghoul
+Toggle Ghoul automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
 {
-Auto-Spawn: Burning Archer
-Toggle Burning Archer automatic spawning on or off.
+Auto-Spawn: Ghoul
+Toggle Ghoul automatic spawning on or off.
 }
 
 STRING 13481
@@ -87050,7 +87050,7 @@ Upgrade to Orc Tier 1
 STRING 13832
 // Units: h00H (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
+|cffffff00Spawned Units:|r Grunt
 |cff808080Range:|r 570
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
@@ -101643,7 +101643,7 @@ Darks
 STRING 17669
 // Units: h023 (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
+|cffffff00Spawned Units:|r Grunt
 |cff808080Range:|r 570
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
@@ -102273,7 +102273,7 @@ STRING 17864
 STRING 17865
 // Units: h02O (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
+|cffffff00Spawned Units:|r Ghoul
 |cff808080Range:|r 625
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 

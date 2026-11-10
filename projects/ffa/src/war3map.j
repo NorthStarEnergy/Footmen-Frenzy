@@ -11781,7 +11781,7 @@ function CreateAllUnits takes nothing returns nothing
     set u=BlzCreateUnitWithSkin(Player(27), 'n046', 2851.055, 3545.406, 233.130, 'n046')
     set u=BlzCreateUnitWithSkin(Player(27), 'n046', -672.000, 4480.000, 278.076, 'n046')
     set u=BlzCreateUnitWithSkin(Player(27), 'n046', -3801.406, 2595.055, 323.130, 'n046')
-    set gg_unit_n000_0054=BlzCreateUnitWithSkin(Player(27), 'n000', 1619.000, 213.000, 196.156, 'n000')
+    set gg_unit_n000_0054=BlzCreateUnitWithSkin(Player(27), 'n000', 0.000, -256.000, 270.000, 'n000')
     set gg_unit_n01B_0055=BlzCreateUnitWithSkin(Player(27), 'n01B', 1539.149, 453.112, 204.736, 'n01B')
     set gg_unit_n004_0057=BlzCreateUnitWithSkin(Player(27), 'n004', 536.312, 1407.949, 252.135, 'n004')
     set gg_unit_n01B_0056=BlzCreateUnitWithSkin(Player(27), 'n01B', -709.112, 1283.149, 294.736, 'n01B')
@@ -15044,32 +15044,32 @@ endfunction
 
 function Trig_MODE_set_bounties_Actions takes nothing returns nothing
 
-set udg_unit_bounty_base[0]=25
-set udg_unit_bounty_base[1]=55
-set udg_unit_bounty_base[2]=102
-set udg_unit_bounty_base[3]=34
-set udg_unit_bounty_base[4]=63
-set udg_unit_bounty_base[5]=125
-set udg_unit_bounty_base[6]=51
-set udg_unit_bounty_base[7]=54
-set udg_unit_bounty_base[8]=105
-set udg_unit_bounty_base[9]=38
-set udg_unit_bounty_base[10]=49
-set udg_unit_bounty_base[11]=63
-set udg_unit_bounty_base[12]=125
-set udg_unit_bounty_base[13]=42
-set udg_unit_bounty_base[14]=49
-set udg_unit_bounty_base[15]=53
-set udg_unit_bounty_base[16]=39
-set udg_unit_bounty_base[17]=23
-set udg_unit_bounty_base[18]=39
-set udg_unit_bounty_base[19]=51
-set udg_unit_bounty_base[20]=39
-set udg_unit_bounty_base[21]=41
-set udg_unit_bounty_base[22]=44
-set udg_unit_bounty_base[23]=38
-set udg_unit_bounty_base[24]=58
-set udg_unit_bounty_base[25]=105
+set udg_unit_bounty_base[0]=19
+set udg_unit_bounty_base[1]=41
+set udg_unit_bounty_base[2]=76
+set udg_unit_bounty_base[3]=26
+set udg_unit_bounty_base[4]=47
+set udg_unit_bounty_base[5]=94
+set udg_unit_bounty_base[6]=38
+set udg_unit_bounty_base[7]=40
+set udg_unit_bounty_base[8]=79
+set udg_unit_bounty_base[9]=28
+set udg_unit_bounty_base[10]=37
+set udg_unit_bounty_base[11]=47
+set udg_unit_bounty_base[12]=94
+set udg_unit_bounty_base[13]=32
+set udg_unit_bounty_base[14]=37
+set udg_unit_bounty_base[15]=40
+set udg_unit_bounty_base[16]=29
+set udg_unit_bounty_base[17]=17
+set udg_unit_bounty_base[18]=29
+set udg_unit_bounty_base[19]=38
+set udg_unit_bounty_base[20]=29
+set udg_unit_bounty_base[21]=31
+set udg_unit_bounty_base[22]=33
+set udg_unit_bounty_base[23]=28
+set udg_unit_bounty_base[24]=44
+set udg_unit_bounty_base[25]=79
 
 endfunction
 
@@ -15276,50 +15276,85 @@ function S8Team takes integer pn returns integer
     return F8_Team[pn-1]
 endfunction
 
+function SKBoardRow takes integer row, integer pn, string role, string name returns nothing
+    local integer king=SKKing[pn]
+    local integer col=2
+    local string status=role
+    if SKActive(pn) then
+        if SKDefected[pn] then
+            set status=role+" / Used"
+        else
+            set status=role+" / Ready"
+        endif
+        if role=="Freefolk" then
+            call MultiboardSetItemValueBJ(udg_multiboard_kills,2,row,"-")
+        else
+            call MultiboardSetItemValueBJ(udg_multiboard_kills,2,row,"|cFFFFD700"+GetPlayerName(Player(king-1))+"|r")
+        endif
+        call MultiboardSetItemValueBJ(udg_multiboard_kills,3,row,I2S(SKTroopKills[king]))
+        call MultiboardSetItemValueBJ(udg_multiboard_kills,4,row,I2S(SKHeroKills[king]))
+        call MultiboardSetItemValueBJ(udg_multiboard_kills,5,row,I2S(SKCaptures[king]))
+        call MultiboardSetItemValueBJ(udg_multiboard_kills,7,row,I2S(udg_KOTH_Team_Gold_Earned_Total[S8Team(king)]))
+    else
+        loop
+            exitwhen col>7
+            call MultiboardSetItemValueBJ(udg_multiboard_kills,col,row,"-")
+            set col=col+1
+        endloop
+        set status="Eliminated"
+        if not F8_Participant[pn] then
+            set status="Empty"
+        elseif GetPlayerSlotState(Player(pn-1))!=PLAYER_SLOT_STATE_PLAYING then
+            set status="Left"
+        endif
+    endif
+    call MultiboardSetItemValueBJ(udg_multiboard_kills,1,row,name)
+    call MultiboardSetItemValueBJ(udg_multiboard_kills,6,row,status)
+endfunction
+
 function SKBoard takes nothing returns nothing
     local integer i=1
+    local integer j
     local integer pn
-    local integer king
-    local string status
+    local integer leader
+    local integer row=2
+    local integer leaderRow
     if udg_multiboard_kills == null then
         return
     endif
     call MultiboardSetTitleText(udg_multiboard_kills, "King Mode - Kingdom totals")
     loop
-        exitwhen i > 8
-        set pn=S8Player(i)
-        set king=SKKing[pn]
-        if SKActive(pn) then
-            set status="King / Ready"
-            if king!=pn then
-                set status="Vassal / Ready"
-            endif
-            if SKDefected[pn] then
-                set status="King / Used"
-                if king!=pn then
-                    set status="Vassal / Used"
+        exitwhen i>8
+        set leader=S8Player(i)
+        if SKActive(leader) and SKKing[leader]==leader then
+            set leaderRow=row
+            set row=row+1
+            set j=1
+            loop
+                exitwhen j>8
+                set pn=S8Player(j)
+                if pn!=leader and SKActive(pn) and SKKing[pn]==leader then
+                    call SKBoardRow(row,pn,"Vassal","   |cFFB0B0B0"+GetPlayerName(Player(pn-1))+"|r")
+                    set row=row+1
                 endif
+                set j=j+1
+            endloop
+            if row>leaderRow+1 then
+                call SKBoardRow(leaderRow,leader,"King","|cFFFFD700"+GetPlayerName(Player(leader-1))+"|r")
+            else
+                call SKBoardRow(leaderRow,leader,"Freefolk","|cFF66DD77"+GetPlayerName(Player(leader-1))+"|r")
             endif
-            call MultiboardSetItemValueBJ(udg_multiboard_kills, 2, i+1, GetPlayerName(Player(king-1)))
-            call MultiboardSetItemValueBJ(udg_multiboard_kills, 3, i+1, I2S(SKTroopKills[king]))
-            call MultiboardSetItemValueBJ(udg_multiboard_kills, 4, i+1, I2S(SKHeroKills[king]))
-            call MultiboardSetItemValueBJ(udg_multiboard_kills, 5, i+1, I2S(SKCaptures[king]))
-        else
-            set status="Eliminated"
-            if GetPlayerSlotState(Player(pn-1))!=PLAYER_SLOT_STATE_PLAYING then
-                set status="Left"
-            endif
-            if not F8_Participant[pn] then
-                set status="Empty"
-            endif
-            call MultiboardSetItemValueBJ(udg_multiboard_kills,3,i+1,"-")
-            call MultiboardSetItemValueBJ(udg_multiboard_kills,4,i+1,"-")
-            call MultiboardSetItemValueBJ(udg_multiboard_kills,5,i+1,"-")
-            call MultiboardSetItemValueBJ(udg_multiboard_kills, 2, i+1, "-")
         endif
-        call MultiboardSetItemValueBJ(udg_multiboard_kills, 1, i+1, GetPlayerName(Player(pn-1)))
-        call MultiboardSetItemValueBJ(udg_multiboard_kills, 6, i+1, status)
-        call MultiboardSetItemValueBJ(udg_multiboard_kills,7,i+1,I2S(udg_KOTH_Team_Gold_Earned_Total[S8Team(king)]))
+        set i=i+1
+    endloop
+    set i=1
+    loop
+        exitwhen i>8
+        set pn=S8Player(i)
+        if not SKActive(pn) then
+            call SKBoardRow(row,pn,"",GetPlayerName(Player(pn-1)))
+            set row=row+1
+        endif
         set i=i+1
     endloop
 endfunction
@@ -16707,9 +16742,11 @@ function SF_RefreshPage takes integer p returns nothing
     set i=first
     loop
         exitwhen i > last or i > SF_PoolCount[p]
+        call SetPlayerUnitAvailableBJ(SF_Pool[p * 128 + i], true, Player(p - 1))
         call AddUnitToStock(SF_Tavern[p], SF_Pool[p * 128 + i], 1, 1)
         set i=i + 1
     endloop
+    call SetPlayerUnitAvailableBJ('hPgN', true, Player(p - 1))
     call AddUnitToStock(SF_Tavern[p], 'hPgN', 1, 1)
 endfunction
 
@@ -16729,6 +16766,7 @@ function SF_OpenTaverns takes nothing returns nothing
         if udg_player_active[p] then
             set a=SF_Angle[p]
             set SF_Tavern[p]=CreateUnit(Player(p-1),'nFHT',SF_TavernX[p],SF_TavernY[p],Atan2(-256.-SF_TavernY[p],-SF_TavernX[p])*bj_RADTODEG)
+            call SetUnitTypeSlots(SF_Tavern[p], 11)
             set i=1
             loop
                 exitwhen i > udg_total_hero_count
@@ -17473,7 +17511,7 @@ function F16_BonusXP takes unit hero,integer amount returns integer
         set F16_XP=InitHashtable()
     endif
     // Integer hundredths avoid repeated floating-point rounding on small awards.
-    set total=LoadInteger(F16_XP,key,0)+amount*95
+    set total=LoadInteger(F16_XP,key,0)+amount*70
     set earned=total/100
     call SaveInteger(F16_XP,key,0,total-earned*100)
     return earned
@@ -17492,10 +17530,10 @@ function Trig_Unit_Experience_System_Func004Func014C takes nothing returns boole
     if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'hrif' ) ) then
         return true
     endif
-    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ohun' ) ) then
+    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ogru' ) ) then
         return true
     endif
-    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'nskf' ) ) then
+    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ugho' ) ) then
         return true
     endif
     if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'earc' ) ) then
@@ -17743,10 +17781,10 @@ function Trig_Foot_Exp_system_Actions takes nothing returns nothing
         set udg_ExpKillingUnit_Foot=GetKillingUnitBJ()
         set udg_ExpPlayer_Foot=GetOwningPlayer(udg_ExpKillingUnit_Foot)
         if ( Trig_Foot_Exp_system_Func002Func005C() ) then
-            set udg_exp_sys_high_Foot=31
+            set udg_exp_sys_high_Foot=30
             set udg_exp_sys_low_Foot=26
         else
-            set udg_exp_sys_high_Foot=32
+            set udg_exp_sys_high_Foot=31
             set udg_exp_sys_low_Foot=28
         endif
         set udg_exp_sys_level_Foot=6
@@ -19584,7 +19622,6 @@ function Trig_start_timers_Actions takes nothing returns nothing
     // this trigger is being executed from the 'start game' trigger
     // Random selection now uses mass start + 15 seconds.
     call StartTimerBJ(udg_timer_foots_increase, false, 480.00)
-    call StartTimerBJ(udg_timer_BountyIncrease, false, 2200.00)
     call StartTimerBJ(udg_timer_unit_ugrades, false, 70.00)
     call StartTimerBJ(udg_timer_tech_delay_t1, false, 60.00)
     call StartTimerBJ(udg_timer_tech_delay_t2, false, 100.00)
@@ -21166,18 +21203,6 @@ function InitTrig_suicide takes nothing returns nothing
     call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(9), "-forfeit", true)
     call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(10), "-forfeit", true)
     call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(11), "-forfeit", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(0), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(1), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(2), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(3), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(4), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(5), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(6), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(7), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(8), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(9), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(10), "-killme", true)
-    call TriggerRegisterPlayerChatEvent(gg_trg_suicide, Player(11), "-killme", true)
     call TriggerAddCondition(gg_trg_suicide, Condition(function Trig_suicide_Conditions))
     call TriggerAddAction(gg_trg_suicide, function Trig_suicide_Actions)
 endfunction
@@ -21207,7 +21232,6 @@ function Trig_suicide_pressed_Actions takes nothing returns nothing
         call SoloFootsDisplayMessageToForce(udg_all_players , ( ( udg_colour[udg_temp_playernumber] + udg_playername[udg_temp_playernumber] ) + "|r has given up, their base will be destroyed" ))
         call SoloFootsDisplayMessageToForce(udg_temp_playergroup , "TRIGSTR_1529")
         //                                                                                                     
-        // Let's prevent them from typing -killme again and destroy their base in 10 seconds:
         set udg_Suicide_Has_Started[udg_temp_playernumber]=true
         call TriggerExecute(gg_trg_suicide_after_10_seconds)
     else
@@ -40965,7 +40989,7 @@ set udg_unit_att_base[0]=12
 set udg_unit_att_num_dice[0]=1
 set udg_unit_att_dice_sides[0]=2
 set udg_unit_att_CD[0]=1.1
-set udg_unit_bounty_base[0]=19
+set udg_unit_bounty_base[0]=14
 set udg_unit_bounty_num_dice[0]=1
 set udg_unit_bounty_dice_sides[0]=2
 set udg_unit_range[0]=110
@@ -40980,7 +41004,7 @@ set udg_unit_att_base[1]=56
 set udg_unit_att_num_dice[1]=1
 set udg_unit_att_dice_sides[1]=3
 set udg_unit_att_CD[1]=1.15
-set udg_unit_bounty_base[1]=55
+set udg_unit_bounty_base[1]=41
 set udg_unit_bounty_num_dice[1]=1
 set udg_unit_bounty_dice_sides[1]=4
 set udg_unit_range[1]=130
@@ -40995,7 +41019,7 @@ set udg_unit_att_base[2]=115
 set udg_unit_att_num_dice[2]=1
 set udg_unit_att_dice_sides[2]=3
 set udg_unit_att_CD[2]=1
-set udg_unit_bounty_base[2]=95
+set udg_unit_bounty_base[2]=71
 set udg_unit_bounty_num_dice[2]=2
 set udg_unit_bounty_dice_sides[2]=6
 set udg_unit_range[2]=150
@@ -41010,7 +41034,7 @@ set udg_unit_att_base[3]=35
 set udg_unit_att_num_dice[3]=1
 set udg_unit_att_dice_sides[3]=4
 set udg_unit_att_CD[3]=1.2
-set udg_unit_bounty_base[3]=38
+set udg_unit_bounty_base[3]=28
 set udg_unit_bounty_num_dice[3]=1
 set udg_unit_bounty_dice_sides[3]=3
 set udg_unit_range[3]=560
@@ -41025,7 +41049,7 @@ set udg_unit_att_base[4]=43
 set udg_unit_att_num_dice[4]=1
 set udg_unit_att_dice_sides[4]=3
 set udg_unit_att_CD[4]=1.2
-set udg_unit_bounty_base[4]=57
+set udg_unit_bounty_base[4]=43
 set udg_unit_bounty_num_dice[4]=1
 set udg_unit_bounty_dice_sides[4]=5
 set udg_unit_range[4]=525
@@ -41040,7 +41064,7 @@ set udg_unit_att_base[5]=101
 set udg_unit_att_num_dice[5]=1
 set udg_unit_att_dice_sides[5]=2
 set udg_unit_att_CD[5]=1
-set udg_unit_bounty_base[5]=108
+set udg_unit_bounty_base[5]=81
 set udg_unit_bounty_num_dice[5]=2
 set udg_unit_bounty_dice_sides[5]=6
 set udg_unit_range[5]=500
@@ -41055,7 +41079,7 @@ set udg_unit_att_base[6]=43
 set udg_unit_att_num_dice[6]=1
 set udg_unit_att_dice_sides[6]=2
 set udg_unit_att_CD[6]=1.2
-set udg_unit_bounty_base[6]=42
+set udg_unit_bounty_base[6]=32
 set udg_unit_bounty_num_dice[6]=1
 set udg_unit_bounty_dice_sides[6]=3
 set udg_unit_range[6]=150
@@ -41071,7 +41095,7 @@ set udg_unit_att_base[7]=56
 set udg_unit_att_num_dice[7]=1
 set udg_unit_att_dice_sides[7]=3
 set udg_unit_att_CD[7]=1.3
-set udg_unit_bounty_base[7]=53
+set udg_unit_bounty_base[7]=40
 set udg_unit_bounty_num_dice[7]=1
 set udg_unit_bounty_dice_sides[7]=5
 set udg_unit_range[7]=150
@@ -41086,7 +41110,7 @@ set udg_unit_att_base[8]=101
 set udg_unit_att_num_dice[8]=1
 set udg_unit_att_dice_sides[8]=3
 set udg_unit_att_CD[8]=1.1
-set udg_unit_bounty_base[8]=95
+set udg_unit_bounty_base[8]=71
 set udg_unit_bounty_num_dice[8]=2
 set udg_unit_bounty_dice_sides[8]=6
 set udg_unit_range[8]=150
@@ -41101,7 +41125,7 @@ set udg_unit_att_base[9]=36
 set udg_unit_att_num_dice[9]=1
 set udg_unit_att_dice_sides[9]=4
 set udg_unit_att_CD[9]=1.2
-set udg_unit_bounty_base[9]=38
+set udg_unit_bounty_base[9]=28
 set udg_unit_bounty_num_dice[9]=1
 set udg_unit_bounty_dice_sides[9]=3
 set udg_unit_range[9]=655
@@ -41116,7 +41140,7 @@ set udg_unit_att_base[10]=34
 set udg_unit_att_num_dice[10]=1
 set udg_unit_att_dice_sides[10]=2
 set udg_unit_att_CD[10]=1.2
-set udg_unit_bounty_base[10]=42
+set udg_unit_bounty_base[10]=32
 set udg_unit_bounty_num_dice[10]=1
 set udg_unit_bounty_dice_sides[10]=3
 set udg_unit_range[10]=685
@@ -41131,7 +41155,7 @@ set udg_unit_att_base[11]=42
 set udg_unit_att_num_dice[11]=1
 set udg_unit_att_dice_sides[11]=2
 set udg_unit_att_CD[11]=1.25
-set udg_unit_bounty_base[11]=55
+set udg_unit_bounty_base[11]=41
 set udg_unit_bounty_num_dice[11]=1
 set udg_unit_bounty_dice_sides[11]=6
 set udg_unit_range[11]=775
@@ -41146,7 +41170,7 @@ set udg_unit_att_base[12]=101
 set udg_unit_att_num_dice[12]=1
 set udg_unit_att_dice_sides[12]=2
 set udg_unit_att_CD[12]=1
-set udg_unit_bounty_base[12]=95
+set udg_unit_bounty_base[12]=71
 set udg_unit_bounty_num_dice[12]=2
 set udg_unit_bounty_dice_sides[12]=6
 set udg_unit_range[12]=800
@@ -41161,7 +41185,7 @@ set udg_unit_att_base[13]=48
 set udg_unit_att_num_dice[13]=1
 set udg_unit_att_dice_sides[13]=2
 set udg_unit_att_CD[13]=1.2
-set udg_unit_bounty_base[13]=40
+set udg_unit_bounty_base[13]=30
 set udg_unit_bounty_num_dice[13]=1
 set udg_unit_bounty_dice_sides[13]=3
 set udg_unit_range[13]=710
@@ -41176,7 +41200,7 @@ set udg_unit_att_base[14]=39
 set udg_unit_att_num_dice[14]=1
 set udg_unit_att_dice_sides[14]=3
 set udg_unit_att_CD[14]=1.2
-set udg_unit_bounty_base[14]=42
+set udg_unit_bounty_base[14]=32
 set udg_unit_bounty_num_dice[14]=1
 set udg_unit_bounty_dice_sides[14]=3
 set udg_unit_range[14]=475
@@ -41191,7 +41215,7 @@ set udg_unit_att_base[15]=47
 set udg_unit_att_num_dice[15]=1
 set udg_unit_att_dice_sides[15]=2
 set udg_unit_att_CD[15]=1
-set udg_unit_bounty_base[15]=42
+set udg_unit_bounty_base[15]=32
 set udg_unit_bounty_num_dice[15]=1
 set udg_unit_bounty_dice_sides[15]=3
 set udg_unit_range[15]=570
@@ -41206,25 +41230,25 @@ set udg_unit_att_base[16]=41
 set udg_unit_att_num_dice[16]=1
 set udg_unit_att_dice_sides[16]=3
 set udg_unit_att_CD[16]=1.2
-set udg_unit_bounty_base[16]=39
+set udg_unit_bounty_base[16]=29
 set udg_unit_bounty_num_dice[16]=1
 set udg_unit_bounty_dice_sides[16]=3
 set udg_unit_range[16]=690
 set udg_unit_level[16]=3
 
-// Burning Archer
-set udg_spawn_unit[17]='nskf'
-set udg_unit_HP[17]=555
-set udg_unit_armor_type[17]=1
-set udg_unit_armor[17]=0
-set udg_unit_att_base[17]=36
-set udg_unit_att_num_dice[17]=1
-set udg_unit_att_dice_sides[17]=3
+// Ghoul
+set udg_spawn_unit[17]='ugho'
+set udg_unit_HP[17]=750
+set udg_unit_armor_type[17]=2
+set udg_unit_armor[17]=2
+set udg_unit_att_base[17]=16
+set udg_unit_att_num_dice[17]=2
+set udg_unit_att_dice_sides[17]=2
 set udg_unit_att_CD[17]=1.1
-set udg_unit_bounty_base[17]=37
+set udg_unit_bounty_base[17]=28
 set udg_unit_bounty_num_dice[17]=1
 set udg_unit_bounty_dice_sides[17]=3
-set udg_unit_range[17]=640
+set udg_unit_range[17]=110
 set udg_unit_level[17]=2
 
 // Milita
@@ -41236,7 +41260,7 @@ set udg_unit_att_base[18]=34
 set udg_unit_att_num_dice[18]=1
 set udg_unit_att_dice_sides[18]=3
 set udg_unit_att_CD[18]=1.1
-set udg_unit_bounty_base[18]=40
+set udg_unit_bounty_base[18]=30
 set udg_unit_bounty_num_dice[18]=1
 set udg_unit_bounty_dice_sides[18]=2
 set udg_unit_range[18]=130
@@ -41251,7 +41275,7 @@ set udg_unit_att_base[19]=46
 set udg_unit_att_num_dice[19]=1
 set udg_unit_att_dice_sides[19]=2
 set udg_unit_att_CD[19]=1.1
-set udg_unit_bounty_base[19]=42
+set udg_unit_bounty_base[19]=32
 set udg_unit_bounty_num_dice[19]=1
 set udg_unit_bounty_dice_sides[19]=3
 set udg_unit_range[19]=800
@@ -41266,7 +41290,7 @@ set udg_unit_att_base[20]=44
 set udg_unit_att_num_dice[20]=1
 set udg_unit_att_dice_sides[20]=3
 set udg_unit_att_CD[20]=1.2
-set udg_unit_bounty_base[20]=39
+set udg_unit_bounty_base[20]=29
 set udg_unit_bounty_num_dice[20]=1
 set udg_unit_bounty_dice_sides[20]=3
 set udg_unit_range[20]=700
@@ -41281,7 +41305,7 @@ set udg_unit_att_base[21]=23
 set udg_unit_att_num_dice[21]=3
 set udg_unit_att_dice_sides[21]=3
 set udg_unit_att_CD[21]=1.2
-set udg_unit_bounty_base[21]=39
+set udg_unit_bounty_base[21]=29
 set udg_unit_bounty_num_dice[21]=1
 set udg_unit_bounty_dice_sides[21]=3
 set udg_unit_range[21]=600
@@ -41296,25 +41320,25 @@ set udg_unit_att_base[22]=31
 set udg_unit_att_num_dice[22]=1
 set udg_unit_att_dice_sides[22]=2
 set udg_unit_att_CD[22]=1.20
-set udg_unit_bounty_base[22]=40
+set udg_unit_bounty_base[22]=30
 set udg_unit_bounty_num_dice[22]=1
 set udg_unit_bounty_dice_sides[22]=3
 set udg_unit_range[22]=585
 set udg_unit_level[22]=3
 
-// Headhunter
-set udg_spawn_unit[23]='ohun'
-set udg_unit_HP[23]=540
-set udg_unit_armor_type[23]=1
-set udg_unit_armor[23]=1
-set udg_unit_att_base[23]=24
-set udg_unit_att_num_dice[23]=2
-set udg_unit_att_dice_sides[23]=3
-set udg_unit_att_CD[23]=1.10
-set udg_unit_bounty_base[23]=38
+// Grunt
+set udg_spawn_unit[23]='ogru'
+set udg_unit_HP[23]=900
+set udg_unit_armor_type[23]=2
+set udg_unit_armor[23]=3
+set udg_unit_att_base[23]=27
+set udg_unit_att_num_dice[23]=1
+set udg_unit_att_dice_sides[23]=4
+set udg_unit_att_CD[23]=1.6
+set udg_unit_bounty_base[23]=28
 set udg_unit_bounty_num_dice[23]=1
 set udg_unit_bounty_dice_sides[23]=3
-set udg_unit_range[23]=610
+set udg_unit_range[23]=110
 set udg_unit_level[23]=2
 
 // Tauren
@@ -41326,7 +41350,7 @@ set udg_unit_att_base[24]=57
 set udg_unit_att_num_dice[24]=1
 set udg_unit_att_dice_sides[24]=3
 set udg_unit_att_CD[24]=1.2
-set udg_unit_bounty_base[24]=56
+set udg_unit_bounty_base[24]=42
 set udg_unit_bounty_num_dice[24]=1
 set udg_unit_bounty_dice_sides[24]=4
 set udg_unit_range[24]=160
@@ -41341,7 +41365,7 @@ set udg_unit_att_base[25]=105
 set udg_unit_att_num_dice[25]=1
 set udg_unit_att_dice_sides[25]=3
 set udg_unit_att_CD[25]=1
-set udg_unit_bounty_base[25]=95
+set udg_unit_bounty_base[25]=71
 set udg_unit_bounty_num_dice[25]=2
 set udg_unit_bounty_dice_sides[25]=6
 set udg_unit_range[25]=160
@@ -41357,25 +41381,25 @@ set udg_unit_att_base[26]=23
 set udg_unit_att_num_dice[26]=3
 set udg_unit_att_dice_sides[26]=3
 set udg_unit_att_CD[26]=1.2
-set udg_unit_bounty_base[26]=39
+set udg_unit_bounty_base[26]=29
 set udg_unit_bounty_num_dice[26]=1
 set udg_unit_bounty_dice_sides[26]=3
 set udg_unit_range[26]=600
 set udg_unit_level[26]=2
 
-// [27] Headhunter (from 23)
-set udg_spawn_unit[27]='ohun'
-set udg_unit_HP[27]=540
-set udg_unit_armor_type[27]=1
-set udg_unit_armor[27]=1
-set udg_unit_att_base[27]=24
-set udg_unit_att_num_dice[27]=2
-set udg_unit_att_dice_sides[27]=3
-set udg_unit_att_CD[27]=1.10
-set udg_unit_bounty_base[27]=38
+// [27] Grunt (from 23)
+set udg_spawn_unit[27]='ogru'
+set udg_unit_HP[27]=900
+set udg_unit_armor_type[27]=2
+set udg_unit_armor[27]=3
+set udg_unit_att_base[27]=27
+set udg_unit_att_num_dice[27]=1
+set udg_unit_att_dice_sides[27]=4
+set udg_unit_att_CD[27]=1.6
+set udg_unit_bounty_base[27]=28
 set udg_unit_bounty_num_dice[27]=1
 set udg_unit_bounty_dice_sides[27]=3
-set udg_unit_range[27]=610
+set udg_unit_range[27]=110
 set udg_unit_level[27]=2
 
 // [28] Huntress (from 22)
@@ -41387,7 +41411,7 @@ set udg_unit_att_base[28]=31
 set udg_unit_att_num_dice[28]=1
 set udg_unit_att_dice_sides[28]=2
 set udg_unit_att_CD[28]=1.20
-set udg_unit_bounty_base[28]=40
+set udg_unit_bounty_base[28]=30
 set udg_unit_bounty_num_dice[28]=1
 set udg_unit_bounty_dice_sides[28]=3
 set udg_unit_range[28]=585
@@ -41402,7 +41426,7 @@ set udg_unit_att_base[29]=57
 set udg_unit_att_num_dice[29]=1
 set udg_unit_att_dice_sides[29]=3
 set udg_unit_att_CD[29]=1.2
-set udg_unit_bounty_base[29]=56
+set udg_unit_bounty_base[29]=42
 set udg_unit_bounty_num_dice[29]=1
 set udg_unit_bounty_dice_sides[29]=4
 set udg_unit_range[29]=160
@@ -41417,7 +41441,7 @@ set udg_unit_att_base[30]=105
 set udg_unit_att_num_dice[30]=1
 set udg_unit_att_dice_sides[30]=3
 set udg_unit_att_CD[30]=1
-set udg_unit_bounty_base[30]=95
+set udg_unit_bounty_base[30]=71
 set udg_unit_bounty_num_dice[30]=2
 set udg_unit_bounty_dice_sides[30]=6
 set udg_unit_range[30]=160
@@ -41432,7 +41456,7 @@ set udg_unit_att_base[31]=35
 set udg_unit_att_num_dice[31]=1
 set udg_unit_att_dice_sides[31]=4
 set udg_unit_att_CD[31]=1.2
-set udg_unit_bounty_base[31]=38
+set udg_unit_bounty_base[31]=28
 set udg_unit_bounty_num_dice[31]=1
 set udg_unit_bounty_dice_sides[31]=3
 set udg_unit_range[31]=560
@@ -41447,7 +41471,7 @@ set udg_unit_att_base[32]=43
 set udg_unit_att_num_dice[32]=1
 set udg_unit_att_dice_sides[32]=3
 set udg_unit_att_CD[32]=1.2
-set udg_unit_bounty_base[32]=57
+set udg_unit_bounty_base[32]=43
 set udg_unit_bounty_num_dice[32]=1
 set udg_unit_bounty_dice_sides[32]=5
 set udg_unit_range[32]=525
@@ -41462,7 +41486,7 @@ set udg_unit_att_base[33]=101
 set udg_unit_att_num_dice[33]=1
 set udg_unit_att_dice_sides[33]=2
 set udg_unit_att_CD[33]=1
-set udg_unit_bounty_base[33]=105
+set udg_unit_bounty_base[33]=79
 set udg_unit_bounty_num_dice[33]=2
 set udg_unit_bounty_dice_sides[33]=6
 set udg_unit_range[33]=500
@@ -41477,7 +41501,7 @@ set udg_unit_att_base[34]=56
 set udg_unit_att_num_dice[34]=1
 set udg_unit_att_dice_sides[34]=3
 set udg_unit_att_CD[34]=1.15
-set udg_unit_bounty_base[34]=55
+set udg_unit_bounty_base[34]=41
 set udg_unit_bounty_num_dice[34]=1
 set udg_unit_bounty_dice_sides[34]=4
 set udg_unit_range[34]=130
@@ -41492,7 +41516,7 @@ set udg_unit_att_base[35]=115
 set udg_unit_att_num_dice[35]=1
 set udg_unit_att_dice_sides[35]=3
 set udg_unit_att_CD[35]=1
-set udg_unit_bounty_base[35]=95
+set udg_unit_bounty_base[35]=71
 set udg_unit_bounty_num_dice[35]=2
 set udg_unit_bounty_dice_sides[35]=6
 set udg_unit_range[35]=150
@@ -41507,7 +41531,7 @@ set udg_unit_att_base[36]=48
 set udg_unit_att_num_dice[36]=1
 set udg_unit_att_dice_sides[36]=2
 set udg_unit_att_CD[36]=1.2
-set udg_unit_bounty_base[36]=40
+set udg_unit_bounty_base[36]=30
 set udg_unit_bounty_num_dice[36]=1
 set udg_unit_bounty_dice_sides[36]=3
 set udg_unit_range[36]=710
@@ -41522,7 +41546,7 @@ set udg_unit_att_base[37]=56
 set udg_unit_att_num_dice[37]=1
 set udg_unit_att_dice_sides[37]=3
 set udg_unit_att_CD[37]=1.3
-set udg_unit_bounty_base[37]=53
+set udg_unit_bounty_base[37]=40
 set udg_unit_bounty_num_dice[37]=1
 set udg_unit_bounty_dice_sides[37]=5
 set udg_unit_range[37]=150
@@ -41537,7 +41561,7 @@ set udg_unit_att_base[38]=101
 set udg_unit_att_num_dice[38]=1
 set udg_unit_att_dice_sides[38]=3
 set udg_unit_att_CD[38]=1.1
-set udg_unit_bounty_base[38]=95
+set udg_unit_bounty_base[38]=71
 set udg_unit_bounty_num_dice[38]=2
 set udg_unit_bounty_dice_sides[38]=6
 set udg_unit_range[38]=150
@@ -41552,7 +41576,7 @@ set udg_unit_att_base[39]=36
 set udg_unit_att_num_dice[39]=1
 set udg_unit_att_dice_sides[39]=4
 set udg_unit_att_CD[39]=1.2
-set udg_unit_bounty_base[39]=38
+set udg_unit_bounty_base[39]=28
 set udg_unit_bounty_num_dice[39]=1
 set udg_unit_bounty_dice_sides[39]=3
 set udg_unit_range[39]=655
@@ -41567,7 +41591,7 @@ set udg_unit_att_base[40]=34
 set udg_unit_att_num_dice[40]=1
 set udg_unit_att_dice_sides[40]=2
 set udg_unit_att_CD[40]=1.2
-set udg_unit_bounty_base[40]=42
+set udg_unit_bounty_base[40]=32
 set udg_unit_bounty_num_dice[40]=1
 set udg_unit_bounty_dice_sides[40]=3
 set udg_unit_range[40]=685
@@ -41582,7 +41606,7 @@ set udg_unit_att_base[41]=42
 set udg_unit_att_num_dice[41]=1
 set udg_unit_att_dice_sides[41]=2
 set udg_unit_att_CD[41]=1.25
-set udg_unit_bounty_base[41]=55
+set udg_unit_bounty_base[41]=41
 set udg_unit_bounty_num_dice[41]=1
 set udg_unit_bounty_dice_sides[41]=6
 set udg_unit_range[41]=775
@@ -41597,7 +41621,7 @@ set udg_unit_att_base[42]=101
 set udg_unit_att_num_dice[42]=1
 set udg_unit_att_dice_sides[42]=2
 set udg_unit_att_CD[42]=1
-set udg_unit_bounty_base[42]=95
+set udg_unit_bounty_base[42]=71
 set udg_unit_bounty_num_dice[42]=2
 set udg_unit_bounty_dice_sides[42]=6
 set udg_unit_range[42]=800
@@ -41612,25 +41636,25 @@ set udg_unit_att_base[43]=43
 set udg_unit_att_num_dice[43]=1
 set udg_unit_att_dice_sides[43]=2
 set udg_unit_att_CD[43]=1.2
-set udg_unit_bounty_base[43]=42
+set udg_unit_bounty_base[43]=32
 set udg_unit_bounty_num_dice[43]=1
 set udg_unit_bounty_dice_sides[43]=3
 set udg_unit_range[43]=150
 set udg_unit_level[43]=3
 
-// [44] Burning Archer (from 17)
-set udg_spawn_unit[44]='nskf'
-set udg_unit_HP[44]=555
-set udg_unit_armor_type[44]=1
-set udg_unit_armor[44]=0
-set udg_unit_att_base[44]=36
-set udg_unit_att_num_dice[44]=1
-set udg_unit_att_dice_sides[44]=3
-set udg_unit_att_CD[44]=1.10
-set udg_unit_bounty_base[44]=37
+// [44] Ghoul (from 17)
+set udg_spawn_unit[44]='ugho'
+set udg_unit_HP[44]=750
+set udg_unit_armor_type[44]=2
+set udg_unit_armor[44]=2
+set udg_unit_att_base[44]=16
+set udg_unit_att_num_dice[44]=2
+set udg_unit_att_dice_sides[44]=2
+set udg_unit_att_CD[44]=1.1
+set udg_unit_bounty_base[44]=28
 set udg_unit_bounty_num_dice[44]=1
 set udg_unit_bounty_dice_sides[44]=3
-set udg_unit_range[44]=640
+set udg_unit_range[44]=110
 set udg_unit_level[44]=2
 
 // [45] Skeletal Mage (from 19)
@@ -41642,7 +41666,7 @@ set udg_unit_att_base[45]=46
 set udg_unit_att_num_dice[45]=1
 set udg_unit_att_dice_sides[45]=2
 set udg_unit_att_CD[45]=1.1
-set udg_unit_bounty_base[45]=42
+set udg_unit_bounty_base[45]=32
 set udg_unit_bounty_num_dice[45]=1
 set udg_unit_bounty_dice_sides[45]=3
 set udg_unit_range[45]=800
@@ -41657,7 +41681,7 @@ set udg_unit_att_base[46]=47
 set udg_unit_att_num_dice[46]=1
 set udg_unit_att_dice_sides[46]=2
 set udg_unit_att_CD[46]=1
-set udg_unit_bounty_base[46]=42
+set udg_unit_bounty_base[46]=32
 set udg_unit_bounty_num_dice[46]=1
 set udg_unit_bounty_dice_sides[46]=3
 set udg_unit_range[46]=570
@@ -41672,7 +41696,7 @@ set udg_unit_att_base[47]=44
 set udg_unit_att_num_dice[47]=1
 set udg_unit_att_dice_sides[47]=3
 set udg_unit_att_CD[47]=1.2
-set udg_unit_bounty_base[47]=39
+set udg_unit_bounty_base[47]=29
 set udg_unit_bounty_num_dice[47]=1
 set udg_unit_bounty_dice_sides[47]=3
 set udg_unit_range[47]=700
@@ -41687,7 +41711,7 @@ set udg_unit_att_base[48]=34
 set udg_unit_att_num_dice[48]=1
 set udg_unit_att_dice_sides[48]=3
 set udg_unit_att_CD[48]=1.1
-set udg_unit_bounty_base[48]=40
+set udg_unit_bounty_base[48]=30
 set udg_unit_bounty_num_dice[48]=1
 set udg_unit_bounty_dice_sides[48]=2
 set udg_unit_range[48]=130
@@ -41702,7 +41726,7 @@ set udg_unit_att_base[49]=39
 set udg_unit_att_num_dice[49]=1
 set udg_unit_att_dice_sides[49]=3
 set udg_unit_att_CD[49]=1.2
-set udg_unit_bounty_base[49]=42
+set udg_unit_bounty_base[49]=32
 set udg_unit_bounty_num_dice[49]=1
 set udg_unit_bounty_dice_sides[49]=3
 set udg_unit_range[49]=475
@@ -41717,7 +41741,7 @@ set udg_unit_att_base[50]=41
 set udg_unit_att_num_dice[50]=1
 set udg_unit_att_dice_sides[50]=3
 set udg_unit_att_CD[50]=1.2
-set udg_unit_bounty_base[50]=39
+set udg_unit_bounty_base[50]=29
 set udg_unit_bounty_num_dice[50]=1
 set udg_unit_bounty_dice_sides[50]=3
 set udg_unit_range[50]=690
@@ -41811,7 +41835,7 @@ set udg_base_type[25]='h011'
 // 26 Rifleman
 set udg_base_type[26]='h02N'
 
-// 27 Headhunter
+// 27 Grunt
 set udg_base_type[27]='h023'
 
 // 28 Huntress
@@ -41862,7 +41886,7 @@ set udg_base_type[42]='h04G'
 // 43 Raider
 set udg_base_type[43]='h025'
 
-// 44 Burning Archer
+// 44 Ghoul
 set udg_base_type[44]='h02O'
 
 // 45 Skeletal Mage
@@ -41924,7 +41948,7 @@ endfunction
 
 function Trig_eight_start_timer_Actions takes nothing returns nothing
     // Start spawning footies every 8 seconds:
-    call StartTimerBJ(udg_spawnTimer, true, 5.416667)
+    call StartTimerBJ(udg_spawnTimer, true, 4.875)
 endfunction
 
 function InitTrig_eight_start_timer takes nothing returns nothing
@@ -42383,7 +42407,7 @@ function Trig_eight_Actions takes nothing returns nothing
         endloop
         set udg_X_playernumber=udg_X_playernumber + 1
     endloop
-    call StartTimerBJ(udg_spawnTimer, true, 6.666667)
+    call StartTimerBJ(udg_spawnTimer, true, 6.00)
 endfunction
 
 function InitTrig_eight takes nothing returns nothing
@@ -43343,7 +43367,7 @@ endfunction
 function InitTrig_five takes nothing returns nothing
     set gg_trg_five=CreateTrigger()
     call DisableTrigger(gg_trg_five)
-    call TriggerRegisterTimerEventPeriodic(gg_trg_five, 5.00)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_five, 4.50)
     call TriggerAddAction(gg_trg_five, function Trig_five_Actions)
 endfunction
 
@@ -43591,7 +43615,7 @@ endfunction
 function InitTrig_ten takes nothing returns nothing
     set gg_trg_ten=CreateTrigger()
     call DisableTrigger(gg_trg_ten)
-    call TriggerRegisterTimerEventPeriodic(gg_trg_ten, 7.50)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_ten, 6.75)
     call TriggerAddAction(gg_trg_ten, function Trig_ten_Actions)
 endfunction
 
@@ -43930,6 +43954,7 @@ function SKCapture takes integer victim, integer attacker returns nothing
         set SKKing[victim]=newKing
     endif
     set SKCaptures[newKing]=SKCaptures[newKing]+1
+    call PlaySoundBJ(gg_snd_TheHornOfCenarius)
     call SKSync()
     call DisplayTextToForce(udg_all_players, "King Mode: " + GetPlayerName(Player(attacker-1)) + " captured " + GetPlayerName(Player(victim-1)) + " for King " + GetPlayerName(Player(newKing-1)) + ".")
     call DisplayTextToPlayer(Player(victim-1), 0.0, 0.0, "Your base will rebuild in 3 seconds. Keep playing for your kingdom. Use -defect once to become independent.")
@@ -46935,6 +46960,7 @@ function SKDefect takes integer pn returns nothing
         return
     endif
     set SKDefected[pn]=true
+    call PlaySound("Abilities\\Spells\\Human\\CallToArms\\HumanCallToArmsWhat1.flac")
     set SKKing[pn]=pn
     set SKProtectUntil[pn]=SKClock+10
     if udg_base[pn] != null then

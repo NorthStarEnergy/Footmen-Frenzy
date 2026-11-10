@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Footmen Frenzy heroes, items, spells, units and mechanics, with separate 799W, 799X and Solo source editions.">
+  <meta name="theme-color" content="#101820">
+  <title>Footmen Frenzy Field Guide — archival wiki</title>
+  <link rel="stylesheet" href="wiki.css">
+  <link rel="stylesheet" href="icons.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><div class="sigil">FF</div><div><span class="eyebrow">COMMUNITY REFERENCE · ARCHIVAL BUILD</span><h1>Footmen Frenzy <em>Field Guide</em></h1></div></div>
+    <p class="mast-note">A browsable, source-linked guide assembled from the recovered 799W / 799X material.</p>
+  </header>
+  <div class="edition-notice"><strong>Edition matters.</strong> This collection spans separate 799W, 799X, Solo Foots and other builds. Pages identify their source; values from different builds are not combined as if they were one balance version.</div>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Wiki sections">
+      <div class="side-label">FIELD GUIDE</div>
+      <button class="nav active" data-page="home"><span>⌂</span> Overview</button>
+      <button class="nav" data-page="heroes"><span>♜</span> Heroes <b id="nav-hero-count"></b></button>
+      <button class="nav" data-page="items"><span>✦</span> Items & usage</button>
+      <button class="nav" data-page="units"><span>◈</span> Units & spawns</button>
+      <button class="nav" data-page="spells"><span>✧</span> Spell notes</button>
+      <button class="nav" data-page="guides"><span>≡</span> Mechanics & guides</button>
+      <button class="nav" data-page="sources"><span>▤</span> Sources & limits</button>
+      <div class="sidebar-foot">COMMUNITY WIKI<br><span>Public · no account required</span></div>
+    </aside>
+    <main id="content" tabindex="-1">
+      <section class="page active" id="page-home">
+        <div class="hero-banner"><div class="banner-copy"><div class="eyebrow">THE FIELD GUIDE</div><h2>Know the roster.<br><em>Know the build.</em></h2><p>Browse hero attributes, spell research, unit data, item observations and mechanics guides—each with its provenance kept visible.</p><button class="primary" data-open="heroes">Explore the hero roster <span>→</span></button></div><div class="banner-mark" aria-hidden="true">799</div></div>
+        <div class="stats-grid" id="overview-stats"></div>
+        <div class="section-heading"><div><div class="eyebrow">START EXPLORING</div><h2>Archive contents</h2></div></div>
+        <div class="feature-grid">
+          <button class="feature-card" data-open="heroes"><span class="feature-icon">♜</span><strong>Hero directory</strong><span>Base attributes, growth, rawcodes, categories and available spell notes.</span></button>
+          <button class="feature-card" data-open="items"><span class="feature-icon">✦</span><strong>Items & observations</strong><span>Prices and recorded purchase summaries; source-set caveats included.</span></button>
+          <button class="feature-card" data-open="units"><span class="feature-icon">◈</span><strong>Units & spawns</strong><span>Extracted unit stats, spawn data and balance-object references.</span></button>
+        </div>
+        <div class="callout"><strong>Editorial note</strong><p>This is a first-pass archival reference, not an official or current balance authority. Trigger-only effects and inherited Warcraft baseline values may change the in-game result.</p></div>
+      </section>
+
+      <section class="page" id="page-heroes">
+        <div class="eyebrow">ROSTER REFERENCE · 799W TESTER</div><h2>Heroes</h2>
+        <p class="lede">The recovered catalog lists hero identity and base attributes from an extracted map script. Select a row for its available spell notes.</p>
+        <div class="toolbar"><label class="select-label">Roster <select id="hero-variant"></select></label><label class="search"><span>⌕</span><input id="hero-search" type="search" placeholder="Search name or rawcode…" autocomplete="off"></label><span class="result-count" id="hero-count"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>#</th><th>Art</th><th>Hero</th><th>Rawcode</th><th>Category</th><th>STR</th><th>AGI</th><th>INT</th><th>Move</th></tr></thead><tbody id="heroes-body"></tbody></table></div>
+        <div id="hero-detail" class="detail-panel hidden"></div>
+      </section>
+
+      <section class="page" id="page-items">
+        <div class="eyebrow">OBSERVED PURCHASES · SOURCE VERSION UNCONFIRMED</div><h2>Items & usage</h2>
+        <p class="lede">This captured aggregate includes item price, buyer counts, share and level-band observations. Treat it as a dataset to investigate, not a universal build recommendation.</p>
+        <div class="callout warning"><strong>Interpret with care</strong><p>The source CSV is labeled <code>game=1v1</code>; its exact map build, sample window and collection method are not established. It is kept separate from the 799W hero catalog.</p></div>
+        <div class="toolbar"><label class="search"><span>⌕</span><input id="item-search" type="search" placeholder="Search items…" autocomplete="off"></label><span class="result-count" id="item-count"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Price</th><th>Buyers</th><th>Share</th><th>Lv 1–9</th><th>Lv 10–13</th><th>Lv 14–17</th><th>Lv 18</th></tr></thead><tbody id="items-body"></tbody></table></div>
+        <h3 class="subheading">Hero purchase summaries</h3><p class="muted">“Bought any” and “top items” are copied from the same aggregate source.</p>
+        <div class="toolbar"><label class="search"><span>⌕</span><input id="hero-usage-search" type="search" placeholder="Search heroes…" autocomplete="off"></label><span class="result-count" id="hero-usage-count"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>Hero</th><th>Mode</th><th>Players</th><th>Bought any</th><th>Top recorded items</th></tr></thead><tbody id="hero-usage-body"></tbody></table></div>
+        <h3 class="subheading">799X item value model · v41</h3>
+        <p class="muted">A separate extracted balance-analysis snapshot for 219 non-information items. “Reference gold” is an analytical estimate of item effects, not the shop price. Entries may contain unpriced effects or partial coverage.</p>
+        <div class="callout warning"><strong>Different source, different question</strong><p>This model comes from <code>FF799X_Rx_ItemBalance_v41.w3x</code>; it is not the 1v1 purchase-observation dataset above and is not merged with it.</p></div>
+        <div class="toolbar"><label class="search"><span>⌕</span><input id="model-item-search" type="search" placeholder="Search modeled items…" autocomplete="off"></label><span class="result-count" id="model-item-count"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>Art</th><th>Item</th><th>Rawcode</th><th>Class</th><th>Cost</th><th>Reference gold</th><th>Coverage</th></tr></thead><tbody id="model-items-body"></tbody></table></div>
+        <div id="model-item-detail" class="detail-panel hidden"></div>
+        <h3 class="subheading">Shop reachability snapshot</h3><p class="muted">An extraction audit found 20 shop types, reporting whether each was reachable in its analyzed build.</p>
+        <p id="shop-method" class="muted"></p>
+        <div class="table-wrap"><table><thead><tr><th>Shop</th><th>Rawcode</th><th>Reachable</th><th>Stock entries</th><th>Invalid IDs</th></tr></thead><tbody id="shops-body"></tbody></table></div>
+        <details class="source-details"><summary>Read the 19 audited recipe combinations</summary><div id="recipe-audit-content" class="guide-content"></div></details>
+      </section>
+
+      <section class="page" id="page-units">
+        <div class="eyebrow">EXTRACTED OBJECT DATA · VARIANTS KEPT SEPARATE</div><h2>Units & spawns</h2>
+        <p class="lede">The recovered v85 unit-stat generator has separate 799X and Solo outputs. Its data includes configured spawn entries and derived combat/bounty fields; map script or runtime behavior may override object-editor values.</p>
+        <div class="toolbar"><label class="select-label">Dataset <select id="unit-variant"></select></label><label class="search"><span>⌕</span><input id="unit-search" type="search" placeholder="Search unit or rawcode…" autocomplete="off"></label><span class="result-count" id="unit-count"></span></div>
+        <div class="table-wrap"><table><thead id="units-head"></thead><tbody id="units-body"></tbody></table></div>
+        <details class="source-details"><summary>About these numbers</summary><p>These are extracted or calculated dataset values, not live measurements. Damage ranges and nominal DPS are model calculations. Confirm against the cited build and test in-game before using them for balance claims.</p></details>
+      </section>
+
+      <section class="page" id="page-spells">
+        <div class="eyebrow">FIRST EXTRACTED DRAFT · 16 BASIC HEROES</div><h2>Spell notes</h2>
+         <p class="lede">The recovered spell breakdown has behavior summaries and per-level tables for 16 basic heroes. Values use the 799W tester map where explicit, or an exact-rawcode match in the separate recovered 799W wiki snapshot; that snapshot is not confirmed to be the same build. A dash means a value was unavailable or not safely resolvable in the cited source, not zero.</p>
+        <label class="search spell-search"><span>⌕</span><input id="spell-search" type="search" placeholder="Search spell notes…" autocomplete="off"></label>
+        <div id="spell-articles"></div>
+        <div class="callout warning"><strong>Not all 91 heroes are covered here.</strong><p>Use the spell notes as a starting point, then verify ability data and trigger code for the exact map build.</p></div>
+      </section>
+
+      <section class="page" id="page-guides">
+        <div class="eyebrow">MECHANICS · SOURCE DOCUMENTS</div><h2>Mechanics & guides</h2>
+        <p class="lede">Recovered design notes and catalogs are linked below. They refer to specific builds; read the source header before applying any guidance.</p>
+        <div id="guide-list" class="guide-list"></div>
+      </section>
+
+      <section class="page" id="page-sources">
+        <div class="eyebrow">PROVENANCE FIRST</div><h2>Sources & limitations</h2>
+        <p class="lede">Every data family remains associated with its recovered source. This avoids treating old test maps, generated tables and match observations as one coherent live ruleset.</p>
+        <div id="source-list" class="source-list"></div>
+        <div class="callout"><strong>About this public edition</strong><p>Only curated game-reference data and images are included. Player identities, match logs and raw replays are excluded. Warcraft III and inherited game assets belong to their respective owners. This is an unofficial community project.</p></div>
+        <p class="muted">This wiki is an archival community reference, not an official source and not a substitute for in-game verification.</p>
+      </section>
+      <footer>FIELD GUIDE · BUILT FROM RECOVERED LOCAL ARCHIVES <span id="build-stamp"></span></footer>
+    </main>
+  </div>
+  <script src="wiki-data.js"></script>
+  <script src="wiki.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+# Changelog
+
+## Unreleased
+
+- Built `releases/799W-tester-recode-pass-21.w3x` from an independent recovery of Claude's unfinished Pass 19/20 review.
+- Fixed cross-team inactive cleanup so defeating one team cannot delete another surviving team's abandoned-base controls.
+- Preserved connected defeated players' center vision across later cleanup and removed transient controls/vision when their owner departs.
+- Revalidated stale votekick and autopool dialogs against current participation state.
+- Removed the autopool threshold force leak/stale-force destruction and temporary-force allocation in the reviewed votekick paths.
+- Retired the uncalled Visibility action while retaining all 499 trigger initializers.
+- Passed strict `pjass`, War3Net parsing, scenario checks, the whole-script audit, deterministic rebuild, and full archive round-trip verification.
+- Built `releases/799W-tester-recode-pass-20.w3x` with a unified player, base, team, visibility, and victory lifecycle.
+- Fixed the leaver-base failure: a connected base-less player now keeps the team alive while any allied base survives.
+- Separated living-base state from connected-player state and made team defeat require a missing base or a fully abandoned team.
+- Unified abandoned-base controls and gold distribution, preserved controls for connected base-less allies, and distributed gold remainders.
+- Routed admin kicks through the same idempotent departure handler and rejected departed players from AR, swap, votekick, and autopool targets.
+- Made inactive cleanup and defeated-team visibility one-shot operations.
+- Replaced the repeated endgame branches with one guarded four-team result path and removed retired KOTH/6v6 lifecycle code.
+- Removed 114 generated lifecycle helpers, added 28 named helpers, and retained all 499 trigger initializers.
+- Passed strict `pjass`, War3Net parsing, modeled lifecycle scenarios, the whole-script audit, deterministic rebuild, and full archive round-trip verification.
+- Built `releases/799W-tester-recode-pass-19.w3x` with the reviewed transient enumeration and shared-handle repairs.
+- Confirmed from Warcraft's installed `Blizzard.j` that matching-group BJ wrappers destroy inline boolexpr filters; retained those correct ownership paths.
+- Reused and destroyed the Unit Indexer's one-shot initial-enumeration filter instead of creating sixteen unowned filters.
+- Added destruction ownership to all 18 remaining anonymous `ForGroupBJ(GetUnits...)` enumerations.
+- Corrected Cripple Wave's cross-spell point cleanup and Mirror Image's duplicate missile-location removal.
+- Repaired Purge the Dead's filter context, duplicate target point, and corpse effects.
+- Removed stale shared-group destruction from Scroll of Invisibility and Scroll of Inner Fire.
+- Rebuilt allied upgrade propagation, Frostbolt tower enumeration, pings, and teammate base-survival checks with local group/force ownership.
+- Removed one obsolete upgrade helper while preserving all 499 trigger initializers.
+- Passed strict `pjass`, the bundled compatibility parser, and round-trip verification of script, object data, GUI trigger data, and custom trigger text.
+- Built `releases/799W-tester-recode-pass-18.w3x` with a complete Guardian Force Field lifecycle rewrite.
+- Matched the six-level `AFOR` object data and restored its intended 1/1/3/3/5/5 wall pattern; levels 3-6 previously entered impossible or unreachable branches.
+- Replaced uninitialized side-wall points with deterministic projections from each field's stored center and cast angle.
+- Made expiry, detonation, stun, pathing removal, and effect destruction use the currently processed field instead of the newest field.
+- Compacted active field instances without retaining duplicate or stale hashtable effect handles.
+- Removed eleven obsolete generated branch helpers while preserving all 499 trigger initializers.
+- Passed the bundled `pjass +nosemanticerror` parser and round-trip verified the script, unit data, and ability data by SHA256.
+- Built `releases/799W-tester-recode-pass-17.w3x` from the confirmed Pass 16 external-review findings.
+- Corrected all four shop-kill zones to push 350 units toward `udg_centermap`; the previous corner target was a long-standing original-map bug.
+- Corrected Scroll of Beast to enumerate the playable map instead of the 64x96 `gg_rct_ENTIRE_MAP` corner sliver.
+- Changed both Mass footman callbacks to target the same `udg_centermap` coordinates as hero autosend.
+- Made River Staff impact use the active missile's source and trajectory, so overlapping Monkey King casts cannot teleport the wrong caster.
+- Cleared Akama's stored point after Blink Return, labeled all 39 compatibility stubs, and corrected the stale 30-second setup comment.
+- Preserved all 499 trigger initializers and the 26-candidate conservative audit result.
+- Passed the bundled `pjass +nosemanticerror` syntax parser and round-trip verified the script and unit object data by SHA256.
+- Built `releases/799W-tester-recode-pass-16.w3x` after tracing the remaining spell ownership candidates.
+- Reused River Staff's existing caster point for its missile start instead of allocating an unowned inline point.
+- Released Akama's stored Blink return point when the five-second return window expires unused while preserving the return-trigger cleanup path.
+- Confirmed The Nook owns its stored Hellseek point on both exit paths and `MissileCreate` owns all submitted start/finish points.
+- Reduced static leak candidates from 27 to 26 while preserving all 499 trigger initializers.
+- Passed the bundled `pjass` syntax parser and round-trip verified the script and unit object data by SHA256.
+- Built `releases/799W-tester-recode-pass-15.w3x` with seven reviewed local handle repairs.
+- Cleaned River Staff impact and Alchemist bounty temporary locations without changing their effects or values.
+- Cleaned every replaced point in Thor Powerhit's movement loop while preserving its original forward/backstep sequence.
+- Made Jaina ultimate keep its three orb units local to each cast, cleaned all temporary points, and destroyed the lightning target group.
+- Cleaned temporary locations and selected-unit groups in the three remaining debug helpers.
+- Reduced static leak candidates from 34 to 27 while preserving all 499 trigger initializers.
+- Passed the bundled `pjass` syntax parser and round-trip verified the script and unit object data by SHA256.
+- Built `releases/799W-tester-recode-pass-14.w3x` after tracing the unresolved startup tower and `R00N` fragments.
+- Removed an impossible `GetTriggerUnit()` structure condition and its unreachable ten-base availability block while preserving per-player starting gold.
+- Identified `R00N` as Reinforced Defenses and removed its lone level-zero write to player 13.
+- Removed the 280-second upgrade-delay timer because no trigger observed its expiration, including its now-unused global and initialization.
+- Preserved the real `R00D`, `R00G`, and `R00E` tier-delay triggers, all 499 trigger initializers, and pass-13 object data.
+- Passed the bundled `pjass` syntax parser and round-trip verified the script and unit object data by SHA256.
+- Built `releases/799W-tester-recode-pass-13.w3x` with reviewed boundary/shop/Phoenix and Mass Start cleanup.
+- Replaced twelve leaking point paths with coordinate movement while preserving offsets, autosend orders, Ankh removal, kills, and warning text.
+- Fixed both Mass Start branches leaking one temporary footman group per player; each enumeration group now has immediate local ownership and cleanup.
+- Reduced static leak candidates from 46 to 34 while preserving all 499 trigger initializers.
+- Passed the bundled `pjass` syntax parser and round-trip verified the script and unit object data by SHA256.
+- Built `releases/799W-tester-recode-pass-12.w3x` with only Pub Default and Pub Custom setup paths.
+- Limited Pub Custom to 2K, No Transmute, and No Pool before Red chooses SD/AP/AR.
+- Made No Transmute exclude all six cataloged Transmute heroes in SD, AP, and AR while keeping twelve SD choices through a second wildcard round.
+- Fixed No Pool so normal resource trading remains locked and all autopool triggers stay disabled.
+- Replaced 37 KOTH, Colossal, 1v1, Inhouse, Pro, balanced, and grouped-spawn implementations with disabled compatibility stubs.
+- Preserved mass-bonus spawning, the individual per-unit spawn scheduler, all 499 trigger initializers, and the pass-10 tavern object edits.
+- Reduced the generated script from 49,320 lines / 2,785 functions to 45,962 audited lines / 2,590 functions; static leak candidates fell from 51 to 46.
+- Passed the bundled `pjass` syntax parser and round-trip verified `war3map.j` and `war3map.w3u` by SHA256.
+- Built `releases/799W-tester-recode-pass-11.w3x` as the corrected startup build; pass 10 is superseded because its injected SD wildcard ended with two JASS statements on one line.
+- Repaired `Start_game`, `Start_SD`, `Start_AP`, and `Start_AR` one-shot group/location ownership without changing unresolved tower or tech rules.
+- Removed the duplicate `Start_game` trigger destruction and limited the Colossal timer dialog to games where Colossals are enabled.
+- Removed three leftover SD count messages, released all temporary SD source/subgroups, and preserved twelve unique SD choices.
+- Added the missing AP tavern `#9` label and bounded the last AP stock range to `udg_total_hero_count` instead of reading hero slots 92-93.
+- Rebuilt AR selection as a unique draw without replacement; `udg_random_hero[player]` now records the hero actually granted, so AR repick is consistent.
+- Removed one obsolete AR helper and the repick command's duplicate temporary-force destruction.
+- Passed the Warcraft installation's bundled `pjass` syntax parser across the complete generated script.
+- Preserved all 499 trigger initializer entry points and round-trip verified both `war3map.j` and `war3map.w3u` by SHA256.
+- Built `releases/799W-tester-recode-pass-10.w3x` with Red-only game setup and no player voting.
+- Changed the AFK fallback to exactly ten seconds and made it start Pub Default / Single Draft once.
+- Replaced AP/AR/SD vote tallying with immediate Red-only selection from the existing setup unit.
+- Preserved Pub Custom special-mode purchases and Colossal wave configuration for Red.
+- Disabled automatic 1v1 startup so it cannot bypass Red's setup choice.
+- Changed tavern object field `utco` from 8 to 12 for AP tavern `n01A` and SD tavern `n02I`.
+- Added one unique wildcard hero to each SD team tavern after the eleven category picks.
+- Verified packed pass-10 `war3map.j` and `war3map.w3u` by round-trip SHA256 comparison.
+- Built `releases/799W-tester-recode-pass-9.w3x` as the item/runtime recode stage.
+- Replaced the 1,143-line item-limit block with 99 lines of named rules and helpers.
+- Removed 82 anonymous item-limit functions while preserving all 26 rawcodes, 20 caps, 9 hero restrictions, custom messages, and double-removal order.
+- Added `docs/item_limit_catalog.md`, `src/systems/item_limits_pass_8.jass`, and `work/RecodeItemLimits`.
+- Removed self-contained location leaks from Forked Fury, constructed item walls, and Architect towers.
+- Reduced static leak candidates from 54 to 51 in pass 9.
+- Verified recode pass 9 by round-trip extraction with SHA256 `9ebf52f103f437ff8518323e5061570c5110b46bdd26de793b6f891a08ae52e1`.
+- Built `releases/799W-tester-recode-pass-7.w3x` as the current recode baseline.
+- Fixed both hook variants leaking movement locations every timer tick.
+- Fixed copied hook cleanup destroying the unrelated Mjolnir target group.
+- Fixed hook dummy facing using the shared loop index instead of the casting player index.
+- Fixed hook and glaive shared timers disabling while another player's cast was active.
+- Destroyed hook random subgroups after target selection.
+- Replaced glaive angle and distance location allocations with coordinate math.
+- Reworked sinkhole cleanup so timer completion uses the correct player and subsequent casts recreate their dummy group.
+- Removed sinkhole per-tick temporary group/filter leaks and stale completion-sound location use.
+- Removed prison exile and block-point location leaks and made expiration cleanup run once per cast.
+- Added `work/RecodeSpellCleanup`, `work/RecodeGlaiveLoop`, and `work/RecodeHookLoops`.
+- Verified recode pass 7 by round-trip extraction with SHA256 `aec3f0ca591c2bf2f5860030c3fbdb3595eaf2abc0843c1642fad2b569a4fbbb`.
+- Built `releases/799W-tester-recode-pass-4.w3x` as the current recode baseline.
+- Replaced the showroom page selector with a ten-row lookup and one shared filter.
+- Fixed unrelated unit sales being able to destroy a stale shared unit group.
+- Removed 28 generated page-system helper functions and eliminated its temporary-location leak.
+- Added `work/RecodePageSystem` and `src/systems/page_system.jass`.
+- Verified recode pass 4 by round-trip extraction with SHA256 `11fe54580a9f171369c44e5e1e7138946d5a5335d137aa5bcd3930f28270ab62`.
+- Built `releases/799W-tester-recode-pass-3.w3x` as the current recode baseline.
+- Replaced 91 repeated hero rawcode rows and 819 repeated hero-stat assignments with validated generated setters.
+- Replaced 663 repeated spawn-unit assignments with 51 validated generated rows.
+- Added `work/RecodeHeroSetup` and `work/RecodeSpawnData` repeatable migration tools.
+- Added `src/systems/hero_setup.generated.jass` and `src/systems/spawn_unit_data.generated.jass`.
+- Preserved hero initialization timing, spawn initialization timing, trigger entry points, and all original values.
+- Verified recode pass 3 by extracting its packed `war3map.j` and matching SHA256 `fac75e44235bc2372f6834e014147861d5de7e41f24e5fa36e31eab196e8559a`.
+- Added whole-map JASS audit and recode plan.
+- Added `work/JassAudit` trigger/function/leak audit tool.
+- Added `work/JassCleanCandidate` safe no-op cleanup tool.
+- Added `work/ReplaceWar3MapScript` generic map-script replacement tool.
+- Added `src/jass/war3map.original.j` as the immutable original JASS baseline.
+- Built `releases/799W-tester-cleaned-jass.w3x`.
+- Built `releases/799W-tester-individual-spawn-cleaned-jass.w3x`.
+- Removed 380 `DoNothing()` no-op calls from the cleaned script candidates.
+- Verified cleaned release scripts by round-trip extraction and SHA256 comparison.
+- Added basic hero spell breakdown draft for the first 16 heroes.
+- Added standalone visual spell-card page for the basic hero breakdowns.
+- Added `work/BuildBasicHeroSpellDocs` extraction/build tool.
+- Injected the individual spawn-rate system into `releases/799W-tester-individual-spawn.w3x`.
+- Added `work/InjectIndividualSpawn` build tool for repeatable map-script injection.
+- Added individual spawn-rate JASS replacement system.
+- Added integration notes for replacing grouped `eight`/`five`/`ten` spawn timers.
+- Added spawn unit catalog and spawn system notes.
+- Added src/data/spawn_units.lua as readable per-unit spawn data.
+- Generated 91-hero Lua catalog from extracted trigger script.
+- Added readable docs/hero_catalog.md table.
+- Created Git/Codex-friendly project structure.
+- Copied original packed map into `map/`.
+- Copied recovered disassembly into `extracted/799W-tester/`.
+- Added starter Lua module layout under `src/`.
+- Added documentation placeholders for trigger migration, hero balance, taverns, and known bugs.
+
+

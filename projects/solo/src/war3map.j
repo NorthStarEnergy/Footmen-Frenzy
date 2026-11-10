@@ -17884,10 +17884,10 @@ function Trig_Unit_Experience_System_Func004Func014C takes nothing returns boole
     if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'hrif' ) ) then
         return true
     endif
-    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ohun' ) ) then
+    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ogru' ) ) then
         return true
     endif
-    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'nskf' ) ) then
+    if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'ugho' ) ) then
         return true
     endif
     if ( ( GetUnitTypeId(udg_ExpDeadUnit_Copy) == 'earc' ) ) then
@@ -19747,7 +19747,6 @@ function Trig_start_timers_Actions takes nothing returns nothing
     // this trigger is being executed from the 'start game' trigger
     call StartTimerBJ(udg_timer_AI_hero_pick, false, 15.00)
     call StartTimerBJ(udg_timer_foots_increase, false, 480.00)
-    call StartTimerBJ(udg_timer_BountyIncrease, false, 2200.00)
     call StartTimerBJ(udg_timer_unit_ugrades, false, 70.00)
     call StartTimerBJ(udg_timer_tech_delay_t1, false, 90.00)
     call StartTimerBJ(udg_timer_tech_delay_t2, false, 220.00)
@@ -40703,19 +40702,19 @@ set udg_unit_bounty_dice_sides[16]=3
 set udg_unit_range[16]=690
 set udg_unit_level[16]=3
 
-// Burning Archer
-set udg_spawn_unit[17]='nskf'
-set udg_unit_HP[17]=550
-set udg_unit_armor_type[17]=1
-set udg_unit_armor[17]=0
-set udg_unit_att_base[17]=36
-set udg_unit_att_num_dice[17]=1
-set udg_unit_att_dice_sides[17]=3
+// Ghoul
+set udg_spawn_unit[17]='ugho'
+set udg_unit_HP[17]=750
+set udg_unit_armor_type[17]=2
+set udg_unit_armor[17]=2
+set udg_unit_att_base[17]=16
+set udg_unit_att_num_dice[17]=2
+set udg_unit_att_dice_sides[17]=2
 set udg_unit_att_CD[17]=1.1
 set udg_unit_bounty_base[17]=37
 set udg_unit_bounty_num_dice[17]=1
 set udg_unit_bounty_dice_sides[17]=3
-set udg_unit_range[17]=640
+set udg_unit_range[17]=110
 set udg_unit_level[17]=2
 
 // Milita
@@ -40793,19 +40792,19 @@ set udg_unit_bounty_dice_sides[22]=3
 set udg_unit_range[22]=585
 set udg_unit_level[22]=3
 
-// Headhunter
-set udg_spawn_unit[23]='ohun'
-set udg_unit_HP[23]=540
-set udg_unit_armor_type[23]=1
-set udg_unit_armor[23]=1
-set udg_unit_att_base[23]=24
-set udg_unit_att_num_dice[23]=2
-set udg_unit_att_dice_sides[23]=3
-set udg_unit_att_CD[23]=1.10
+// Grunt
+set udg_spawn_unit[23]='ogru'
+set udg_unit_HP[23]=900
+set udg_unit_armor_type[23]=2
+set udg_unit_armor[23]=3
+set udg_unit_att_base[23]=27
+set udg_unit_att_num_dice[23]=1
+set udg_unit_att_dice_sides[23]=4
+set udg_unit_att_CD[23]=1.6
 set udg_unit_bounty_base[23]=38
 set udg_unit_bounty_num_dice[23]=1
 set udg_unit_bounty_dice_sides[23]=3
-set udg_unit_range[23]=610
+set udg_unit_range[23]=110
 set udg_unit_level[23]=2
 
 // Tauren
@@ -40854,19 +40853,19 @@ set udg_unit_bounty_dice_sides[26]=3
 set udg_unit_range[26]=600
 set udg_unit_level[26]=2
 
-// [27] Headhunter (from 23)
-set udg_spawn_unit[27]='ohun'
-set udg_unit_HP[27]=540
-set udg_unit_armor_type[27]=1
-set udg_unit_armor[27]=1
-set udg_unit_att_base[27]=24
-set udg_unit_att_num_dice[27]=2
-set udg_unit_att_dice_sides[27]=3
-set udg_unit_att_CD[27]=1.10
+// Grunt
+set udg_spawn_unit[27]='ogru'
+set udg_unit_HP[27]=900
+set udg_unit_armor_type[27]=2
+set udg_unit_armor[27]=3
+set udg_unit_att_base[27]=27
+set udg_unit_att_num_dice[27]=1
+set udg_unit_att_dice_sides[27]=4
+set udg_unit_att_CD[27]=1.6
 set udg_unit_bounty_base[27]=38
 set udg_unit_bounty_num_dice[27]=1
 set udg_unit_bounty_dice_sides[27]=3
-set udg_unit_range[27]=610
+set udg_unit_range[27]=110
 set udg_unit_level[27]=2
 
 // [28] Huntress (from 22)
@@ -41109,19 +41108,19 @@ set udg_unit_bounty_dice_sides[43]=3
 set udg_unit_range[43]=150
 set udg_unit_level[43]=3
 
-// [44] Burning Archer (from 17)
-set udg_spawn_unit[44]='nskf'
-set udg_unit_HP[44]=550
-set udg_unit_armor_type[44]=1
-set udg_unit_armor[44]=0
-set udg_unit_att_base[44]=36
-set udg_unit_att_num_dice[44]=1
-set udg_unit_att_dice_sides[44]=3
-set udg_unit_att_CD[44]=1.10
+// Ghoul
+set udg_spawn_unit[44]='ugho'
+set udg_unit_HP[44]=750
+set udg_unit_armor_type[44]=2
+set udg_unit_armor[44]=2
+set udg_unit_att_base[44]=16
+set udg_unit_att_num_dice[44]=2
+set udg_unit_att_dice_sides[44]=2
+set udg_unit_att_CD[44]=1.1
 set udg_unit_bounty_base[44]=37
 set udg_unit_bounty_num_dice[44]=1
 set udg_unit_bounty_dice_sides[44]=3
-set udg_unit_range[44]=640
+set udg_unit_range[44]=110
 set udg_unit_level[44]=2
 
 // [45] Skeletal Mage (from 19)
