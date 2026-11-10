@@ -7,9 +7,15 @@ param(
  [string]$MapsRoot=(Join-Path $env:USERPROFILE 'Documents\Warcraft III\Maps')
 )
 $ErrorActionPreference='Stop'
-& $Python (Join-Path $PSScriptRoot 'tools\build_map.py') $Project --name $Name
-if($LASTEXITCODE -ne 0){throw 'Map build or verification failed; nothing installed'}
 $meta=Get-Content -LiteralPath (Join-Path $PSScriptRoot "projects\$Project\project.json") -Raw|ConvertFrom-Json
+$publishArgs=@()
+if(-not $LocalOnly){
+ $ref=git -C $PSScriptRoot ls-remote --exit-code origin "refs/heads/$($meta.branch)"
+ if($LASTEXITCODE -ne 0){throw "Could not identify the publication base on $($meta.branch). Use -LocalOnly for an offline build."}
+ $publishArgs=@('--source-parent',($ref -split '\s+')[0])
+}
+& $Python (Join-Path $PSScriptRoot 'tools\build_map.py') $Project --name $Name @publishArgs
+if($LASTEXITCODE -ne 0){throw 'Map build or verification failed; nothing installed'}
 $source=Join-Path $PSScriptRoot "build\$Project\$Name"
 & (Join-Path $PSScriptRoot 'tools\Install-Wc3Map.ps1') -Source $source -Channel Tests -MapType $meta.map_type -MapsRoot $MapsRoot
 $hash=(Get-FileHash -LiteralPath $source).Hash
