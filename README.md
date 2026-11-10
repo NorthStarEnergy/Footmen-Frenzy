@@ -32,7 +32,7 @@ Windows, Python 3.10+, and a 64-bit StormLib DLL are required. Copy `tools.local
 .\Build-Map.ps1 -Project ffa -Name Solo_Foots_8P_FFA_v18.w3x
 ```
 
-Edit `src` first. This changes the output filename; update map titles in the source separately when appropriate. The builder copies the complete baseline, replaces changed payloads, compiles changed JASS, verifies roundtrip bytes and untouched named entries, and writes its verification report under ignored `build/`. Removing a source file does not delete an archive entry. Game and World Editor testing remain necessary for gameplay changes.
+Edit `src` first. The builder sets the in-client map title to the output filename without the .w3x extension and verifies it in the packed map. The builder copies the complete baseline, replaces changed payloads, compiles changed JASS, verifies roundtrip bytes and untouched named entries, and writes its verification report under ignored `build/`. Removing a source file does not delete an archive entry. Game and World Editor testing remain necessary for gameplay changes.
 
 The PowerShell entry point then installs into local `Documents/Warcraft III/Maps/Tests/<map type>`, archives the previous test inside `Test Archives`, and synchronizes `Maps/<map type>`. Exactly one active test remains. Previous main copies go into `Maps/Archive/<map type>`. It never deploys into `Maps/Foots` unless separately requested and never writes maps into OneDrive or singular `Maps/Test`. Use `-Python` or `-MapsRoot` to override local executable/destination paths.
 

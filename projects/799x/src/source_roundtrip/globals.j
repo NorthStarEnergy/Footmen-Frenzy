@@ -2590,6 +2590,18 @@ constant real zoom__gFogZStart= 3000.00
 constant real zoom__gFogZEnd= 5000.00
 framehandle zoom__slider= null
 framehandle zoom__sliderLabel= null
+// Local UI preferences; never consulted by simulation code.
+framehandle spellKeysPanel
+framehandle spellKeysClose
+framehandle spellKeysToggle
+framehandle array spellKeysRows
+hashtable spellKeysNativeKeys
+framehandle array spellKeysBadges
+item array spellKeysTargetItem
+framehandle array spellKeysCommands
+integer array spellKeysBinding
+integer spellKeysEditing = -1
+boolean spellKeysOpen = false
 framehandle zoom__lockButton= null
 framehandle zoom__lockLabel= null
 boolean array zoom__sliderLocked
@@ -3009,6 +3021,8 @@ boolean array FFR_Locked
     real array FS_EmpowerEnd
     real array FS_FlurryEnd
     constant integer FS_DETONATE = 'AGr8'
+    real array FS_BarrelTravel
+    real array FS_BarrelYaw
     real array FS_BarrelHeading
     real array FS_BarrelAngle
     real array FS_BarrelRadius

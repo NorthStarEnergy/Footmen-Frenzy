@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "a694d8d556a2373447c0b5c9f8966be97b5e1648d8cd2a5edc14f1281e4255f9",
-  "runtime_functions": 3780,
+  "compiled_source_sha256": "19699d4ea8d14b96f9347662326629c4ab9151d5aa405772038cca81bf3589a3",
+  "runtime_functions": 3800,
   "editor_generated_functions": [
     "CreateAllUnits",
     "CreateBuildingsForPlayer0",
@@ -51,15 +51,15 @@
     "main"
   ],
   "editor_generated_globals": 165,
-  "globals_sha256": "8e3792c3b121cca19e3b1811c3e2db59bbd2742ef62dfc6febc7dbd0cb634f59",
-  "runtime_sha256": "9e19dc6fd37ed3c25056ecd1f36da2bb7731cb860ade8377a390cc0d54ec3a89",
+  "globals_sha256": "55151d5718abb9e8baa381f401786ec5d26537138fd8770b4f526253cdcc6c10",
+  "runtime_sha256": "a29331c5c6b0934d9d789adef80917f380dfc59fefe100c23fb081fa0a5ceebe",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "82858cb2460b5ef7270c6d9ca7528f1356aaf01735611bd596a47cba59ee9473",
-  "revision": "v97 Gragas Z braking and short fuse",
+  "source_map_sha256": "01877612b023b54cf2375ce74ff092b1c52f99ba64ed14bd4440be1e4bcd5ffc",
+  "revision": "FF799X_Grunts_Ghouls_v116_TEST",
   "engine_playtest": false
 }
