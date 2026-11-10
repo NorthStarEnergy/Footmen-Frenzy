@@ -1,0 +1,13 @@
+Black Legion Enchantress V2 and Black Legion Enchantress Missile V2
+Author: johnwar
+Base models credited to Ujimasa Hojo by the author.
+Source: https://www.hiveworkshop.com/threads/black-legion-mages-pack.337553/
+Downloaded October 28, 2026 from the resource's Enchantress and Missile downloads.
+
+The hero model is unmodified. Persistent orb variants preserve the missile mesh
+and textures, reduce particle emission/opacity, and omit missile sound events
+and death-burst particles. Protect uses a blue variant; trail uses the orb mesh
+without particle emitters. Native Warcraft III textures and Sorceress voice.
+V11 adds an original shaded opaque sphere inside the author's orb glow.
+Generated variants: Spells\Orianna\Feedback\EnchantressOrb.mdx,
+EnchantressOrbBlue.mdx, EnchantressTrail.mdx.
