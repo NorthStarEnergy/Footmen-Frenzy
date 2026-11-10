@@ -3094,7 +3094,7 @@ boolean array FFR_Locked
     constant integer OM_PROTECT = 'AOz3'
     constant integer OM_SHOCK = 'AOz4'
     constant real OM_TICK = 0.03125
-    constant real OM_SPEED = 1320.0
+    constant real OM_SPEED = 1452.0
     constant real OM_LEASH = 1200.0
     location OM_VisualGround = Location(0.0, 0.0)
     hashtable OM_Hash = InitHashtable()
@@ -3172,6 +3172,9 @@ boolean array FFR_Locked
     real array FS_EmpowerEnd
     real array FS_FlurryEnd
     constant integer FS_DETONATE = 'AGr8'
+    real array FS_BarrelHeading
+    real array FS_BarrelAngle
+    real array FS_BarrelRadius
     boolean array FS_Landed
 
     constant integer GD_ABILITY = 'AZd1'
@@ -6513,7 +6516,7 @@ function OM_CommandSound takes unit ball, integer kind returns nothing
     local sound s
     if kind == 3 then
         set path = "Spells\\Orianna\\Feedback\\Shockwave.wav"
-        set duration = 1200
+        set duration = 360
     elseif kind == 4 then
         set path = "Spells\\Orianna\\Feedback\\Protect.wav"
         set duration = 600
@@ -6584,8 +6587,9 @@ function OM_CommandGroundTick takes nothing returns nothing
         call BlzSetSpecialEffectScale(fx, (size * RMinBJ(1.0, elapsed / 0.25)) * 1.5)
         set fade = RMinBJ(1.0, RMaxBJ(0.0, (duration - elapsed) / 0.125))
     elseif kind == 4 then
-        call BlzSetSpecialEffectScale(fx, (size * RMinBJ(1.0, elapsed / 0.18)) * 1.5)
-        set fade = RMinBJ(1.0, RMaxBJ(0.0, (duration - elapsed) / 0.45))
+        // The ring collapses during the same 0.30 seconds as the displaced units.
+        call BlzSetSpecialEffectScale(fx, size * (0.06 + 0.88 * fade))
+        set fade = RMinBJ(0.74, fade * 1.6)
     elseif kind == 3 then
         call BlzSetSpecialEffectScale(fx, (size * RMinBJ(1.0, elapsed / 0.50)) * 1.5)
         set fade = RMinBJ(1.0, RMaxBJ(0.0, (duration - elapsed) / 0.65))
@@ -6615,15 +6619,18 @@ function OM_CommandGround takes integer kind, real x, real y, real size, real ya
         set model = "Spells\\Orianna\\Feedback\\ProtectGround.mdx"
         set duration = 1.5
     elseif kind == 4 then
-        set model = "Spells\\Orianna\\Feedback\\ShockImpact.mdx"
-        set duration = 0.65
+        set model = "Spells\\Orianna\\Feedback\\ShockGround.mdx"
+        set duration = 0.30
     endif
     set fx = AddSpecialEffect(model, x, y)
     call MoveLocation(OM_VisualGround, x, y)
     call BlzSetSpecialEffectZ(fx, GetLocationZ(OM_VisualGround) + 8.0)
     call BlzSetSpecialEffectYaw(fx, yaw)
     call BlzSetSpecialEffectAlpha(fx, 225)
-    if kind == 2 or kind == 3 or kind == 4 then
+    if kind == 4 then
+        call BlzSetSpecialEffectScale(fx, size * 0.94)
+        call BlzSetSpecialEffectAlpha(fx, 165)
+    elseif kind == 2 or kind == 3 then
         call BlzSetSpecialEffectScale(fx, 0.01)
     else
         call BlzSetSpecialEffectScale(fx, (size) * 1.5)
@@ -6641,30 +6648,18 @@ endfunction
 
 function OM_UpdateShockGround takes integer i returns nothing
     local effect fx = LoadEffectHandle(OM_Hash, GetHandleId(OM_Ball[i]), -108)
-    local real remaining = RMaxBJ(0.0, OM_ShockAt[i] - OM_Now)
-    local real progress = RMinBJ(1.0, 1.0 - remaining / 0.5)
-    local effect outer = LoadEffectHandle(OM_Hash, GetHandleId(OM_Ball[i]), -101)
-    if outer != null then
-        call BlzSetSpecialEffectScale(outer, (OM_ShockRadius[i] * (0.25 + 0.75 * progress)) * 1.6)
-        call BlzSetSpecialEffectAlpha(outer, R2I(110.0 * (1.0 - 0.55 * progress)))
-    endif
-    set outer = null
+    local real progress
     if fx != null then
-        call BlzSetSpecialEffectScale(fx, (OM_ShockRadius[i] * (0.92 - 0.74 * progress)) * 1.6)
-        call BlzSetSpecialEffectYaw(fx, -2.5 * progress)
-        call BlzSetSpecialEffectAlpha(fx, R2I(180.0 * (1.0 - 0.35 * progress)))
+        set progress = RMinBJ(1.0, RMaxBJ(0.0, 1.0 - (OM_ShockAt[i] - OM_Now) / 0.5))
+        call BlzSetSpecialEffectScale(fx, OM_ShockRadius[i] * (1.0 - 0.06 * progress))
+        call BlzSetSpecialEffectAlpha(fx, R2I(110.0 + 55.0 * progress))
     endif
     set fx = null
 endfunction
 
 function OM_StopWindupFX takes integer i returns nothing
     local integer key = GetHandleId(OM_Ball[i])
-    local effect fx = LoadEffectHandle(OM_Hash, key, -101)
-    if fx != null then
-        call DestroyEffect(fx)
-        call RemoveSavedHandle(OM_Hash, key, -101)
-    endif
-    set fx = LoadEffectHandle(OM_Hash, key, -108)
+    local effect fx = LoadEffectHandle(OM_Hash, key, -108)
     if fx != null then
         call BlzSetSpecialEffectAlpha(fx, 0)
         call DestroyEffect(fx)
@@ -6681,15 +6676,9 @@ function OM_WindupFX takes integer i returns nothing
     call QueueUnitAnimation(OM_Hero[i], "stand")
     call OM_StopWindupFX(i)
     set fx = AddSpecialEffect("Spells\\Orianna\\Feedback\\ShockGround.mdx", OM_X[i], OM_Y[i])
-    call BlzSetSpecialEffectZ(fx, GetLocationZ(ground) + 12.0)
-    call BlzSetSpecialEffectScale(fx, (OM_ShockRadius[i]) * 1.6)
-    call BlzSetSpecialEffectAlpha(fx, 110)
-    call BlzPlaySpecialEffect(fx, ANIM_TYPE_STAND)
-    call SaveEffectHandle(OM_Hash, GetHandleId(OM_Ball[i]), -101, fx)
-    set fx = AddSpecialEffect("Spells\\Orianna\\Feedback\\ShockGround.mdx", OM_X[i], OM_Y[i])
     call BlzSetSpecialEffectZ(fx, GetLocationZ(ground) + 8.0)
-    call BlzSetSpecialEffectScale(fx, (OM_ShockRadius[i] * 0.92) * 1.6)
-    call BlzSetSpecialEffectAlpha(fx, 180)
+    call BlzSetSpecialEffectScale(fx, OM_ShockRadius[i])
+    call BlzSetSpecialEffectAlpha(fx, 110)
     call BlzPlaySpecialEffect(fx, ANIM_TYPE_STAND)
     call SaveEffectHandle(OM_Hash, GetHandleId(OM_Ball[i]), -108, fx)
     call OM_CommandSound(OM_Ball[i], 7)
@@ -6814,6 +6803,7 @@ function OM_Slow takes unit caster, unit target returns nothing
     local unit dummy
     if OM_Enemy(caster, target) then
         set dummy = CreateUnit(GetOwningPlayer(caster), 'hor3', GetUnitX(target), GetUnitY(target), 0.0)
+        call SetUnitUseFood(dummy, false)
         call UnitAddAbility(dummy, 'AOz5')
         call IssueTargetOrder(dummy, "slow", target)
         call UnitApplyTimedLife(dummy, 'BTLF', 1.0)
@@ -6865,26 +6855,6 @@ endfunction
 
 
 
-function OM_GroundRing takes real x, real y, real radius, boolean ultimate returns nothing
-    local string model = "Spells\\Orianna\\Feedback\\AttackRing.mdx"
-    local location ground = Location(x, y)
-    local effect fx
-    local effect burst
-    set burst = AddSpecialEffect("Abilities\\Spells\\Undead\\FrostNova\\FrostNovaTarget.mdl", x, y)
-    call BlzSetSpecialEffectZ(burst, GetLocationZ(ground)+16.0)
-    call BlzSetSpecialEffectScale(burst, (radius/140.0) * 1.8)
-    call OM_KeepEffect(burst, 1.5)
-    call OM_CommandGround(4, x, y, radius, 0.0)
-    set burst = AddSpecialEffect("Abilities\\Spells\\Other\\Monsoon\\MonsoonBoltTarget.mdl", x, y)
-    call BlzSetSpecialEffectZ(burst, GetLocationZ(ground) + 40.0)
-    call BlzSetSpecialEffectScale(burst, (1.2) * 1.8)
-    call BlzSetSpecialEffectColor(burst, 120, 230, 255)
-    call OM_KeepEffect(burst, 1.0)
-    call RemoveLocation(ground)
-    set ground = null
-    set fx = null
-    set burst = null
-endfunction
 
 function OM_TravelImpact takes unit target returns nothing
     local effect fx = AddSpecialEffectTarget("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl", target, "chest")
@@ -6997,6 +6967,7 @@ function OM_Register takes unit u returns integer
     set OM_Hero[i] = u
     set OM_Owner[i] = GetOwningPlayer(u)
     set OM_Ball[i] = CreateUnit(OM_Owner[i], 'hor1', GetUnitX(u), GetUnitY(u), 0.0)
+    call SetUnitUseFood(OM_Ball[i], false)
     call UnitAddAbility(OM_Ball[i], 'Aloc')
     call UnitAddAbility(OM_Ball[i], 'Avul')
     call UnitAddAbility(OM_Ball[i], 'Arav')
@@ -7084,9 +7055,6 @@ function OM_AttackGroundCleanup takes nothing returns nothing
     set t = null
 endfunction
 
-function OM_AttackGroundFX takes real x, real y, real radius returns nothing
-    call OM_GroundRing(x, y, radius, false)
-endfunction
 
 // Stationary afterimages fade behind the moving orb, never attached to it.
 function OM_TrailTick takes nothing returns nothing
@@ -7214,7 +7182,7 @@ function OM_Burst takes integer i, boolean ultimate, integer level returns nothi
         return
     endif
     call OM_StopWindupFX(i)
-    call OM_GroundRing(x, y, OM_ShockRadius[i], true)
+    call OM_CommandGround(4, x, y, OM_ShockRadius[i], 0.0)
     call OM_CommandSound(OM_Ball[i], 3)
     call GroupEnumUnitsInRange(OM_Group, x, y, OM_ShockRadius[i], null)
     loop
@@ -7222,7 +7190,6 @@ function OM_Burst takes integer i, boolean ultimate, integer level returns nothi
         exitwhen u == null
         call GroupRemoveUnit(OM_Group, u)
         if OM_Enemy(OM_Hero[i], u) then
-            call OM_TravelImpact(u)
             call OM_Deal(OM_Hero[i], u, OM_ShockDamage[i])
             if OM_Alive(u) then
                 call OM_Pull(u, x, y)
@@ -7249,6 +7216,7 @@ function OM_Tick takes nothing returns nothing
             if OM_Owner[i] != GetOwningPlayer(OM_Hero[i]) then
                 set OM_Owner[i] = GetOwningPlayer(OM_Hero[i])
                 call SetUnitOwner(OM_Ball[i], OM_Owner[i], false)
+                call SetUnitUseFood(OM_Ball[i], false)
                 set OM_ShockAt[i] = 0.0
                 call OM_Home(i)
             endif
@@ -7594,6 +7562,10 @@ endfunction
 
 function FS_ClearFortitude takes integer i returns nothing
     local integer rank = 1
+    if FS_Armor[i] > 0.0 then
+        call SetUnitScale(FS_U[i], 1.0, 1.0, 1.0)
+        call SetUnitVertexColor(FS_U[i], 255, 255, 255, 255)
+    endif
     call UnitRemoveAbility(FS_U[i], 'AGf1')
     loop
         exitwhen rank > 6
@@ -7860,10 +7832,22 @@ function FS_OnDamage takes nothing returns nothing
     set source = null
 endfunction
 
-function FS_BarrelPresentation takes effect fx, unit caster, boolean ultimate returns nothing
+function FS_PositionBarrel takes integer i, real distance returns nothing
+    // The keg's axle follows local Y. Rotate one radian per radius travelled.
+    set FS_BarrelAngle[i] = FS_BarrelAngle[i] + distance / FS_BarrelRadius[i]
+    call MoveLocation(FS_Ground, FS_X[i], FS_Y[i])
+    call BlzSetSpecialEffectPosition(FS_FX[i], FS_X[i], FS_Y[i], GetLocationZ(FS_Ground) + FS_BarrelRadius[i])
+    call BlzSetSpecialEffectOrientation(FS_FX[i], FS_BarrelHeading[i], FS_BarrelAngle[i], 0.0)
+endfunction
+
+function FS_BarrelPresentation takes integer i, unit caster, boolean ultimate returns nothing
+    local effect fx = FS_FX[i]
     local sound yell = null
     local string voice = "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmasterWarcry1.wav"
+    set FS_BarrelAngle[i] = 0.0
+    set FS_BarrelHeading[i] = Atan2(FS_TY[i] - FS_Y[i], FS_TX[i] - FS_X[i])
     if ultimate then
+        set FS_BarrelRadius[i] = 43.0 * 1.45
         call BlzSetSpecialEffectScale(fx, 1.45)
         call BlzSetSpecialEffectColor(fx, 255, 55, 35)
         set yell = CreateSound(voice, false, true, true, 0, 0, "HeroAcksEAX")
@@ -7876,8 +7860,12 @@ function FS_BarrelPresentation takes effect fx, unit caster, boolean ultimate re
         call StartSound(yell)
         call KillSoundWhenDone(yell)
     else
+        set FS_BarrelRadius[i] = 43.0 * 1.15
         call BlzSetSpecialEffectScale(fx, 1.15)
     endif
+    call BlzPlaySpecialEffect(fx, ANIM_TYPE_STAND)
+    call FS_PositionBarrel(i, 0.0)
+    set fx = null
     set yell = null
 endfunction
 
@@ -7955,18 +7943,12 @@ function FS_Tick takes nothing returns nothing
                     if dist > step then
                         set FS_X[i] = FS_X[i] + step*dx/dist
                         set FS_Y[i] = FS_Y[i] + step*dy/dist
-                        call BlzSetSpecialEffectX(FS_FX[i], FS_X[i])
-                        call BlzSetSpecialEffectY(FS_FX[i], FS_Y[i])
-                        call MoveLocation(FS_Ground, FS_X[i], FS_Y[i])
-                        call BlzSetSpecialEffectZ(FS_FX[i], GetLocationZ(FS_Ground) + 70.0)
+                        call FS_PositionBarrel(i, step)
                     else
                         set FS_X[i] = FS_TX[i]
                         set FS_Y[i] = FS_TY[i]
-                        call BlzSetSpecialEffectX(FS_FX[i], FS_X[i])
-                        call BlzSetSpecialEffectY(FS_FX[i], FS_Y[i])
-                        call MoveLocation(FS_Ground, FS_X[i], FS_Y[i])
-                        call BlzSetSpecialEffectZ(FS_FX[i], GetLocationZ(FS_Ground))
                         if not FS_Landed[i] then
+                            call FS_PositionBarrel(i, dist)
                             set FS_Landed[i] = true
                         else
                             set FS_Left[i] = FS_Left[i] - FS_PERIOD
@@ -8204,13 +8186,15 @@ function FS_OnCast takes nothing returns nothing
                     set FS_Damage[i] = 100.0 + 100.0*level
                 endif
                 set FS_FX[i] = AddSpecialEffect(FS_BARREL, GetUnitX(u), GetUnitY(u))
-                call FS_BarrelPresentation(FS_FX[i], u, a == FS_R)
+                call FS_BarrelPresentation(i, u, a == FS_R)
             endif
         elseif a == FS_W then
             set i = FS_Buff(u)
             if i != 0 then
                 call FS_ClearFortitude(i)
                 set FS_Armor[i] = 3.0 + 2.0*level
+                call SetUnitScale(u, 1.12, 1.12, 1.12)
+                call SetUnitVertexColor(u, 255, 236, 195, 255)
                 // One fixed-rank item modifier: immediate armor, no aura polling.
                 call UnitAddAbility(u, 'GF01' + level - 1)
                 call BlzUnitHideAbility(u, 'GF01' + level - 1, true)
