@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "904f950a651acf9c34be903482a54d3e9ea2e1e2e8751f74a2bd629648c02101",
+  "compiled_source_sha256": "469710edc65a739cc4ae523955380b90a4ea83c0a8332c063b75116f09b34486",
   "runtime_functions": 3780,
   "editor_generated_functions": [
     "CreateAllUnits",
@@ -52,14 +52,14 @@
   ],
   "editor_generated_globals": 165,
   "globals_sha256": "8e3792c3b121cca19e3b1811c3e2db59bbd2742ef62dfc6febc7dbd0cb634f59",
-  "runtime_sha256": "fa4a7d8a42720bff0dd6a1ff8e258bc588738fbaf98c433f8e52f09858a93d99",
+  "runtime_sha256": "9a8574258431789750c184406bcc77219e4bc9af1f7f02b5a861e57e7f27b25d",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "2705e1df1d30564d90ad838321f79e5d9385ee95561a7208289c7308fed59580",
-  "revision": "v99 Veigar gait, FX and hero hotkeys",
+  "source_map_sha256": "9a82a7c60ad91110d2349e640f17b96f2c0fe1008cfecd054e90da882a5fa253",
+  "revision": "v100 Gragas landed spin and detonation",
   "engine_playtest": false
 }
