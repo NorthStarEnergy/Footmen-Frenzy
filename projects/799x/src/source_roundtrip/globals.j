@@ -3255,7 +3255,7 @@ real array TFP_s__destiny___destinyDat_duration
 integer array TFP_s__destiny___destinyDat_revertAbilityLevel
 integer array TFP_s__tfConsts_CARD_ID
 integer array TFP_si__Table___GTable_type
-constant integer TFP_FFDP_ABIL_CAST   = 'ATfd' // "Dark Passage"  (target point, base Carrion Swarm)
+constant integer TFP_FFDP_ABIL_CAST   = 'ATfd' // "Psionic Recall"  (target point, base Carrion Swarm)
 constant integer TFP_FFDP_UNIT_LANTERN= 'htf4' // lantern dummy unit
 constant integer TFP_FFDP_ABIL_CROW   = 'Amrf' // Crow Form, used to unlock SetUnitFlyHeight
 constant real    TFP_FFDP_TICK        = 0.03
