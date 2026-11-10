@@ -4045,7 +4045,7 @@ function T66_ShowRecord takes nothing returns nothing
 endfunction
 
 function MF_HeroDisabled takes integer id returns boolean
-    return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H01Q' or id == 'H02W' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
+    return id == 'HMu1' or id == 'HVg1' or id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H01Q' or id == 'H02W' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
 endfunction
 
 function DraftRemember takes unit shop, integer id returns nothing
@@ -30014,6 +30014,7 @@ endfunction
 
 function FFCH_Start takes nothing returns nothing
     local integer i=1
+    local integer heroId
     local integer teamNumber
     local player p
     local unit u
@@ -30053,7 +30054,11 @@ function FFCH_Start takes nothing returns nothing
             set angle=I2R(ModuloInteger(i - 1, 3)) * 120.00 * bj_DEGTORAD
             set x=udg_FFCH_BuildX[teamNumber] + 96.00 * Cos(angle)
             set y=udg_FFCH_BuildY[teamNumber] + 96.00 * Sin(angle)
-            set u=CreateUnit(p, udg_hero_type[GetRandomInt(1, udg_total_hero_count)], x, y, 270.00)
+            loop
+                set heroId=udg_hero_type[GetRandomInt(1, udg_total_hero_count)]
+                exitwhen heroId != 0 and not MF_HeroDisabled(heroId)
+            endloop
+            set u=CreateUnit(p, heroId, x, y, 270.00)
             set udg_FFCH_Hero[i]=u
             set udg_herO[i]=u
             set udg_picked_hero[i]=GetUnitTypeId(u)
@@ -31894,7 +31899,7 @@ function FF_AutoPick_GetGenericHero takes boolean allowCarry returns integer
     local integer chosen= 0
     loop
         exitwhen i > udg_total_hero_count
-        if ( udg_hero_type[i] != 0 and ( udg_hero_category[i] < 12 or allowCarry ) and not FF_AutoPick_HeroTaken(udg_hero_type[i]) ) then
+        if ( udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and ( udg_hero_category[i] < 12 or allowCarry ) and not FF_AutoPick_HeroTaken(udg_hero_type[i]) ) then
             set candidates=candidates + 1
         endif
         set i=i + 1
@@ -31906,7 +31911,7 @@ function FF_AutoPick_GetGenericHero takes boolean allowCarry returns integer
     set i=1
     loop
         exitwhen i > udg_total_hero_count
-        if ( udg_hero_type[i] != 0 and ( udg_hero_category[i] < 12 or allowCarry ) and not FF_AutoPick_HeroTaken(udg_hero_type[i]) ) then
+        if ( udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and ( udg_hero_category[i] < 12 or allowCarry ) and not FF_AutoPick_HeroTaken(udg_hero_type[i]) ) then
             set chosen=chosen - 1
             if ( chosen == 0 ) then
                 return udg_hero_type[i]
@@ -66558,8 +66563,6 @@ function InitTrig_FF_Runtime takes nothing returns nothing
     call TFP_Init()
     call FF_CompactHeroTooltips_Init()
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HTf1', GetRectCenterX(gg_rct_EXILE) + 192.0, GetRectCenterY(gg_rct_EXILE), 270.0)
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HVg1', GetRectCenterX(gg_rct_EXILE) + 320.0, GetRectCenterY(gg_rct_EXILE), 270.0)
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HMu1', GetRectCenterX(gg_rct_EXILE) + 256.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HDk1', GetRectCenterX(gg_rct_EXILE) + 128.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before GD_Init")
     call GD_Init()
@@ -67234,7 +67237,6 @@ function VG_Init takes nothing returns nothing
     set kills = null
     loop
         exitwhen i >= 12
-        call TriggerRegisterPlayerChatEvent(chat, Player(i), "-veigar", true)
         set i = i + 1
     endloop
     call TriggerAddAction(chat, function VG_Summon)
