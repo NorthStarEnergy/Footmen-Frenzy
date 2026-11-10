@@ -1,0 +1,141 @@
+Version {
+	FormatVersion 800,
+}
+Model "Final Spark source flare" {
+	NumGeosets 1,
+	NumGeosetAnims 1,
+	NumBones 1,
+	BlendTime 0,
+	MinimumExtent { -4096, -4096, -512 },
+	MaximumExtent { 4096, 4096, 512 },
+	BoundsRadius 4096,
+}
+Sequences 2 {
+	Anim "Stand" {
+		Interval { 0, 1000 },
+		MinimumExtent { -4096, -4096, -512 },
+		MaximumExtent { 4096, 4096, 512 },
+		BoundsRadius 4096,
+	}
+	Anim "Death" {
+		Interval { 1100, 1200 },
+		NonLooping,
+		MinimumExtent { -4096, -4096, -512 },
+		MaximumExtent { 4096, 4096, 512 },
+		BoundsRadius 4096,
+	}
+}
+Textures 1 {
+	Bitmap {
+		Image "Spells\Lux\FinalSparkFlare.blp",
+	}
+}
+Materials 1 {
+	Material {
+		Layer {
+			FilterMode Additive,
+			static TextureID 0,
+			TwoSided,
+			Unshaded,
+		}
+	}
+}
+Geoset {
+	Vertices 12 {
+		{ -0.5, -0.5, 0 },
+		{ 0.5, -0.5, 0 },
+		{ 0.5, 0.5, 0 },
+		{ -0.5, 0.5, 0 },
+		{ -0.5, 0, -0.19 },
+		{ 0.5, 0, -0.19 },
+		{ 0.5, 0, 0.19 },
+		{ -0.5, 0, 0.19 },
+		{ 0, -0.5, -0.5 },
+		{ 0, 0.5, -0.5 },
+		{ 0, 0.5, 0.5 },
+		{ 0, -0.5, 0.5 },
+	}
+	Normals 12 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+	}
+	TVertices 12 {
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 18 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -4096, -4096, -512 },
+	MaximumExtent { 4096, 4096, 512 },
+	BoundsRadius 4096,
+	Anim {
+		MinimumExtent { -4096, -4096, -512 },
+		MaximumExtent { 4096, 4096, 512 },
+		BoundsRadius 4096,
+	}
+	Anim {
+		MinimumExtent { -4096, -4096, -512 },
+		MaximumExtent { 4096, 4096, 512 },
+		BoundsRadius 4096,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+}
+GeosetAnim {
+	GeosetId 0,
+	Alpha 4 {
+		DontInterp,
+		0: 1,
+		1000: 1,
+		1100: 0,
+		1200: 0,
+	}
+}
+Bone "Root" {
+	ObjectId 0,
+	GeosetId Multiple,
+	GeosetAnimId None,
+}
+PivotPoints 1 {
+	{ 0, 0, 0 },
+}

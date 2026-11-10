@@ -1,0 +1,3 @@
+const fs=require('fs');const {parseMDX,generateMDX}=require('../mundo-polish-v45/tools/war3-model/package/dist/war3-model.cjs');
+let b=fs.readFileSync('../tf-guardian-v47/src/TFOrb.mdx');let m=parseMDX(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength));m.Info.Name='Violet slim wild orb';let trail=m.RibbonEmitters[0];trail.HeightAbove=2.5;trail.HeightBelow=2.5;trail.Color=new Float32Array([0.50,0.35,1.0]);trail.LifeSpan=.30;trail.Alpha=.7;for(let i=0;i<m.Geosets[1].Vertices.length;i++)m.Geosets[1].Vertices[i]*=.52;
+const data=generateMDX(m),v=parseMDX(data);if(Math.abs(v.RibbonEmitters[0].HeightAbove-2.5)>.001)throw Error('Wrong trail');fs.writeFileSync('src/TFWildOrb.mdx',Buffer.from(data));console.log('Violet projectile model roundtrip passed');

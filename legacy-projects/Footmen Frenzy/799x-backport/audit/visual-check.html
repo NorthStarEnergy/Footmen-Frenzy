@@ -1,0 +1,25 @@
+<!doctype html><meta charset="utf-8"><title>Orianna v3 asset check</title>
+<style>body{background:#111820;color:#e6eef8;font:16px system-ui;margin:24px}main{display:grid;grid-template-columns:repeat(2,440px);gap:16px}canvas{width:440px;height:290px}p{color:#adb9c8}figure{margin:0}figcaption{margin:8px 0}</style>
+<h2>Orianna v3 — packaged model check</h2><p>Orb idle animation and spell rings. WebGL preview; Warcraft playtest pending.</p><main></main><p id="status">Loading…</p>
+<script src="../tools/model-tools/node_modules/war3-model/dist/war3-model.browser.js"></script>
+<script src="../tools/model-tools/node_modules/.pnpm/gl-matrix@3.3.0/node_modules/gl-matrix/gl-matrix-min.js"></script>
+<script>
+(async()=>{
+const specs=[['Ball — Move / Attack','war3mapImported/OrbLightningX.mdx',3,false],['Ball — Protect','war3mapImported/OrbLightX.mdx',3,false],['Attack — red radius','Spells/Orianna/Feedback/AttackRing.mdx',0,true],['Shockwave — cyan radius','Spells/Orianna/Feedback/ShockwaveRing.mdx',0,true]];
+window.results=[];
+for(const [title,file,seq,ring] of specs){
+const f=document.createElement('figure'),c=document.createElement('canvas');c.width=880;c.height=580;f.append(c);f.insertAdjacentHTML('beforeend','<figcaption>'+title+'</figcaption>');document.querySelector('main').append(f);
+const gl=c.getContext('webgl',{preserveDrawingBuffer:true});if(!gl)throw Error('No WebGL');
+const m=war3model.parseMDX(await(await fetch('../src/'+file)).arrayBuffer()),r=new war3model.ModelRenderer(m);r.initGL(gl);
+for(const t of m.Textures){const blp=war3model.decodeBLP(await(await fetch('../src/'+t.Image.replaceAll('\\','/'))).arrayBuffer());r.setTextureImageData(t.Image,blp.mipmaps.map((_,i)=>war3model.getBLPImageData(blp,i)));}
+const {mat4,quat}=glMatrix,v=mat4.create(),p=mat4.create(),inv=mat4.create(),q=quat.create();
+const camera=ring?[0,-2.5,3]:[0,-480,300],target=ring?[0,0,0]:[0,0,80];mat4.lookAt(v,camera,target,[0,0,1]);mat4.perspective(p,Math.PI/4,c.width/c.height,ring?.01:1,ring?40:3000);mat4.invert(inv,v);mat4.getRotation(q,inv);
+r.setCamera(camera,q);r.setLightPosition([0,-300,500]);r.setLightColor([1,1,1]);r.setSequence(seq);
+for(let time=0;time<600;time+=16)r.update(16);
+gl.viewport(0,0,c.width,c.height);gl.clearColor(.13,.17,.16,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);r.render(v,p,{});
+const pixels=new Uint8Array(c.width*c.height*4);gl.readPixels(0,0,c.width,c.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);let bright=0;for(let i=0;i<pixels.length;i+=4)if(Math.max(pixels[i],pixels[i+1],pixels[i+2])>90)bright++;
+if(bright<50)throw Error(title+' has no visible geometry');window.results.push({title,brightPixels:bright});
+}
+document.querySelector('#status').textContent='All four models rendered with packaged textures.';window.ready=true;
+})().catch(e=>{document.querySelector('#status').textContent=e.stack;window.error=e.stack;});
+</script>

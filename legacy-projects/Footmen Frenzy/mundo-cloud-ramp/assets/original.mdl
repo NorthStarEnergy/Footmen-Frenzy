@@ -1,0 +1,75 @@
+Version {
+	FormatVersion 1800,
+}
+Model "PlagueCloudCaster" {
+	NumParticleEmitters2 1,
+	BlendTime 150,
+	MinimumExtent { 0, 0, 0 },
+	MaximumExtent { 0, 0, 0 },
+}
+Sequences 3 {
+	Anim "Birth" {
+		Interval { 333, 667 },
+		NonLooping,
+		MinimumExtent { 0, 0, 0 },
+		MaximumExtent { 0, 0, 0 },
+	}
+	Anim "Stand" {
+		Interval { 1200, 1533 },
+		MinimumExtent { 0, 0, 0 },
+		MaximumExtent { 0, 0, 0 },
+	}
+	Anim "Death" {
+		Interval { 1933, 2267 },
+		NonLooping,
+		MinimumExtent { 0, 0, 0 },
+		MaximumExtent { 0, 0, 0 },
+	}
+}
+Textures 1 {
+	Bitmap {
+		Image "ReplaceableTextures\Weather\Clouds8x8.blp",
+	}
+}
+PivotPoints 1 {
+	{ -0.01528, 0.738007, 100.230003 },
+}
+ParticleEmitter2 "BlizParticle01" {
+	ObjectId 0,
+	Blend,
+	static Speed 100,
+	static Variation 0,
+	static Latitude 127.5,
+	static Gravity 0,
+	static EmissionRate 25,
+	static Width 50,
+	static Length 50,
+	Visibility 4 {
+		DontInterp,
+		333: 0,
+		367: 1,
+		1933: 1,
+		1967: 0,
+	}
+	SegmentColor {
+		Color { 0.066667, 1, 0.968628 },
+		Color { 0.007843, 0.980392, 0.509804 },
+		Color { 0.039216, 0.796079, 0 },
+	},
+	Alpha { 123, 60, 0 },
+	ParticleScaling { 45, 55, 65 },
+	LifeSpanUVAnim { 0, 6, 1 },
+	DecayUVAnim { 7, 12, 1 },
+	TailUVAnim { 0, 0, 1 },
+	TailDecayUVAnim { 0, 0, 1 },
+	Rows 8,
+	Columns 8,
+	TextureID 0,
+	Time 0.5,
+	LifeSpan 1,
+	TailLength 1,
+	ReplaceableId 0,
+	SortPrimsFarZ,
+	Unshaded,
+	Head,
+}

@@ -1,0 +1,470 @@
+﻿# Whole Map JASS Audit
+
+Source: `C:\Users\Ryan1\Documents\Codex\2026-07-09\work-o\outputs\SoloFoots-v1.7\roundtrip\smooth-spawn-test\files\war3map.j`
+
+## Summary
+
+- Lines: 49,902
+- Globals: 2,702
+- Functions: 2,726
+- Reachable functions: 1,609
+- Unreachable function candidates: 1,117
+- Init triggers: 479
+- Initially disabled triggers: 94
+- Init triggers with no registered event: 91
+- Dormant triggers with wake-up/execute links: 106
+- Dormant triggers needing manual review: 66
+
+## Resource Smell Counters
+
+- `CreateGroup`: 97; `DestroyGroup`: 98
+- `GetUnits*`: 139
+- Location creates/lookups: 365; `RemoveLocation`: 310
+- `CreateTimer`: 95; `DestroyTimer`: 21
+- `DoNothing`: 349
+- Text/debug output calls: 276
+
+## Highest-Risk Leak Candidates
+
+- `InitGlobals` line 7269: unit group created 89, cleaned 0, excess 89
+- `InitGlobals` line 7269: timer created 73, cleaned 0, excess 73
+- `Trig_init_Actions` line 13597: location created 35, cleaned 2, excess 33
+- `Trig_set_hero_numbers_Actions` line 14240: location created 10, cleaned 0, excess 10
+- `Trig_page_system_Actions` line 20186: location created 10, cleaned 0, excess 10
+- `InitGlobals` line 7269: force created 7, cleaned 0, excess 7
+- `Trig_debugmode_Actions` line 24257: location created 7, cleaned 0, excess 7
+- `Trig_HERO_Prison_Actions` line 38032: location created 8, cleaned 1, excess 7
+- `Trig_HERO_Myrmidon_Sinkhole_start_Actions` line 37115: location created 8, cleaned 2, excess 6
+- `Trig_HERO_Throw_Glaive_Loop_Actions` line 26213: location created 6, cleaned 1, excess 5
+- `sa__Missiles_setup` line 49388: location created 5, cleaned 0, excess 5
+- `Trig_colossal_variables_Actions` line 20905: location created 4, cleaned 0, excess 4
+- `Trig_Guardian_Force_Field_Loop_Actions` line 30539: location created 6, cleaned 3, excess 3
+- `Trig_HERO_Jaina_Ulti_Actions` line 36535: location created 5, cleaned 2, excess 3
+- `Trig_HERO_Myrmidon_Sinkhole_suck_Func001Func001Func007A` line 37221: location created 3, cleaned 0, excess 3
+- `Trig_keep_footy_in_base_Actions` line 18805: location created 3, cleaned 1, excess 2
+- `Trig_kill_blink_shop_t1_Actions` line 19388: location created 3, cleaned 1, excess 2
+- `Trig_kill_blink_shop_t2_Actions` line 19422: location created 3, cleaned 1, excess 2
+- `Trig_kill_blink_shop_t3_Actions` line 19456: location created 3, cleaned 1, excess 2
+- `Trig_kill_blink_shop_t4_Actions` line 19490: location created 3, cleaned 1, excess 2
+- `Trig_HERO_Hook_Loop_Copy_Actions` line 25300: location created 4, cleaned 2, excess 2
+- `Trig_Staff_of_the_River_Actions` line 27614: location created 4, cleaned 2, excess 2
+- `Trig_HERO_Thor_Powerhit_Actions` line 37935: location created 4, cleaned 2, excess 2
+- `Trig_eight_new_Func001Func002A` line 46609: location created 2, cleaned 0, excess 2
+- `Trig_Start_SD_Actions` line 17198: location created 1, cleaned 0, excess 1
+- `InitTrig_Foot_Spawn` line 18776: timer created 1, cleaned 0, excess 1
+- `Trig_block_from_shop_t1_Actions` line 19264: location created 2, cleaned 1, excess 1
+- `Trig_block_from_shop_t2_Actions` line 19295: location created 2, cleaned 1, excess 1
+- `Trig_block_from_shop_t3_Actions` line 19326: location created 2, cleaned 1, excess 1
+- `Trig_block_from_shop_t4_Actions` line 19357: location created 2, cleaned 1, excess 1
+- `Trig_colossal_spawn_Actions` line 21405: location created 2, cleaned 1, excess 1
+- `Trig_phoenix_block_Actions` line 22050: location created 2, cleaned 1, excess 1
+- `Trig_debug_Actions` line 24407: location created 1, cleaned 0, excess 1
+- `Trig_debug_control_Actions` line 24614: location created 1, cleaned 0, excess 1
+- `Trig_Searing_Bullet_Actions` line 25881: location created 3, cleaned 2, excess 1
+- `Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001Func002C` line 26179: location created 1, cleaned 0, excess 1
+- `Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001C` line 26189: location created 1, cleaned 0, excess 1
+- `Trig_Cripple_Wave_Actions` line 26715: location created 3, cleaned 2, excess 1
+- `Trig_Staff_of_the_River_OnHit_Actions` line 27706: location created 1, cleaned 0, excess 1
+- `Trig_Akama_Blink_Start_Actions` line 28258: location created 1, cleaned 0, excess 1
+- `Trig_Avalanche_Toss_Loop_Func002A` line 28721: location created 5, cleaned 4, excess 1
+- `Trig_Guardian_Energy_Chamber_Ally_Cast_Func006Func002A` line 30822: location created 2, cleaned 1, excess 1
+- `Trig_SovietSniper_Decoy_Bomb_Cast_Actions` line 31133: location created 1, cleaned 0, excess 1
+- `Trig_TheNook_Hellseek_Cast_Actions` line 31818: location created 1, cleaned 0, excess 1
+- `Trig_Thunder_Axe_Actions` line 32157: location created 3, cleaned 2, excess 1
+- `Trig_Hammer_Cast_Actions` line 32356: location created 3, cleaned 2, excess 1
+- `Trig_Charge_Pos_2_and_Pos_3_Actions` line 32979: unit group created 1, cleaned 0, excess 1
+- `Trig_Mirror_Image_Finish_Actions` line 33263: location created 3, cleaned 2, excess 1
+- `Trig_Medivh_Gust_Cast_Actions` line 33423: location created 1, cleaned 0, excess 1
+- `Trig_Shockwave_Cast_Actions` line 33661: unit group created 1, cleaned 0, excess 1
+- `Trig_HERO_Alchemist_Chemical_Rage_Bounty_Actions` line 34164: location created 1, cleaned 0, excess 1
+- `Trig_HERO_Architect_tower_build_Actions` line 34513: location created 1, cleaned 0, excess 1
+- `Trig_HERO_Prison_Func029A` line 38006: location created 1, cleaned 0, excess 1
+- `Trig_ITEM_Forked_Fury_NEW_Actions` line 41076: location created 1, cleaned 0, excess 1
+- `Trig_ITEM_Wall_Actions` line 41265: location created 1, cleaned 0, excess 1
+- `Trig_ten_new_Func001Func002A` line 46670: location created 1, cleaned 0, excess 1
+- `Trig_twelve_new_Func001Func002A` line 46711: location created 1, cleaned 0, excess 1
+- `sa___prototype4_TimerUtils___init` line 49850: timer created 1, cleaned 0, excess 1
+
+## Largest Functions
+
+- `InitGlobals` lines 7269-11507 (4,239 lines, map-init)
+- `Trig_set_hero_stats_Actions` lines 14381-15387 (1,007 lines, gui-trigger)
+- `Trig_set_spawn_variables_Actions` lines 43898-44670 (773 lines, gui-trigger)
+- `Trig_ITEM_limits_Actions` lines 39529-40035 (507 lines, gui-trigger)
+- `InitCustomTriggers` lines 48118-48605 (488 lines, map-init)
+- `Trig_colossal_stats_Actions` lines 20987-21325 (339 lines, gui-trigger)
+- `sa__Missiles_move` lines 49513-49840 (328 lines, generated-library)
+- `InitCustomTeams` lines 48803-49102 (300 lines, map-init)
+- `Trig_END_Actions` lines 47836-48109 (274 lines, gui-trigger)
+- `Trig_init_Actions` lines 13597-13841 (245 lines, gui-trigger)
+- `Trig_five_Actions` lines 46133-46313 (181 lines, gui-trigger)
+- `CreateNeutralPassive` lines 11990-12169 (180 lines, function)
+- `Trig_eight_Actions` lines 45170-45347 (178 lines, gui-trigger)
+- `Trig_eight_mass_bonus_Actions` lines 45663-45835 (173 lines, gui-trigger)
+- `Trig_Helios_Collision_Loop_Actions` lines 30108-30273 (166 lines, gui-trigger)
+- `InitAllyPriorities` lines 49104-49261 (158 lines, map-init)
+- `Trig_Start_SD_Actions` lines 17198-17342 (145 lines, gui-trigger)
+- `Trig_set_base_Actions` lines 44725-44869 (145 lines, gui-trigger)
+- `InitCustomPlayerSlots` lines 48671-48801 (131 lines, map-init)
+- `Trig_set_hero_numbers_Actions` lines 14240-14368 (129 lines, gui-trigger)
+- `Trig_SovietSniper_Golovu_Shot_Loop_Func002A` lines 31670-31794 (125 lines, gui-trigger)
+- `CreateRegions` lines 12208-12330 (123 lines, function)
+- `Trig_colossal_spawn_Actions` lines 21405-21523 (119 lines, gui-trigger)
+- `Trig_Multiboard_Update_Actions` lines 17877-17990 (114 lines, gui-trigger)
+- `InitSounds` lines 11595-11706 (112 lines, map-init)
+- `Trig_Guardian_Force_Field_Loop_Actions` lines 30539-30650 (112 lines, gui-trigger)
+- `Trig_Avalanche_Trample_Loop_Actions` lines 28976-29082 (107 lines, gui-trigger)
+- `Trig_HERO_Prison_Actions` lines 38032-38136 (105 lines, gui-trigger)
+- `Trig_Helios_Collision_Activation_Actions` lines 29808-29910 (103 lines, gui-trigger)
+- `Trig_debug_Actions` lines 24407-24508 (102 lines, gui-trigger)
+- `Trig_TP_hero_Actions` lines 17414-17511 (98 lines, gui-trigger)
+- `Trig_Altar_Hero_Summon_Actions` lines 42220-42316 (97 lines, gui-trigger)
+- `Trig_page_system_Actions` lines 20186-20280 (95 lines, gui-trigger)
+- `Trig_Akama_Shadow_Clone_Cast_Actions` lines 27798-27892 (95 lines, gui-trigger)
+- `Trig_TheNook_Hellseek_Loop_Func002A` lines 31927-32021 (95 lines, gui-trigger)
+- `Trig_HERO_Hook_Loop_Actions` lines 38382-38476 (95 lines, gui-trigger)
+- `Trig_Avalanche_Toss_Loop_Func002A` lines 28721-28813 (93 lines, gui-trigger)
+- `Trig_Avalanche_Seismic_Fury_Loop_Func002A` lines 29564-29656 (93 lines, gui-trigger)
+- `Trig_ten_Actions` lines 46474-46565 (92 lines, gui-trigger)
+- `Trig_HERO_Summon_Brewer_Stats_Actions` lines 35934-36022 (89 lines, gui-trigger)
+
+## Linked Dormant Triggers
+
+- `Akama_Blink_Return` line 28329: disabled; enabled by Trig_Akama_Learn_Blink_Actions:28227
+- `Akama_Blink_Start` line 28289: disabled; enabled by Trig_Akama_Learn_Blink_Actions:28226
+- `Akama_Shadow_Clone_Akama_Dies` line 28154: disabled; enabled by Trig_Akama_Shadow_Clone_Cast_Actions:27889
+- `Akama_Shadow_Clone_Destroy_Clone` line 28200: no registered event; executed by Trig_Akama_Shadow_Clone_Cast_Actions:27803, Trig_Akama_Shadow_Clone_Loop_Func001A:27963, Trig_Akama_Shadow_Clone_Akama_Dies_Actions:28150
+- `Akama_Shadow_Clone_Loop` line 28012: disabled; enabled by Trig_Akama_Shadow_Clone_Cast_Actions:27888
+- `Akama_Shadow_Clone_Mimic_Start` line 28100: disabled; enabled by Trig_Akama_Shadow_Clone_Cast_Actions:27890
+- `Akama_Shadow_Clone_Mimic_Stop` line 28127: disabled; enabled by Trig_Akama_Shadow_Clone_Cast_Actions:27891
+- `Avalanche_Craggy_Exterior_Stun` line 29241: disabled; enabled by Trig_Avalanche_Craggy_Exterior_Learn_Actions:29103
+- `Avalanche_Seismic_Fury_Enable` line 29307: disabled; executed by Trig_Avalanche_Toss_Loop_Func002Func026Func016Func022A:28697, Trig_Avalanche_Trample_Loop_Func001Func021Func007A:28901, Trig_Avalanche_Craggy_Exterior_Stun_Actions:29196
+- `Avalanche_Seismic_Fury_Floating_Text` line 29699: disabled; executed by Trig_Avalanche_Toss_Start_Cast_Actions:28540, Trig_Avalanche_Craggy_Exterior_Stun_Actions:29177
+- `Avalanche_Seismic_Fury_Loop` line 29663: disabled; enabled by Trig_Avalanche_Seismic_Fury_Begin_Cast_Actions:29331, Trig_Avalanche_Seismic_Fury_Start_Cast_Actions:29366
+- `Avalanche_Toss_Loop` line 28821: disabled; enabled by Trig_Avalanche_Toss_Start_Cast_Actions:28590
+- `Avalanche_Trample_Loop` line 29085: disabled; enabled by Trig_Dash_Wooj_Actions:32696, Trig_Charge_Pos_2_and_Pos_3_Actions:33034
+- `Avatar_Hydralisk_Loop` line 32904: disabled; enabled by Trig_Avatar_Hydralisk_Actions:32805
+- `Avatar_Loop` line 32877: disabled; enabled by Trig_Avatar_Hydralisk_Actions:32804, Trig_Avatar_Yeti_Actions:32831
+- `DDE_Destroy_Effect` line 13225: no registered event; executed by Trig_Guardian_Force_Field_Loop_Actions:30629
+- `DDE_Destroy_Last_Created_Effect` line 13279: no registered event; executed by Trig_Avalanche_Seismic_Fury_Loop_Func002A:29626, Trig_SovietSniper_Decoy_Bomb_Create_Bomb_Actions:31207, Trig_SovietSniper_Decoy_Bomb_Create_Bomb_Actions:31215
+- `Destroy_Triggers_1` line 22109: no registered event; executed by Trig_Start_game_Actions:17055
+- `Destroy_Triggers_2` line 22130: no registered event; executed by Trig_Mass_START_Actions:18841
+- `END` line 48112: no registered event; executed by Trig_player_leaves_Actions:47215, Trig_player_destroyed_Actions:47358, Trig_player_destroyed_Actions:47375
+- `GM_send_messages` line 19246: disabled; enabled by Trig_GM_info_Actions:19055
+- `GM_set_messages` line 19027: no registered event; executed by RunInitializationTriggers:48613
+- `Guardian_Energy_Chamber_Ally_Cast` line 30879: disabled; enabled by Trig_Guardian_Energy_Chamber_Learn_Actions:30928
+- `Guardian_Energy_Chamber_Tome_Of_Retraining` line 30905: disabled; enabled by Trig_Guardian_Energy_Chamber_Learn_Actions:30929
+- `Guardian_Force_Field_Damage` line 30787: no registered event; executed by Trig_Guardian_Force_Field_Loop_Actions:30566, Trig_Guardian_Force_Field_Loop_Actions:30591, Trig_Guardian_Force_Field_Loop_Actions:30610
+- `Guardian_Force_Field_Loop` line 30653: disabled; enabled by Trig_Guardian_Force_Field_Cast_Actions:30485
+- `HERO_Hook_Loop` line 38479: disabled; enabled by Trig_HERO_Hook_Throw_Actions:38222
+- `HERO_Hook_Loop_Copy` line 25378: disabled; enabled by Trig_HERO_Hook_Throw_Copy_Actions:25157
+- `HERO_Monkey_Staff_of_the_Jungle_Loop` line 26979: disabled; enabled by Trig_HERO_Monkey_Staff_of_the_Jungle_Throw_Actions:26861
+- `HERO_Thor_Mjolnir_Loop` line 37909: disabled; enabled by Trig_HERO_Thor_Mjolnir_Throw_Actions:37797
+- `HERO_Throw_Glaive_Loop` line 26273: disabled; enabled by Trig_HERO_Throw_Glaive_Actions:26105
+- `Hammer_Ulti_Loop` line 32646: disabled; enabled by Trig_Hammer_Ulti_Cast_Actions:32570
+- `Helios_Collision_Loop` line 30276: disabled; enabled by Trig_Helios_Collision_Activation_Actions:29843
+- `Holy_Crash_Loop` line 27286: disabled; enabled by Trig_Holy_Crash_Cast_Actions:27109
+- `Initialization` line 25527: no registered event; executed by RunInitializationTriggers:48614
+- `KICK_rebuild_dialog` line 23896: no registered event; executed by Trig_KICK_command_Actions:23791, Trig_KICK_execute_Actions:23987, Trig_KICK_execute_Actions:23999
+- `KOTH_Create_Hill_Glow` line 16555: no registered event; executed by Trig_KOTH_Setup_Actions:16236, Trig_KOTH_Reset_Hill_Actions:16510
+- `KOTH_Gold_Depleted` line 16454: no registered event; executed by Trig_KOTH_Income_Actions:16345
+- `KOTH_Reset_Hill` line 16528: no registered event; executed by Trig_KOTH_Income_Actions:16340, Trig_KOTH_Hill_Dies_Actions:16418, Trig_KOTH_Second_Hill_Actions:16745
+- `KOTH_Set_Neutral_Hill` line 16471: no registered event; executed by Trig_KOTH_Hill_Dies_Actions:16397, Trig_player_leaves_Actions:47194, Trig_player_destroyed_Actions:47345
+- `KOTH_Setup` line 16245: disabled; enabled by Trig_MODE_King_Of_The_Hill_Actions:16134, Trig_MODE_King_Of_The_Hill_Actions:16140
+- `KOTH_Update_Board_Gold` line 16709: no registered event; executed by Trig_KOTH_Income_Actions:16325
+- `KOTH_Update_Text` line 16695: no registered event; executed by Trig_KOTH_Setup_Actions:16233, Trig_KOTH_Income_Actions:16326, Trig_KOTH_Reset_Hill_Actions:16524
+- `Kill_units_of_inactive_player` line 47087: disabled; enabled by Trig_check_if_team_active_Actions:47000, Trig_check_if_team_active_Actions:47013, Trig_check_if_team_active_Actions:47026; executed by Trig_player_leaves_Actions:47212, Trig_player_destroyed_Actions:47372
+- `KnockUp_Apply` line 13396: no registered event; executed by Trig_Holy_Crash_Loop_Func002Func026Func016Func008A:27185, Trig_Pounce_Loop_Func002Func025Func015Func008A:27498
+- `KnockUp_Loop` line 13454: disabled; enabled by Trig_KnockUp_Apply_Actions:13370
+- `KnockbackUnits` line 25707: disabled; enabled by Trig_Beast_Attack_Actions:25587
+- `MASS_timer` line 18657: disabled; enabled by Trig_start_timers_Actions:20426; executed by Trig_start_timers_Actions:20427
+- `MH_hide_fake_shop_rat` line 19657: disabled; enabled by Trig_init_Actions:13791
+- `MH_hide_fake_shop_truesight` line 19866: disabled; enabled by Trig_init_Actions:13792, Trig_turn_on_mh_Actions:19985
+- `MH_shop_click` line 19605: disabled; enabled by Trig_init_Actions:13793
+- `MH_shop_redirect` line 19545: disabled; enabled by Trig_init_Actions:13794
+- `MH_truesight_add_units` line 19752: disabled; enabled by Trig_init_Actions:13795
+- `MH_truesight_remove_units` line 19828: disabled; enabled by Trig_init_Actions:13796
+- `MH_uhide_fake_shop_truesight` line 19907: disabled; enabled by Trig_init_Actions:13797
+- `MH_unhide_fake_shop_rat` line 19678: disabled; enabled by Trig_init_Actions:13798
+- `MODE_777` line 16166: no registered event; executed by Trig_Start_game_Actions:17028
+- `MODE_King_Of_The_Hill` line 16148: no registered event; executed by Trig_Start_game_Actions:16991
+- `MODE_set_pub_game` line 16038: no registered event; executed by Trig_AFK_Host_Timer_Expires_Actions:15908, Trig_MODE_GUI_execute_Actions:15983, Trig_MODE_GUI_execute_Actions:15990
+- `Medivh_Gust_Loop` line 33644: disabled; enabled by Trig_Medivh_Gust_Stun_Actions:33527
+- `MissileCreate` line 12669: no registered event; executed by Trig_Searing_Bullet_Actions:25915, Trig_Cripple_Wave_Actions:26749, Trig_Staff_of_the_River_Actions:27646
+- `Multiboard_Create_with_KOTH` line 17630: no registered event; executed by Trig_MODE_set_pub_game_Actions:16033, Trig_Start_game_Actions:16990
+- `Multiboard_Show` line 17646: no registered event; executed by Trig_MODE_set_pub_game_Actions:16034, Trig_Mass_START_Actions:18840
+- `Overdrive_income` line 16183: disabled; enabled by Trig_Mass_START_Actions:18837
+- `Pounce_Loop` line 27597: disabled; enabled by Trig_Pounce_Cast_Actions:27422
+- `Reptile_Acid_Armor_Loop` line 33154: disabled; enabled by Trig_Reptile_Acid_Armor_Cast_Actions:33108
+- `Shockwave_Cast` line 33683: no registered event; executed by Trig_Medivh_Gust_Cast_Actions:33475
+- `Shockwave_Loop` line 33940: disabled; enabled by Trig_Shockwave_Cast_Actions:33675
+- `SovietSniper_Decoy_Bomb_Loop` line 31426: disabled; enabled by Trig_SovietSniper_Decoy_Bomb_Create_Bomb_Actions:31257
+- `SovietSniper_Golovu_Shot_Loop` line 31801: disabled; enabled by Trig_SovietSniper_Golovu_Shot_Begin_Cast_Actions:31451, Trig_SovietSniper_Golovu_Shot_Start_Cast_Actions:31496
+- `SovietSniper_Reposition_Loop` line 31109: disabled; enabled by Trig_SovietSniper_Reposition_Cast_Actions:30984
+- `Start_SD` line 17345: no registered event; executed by Trig_MODE_set_pub_game_Actions:16031
+- `Start_game` line 17073: no registered event; executed by Trig_AFK_Host_Timer_Expires_Actions:15909, Trig_MODE_set_pub_game_Actions:16032
+- `TheNook_Hellseek_Loop` line 32028: disabled; enabled by Trig_TheNook_Hellseek_Cast_Actions:31827
+- `Unit_Indexer` line 12643: no registered event; executed by RunInitializationTriggers:48609
+- `Visibility` line 47522: disabled; enabled by Trig_player_leaves_Actions:47213, Trig_player_destroyed_Actions:47356, Trig_player_destroyed_Actions:47373; executed by Trig_player_leaves_Actions:47214, Trig_player_destroyed_Actions:47357, Trig_player_destroyed_Actions:47374
+- `Votekick_RESET` line 22461: no registered event; executed by Trig_Votekick_Select_Ally_To_Kick_Actions:22299, Trig_Votekick_Vote_Yes_or_No_Actions:22414, Trig_Votekick_Vote_Yes_or_No_Actions:22419
+- `autopool_th_execute` line 23352: disabled; enabled by Trig_autopool_execute_Actions:23186
+- `colossal_death` line 21676: disabled; enabled by Trig_colossal_variables_Actions:20910
+- `colossal_spawn` line 21526: disabled; enabled by Trig_colossal_variables_Actions:20909
+- `colossal_stats` line 21328: disabled; executed by Trig_colossal_variables_Actions:20911
+- `colossal_variables` line 20936: disabled; enabled by Trig_Start_game_Actions:16996; executed by Trig_Start_game_Actions:16997
+- `debug` line 24511: disabled; enabled by Trig_admin_level_Actions:15503, Trig_debugmode_Actions:24263
+- `debug_control` line 24638: disabled; enabled by Trig_debugmode_Actions:24262
+- `debug_show_ability_name` line 24670: disabled; enabled by Trig_debugmode_Actions:24261
+- `debug_show_order_ids` line 24698: disabled; enabled by Trig_debugmode_Actions:24264
+- `debugmode` line 24299: disabled; enabled by Trig_admin_level_Actions:15497, Trig_admin_level_Actions:15502; executed by Trig_debug_Actions:24412
+- `five` line 46316: disabled; enabled by Trig_Tech_Delay_T1_Func008A:20471
+- `fog` line 24831: disabled; enabled by Trig_admin_level_Actions:15500
+- `init` line 13844: no registered event; executed by RunInitializationTriggers:48611
+- `reveal` line 24794: disabled; enabled by Trig_admin_level_Actions:15499
+- `set_base` line 44872: no registered event; executed by RunInitializationTriggers:48617
+- `set_hero_numbers` line 14371: no registered event; executed by RunInitializationTriggers:48612
+- `set_spawn_rates` line 44716: no registered event; executed by RunInitializationTriggers:48616
+- `set_spawn_variables` line 44673: no registered event; executed by Trig_MODE_set_standard_units_Actions:16059, RunInitializationTriggers:48615
+- `spawn_killa` line 24550: disabled; enabled by Trig_admin_level_Actions:15498
+- `start_timers` line 20432: no registered event; executed by Trig_Start_game_Actions:17053
+- `status` line 24892: disabled; enabled by Trig_admin_level_Actions:15505
+- `suicide_after_10_seconds` line 22620: no registered event; executed by Trig_suicide_pressed_Actions:22555
+- `summon_hero_for_player` line 24757: disabled; enabled by Trig_admin_level_Actions:15496, Trig_admin_level_Actions:15501
+- `swap_command` line 22873: disabled; enabled by Trig_Start_SD_Actions:17200
+- `swap_execute` line 23020: disabled; enabled by Trig_Start_SD_Actions:17201
+- `ten` line 46568: disabled; enabled by Trig_Tech_Delay_T1_Func008A:20470
+- `test_message` line 24928: disabled; enabled by Trig_admin_level_Actions:15504
+- `turn_off_mh` line 19943: disabled; enabled by Trig_init_Actions:13799
+- `turn_on_mh` line 19991: disabled; enabled by Trig_init_Actions:13800
+
+## Dormant Trigger Review Candidates
+
+- `Avalanche_Seismic_Fury_Begin_Cast` line 29335: disabled
+- `Avalanche_Seismic_Fury_Learn` line 29283: disabled
+- `Avalanche_Seismic_Fury_Start_Cast` line 29384: disabled
+- `Avalanche_Seismic_Fury_Stop_Cast` line 29435: disabled
+- `Axe_OnHit` line 32319: no registered event
+- `Camera_Zoom` line 15863: no registered event
+- `Cripple_Wave_OnHit` line 26830: no registered event
+- `DDE_Expire` line 13292: no registered event
+- `DDE_Expire_Hide` line 13309: no registered event
+- `DestroyMissileGroup` line 13020: no registered event
+- `GST_Example_0_Expire` line 13102: disabled
+- `GST_Example_1_Expire` line 13119: disabled
+- `GST_Example_2_Expire` line 13138: disabled
+- `GST_Example_3_Expire` line 13155: disabled
+- `GST_Example_5_Expire` line 13172: disabled
+- `Hammer_OnHit` line 32533: no registered event
+- `Hero_Skills` line 17559: no registered event
+- `MODE_set_bounties` line 16104: no registered event
+- `MODE_set_standard_units` line 16063: no registered event
+- `Medivh_Gust_Stun` line 33570: no registered event
+- `Mirror_Image_Create_Illusions` line 33237: no registered event
+- `MissileAttach` line 12786: no registered event
+- `MissileBounce` line 12682: no registered event
+- `MissileColor` line 12656: no registered event
+- `MissileDeflect` line 12708: no registered event
+- `MissileDeflectTarget` line 12695: no registered event
+- `MissileDetach` line 12799: no registered event
+- `MissileFlush` line 12721: no registered event
+- `MissileFlushAll` line 12734: no registered event
+- `MissileGroupAdd` line 12968: no registered event
+- `MissileGroupAddGroup` line 12994: no registered event
+- `MissileGroupClear` line 12955: no registered event
+- `MissileGroupRemove` line 12981: no registered event
+- `MissileGroupRemoveGroup` line 13007: no registered event
+- `MissileHitted` line 12747: no registered event
+- `MissilePause` line 12760: no registered event
+- `MissileResume` line 12773: no registered event
+- `MissilesInRange` line 12825: no registered event
+- `MissilesInRangeCounted` line 12838: no registered event
+- `MissilesInRangeOfLoc` line 12851: no registered event
+- `MissilesInRangeOfLocCounted` line 12864: no registered event
+- `MissilesInRect` line 12877: no registered event
+- `MissilesInRectCounted` line 12890: no registered event
+- `MissilesOfPlayer` line 12903: no registered event
+- `MissilesOfPlayerCounted` line 12916: no registered event
+- `MissilesOfType` line 12929: no registered event
+- `MissilesOfTypeCounted` line 12942: no registered event
+- `Mute_Player_Command` line 12466: disabled
+- `Mute_Setup` line 12389: disabled
+- `No_double_tech` line 46769: disabled
+- `PickedMissile` line 12812: no registered event
+- `Searing_Bullet_OnHit` line 26000: no registered event
+- `SovietSniper_Decoy_Bomb_Create_Bomb` line 31261: no registered event
+- `Staff_of_the_River_OnHit` line 27719: no registered event
+- `Warlock_Vengeance_Expire` line 38596: no registered event
+- `autopool_command` line 23099: disabled
+- `autopool_execute` line 23213: disabled
+- `autopool_time` line 23273: disabled
+- `bounds` line 25050: disabled
+- `coords` line 24990: disabled
+- `eight_new` line 46650: disabled
+- `move_unit_hero_showroom` line 20400: disabled
+- `repick_command` line 22785: disabled
+- `restore_visibility_to_tavern` line 20358: disabled
+- `ten_new` line 46691: disabled
+- `twelve_new` line 46732: disabled
+
+## Unreachable Function Candidates
+
+- `s__MissileGroup__allocate` line 2788 (generated-library)
+- `s__MissileGroup_deallocate` line 2805 (generated-library)
+- `sc__Missiles_terminate` line 2816 (generated-library)
+- `sc__Missiles_setup` line 2822 (generated-library)
+- `sc__Missiles_move` line 2862 (generated-library)
+- `s__Missiles__allocate` line 2867 (generated-library)
+- `s__Missiles_deallocate` line 2897 (generated-library)
+- `s__Missiles___Coordinates__allocate` line 2908 (generated-library)
+- `s__Missiles___Pool__allocate` line 2936 (generated-library)
+- `s__Missiles___Pool_deallocate` line 2953 (generated-library)
+- `s__MissileEffect__allocate` line 2964 (generated-library)
+- `s__MissileEffect_deallocate` line 2981 (generated-library)
+- `sc__MMD___QueueNode_onDestroy` line 2992 (generated-library)
+- `s__MMD___QueueNode__allocate` line 3001 (generated-library)
+- `sc__MMD___QueueNode_deallocate` line 3019 (generated-library)
+- `sc___prototype4_execute` line 3030 (generated-library)
+- `sc___prototype4_evaluate` line 3034 (generated-library)
+- `s__MMD___QueueNode_deallocate` line 4267 (generated-library)
+- `ItemTable000000_DropItems` line 11552 (function)
+- `Trig_Mute_Player_Command_Func007Func004Func011C` line 12406 (gui-trigger)
+- `Trig_Mute_Player_Command_Func007Func004C` line 12413 (gui-trigger)
+- `Trig_Mute_Player_Command_Func007C` line 12420 (gui-trigger)
+- `Trig_Unit_Indexer_Func017Func004C` line 12481 (gui-trigger)
+- `Trig_Unit_Indexer_Func017C` line 12488 (gui-trigger)
+- `Trig_Unit_Indexer_Func030Func005C` line 12495 (gui-trigger)
+- `Trig_Unit_Indexer_Func030C` line 12502 (gui-trigger)
+- `Trig_Unit_Indexer_Func034C` line 12509 (gui-trigger)
+- `Trig_DDE_Destroy_Effect_Func001Func001C` line 13181 (gui-trigger)
+- `Trig_DDE_Destroy_Effect_Func001Func002C` line 13188 (gui-trigger)
+- `Trig_DDE_Destroy_Effect_Func001C` line 13195 (gui-trigger)
+- `Trig_DDE_Destroy_Last_Created_Effect_Func002Func001C` line 13233 (gui-trigger)
+- `Trig_DDE_Destroy_Last_Created_Effect_Func002Func002C` line 13240 (gui-trigger)
+- `Trig_DDE_Destroy_Last_Created_Effect_Func002C` line 13247 (gui-trigger)
+- `Trig_CPP_Create_Pathing_Checker_Func003C` line 13317 (gui-trigger)
+- `Trig_KnockUp_Apply_Func009C` line 13344 (gui-trigger)
+- `Trig_KnockUp_Apply_Func012C` line 13351 (gui-trigger)
+- `Trig_KnockUp_Loop_Func002Func004Func010C` line 13404 (gui-trigger)
+- `Trig_KnockUp_Loop_Func002Func004C` line 13411 (gui-trigger)
+- `Trig_init_Func037Func001Func019C` line 13509 (gui-trigger)
+- `Trig_init_Func037Func001C` line 13520 (gui-trigger)
+- `Trig_init_Func053Func001C` line 13527 (gui-trigger)
+- `Trig_init_Func054Func001C` line 13534 (gui-trigger)
+- `Trig_init_Func055Func001C` line 13541 (gui-trigger)
+- `Trig_init_Func056Func001C` line 13548 (gui-trigger)
+- `Trig_init_Func087C` line 13590 (gui-trigger)
+- `Trig_Remove_Obs_PauseSave_Func008Func001C` line 13852 (gui-trigger)
+- `Trig_VERSION_CHECK_Func009Func001Func001Func002C` line 13982 (gui-trigger)
+- `Trig_VERSION_CHECK_Func009Func001Func001C` line 13992 (gui-trigger)
+- `Trig_VERSION_CHECK_Func009Func002C` line 13999 (gui-trigger)
+- `Trig_VERSION_CHECK_Func009C` line 14006 (gui-trigger)
+- `Trig_newzoom_Func006Func001Func001Func002C` line 14068 (gui-trigger)
+- `Trig_newzoom_Func006Func001Func001C` line 14078 (gui-trigger)
+- `Trig_newzoom_Func006Func002C` line 14085 (gui-trigger)
+- `Trig_newzoom_Func006C` line 14092 (gui-trigger)
+- `Trig_fake_shops_insert_Func002C` line 14160 (gui-trigger)
+- `Trig_admin_level_Func002Func002Func002C` line 15407 (gui-trigger)
+- `Trig_admin_level_Func002Func002C` line 15423 (gui-trigger)
+- `Trig_admin_level_Func002Func004Func002C` line 15430 (gui-trigger)
+- `Trig_admin_level_Func002Func004C` line 15449 (gui-trigger)
+- `Trig_admin_level_Func002Func005C` line 15456 (gui-trigger)
+- `Trig_admin_level_Func002Func007C` line 15466 (gui-trigger)
+- `Trig_playernameandtag_Func003Func002Func002C` line 15531 (gui-trigger)
+- `Trig_playernameandtag_Func003Func002Func003C` line 15538 (gui-trigger)
+- `Trig_Observer_Vision_Fix_Func001Func004C` line 15711 (gui-trigger)
+- `InitTrig_Camera_Zoom` line 15863 (init-trigger)
+- `Trig_AFK_Host_Timer_Expires_Func002C` line 15891 (gui-trigger)
+- `Trig_MODE_GUI_show_Func003C` line 15926 (gui-trigger)
+- `Trig_MODE_GUI_execute_Func004C` line 15963 (gui-trigger)
+- `Trig_MODE_GUI_execute_Func005C` line 15970 (gui-trigger)
+- `Trig_MODE_King_Of_The_Hill_Func002Func002C` line 16113 (gui-trigger)
+- `Trig_MODE_King_Of_The_Hill_Func002C` line 16120 (gui-trigger)
+- `Trig_KOTH_Setup_Func012C` line 16193 (gui-trigger)
+- `Trig_KOTH_Income_Func006Func001C` line 16255 (gui-trigger)
+- `Trig_KOTH_Income_Func010C` line 16269 (gui-trigger)
+- `Trig_KOTH_Income_Func024Func002C` line 16281 (gui-trigger)
+- `Trig_KOTH_Income_Func024Func005C` line 16288 (gui-trigger)
+- `Trig_KOTH_Income_Func024C` line 16295 (gui-trigger)
+- `Trig_KOTH_Hill_Dies_Func002Func009C` line 16368 (gui-trigger)
+- `Trig_KOTH_Hill_Dies_Func002C` line 16387 (gui-trigger)
+- `Trig_KOTH_Reset_Hill_Func002C` line 16479 (gui-trigger)
+- `Trig_KOTH_Reset_Hill_Func017C` line 16486 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func002Func001Func001Func002C` line 16563 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func002Func001Func001C` line 16570 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func002Func001C` line 16577 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func002C` line 16584 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func005Func001Func001Func001Func002C` line 16591 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func005Func001Func001Func001C` line 16598 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func005Func001Func001C` line 16605 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func005Func001C` line 16612 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func005C` line 16619 (gui-trigger)
+- `Trig_KOTH_Update_Text_Func006C` line 16626 (gui-trigger)
+- `Trig_KOTH_Second_Hill_Func012C` line 16717 (gui-trigger)
+- `Trig_KOTH_Third_Hill_Func012C` line 16758 (gui-trigger)
+- `Trig_KOTH_Fourth_Hill_Func012C` line 16799 (gui-trigger)
+- `Trig_Add_Creeps_To_Pub_Mode_Func003Func001Func003C` line 16856 (gui-trigger)
+- `Trig_Add_Creeps_To_Pub_Mode_Func003Func001C` line 16863 (gui-trigger)
+- `Trig_Start_game_Func006C` line 16918 (gui-trigger)
+- `Trig_Start_game_Func016C` line 16925 (gui-trigger)
+- `Trig_Start_game_Func024C` line 16954 (gui-trigger)
+- `Trig_Start_game_Func025Func004C` line 16961 (gui-trigger)
+- `Trig_Start_SD_Func013Func030C` line 17112 (gui-trigger)
+- `Trig_Start_SD_Func013Func031Func001Func001Func001C` line 17119 (gui-trigger)
+- `Trig_Start_SD_Func013Func042Func001Func001Func001Func002C` line 17139 (gui-trigger)
+- `Trig_Start_SD_Func013Func042Func001Func001Func001Func003C` line 17146 (gui-trigger)
+- `Trig_Start_SD_Func013Func042Func001Func001Func001Func004C` line 17153 (gui-trigger)
+- `Trig_Start_SD_Func013Func042C` line 17180 (gui-trigger)
+- `Trig_Start_SD_Func013C` line 17191 (gui-trigger)
+- `Trig_TP_hero_Func006Func017Func001Func003C` line 17362 (gui-trigger)
+- `Trig_TP_hero_Func006Func017Func001C` line 17369 (gui-trigger)
+- `Trig_TP_hero_Func006C` line 17376 (gui-trigger)
+- `Trig_TP_hero_Func010001` line 17383 (gui-trigger)
+- `Trig_TP_hero_Func011001` line 17387 (gui-trigger)
+- `Trig_TP_hero_Func012001` line 17391 (gui-trigger)
+- `Trig_TP_hero_Func013001` line 17395 (gui-trigger)
+- `Trig_TP_hero_Func014001` line 17399 (gui-trigger)
+- `Trig_TP_hero_Func015001` line 17403 (gui-trigger)
+- `Trig_TP_hero_Func020C` line 17407 (gui-trigger)
+- `Trig_Hero_Skills_Func001Func001C` line 17531 (gui-trigger)
+- `Trig_Multiboard_Create_with_KOTH_Func001C` line 17570 (gui-trigger)
+- `Trig_Multiboard_Create_with_KOTH_Func005C` line 17577 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func002Func003Func002C` line 17667 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func002Func003C` line 17674 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func002C` line 17681 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func009C` line 17691 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func016Func001Func001Func001Func001C` line 17698 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func016Func001Func001Func001C` line 17705 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func016Func001Func001C` line 17712 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func016Func001C` line 17719 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func016C` line 17726 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007Func018C` line 17733 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func007C` line 17740 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func002Func003Func002C` line 17747 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func002Func003C` line 17754 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func002C` line 17761 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func012Func002C` line 17771 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func012C` line 17781 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009Func013C` line 17791 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func009C` line 17828 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func011Func002C` line 17838 (gui-trigger)
+- `Trig_Multiboard_Update_Func005Func011C` line 17851 (gui-trigger)
+- `Trig_Multiboard_Update_Func005C` line 17858 (gui-trigger)
+- `Trig_Unit_Experience_System_Func004Func009002003001` line 18020 (gui-trigger)
+- `Trig_Unit_Experience_System_Func004Func009002003002` line 18024 (gui-trigger)
+- `Trig_Unit_Experience_System_Func004Func012Func001C` line 18032 (gui-trigger)
+- `Trig_Unit_Experience_System_Func004Func014C` line 18048 (gui-trigger)
+- `Trig_Unit_Experience_System_Func004C` line 18067 (gui-trigger)
+- `Trig_Unit_Experience_System_Func005Func009002003001` line 18077 (gui-trigger)
+- `Trig_Unit_Experience_System_Func005Func009002003002` line 18081 (gui-trigger)
+- `Trig_Unit_Experience_System_Func005Func012Func001C` line 18089 (gui-trigger)
+- `Trig_Unit_Experience_System_Func005Func014C` line 18105 (gui-trigger)
+- `Trig_Unit_Experience_System_Func005C` line 18124 (gui-trigger)
+- `Trig_Unit_Experience_System_Func006Func009002003001` line 18134 (gui-trigger)
+- `Trig_Unit_Experience_System_Func006Func009002003002` line 18138 (gui-trigger)
+- `Trig_Unit_Experience_System_Func006Func012Func001C` line 18146 (gui-trigger)
+- `Trig_Unit_Experience_System_Func006Func014C` line 18162 (gui-trigger)
+- `Trig_Unit_Experience_System_Func006C` line 18178 (gui-trigger)
+- `Trig_Foot_Exp_system_Func002Func005C` line 18249 (gui-trigger)
+- `Trig_Foot_Exp_system_Func002Func008002003001` line 18256 (gui-trigger)
+- `Trig_Foot_Exp_system_Func002Func008002003002` line 18260 (gui-trigger)
+- `Trig_Foot_Exp_system_Func002Func011Func001C` line 18268 (gui-trigger)

@@ -1,0 +1,5 @@
+from pathlib import Path
+import json,hashlib
+r=Path(__file__).parent;p=r/'verification.json';data=json.loads(p.read_text());data['engine_test']='Combined October 28 build compiled and passed archive/structural checks. Live HUD interaction testing is pending; no running match was interrupted.'
+base=Path(r'C:\Users\User\Documents\Warcraft III\Maps\Test\Archive\FF799X_Rx_HeroTavern_v1.w3x');data['base_sha256']=hashlib.sha256(base.read_bytes()).hexdigest()
+delivery=Path(r'C:\Users\User\OneDrive\Documents\Warcraft III\Maps\Mini Foots\Mini Foots v6.w3x');data['installed_sha256']=hashlib.sha256(delivery.read_bytes()).hexdigest() if delivery.exists() else None;data['installed_path']=str(delivery);data['installed_hash_verified']=data['installed_sha256']==data['sha256'];p.write_text(json.dumps(data,indent=2));(r/'release/Mini Foots v6.sha256').write_text(data['sha256']+'  Mini Foots v6.w3x\n');print(json.dumps({k:data[k] for k in ['sha256','bytes','engine_test','installed_path','installed_hash_verified']},indent=2))

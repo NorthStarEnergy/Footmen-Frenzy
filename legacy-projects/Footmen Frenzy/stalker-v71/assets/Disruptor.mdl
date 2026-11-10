@@ -1,0 +1,142 @@
+Version {
+	FormatVersion 800,
+}
+Model "Stalker particle disruptor" {
+	NumGeosets 1,
+	NumGeosetAnims 1,
+	NumBones 1,
+	BlendTime 0,
+	MinimumExtent { -45, -14, -14 },
+	MaximumExtent { 25, 14, 14 },
+	BoundsRadius 60,
+}
+Sequences 2 {
+	Anim "Stand" {
+		Interval { 0, 1000 },
+		MinimumExtent { -45, -14, -14 },
+		MaximumExtent { 25, 14, 14 },
+		BoundsRadius 60,
+	}
+	Anim "Death" {
+		Interval { 1100, 1200 },
+		NonLooping,
+		MinimumExtent { -45, -14, -14 },
+		MaximumExtent { 25, 14, 14 },
+		BoundsRadius 60,
+	}
+}
+Textures 1 {
+	Bitmap {
+		Image "Units\Stalker\Plasma.blp",
+	}
+}
+Materials 1 {
+	Material {
+		Layer {
+			FilterMode Additive,
+			static TextureID 0,
+			TwoSided,
+			Unshaded,
+		}
+	}
+}
+Geoset {
+	Vertices 12 {
+		{ -32, -11, 0 },
+		{ 32, -11, 0 },
+		{ 32, 11, 0 },
+		{ -32, 11, 0 },
+		{ -32, 0, -4.18 },
+		{ 32, 0, -4.18 },
+		{ 32, 0, 4.18 },
+		{ -32, 0, 4.18 },
+		{ 0, -11, -11 },
+		{ 0, 11, -11 },
+		{ 0, 11, 11 },
+		{ 0, -11, 11 },
+	}
+	Normals 12 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 0, -1, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+		{ 1, 0, 0 },
+	}
+	TVertices 12 {
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+		{ 0, 0 },
+		{ 1, 0 },
+		{ 1, 1 },
+		{ 0, 1 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 18 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -45, -14, -14 },
+	MaximumExtent { 25, 14, 14 },
+	BoundsRadius 60,
+	Anim {
+		MinimumExtent { -45, -14, -14 },
+		MaximumExtent { 25, 14, 14 },
+		BoundsRadius 60,
+	}
+	Anim {
+		MinimumExtent { -45, -14, -14 },
+		MaximumExtent { 25, 14, 14 },
+		BoundsRadius 60,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+}
+GeosetAnim {
+	GeosetId 0,
+	Alpha 4 {
+		DontInterp,
+		0: 1,
+		1000: 1,
+		1100: 0,
+		1200: 0,
+	}
+	static Color { 0.25, 0.42, 1 },
+}
+Bone "Root" {
+	ObjectId 0,
+	GeosetId Multiple,
+	GeosetAnimId None,
+}
+PivotPoints 1 {
+	{ 0, 0, 0 },
+}

@@ -1,0 +1,41 @@
+Frame "SLIDER" "MiniFootsZoomSlider" {
+    SliderLayoutVertical,
+    Width 0.012,
+    Height 0.095,
+    ControlBackdrop "MFZoomTrack",
+    Frame "BACKDROP" "MFZoomTrack" {
+        DecorateFileNames,
+        BackdropBlendAll,
+        BackdropBackground "EscMenuSliderBackground",
+        BackdropEdgeFile "EscMenuSliderBorder",
+        BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
+        BackdropCornerSize 0.004,
+        BackdropBackgroundInsets 0.002 0.002 0.002 0.002,
+    }
+    ControlDisabledBackdrop "MFZoomLockedTrack",
+    Frame "BACKDROP" "MFZoomLockedTrack" {
+        DecorateFileNames,
+        BackdropBlendAll,
+        BackdropBackground "EscMenuSliderBackground",
+        BackdropEdgeFile "EscMenuSliderBorder",
+        BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
+        BackdropCornerSize 0.004,
+    }
+    SliderThumbButtonFrame "MFZoomThumb",
+    Frame "BUTTON" "MFZoomThumb" {
+        Width 0.014,
+        Height 0.014,
+        ControlBackdrop "MFZoomThumbArt",
+        Frame "BACKDROP" "MFZoomThumbArt" {
+            DecorateFileNames,
+            BackdropBlendAll,
+            BackdropBackground "EscMenuSliderThumbButton",
+        }
+        ControlDisabledBackdrop "MFZoomLockedThumbArt",
+        Frame "BACKDROP" "MFZoomLockedThumbArt" {
+            DecorateFileNames,
+            BackdropBlendAll,
+            BackdropBackground "EscMenuSliderDisabledThumbButton",
+        }
+    }
+}

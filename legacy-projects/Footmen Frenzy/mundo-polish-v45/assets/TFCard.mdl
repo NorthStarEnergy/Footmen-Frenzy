@@ -1,0 +1,337 @@
+Version {
+	FormatVersion 800,
+}
+Model "Twisted Fate - small playing card" {
+	NumGeosets 6,
+	NumGeosetAnims 6,
+	NumBones 1,
+	BlendTime 150,
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+}
+Sequences 1 {
+	Anim "Stand" {
+		Interval { 0, 1000 },
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+}
+Textures 1 {
+	Bitmap {
+		Image "war3mapImported\TFWhite.blp",
+	}
+}
+Materials 1 {
+	Material {
+		Layer {
+			FilterMode None,
+			static TextureID 0,
+			TwoSided,
+			Unshaded,
+		}
+	}
+}
+Geoset {
+	Vertices 4 {
+		{ -28, -18, 0 },
+		{ 28, -18, 0 },
+		{ 28, 18, 0 },
+		{ -28, 18, 0 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+Geoset {
+	Vertices 4 {
+		{ -24, -14, 0.3 },
+		{ 24, -14, 0.3 },
+		{ 24, 14, 0.3 },
+		{ -24, 14, 0.3 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+Geoset {
+	Vertices 4 {
+		{ -22, -12, 0.6 },
+		{ 22, -12, 0.6 },
+		{ 22, 12, 0.6 },
+		{ -22, 12, 0.6 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+Geoset {
+	Vertices 4 {
+		{ -13, 0, 1 },
+		{ 0, -9, 1 },
+		{ 13, 0, 1 },
+		{ 0, 9, 1 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+Geoset {
+	Vertices 4 {
+		{ -21, 6, 1 },
+		{ -17, 6, 1 },
+		{ -17, 10, 1 },
+		{ -21, 10, 1 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+Geoset {
+	Vertices 4 {
+		{ 17, -10, 1 },
+		{ 21, -10, 1 },
+		{ 21, -6, 1 },
+		{ 17, -6, 1 },
+	}
+	Normals 4 {
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+		{ 0, 0, 1 },
+	}
+	TVertices 4 {
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+		{ 0.5, 0.5 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 6 {
+		Triangles {
+			{ 0, 1, 2, 0, 2, 3 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -40, -40, -40 },
+	MaximumExtent { 40, 40, 40 },
+	BoundsRadius 69.32,
+	Anim {
+		MinimumExtent { -40, -40, -40 },
+		MaximumExtent { 40, 40, 40 },
+		BoundsRadius 69.32,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+	Unselectable,
+}
+GeosetAnim {
+	GeosetId 0,
+	static Color { 0.95, 0.95, 0.95 },
+}
+GeosetAnim {
+	GeosetId 1,
+	static Color { 0.16, 0.12, 0.12 },
+}
+GeosetAnim {
+	GeosetId 2,
+	static Color { 0.95, 0.95, 0.95 },
+}
+GeosetAnim {
+	GeosetId 3,
+	static Color { 0.14, 0.1, 0.1 },
+}
+GeosetAnim {
+	GeosetId 4,
+	static Color { 0.14, 0.1, 0.1 },
+}
+GeosetAnim {
+	GeosetId 5,
+	static Color { 0.14, 0.1, 0.1 },
+}
+Bone "Root" {
+	ObjectId 0,
+	GeosetId Multiple,
+	GeosetAnimId None,
+}
+PivotPoints 1 {
+	{ 0, 0, 0 },
+}

@@ -1,0 +1,3 @@
+const fs=require('fs'),w=require('C:/Users/User/Documents/ChatGPT/Footmen Frenzy/799x-backport/tools/model-tools/node_modules/war3-model');
+const b=fs.readFileSync('C:/Users/User/Documents/ChatGPT/Footmen Frenzy/mini-foots/base/files/InfernalGragas.mdx');const m=w.parseMDX(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength));fs.writeFileSync('799x-gragus-animation/model.json',JSON.stringify(m,(k,v)=>ArrayBuffer.isView(v)?Array.from(v):v));
+console.log(Object.keys(m));console.log(m.Sequences); console.log(m.Nodes.map(x=>({id:x.ObjectId,parent:x.Parent,name:x.Name,pivot:x.PivotPoint,rotation:x.Rotation?.Keys?.slice(0,2)})));
