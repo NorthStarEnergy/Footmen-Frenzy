@@ -17140,7 +17140,7 @@ endfunction
 
 function SoloFootsIsNoMuteHeroType takes integer heroType returns boolean
     // These heroes are intentionally not stocked in the solo taverns.
-    return heroType == 'H00K' or heroType == 'U00F' or heroType == 'N03J' or heroType == 'H043' or heroType == 'O00G'
+    return heroType == 'HMu1' or heroType == 'HVg1' or heroType == 'H00K' or heroType == 'U00F' or heroType == 'N03J' or heroType == 'H043' or heroType == 'O00G'
 endfunction
 
 function DraftRemember takes unit shop, integer id returns nothing
@@ -17182,6 +17182,8 @@ function SoloFootsDisableNoMuteHeroes takes nothing returns nothing
         call SetPlayerUnitAvailableBJ('N03J', false, Player(playerIndex))
         call SetPlayerUnitAvailableBJ('H043', false, Player(playerIndex))
         call SetPlayerUnitAvailableBJ('O00G', false, Player(playerIndex))
+        call SetPlayerUnitAvailableBJ('HMu1', false, Player(playerIndex))
+        call SetPlayerUnitAvailableBJ('HVg1', false, Player(playerIndex))
         set playerIndex=playerIndex + 1
     endloop
     set blocked=GetUnitsOfTypeIdAll('H00K')
@@ -17197,6 +17199,12 @@ function SoloFootsDisableNoMuteHeroes takes nothing returns nothing
     call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
     call DestroyGroup(blocked)
     set blocked=GetUnitsOfTypeIdAll('O00G')
+    call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
+    call DestroyGroup(blocked)
+    set blocked=GetUnitsOfTypeIdAll('HMu1')
+    call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
+    call DestroyGroup(blocked)
+    set blocked=GetUnitsOfTypeIdAll('HVg1')
     call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
     call DestroyGroup(blocked)
     set blocked=null
@@ -56126,7 +56134,6 @@ function VG_Init takes nothing returns nothing
     set kills = null
     loop
         exitwhen i >= 12
-        call TriggerRegisterPlayerChatEvent(chat, Player(i), "-veigar", true)
         set i = i + 1
     endloop
     call TriggerAddAction(chat, function VG_Summon)
