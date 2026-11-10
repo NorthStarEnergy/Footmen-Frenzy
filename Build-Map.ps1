@@ -2,6 +2,7 @@
 param(
  [Parameter(Mandatory)][ValidateSet('799x','solo','mini','ffa')][string]$Project,
  [Parameter(Mandatory)][string]$Name,
+ [switch]$LocalOnly,
  [string]$Python='python',
  [string]$MapsRoot=(Join-Path $env:USERPROFILE 'Documents\Warcraft III\Maps')
 )
@@ -18,3 +19,8 @@ foreach($folder in @("Tests\$($meta.map_type)",$meta.map_type)){
  if($maps.Count -ne 1 -or $maps[0].Name -ne $Name -or (Get-FileHash -LiteralPath $maps[0].FullName).Hash -ne $hash){throw "Delivery verification failed: $directory"}
 }
 "Built, verified, and installed $Name for $($meta.map_type)."
+
+if(-not $LocalOnly){
+ & $Python (Join-Path $PSScriptRoot 'tools\publish_test_map.py') $Project $Name
+ if($LASTEXITCODE -ne 0){throw "Local delivery succeeded. GitHub publication failed. Retry tools/publish_test_map.py with the same project and filename."}
+}
