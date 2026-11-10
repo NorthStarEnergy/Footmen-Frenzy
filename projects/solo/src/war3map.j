@@ -278,6 +278,7 @@ boolean udg_mode_selected= false
 button array udg_dlg_btn_mode_05
 button array udg_dlg_btn_kick
 dialog udg_dlg_kick= null
+boolean DraftAllPick = false
 player udg_Host= null
 button array udg_dlg_btn_mode_04
 button array udg_dlg_btn_mode_03
@@ -3208,6 +3209,10 @@ integer array SyncTicks
 integer array SyncWall
 integer array SyncNext
 integer SyncClock=0
+    unit array GSI_Source
+    timer array GSI_Expiry
+    rect GSI_Bounds = null
+
 endglobals
 
 //= FFGS-SETTINGS-BEGIN
@@ -15005,7 +15010,7 @@ set udg_hero_move_base[71]=320
 set udg_hero_turnrate[71]=0.6
 
 //Guardian
-set udg_hero_category[72]=0
+set udg_hero_category[72]=15
 set udg_hero_STR_base[72]=18
 set udg_hero_STR_inc[72]=2
 set udg_hero_AGI_base[72]=18
@@ -15247,7 +15252,7 @@ call DestroyTrigger(GetTriggeringTrigger())
 
 
 
-set udg_hero_category[92]=15
+set udg_hero_category[92]=17
 set udg_hero_STR_base[92]=17
 set udg_hero_STR_inc[92]=1.7
 set udg_hero_AGI_base[92]=udg_hero_AGI_base[79]
@@ -15256,7 +15261,7 @@ set udg_hero_INT_base[92]=22
 set udg_hero_INT_inc[92]=2.5
 set udg_hero_move_base[92]=310
 set udg_hero_turnrate[92]=0.6
-set udg_hero_category[93]=15
+set udg_hero_category[93]=16
 set udg_hero_STR_base[93]=22
 set udg_hero_STR_inc[93]=2.6
 set udg_hero_AGI_base[93]=udg_hero_AGI_base[17]
@@ -17138,9 +17143,16 @@ function SoloFootsCreateAllPlayerTaverns takes nothing returns nothing
     endloop
 endfunction
 
+function AllowAPHeroes takes nothing returns boolean
+    return DraftAllPick or udg_selected_mode == 2 or udg_mode_debugmode
+endfunction
+
 function SoloFootsIsNoMuteHeroType takes integer heroType returns boolean
     // These heroes are intentionally not stocked in the solo taverns.
-    return heroType == 'HMu1' or heroType == 'HVg1' or heroType == 'H00K' or heroType == 'U00F' or heroType == 'N03J' or heroType == 'H043' or heroType == 'O00G'
+    if heroType == 'HMu1' or heroType == 'HVg1' or heroType == 'HTf1' then
+        return not AllowAPHeroes()
+    endif
+    return heroType == 'H00K' or heroType == 'U00F' or heroType == 'N03J' or heroType == 'O00G'
 endfunction
 
 function DraftRemember takes unit shop, integer id returns nothing
@@ -17180,10 +17192,7 @@ function SoloFootsDisableNoMuteHeroes takes nothing returns nothing
         call SetPlayerUnitAvailableBJ('H00K', false, Player(playerIndex))
         call SetPlayerUnitAvailableBJ('U00F', false, Player(playerIndex))
         call SetPlayerUnitAvailableBJ('N03J', false, Player(playerIndex))
-        call SetPlayerUnitAvailableBJ('H043', false, Player(playerIndex))
         call SetPlayerUnitAvailableBJ('O00G', false, Player(playerIndex))
-        call SetPlayerUnitAvailableBJ('HMu1', false, Player(playerIndex))
-        call SetPlayerUnitAvailableBJ('HVg1', false, Player(playerIndex))
         set playerIndex=playerIndex + 1
     endloop
     set blocked=GetUnitsOfTypeIdAll('H00K')
@@ -17195,16 +17204,7 @@ function SoloFootsDisableNoMuteHeroes takes nothing returns nothing
     set blocked=GetUnitsOfTypeIdAll('N03J')
     call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
     call DestroyGroup(blocked)
-    set blocked=GetUnitsOfTypeIdAll('H043')
-    call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
-    call DestroyGroup(blocked)
     set blocked=GetUnitsOfTypeIdAll('O00G')
-    call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
-    call DestroyGroup(blocked)
-    set blocked=GetUnitsOfTypeIdAll('HMu1')
-    call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
-    call DestroyGroup(blocked)
-    set blocked=GetUnitsOfTypeIdAll('HVg1')
     call ForGroup(blocked, function SoloFootsRemoveNoMuteHero)
     call DestroyGroup(blocked)
     set blocked=null
@@ -17264,6 +17264,14 @@ function SoloFootsStockTeamTaverns takes integer teamIndex returns nothing
             endif
             set category=category + 1
         endloop
+        if page == 1 then
+            // Use one of the existing refill slots for a carry.
+            set heroIndex=SoloFootsTakeTavernHero(teamIndex, GetRandomInt(15, 17))
+            if heroIndex != 0 then
+                call SoloFootsAddHeroToTavern(heroIndex, shop)
+                set stocked=stocked + 1
+            endif
+        endif
         loop
             exitwhen stocked >= 12
             set heroIndex=SoloFootsTakeTavernHero(teamIndex, 0)
@@ -17533,7 +17541,34 @@ function Trig_Start_SD_Actions takes nothing returns nothing
     call DestroyTrigger(GetTriggeringTrigger())
 endfunction
 
+function DraftHostAllPick takes nothing returns nothing
+    local integer p = 1
+    if GetTriggerPlayer() != udg_Host or DraftAllPick then
+        return
+    endif
+    loop
+        exitwhen p > 12
+        if udg_herO[p] != null then
+            call DisplayTextToPlayer(udg_Host, 0., 0., "All Pick must be enabled before the first hero is chosen.")
+            return
+        endif
+        set p = p + 1
+    endloop
+    set DraftAllPick = true
+    call ExecuteFunc("AddAPHeroesToDraft")
+    call DisplayTextToForce(GetPlayersAll(), "All Pick enabled. All eligible heroes are available in your tavern.")
+endfunction
+
 function InitTrig_Start_SD takes nothing returns nothing
+    local trigger ap = CreateTrigger()
+    local integer i = 0
+    loop
+        exitwhen i >= 12
+        call TriggerRegisterPlayerChatEvent(ap, Player(i), "-ap", true)
+        set i = i + 1
+    endloop
+    call TriggerAddAction(ap, function DraftHostAllPick)
+    set ap = null
     set gg_trg_Start_SD=CreateTrigger()
     call TriggerAddAction(gg_trg_Start_SD, function Trig_Start_SD_Actions)
 endfunction
@@ -23360,6 +23395,7 @@ function Trig_debugmode_Actions takes nothing returns nothing
     call EnableTrigger(gg_trg_debug)
     call EnableTrigger(gg_trg_debug_show_order_ids)
     set udg_mode_debugmode=true
+    call ExecuteFunc("AddAPHeroesToDraft")
     set udg_version=5
     set udg_ap_number_of_heros=2
     set udg_X=1
@@ -56141,6 +56177,14 @@ function VG_Init takes nothing returns nothing
     set chat = null
 endfunction
 
+function DraftAddHero takes integer team, integer id returns nothing
+    if not HaveSavedBoolean(DraftStock, -team, id) then
+        set DraftCount[team] = DraftCount[team] + 1
+        set DraftPool[team*256 + DraftCount[team]] = id
+        call SaveBoolean(DraftStock, -team, id, true)
+    endif
+endfunction
+
 function DraftImport takes integer team, unit shop returns nothing
     local integer key = GetHandleId(shop)
     local integer i = 1
@@ -56151,11 +56195,7 @@ function DraftImport takes integer team, unit shop returns nothing
     loop
         exitwhen i > LoadInteger(DraftStock, key, 0)
         set id = LoadInteger(DraftStock, key, i)
-        if not HaveSavedBoolean(DraftStock, -team, id) then
-            set DraftCount[team] = DraftCount[team] + 1
-            set DraftPool[team*256 + DraftCount[team]] = id
-            call SaveBoolean(DraftStock, -team, id, true)
-        endif
+        call DraftAddHero(team, id)
         set i = i + 1
     endloop
     call ShowUnit(shop, false)
@@ -56189,6 +56229,30 @@ function DraftRefresh takes integer team returns nothing
         endif
         set i = i + 1
     endloop
+endfunction
+
+function AddAPHeroesToDraft takes nothing returns nothing
+    local integer team = 1
+    local integer i
+    local integer id
+    if AllowAPHeroes() then
+        loop
+            exitwhen team > 4
+            set i = 1
+            loop
+                exitwhen i > udg_total_hero_count
+                set id = udg_hero_type[i]
+                if id != 0 and not SoloFootsIsNoMuteHeroType(id) and (DraftAllPick or id == 'HMu1' or id == 'HVg1' or id == 'HTf1') then
+                    call DraftAddHero(team, id)
+                endif
+                set i = i + 1
+            endloop
+            if DraftShop[team] != null then
+                call DraftRefresh(team)
+            endif
+            set team = team + 1
+        endloop
+    endif
 endfunction
 
 function DraftSale takes nothing returns nothing
@@ -56332,11 +56396,115 @@ function DraftStart takes nothing returns nothing
         set team = team + 1
     endloop
     call TriggerRegisterAnyUnitEventBJ(sales, EVENT_PLAYER_UNIT_SELL)
+    call AddAPHeroesToDraft()
     call TriggerAddAction(sales, function DraftSale)
     call DraftUpdate()
     call TimerStart(CreateTimer(), 0.25, true, function DraftUpdate)
 endfunction
 
+function GSI_Blocked takes unit u returns boolean
+    local integer i = 0
+    loop
+        exitwhen i >= bj_MAX_PLAYER_SLOTS
+        if GSI_Source[i] != null and TimerGetRemaining(GSI_Expiry[i]) > 0.0 and IsUnitEnemy(u, Player(i)) then
+            return true
+        endif
+        set i = i + 1
+    endloop
+    return false
+endfunction
+
+function GSI_Guard takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    local ability a = BlzGetUnitAbility(u, GetSpellAbilityId())
+    if GetUnitTypeId(u) != 'hGs1' and GSI_Blocked(u) and not BlzGetAbilityBooleanField(a, ABILITY_BF_ITEM_ABILITY) then
+        call IssueImmediateOrder(u, "stop")
+    endif
+    set a = null
+    set u = null
+endfunction
+
+function GSI_Pulse takes nothing returns nothing
+    local integer i = 0
+    loop
+        exitwhen i >= bj_MAX_PLAYER_SLOTS
+        if GSI_Source[i] != null and TimerGetRemaining(GSI_Expiry[i]) > 0.0 then
+            // Native instant Silence, refreshed before its short buff can expire.
+            // No channel to interrupt; newly spawned/revived/dispelled enemies join next pulse.
+            call IssuePointOrder(GSI_Source[i], "silence", GetRectCenterX(GSI_Bounds), GetRectCenterY(GSI_Bounds))
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
+function GSI_Expire takes nothing returns nothing
+    local integer i = 0
+    local unit u
+    local group g = CreateGroup()
+    loop
+        exitwhen i >= bj_MAX_PLAYER_SLOTS or GSI_Expiry[i] == GetExpiredTimer()
+        set i = i + 1
+    endloop
+    if i < bj_MAX_PLAYER_SLOTS then
+        call RemoveUnit(GSI_Source[i])
+        set GSI_Source[i] = null
+        call GroupEnumUnitsInRect(g, GSI_Bounds, null)
+        loop
+            set u = FirstOfGroup(g)
+            exitwhen u == null
+            call GroupRemoveUnit(g, u)
+            if not GSI_Blocked(u) then
+                call UnitRemoveAbility(u, 'BGs1')
+                call UnitRemoveAbility(u, 'BGs2')
+            endif
+        endloop
+    endif
+    call DestroyGroup(g)
+    set g = null
+    set u = null
+endfunction
+
+function GSI_Start takes unit caster returns nothing
+    local integer i = GetPlayerId(GetOwningPlayer(caster))
+    local real x = GetRectCenterX(GSI_Bounds)
+    local real y = GetRectCenterY(GSI_Bounds)
+    if GSI_Source[i] == null then
+        set GSI_Source[i] = CreateUnit(Player(i), 'hGs1', x, y, 0.0)
+        call SetUnitPathing(GSI_Source[i], false)
+    endif
+    if GSI_Expiry[i] == null then
+        set GSI_Expiry[i] = CreateTimer()
+    endif
+    call TimerStart(GSI_Expiry[i], 120.0, false, function GSI_Expire)
+    call GSI_Pulse()
+    call DisplayTimedTextToForce(bj_FORCE_ALL_PLAYERS, 5.0, GetPlayerName(Player(i)) + " used Global Silence: enemy spellcasting is suppressed for 120 seconds.")
+endfunction
+
+function GSI_Cast takes nothing returns nothing
+    if GetSpellAbilityId() == 'AGs1' then
+        call GSI_Start(GetTriggerUnit())
+    endif
+endfunction
+
+function GSI_UseItem takes nothing returns nothing
+    if GetItemTypeId(GetManipulatedItem()) == 'IGs1' then
+        call GSI_Start(GetTriggerUnit())
+    endif
+endfunction
+
+function GSI_Init takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    local timer pulse = CreateTimer()
+    set GSI_Bounds = GetWorldBounds()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
+    call TriggerAddAction(t, function GSI_Guard)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_USE_ITEM)
+    call TriggerAddAction(t, function GSI_UseItem)
+    call TimerStart(pulse, 0.25, true, function GSI_Pulse)
+    set pulse = null
+    set t = null
+endfunction
 function main takes nothing returns nothing
     call SetCameraBounds(- 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), - 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
     call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
@@ -56351,6 +56519,7 @@ function main takes nothing returns nothing
     call InitUpgrades()
     call CreateAllUnits()
     call InitBlizzard()
+    call GSI_Init()
 
 call ExecuteFunc("jasshelper__initstructs604298953")
 call ExecuteFunc("TimerUtils___init")
