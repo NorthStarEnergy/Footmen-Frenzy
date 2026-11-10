@@ -48,14 +48,14 @@ def map_header_with_title(path, title):
     return result.ljust(512, b'\0')
 
 
-def build(project, name, verify_only=False):
+def build(project, name, verify_only=False, source_parent=None):
     output_root = ROOT / 'build'
     output_root.mkdir(exist_ok=True)
     with TemporaryDirectory(dir=output_root) as staging:
-        _build(project, name, verify_only, Path(staging))
+        _build(project, name, verify_only, Path(staging), source_parent)
 
 
-def _build(project, name, verify_only, staging):
+def _build(project, name, verify_only, staging, source_parent):
     folder = ROOT / 'projects' / project
     meta = json.loads((folder / 'project.json').read_text())
     config_path = ROOT / 'tools.local.json'
@@ -130,8 +130,11 @@ def _build(project, name, verify_only, staging):
                 raise RuntimeError(f'Untouched entry changed: {entry}')
     report = dict(project=project, output=str(destination), sha256=hashlib.sha256(destination.read_bytes()).hexdigest(),
                   client_title=client_title, checked_payloads=len(files), changed_entries=changed, verified=True)
+    if source_parent:
+        report.update(source_parent=source_parent, project_metadata=meta,
+                      source_entries=sorted(files))
     destination.with_suffix('.verification.json').write_text(json.dumps(report, indent=2))
-    print(json.dumps(report, indent=2))
+    print(json.dumps({k: v for k, v in report.items() if k != "source_entries"}, indent=2))
 
 
 if __name__ == '__main__':
@@ -139,5 +142,6 @@ if __name__ == '__main__':
     parser.add_argument('project', choices=['799x', 'solo', 'mini', 'ffa'])
     parser.add_argument('--name')
     parser.add_argument('--verify-only', action='store_true')
+    parser.add_argument('--source-parent')
     args = parser.parse_args()
-    build(args.project, args.name, args.verify_only)
+    build(args.project, args.name, args.verify_only, args.source_parent)
