@@ -4044,8 +4044,15 @@ function T66_ShowRecord takes nothing returns nothing
     endloop
 endfunction
 
+function AllowAPHeroes takes nothing returns boolean
+    return udg_selected_mode == 2 or udg_mode_debugmode
+endfunction
+
 function MF_HeroDisabled takes integer id returns boolean
-    return id == 'HMu1' or id == 'HVg1' or id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H01Q' or id == 'H02W' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
+    if id == 'HMu1' or id == 'HVg1' or id == 'HTf1' then
+        return not AllowAPHeroes()
+    endif
+    return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H01Q' or id == 'H02W' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
 endfunction
 
 function DraftRemember takes unit shop, integer id returns nothing
@@ -6266,6 +6273,10 @@ function TFP_Init takes nothing returns nothing
     call TFP_InitTrig_FFDP_DarkPassage()
 endfunction
 
+function FF_IsStandardPub takes nothing returns boolean
+    return udg_mode_pub and not FFR4Pro and not udg_mode_debugmode and not FFMode4K
+endfunction
+
 function PBI_Allowed takes nothing returns boolean
     local integer owner = GetItemUserData(GetManipulatedItem())
     return owner == 0 or owner == GetPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1
@@ -6290,6 +6301,16 @@ function PBI_OnPickup takes nothing returns nothing
     set carrier = null
 endfunction
 
+function PBI_OnPurchase takes nothing returns nothing
+    local item purchased = GetSoldItem()
+    local unit buyer = GetBuyingUnit()
+    if FF_IsStandardPub() and buyer != null and purchased != null and not IsItemPowerup(purchased) then
+        call SetItemUserData(purchased, GetPlayerId(GetOwningPlayer(buyer)) + 1)
+    endif
+    set purchased = null
+    set buyer = null
+endfunction
+
 function PBI_OnPawn takes nothing returns nothing
     call SetItemUserData(GetManipulatedItem(), 0)
 endfunction
@@ -6308,16 +6329,20 @@ endfunction
 function PBI_Init takes nothing returns nothing
     local trigger pickup = CreateTrigger()
     local trigger pawn = CreateTrigger()
+    local trigger purchase = CreateTrigger()
     local integer index = 0
     local group existing = CreateGroup()
     local rect bounds = GetWorldBounds()
     loop
         exitwhen index >= bj_MAX_PLAYER_SLOTS
         call TriggerRegisterPlayerUnitEvent(pickup, Player(index), EVENT_PLAYER_UNIT_PICKUP_ITEM, null)
+        call TriggerRegisterPlayerUnitEvent(purchase, Player(index), EVENT_PLAYER_UNIT_SELL_ITEM, null)
         call TriggerRegisterPlayerUnitEvent(pawn, Player(index), EVENT_PLAYER_UNIT_PAWN_ITEM, null)
         set index = index + 1
     endloop
     call TriggerAddAction(pickup, function PBI_OnPickup)
+    call TriggerAddAction(purchase, function PBI_OnPurchase)
+    set purchase = null
     call TriggerAddAction(pawn, function PBI_OnPawn)
     call GroupEnumUnitsInRect(existing, bounds, null)
     call ForGroup(existing, function PBI_BindInventory)
@@ -25691,7 +25716,7 @@ set udg_hero_move_base[71]=320
 set udg_hero_turnrate[71]=0.6
 
 //Guardian
-set udg_hero_category[72]=1
+set udg_hero_category[72]=15
 set udg_hero_STR_base[72]=18
 set udg_hero_STR_inc[72]=2
 set udg_hero_AGI_base[72]=18
@@ -25913,7 +25938,7 @@ set udg_hero_turnrate[91]=0.6
 
 
 // Imported spell heroes; ordinary SD categories.
-set udg_hero_category[92]=15
+set udg_hero_category[92]=17
 set udg_hero_STR_base[92]=17
 set udg_hero_STR_inc[92]=1.7
 set udg_hero_AGI_base[92]=udg_hero_AGI_base[79]
@@ -25922,7 +25947,7 @@ set udg_hero_INT_base[92]=22
 set udg_hero_INT_inc[92]=2.5
 set udg_hero_move_base[92]=310
 set udg_hero_turnrate[92]=0.6
-set udg_hero_category[93]=15
+set udg_hero_category[93]=16
 set udg_hero_STR_base[93]=22
 set udg_hero_STR_inc[93]=2.6
 set udg_hero_AGI_base[93]=udg_hero_AGI_base[17]
@@ -25943,7 +25968,7 @@ set udg_hero_INT_inc[94]=1.8
 set udg_hero_move_base[94]=310
 set udg_hero_turnrate[94]=0.6
 
-// Classic Mundo: middle Carry category, same as Gragas.
+// Classic Mundo: middle Carry category.
 set udg_hero_category[95]=15
 set udg_hero_STR_base[95]=20
 set udg_hero_STR_inc[95]=2.5
@@ -27053,7 +27078,7 @@ function InitTrig_Camera_Zoom takes nothing returns nothing
 endfunction
 
 function FFR4_PoolingAllowed takes nothing returns boolean
-    return not FFR4NoPool and not udg_mode_promode and udg_autopoool_allowed
+    return not FF_IsStandardPub() and not FFR4NoPool and not udg_mode_promode and udg_autopoool_allowed
 endfunction
 
 function FFR4_LockPooling takes nothing returns nothing
@@ -31580,14 +31605,12 @@ function Trig_Start_game_Actions takes nothing returns nothing
         set udg_startgold=100
         set udg_mode_pub=true
         // TRADE TIMER
-        if not FFR4Pro and not udg_mode_debugmode and not FFMode4K then
-            set udg_t_trading=1800.00
-        elseif ( Trig_Start_game_Func016Func010C() ) then
+        if ( Trig_Start_game_Func016Func010C() ) then
             set udg_t_trading=3.00
         else
             set udg_t_trading=230.00
         endif
-        if not FFR4NoPool or (udg_mode_pub and not FFR4Pro and not udg_mode_debugmode and not FFMode4K) then
+        if not FF_IsStandardPub() and not FFR4NoPool then
             call StartTimerBJ(udg_timer_trading, false, udg_t_trading)
             call CreateTimerDialogBJ(udg_timer_trading, "Pooling unlock")
             set udg_timer_window_trading=GetLastCreatedTimerDialogBJ()
@@ -31665,7 +31688,7 @@ function Trig_Start_game_Actions takes nothing returns nothing
     if udg_FFCH_Mode then
         call FFCH_Start()
     endif
-    if FFR4NoPool and not udg_mode_pub then
+    if FF_IsStandardPub() or (FFR4NoPool and not udg_mode_pub) then
         call FFR4_LockPooling()
     endif
     // START TIMERS
@@ -35907,13 +35930,9 @@ function Trig_turn_trading_ON_Func002C takes nothing returns boolean
 endfunction
 
 function Trig_turn_trading_ON_Actions takes nothing returns nothing
-    if FFR4NoPool then
-        if udg_mode_pub and not FFR4Pro and not udg_mode_debugmode and not FFMode4K then
-            set FFR4NoPool=false
-        else
-            call FFR4_LockPooling()
-            return
-        endif
+    if FF_IsStandardPub() or FFR4NoPool then
+        call FFR4_LockPooling()
+        return
     endif
     if udg_timer_window_trading != null then
         call TimerDialogDisplayBJ(false, udg_timer_window_trading)
@@ -38443,7 +38462,7 @@ function Trig_autopool_command_Actions takes nothing returns nothing
         set udg_dlg_btn_pool_cancel[udg_temp_playernumber]=GetLastCreatedButtonBJ()
         call DialogDisplayBJ(true, udg_dlg_pool[udg_temp_playernumber], GetTriggerPlayer())
     else
-        call DisplayTextToForce(udg_temp_playergroup, "Pooling is disabled. In Pub, it opens 30 minutes after game start.")
+        call DisplayTextToForce(udg_temp_playergroup, "Pooling is disabled in this mode.")
     endif
     call DestroyForce(udg_temp_playergroup)
 endfunction
@@ -38894,7 +38913,7 @@ function F3_SendAllGold_Callback takes nothing returns nothing
     local integer requested = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD) - udg_pool_threshold[senderId]
     local integer amount
     if not FFR4_PoolingAllowed() then
-        call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "Pooling is disabled. In Pub, it opens 30 minutes after game start.")
+        call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "Pooling is disabled in this mode.")
     elseif targetId < 1 or targetId > 12 or targetId == senderId or not SoloSub_CanReceiveGold(targetId) or not IsPlayerAlly(ConvertedPlayer(targetId), sender) then
         call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "|cffff0000F3: choose an available teammate with -pool first.|r")
     elseif requested <= 0 then
@@ -39617,6 +39636,7 @@ function Trig_debugmode_Actions takes nothing returns nothing
     call EnableTrigger(gg_trg_debug)
     call EnableTrigger(gg_trg_debug_show_order_ids)
     set udg_mode_debugmode=true
+    call ExecuteFunc("AddAPHeroesToDraft")
     set udg_version=5
     set udg_ap_number_of_heros=2
     set udg_X=1
@@ -57650,17 +57670,17 @@ set udg_unit_level[8]=6
 
 // Banshee
 set udg_spawn_unit[9]='uban'
-set udg_unit_HP[9]=540
+set udg_unit_HP[9]=530
 set udg_unit_armor_type[9]=7
 set udg_unit_armor[9]=1
-set udg_unit_att_base[9]=35
+set udg_unit_att_base[9]=34
 set udg_unit_att_num_dice[9]=1
 set udg_unit_att_dice_sides[9]=4
 set udg_unit_att_CD[9]=1.2
 set udg_unit_bounty_base[9]=35
 set udg_unit_bounty_num_dice[9]=1
 set udg_unit_bounty_dice_sides[9]=3
-set udg_unit_range[9]=650
+set udg_unit_range[9]=640
 set udg_unit_level[9]=2
 
 // Warlock
@@ -57815,17 +57835,17 @@ set udg_unit_level[19]=3
 
 // Wraith
 set udg_spawn_unit[20]='ngh2'
-set udg_unit_HP[20]=680
+set udg_unit_HP[20]=660
 set udg_unit_armor_type[20]=7
 set udg_unit_armor[20]=0
-set udg_unit_att_base[20]=44
+set udg_unit_att_base[20]=43
 set udg_unit_att_num_dice[20]=1
 set udg_unit_att_dice_sides[20]=3
 set udg_unit_att_CD[20]=1.2
 set udg_unit_bounty_base[20]=39
 set udg_unit_bounty_num_dice[20]=1
 set udg_unit_bounty_dice_sides[20]=3
-set udg_unit_range[20]=690
+set udg_unit_range[20]=680
 set udg_unit_level[20]=3
 
 // Riflemen
@@ -58101,17 +58121,17 @@ set udg_unit_level[38]=6
 
 // [39] Banshee (from 9)
 set udg_spawn_unit[39]='uban'
-set udg_unit_HP[39]=540
+set udg_unit_HP[39]=530
 set udg_unit_armor_type[39]=7
 set udg_unit_armor[39]=1
-set udg_unit_att_base[39]=35
+set udg_unit_att_base[39]=34
 set udg_unit_att_num_dice[39]=1
 set udg_unit_att_dice_sides[39]=4
 set udg_unit_att_CD[39]=1.2
 set udg_unit_bounty_base[39]=35
 set udg_unit_bounty_num_dice[39]=1
 set udg_unit_bounty_dice_sides[39]=3
-set udg_unit_range[39]=650
+set udg_unit_range[39]=640
 set udg_unit_level[39]=2
 
 // [40] Warlock (from 10)
@@ -58221,17 +58241,17 @@ set udg_unit_level[46]=3
 
 // [47] Wraith (from 20)
 set udg_spawn_unit[47]='ngh2'
-set udg_unit_HP[47]=680
+set udg_unit_HP[47]=660
 set udg_unit_armor_type[47]=7
 set udg_unit_armor[47]=0
-set udg_unit_att_base[47]=44
+set udg_unit_att_base[47]=43
 set udg_unit_att_num_dice[47]=1
 set udg_unit_att_dice_sides[47]=3
 set udg_unit_att_CD[47]=1.2
 set udg_unit_bounty_base[47]=39
 set udg_unit_bounty_num_dice[47]=1
 set udg_unit_bounty_dice_sides[47]=3
-set udg_unit_range[47]=690
+set udg_unit_range[47]=680
 set udg_unit_level[47]=3
 
 // [48] Militia (from 18)
@@ -66562,7 +66582,6 @@ function InitTrig_FF_Runtime takes nothing returns nothing
     call MU_Init()
     call TFP_Init()
     call FF_CompactHeroTooltips_Init()
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HTf1', GetRectCenterX(gg_rct_EXILE) + 192.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HDk1', GetRectCenterX(gg_rct_EXILE) + 128.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before GD_Init")
     call GD_Init()
@@ -67244,6 +67263,14 @@ function VG_Init takes nothing returns nothing
     set chat = null
 endfunction
 
+function DraftAddHero takes integer team, integer id returns nothing
+    if not HaveSavedBoolean(DraftStock, -team, id) then
+        set DraftCount[team] = DraftCount[team] + 1
+        set DraftPool[team*256 + DraftCount[team]] = id
+        call SaveBoolean(DraftStock, -team, id, true)
+    endif
+endfunction
+
 function DraftImport takes integer team, unit shop returns nothing
     local integer key = GetHandleId(shop)
     local integer i = 1
@@ -67254,11 +67281,7 @@ function DraftImport takes integer team, unit shop returns nothing
     loop
         exitwhen i > LoadInteger(DraftStock, key, 0)
         set id = LoadInteger(DraftStock, key, i)
-        if not HaveSavedBoolean(DraftStock, -team, id) then
-            set DraftCount[team] = DraftCount[team] + 1
-            set DraftPool[team*256 + DraftCount[team]] = id
-            call SaveBoolean(DraftStock, -team, id, true)
-        endif
+        call DraftAddHero(team, id)
         set i = i + 1
     endloop
     call ShowUnit(shop, false)
@@ -67292,6 +67315,22 @@ function DraftRefresh takes integer team returns nothing
         endif
         set i = i + 1
     endloop
+endfunction
+
+function AddAPHeroesToDraft takes nothing returns nothing
+    local integer team = 1
+    if AllowAPHeroes() then
+        loop
+            exitwhen team > 4
+            call DraftAddHero(team, 'HMu1')
+            call DraftAddHero(team, 'HVg1')
+            call DraftAddHero(team, 'HTf1')
+            if DraftShop[team] != null then
+                call DraftRefresh(team)
+            endif
+            set team = team + 1
+        endloop
+    endif
 endfunction
 
 function DraftSale takes nothing returns nothing
@@ -67432,6 +67471,7 @@ function DraftStart takes nothing returns nothing
         set team = team + 1
     endloop
     call TriggerRegisterAnyUnitEventBJ(sales, EVENT_PLAYER_UNIT_SELL)
+    call AddAPHeroesToDraft()
     call TriggerAddAction(sales, function DraftSale)
     call DraftUpdate()
     call TimerStart(CreateTimer(), 0.25, true, function DraftUpdate)
