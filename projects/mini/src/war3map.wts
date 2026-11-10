@@ -52830,7 +52830,7 @@ Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it
 }
 
 STRING 8514
-// Abilities: XT08 (Headhunter), Hotkey (Hotkey - Normal)
+// Abilities: XT08 (Grunt), Hotkey (Hotkey - Normal)
 {
 W
 }
@@ -64117,7 +64117,7 @@ STRING 10312
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.25s
 }
 
 STRING 10313
@@ -64305,12 +64305,12 @@ Upgrade to Undead Tier 1
 STRING 10342
 // Units: h00Z (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 570
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cffffff00Spawned Units:|r Ghoul
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 675
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 10343
@@ -66432,7 +66432,7 @@ STRING 10648
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 10649
@@ -86509,7 +86509,7 @@ STRING 13798
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 13799
@@ -86713,12 +86713,12 @@ Upgrade to Orc Tier 1
 STRING 13832
 // Units: h00H (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
-|cff808080Range:|r 570
+|cffffff00Spawned Units:|r Grunt
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 800
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 13833
@@ -90252,27 +90252,27 @@ Unit Level: 2
 }
 
 STRING 14396
-// Abilities: XT08 (Headhunter), Name (Name)
+// Abilities: XT08 (Grunt), Name (Name)
 {
-Headhunter
+Grunt
 }
 
 STRING 14397
-// Abilities: XT08 (Headhunter), Tip (Tooltip - Normal)
+// Abilities: XT08 (Grunt), Tip (Tooltip - Normal)
 {
-Headhunter
+Grunt
 }
 
 STRING 14398
-// Abilities: XT08 (Headhunter), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT08 (Grunt), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Headhunter|r
+|cffffcc00Grunt|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
-Armor: 1
-Damage: 24 + 2d3
-Attack Cooldown: 1.10s
-Attack Range: 600
+Hit Points: 800
+Armor: 2
+Damage: 24 + 1d4
+Attack Cooldown: 1.6s
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91019,9 +91019,9 @@ Summons <A007,DataB6> Treants with 61-63 damage, True Sight and Spell Immunity.
 }
 
 STRING 14508
-// Abilities: XT0I (Burning Archer), Name (Name)
+// Abilities: XT0I (Ghoul), Name (Name)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14509
@@ -91053,21 +91053,21 @@ Deals 460 damage to up to 5 non-mechanical targets.
 }
 
 STRING 14514
-// Abilities: XT0I (Burning Archer), Tip (Tooltip - Normal)
+// Abilities: XT0I (Ghoul), Tip (Tooltip - Normal)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14515
-// Abilities: XT0I (Burning Archer), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0I (Ghoul), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Burning Archer|r
+|cffffcc00Ghoul|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 570
-Armor: 0
-Damage: 36 + 1d3
+Hit Points: 675
+Armor: 1
+Damage: 14 + 2d2
 Attack Cooldown: 1.1s
-Attack Range: 640
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91169,7 +91169,7 @@ Defile - [|cffffcc00Level 1|r]
 }
 
 STRING 14530
-// Abilities: XT0I (Burning Archer), Hotkey (Hotkey - Normal)
+// Abilities: XT0I (Ghoul), Hotkey (Hotkey - Normal)
 {
 T
 }
@@ -91542,9 +91542,9 @@ Unit Level: 2
 }
 
 STRING 14582
-// Abilities: XT0P (Headhunter), Name (Name)
+// Abilities: XT0P (Grunt), Name (Name)
 {
-Headhunter
+Grunt
 }
 
 STRING 14583
@@ -91554,9 +91554,9 @@ V
 }
 
 STRING 14584
-// Abilities: XT0P (Headhunter), Tip (Tooltip - Normal)
+// Abilities: XT0P (Grunt), Tip (Tooltip - Normal)
 {
-Headhunter
+Grunt
 }
 
 STRING 14585
@@ -91581,15 +91581,15 @@ Cold Strike - [|cffffcc00Level 5|r]
 }
 
 STRING 14588
-// Abilities: XT0P (Headhunter), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0P (Grunt), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Headhunter|r
+|cffffcc00Grunt|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
-Armor: 1
-Damage: 24 + 2d3
-Attack Cooldown: 1.10s
-Attack Range: 600
+Hit Points: 800
+Armor: 2
+Damage: 24 + 1d4
+Attack Cooldown: 1.6s
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91600,7 +91600,7 @@ E
 }
 
 STRING 14590
-// Abilities: XT0P (Headhunter), Hotkey (Hotkey - Normal)
+// Abilities: XT0P (Grunt), Hotkey (Hotkey - Normal)
 {
 T
 }
@@ -92059,32 +92059,32 @@ Unit Level: 2
 }
 
 STRING 14655
-// Abilities: XT0Z (Burning Archer), Name (Name)
+// Abilities: XT0Z (Ghoul), Name (Name)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14656
-// Abilities: XT0Z (Burning Archer), Tip (Tooltip - Normal)
+// Abilities: XT0Z (Ghoul), Tip (Tooltip - Normal)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14657
-// Abilities: XT0Z (Burning Archer), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0Z (Ghoul), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Burning Archer|r
+|cffffcc00Ghoul|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 570
-Armor: 0
-Damage: 36 + 1d3
-Attack Cooldown: 1.10s
-Attack Range: 640
+Hit Points: 675
+Armor: 1
+Damage: 14 + 2d2
+Attack Cooldown: 1.1s
+Attack Range: 110
 Unit Level: 2
 }
 
 STRING 14658
-// Abilities: XT0Z (Burning Archer), Hotkey (Hotkey - Normal)
+// Abilities: XT0Z (Ghoul), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -104605,12 +104605,12 @@ Darks
 STRING 17669
 // Units: h023 (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
-|cff808080Range:|r 570
+|cffffff00Spawned Units:|r Grunt
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 800
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 17670
@@ -105340,18 +105340,18 @@ STRING 17864
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.25s
 }
 
 STRING 17865
 // Units: h02O (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 570
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cffffff00Spawned Units:|r Ghoul
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 675
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 17866
@@ -105373,7 +105373,7 @@ STRING 17867
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 17869
@@ -105384,7 +105384,7 @@ STRING 17869
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 17872

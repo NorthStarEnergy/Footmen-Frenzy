@@ -1,4 +1,15 @@
 globals
+    hashtable DraftStock = InitHashtable()
+    unit array DraftShop
+    unit array DraftWisp
+    integer array DraftPool
+    integer array DraftCount
+    integer array DraftPage
+    integer array DraftShown
+    boolean array DraftTaken
+    boolean array DraftPending
+    real array DraftX
+    real array DraftY
 
     framehandle DPS_Panel = null
     framehandle DPS_Button = null
@@ -3480,8 +3491,22 @@ function MF_HeroDisabled takes integer id returns boolean
     return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00E' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H015' or id == 'H01Q' or id == 'H02G' or id == 'H02J' or id == 'H02W' or id == 'H04Y' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'HMu1' or id == 'HTf1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01C' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
 endfunction
 
+function DraftRemember takes unit shop, integer id returns nothing
+    local integer key = GetHandleId(shop)
+    local integer n
+    if shop != null and IsHeroUnitId(id) and id != 'H0R0' and not HaveSavedBoolean(DraftStock, key, id) then
+        set n = LoadInteger(DraftStock, key, 0) + 1
+        call SaveInteger(DraftStock, key, 0, n)
+        call SaveInteger(DraftStock, key, n, id)
+        call SaveBoolean(DraftStock, key, id, true)
+    endif
+endfunction
+
 function MF_StockUnit takes unit shop, integer id, integer current, integer maximum returns nothing
     if not MF_HeroDisabled(id) then
+        if current > 0 then
+            call DraftRemember(shop, id)
+        endif
         call AddUnitToStock(shop, id, current, maximum)
     endif
 endfunction
@@ -9669,17 +9694,17 @@ function FFGS_InitSettings takes nothing returns nothing
     set ffgs_spawn_interval[14]=6.25
     set ffgs_spawn_interval[15]=6.25
     set ffgs_spawn_interval[16]=5.00
-    set ffgs_spawn_interval[17]=4.50
+    set ffgs_spawn_interval[17]=5.5
     set ffgs_spawn_interval[18]=5.00
     set ffgs_spawn_interval[19]=6.25
     set ffgs_spawn_interval[20]=5.00
-    set ffgs_spawn_interval[21]=7.00
+    set ffgs_spawn_interval[21]=6.25
     set ffgs_spawn_interval[22]=7.00
-    set ffgs_spawn_interval[23]=4.50
+    set ffgs_spawn_interval[23]=5.75
     set ffgs_spawn_interval[24]=8.75
     set ffgs_spawn_interval[25]=8.75
-    set ffgs_spawn_interval[26]=7.00
-    set ffgs_spawn_interval[27]=4.50
+    set ffgs_spawn_interval[26]=6.25
+    set ffgs_spawn_interval[27]=5.75
     set ffgs_spawn_interval[28]=7.00
     set ffgs_spawn_interval[29]=8.75
     set ffgs_spawn_interval[30]=8.75
@@ -9696,7 +9721,7 @@ function FFGS_InitSettings takes nothing returns nothing
     set ffgs_spawn_interval[41]=8.00
     set ffgs_spawn_interval[42]=8.00
     set ffgs_spawn_interval[43]=8.00
-    set ffgs_spawn_interval[44]=4.50
+    set ffgs_spawn_interval[44]=5.5
     set ffgs_spawn_interval[45]=6.25
     set ffgs_spawn_interval[46]=6.25
     set ffgs_spawn_interval[47]=5.00
@@ -24621,19 +24646,32 @@ function Trig_KOTH_Hill_Dies_Func002C takes nothing returns boolean
     return true
 endfunction
 
+function FF_st_Slot takes player p returns integer
+    local integer s = GetPlayerId(p) + 1
+    if s >= 1 and s <= 12 then
+        return s
+    endif
+    if s > 12 and s <= bj_MAX_PLAYER_SLOTS then
+        return SoloSub_playerForObserver[s - 1]
+    endif
+    return 0
+endfunction
+
 function Trig_KOTH_Hill_Dies_Actions takes nothing returns nothing
+    local integer previousTeam = udg_KOTH_Team_Number
+    local boolean wasNeutral = udg_KOTH_Player == Player(PLAYER_NEUTRAL_PASSIVE)
+    local integer slot
     // Let's make sure that the hill goes back to Neutral if we can't find the Player that killed it:
     if ( Trig_KOTH_Hill_Dies_Func002C() ) then
         call TriggerExecute(gg_trg_KOTH_Set_Neutral_Hill)
     else
         // An actual Player killed the Hill - Let's give them control:
         set udg_KOTH_Player=GetOwningPlayer(GetKillingUnitBJ())
-        if GetPlayerId(udg_KOTH_Player) < 12 then
-            set DPS_Caps[GetConvertedPlayerId(udg_KOTH_Player)] = DPS_Caps[GetConvertedPlayerId(udg_KOTH_Player)] + 1
-        elseif SoloSub_playerForObserver[GetPlayerId(udg_KOTH_Player)] >= 1 and SoloSub_playerForObserver[GetPlayerId(udg_KOTH_Player)] <= 12 then
-            set DPS_Caps[SoloSub_playerForObserver[GetPlayerId(udg_KOTH_Player)]] = DPS_Caps[SoloSub_playerForObserver[GetPlayerId(udg_KOTH_Player)]] + 1
-        endif
         set udg_KOTH_Team_Number=udg_teamnumber[GetConvertedPlayerId(udg_KOTH_Player)]
+        set slot = FF_st_Slot(udg_KOTH_Player)
+        if slot >= 1 and slot <= 12 and (wasNeutral or previousTeam != udg_KOTH_Team_Number) then
+            set DPS_Caps[slot] = DPS_Caps[slot] + 1
+        endif
         set udg_KOTH_Team=udg_team[udg_KOTH_Team_Number]
         set udg_KOTH_Team_Gold_Earned_Total[udg_KOTH_Team_Number]=( udg_KOTH_Team_Gold_Earned_Total[udg_KOTH_Team_Number] + udg_KOTH_Gold_Bounty )
         call TriggerExecute(gg_trg_KOTH_Update_Board_Gold)
@@ -26107,22 +26145,11 @@ function FFCH_Init takes nothing returns nothing
 endfunction
 
 function FFRandom_Stock takes nothing returns nothing
-    local integer i=1
-    local unit shop
-    loop
-        exitwhen i > 21
-        if i <= 4 or i >= 13 then
-            set shop=udg_real_shop[i]
-            if shop != null and GetUnitTypeId(shop) != 0 then
-                call MF_StockUnit(shop,'h004',1,1)
-            endif
-        endif
-        set i=i+1
-    endloop
-    set shop=null
+    // Random Hero is a permanent command on the team tavern.
 endfunction
 
 function Trig_Start_game_Actions takes nothing returns nothing
+    call ExecuteFunc("DraftStart")
     if ( Trig_Start_game_Func001C() ) then
         // Create the Multiboard specialized for KOTH mode:
         call TriggerExecute(gg_trg_Multiboard_Create_with_KOTH)
@@ -26603,7 +26630,7 @@ function FFRandom_Sold takes nothing returns nothing
     local integer team
     local integer heroId=0
     local unit shop
-    if GetUnitTypeId(sold) != 'h004' then
+    if GetUnitTypeId(sold) != 'hTRZ' then
         set sold=null
         return
     endif
@@ -26611,7 +26638,9 @@ function FFRandom_Sold takes nothing returns nothing
     set pn=GetConvertedPlayerId(p)
     set shop=GetSellingUnit()
     call RemoveUnit(sold)
-    call MF_StockUnit(shop,'h004',1,1)
+    if shop != DraftShop[udg_teamnumber[pn]] then
+        return
+    endif
     if pn >= 1 and pn <= 12 and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and udg_herO[pn] == null then
         set team=udg_teamnumber[pn]
         if udg_selected_mode == 3 and CarryTav_shop[team] != null then
@@ -26658,19 +26687,19 @@ function Trig_Start_SD_Func006C takes nothing returns boolean
 endfunction
 
 function Trig_Start_SD_Func015A takes nothing returns nothing
-    call CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_T1_SD_TAVERN)
+    // Draft patrons provide team vision.
 endfunction
 
 function Trig_Start_SD_Func016A takes nothing returns nothing
-    call CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_T2_SD_TAVERN)
+    // Draft patrons provide team vision.
 endfunction
 
 function Trig_Start_SD_Func017A takes nothing returns nothing
-    call CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_T3_SD_TAVERN)
+    // Draft patrons provide team vision.
 endfunction
 
 function Trig_Start_SD_Func018A takes nothing returns nothing
-    call CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_T4_SD_TAVERN)
+    // Draft patrons provide team vision.
 endfunction
 
 function Trig_Start_SD_Func021C takes nothing returns boolean
@@ -30307,7 +30336,7 @@ function InitTrig_stop_TK takes nothing returns nothing
 endfunction
 
 function Trig_restore_visibility_to_tavern_Func002A takes nothing returns nothing
-    call CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_TAVERN_AREA)
+    // Draft patrons provide vision only while selection is open.
 endfunction
 
 function Trig_restore_visibility_to_tavern_Actions takes nothing returns nothing
@@ -52662,7 +52691,7 @@ set udg_unit_bounty_dice_sides[16]=3
 set udg_unit_range[16]=680
 set udg_unit_level[16]=3
 
-// Burning Archer
+// Ghoul
 set udg_spawn_unit[17]='ugho'
 set udg_unit_HP[17]=675
 set udg_unit_armor_type[17]=2
@@ -52752,7 +52781,7 @@ set udg_unit_bounty_dice_sides[22]=3
 set udg_unit_range[22]=580
 set udg_unit_level[22]=3
 
-// Headhunter
+// Grunt
 set udg_spawn_unit[23]='ogru'
 set udg_unit_HP[23]=800
 set udg_unit_armor_type[23]=2
@@ -52813,7 +52842,7 @@ set udg_unit_bounty_dice_sides[26]=3
 set udg_unit_range[26]=590
 set udg_unit_level[26]=2
 
-// [27] Headhunter (from 23)
+// [27] Grunt (from 23)
 set udg_spawn_unit[27]='ogru'
 set udg_unit_HP[27]=800
 set udg_unit_armor_type[27]=2
@@ -53068,7 +53097,7 @@ set udg_unit_bounty_dice_sides[43]=3
 set udg_unit_range[43]=150
 set udg_unit_level[43]=3
 
-// [44] Burning Archer (from 17)
+// [44] Ghoul (from 17)
 set udg_spawn_unit[44]='ugho'
 set udg_unit_HP[44]=675
 set udg_unit_armor_type[44]=2
@@ -58501,17 +58530,6 @@ function FF_ComputeGameToken takes nothing returns string
     return I2S(h)
 endfunction
 
-function FF_st_Slot takes player p returns integer
-    local integer s = GetPlayerId(p) + 1
-    if s >= 1 and s <= 12 then
-        return s
-    endif
-    if s > 12 and s <= bj_MAX_PLAYER_SLOTS then
-        return SoloSub_playerForObserver[s - 1]
-    endif
-    return 0
-endfunction
-
 function FF_st_OnSpell takes nothing returns nothing
     local integer id = GetSpellAbilityId()
     local integer s
@@ -60333,6 +60351,199 @@ endfunction
 
 function InitCustomTriggers takes nothing returns nothing
     call InitTrig_FF_Runtime()
+endfunction
+
+function DraftImport takes integer team, unit shop returns nothing
+    local integer key = GetHandleId(shop)
+    local integer i = 1
+    local integer id
+    if shop == null then
+        return
+    endif
+    loop
+        exitwhen i > LoadInteger(DraftStock, key, 0)
+        set id = LoadInteger(DraftStock, key, i)
+        if not HaveSavedBoolean(DraftStock, -team, id) then
+            set DraftCount[team] = DraftCount[team] + 1
+            set DraftPool[team*256 + DraftCount[team]] = id
+            call SaveBoolean(DraftStock, -team, id, true)
+        endif
+        set i = i + 1
+    endloop
+    call ShowUnit(shop, false)
+endfunction
+
+function DraftEligible takes integer team, integer id returns boolean
+    return udg_selected_mode != 3 or udg_mode_mirror or CarryTav_shop[team] == null or FFR_Allowed(team, FFR_Index(id))
+endfunction
+
+function DraftRefresh takes integer team returns nothing
+    local integer i = 0
+    local integer index
+    local integer id
+    loop
+        exitwhen i >= 8
+        set index = team*8+i
+        if DraftShown[index] != 0 then
+            call RemoveUnitFromStock(DraftShop[team], DraftShown[index])
+            set DraftShown[index] = 0
+        endif
+        set i = i + 1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 8 or DraftPage[team]*8+i >= DraftCount[team]
+        set index = team*256+DraftPage[team]*8+i+1
+        set id = DraftPool[index]
+        if not DraftTaken[index] and DraftEligible(team,id) then
+            call AddUnitToStock(DraftShop[team], id, 1, 1)
+            set DraftShown[team*8+i] = id
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
+function DraftSale takes nothing returns nothing
+    local unit shop = GetSellingUnit()
+    local unit sold = GetSoldUnit()
+    local player p = GetOwningPlayer(sold)
+    local integer pn = GetConvertedPlayerId(p)
+    local integer team = udg_teamnumber[pn]
+    local integer id = GetUnitTypeId(sold)
+    local integer i = 1
+    if GetUnitTypeId(shop) != 'nTDP' then
+        return
+    endif
+    if team < 1 or team > 4 or shop != DraftShop[team] or not DraftPending[pn] or udg_herO[pn] != null then
+        call RemoveUnit(sold)
+        return
+    endif
+    if id == 'hTNP' then
+        call RemoveUnit(sold)
+        set DraftPage[team] = DraftPage[team] + 1
+        if DraftPage[team]*8 >= DraftCount[team] then
+            set DraftPage[team] = 0
+        endif
+        call DraftRefresh(team)
+        call SelectUnitForPlayerSingle(shop, p)
+    
+    elseif IsUnitType(sold, UNIT_TYPE_HERO) then
+        if not DraftEligible(team,id) then
+            call RemoveUnit(sold)
+        else
+            call SetUnitPositionLoc(sold, udg_loc_tavern)
+            if udg_selected_mode == 3 then
+                loop
+                    exitwhen i > DraftCount[team]
+                    if DraftPool[team*256+i] == id then
+                        set DraftTaken[team*256+i] = true
+                    endif
+                    set i = i + 1
+                endloop
+            endif
+        endif
+        call DraftRefresh(team)
+    endif
+    set sold = null
+    set shop = null
+endfunction
+
+function DraftUpdate takes nothing returns nothing
+    local integer pn = 1
+    local integer team
+    local integer array waiting
+    local player p
+    local boolean wants
+    loop
+        exitwhen pn > 12
+        set p = ConvertedPlayer(pn)
+        set team = udg_teamnumber[pn]
+        if team >= 1 and team <= 4 then
+            set wants = udg_player_active[pn] and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and udg_herO[pn] == null
+            if wants then
+                set waiting[team] = waiting[team] + 1
+                if DraftShop[team] == null then
+                    set DraftShop[team] = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'nTDP', DraftX[team], DraftY[team], 270.)
+                    call BlzSetUnitName(DraftShop[team], "Team " + I2S(team) + " Hero Tavern")
+                    call SetUnitTypeSlots(DraftShop[team], 12)
+                    call DraftRefresh(team)
+                endif
+                if not DraftPending[pn] then
+                    set DraftWisp[pn] = CreateUnit(p, 'eTWP', DraftX[team], DraftY[team]-96., 90.)
+                    call SelectUnitForPlayerSingle(DraftShop[team], p)
+                    call PanCameraToTimedForPlayer(p, DraftX[team], DraftY[team], 0.25)
+                endif
+            elseif DraftWisp[pn] != null then
+                call RemoveUnit(DraftWisp[pn])
+                set DraftWisp[pn] = null
+            endif
+            set DraftPending[pn] = wants
+        endif
+        set pn = pn + 1
+    endloop
+    set team = 1
+    loop
+        exitwhen team > 4
+        if waiting[team] == 0 and DraftShop[team] != null then
+            call RemoveUnit(DraftShop[team])
+            set DraftShop[team] = null
+        endif
+        set team = team + 1
+    endloop
+endfunction
+
+function DraftStart takes nothing returns nothing
+    local integer team = 1
+    local integer i
+    local group patrons = CreateGroup()
+    local unit u
+    local trigger sales = CreateTrigger()
+    call GroupEnumUnitsInRect(patrons, gg_rct_TAVERN_AREA, null)
+    loop
+        set u = FirstOfGroup(patrons)
+        exitwhen u == null
+        call GroupRemoveUnit(patrons,u)
+        if GetUnitTypeId(u) == 'h01G' or GetUnitTypeId(u) == 'h03Y' then
+            call RemoveUnit(u)
+        endif
+    endloop
+    call DestroyGroup(patrons)
+    set i = 1
+    loop
+        exitwhen i > 12
+        if udg_Tavern_Visibility[i] != null then
+            call FogModifierStop(udg_Tavern_Visibility[i])
+        endif
+        set i = i + 1
+    endloop
+    loop
+        exitwhen team > 4
+        set DraftX[team] = -1600.
+        if team == 2 or team == 3 then
+            set DraftX[team] = 1280.
+        endif
+        set DraftY[team] = 1408.
+        if team >= 3 then
+            set DraftY[team] = -1920.
+        endif
+        if udg_selected_mode == 2 then
+            set i = 13
+            loop
+                exitwhen i > 21
+                call DraftImport(team, udg_real_shop[i])
+                set i = i + 1
+            endloop
+        else
+            call DraftImport(team, udg_real_shop[team])
+        endif
+        call DraftImport(team, CarryTav_shop[team])
+        call DraftImport(team, OD_CarryTav_shop2[team])
+        set team = team + 1
+    endloop
+    call TriggerRegisterAnyUnitEventBJ(sales, EVENT_PLAYER_UNIT_SELL)
+    call TriggerAddAction(sales, function DraftSale)
+    call DraftUpdate()
+    call TimerStart(CreateTimer(), 0.25, true, function DraftUpdate)
 endfunction
 
 function main takes nothing returns nothing
