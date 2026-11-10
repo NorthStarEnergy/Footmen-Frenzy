@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "a694d8d556a2373447c0b5c9f8966be97b5e1648d8cd2a5edc14f1281e4255f9",
+  "compiled_source_sha256": "904f950a651acf9c34be903482a54d3e9ea2e1e2e8751f74a2bd629648c02101",
   "runtime_functions": 3780,
   "editor_generated_functions": [
     "CreateAllUnits",
@@ -52,14 +52,14 @@
   ],
   "editor_generated_globals": 165,
   "globals_sha256": "8e3792c3b121cca19e3b1811c3e2db59bbd2742ef62dfc6febc7dbd0cb634f59",
-  "runtime_sha256": "9e19dc6fd37ed3c25056ecd1f36da2bb7731cb860ade8377a390cc0d54ec3a89",
+  "runtime_sha256": "fa4a7d8a42720bff0dd6a1ff8e258bc588738fbaf98c433f8e52f09858a93d99",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "82858cb2460b5ef7270c6d9ca7528f1356aaf01735611bd596a47cba59ee9473",
-  "revision": "v97 Gragas Z braking and short fuse",
+  "source_map_sha256": "2705e1df1d30564d90ad838321f79e5d9385ee95561a7208289c7308fed59580",
+  "revision": "v99 Veigar gait, FX and hero hotkeys",
   "engine_playtest": false
 }
