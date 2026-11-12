@@ -3389,7 +3389,7 @@ boolean array TFP_s__pickACard___pickDat_thrown
 integer TFP_si__pickACard___dummyCardDat_F=0
 integer TFP_si__pickACard___dummyCardDat_I=0
 integer array TFP_si__pickACard___dummyCardDat_V
-unit array TFP_s__pickACard___dummyCardDat_dummy
+effect array TFP_s__pickACard___dummyCardDat_dummy
 unit array TFP_s__pickACard___dummyCardDat_fate
 integer TFP_si__destiny___target_F=0
 integer TFP_si__destiny___target_I=0
@@ -3821,16 +3821,14 @@ function TFP_pickACard___dummyP takes nothing returns nothing
         loop
             exitwhen index > TFP_pickACard___dummyDBIndex
             set tempDat=TFP_pickACard___dummyDB[index]
-            call SetUnitX(TFP_s__pickACard___dummyCardDat_dummy[tempDat], GetUnitX(TFP_s__pickACard___dummyCardDat_fate[tempDat]) + 95. * Cos(GetUnitFacing(TFP_s__pickACard___dummyCardDat_fate[tempDat]) * bj_DEGTORAD))
-            call SetUnitY(TFP_s__pickACard___dummyCardDat_dummy[tempDat], GetUnitY(TFP_s__pickACard___dummyCardDat_fate[tempDat]) + 95. * Sin(GetUnitFacing(TFP_s__pickACard___dummyCardDat_fate[tempDat]) * bj_DEGTORAD))
             if GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_BLUE_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf6') > 0 then
-                call SetUnitVertexColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 80, 80, 255, 255)
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 80, 80, 255)
             elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_RED_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf7') > 0 then
-                call SetUnitVertexColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 55, 55, 255)
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 55, 55)
             elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_GOLD_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf8') > 0 then
-                call SetUnitVertexColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55, 255)
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55)
             else
-                call RemoveUnit(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
+                call DestroyEffect(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
                 set TFP_s__pickACard___dummyCardDat_dummy[tempDat]=null
                 set TFP_s__pickACard___dummyCardDat_fate[tempDat]=null
                 call TFP_s__pickACard___dummyCardDat_deallocate(tempDat)
@@ -3902,11 +3900,7 @@ function TFP_pickACard___c takes nothing returns boolean
             //create the dummy card and give it the proper color. we need to attach it to a different, more smooth timer. This one will be stack based.
             set tempDCDat=TFP_s__pickACard___dummyCardDat__allocate()
             set TFP_s__pickACard___dummyCardDat_fate[tempDCDat]=TFP_s__pickACard___pickDat_fate[tempDat]
-            set TFP_s__pickACard___dummyCardDat_dummy[tempDCDat]=CreateUnit(GetOwningPlayer(TFP_s__pickACard___pickDat_fate[tempDat]), TFP_tfConsts_CARD_DUMMY_ID, GetUnitX(TFP_s__pickACard___pickDat_fate[tempDat]), GetUnitY(TFP_s__pickACard___pickDat_fate[tempDat]), 0.)
-            call UnitAddAbility(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 'arav')
-            call UnitRemoveAbility(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 'arav')
-            call SetUnitFlyHeight(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 380., 0.)
-            call SetUnitTimeScale(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], .5)
+            set TFP_s__pickACard___dummyCardDat_dummy[tempDCDat]=AddSpecialEffectTarget("war3mapImported\\TFPickedCard.mdx", TFP_s__pickACard___pickDat_fate[tempDat], "origin")
             set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex + 1
             set TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]=tempDCDat
             if TFP_pickACard___dummyDBIndex == 0 then
