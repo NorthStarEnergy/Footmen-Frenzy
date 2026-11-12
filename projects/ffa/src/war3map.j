@@ -2953,7 +2953,7 @@ timer DPS_Clock= null
     integer array FF_st_tmSlot
     unit array FF_st_tmTarget
     real array FF_st_tmUntil
-constant string zoom__gFileName= "FFR_Zoom.txt"
+constant string FF_ConfigFile = "ff-config"
 integer zoom__gMaxDistance= 6000
 integer zoom__gMinDistance= 1400
 framehandle zoom__lockButton= null
@@ -3644,6 +3644,40 @@ endfunction
     function FileIO_Read takes string filename returns string
         return s__File_readEx(s__File_open(filename),true)
     endfunction
+
+// Zoom and spell/item bindings share a profile across map families.
+function FF_ConfigRead takes boolean keys returns string
+    local string data = FileIO_Read(FF_ConfigFile)
+    local integer i = 0
+    loop
+        exitwhen i >= StringLength(data) or SubString(data,i,i+1) == "|"
+        set i = i + 1
+    endloop
+    if i < StringLength(data) then
+        if keys then
+            return SubString(data,i+1,StringLength(data))
+        endif
+        return SubString(data,0,i)
+    endif
+    if keys then
+        set data = FileIO_Read("FF799X_Hotkeys.pld")
+    else
+        set data = FileIO_Read("FFR_Zoom.txt")
+    endif
+    if data == null then
+        return ""
+    endif
+    return data
+endfunction
+
+function FF_ConfigSave takes boolean keys, string value returns nothing
+    if keys then
+        call FileIO_Write(FF_ConfigFile, FF_ConfigRead(false)+"|"+value)
+    else
+        call FileIO_Write(FF_ConfigFile, value+"|"+FF_ConfigRead(true))
+    endif
+endfunction
+
 
     function GST_DestroyTimer takes nothing returns nothing
         local timer t= GetExpiredTimer()
@@ -16306,13 +16340,11 @@ endfunction
 
 function zoom__RestoreFromFile takes nothing returns nothing
 
-    local integer file= s__File_open(zoom__gFileName)
 
-    local string input= ( s__File_readEx(( file ) , false) )
+    local string input=FF_ConfigRead(false)
 
     local integer cameraDistance= S2I(SubString(input, 0, 4))
 
-    call s__File_close(file)
 
     // No saved file yet (S2I of an empty read is 0) means "leave the default camera alone".
 
@@ -16997,6 +17029,81 @@ function SF_RemoveTavern takes integer p returns nothing
     endif
 endfunction
 
+function SF_DraftIndex takes integer id returns integer
+    local integer i=1
+    loop
+        exitwhen i > udg_total_hero_count or udg_hero_type[i] == id
+        set i=i+1
+    endloop
+    return i
+endfunction
+
+function DraftPubSD takes nothing returns boolean
+    return udg_mode_pub and udg_selected_mode == 3 and not DraftAllPick
+endfunction
+
+function DraftRefreshPub takes integer team returns nothing
+    local integer array normal
+    local integer array carry
+    local integer normals = 0
+    local integer carries = 0
+    local integer xmutes = 0
+    local integer i = 1
+    local integer j
+    local integer id
+    local integer category
+    local integer slot
+    local integer shown
+    loop
+        exitwhen i > SF_PoolCount[team]
+        set id = SF_Pool[team*128+i]
+        if id != 0 then
+            set category = udg_hero_category[SF_DraftIndex(id)]
+            if category >= 15 and category <= 17 then
+                set carry[carries] = id
+                set carries = carries + 1
+            else
+                set normal[normals] = id
+                if id == 'E00E' or id == 'N01C' or id == 'H02J' or id == 'H02G' or id == 'H015' or id == 'H04Y' then
+                    set normal[normals] = normal[xmutes]
+                    set normal[xmutes] = id
+                    set xmutes = xmutes + 1
+                endif
+                set normals = normals + 1
+            endif
+        endif
+        set i = i + 1
+    endloop
+    // Random Hero and Next Page occupy the two fixed command-card cells.
+    set j = IMinBJ(normals,10)
+    set shown = normals + carries
+    if j < 10 and carries > 0 then
+        set shown = shown + 10 - j
+    endif
+    if SF_Page[team]*10 >= shown then
+        set SF_Page[team] = 0
+    endif
+    set i = 0
+    loop
+        exitwhen i >= 10
+        set slot = SF_Page[team]*10+i
+        set id = 0
+        if slot < j then
+            set id = normal[slot]
+        elseif slot >= 10 and slot < 10+carries then
+            set id = carry[slot-10]
+        elseif slot >= 10+carries and slot-carries < normals then
+            set id = normal[slot-carries]
+        endif
+        if id != 0 then
+            call SetPlayerUnitAvailableBJ(id,true,Player(team-1))
+            call AddUnitToStock(SF_Tavern[team],id,1,1)
+
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
 function SF_RefreshPage takes integer p returns nothing
     local integer i=1
     local integer first=SF_Page[p] * 8 + 1
@@ -17007,6 +17114,9 @@ function SF_RefreshPage takes integer p returns nothing
         set i=i + 1
     endloop
     call RemoveUnitFromStock(SF_Tavern[p], 'hPgP')
+    if DraftPubSD() then
+        call DraftRefreshPub(p)
+    else
     set i=first
     loop
         exitwhen i > last or i > SF_PoolCount[p]
@@ -17014,6 +17124,7 @@ function SF_RefreshPage takes integer p returns nothing
         call AddUnitToStock(SF_Tavern[p], SF_Pool[p * 128 + i], 1, 1)
         set i=i + 1
     endloop
+    endif
     call SetPlayerUnitAvailableBJ('hTRZ', true, Player(p - 1))
     call SetPlayerUnitAvailableBJ('hPgN', true, Player(p - 1))
 endfunction
@@ -17288,7 +17399,7 @@ function SF_OnSale takes nothing returns nothing
             call RemoveUnit(sold)
             if SF_Tavern[p] != null and not SF_Picked[p] then
                 set SF_Page[p]=SF_Page[p] + 1
-                if SF_Page[p] * 8 >= SF_PoolCount[p] then
+                if not DraftPubSD() and SF_Page[p] * 8 >= SF_PoolCount[p] then
                     set SF_Page[p]=0
                 endif
                 call SF_RefreshPage(p)
@@ -45904,13 +46015,7 @@ function zoom__handleLockButton takes nothing returns nothing
 endfunction
 
 function zoom__Save takes integer cameraDistance returns nothing
-
-    local integer file= s__File_open(zoom__gFileName)
-
-    call s__File_write(file , I2S(cameraDistance))
-
-    call s__File_close(file)
-
+    call FF_ConfigSave(false,I2S(cameraDistance))
 endfunction
 
 function zoom__handleSegment takes nothing returns nothing
@@ -53544,7 +53649,7 @@ endfunction
 
 function MD_Start takes unit u, unit v, integer rank returns nothing
     local integer h = GetHandleId(u)
-    if LoadUnitHandle(MD_Hash, h, 1) != null or not MD_Eligible(u, v) then
+    if LoadUnitHandle(MD_Hash, h, 1) != null or v == null then
         call MD_Reject(u)
         call BlzEndUnitAbilityCooldown(u, 'AMu3')
         return
@@ -53611,7 +53716,7 @@ function MM_ExecuteDevour takes nothing returns nothing
     if MM_DevourReady(u, v) then
         call UnitAddAbility(u, 'AMdv')
         call SetUnitAbilityLevel(u, 'AMdv', rank)
-        call BlzUnitHideAbility(u, 'AMdv', true)
+        call BlzEndUnitAbilityCooldown(u, 'AMdv')
         call UnitAddAbility(u, 'AMdc')
         call SetUnitAbilityLevel(u, 'AMdc', rank)
         call BlzUnitHideAbility(u, 'AMdc', true)
@@ -53971,6 +54076,9 @@ function MU_ZeroResources takes unit u returns nothing
     local integer id
     local integer amount
     local integer bit = 1
+    if GetHeroInt(u,false) == 0 and GetHeroInt(u,true) == 0 and BlzGetUnitMaxMana(u) == 0 then
+        return
+    endif
     loop
         exitwhen i == 20
         if i < 10 then
@@ -54049,7 +54157,7 @@ function MU_OnCast takes nothing returns nothing
     elseif spell == 'AMu3' then
         call MM_Cast(u, GetSpellTargetUnit(), rank)
     elseif spell == 'AMdv' then
-        if MM_DevourReady(u, GetSpellTargetUnit()) then
+        if LoadTimerHandle(MM_Hash,h,1) != null and LoadUnitHandle(MM_Hash,GetHandleId(LoadTimerHandle(MM_Hash,h,1)),2) == GetSpellTargetUnit() then
             call RemoveSavedHandle(MM_Hash, h, 1)
             call MD_Start(u, GetSpellTargetUnit(), rank)
         endif
@@ -54436,6 +54544,808 @@ function MU_Tick takes nothing returns nothing
     set u = null
 endfunction
 
+function MD_InitTypes takes nothing returns nothing
+    call SaveBoolean(MD_Types, 'E002', 1, true)
+    call SaveBoolean(MD_Types, 'E003', 1, true)
+    call SaveBoolean(MD_Types, 'E005', 1, true)
+    call SaveBoolean(MD_Types, 'E00F', 1, true)
+    call SaveBoolean(MD_Types, 'E00V', 1, true)
+    call SaveBoolean(MD_Types, 'E011', 1, true)
+    call SaveBoolean(MD_Types, 'E018', 1, true)
+    call SaveBoolean(MD_Types, 'H005', 1, true)
+    call SaveBoolean(MD_Types, 'H008', 1, true)
+    call SaveBoolean(MD_Types, 'H009', 1, true)
+    call SaveBoolean(MD_Types, 'H00A', 1, true)
+    call SaveBoolean(MD_Types, 'H01Q', 1, true)
+    call SaveBoolean(MD_Types, 'H01R', 1, true)
+    call SaveBoolean(MD_Types, 'H04F', 1, true)
+    call SaveBoolean(MD_Types, 'H04W', 1, true)
+    call SaveBoolean(MD_Types, 'H0R0', 1, true)
+    call SaveBoolean(MD_Types, 'N00C', 1, true)
+    call SaveBoolean(MD_Types, 'N00D', 1, true)
+    call SaveBoolean(MD_Types, 'N00H', 1, true)
+    call SaveBoolean(MD_Types, 'N00I', 1, true)
+    call SaveBoolean(MD_Types, 'N00N', 1, true)
+    call SaveBoolean(MD_Types, 'N00O', 1, true)
+    call SaveBoolean(MD_Types, 'N00P', 1, true)
+    call SaveBoolean(MD_Types, 'N00Z', 1, true)
+    call SaveBoolean(MD_Types, 'N017', 1, true)
+    call SaveBoolean(MD_Types, 'N018', 1, true)
+    call SaveBoolean(MD_Types, 'N01C', 1, true)
+    call SaveBoolean(MD_Types, 'N01D', 1, true)
+    call SaveBoolean(MD_Types, 'N01G', 1, true)
+    call SaveBoolean(MD_Types, 'N01H', 1, true)
+    call SaveBoolean(MD_Types, 'N01I', 1, true)
+    call SaveBoolean(MD_Types, 'N035', 1, true)
+    call SaveBoolean(MD_Types, 'N03B', 1, true)
+    call SaveBoolean(MD_Types, 'N03J', 1, true)
+    call SaveBoolean(MD_Types, 'N05H', 1, true)
+    call SaveBoolean(MD_Types, 'Naka', 1, true)
+    call SaveBoolean(MD_Types, 'Nal2', 1, true)
+    call SaveBoolean(MD_Types, 'Nal3', 1, true)
+    call SaveBoolean(MD_Types, 'Nalc', 1, true)
+    call SaveBoolean(MD_Types, 'Nalm', 1, true)
+    call SaveBoolean(MD_Types, 'Nbrn', 1, true)
+    call SaveBoolean(MD_Types, 'Nbst', 1, true)
+    call SaveBoolean(MD_Types, 'Nfir', 1, true)
+    call SaveBoolean(MD_Types, 'Nglx', 1, true)
+    call SaveBoolean(MD_Types, 'Nmsr', 1, true)
+    call SaveBoolean(MD_Types, 'Nngs', 1, true)
+    call SaveBoolean(MD_Types, 'Npal', 1, true)
+    call SaveBoolean(MD_Types, 'Npbm', 1, true)
+    call SaveBoolean(MD_Types, 'Nplh', 1, true)
+    call SaveBoolean(MD_Types, 'Nrob', 1, true)
+    call SaveBoolean(MD_Types, 'Nswt', 1, true)
+    call SaveBoolean(MD_Types, 'Ntin', 1, true)
+    call SaveBoolean(MD_Types, 'O003', 1, true)
+    call SaveBoolean(MD_Types, 'O004', 1, true)
+    call SaveBoolean(MD_Types, 'O005', 1, true)
+    call SaveBoolean(MD_Types, 'O006', 1, true)
+    call SaveBoolean(MD_Types, 'O016', 1, true)
+    call SaveBoolean(MD_Types, 'U002', 1, true)
+    call SaveBoolean(MD_Types, 'U003', 1, true)
+    call SaveBoolean(MD_Types, 'U004', 1, true)
+    call SaveBoolean(MD_Types, 'U005', 1, true)
+    call SaveBoolean(MD_Types, 'U00R', 1, true)
+    call SaveBoolean(MD_Types, 'n001', 1, true)
+    call SaveBoolean(MD_Types, 'n005', 1, true)
+    call SaveBoolean(MD_Types, 'n00A', 1, true)
+    call SaveBoolean(MD_Types, 'n00J', 1, true)
+    call SaveBoolean(MD_Types, 'n00L', 1, true)
+    call SaveBoolean(MD_Types, 'n00Q', 1, true)
+    call SaveBoolean(MD_Types, 'n00S', 1, true)
+    call SaveBoolean(MD_Types, 'n00T', 1, true)
+    call SaveBoolean(MD_Types, 'n00U', 1, true)
+    call SaveBoolean(MD_Types, 'n00Y', 1, true)
+    call SaveBoolean(MD_Types, 'n010', 1, true)
+    call SaveBoolean(MD_Types, 'n011', 1, true)
+    call SaveBoolean(MD_Types, 'n014', 1, true)
+    call SaveBoolean(MD_Types, 'n01P', 1, true)
+    call SaveBoolean(MD_Types, 'n01R', 1, true)
+    call SaveBoolean(MD_Types, 'n02Q', 1, true)
+    call SaveBoolean(MD_Types, 'n02R', 1, true)
+    call SaveBoolean(MD_Types, 'n02T', 1, true)
+    call SaveBoolean(MD_Types, 'n033', 1, true)
+    call SaveBoolean(MD_Types, 'n03M', 1, true)
+    call SaveBoolean(MD_Types, 'n03O', 1, true)
+    call SaveBoolean(MD_Types, 'n03P', 1, true)
+    call SaveBoolean(MD_Types, 'n03W', 1, true)
+    call SaveBoolean(MD_Types, 'n040', 1, true)
+    call SaveBoolean(MD_Types, 'n042', 1, true)
+    call SaveBoolean(MD_Types, 'n043', 1, true)
+    call SaveBoolean(MD_Types, 'n044', 1, true)
+    call SaveBoolean(MD_Types, 'n052', 1, true)
+    call SaveBoolean(MD_Types, 'n053', 1, true)
+    call SaveBoolean(MD_Types, 'n054', 1, true)
+    call SaveBoolean(MD_Types, 'n055', 1, true)
+    call SaveBoolean(MD_Types, 'n056', 1, true)
+    call SaveBoolean(MD_Types, 'n057', 1, true)
+    call SaveBoolean(MD_Types, 'n058', 1, true)
+    call SaveBoolean(MD_Types, 'n05G', 1, true)
+    call SaveBoolean(MD_Types, 'n05L', 1, true)
+    call SaveBoolean(MD_Types, 'n05N', 1, true)
+    call SaveBoolean(MD_Types, 'n05O', 1, true)
+    call SaveBoolean(MD_Types, 'n05Q', 1, true)
+    call SaveBoolean(MD_Types, 'n05X', 1, true)
+    call SaveBoolean(MD_Types, 'n05Y', 1, true)
+    call SaveBoolean(MD_Types, 'n061', 1, true)
+    call SaveBoolean(MD_Types, 'nadk', 1, true)
+    call SaveBoolean(MD_Types, 'nadr', 1, true)
+    call SaveBoolean(MD_Types, 'nadw', 1, true)
+    call SaveBoolean(MD_Types, 'nahy', 1, true)
+    call SaveBoolean(MD_Types, 'nanb', 1, true)
+    call SaveBoolean(MD_Types, 'nanc', 1, true)
+    call SaveBoolean(MD_Types, 'nane', 1, true)
+    call SaveBoolean(MD_Types, 'nanm', 1, true)
+    call SaveBoolean(MD_Types, 'nano', 1, true)
+    call SaveBoolean(MD_Types, 'nanw', 1, true)
+    call SaveBoolean(MD_Types, 'narg', 1, true)
+    call SaveBoolean(MD_Types, 'nass', 1, true)
+    call SaveBoolean(MD_Types, 'nban', 1, true)
+    call SaveBoolean(MD_Types, 'nbda', 1, true)
+    call SaveBoolean(MD_Types, 'nbdk', 1, true)
+    call SaveBoolean(MD_Types, 'nbdm', 1, true)
+    call SaveBoolean(MD_Types, 'nbdo', 1, true)
+    call SaveBoolean(MD_Types, 'nbdr', 1, true)
+    call SaveBoolean(MD_Types, 'nbds', 1, true)
+    call SaveBoolean(MD_Types, 'nbdw', 1, true)
+    call SaveBoolean(MD_Types, 'nbld', 1, true)
+    call SaveBoolean(MD_Types, 'nbnb', 1, true)
+    call SaveBoolean(MD_Types, 'nbot', 1, true)
+    call SaveBoolean(MD_Types, 'nbrg', 1, true)
+    call SaveBoolean(MD_Types, 'nbwm', 1, true)
+    call SaveBoolean(MD_Types, 'nbzd', 1, true)
+    call SaveBoolean(MD_Types, 'nbzk', 1, true)
+    call SaveBoolean(MD_Types, 'nbzw', 1, true)
+    call SaveBoolean(MD_Types, 'ncat', 1, true)
+    call SaveBoolean(MD_Types, 'ncea', 1, true)
+    call SaveBoolean(MD_Types, 'ncen', 1, true)
+    call SaveBoolean(MD_Types, 'ncer', 1, true)
+    call SaveBoolean(MD_Types, 'ncfs', 1, true)
+    call SaveBoolean(MD_Types, 'ncim', 1, true)
+    call SaveBoolean(MD_Types, 'ncks', 1, true)
+    call SaveBoolean(MD_Types, 'ncnk', 1, true)
+    call SaveBoolean(MD_Types, 'ndmu', 1, true)
+    call SaveBoolean(MD_Types, 'ndqn', 1, true)
+    call SaveBoolean(MD_Types, 'ndqp', 1, true)
+    call SaveBoolean(MD_Types, 'ndqs', 1, true)
+    call SaveBoolean(MD_Types, 'ndqt', 1, true)
+    call SaveBoolean(MD_Types, 'ndqv', 1, true)
+    call SaveBoolean(MD_Types, 'ndrd', 1, true)
+    call SaveBoolean(MD_Types, 'ndrf', 1, true)
+    call SaveBoolean(MD_Types, 'ndrh', 1, true)
+    call SaveBoolean(MD_Types, 'ndrj', 1, true)
+    call SaveBoolean(MD_Types, 'ndrl', 1, true)
+    call SaveBoolean(MD_Types, 'ndrm', 1, true)
+    call SaveBoolean(MD_Types, 'ndrn', 1, true)
+    call SaveBoolean(MD_Types, 'ndrp', 1, true)
+    call SaveBoolean(MD_Types, 'ndrs', 1, true)
+    call SaveBoolean(MD_Types, 'ndrt', 1, true)
+    call SaveBoolean(MD_Types, 'ndrv', 1, true)
+    call SaveBoolean(MD_Types, 'ndrw', 1, true)
+    call SaveBoolean(MD_Types, 'ndsa', 1, true)
+    call SaveBoolean(MD_Types, 'ndtb', 1, true)
+    call SaveBoolean(MD_Types, 'ndth', 1, true)
+    call SaveBoolean(MD_Types, 'ndtp', 1, true)
+    call SaveBoolean(MD_Types, 'ndtr', 1, true)
+    call SaveBoolean(MD_Types, 'ndtt', 1, true)
+    call SaveBoolean(MD_Types, 'ndtw', 1, true)
+    call SaveBoolean(MD_Types, 'nehy', 1, true)
+    call SaveBoolean(MD_Types, 'nelb', 1, true)
+    call SaveBoolean(MD_Types, 'nele', 1, true)
+    call SaveBoolean(MD_Types, 'nenc', 1, true)
+    call SaveBoolean(MD_Types, 'nenf', 1, true)
+    call SaveBoolean(MD_Types, 'nenp', 1, true)
+    call SaveBoolean(MD_Types, 'nepl', 1, true)
+    call SaveBoolean(MD_Types, 'nerd', 1, true)
+    call SaveBoolean(MD_Types, 'ners', 1, true)
+    call SaveBoolean(MD_Types, 'nerw', 1, true)
+    call SaveBoolean(MD_Types, 'nfgb', 1, true)
+    call SaveBoolean(MD_Types, 'nfgl', 1, true)
+    call SaveBoolean(MD_Types, 'nfgo', 1, true)
+    call SaveBoolean(MD_Types, 'nfgt', 1, true)
+    call SaveBoolean(MD_Types, 'nfgu', 1, true)
+    call SaveBoolean(MD_Types, 'nfod', 1, true)
+    call SaveBoolean(MD_Types, 'nfor', 1, true)
+    call SaveBoolean(MD_Types, 'nfot', 1, true)
+    call SaveBoolean(MD_Types, 'nfov', 1, true)
+    call SaveBoolean(MD_Types, 'nfpc', 1, true)
+    call SaveBoolean(MD_Types, 'nfpe', 1, true)
+    call SaveBoolean(MD_Types, 'nfpl', 1, true)
+    call SaveBoolean(MD_Types, 'nfps', 1, true)
+    call SaveBoolean(MD_Types, 'nfpt', 1, true)
+    call SaveBoolean(MD_Types, 'nfpu', 1, true)
+    call SaveBoolean(MD_Types, 'nfra', 1, true)
+    call SaveBoolean(MD_Types, 'nfrb', 1, true)
+    call SaveBoolean(MD_Types, 'nfre', 1, true)
+    call SaveBoolean(MD_Types, 'nfrg', 1, true)
+    call SaveBoolean(MD_Types, 'nfrl', 1, true)
+    call SaveBoolean(MD_Types, 'nfrp', 1, true)
+    call SaveBoolean(MD_Types, 'nfrs', 1, true)
+    call SaveBoolean(MD_Types, 'nfsh', 1, true)
+    call SaveBoolean(MD_Types, 'nfsp', 1, true)
+    call SaveBoolean(MD_Types, 'nftb', 1, true)
+    call SaveBoolean(MD_Types, 'nftk', 1, true)
+    call SaveBoolean(MD_Types, 'nftr', 1, true)
+    call SaveBoolean(MD_Types, 'nftt', 1, true)
+    call SaveBoolean(MD_Types, 'ngdk', 1, true)
+    call SaveBoolean(MD_Types, 'nggd', 1, true)
+    call SaveBoolean(MD_Types, 'nggg', 1, true)
+    call SaveBoolean(MD_Types, 'nggm', 1, true)
+    call SaveBoolean(MD_Types, 'nggr', 1, true)
+    call SaveBoolean(MD_Types, 'ngh1', 1, true)
+    call SaveBoolean(MD_Types, 'ngir', 1, true)
+    call SaveBoolean(MD_Types, 'nglm', 1, true)
+    call SaveBoolean(MD_Types, 'ngna', 1, true)
+    call SaveBoolean(MD_Types, 'ngnb', 1, true)
+    call SaveBoolean(MD_Types, 'ngno', 1, true)
+    call SaveBoolean(MD_Types, 'ngns', 1, true)
+    call SaveBoolean(MD_Types, 'ngnv', 1, true)
+    call SaveBoolean(MD_Types, 'ngnw', 1, true)
+    call SaveBoolean(MD_Types, 'ngos', 1, true)
+    call SaveBoolean(MD_Types, 'ngow', 1, true)
+    call SaveBoolean(MD_Types, 'ngrd', 1, true)
+    call SaveBoolean(MD_Types, 'ngrk', 1, true)
+    call SaveBoolean(MD_Types, 'ngrw', 1, true)
+    call SaveBoolean(MD_Types, 'ngsp', 1, true)
+    call SaveBoolean(MD_Types, 'ngst', 1, true)
+    call SaveBoolean(MD_Types, 'ngz1', 1, true)
+    call SaveBoolean(MD_Types, 'ngz2', 1, true)
+    call SaveBoolean(MD_Types, 'ngz3', 1, true)
+    call SaveBoolean(MD_Types, 'nhar', 1, true)
+    call SaveBoolean(MD_Types, 'nhdc', 1, true)
+    call SaveBoolean(MD_Types, 'nhfp', 1, true)
+    call SaveBoolean(MD_Types, 'nhhr', 1, true)
+    call SaveBoolean(MD_Types, 'nhrh', 1, true)
+    call SaveBoolean(MD_Types, 'nhrq', 1, true)
+    call SaveBoolean(MD_Types, 'nhrr', 1, true)
+    call SaveBoolean(MD_Types, 'nhrw', 1, true)
+    call SaveBoolean(MD_Types, 'nhyd', 1, true)
+    call SaveBoolean(MD_Types, 'nhyh', 1, true)
+    call SaveBoolean(MD_Types, 'nina', 1, true)
+    call SaveBoolean(MD_Types, 'ninc', 1, true)
+    call SaveBoolean(MD_Types, 'ninm', 1, true)
+    call SaveBoolean(MD_Types, 'nith', 1, true)
+    call SaveBoolean(MD_Types, 'nitp', 1, true)
+    call SaveBoolean(MD_Types, 'nitr', 1, true)
+    call SaveBoolean(MD_Types, 'nits', 1, true)
+    call SaveBoolean(MD_Types, 'nitt', 1, true)
+    call SaveBoolean(MD_Types, 'nitw', 1, true)
+    call SaveBoolean(MD_Types, 'njg1', 1, true)
+    call SaveBoolean(MD_Types, 'njga', 1, true)
+    call SaveBoolean(MD_Types, 'njgb', 1, true)
+    call SaveBoolean(MD_Types, 'nkob', 1, true)
+    call SaveBoolean(MD_Types, 'nkog', 1, true)
+    call SaveBoolean(MD_Types, 'nkol', 1, true)
+    call SaveBoolean(MD_Types, 'nkot', 1, true)
+    call SaveBoolean(MD_Types, 'nlds', 1, true)
+    call SaveBoolean(MD_Types, 'nlkl', 1, true)
+    call SaveBoolean(MD_Types, 'nlpd', 1, true)
+    call SaveBoolean(MD_Types, 'nlpr', 1, true)
+    call SaveBoolean(MD_Types, 'nlps', 1, true)
+    call SaveBoolean(MD_Types, 'nlrv', 1, true)
+    call SaveBoolean(MD_Types, 'nlsn', 1, true)
+    call SaveBoolean(MD_Types, 'nltc', 1, true)
+    call SaveBoolean(MD_Types, 'nltl', 1, true)
+    call SaveBoolean(MD_Types, 'nlur', 1, true)
+    call SaveBoolean(MD_Types, 'nmam', 1, true)
+    call SaveBoolean(MD_Types, 'nmbg', 1, true)
+    call SaveBoolean(MD_Types, 'nmcf', 1, true)
+    call SaveBoolean(MD_Types, 'nmdr', 1, true)
+    call SaveBoolean(MD_Types, 'nmfs', 1, true)
+    call SaveBoolean(MD_Types, 'nmgd', 1, true)
+    call SaveBoolean(MD_Types, 'nmgr', 1, true)
+    call SaveBoolean(MD_Types, 'nmgw', 1, true)
+    call SaveBoolean(MD_Types, 'nmit', 1, true)
+    call SaveBoolean(MD_Types, 'nmmu', 1, true)
+    call SaveBoolean(MD_Types, 'nmpg', 1, true)
+    call SaveBoolean(MD_Types, 'nmrl', 1, true)
+    call SaveBoolean(MD_Types, 'nmrm', 1, true)
+    call SaveBoolean(MD_Types, 'nmrr', 1, true)
+    call SaveBoolean(MD_Types, 'nmrv', 1, true)
+    call SaveBoolean(MD_Types, 'nmsc', 1, true)
+    call SaveBoolean(MD_Types, 'nmsn', 1, true)
+    call SaveBoolean(MD_Types, 'nmtw', 1, true)
+    call SaveBoolean(MD_Types, 'nndk', 1, true)
+    call SaveBoolean(MD_Types, 'nndr', 1, true)
+    call SaveBoolean(MD_Types, 'nnht', 1, true)
+    call SaveBoolean(MD_Types, 'nnwa', 1, true)
+    call SaveBoolean(MD_Types, 'nnwl', 1, true)
+    call SaveBoolean(MD_Types, 'nnwq', 1, true)
+    call SaveBoolean(MD_Types, 'nnwr', 1, true)
+    call SaveBoolean(MD_Types, 'nnws', 1, true)
+    call SaveBoolean(MD_Types, 'noga', 1, true)
+    call SaveBoolean(MD_Types, 'nogl', 1, true)
+    call SaveBoolean(MD_Types, 'nogm', 1, true)
+    call SaveBoolean(MD_Types, 'nogn', 1, true)
+    call SaveBoolean(MD_Types, 'nogo', 1, true)
+    call SaveBoolean(MD_Types, 'nogr', 1, true)
+    call SaveBoolean(MD_Types, 'nomg', 1, true)
+    call SaveBoolean(MD_Types, 'nowb', 1, true)
+    call SaveBoolean(MD_Types, 'nowe', 1, true)
+    call SaveBoolean(MD_Types, 'nowk', 1, true)
+    call SaveBoolean(MD_Types, 'npfl', 1, true)
+    call SaveBoolean(MD_Types, 'npfm', 1, true)
+    call SaveBoolean(MD_Types, 'nplb', 1, true)
+    call SaveBoolean(MD_Types, 'nplg', 1, true)
+    call SaveBoolean(MD_Types, 'npn1', 1, true)
+    call SaveBoolean(MD_Types, 'npn2', 1, true)
+    call SaveBoolean(MD_Types, 'npn3', 1, true)
+    call SaveBoolean(MD_Types, 'npn4', 1, true)
+    call SaveBoolean(MD_Types, 'npn5', 1, true)
+    call SaveBoolean(MD_Types, 'npn6', 1, true)
+    call SaveBoolean(MD_Types, 'nqbh', 1, true)
+    call SaveBoolean(MD_Types, 'nrdk', 1, true)
+    call SaveBoolean(MD_Types, 'nrdr', 1, true)
+    call SaveBoolean(MD_Types, 'nrel', 1, true)
+    call SaveBoolean(MD_Types, 'nrog', 1, true)
+    call SaveBoolean(MD_Types, 'nrvd', 1, true)
+    call SaveBoolean(MD_Types, 'nrvf', 1, true)
+    call SaveBoolean(MD_Types, 'nrvi', 1, true)
+    call SaveBoolean(MD_Types, 'nrvl', 1, true)
+    call SaveBoolean(MD_Types, 'nrvs', 1, true)
+    call SaveBoolean(MD_Types, 'nrwm', 1, true)
+    call SaveBoolean(MD_Types, 'nrzb', 1, true)
+    call SaveBoolean(MD_Types, 'nrzg', 1, true)
+    call SaveBoolean(MD_Types, 'nrzm', 1, true)
+    call SaveBoolean(MD_Types, 'nrzs', 1, true)
+    call SaveBoolean(MD_Types, 'nrzt', 1, true)
+    call SaveBoolean(MD_Types, 'nsat', 1, true)
+    call SaveBoolean(MD_Types, 'nsbm', 1, true)
+    call SaveBoolean(MD_Types, 'nsc2', 1, true)
+    call SaveBoolean(MD_Types, 'nsc3', 1, true)
+    call SaveBoolean(MD_Types, 'nsca', 1, true)
+    call SaveBoolean(MD_Types, 'nscb', 1, true)
+    call SaveBoolean(MD_Types, 'nsce', 1, true)
+    call SaveBoolean(MD_Types, 'nsel', 1, true)
+    call SaveBoolean(MD_Types, 'nsgb', 1, true)
+    call SaveBoolean(MD_Types, 'nsgg', 1, true)
+    call SaveBoolean(MD_Types, 'nsgh', 1, true)
+    call SaveBoolean(MD_Types, 'nsgn', 1, true)
+    call SaveBoolean(MD_Types, 'nsgt', 1, true)
+    call SaveBoolean(MD_Types, 'nska', 1, true)
+    call SaveBoolean(MD_Types, 'nskg', 1, true)
+    call SaveBoolean(MD_Types, 'nskm', 1, true)
+    call SaveBoolean(MD_Types, 'nsko', 1, true)
+    call SaveBoolean(MD_Types, 'nslf', 1, true)
+    call SaveBoolean(MD_Types, 'nslh', 1, true)
+    call SaveBoolean(MD_Types, 'nsll', 1, true)
+    call SaveBoolean(MD_Types, 'nslm', 1, true)
+    call SaveBoolean(MD_Types, 'nsln', 1, true)
+    call SaveBoolean(MD_Types, 'nslr', 1, true)
+    call SaveBoolean(MD_Types, 'nslv', 1, true)
+    call SaveBoolean(MD_Types, 'nsns', 1, true)
+    call SaveBoolean(MD_Types, 'nsoc', 1, true)
+    call SaveBoolean(MD_Types, 'nsog', 1, true)
+    call SaveBoolean(MD_Types, 'nspb', 1, true)
+    call SaveBoolean(MD_Types, 'nspd', 1, true)
+    call SaveBoolean(MD_Types, 'nspg', 1, true)
+    call SaveBoolean(MD_Types, 'nspp', 1, true)
+    call SaveBoolean(MD_Types, 'nspr', 1, true)
+    call SaveBoolean(MD_Types, 'nsqa', 1, true)
+    call SaveBoolean(MD_Types, 'nsqe', 1, true)
+    call SaveBoolean(MD_Types, 'nsqo', 1, true)
+    call SaveBoolean(MD_Types, 'nsqt', 1, true)
+    call SaveBoolean(MD_Types, 'nsra', 1, true)
+    call SaveBoolean(MD_Types, 'nsrh', 1, true)
+    call SaveBoolean(MD_Types, 'nsrn', 1, true)
+    call SaveBoolean(MD_Types, 'nsrv', 1, true)
+    call SaveBoolean(MD_Types, 'nsrw', 1, true)
+    call SaveBoolean(MD_Types, 'nssp', 1, true)
+    call SaveBoolean(MD_Types, 'nsth', 1, true)
+    call SaveBoolean(MD_Types, 'nstl', 1, true)
+    call SaveBoolean(MD_Types, 'nsts', 1, true)
+    call SaveBoolean(MD_Types, 'nstw', 1, true)
+    call SaveBoolean(MD_Types, 'nsty', 1, true)
+    call SaveBoolean(MD_Types, 'nsw1', 1, true)
+    call SaveBoolean(MD_Types, 'nsw2', 1, true)
+    call SaveBoolean(MD_Types, 'nsw3', 1, true)
+    call SaveBoolean(MD_Types, 'nthl', 1, true)
+    call SaveBoolean(MD_Types, 'ntka', 1, true)
+    call SaveBoolean(MD_Types, 'ntkc', 1, true)
+    call SaveBoolean(MD_Types, 'ntkf', 1, true)
+    call SaveBoolean(MD_Types, 'ntkh', 1, true)
+    call SaveBoolean(MD_Types, 'ntks', 1, true)
+    call SaveBoolean(MD_Types, 'ntkt', 1, true)
+    call SaveBoolean(MD_Types, 'ntkw', 1, true)
+    call SaveBoolean(MD_Types, 'ntrd', 1, true)
+    call SaveBoolean(MD_Types, 'ntrg', 1, true)
+    call SaveBoolean(MD_Types, 'ntrh', 1, true)
+    call SaveBoolean(MD_Types, 'ntrs', 1, true)
+    call SaveBoolean(MD_Types, 'ntrt', 1, true)
+    call SaveBoolean(MD_Types, 'ntrv', 1, true)
+    call SaveBoolean(MD_Types, 'ntws', 1, true)
+    call SaveBoolean(MD_Types, 'nubk', 1, true)
+    call SaveBoolean(MD_Types, 'nubr', 1, true)
+    call SaveBoolean(MD_Types, 'nubw', 1, true)
+    call SaveBoolean(MD_Types, 'nvde', 1, true)
+    call SaveBoolean(MD_Types, 'nvdg', 1, true)
+    call SaveBoolean(MD_Types, 'nvdl', 1, true)
+    call SaveBoolean(MD_Types, 'nvdw', 1, true)
+    call SaveBoolean(MD_Types, 'nwen', 1, true)
+    call SaveBoolean(MD_Types, 'nwiz', 1, true)
+    call SaveBoolean(MD_Types, 'nwld', 1, true)
+    call SaveBoolean(MD_Types, 'nwlg', 1, true)
+    call SaveBoolean(MD_Types, 'nwlt', 1, true)
+    call SaveBoolean(MD_Types, 'nwna', 1, true)
+    call SaveBoolean(MD_Types, 'nwnr', 1, true)
+    call SaveBoolean(MD_Types, 'nwns', 1, true)
+    call SaveBoolean(MD_Types, 'nwrg', 1, true)
+    call SaveBoolean(MD_Types, 'nwwd', 1, true)
+    call SaveBoolean(MD_Types, 'nwwf', 1, true)
+    call SaveBoolean(MD_Types, 'nwwg', 1, true)
+    call SaveBoolean(MD_Types, 'nwzd', 1, true)
+    call SaveBoolean(MD_Types, 'nwzg', 1, true)
+    call SaveBoolean(MD_Types, 'nwzr', 1, true)
+    call SaveBoolean(MD_Types, 'nwzw', 1, true)
+    call SaveBoolean(MD_Types, 'nzep', 1, true)
+    call SaveBoolean(MD_Types, 'o00A', 1, true)
+    call SaveBoolean(MD_Types, 'o00H', 1, true)
+    call SaveBoolean(MD_Types, 'o00K', 1, true)
+    call SaveBoolean(MD_Types, 'o00U', 1, true)
+    call SaveBoolean(MD_Types, 'o00W', 1, true)
+    call SaveBoolean(MD_Types, 'o011', 1, true)
+    call SaveBoolean(MD_Types, 'o01C', 1, true)
+    call SaveBoolean(MD_Types, 'o01H', 1, true)
+    call SaveBoolean(MD_Types, 'o01I', 1, true)
+    call SaveBoolean(MD_Types, 'ohwd', 1, true)
+    call SaveBoolean(MD_Types, 'z007', 1, true)
+    call SaveBoolean(MD_Types, 'z008', 1, true)
+    call SaveBoolean(MD_Types, 'z009', 1, true)
+    call SaveBoolean(MD_Types, 'z00A', 1, true)
+    call SaveBoolean(MD_Types, 'z00B', 1, true)
+endfunction
+
+function MD_OnOrder takes nothing returns nothing
+    local unit u=GetTriggerUnit()
+    if GetUnitTypeId(u) == 'HMu1' and GetIssuedOrderId() == OrderId("devour") then
+        if not MM_DevourReady(u, GetOrderTargetUnit()) then
+            call MD_Reject(u)
+        endif
+    endif
+    set u=null
+endfunction
+
+function MD_OnChannel takes nothing returns nothing
+    local unit u=GetTriggerUnit()
+    local integer a=GetSpellAbilityId()
+    if GetUnitTypeId(u) == 'HMu1' then
+        if a == 'AMu3' then
+            if not MM_CanCast(u, GetSpellTargetUnit()) then
+                call MD_Reject(u)
+            endif
+        elseif a == 'AMdv' then
+            if not MM_DevourReady(u, GetSpellTargetUnit()) then
+                call MD_Reject(u)
+            endif
+        endif
+    endif
+    set u=null
+endfunction
+
+function MD_OnDamage takes nothing returns nothing
+    local unit v = GetTriggerUnit()
+    local unit u = LoadUnitHandle(MD_Hash, GetHandleId(v), 10)
+    local integer rank
+    local real amount
+    if u != null and FS_Alive(u) and GetEventDamageSource() == u and IsUnitInTransport(v, u) and GetOwningPlayer(u) == LoadPlayerHandle(MD_Hash, GetHandleId(u), 3) then
+        // Position the hidden passenger before lethal damage, so native XP and
+        // the map's later death handlers both use the current digestion location.
+        call SetUnitX(v, GetUnitX(u))
+        call SetUnitY(v, GetUnitY(u))
+        set rank = LoadInteger(MD_Hash, GetHandleId(u), 2)
+        if HaveSavedReal(MD_Hash, GetHandleId(u), 25) and MU_Now > LoadReal(MD_Hash, GetHandleId(u), 25) and GetEventDamage() > 0.0 then
+            call SaveReal(MD_Hash, GetHandleId(u), 26, GetEventDamage()/(MU_Now-LoadReal(MD_Hash, GetHandleId(u), 25)))
+        endif
+        call SaveReal(MD_Hash, GetHandleId(u), 25, MU_Now)
+        set amount = RMinBJ(GetWidgetLife(v), RMaxBJ(0.0, GetEventDamage()))
+        call MU_Heal(u, amount*(0.20+0.05*rank))
+    endif
+    set u = null
+    set v = null
+endfunction
+
+function MD_Burst takes unit u, integer rank returns nothing
+    local group g = CreateGroup()
+    local unit v
+    local real amount = 150.0+50.0*rank
+    local sound burp = CreateSoundFromLabel("Devour", false, true, true, 10, 10)
+    call SetSoundPosition(burp, GetUnitX(u), GetUnitY(u), DK_GroundZ(GetUnitX(u), GetUnitY(u))+80.0)
+    call StartSound(burp)
+    call KillSoundWhenDone(burp)
+    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl", u, "origin"))
+    call GroupEnumUnitsInRange(g, GetUnitX(u), GetUnitY(u), 250.0+50.0*rank, null)
+    loop
+        set v = FirstOfGroup(g)
+        exitwhen v == null
+        call GroupRemoveUnit(g, v)
+        if FS_Alive(v) and IsUnitAlly(v, GetOwningPlayer(u)) and not IsUnitType(v, UNIT_TYPE_STRUCTURE) and not IsUnitHidden(v) and GetUnitAbilityLevel(v, 'Aloc') == 0 then
+            call SetWidgetLife(v, RMinBJ(GetUnitState(v, UNIT_STATE_MAX_LIFE), GetWidgetLife(v)+amount))
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIhe\\AIheTarget.mdl", v, "origin"))
+        endif
+    endloop
+    call DestroyGroup(g)
+    set g = null
+    set v = null
+    set burp = null
+endfunction
+
+function MD_OnDeath takes nothing returns nothing
+    local unit v = GetTriggerUnit()
+    local unit u = LoadUnitHandle(MD_Hash, GetHandleId(v), 10)
+    local integer rank
+    if u != null then
+        if FS_Alive(u) and GetKillingUnit() == u and GetOwningPlayer(u) == LoadPlayerHandle(MD_Hash, GetHandleId(u), 3) and (IsUnitHidden(v) or IsUnitInTransport(v, u) or LoadBoolean(MD_Hash, GetHandleId(u), 5)) then
+            set rank = LoadInteger(MD_Hash, GetHandleId(u), 2)
+            // This handler precedes the map's XP handlers. Share at Mundo's current location.
+            call SetUnitX(v, GetUnitX(u))
+            call SetUnitY(v, GetUnitY(u))
+            call MD_Clear(u)
+            call MD_Burst(u, rank)
+        else
+            call MD_Clear(u)
+        endif
+    endif
+    if GetUnitTypeId(v) == 'HMu1' then
+        call MD_Clear(v)
+    endif
+    set u = null
+    set v = null
+endfunction
+
+function MD_Init takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    set MDV_Code[1] = 'mD00'
+    set MDV_Code[2] = 'mD01'
+    set MDV_Code[3] = 'mD02'
+    set MDV_Code[4] = 'mD03'
+    set MDV_Code[5] = 'mD04'
+    set MDV_Code[6] = 'mD05'
+    set MDV_Code[7] = 'mD06'
+    set MDV_Code[8] = 'mD07'
+    set MDV_Code[9] = 'mD08'
+    set MDV_Code[10] = 'mD09'
+    set MDV_Code[11] = 'mD0A'
+    set MDV_Code[12] = 'mD0B'
+    set MDV_Code[13] = 'mD0C'
+    set MDV_Code[14] = 'mD0D'
+    set MDV_Code[15] = 'mD0E'
+    set MDV_Code[16] = 'mD0F'
+    set MDV_Code[17] = 'mD10'
+    set MDV_Code[18] = 'mD11'
+    set MDV_Code[19] = 'mD12'
+    set MDV_Code[20] = 'mD13'
+    set MDV_Code[21] = 'mD14'
+    set MDV_Code[22] = 'mD15'
+    set MDV_Code[23] = 'mD16'
+    set MDV_Code[24] = 'mD17'
+    set MDV_Code[25] = 'mD18'
+    set MDV_Code[26] = 'mD19'
+    set MDV_Code[27] = 'mD1A'
+    set MDV_Code[28] = 'mD1B'
+    set MDV_Code[29] = 'mD1C'
+    set MDV_Code[30] = 'mD1D'
+    set MDV_Code[31] = 'mD1E'
+    set MDV_Code[32] = 'mD1F'
+    set MDV_Code[33] = 'mD20'
+    set MDV_Code[34] = 'mD21'
+    set MDV_Code[35] = 'mD22'
+    set MDV_Code[36] = 'mD23'
+    set MDV_Code[37] = 'mD24'
+    set MDV_Code[38] = 'mD25'
+    set MDV_Code[39] = 'mD26'
+    set MDV_Code[40] = 'mD27'
+    set MDV_Code[41] = 'mD28'
+    set MDV_Code[42] = 'mD29'
+    set MDV_Code[43] = 'mD2A'
+    set MDV_Code[44] = 'mD2B'
+    set MDV_Code[45] = 'mD2C'
+    set MDV_Code[46] = 'mD2D'
+    set MDV_Code[47] = 'mD2E'
+    set MDV_Code[48] = 'mD2F'
+    set MDV_Code[49] = 'mD30'
+    set MDV_Code[50] = 'mD31'
+    set MDV_Code[51] = 'mD32'
+    set MDV_Code[52] = 'mD33'
+    set MDV_Code[53] = 'mD34'
+    set MDV_Code[54] = 'mD35'
+    set MDV_Code[55] = 'mD36'
+    set MDV_Code[56] = 'mD37'
+    set MDV_Code[57] = 'mD38'
+    set MDV_Code[58] = 'mD39'
+    set MDV_Code[59] = 'mD3A'
+    set MDV_Code[60] = 'mD3B'
+    set MDV_Code[61] = 'mD3C'
+    set MDV_Code[62] = 'mD3D'
+    set MDV_Code[63] = 'mD3E'
+    set MDV_Code[64] = 'mD3F'
+    set MDV_Code[65] = 'mD40'
+    set MDV_Code[66] = 'mD41'
+    set MDV_Code[67] = 'mD42'
+    set MDV_Code[68] = 'mD43'
+    set MDV_Code[69] = 'mD44'
+    set MDV_Code[70] = 'mD45'
+    set MDV_Code[71] = 'mD46'
+    set MDV_Code[72] = 'mD47'
+    set MDV_Code[73] = 'mD48'
+    set MDV_Code[74] = 'mD49'
+    set MDV_Code[75] = 'mD4A'
+    set MDV_Code[76] = 'mD4B'
+    set MDV_Code[77] = 'mD4C'
+    set MDV_Code[78] = 'mD4D'
+    set MDV_Code[79] = 'mD4E'
+    set MDV_Code[80] = 'mD4F'
+    set MDV_Code[81] = 'mD50'
+    set MDV_Code[82] = 'mD51'
+    set MDV_Code[83] = 'mD52'
+    set MDV_Code[84] = 'mD53'
+    set MDV_Code[85] = 'mD54'
+    set MDV_Code[86] = 'mD55'
+    set MDV_Code[87] = 'mD56'
+    set MDV_Code[88] = 'mD57'
+    set MDV_Code[89] = 'mD58'
+    set MDV_Code[90] = 'mD59'
+    set MDV_Code[91] = 'mD5A'
+    set MDV_Code[92] = 'mD5B'
+    set MDV_Code[93] = 'mD5C'
+    set MDV_Code[94] = 'mD5D'
+    set MDV_Code[95] = 'mD5E'
+    set MDV_Code[96] = 'mD5F'
+    set MDV_Code[97] = 'mD60'
+    set MDV_Code[98] = 'mD61'
+    set MDV_Code[99] = 'mD62'
+    set MDV_Code[100] = 'mD63'
+    set MDV_Code[101] = 'mD64'
+    set MDV_Code[102] = 'mD65'
+    set MDV_Code[103] = 'mD66'
+    set MDV_Code[104] = 'mD67'
+    set MDV_Code[105] = 'mD68'
+    set MDV_Code[106] = 'mD69'
+    set MDV_Code[107] = 'mD6A'
+    set MDV_Code[108] = 'mD6B'
+    set MDV_Code[109] = 'mD6C'
+    set MDV_Code[110] = 'mD6D'
+    set MDV_Code[111] = 'mD6E'
+    set MDV_Code[112] = 'mD6F'
+    set MDV_Code[113] = 'mD70'
+    set MDV_Code[114] = 'mD71'
+    set MDV_Code[115] = 'mD72'
+    set MDV_Code[116] = 'mD73'
+    set MDV_Code[117] = 'mD74'
+    set MDV_Code[118] = 'mD75'
+    set MDV_Code[119] = 'mD76'
+    set MDV_Code[120] = 'mD77'
+    set MDV_Code[121] = 'mD78'
+    set MDV_Code[122] = 'mD79'
+    set MDV_Code[123] = 'mD7A'
+    set MDV_Code[124] = 'mD7B'
+    set MDV_Code[125] = 'mD7C'
+    set MDV_Code[126] = 'mD7D'
+    set MDV_Code[127] = 'mD7E'
+    set MDV_Code[128] = 'mD7F'
+    set MDV_Code[129] = 'mD80'
+    set MDV_Code[130] = 'mD81'
+    set MDV_Code[131] = 'mD82'
+    set MDV_Code[132] = 'mD83'
+    set MDV_Code[133] = 'mD84'
+    set MDV_Code[134] = 'mD85'
+    set MDV_Code[135] = 'mD86'
+    set MDV_Code[136] = 'mD87'
+    set MDV_Code[137] = 'mD88'
+    set MDV_Code[138] = 'mD89'
+    set MDV_Code[139] = 'mD8A'
+    set MDV_Code[140] = 'mD8B'
+    set MDV_Code[141] = 'mD8C'
+    set MDV_Code[142] = 'mD8D'
+    set MDV_Code[143] = 'mD8E'
+    set MDV_Code[144] = 'mD8F'
+    set MDV_Code[145] = 'mD90'
+    set MDV_Code[146] = 'mD91'
+    set MDV_Code[147] = 'mD92'
+    set MDV_Code[148] = 'mD93'
+    set MDV_Code[149] = 'mD94'
+    set MDV_Code[150] = 'mD95'
+    set MDV_Code[151] = 'mD96'
+    set MDV_Code[152] = 'mD97'
+    set MDV_Code[153] = 'mD98'
+    set MDV_Code[154] = 'mD99'
+    set MDV_Code[155] = 'mD9A'
+    set MDV_Code[156] = 'mD9B'
+    set MDV_Code[157] = 'mD9C'
+    set MDV_Code[158] = 'mD9D'
+    set MDV_Code[159] = 'mD9E'
+    set MDV_Code[160] = 'mD9F'
+    set MDV_Code[161] = 'mDA0'
+    set MDV_Code[162] = 'mDA1'
+    set MDV_Code[163] = 'mDA2'
+    set MDV_Code[164] = 'mDA3'
+    set MDV_Code[165] = 'mDA4'
+    set MDV_Code[166] = 'mDA5'
+    set MDV_Code[167] = 'mDA6'
+    set MDV_Code[168] = 'mDA7'
+    set MDV_Code[169] = 'mDA8'
+    set MDV_Code[170] = 'mDA9'
+    set MDV_Code[171] = 'mDAA'
+    set MDV_Code[172] = 'mDAB'
+    set MDV_Code[173] = 'mDAC'
+    set MDV_Code[174] = 'mDAD'
+    set MDV_Code[175] = 'mDAE'
+    set MDV_Code[176] = 'mDAF'
+    set MDV_Code[177] = 'mDB0'
+    set MDV_Code[178] = 'mDB1'
+    set MDV_Code[179] = 'mDB2'
+    set MDV_Code[180] = 'mDB3'
+    set MDV_Code[181] = 'mDB4'
+    set MDV_Code[182] = 'mDB5'
+    set MDV_Code[183] = 'mDB6'
+    set MDV_Code[184] = 'mDB7'
+    set MDV_Code[185] = 'mDB8'
+    set MDV_Code[186] = 'mDB9'
+    set MDV_Code[187] = 'mDBA'
+    set MDV_Code[188] = 'mDBB'
+    set MDV_Code[189] = 'mDBC'
+    set MDV_Code[190] = 'mDBD'
+    set MDV_Code[191] = 'mDBE'
+    set MDV_Code[192] = 'mDBF'
+    set MDV_Code[193] = 'mDC0'
+    set MDV_Code[194] = 'mDC1'
+    set MDV_Code[195] = 'mDC2'
+    set MDV_Code[196] = 'mDC3'
+    set MDV_Code[197] = 'mDC4'
+    set MDV_Code[198] = 'mDC5'
+    set MDV_Code[199] = 'mDC6'
+    set MDV_Code[200] = 'mDC7'
+    set MDV_Code[201] = 'mDC8'
+    set MDV_Code[202] = 'mDC9'
+    set MDV_Code[203] = 'mDCA'
+    set MDV_Code[204] = 'mDCB'
+    set MDV_Code[205] = 'mDCC'
+    set MDV_Code[206] = 'mDCD'
+    set MDV_Code[207] = 'mDCE'
+    set MDV_Code[208] = 'mDCF'
+    set MDV_Code[209] = 'mDD0'
+    set MDV_Code[210] = 'mDD1'
+    set MDV_Code[211] = 'mDD2'
+    set MDV_Code[212] = 'mDD3'
+    set MDV_Code[213] = 'mDD4'
+    set MDV_Code[214] = 'mDD5'
+    set MDV_Code[215] = 'mDD6'
+    set MDV_Code[216] = 'mDD7'
+    set MDV_Code[217] = 'mDD8'
+    set MDV_Code[218] = 'mDD9'
+    set MDV_Code[219] = 'mDDA'
+    set MDV_Code[220] = 'mDDB'
+    set MDV_Code[221] = 'mDDC'
+    set MDV_Code[222] = 'mDDD'
+    set MDV_Code[223] = 'mDDE'
+    set MDV_Code[224] = 'mDDF'
+    set MDV_Code[225] = 'mDE0'
+    set MDV_Code[226] = 'mDE1'
+    set MDV_Code[227] = 'mDE2'
+    set MDV_Code[228] = 'mDE3'
+    set MDV_Code[229] = 'mDE4'
+    set MDV_Code[230] = 'mDE5'
+    set MDV_Code[231] = 'mDE6'
+    set MDV_Code[232] = 'mDE7'
+    set MDV_Code[233] = 'mDE8'
+    set MDV_Code[234] = 'mDE9'
+    set MDV_Code[235] = 'mDEA'
+    set MDV_Code[236] = 'mDEB'
+    set MDV_Code[237] = 'mDEC'
+    set MDV_Code[238] = 'mDED'
+    set MDV_Code[239] = 'mDEE'
+    set MDV_Code[240] = 'mDEF'
+    set MDV_Code[241] = 'mDF0'
+    set MDV_Code[242] = 'mDF1'
+    set MDV_Code[243] = 'mDF2'
+    set MDV_Code[244] = 'mDF3'
+    set MDV_Code[245] = 'mDF4'
+    set MDV_Code[246] = 'mDF5'
+    set MDV_Code[247] = 'mDF6'
+    set MDV_Code[248] = 'mDF7'
+    set MDV_Code[249] = 'mDF8'
+    set MDV_Code[250] = 'mDF9'
+    set MDV_Code[251] = 'mDFA'
+    set MDV_Code[252] = 'mDFB'
+    set MDV_Code[253] = 'mDFC'
+    set MDV_Code[254] = 'mDFD'
+    set MDV_Code[255] = 'mDFE'
+    set MDV_Code[256] = 'mDFF'
+    call MD_InitTypes()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddAction(t, function MD_OnDeath)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGED)
+    call TriggerAddAction(t, function MD_OnDamage)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
+    call TriggerAddAction(t, function MD_OnOrder)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
+    call TriggerAddAction(t, function MD_OnChannel)
+    set t = null
+endfunction
+
 function MU_Init takes nothing returns nothing
     local trigger cast = CreateTrigger()
     local trigger death = CreateTrigger()
@@ -54591,8 +55501,8 @@ function SpellKeysStore takes nothing returns nothing
         set data = data + SubString(digits, 1, 4)
         set i = i + 1
     endloop
-    call FileIO_Write("FF799X_Hotkeys.pld", data)
-    if FileIO_Read("FF799X_Hotkeys.pld") != data then
+    call FF_ConfigSave(true, data)
+    if FF_ConfigRead(true) != data then
         call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,5,"Hotkeys set for this match. Local profile could not be read back.")
     endif
 endfunction
@@ -54648,7 +55558,7 @@ function SpellKeysLabel takes string label, real x, real y, real size returns no
 endfunction
 
 function SpellKeysRestore takes nothing returns nothing
-    local string data = FileIO_Read("FF799X_Hotkeys.pld")
+    local string data = FF_ConfigRead(true)
     local integer i = 0
     local integer key
     local integer base
@@ -56845,6 +57755,7 @@ call ExecuteFunc("TimerUtils___init")
 
     call GPS_Init()
     call DK_Init()
+    call MD_Init()
     call MU_Init()
     call TFP_Init()
     call VG_Init()
