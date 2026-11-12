@@ -2757,7 +2757,7 @@ trigger gg_trg_player_leaves= null
 trigger gg_trg_player_destroyed= null
 trigger gg_trg_Visibility= null
 trigger gg_trg_END= null
-constant string zoom__gFileName= "FFR_Zoom.txt"
+constant string FF_ConfigFile = "ff-config"
 integer zoom__gMinDistance= 1400
 integer zoom__gMaxDistance= 6000
 constant real zoom__gFogZStart= 3000.00
@@ -10307,7 +10307,7 @@ function MM_ExecuteDevour takes nothing returns nothing
     if MM_DevourReady(u, v) then
         call UnitAddAbility(u, 'AMdv')
         call SetUnitAbilityLevel(u, 'AMdv', rank)
-        call BlzUnitHideAbility(u, 'AMdv', true)
+        call BlzEndUnitAbilityCooldown(u, 'AMdv')
         call UnitAddAbility(u, 'AMdc')
         call SetUnitAbilityLevel(u, 'AMdc', rank)
         call BlzUnitHideAbility(u, 'AMdc', true)
@@ -10381,7 +10381,7 @@ endfunction
 
 function MD_Start takes unit u, unit v, integer rank returns nothing
     local integer h = GetHandleId(u)
-    if LoadUnitHandle(MD_Hash, h, 1) != null or not MD_Eligible(u, v) then
+    if LoadUnitHandle(MD_Hash, h, 1) != null or v == null then
         call MD_Reject(u)
         call BlzEndUnitAbilityCooldown(u, 'AMu3')
         return
@@ -10846,6 +10846,9 @@ function MU_ZeroResources takes unit u returns nothing
     local integer id
     local integer amount
     local integer bit = 1
+    if GetHeroInt(u,false) == 0 and GetHeroInt(u,true) == 0 and BlzGetUnitMaxMana(u) == 0 then
+        return
+    endif
     loop
         exitwhen i == 20
         if i < 10 then
@@ -11336,7 +11339,7 @@ function MU_OnCast takes nothing returns nothing
     elseif spell == 'AMu3' then
         call MM_Cast(u, GetSpellTargetUnit(), rank)
     elseif spell == 'AMdv' then
-        if MM_DevourReady(u, GetSpellTargetUnit()) then
+        if LoadTimerHandle(MM_Hash,h,1) != null and LoadUnitHandle(MM_Hash,GetHandleId(LoadTimerHandle(MM_Hash,h,1)),2) == GetSpellTargetUnit() then
             call RemoveSavedHandle(MM_Hash, h, 1)
             call MD_Start(u, GetSpellTargetUnit(), rank)
         endif
@@ -15201,6 +15204,40 @@ function FileIO_Write takes string filename,string contents returns nothing
 function FileIO_Read takes string filename returns string
         return s__File_readEx(s__File_open(filename) , true)
     endfunction
+
+// Zoom and spell/item bindings share a profile across map families.
+function FF_ConfigRead takes boolean keys returns string
+    local string data = FileIO_Read(FF_ConfigFile)
+    local integer i = 0
+    loop
+        exitwhen i >= StringLength(data) or SubString(data,i,i+1) == "|"
+        set i = i + 1
+    endloop
+    if i < StringLength(data) then
+        if keys then
+            return SubString(data,i+1,StringLength(data))
+        endif
+        return SubString(data,0,i)
+    endif
+    if keys then
+        set data = FileIO_Read("FF799X_Hotkeys.pld")
+    else
+        set data = FileIO_Read("FFR_Zoom.txt")
+    endif
+    if data == null then
+        return ""
+    endif
+    return data
+endfunction
+
+function FF_ConfigSave takes boolean keys, string value returns nothing
+    if keys then
+        call FileIO_Write(FF_ConfigFile, FF_ConfigRead(false)+"|"+value)
+    else
+        call FileIO_Write(FF_ConfigFile, value+"|"+FF_ConfigRead(true))
+    endif
+endfunction
+
 
 function GST_DestroyTimer takes nothing returns nothing
         local timer t= GetExpiredTimer()
@@ -26285,9 +26322,7 @@ function zoom__handleLockButton takes nothing returns nothing
 endfunction
 
 function zoom__Save takes integer cameraDistance returns nothing
-    local integer file= s__File_open(zoom__gFileName)
-    call s__File_write(file , I2S(cameraDistance))
-    call s__File_close(file)
+    call FF_ConfigSave(false,I2S(cameraDistance))
 endfunction
 
 function zoom__handleSegment takes nothing returns nothing
@@ -26374,14 +26409,14 @@ function SpellKeysStore takes nothing returns nothing
         set data = data + SubString(digits, 1, 4)
         set i = i + 1
     endloop
-    call FileIO_Write("FF799X_Hotkeys.pld", data)
-    if FileIO_Read("FF799X_Hotkeys.pld") != data then
+    call FF_ConfigSave(true, data)
+    if FF_ConfigRead(true) != data then
         call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,5,"Hotkeys set for this match. Local profile could not be read back.")
     endif
 endfunction
 
 function SpellKeysRestore takes nothing returns nothing
-    local string data = FileIO_Read("FF799X_Hotkeys.pld")
+    local string data = FF_ConfigRead(true)
     local integer i = 0
     local integer key
     local integer base
@@ -26988,10 +27023,8 @@ function zoom__CreateSlider takes nothing returns nothing
 endfunction
 
 function zoom__RestoreFromFile takes nothing returns nothing
-    local integer file= s__File_open(zoom__gFileName)
-    local string input= ( s__File_readEx(( file ) , false) )
+    local string input=FF_ConfigRead(false)
     local integer cameraDistance= S2I(SubString(input, 0, 4))
-    call s__File_close(file)
     // No saved file yet (S2I of an empty read is 0) means "leave the default camera alone".
     // Passing 0 through clamped a first-time player all the way in to zoom__gMinDistance.
     if ( cameraDistance > 0 ) then
