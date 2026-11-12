@@ -4513,7 +4513,7 @@ function TFP_pickACard___c takes nothing returns boolean
             set TFP_s__pickACard___dummyCardDat_dummy[tempDCDat]=CreateUnit(GetOwningPlayer(TFP_s__pickACard___pickDat_fate[tempDat]), TFP_tfConsts_CARD_DUMMY_ID, GetUnitX(TFP_s__pickACard___pickDat_fate[tempDat]), GetUnitY(TFP_s__pickACard___pickDat_fate[tempDat]), 0.)
             call UnitAddAbility(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 'arav')
             call UnitRemoveAbility(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 'arav')
-            call SetUnitFlyHeight(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 230., 0.)
+            call SetUnitFlyHeight(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], 380., 0.)
             call SetUnitTimeScale(TFP_s__pickACard___dummyCardDat_dummy[tempDCDat], .5)
             set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex + 1
             set TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]=tempDCDat
@@ -27442,9 +27442,6 @@ function Trig_MODE_GUI_execute_Actions takes nothing returns nothing
             set udg_mode_inhouse=false
             set udg_mode_pub=true
             set udg_mode_koth=true
-            call EnableTrigger(gg_trg_Start_Vote)
-            call ConditionalTriggerExecute(gg_trg_Start_Vote)
-            call EnableTrigger(gg_trg_Vote_Timer_Expires)
             call EnableTrigger(gg_trg_debugmode)
             call ConditionalTriggerExecute(gg_trg_debugmode)
         elseif clicked == udg_dlg_btn_mode_03[pn] then
@@ -32737,7 +32734,7 @@ function FF_DebugHireComplete takes nothing returns nothing
     if udg_mode_debugmode then
         // Run after sale/enter-region handlers and the engine's stock decrement.
         call FF_DebugHeroReady(u)
-        if GetUnitTypeId(shop) != 0 then
+        if GetUnitTypeId(shop) != 0 and GetUnitTypeId(shop) != 'nTDP' then
             call RemoveUnitFromStock(shop, kind)
             call MF_StockUnit(shop, kind, 2, 2)
         endif
@@ -39660,8 +39657,11 @@ function Trig_debugmode_Actions takes nothing returns nothing
         endif
         set udg_X=udg_X + 1
     endloop
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_voting, false, 0.00)
+    if udg_selected_mode == 0 then
+        call EnableTrigger(gg_trg_Start_AP)
+        call ConditionalTriggerExecute(gg_trg_Start_AP)
+        call ConditionalTriggerExecute(gg_trg_Start_game)
+    endif
     call TriggerSleepAction(1.00)
     call StartTimerBJ(udg_timer_tech_delay_t1, false, 0.00)
     call TriggerSleepAction(1.00)
@@ -67344,7 +67344,7 @@ function DraftSale takes nothing returns nothing
     if GetUnitTypeId(shop) != 'nTDP' then
         return
     endif
-    if team < 1 or team > 4 or shop != DraftShop[team] or not DraftPending[pn] or udg_herO[pn] != null then
+    if team < 1 or team > 4 or shop != DraftShop[team] or not DraftPending[pn] or (udg_herO[pn] != null and not udg_mode_debugmode) then
         call RemoveUnit(sold)
         return
     endif
@@ -67362,7 +67362,7 @@ function DraftSale takes nothing returns nothing
             call RemoveUnit(sold)
         else
             call SetUnitPositionLoc(sold, udg_loc_tavern)
-            if udg_selected_mode == 3 then
+            if udg_selected_mode == 3 and not udg_mode_debugmode then
                 loop
                     exitwhen i > DraftCount[team]
                     if DraftPool[team*256+i] == id then
@@ -67389,7 +67389,7 @@ function DraftUpdate takes nothing returns nothing
         set p = ConvertedPlayer(pn)
         set team = udg_teamnumber[pn]
         if team >= 1 and team <= 4 then
-            set wants = udg_player_active[pn] and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and udg_herO[pn] == null
+            set wants = udg_player_active[pn] and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and (udg_herO[pn] == null or udg_mode_debugmode)
             if wants then
                 set waiting[team] = waiting[team] + 1
                 if DraftShop[team] == null then
@@ -67457,10 +67457,12 @@ function DraftStart takes nothing returns nothing
             set DraftY[team] = -1920.
         endif
         if udg_selected_mode == 2 then
-            set i = 13
+            set i = 1
             loop
-                exitwhen i > 21
-                call DraftImport(team, udg_real_shop[i])
+                exitwhen i > udg_total_hero_count
+                if udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) then
+                    call DraftAddHero(team, udg_hero_type[i])
+                endif
                 set i = i + 1
             endloop
         else
@@ -67470,6 +67472,25 @@ function DraftStart takes nothing returns nothing
         call DraftImport(team, OD_CarryTav_shop2[team])
         set team = team + 1
     endloop
+    if udg_selected_mode == 2 then
+        set i = 13
+        loop
+            exitwhen i > 21
+            call ShowUnit(udg_real_shop[i], udg_mode_debugmode)
+            set i = i + 1
+        endloop
+        if udg_mode_debugmode then
+            set i = 1
+            loop
+                exitwhen i > 12
+                if udg_player_active[i] then
+                    call FFHire_CreateBuyer(ConvertedPlayer(i), GetRectCenterX(gg_rct_TAVERN_AREA), GetRectCenterY(gg_rct_TAVERN_AREA))
+                    call FogModifierStart(CreateFogModifierRect(ConvertedPlayer(i), FOG_OF_WAR_VISIBLE, gg_rct_TAVERN_AREA, true, false))
+                endif
+                set i = i + 1
+            endloop
+        endif
+    endif
     call TriggerRegisterAnyUnitEventBJ(sales, EVENT_PLAYER_UNIT_SELL)
     call AddAPHeroesToDraft()
     call TriggerAddAction(sales, function DraftSale)
