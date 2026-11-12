@@ -1,7 +1,7 @@
 {
   "map_type": "799X",
   "branch": "Footmen-Frenzy-12p",
-  "release": "FF799X_Rx_Shared_Fixes_v85_TEST.w3x",
-  "sha256": "553ecc4c667d5639f8eb05864d10dc624bf42cbe332fbf780a7a8483fd7f7dac",
-  "source_payloads": 1277
+  "release": "799-rc7.w3x",
+  "sha256": "21afb3fe49388c04ecd0ecd72ed3a59dc94346fe5fdf251171dd70476eb54eec",
+  "source_payloads": 1309
 }
