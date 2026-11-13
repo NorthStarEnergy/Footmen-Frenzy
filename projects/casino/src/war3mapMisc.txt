@@ -1,0 +1,68 @@
+[HERO]
+DependencyOr=N02O,H01I,H01H,N027,H005,H008,H00A,H009,O003,O004,O005,O006,U002,U003,U004,U005,E002,E003,E00F,E005,N01C,N00C,N00Z,N00D,N00H,N01D,N00I,N00P,Hlgr,Eevi,Efur,Emfr,Hvwd,E00A,E00E,H00E,H00U,O008,O000,N00O,N00N,O00D,E007,N015,H00T,E00O,O00I,N01L,H01B,HOr1,HGr1,HMu1,HTf1,HVg1
+
+[Misc]
+AgiMoveBonus=0.15
+AnimatedUnitsBestowAuras=1
+CanDeactivateChemicalRage=1
+CanDeactivateWindWalk=1
+ConstructionRefundRate=0.95
+DamageBonusHero=1.25,1.00,1.00,0.40,1.00,1.00,0.05,1.00
+DamageBonusMagic=1.00,0.50,1.50,0.35,1.00,1.00,0.05,0.95
+DamageBonusNormal=1.50,1.50,1.00,0.70,1.25,1.00,0.05,1.00
+DamageBonusPierce=1.50,0.80,0.90,0.35,1.05,0.50,0.05,1.10
+DamageBonusSiege=1.00,0.50,1.00,1.50,1.00,0.50,0.05,1.50
+DamageBonusSpells=1.00,1.00,1.00,1.00,1.00,0.75,0.05,1.00
+DayLength=360.0
+DrainGivesBonusLife=1
+DrainGivesBonusMana=1
+DrainTransfersLife=1
+DrainTransfersMana=1
+DrainUsesEtheralBonus=1
+FrostMoveSpeedDecrease=0.25
+GrantHeroXP=100,120,160,220,300,400,500,600,700,800,900,1000,1100,1200,1400,1800,2000,2200
+GuardDistance=200.0
+HeroAwakenLifeFactor=0.75
+HeroAwakenManaFactor=0.25
+HeroExpRange=1200.0
+HeroFactorXP=100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100
+HeroMaxReviveCostGold=0
+HeroMaxReviveTime=45.0
+ItemStackingEnabled=1
+MaxBldgSpeed=400.0
+MaxGuardDistance=1300.0
+MaxHeroLevel=18
+MaxLevelHeroesDrainExp=0
+MaxUnitSpeed=435.0
+MinUnitSpeed=80.0
+PawnItemRate=0.6
+RelativeUpgradeCost=1
+ReviveBaseFactor=0.5
+ReviveBaseLumberFactor=0.0
+ReviveLevelFactor=0.5
+ReviveMaxFactor=4.0
+ReviveMaxTimeFactor=2.0
+SummonedKillFactor=0.75
+TradingIncLarge=500
+UpgradeRefundRate=0.95
+UpkeepUsage=5,100,10000,10000,10000,10000,10000,10000,10000,10000
+
+[Terrain]
+MaxHeight=3712,3712,3712,3712,3712,3712,3712,3712
+MaxSlope=90,90,90,90,90,90,90,90
+MinHeight=-2048,-2048,-2048,-2048,-2048,-2048,-2048,-2048
+
+[WorldEditMisc]
+MaximumMapSize=480,480,480,480,480,480,480,480
+MinimumMapSize=32,32,32,32,32,32,32,32
+
+[WorldEditStrings]
+WESTRING_MODULE_AI=AI Editor,AI Editor,AI Editor,AI Editor,AI Editor,AI Editor,AI Editor,AI Editor
+WESTRING_MODULE_CAMPAIGN=Campaign Editor,Campaign Editor,Campaign Editor,Campaign Editor,Campaign Editor,Campaign Editor,Campaign Editor,Campaign Editor
+WESTRING_MODULE_IMPORT=Import Manager,Import Manager,Import Manager,Import Manager,Import Manager,Import Manager,Import Manager,Import Manager
+WESTRING_MODULE_OBJEDIT=Object Editor,Object Editor,Object Editor,Object Editor,Object Editor,Object Editor,Object Editor,Object Editor
+WESTRING_MODULE_OBJMAN=Object Manager,Object Manager,Object Manager,Object Manager,Object Manager,Object Manager,Object Manager,Object Manager
+WESTRING_MODULE_SCRIPTS=Trigger Editor,Trigger Editor,Trigger Editor,Trigger Editor,Trigger Editor,Trigger Editor,Trigger Editor,Trigger Editor
+WESTRING_MODULE_SOUND=Sound Editor,Sound Editor,Sound Editor,Sound Editor,Sound Editor,Sound Editor,Sound Editor,Sound Editor
+WESTRING_MODULE_TERRAIN=Terrain Editor,Terrain Editor,Terrain Editor,Terrain Editor,Terrain Editor,Terrain Editor,Terrain Editor,Terrain Editor
+

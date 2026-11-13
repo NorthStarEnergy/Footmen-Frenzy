@@ -115,7 +115,7 @@ def publish(project, names):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("project", choices=["799x", "solo", "mini", "ffa"])
+    parser.add_argument("project", choices=["casino", "799x", "solo", "mini", "ffa"])
     parser.add_argument("names", nargs="+")
     args = parser.parse_args()
     publish(args.project, args.names)

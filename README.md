@@ -1,3 +1,7 @@
+# 799-CASINO
+
+Independent casino map. Build with `./Build-Map.ps1 -Project casino -Name "799-CASINO.w3x" -LocalOnly`.
+
 # Footmen Frenzy
 
 Four Warcraft III map projects, shared build/install tools, and development history.

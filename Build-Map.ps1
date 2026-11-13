@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
- [Parameter(Mandatory)][ValidateSet('799x','solo','mini','ffa')][string]$Project,
+ [Parameter(Mandatory)][ValidateSet('casino','799x','solo','mini','ffa')][string]$Project,
  [Parameter(Mandatory)][string]$Name,
  [switch]$LocalOnly,
  [string]$Python='python',

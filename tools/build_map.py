@@ -139,7 +139,7 @@ def _build(project, name, verify_only, staging, source_parent):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('project', choices=['799x', 'solo', 'mini', 'ffa'])
+    parser.add_argument('project', choices=['casino', '799x', 'solo', 'mini', 'ffa'])
     parser.add_argument('--name')
     parser.add_argument('--verify-only', action='store_true')
     parser.add_argument('--source-parent')
