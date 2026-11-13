@@ -32255,7 +32255,22 @@ function Trig_Start_SD_Func022Func030Func001Func001Func001C takes nothing return
     return true
 endfunction
 
+function SD_TeamCarry takes integer team returns integer
+    if team == 1 then
+        return 'HOr1'
+    elseif team == 2 then
+        return 'HGr1'
+    elseif team == 3 then
+        return 'H043'
+    endif
+    return 'HTf1'
+endfunction
+
 function Trig_Start_SD_Func022Func030Func001A takes nothing returns nothing
+    local integer raw = GetUnitTypeId(GetEnumUnit())
+    if udg_numberofSDcategories >= 12 and (raw == SD_TeamCarry(1) or raw == SD_TeamCarry(2) or raw == SD_TeamCarry(3) or raw == SD_TeamCarry(4)) then
+        return
+    endif
     set udg_temp_int=1
     loop
         exitwhen udg_temp_int > udg_numberofSDcategories
@@ -32289,15 +32304,19 @@ function Trig_Start_SD_Func022Func041Func001Func001Func001Func004C takes nothing
     return true
 endfunction
 
-function Trig_Start_SD_Func022Func041Func001Func001Func001A takes nothing returns nothing
+function SD_StockOffer takes integer raw returns nothing
     local integer autoIndex
-    set FFR_Seeded[FFR_Index(GetUnitTypeId(GetEnumUnit()))] = true
-    call MF_StockUnitBJ(GetUnitTypeId(GetEnumUnit()), CarryTav_ShopFor(udg_temp_int , udg_X_category), 1, 1)
+    set FFR_Seeded[FFR_Index(raw)] = true
+    call MF_StockUnitBJ(raw, CarryTav_ShopFor(udg_temp_int , udg_X_category), 1, 1)
     set FF_AutoPick_count[udg_temp_int]=FF_AutoPick_count[udg_temp_int] + 1
     set autoIndex=udg_temp_int * 32 + FF_AutoPick_count[udg_temp_int]
-    set FF_AutoPick_hero[autoIndex]=GetUnitTypeId(GetEnumUnit())
+    set FF_AutoPick_hero[autoIndex]=raw
     set FF_AutoPick_category[autoIndex]=udg_X_category
-    call CarryTav_Register(udg_temp_int , udg_X_category , GetUnitTypeId(GetEnumUnit()))
+    call CarryTav_Register(udg_temp_int , udg_X_category , raw)
+endfunction
+
+function Trig_Start_SD_Func022Func041Func001Func001Func001A takes nothing returns nothing
+    call SD_StockOffer(GetUnitTypeId(GetEnumUnit()))
     call GroupRemoveUnitSimple(GetEnumUnit(), udg_hero_category_group[udg_X_category])
 endfunction
 
@@ -32410,7 +32429,11 @@ function Trig_Start_SD_Actions takes nothing returns nothing
                 set udg_X_category=1
                 loop
                     exitwhen udg_X_category > udg_numberofSDcategories
-                    call ForGroupBJ(GetRandomSubGroup(1, udg_hero_category_group[udg_X_category]), function Trig_Start_SD_Func022Func041Func001Func001Func001A)
+                    if udg_X_category == udg_hero_category[FFR_Index(SD_TeamCarry(udg_temp_int))] then
+                        call SD_StockOffer(SD_TeamCarry(udg_temp_int))
+                    else
+                        call ForGroupBJ(GetRandomSubGroup(1, udg_hero_category_group[udg_X_category]), function Trig_Start_SD_Func022Func041Func001Func001Func001A)
+                    endif
                     set udg_X_category=udg_X_category + 1
                 endloop
                 set udg_temp_int=udg_temp_int + 1
@@ -67704,6 +67727,9 @@ function DraftStart takes nothing returns nothing
         endif
         call DraftImport(team, CarryTav_shop[team])
         call DraftImport(team, OD_CarryTav_shop2[team])
+        if udg_selected_mode == 3 then
+            call DraftAddHero(team, SD_TeamCarry(team))
+        endif
         set team = team + 1
     endloop
     if udg_selected_mode == 2 then
