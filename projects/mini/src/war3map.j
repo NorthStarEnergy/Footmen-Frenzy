@@ -243,6 +243,20 @@ integer SafeRemoval_GraceTicks=0
 //globals
 // from Alloc:
 constant boolean LIBRARY_Alloc=true
+framehandle spellKeysPanel
+framehandle spellKeysClose
+framehandle spellKeysToggle
+framehandle array spellKeysRows
+hashtable spellKeysNativeKeys
+framehandle array spellKeysBadges
+timer array spellKeysTapWindow
+item array spellKeysTargetItem
+framehandle array spellKeysCommands
+integer array spellKeysBinding
+unit array spellKeysSelectedHero
+unit array spellKeysItemCaster
+integer spellKeysEditing = -1
+boolean spellKeysOpen = false
 //endglobals
 // from Alloc
 //globals
@@ -3184,6 +3198,9 @@ boolean array FFR_Locked
 
     unit array GSI_Source
     timer array GSI_Expiry
+    group GSI_Shops = CreateGroup()
+    boolean GSI_Purchased = false
+    boolean GSI_Used = false
     rect GSI_Bounds = null
 
 
@@ -3375,6 +3392,9 @@ real array TFP_s___wildCards___cardDat_gradX
 integer array TFP_s__wildCards___cardDat_gradX
 real array TFP_s___wildCards___cardDat_gradY
 integer array TFP_s__wildCards___cardDat_gradY
+sound FF_DraftPageClick
+unit array FF_DebugFate
+real array TFP_WildDamage
 real array TFP_s__wildCards___cardDat_damage
 real array TFP_s__wildCards___cardDat_traveled
 group array TFP_s__wildCards___cardDat_struckUnits
@@ -3472,7 +3492,7 @@ integer array TFP_TF_LockedThrow
 // Mini Foots: invisible, paused middle formations released together.
 boolean MF_MassReleased=false
 integer array MF_MassRemainder
-integer array MF_PlayerStaged
+integer array MF_TeamSpawnSlot
 unit array MF_MassPool
 integer MF_MassPoolCount=0
 group MF_BootWearers=null
@@ -3493,7 +3513,7 @@ endglobals
 // Item custom values 1..24 store the bound player's zero-based index plus one.
 // This map previously had no item custom-value readers or writers.
 function MF_HeroDisabled takes integer id returns boolean
-    return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00E' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H015' or id == 'H01Q' or id == 'H02G' or id == 'H02J' or id == 'H02W' or id == 'H04Y' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'HMu1' or id == 'HTf1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01C' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
+    return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00E' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H015' or id == 'H01Q' or id == 'H02G' or id == 'H02J' or id == 'H02W' or id == 'H04Y' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'HMu1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01C' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
 endfunction
 
 function DraftRemember takes unit shop, integer id returns nothing
@@ -3800,7 +3820,7 @@ function TFP_wildCards___c takes nothing returns boolean
             set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle + TFP_wildCards___OFFSET_ANGLE)
             set TFP_s__wildCards___cardDat_struckUnits[tempDat]=CreateGroup()
             set TFP_s__wildCards___cardDat_caster[tempDat]=tU
-            set TFP_s__wildCards___cardDat_damage[tempDat]=10. + 50. * GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)
+            set TFP_s__wildCards___cardDat_damage[tempDat]=TFP_WildDamage[GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)]
             set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex + 1
             set TFP_wildCards___datDB[TFP_wildCards___dbIndex]=tempDat
             if TFP_wildCards___dbIndex == 0 then
@@ -3818,7 +3838,13 @@ function TFP_wildCards___i takes nothing returns nothing
         call TriggerAddCondition(t, Condition(function TFP_wildCards___c))
         set TFP_wildCards___cdrTable=TFP_s__HandleTable__allocate()
         set t=null
-    endfunction
+        set TFP_WildDamage[1] = 90.0
+    set TFP_WildDamage[2] = 175.0
+    set TFP_WildDamage[3] = 225.0
+    set TFP_WildDamage[4] = 300.0
+    set TFP_WildDamage[5] = 400.0
+    set TFP_WildDamage[6] = 550.0
+endfunction
 
 function TFP_pickACard___dummyP takes nothing returns nothing
         local integer index=0
@@ -3833,6 +3859,7 @@ function TFP_pickACard___dummyP takes nothing returns nothing
             elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_GOLD_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf8') > 0 then
                 call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55)
             else
+                call BlzSetSpecialEffectAlpha(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 0)
                 call DestroyEffect(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
                 set TFP_s__pickACard___dummyCardDat_dummy[tempDat]=null
                 set TFP_s__pickACard___dummyCardDat_fate[tempDat]=null
@@ -4928,17 +4955,17 @@ function TFP_Init takes nothing returns nothing
     call TFP_destiny___i()
     call TFP_InitTrig_FFDP_DarkPassage()
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 1|r|n|nThrow three piercing cards up to 1450 range. Deals 60 magic damage to each enemy hit, once per cast.|n|nMana: 60. Cooldown: 6 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 4|r|n|nThrow three piercing cards up to 1450 range. Deals 110 magic damage to each enemy hit, once per cast.|n|nMana: 70. Cooldown: 6 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.", 1)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 7|r|n|nThrow three piercing cards up to 1450 range. Deals 160 magic damage to each enemy hit, once per cast.|n|nMana: 80. Cooldown: 6 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.", 2)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 10|r|n|nThrow three piercing cards up to 1450 range. Deals 210 magic damage to each enemy hit, once per cast.|n|nMana: 90. Cooldown: 6 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.", 3)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 13|r|n|nThrow three piercing cards up to 1450 range. Deals 260 magic damage to each enemy hit, once per cast.|n|nMana: 100. Cooldown: 6 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.", 4)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "|cffffcc00Requires hero level 16|r|n|nThrow three piercing cards up to 1450 range. Deals 310 magic damage to each enemy hit, once per cast.|n|nMana: 110. Cooldown: 6 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [|cffffcc00W|r] - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('ATf2', "|cffffcc00Requires hero level 1|r|n|nPress X to cycle cards, X to lock, then X and click an enemy to throw. Blue: 40 magic damage and restore 60 mana. Red: 30 magic damage in 250 radius and 30% movement slow for 2.5 seconds. Gold: 15 magic damage and 1-second stun.|nUse the locked card within 6 seconds. Cooldown begins on use or expiry.|n|nMana: 40. Cooldown: 6 seconds.", 0)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [|cffffcc00W|r] - Level 2", 1)
@@ -4952,17 +4979,17 @@ function TFP_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [|cffffcc00W|r] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('ATf2', "|cffffcc00Requires hero level 16|r|n|nPress X to cycle cards, X to lock, then X and click an enemy to throw. Blue: 140 magic damage and restore 160 mana. Red: 105 magic damage in 250 radius and 30% movement slow for 2.5 seconds. Gold: 52.5 magic damage and 2.25-second stun.|nUse the locked card within 6 seconds. Cooldown begins on use or expiry.|n|nMana: 115. Cooldown: 6 seconds.", 5)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 1|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 100 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 6 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 60. Cooldown: 13 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 1|nDrop a lantern to shield nearby allied heroes for 100 and pull one allied hero to you.", 0)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 4|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 140 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 7 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 70. Cooldown: 12 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 4|nDrop a lantern to shield nearby allied heroes for 140 and pull one allied hero to you.", 1)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 7|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 180 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 8 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 80. Cooldown: 11 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 7|nDrop a lantern to shield nearby allied heroes for 180 and pull one allied hero to you.", 2)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 10|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 220 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 9 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 90. Cooldown: 10 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 10|nDrop a lantern to shield nearby allied heroes for 220 and pull one allied hero to you.", 3)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 13|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 260 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 10 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 100. Cooldown: 9 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 13|nDrop a lantern to shield nearby allied heroes for 260 and pull one allied hero to you.", 4)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Dark Passage [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 16|r|n|nPlace a small lantern up to 1000 range. Shield allied heroes within 130 range for 300 damage for 4 seconds. Another allied hero stepping within 130 range automatically rides to you. No pickup hotkey. One passenger; lasts 11 seconds. A moving chain tether connects it to you. The passenger is invulnerable during travel. Teleports break the chain; Blink preserves it within the leash.|n|nMana: 110. Cooldown: 8 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 16|nDrop a lantern to shield nearby allied heroes for 300 and pull one allied hero to you.", 5)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [|cffffcc00R|r] - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('ATfb', "|cffffcc00Requires hero level 6|r|n|nReveal living enemy heroes for 6 seconds and allow one Gate teleport. No passive cooldown reduction.|n|nMana: 150. Cooldown: 150 seconds.", 0)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [|cffffcc00R|r] - Level 2", 1)
@@ -5157,6 +5184,10 @@ function GSI_Start takes unit caster returns nothing
     local integer i = GetPlayerId(GetOwningPlayer(caster))
     local real x = GetRectCenterX(GSI_Bounds)
     local real y = GetRectCenterY(GSI_Bounds)
+    if GSI_Used then
+        return
+    endif
+    set GSI_Used = true
     if GSI_Source[i] == null then
         set GSI_Source[i] = CreateUnit(Player(i), 'hGs1', x, y, 0.0)
         call SetUnitPathing(GSI_Source[i], false)
@@ -5181,9 +5212,33 @@ function GSI_UseItem takes nothing returns nothing
     endif
 endfunction
 
+function GSI_Purchase takes nothing returns nothing
+    local item scroll = GetSoldItem()
+    local unit shop
+    if GetItemTypeId(scroll) == 'IGs1' then
+        if GSI_Purchased then
+            call RemoveItem(scroll)
+            call AdjustPlayerStateBJ(6000, GetOwningPlayer(GetBuyingUnit()), PLAYER_STATE_RESOURCE_GOLD)
+        else
+            set GSI_Purchased = true
+            loop
+                set shop = FirstOfGroup(GSI_Shops)
+                exitwhen shop == null
+                call RemoveItemFromStock(shop, 'IGs1')
+                call GroupRemoveUnit(GSI_Shops, shop)
+            endloop
+        endif
+    endif
+    set scroll = null
+    set shop = null
+endfunction
+
 function GSI_Init takes nothing returns nothing
     local trigger t = CreateTrigger()
     local timer pulse = CreateTimer()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SELL_ITEM)
+    call TriggerAddAction(t, function GSI_Purchase)
+    set t = CreateTrigger()
     set GSI_Bounds = GetWorldBounds()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
     call TriggerAddAction(t, function GSI_Guard)
@@ -6252,89 +6307,89 @@ endfunction
 
 function FF_HeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 1 - Requires hero level 1|r|n|nSend the ball to a target point.|nMagic damage: 60 per enemy crossed.|nTravel radius: 90.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 60.|nCooldown: 8 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 1|nSend the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 2 - Requires hero level 4|r|n|nSend the ball to a target point.|nMagic damage: 90 per enemy crossed.|nTravel radius: 103.5.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 65.|nCooldown: 8 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 4|nSend the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 3 - Requires hero level 7|r|n|nSend the ball to a target point.|nMagic damage: 120 per enemy crossed.|nTravel radius: 112.5.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 70.|nCooldown: 8 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 7|nSend the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 4 - Requires hero level 10|r|n|nSend the ball to a target point.|nMagic damage: 160 per enemy crossed.|nTravel radius: 130.5.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 75.|nCooldown: 8 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 10|nSend the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 5 - Requires hero level 13|r|n|nSend the ball to a target point.|nMagic damage: 200 per enemy crossed.|nTravel radius: 135.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 80.|nCooldown: 8 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 13|nSend the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Level 6 - Requires hero level 16|r|n|nSend the ball to a target point.|nMagic damage: 225 per enemy crossed.|nTravel radius: 157.5.|nMovement slow: 25% for 2 seconds.|nEach enemy is hit once; no damage falloff.|n|nCast range: 1000.|nMana: 90.|nCooldown: 8 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 16|nSend the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 1 - Requires hero level 1|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 75.|nRadius: 259.875.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 75.|nCooldown: 12 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 1|nPulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 2 - Requires hero level 4|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 100.|nRadius: 281.53125.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 85.|nCooldown: 12 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 4|nPulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 3 - Requires hero level 7|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 125.|nRadius: 303.1875.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 95.|nCooldown: 12 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 7|nPulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 4 - Requires hero level 10|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 185.|nRadius: 346.5.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 110.|nCooldown: 12 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 10|nPulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 5 - Requires hero level 13|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 225.|nRadius: 389.8125.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 130.|nCooldown: 12 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 13|nPulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Level 6 - Requires hero level 16|r|n|nRelease a fast outward pulse from the ball.|nMagic damage: 500.|nRadius: 433.125.|nMovement slow: 25% for 2 seconds.|nExpands in 0.25 seconds; hits each enemy once as the pulse reaches them.|n|nMana: 150.|nCooldown: 12 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 16|nPulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 1 - Requires hero level 1|r|n|nSend the ball to an allied unit.|nTravel magic damage: 30.|nTravel radius: 100.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 100 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 60.|nCooldown: 15 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 1|nSend the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 2 - Requires hero level 4|r|n|nSend the ball to an allied unit.|nTravel magic damage: 50.|nTravel radius: 115.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 150 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 70.|nCooldown: 15 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 4|nSend the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 1)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 3 - Requires hero level 7|r|n|nSend the ball to an allied unit.|nTravel magic damage: 75.|nTravel radius: 125.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 200 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 80.|nCooldown: 15 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 7|nSend the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 2)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 4 - Requires hero level 10|r|n|nSend the ball to an allied unit.|nTravel magic damage: 100.|nTravel radius: 145.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 250 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 90.|nCooldown: 15 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 10|nSend the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 3)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 5 - Requires hero level 13|r|n|nSend the ball to an allied unit.|nTravel magic damage: 125.|nTravel radius: 150.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 300 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 100.|nCooldown: 15 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 13|nSend the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 4)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Level 6 - Requires hero level 16|r|n|nSend the ball to an allied unit.|nTravel magic damage: 150.|nTravel radius: 175.|nEnemies crossed: 25% slow for 2 seconds.|nArrival heal: 400 HP to allies within 200.|nAlly movement speed: +10%.|nTarget haste: 5 seconds; other allies: 2 seconds.|nHealing is capped at maximum HP. No shield.|n|nCast range: 1000.|nMana: 110.|nCooldown: 15 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 16|nSend the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 5)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Level 1 - Requires hero level 6|r|n|nPull ground enemies toward the ball.|nMagic damage: 200.|nRadius: 264.6875.|nWindup: 0.5 seconds.|nCannot affect buildings or magic-immune enemies.|n|nMana: 150.|nCooldown: 200 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 6|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Level 2 - Requires hero level 11|r|n|nPull ground enemies toward the ball.|nMagic damage: 275.|nRadius: 317.625.|nWindup: 0.5 seconds.|nCannot affect buildings or magic-immune enemies.|n|nMana: 175.|nCooldown: 200 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 11|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 1)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Level 3 - Requires hero level 16|r|n|nPull ground enemies toward the ball.|nMagic damage: 400.|nRadius: 370.5625.|nWindup: 0.5 seconds.|nCannot affect buildings or magic-immune enemies.|n|nMana: 200.|nCooldown: 200 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 1 - Requires hero level 1|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 80.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 75.|nCooldown: 10 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 0)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 2 - Requires hero level 4|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 120.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 85.|nCooldown: 10 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 1)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 3 - Requires hero level 7|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 180.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 95.|nCooldown: 12 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 2)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 4 - Requires hero level 10|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 240.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 110.|nCooldown: 12 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 3)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 5 - Requires hero level 13|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 300.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 130.|nCooldown: 12 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 4)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Level 6 - Requires hero level 16|r|n|nRoll an explosive barrel to a target point.|nMagic damage: 550.|nRadius: 260.|nMovement slow: 25% for 2 seconds.|nPress Z again to detonate, even during travel.|nOtherwise explodes 2 seconds after arrival.|nCooldown begins when the barrel is launched.|n|nCast range: 1000.|nMana: 150.|nCooldown: 13 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast to detonate early.", 5)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 1 - Requires hero level 1|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +5.|nMagic damage reduction: 10%.|nHealth regeneration: 20 HP per second.|n|nMana: 50.|nCooldown: 12 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 2 - Requires hero level 4|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +7.|nMagic damage reduction: 15%.|nHealth regeneration: 30 HP per second.|n|nMana: 60.|nCooldown: 12 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 3 - Requires hero level 7|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +9.|nMagic damage reduction: 20%.|nHealth regeneration: 40 HP per second.|n|nMana: 70.|nCooldown: 12 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 4 - Requires hero level 10|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +11.|nMagic damage reduction: 25%.|nHealth regeneration: 50 HP per second.|n|nMana: 80.|nCooldown: 12 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 5 - Requires hero level 13|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +13.|nMagic damage reduction: 30%.|nHealth regeneration: 60 HP per second.|n|nMana: 90.|nCooldown: 12 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Level 6 - Requires hero level 16|r|n|nDrink to strengthen yourself for 5 seconds.|nArmor: +15.|nMagic damage reduction: 35%.|nHealth regeneration: 70 HP per second.|n|nMana: 100.|nCooldown: 12 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 1 - Requires hero level 1|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 75.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 75.|nCooldown: 15 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nCharge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 2 - Requires hero level 4|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 100.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 85.|nCooldown: 15 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nCharge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 3 - Requires hero level 7|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 125.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 95.|nCooldown: 15 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nCharge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 4 - Requires hero level 10|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 175.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 110.|nCooldown: 15 seconds.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nCharge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 5 - Requires hero level 13|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 200.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 130.|nCooldown: 15 seconds.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nCharge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Level 6 - Requires hero level 16|r|n|nDash through allies up to 600 distance.|nImpact magic damage: 225.|nImpact radius: 220.|nStun: 0.6 seconds.|nHits enemy ground units.|nBuildings and blocked terrain stop the dash|nwithout a damage burst.|n|nMana: 150.|nCooldown: 15 seconds.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nCharge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Level 1 - Requires hero level 6|r|n|nThrow a cask that explodes on arrival.|nMagic damage: 200.|nRadius: 430.|nStun: 0.6 seconds.|nOutward knockback: up to 400 distance.|nGround enemies only; obstacles stop knockback.|n|nCast range: 1000.|nMana: 150.|nCooldown: 200 seconds.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Level 2 - Requires hero level 11|r|n|nThrow a cask that explodes on arrival.|nMagic damage: 300.|nRadius: 430.|nStun: 0.6 seconds.|nOutward knockback: up to 400 distance.|nGround enemies only; obstacles stop knockback.|n|nCast range: 1000.|nMana: 175.|nCooldown: 200 seconds.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Level 3 - Requires hero level 16|r|n|nThrow a cask that explodes on arrival.|nMagic damage: 400.|nRadius: 430.|nStun: 0.6 seconds.|nOutward knockback: up to 400 distance.|nGround enemies only; obstacles stop knockback.|n|nCast range: 1000.|nMana: 200.|nCooldown: 200 seconds.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
 endfunction
 
 function OM_OnCastAnimation takes nothing returns nothing
@@ -10200,24 +10255,32 @@ function CreateNeutralPassiveBuildings takes nothing returns nothing
     call SetUnitColor(gg_unit_n004_0058, ConvertPlayerColor(0))
     set u=BlzCreateUnitWithSkin(p, 'n012', - 3008.0, 3008.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', - 3136.0, 3008.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', - 3264.0, 2752.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', - 3264.0, 2880.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', - 3264.0, 3008.0, 345.630, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', 3264.0, 2752.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', 3264.0, 2880.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', 3008.0, 3008.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', 3136.0, 3008.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', 3264.0, 3008.0, 255.271, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', 3008.0, - 3520.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', 3136.0, - 3520.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', 3264.0, - 3264.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', 3264.0, - 3392.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', 3264.0, - 3520.0, 161.536, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', - 3264.0, - 3264.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', - 3264.0, - 3392.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', - 3008.0, - 3520.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', - 3136.0, - 3520.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', - 3264.0, - 3520.0, 75.492, 'n00R')
@@ -11253,34 +11316,28 @@ function FFGS_ApplyUnit takes unit u, integer idx, integer pn returns nothing
     endif
 endfunction
 
-function MF_StageFootman takes unit u, integer pn returns nothing
-    local integer team=(pn - 1) / 3
-    local integer n=MF_PlayerStaged[pn]
-    local integer col=ModuloInteger(n, 12)
-    local real x
-    local real y
-    if RAbsBJ(GetUnitY(udg_base[pn]) - ffgs_center_y) > RAbsBJ(GetUnitX(udg_base[pn]) - ffgs_center_x) then
-        set x=640.0 + I2R(col) * 64.0
-        set y=160.0 + I2R(n / 12) * 64.0
-    else
-        set x=160.0 + I2R(n / 12) * 64.0
-        set y=640.0 + I2R(col) * 64.0
-    endif
-
+function F35_WallX takes integer team, real column, integer rank returns real
+    local real distance = 640.0 + 40.0 * column + 48.0 * I2R(rank)
     if team == 0 or team == 3 then
-        set x=-x
+        return GetRectCenterX(gg_rct_MAP_CENTER) - distance
     endif
+    return GetRectCenterX(gg_rct_MAP_CENTER) + distance
+endfunction
+
+function F35_WallY takes integer team, real column, integer rank returns real
+    local real distance = 640.0 + 40.0 * (20.0 - column) + 48.0 * I2R(rank)
     if team == 2 or team == 3 then
-        set y=-y
+        return GetRectCenterY(gg_rct_MAP_CENTER) - distance
     endif
+    return GetRectCenterY(gg_rct_MAP_CENTER) + distance
+endfunction
+
+function MF_StageFootman takes unit u, integer pn returns nothing
     call ShowUnit(u, false)
     call PauseUnit(u, true)
     call SetUnitInvulnerable(u, true)
     call SetUnitUseFood(u, false)
     call SetUnitPathing(u, false)
-    call SetUnitX(u, ffgs_center_x + x)
-    call SetUnitY(u, ffgs_center_y + y)
-    set MF_PlayerStaged[pn]=n + 1
     set MF_MassPool[MF_MassPoolCount]=u
     set MF_MassPoolCount=MF_MassPoolCount + 1
 endfunction
@@ -11325,6 +11382,9 @@ function FFGS_SpawnForPlayer takes integer idx, integer pn, integer count return
     local real x=GetUnitX(udg_base[pn])
     local real y=GetUnitY(udg_base[pn])
     local integer i=1
+    local integer team=(pn-1)/3
+    local integer seq
+    local real heading=bj_UNIT_FACING
     local integer scaled
     local boolean stage=(idx == 0 and not MF_MassReleased)
     if stage then
@@ -11337,7 +11397,14 @@ function FFGS_SpawnForPlayer takes integer idx, integer pn, integer count return
     endif
     loop
         exitwhen i > count
-        set ffgs_new_unit[i]=CreateUnit(p, udg_spawn_unit[idx], x, y, bj_UNIT_FACING)
+        if idx == 0 then
+            set seq=MF_TeamSpawnSlot[team]
+            set x=F35_WallX(team,I2R(ModuloInteger(seq*8,21)),seq/21)
+            set y=F35_WallY(team,I2R(ModuloInteger(seq*8,21)),seq/21)
+            set heading=Atan2(ffgs_center_y-y,ffgs_center_x-x)*bj_RADTODEG
+            set MF_TeamSpawnSlot[team]=ModuloInteger(seq+1,210)
+        endif
+        set ffgs_new_unit[i]=CreateUnit(p, udg_spawn_unit[idx], x, y, heading)
         if stage then
             call MF_StageFootman(ffgs_new_unit[i], pn)
         endif
@@ -22306,10 +22373,8 @@ function Trig_set_hero_numbers_Actions takes nothing returns nothing
     // set hero count
     set udg_hero_type[92]='HOr1'
     set udg_hero_type[93]='HGr1'
-    set udg_hero_type[94]='HDk1'
-    set udg_hero_type[95]='HMu1'
-    set udg_hero_type[96]='HTf1'
-    set udg_total_hero_count=96
+    set udg_hero_type[94]='HTf1'
+    set udg_total_hero_count=94
     // ##########################################
     set udg_hero_type[99]='H02W'
     // Hero Showroom
@@ -23396,15 +23461,15 @@ set udg_hero_INT_base[95]=15
 set udg_hero_INT_inc[95]=1.5
 set udg_hero_move_base[95]=310
 set udg_hero_turnrate[95]=0.6
-    set udg_hero_category[96]=0
-    set udg_hero_STR_base[96]=18
-    set udg_hero_STR_inc[96]=1.8
-    set udg_hero_AGI_base[96]=22
-    set udg_hero_AGI_inc[96]=2.4
-    set udg_hero_INT_base[96]=19
-    set udg_hero_INT_inc[96]=1.9
-    set udg_hero_move_base[96]=330
-    set udg_hero_turnrate[96]=0.6
+    set udg_hero_category[94]=16
+    set udg_hero_STR_base[94]=18
+    set udg_hero_STR_inc[94]=1.8
+    set udg_hero_AGI_base[94]=22
+    set udg_hero_AGI_inc[94]=2.4
+    set udg_hero_INT_base[94]=19
+    set udg_hero_INT_inc[94]=1.9
+    set udg_hero_move_base[94]=330
+    set udg_hero_turnrate[94]=0.6
 call DestroyTrigger(GetTriggeringTrigger())
 
 endfunction
@@ -23716,6 +23781,688 @@ function zoom__handleSegment takes nothing returns nothing
     set p=null
 endfunction
 
+function SpellKeysName takes integer binding returns string
+    local string prefix = ""
+    local integer k = binding
+    if k >= 256 then
+        set prefix = "Alt+"
+        set k = k - 256
+    endif
+    if k >= 96 then
+        return prefix + "Num " + I2S(k - 96)
+    elseif k >= 65 then
+        return prefix + SubString("ABCDEFGHIJKLMNOPQRSTUVWXYZ", k - 65, k - 64)
+    endif
+    return "Default"
+endfunction
+
+function SpellKeysRefresh takes nothing returns nothing
+    local integer i = 0
+    loop
+        exitwhen i == 10
+        if spellKeysBinding[i] == 0 then
+            call BlzFrameSetText(spellKeysBadges[i], "")
+        else
+            call BlzFrameSetText(spellKeysBadges[i], "|cffffdd66" + SpellKeysName(spellKeysBinding[i]) + "|r")
+        endif
+        if i == spellKeysEditing then
+            call BlzFrameSetText(spellKeysRows[i], "Press key...")
+        elseif i >= 4 then
+            call BlzFrameSetText(spellKeysRows[i], "Item " + I2S(i - 3) + "  " + SpellKeysName(spellKeysBinding[i]))
+        else
+            call BlzFrameSetText(spellKeysRows[i], "Spell " + I2S(i + 1) + "  " + SpellKeysName(spellKeysBinding[i]))
+        endif
+        set i = i + 1
+    endloop
+    call BlzFrameSetVisible(spellKeysPanel, spellKeysOpen)
+endfunction
+
+function SpellKeysClick takes nothing returns nothing
+    local framehandle clicked = BlzGetTriggerFrame()
+    local integer i = 0
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        call BlzFrameSetEnable(clicked, false)
+        call BlzFrameSetEnable(clicked, true)
+        call BlzFrameSetFocus(clicked, false)
+        if clicked == spellKeysToggle or clicked == spellKeysClose then
+            set spellKeysOpen = clicked == spellKeysToggle and not spellKeysOpen
+            if spellKeysOpen and DPS_Panel != null then
+                set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
+                call BlzFrameSetVisible(DPS_Panel, false)
+            endif
+            set spellKeysEditing = -1
+        else
+            loop
+                exitwhen i == 10 or clicked == spellKeysRows[i]
+                set i = i + 1
+            endloop
+            set spellKeysEditing = i
+        endif
+        call SpellKeysRefresh()
+    endif
+    set clicked = null
+endfunction
+
+function SpellKeysStore takes nothing returns nothing
+    local integer i = 0
+    local string data = "K1"
+    local string digits
+    loop
+        exitwhen i == 10
+        set digits = I2S(1000 + spellKeysBinding[i])
+        set data = data + SubString(digits, 1, 4)
+        set i = i + 1
+    endloop
+    call FF_ConfigSave(true, data)
+    if FF_ConfigRead(true) != data then
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,5,"Hotkeys set for this match. Local profile could not be read back.")
+    endif
+endfunction
+
+function SpellKeysRestore takes nothing returns nothing
+    local string data = FF_ConfigRead(true)
+    local integer i = 0
+    local integer key
+    local integer base
+    if StringLength(data) == 32 and SubString(data,0,2) == "K1" then
+        loop
+            exitwhen i == 10
+            set key = S2I(SubString(data,2+3*i,5+3*i))
+            set base = ModuloInteger(key,256)
+            if key <= 361 and ((base >= 65 and base <= 90) or (base >= 96 and base <= 105)) then
+                set spellKeysBinding[i] = key
+            endif
+            set i = i+1
+        endloop
+    endif
+endfunction
+
+function SpellKeysSelection takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local unit u = GetTriggerUnit()
+    local integer id = GetPlayerId(p)
+    if GetTriggerEventId() == EVENT_PLAYER_UNIT_SELECTED then
+        if GetOwningPlayer(u) == p and IsUnitType(u, UNIT_TYPE_HERO) then
+            set spellKeysSelectedHero[id] = u
+        endif
+    elseif spellKeysSelectedHero[id] == u then
+        set spellKeysSelectedHero[id] = null
+    endif
+    set u = null
+    set p = null
+endfunction
+
+function SpellKeysHero takes player p returns unit
+    local unit u = spellKeysSelectedHero[GetPlayerId(p)]
+    if u == null then
+        return udg_herO[GetPlayerId(p)+1]
+    endif
+    return u
+endfunction
+
+function SpellKeysUseItem takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer id = GetPlayerId(p)
+    local unit hero = SpellKeysHero(p)
+    local integer slot = S2I(BlzGetTriggerSyncData())
+    local item it
+    local item pending = spellKeysTargetItem[id]
+    local unit previousHero = spellKeysItemCaster[id]
+    local unit home = udg_base[id+1]
+    set spellKeysItemCaster[id] = null
+    set spellKeysTargetItem[id] = null
+    if slot >= 0 and slot < 6 and hero != null and GetOwningPlayer(hero) == p then
+        set it = UnitItemInSlot(hero,slot)
+        if GetItemTypeId(it) == 'stwp' then
+            if it == pending and previousHero == hero and TimerGetRemaining(spellKeysTapWindow[id]) > 0.0 and GetWidgetLife(home) > 0.405 then
+                if not UnitUseItemTarget(hero,it,home) then
+                    call UnitUseItemPoint(hero,it,GetUnitX(home),GetUnitY(home))
+                endif
+            else
+                set spellKeysTargetItem[id] = it
+                set spellKeysItemCaster[id] = hero
+                call TimerStart(spellKeysTapWindow[id],0.60,false,null)
+                call DisplayTimedTextToPlayer(p,0,0,2,"Press the same hotkey again to teleport home, or click a destination.")
+            endif
+        elseif it != null and BlzGetItemBooleanField(it,ITEM_BF_ACTIVELY_USED) then
+            if not UnitUseItem(hero,it) then
+                set spellKeysTargetItem[id] = it
+                set spellKeysItemCaster[id] = hero
+                call DisplayTimedTextToPlayer(p,0,0,3,"Click the item target or ground. Right-click to cancel.")
+            endif
+        endif
+    endif
+    set pending = null
+    set previousHero = null
+    set home = null
+    set it = null
+    set hero = null
+    set p = null
+endfunction
+
+function SpellKeysAim takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer id = GetPlayerId(p)
+    local real x = BlzGetTriggerPlayerMouseX()
+    local real y = BlzGetTriggerPlayerMouseY()
+    if spellKeysTargetItem[id] != null then
+        if BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_RIGHT then
+            set spellKeysTargetItem[id] = null
+        elseif BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_LEFT and GetLocalPlayer() == p then
+            call BlzSendSyncData("FFItemAim", I2S(GetHandleId(spellKeysTargetItem[id])) + ":" + I2S(GetHandleId(BlzGetMouseFocusUnit())) + ":" + R2S(x) + ":" + R2S(y))
+        endif
+    endif
+    set p = null
+endfunction
+
+function SpellKeysFieldEnd takes string data, integer pos returns integer
+    loop
+        exitwhen pos >= StringLength(data) or SubString(data,pos,pos+1) == ":"
+        set pos = pos+1
+    endloop
+    return pos
+endfunction
+
+function SpellKeysTarget takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer id = GetPlayerId(p)
+    local unit hero = spellKeysItemCaster[id]
+    local item it = spellKeysTargetItem[id]
+    local string data = BlzGetTriggerSyncData()
+    local integer a = SpellKeysFieldEnd(data,0)
+    local integer b = SpellKeysFieldEnd(data,a+1)
+    local integer c = SpellKeysFieldEnd(data,b+1)
+    local integer targetId = S2I(SubString(data,a+1,b))
+    local real x = S2R(SubString(data,b+1,c))
+    local real y = S2R(SubString(data,c+1,StringLength(data)))
+    local group g
+    local unit u
+    local boolean used = false
+    if it != null and GetHandleId(it) == S2I(SubString(data,0,a)) then
+        set spellKeysTargetItem[id] = null
+        if hero != null and GetOwningPlayer(hero) == p and UnitHasItem(hero,it) then
+            if targetId != 0 then
+                set g = CreateGroup()
+                call GroupEnumUnitsInRange(g,x,y,640.0,null)
+                loop
+                    set u = FirstOfGroup(g)
+                    exitwhen u == null
+                    if GetHandleId(u) == targetId then
+                        set used = UnitUseItemTarget(hero,it,u)
+                        exitwhen true
+                    endif
+                    call GroupRemoveUnit(g,u)
+                endloop
+                call DestroyGroup(g)
+            endif
+            if not used then
+                call UnitUseItemPoint(hero,it,x,y)
+            endif
+        endif
+    endif
+    set g = null
+    set u = null
+    set hero = null
+    set it = null
+    set p = null
+endfunction
+
+function SpellKeysNative takes unit hero, integer slot returns string
+    local integer n = 0
+    local ability ab
+    local integer abilityId
+    local string key
+    loop
+        set ab = BlzGetUnitAbilityByIndex(hero,n)
+        exitwhen ab == null
+        set abilityId = BlzGetAbilityId(ab)
+        if BlzGetAbilityPosY(abilityId) == 2 and BlzGetAbilityPosX(abilityId) == slot then
+            set key = LoadStr(spellKeysNativeKeys,abilityId,0)
+            if key != null and key != "" then
+                set ab = null
+                return key
+            endif
+        endif
+        set n = n+1
+    endloop
+    return SubString("ZXCV", slot, slot+1)
+endfunction
+
+function SpellKeysInput takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer key = GetHandleId(BlzGetTriggerPlayerKey())
+    local integer i = 0
+    if GetLocalPlayer() == p then
+        if BlzGetTriggerPlayerMetaKey() == 4 then
+            set key = key + 256
+        endif
+        if spellKeysEditing >= 0 then
+            loop
+                exitwhen i == 10
+                if spellKeysBinding[i] == key then
+                    set spellKeysBinding[i] = 0
+                endif
+                set i = i + 1
+            endloop
+            if key == 8 then
+                set key = 0
+            endif
+            set spellKeysBinding[spellKeysEditing] = key
+            set spellKeysEditing = -1
+            call SpellKeysStore()
+            call SpellKeysRefresh()
+        elseif IsUnitSelected(SpellKeysHero(p), p) then
+            loop
+                exitwhen i == 10
+                if spellKeysBinding[i] == key then
+                    if i < 4 then
+                        call ForceUIKey(SpellKeysNative(SpellKeysHero(p), i))
+                    else
+                        call BlzSendSyncData("FFItemKey", I2S(i-4))
+                    endif
+                    exitwhen true
+                endif
+                set i = i + 1
+            endloop
+        endif
+    endif
+    set p = null
+endfunction
+
+function SpellKeysLabel takes string label, real x, real y, real size returns nothing
+    local framehandle f = BlzCreateFrameByType("TEXT", "", spellKeysPanel, "", 0)
+    call BlzFrameSetPoint(f, FRAMEPOINT_TOPLEFT, spellKeysPanel, FRAMEPOINT_TOPLEFT, x, -y)
+    call BlzFrameSetFont(f, "Fonts\\FRIZQT__.TTF", size, 0)
+    call BlzFrameSetEnable(f, false)
+    call BlzFrameSetText(f, label)
+    set f = null
+endfunction
+
+function SpellKeysInit takes framehandle ui returns nothing
+    local trigger click = CreateTrigger()
+    local trigger selection = CreateTrigger()
+    local trigger input = CreateTrigger()
+    local integer i = 0
+    local integer k
+    local trigger items = CreateTrigger()
+    local trigger aim = CreateTrigger()
+    local trigger target = CreateTrigger()
+    set spellKeysNativeKeys = InitHashtable()
+    call SaveStr(spellKeysNativeKeys,'A0DL',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'ADk1',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'ADk3',0,"C")
+    call SaveStr(spellKeysNativeKeys,'ADk4',0,"V")
+    call SaveStr(spellKeysNativeKeys,'ADk5',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AFg1',0,"X")
+    call SaveStr(spellKeysNativeKeys,'AGr1',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'AGr2',0,"X")
+    call SaveStr(spellKeysNativeKeys,'AGr3',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AGr4',0,"V")
+    call SaveStr(spellKeysNativeKeys,'AGr8',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'ALxR',0,"V")
+    call SaveStr(spellKeysNativeKeys,'AMu1',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'AMu2',0,"X")
+    call SaveStr(spellKeysNativeKeys,'AMu3',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AMu4',0,"V")
+    call SaveStr(spellKeysNativeKeys,'AOz1',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'AOz2',0,"X")
+    call SaveStr(spellKeysNativeKeys,'AOz3',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AOz4',0,"V")
+    call SaveStr(spellKeysNativeKeys,'APs1',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AStB',0,"B")
+    call SaveStr(spellKeysNativeKeys,'ATf1',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'ATf2',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf3',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf4',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf5',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf6',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf7',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATf8',0,"X")
+    call SaveStr(spellKeysNativeKeys,'ATfb',0,"V")
+    call SaveStr(spellKeysNativeKeys,'ATfc',0,"V")
+    call SaveStr(spellKeysNativeKeys,'ATfd',0,"C")
+    call SaveStr(spellKeysNativeKeys,'ATfg',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AVge',0,"C")
+    call SaveStr(spellKeysNativeKeys,'AVgq',0,"Z")
+    call SaveStr(spellKeysNativeKeys,'AVgr',0,"V")
+    call SaveStr(spellKeysNativeKeys,'AVgw',0,"X")
+    call SaveStr(spellKeysNativeKeys,'AZd1',0,"V")
+    call SaveStr(spellKeysNativeKeys,'mD00',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD01',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD02',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD03',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD04',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD05',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD06',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD07',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD08',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD09',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD0F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD10',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD11',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD12',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD13',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD14',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD15',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD16',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD17',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD18',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD19',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD1F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD20',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD21',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD22',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD23',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD24',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD25',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD26',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD27',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD28',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD29',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD2F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD30',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD31',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD32',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD33',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD34',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD35',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD36',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD37',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD38',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD39',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD3F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD40',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD41',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD42',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD43',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD44',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD45',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD46',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD47',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD48',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD49',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD4F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD50',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD51',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD52',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD53',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD54',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD55',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD56',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD57',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD58',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD59',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD5F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD60',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD61',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD62',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD63',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD64',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD65',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD66',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD67',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD68',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD69',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD6F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD70',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD71',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD72',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD73',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD74',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD75',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD76',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD77',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD78',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD79',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD7F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD80',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD81',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD82',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD83',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD84',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD85',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD86',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD87',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD88',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD89',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD8F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD90',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD91',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD92',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD93',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD94',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD95',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD96',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD97',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD98',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD99',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9A',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9B',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9C',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9D',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9E',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mD9F',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDA9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAD',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDAF',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDB9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBD',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDBF',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDC9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCD',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDCF',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDD9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDD',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDDF',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDE9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDEA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDEB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDEC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDED',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDEE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDEF',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF0',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF1',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF2',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF3',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF4',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF5',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF6',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF7',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF8',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDF9',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFA',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFB',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFC',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFD',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFE',0,"D")
+    call SaveStr(spellKeysNativeKeys,'mDFF',0,"D")
+    set spellKeysToggle = BlzCreateFrame("ScriptDialogButton", ui, 0, 0)
+    call BlzFrameSetPoint(spellKeysToggle, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.039, 0.004)
+    call BlzFrameSetSize(spellKeysToggle, 0.073, 0.028)
+    call BlzFrameSetText(spellKeysToggle, "Hotkeys")
+    call BlzFrameSetLevel(spellKeysToggle, 20)
+    set spellKeysPanel = BlzCreateFrame("EscMenuBackdrop", ui, 0, 0)
+    call BlzFrameSetSize(spellKeysPanel, 0.414, 0.240)
+    call BlzFrameSetAbsPoint(spellKeysPanel, FRAMEPOINT_CENTER, 0.400, 0.348)
+    call BlzFrameSetLevel(spellKeysPanel, 21)
+    call SpellKeysLabel("Hotkeys", 0.020, 0.018, 0.016)
+    call SpellKeysLabel("Hero spells", 0.020, 0.061, 0.011)
+    call SpellKeysLabel("Inventory", 0.161, 0.061, 0.011)
+    call SpellKeysLabel("Select a slot, then press A-Z or a numpad key.", 0.020, 0.198, 0.0095)
+    call SpellKeysLabel("Alt combinations are supported. Backspace restores the default.", 0.020, 0.212, 0.0095)
+    set spellKeysClose = BlzCreateFrame("ScriptDialogButton", spellKeysPanel, 0, 0)
+    call BlzFrameSetSize(spellKeysClose, 0.061, 0.025)
+    call BlzFrameSetPoint(spellKeysClose, FRAMEPOINT_TOPRIGHT, spellKeysPanel, FRAMEPOINT_TOPRIGHT, -0.018, -0.013)
+    call BlzFrameSetText(spellKeysClose, "Close")
+    call BlzTriggerRegisterFrameEvent(click, spellKeysClose, FRAMEEVENT_CONTROL_CLICK)
+    call BlzTriggerRegisterFrameEvent(click, spellKeysToggle, FRAMEEVENT_CONTROL_CLICK)
+    loop
+        exitwhen i == 10
+        if i < 4 then
+            set spellKeysCommands[i] = BlzGetOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, 8 + i)
+        else
+            set spellKeysCommands[i] = BlzGetOriginFrame(ORIGIN_FRAME_ITEM_BUTTON, i-4)
+        endif
+        set spellKeysBadges[i] = BlzCreateFrameByType("TEXT","FFSlotKey",ui,"",i)
+        call BlzFrameSetPoint(spellKeysBadges[i],FRAMEPOINT_BOTTOMRIGHT,spellKeysCommands[i],FRAMEPOINT_BOTTOMRIGHT,0,0)
+        call BlzFrameSetScale(spellKeysBadges[i],0.8)
+        call BlzFrameSetEnable(spellKeysBadges[i],false)
+        set spellKeysRows[i] = BlzCreateFrame("ScriptDialogButton", spellKeysPanel, 0, i + 1)
+        if i < 4 then
+            call BlzFrameSetPoint(spellKeysRows[i], FRAMEPOINT_TOPLEFT, spellKeysPanel, FRAMEPOINT_TOPLEFT, 0.020, -0.078-i*0.028)
+        else
+            call BlzFrameSetPoint(spellKeysRows[i], FRAMEPOINT_TOPLEFT, spellKeysPanel, FRAMEPOINT_TOPLEFT, 0.161+ModuloInteger(i-4,2)*0.120, -0.078-((i-4)/2)*0.028)
+        endif
+        call BlzFrameSetSize(spellKeysRows[i], 0.114, 0.025)
+        call BlzTriggerRegisterFrameEvent(click, spellKeysRows[i], FRAMEEVENT_CONTROL_CLICK)
+        set i = i + 1
+    endloop
+    call SpellKeysRestore()
+    call SpellKeysRefresh()
+    set i = 0
+    loop
+        exitwhen i == 12
+        if GetPlayerController(Player(i)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
+            call TriggerRegisterPlayerUnitEvent(selection, Player(i), EVENT_PLAYER_UNIT_SELECTED, null)
+            call TriggerRegisterPlayerUnitEvent(selection, Player(i), EVENT_PLAYER_UNIT_DESELECTED, null)
+            set spellKeysTapWindow[i] = CreateTimer()
+            call BlzTriggerRegisterPlayerSyncEvent(items, Player(i), "FFItemKey", false)
+            call BlzTriggerRegisterPlayerSyncEvent(target, Player(i), "FFItemAim", false)
+            call TriggerRegisterPlayerEvent(aim, Player(i), EVENT_PLAYER_MOUSE_DOWN)
+            call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), OSKEY_BACKSPACE, 0, false)
+            set k = 65
+            loop
+                exitwhen k > 105
+                if k <= 90 or k >= 96 then
+                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 0, false)
+                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 4, false)
+                endif
+                set k = k + 1
+            endloop
+        endif
+        set i = i + 1
+    endloop
+    call TriggerAddAction(selection, function SpellKeysSelection)
+    set selection = null
+    call TriggerAddAction(input, function SpellKeysInput)
+    call TriggerAddAction(click, function SpellKeysClick)
+    call TriggerAddAction(items,function SpellKeysUseItem)
+    call TriggerAddAction(aim,function SpellKeysAim)
+    call TriggerAddAction(target,function SpellKeysTarget)
+    set items = null
+    set aim = null
+    set target = null
+    set click = null
+    set input = null
+endfunction
+
 function zoom__CreateSlider takes nothing returns nothing
     local framehandle gameUI= BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
     local framehandle minimap=BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0)
@@ -23764,6 +24511,7 @@ function zoom__CreateSlider takes nothing returns nothing
     set gameUI=null
     set sliderTrigger=null
     set lockTrigger=null
+    call SpellKeysInit(gameUI)
 endfunction
 
 function zoom__RestoreFromFile takes nothing returns nothing
@@ -23849,7 +24597,7 @@ function InitTrig_Camera_Zoom takes nothing returns nothing
 endfunction
 
 function FFR4_PoolingAllowed takes nothing returns boolean
-    return udg_gametime_s >= 1200 and not FFR4NoPool and not udg_mode_promode and udg_autopoool_allowed
+    return (FFR4Pro or udg_gametime_s >= 1200) and not FFR4NoPool and not udg_mode_promode and udg_autopoool_allowed
 endfunction
 
 function FFR4_LockPooling takes nothing returns nothing
@@ -27871,6 +28619,20 @@ function FF_AutoPick_Actions takes nothing returns nothing
     endloop
 endfunction
 
+function FF_GiveRandomBoots takes unit hero returns nothing
+    local integer slot = UnitInventorySize(hero) - 1
+    loop
+        exitwhen slot < 0
+        if UnitItemInSlot(hero, slot) == null then
+            if UnitAddItemToSlotById(hero, 'bspd', slot) then
+                return
+            endif
+        endif
+        set slot = slot - 1
+    endloop
+    call CreateItem('bspd', GetUnitX(hero), GetUnitY(hero))
+endfunction
+
 function FFRandom_Sold takes nothing returns nothing
     local unit sold=GetSoldUnit()
     local player p
@@ -27906,6 +28668,9 @@ function FFRandom_Sold takes nothing returns nothing
                 call CarryTav_LockTeam(team)
             endif
             call CreateNUnitsAtLoc(1,heroId,p,udg_loc_tavern,bj_UNIT_FACING)
+            if udg_selected_mode == 3 and heroId != 'H0R0' then
+                call FF_GiveRandomBoots(GetLastCreatedUnit())
+            endif
         endif
     endif
     set sold=null
@@ -28645,6 +29410,7 @@ function FF_TestExtraHero takes unit u returns nothing
     set p = null
 endfunction
 
+
 function Trig_TP_hero_Actions takes nothing returns nothing
     local boolean randomPick = false
     local integer randomIndex = 0
@@ -28726,7 +29492,7 @@ function Trig_TP_hero_Actions takes nothing returns nothing
         call UnitAddItemByIdSwapped('pinv', udg_temp_unit)
         call UnitAddItemByIdSwapped('hslv', udg_temp_unit)
         if randomPick then
-            call UnitAddItemByIdSwapped('bspd', udg_temp_unit)
+            call FF_GiveRandomBoots(udg_temp_unit)
         endif
         if ( Trig_TP_hero_Func007Func012C() ) then
             call UnitAddItemByIdSwapped('I01C', udg_temp_unit)
@@ -31260,7 +32026,7 @@ endfunction
 
 function Trig_game_time_Actions takes nothing returns nothing
     set udg_gametime_s=( udg_gametime_s + 1 )
-    if udg_gametime_s == 1200 then
+    if udg_gametime_s == 1200 and not FFR4Pro and not (udg_mode_pub and not udg_mode_debugmode and not FFMode4K) then
         call ExecuteFunc("MF_EnablePooling")
     endif
 endfunction
@@ -31690,20 +32456,22 @@ function Trig_start_timers_Actions takes nothing returns nothing
         call StartTimerBJ(udg_timer_tech_delay_t2, false, 0.00)
         call StartTimerBJ(udg_timer_tech_delay_t3, false, 0.00)
     endif
-    call DisableTrigger(gg_trg_turn_trading_ON)
-    call PauseTimer(udg_timer_trading)
-    if udg_timer_window_trading != null then
-        call TimerDialogDisplayBJ(false, udg_timer_window_trading)
+    if not FFR4Pro and (not udg_mode_pub or udg_mode_debugmode or FFMode4K) then
+        call DisableTrigger(gg_trg_turn_trading_ON)
+        call PauseTimer(udg_timer_trading)
+        if udg_timer_window_trading != null then
+            call TimerDialogDisplayBJ(false, udg_timer_window_trading)
+        endif
+        call FFR4_LockPooling()
+        set FFR4NoPool=true
+        call TimerStart(udg_timer_trading, RMaxBJ(0.0, 1200.0 - I2R(udg_gametime_s)), false, null)
+        if udg_timer_window_trading != null then
+            call DestroyTimerDialog(udg_timer_window_trading)
+        endif
+        call CreateTimerDialogBJ(udg_timer_trading, "Pooling available")
+        set udg_timer_window_trading=GetLastCreatedTimerDialogBJ()
+        call TimerDialogDisplayBJ(true, udg_timer_window_trading)
     endif
-    call FFR4_LockPooling()
-    set FFR4NoPool=true
-    call TimerStart(udg_timer_trading, RMaxBJ(0.0, 1200.0 - I2R(udg_gametime_s)), false, null)
-    if udg_timer_window_trading != null then
-        call DestroyTimerDialog(udg_timer_window_trading)
-    endif
-    call CreateTimerDialogBJ(udg_timer_trading, "Pooling available")
-    set udg_timer_window_trading=GetLastCreatedTimerDialogBJ()
-    call TimerDialogDisplayBJ(true, udg_timer_window_trading)
     call CreateTimerDialogBJ(udg_timer_tech_delay_t1, "TRIGSTR_10041")
     set udg_timer_window_tech_delay=GetLastCreatedTimerDialogBJ()
     call TimerDialogDisplayBJ(true, udg_timer_window_tech_delay)
@@ -35452,6 +36220,7 @@ function Trig_debugmode_Actions takes nothing returns nothing
     call EnableTrigger(gg_trg_debug)
     call EnableTrigger(gg_trg_debug_show_order_ids)
     set udg_mode_debugmode=true
+    set udg_total_hero_count=94
     set udg_version=5
     set udg_ap_number_of_heros=2
     set udg_X=1
@@ -61308,7 +62077,7 @@ function DPS_Create takes nothing returns nothing
     local real y
     set DPS_Button = BlzCreateFrame("ScriptDialogButton", ui, 0, 0)
     call BlzFrameSetSize(DPS_Button, 0.0625, 0.020)
-    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.0, 0.002)
+    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, -0.039, 0.004)
     call BlzFrameSetVisible(DPS_Button, true)
     call BlzFrameSetText(DPS_Button, "Stats")
     call BlzFrameSetLevel(DPS_Button, 20)
@@ -61492,7 +62261,6 @@ function MF_Init takes nothing returns nothing
         call SetPlayerTechMaxAllowed(Player(i), 'H04Y', 0)
         call SetPlayerTechMaxAllowed(Player(i), 'HDk1', 0)
         call SetPlayerTechMaxAllowed(Player(i), 'HMu1', 0)
-        call SetPlayerTechMaxAllowed(Player(i), 'HTf1', 0)
         call SetPlayerTechMaxAllowed(Player(i), 'N01C', 0)
         call SetPlayerTechMaxAllowed(Player(i), 'N03J', 0)
         call SetPlayerTechMaxAllowed(Player(i), 'O00G', 0)
@@ -61577,6 +62345,7 @@ function InitTrig_FF_Runtime takes nothing returns nothing
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HOr1', GetRectCenterX(gg_rct_EXILE), GetRectCenterY(gg_rct_EXILE), 270.0)
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before CreateUnit")
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HGr1', GetRectCenterX(gg_rct_EXILE) + 64.0, GetRectCenterY(gg_rct_EXILE), 270.0)
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HTf1', GetRectCenterX(gg_rct_EXILE) + 192.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before OM_Init")
     call OM_Init()
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before FS_Init")
@@ -61585,9 +62354,6 @@ function InitTrig_FF_Runtime takes nothing returns nothing
     call MD_Init()
     call MU_Init()
     call TFP_Init()
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HTf1', GetRectCenterX(gg_rct_EXILE) + 192.0, GetRectCenterY(gg_rct_EXILE), 270.0)
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HMu1', GetRectCenterX(gg_rct_EXILE) + 256.0, GetRectCenterY(gg_rct_EXILE), 270.0)
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HDk1', GetRectCenterX(gg_rct_EXILE) + 128.0, GetRectCenterY(gg_rct_EXILE), 270.0)
     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before GD_Init")
     call GD_Init()
     call GPS_Init()
@@ -61671,6 +62437,10 @@ function DraftRefreshPub takes integer team returns nothing
     if DraftPage[team]*10 >= shown then
         set DraftPage[team] = 0
     endif
+    call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
+    if DraftPage[team] == 0 then
+        call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
+    endif
     set i = 0
     loop
         exitwhen i >= 10
@@ -61712,6 +62482,10 @@ function DraftRefresh takes integer team returns nothing
         call DraftRefreshPub(team)
         return
     endif
+    call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
+    if DraftPage[team] == 0 then
+        call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
+    endif
     set i = 0
     loop
         exitwhen i >= 8 or DraftPage[team]*8+i >= DraftCount[team]
@@ -61741,6 +62515,7 @@ function DraftSale takes nothing returns nothing
         return
     endif
     if id == 'hTNP' then
+        call StartSoundForPlayerBJ(p, FF_DraftPageClick)
         call RemoveUnit(sold)
         set DraftPage[team] = DraftPage[team] + 1
         if not DraftPubSD() and DraftPage[team]*8 >= DraftCount[team] then
@@ -61859,6 +62634,9 @@ function DraftStart takes nothing returns nothing
                 set i = i + 1
             endloop
         else
+            if udg_mode_mirror or udg_mode_debugmode then
+                call MF_StockUnitBJ('HTf1', udg_real_shop[team], 1, 1)
+            endif
             call DraftImport(team, udg_real_shop[team])
         endif
         call DraftImport(team, CarryTav_shop[team])
@@ -61869,6 +62647,40 @@ function DraftStart takes nothing returns nothing
     call TriggerAddAction(sales, function DraftSale)
     call DraftUpdate()
     call TimerStart(CreateTimer(), 0.25, true, function DraftUpdate)
+endfunction
+
+function FF_DebugTwistedFate takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer slot = GetPlayerId(p)
+    local integer start = GetPlayerStartLocation(p)
+    local unit hero
+    if udg_mode_debugmode then
+        set hero = FF_DebugFate[slot]
+        if GetUnitTypeId(hero) == 0 then
+            set hero = CreateUnit(p, 'HTf1', GetStartLocationX(start), GetStartLocationY(start), 270.0)
+            set FF_DebugFate[slot] = hero
+            call FF_TestExtraHero(hero)
+        else
+            if IsUnitType(hero, UNIT_TYPE_DEAD) then
+                call ReviveHero(hero, GetStartLocationX(start), GetStartLocationY(start), true)
+            endif
+            call SelectUnitForPlayerSingle(hero, p)
+        endif
+    endif
+    set hero = null
+    set p = null
+endfunction
+
+function FF_InitDebugTwistedFate takes nothing returns nothing
+    local trigger chat = CreateTrigger()
+    local integer slot = 0
+    loop
+        exitwhen slot >= 12
+        call TriggerRegisterPlayerChatEvent(chat, Player(slot), "-tf", true)
+        set slot = slot + 1
+    endloop
+    call TriggerAddAction(chat, function FF_DebugTwistedFate)
+    set chat = null
 endfunction
 
 function main takes nothing returns nothing
@@ -61903,7 +62715,9 @@ function main takes nothing returns nothing
     call FFLoadTrace_Mark("main: before InitGlobals")
     call InitGlobals()
     call FFLoadTrace_Mark("main: before InitCustomTriggers")
+    set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
     call InitCustomTriggers()
+    call FF_InitDebugTwistedFate()
 
     call FFLoadTrace_Mark("main: completed")
 endfunction
