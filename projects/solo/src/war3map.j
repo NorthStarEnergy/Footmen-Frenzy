@@ -2979,9 +2979,12 @@ framehandle spellKeysToggle
 framehandle array spellKeysRows
 hashtable spellKeysNativeKeys
 framehandle array spellKeysBadges
+timer array spellKeysTapWindow
 item array spellKeysTargetItem
 framehandle array spellKeysCommands
 integer array spellKeysBinding
+unit array spellKeysSelectedHero
+unit array spellKeysItemCaster
 integer spellKeysEditing = -1
 boolean spellKeysOpen = false
 integer array SoloSub_playerForObserver
@@ -3085,6 +3088,9 @@ real array TFP_s___wildCards___cardDat_gradX
 integer array TFP_s__wildCards___cardDat_gradX
 real array TFP_s___wildCards___cardDat_gradY
 integer array TFP_s__wildCards___cardDat_gradY
+sound FF_DraftPageClick
+unit array FF_DebugFate
+real array TFP_WildDamage
 real array TFP_s__wildCards___cardDat_damage
 real array TFP_s__wildCards___cardDat_traveled
 group array TFP_s__wildCards___cardDat_struckUnits
@@ -3211,6 +3217,9 @@ integer array SyncNext
 integer SyncClock=0
     unit array GSI_Source
     timer array GSI_Expiry
+    group GSI_Shops = CreateGroup()
+    boolean GSI_Purchased = false
+    boolean GSI_Used = false
     rect GSI_Bounds = null
 
 endglobals
@@ -12158,24 +12167,32 @@ function CreateNeutralPassiveBuildings takes nothing returns nothing
     call SetUnitColor(gg_unit_n004_0058, ConvertPlayerColor(0))
     set u=BlzCreateUnitWithSkin(p, 'n012', - 3008.0, 3008.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', - 3136.0, 3008.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', - 3264.0, 2752.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', - 3264.0, 2880.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', - 3264.0, 3008.0, 345.630, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', 3264.0, 2752.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', 3264.0, 2880.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', 3008.0, 3008.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', 3136.0, 3008.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', 3264.0, 3008.0, 255.271, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', 3008.0, - 3520.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', 3136.0, - 3520.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', 3264.0, - 3264.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', 3264.0, - 3392.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', 3264.0, - 3520.0, 161.536, 'n00R')
     call SetUnitColor(u, ConvertPlayerColor(10))
     set u=BlzCreateUnitWithSkin(p, 'n012', - 3264.0, - 3264.0, 270.000, 'n012')
     set u=BlzCreateUnitWithSkin(p, 'n007', - 3264.0, - 3392.0, 270.000, 'n007')
+    call GroupAddUnit(GSI_Shops,u)
+    call AddItemToStock(u,'IGs1',1,1)
     set u=BlzCreateUnitWithSkin(p, 'n01Y', - 3008.0, - 3520.0, 270.000, 'n01Y')
     set u=BlzCreateUnitWithSkin(p, 'n01T', - 3136.0, - 3520.0, 270.000, 'n01T')
     set u=BlzCreateUnitWithSkin(p, 'n00R', - 3264.0, - 3520.0, 75.492, 'n00R')
@@ -14219,7 +14236,7 @@ function Trig_set_hero_numbers_Actions takes nothing returns nothing
     set udg_hero_type[90]='O01L'
     set udg_hero_type[91]='N00H'
     // set hero count
-    set udg_total_hero_count=97
+    set udg_total_hero_count=94
     // ##########################################
     set udg_hero_type[99]='H02W'
     // Hero Showroom
@@ -15322,15 +15339,15 @@ set udg_hero_INT_base[95]=1
 set udg_hero_INT_inc[95]=0
 set udg_hero_move_base[95]=320
 set udg_hero_turnrate[95]=0.6
-set udg_hero_category[96]=2
-set udg_hero_STR_base[96]=18
-set udg_hero_STR_inc[96]=1.8
-set udg_hero_AGI_base[96]=udg_hero_AGI_base[68]
-set udg_hero_AGI_inc[96]=udg_hero_AGI_inc[68]
-set udg_hero_INT_base[96]=19
-set udg_hero_INT_inc[96]=1.9
-set udg_hero_move_base[96]=330
-set udg_hero_turnrate[96]=0.6
+set udg_hero_category[94]=16
+set udg_hero_STR_base[94]=18
+set udg_hero_STR_inc[94]=1.8
+set udg_hero_AGI_base[94]=udg_hero_AGI_base[68]
+set udg_hero_AGI_inc[94]=udg_hero_AGI_inc[68]
+set udg_hero_INT_base[94]=19
+set udg_hero_INT_inc[94]=1.9
+set udg_hero_move_base[94]=330
+set udg_hero_turnrate[94]=0.6
 set udg_hero_category[97]=6
 set udg_hero_STR_base[97]=15
 set udg_hero_STR_inc[97]=1.5
@@ -15342,11 +15359,8 @@ set udg_hero_move_base[97]=270
 set udg_hero_turnrate[97]=0.6
 set udg_hero_type[92]='HOr1'
 set udg_hero_type[93]='HGr1'
-set udg_hero_type[94]='HDk1'
-set udg_hero_type[95]='HMu1'
-set udg_hero_type[96]='HTf1'
-set udg_hero_type[97]='HVg1'
-set udg_total_hero_count=97
+set udg_hero_type[94]='HTf1'
+set udg_total_hero_count=94
 endfunction
 
 function InitTrig_set_hero_stats takes nothing returns nothing
@@ -17179,8 +17193,8 @@ endfunction
 
 function SoloFootsIsNoMuteHeroType takes integer heroType returns boolean
     // These heroes are intentionally not stocked in the solo taverns.
-    if heroType == 'HMu1' or heroType == 'HVg1' or heroType == 'HTf1' then
-        return not AllowAPHeroes()
+    if heroType == 'HDk1' or heroType == 'HMu1' or heroType == 'HVg1' then
+        return true
     endif
     return heroType == 'H00K' or heroType == 'U00F' or heroType == 'N03J' or heroType == 'O00G'
 endfunction
@@ -17585,6 +17599,7 @@ function DraftHostAllPick takes nothing returns nothing
         set p = p + 1
     endloop
     set DraftAllPick = true
+    set udg_total_hero_count=94
     call ExecuteFunc("AddAPHeroesToDraft")
     call DisplayTextToForce(GetPlayersAll(), "All Pick enabled. All eligible heroes are available in your tavern.")
 endfunction
@@ -23425,6 +23440,7 @@ function Trig_debugmode_Actions takes nothing returns nothing
     call EnableTrigger(gg_trg_debug)
     call EnableTrigger(gg_trg_debug_show_order_ids)
     set udg_mode_debugmode=true
+    set udg_total_hero_count=94
     call ExecuteFunc("AddAPHeroesToDraft")
     set udg_version=5
     set udg_ap_number_of_heros=2
@@ -49652,177 +49668,177 @@ endfunction
 
 function SF08_HeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff60|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 1|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff60|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 1|nSend the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff90|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff65|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 4|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff90|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff65|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 4|nSend the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 1)
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 7|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 7|nSend the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 2)
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff160|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 10|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff160|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 10|nSend the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 3)
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 13|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 13|nSend the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 4)
     call BlzSetAbilityTooltip('AOz1', "Command: Move [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Send the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Command: Move [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "|cffffcc00Requires hero level 16|r|n|nSend the ball to a point, damaging and slowing enemies it crosses.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff6 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 16|nSend the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 5)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Radius:|r |cff80dfff~260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 1|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Radius:|r |cff80dfff~260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 1|nPulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Radius:|r |cff80dfff~282|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 4|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Radius:|r |cff80dfff~282|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 4|nPulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 1)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Radius:|r |cff80dfff~303|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 7|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Radius:|r |cff80dfff~303|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 7|nPulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 2)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff185|r magic|n|cffffcc00Radius:|r |cff80dfff~346|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 10|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff185|r magic|n|cffffcc00Radius:|r |cff80dfff~346|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 10|nPulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 3)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Radius:|r |cff80dfff~390|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 13|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Radius:|r |cff80dfff~390|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 13|nPulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 4)
     call BlzSetAbilityTooltip('AOz2', "Command: Attack [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz2', "The ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff500|r magic|n|cffffcc00Radius:|r |cff80dfff~433|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Command: Attack [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "|cffffcc00Requires hero level 16|r|n|nThe ball emits a fast pulse that damages and slows enemies.|n|n|cffffcc00Damage:|r |cff80dfff500|r magic|n|cffffcc00Radius:|r |cff80dfff~433|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 16|nPulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 5)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff30|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80100|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 1|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff30|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80100|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 1|nSend the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff50|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80150|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 1)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 4|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff50|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80150|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 4|nSend the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 1)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff75|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80200|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 2)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 7|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff75|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80200|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 7|nSend the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 2)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff100|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80250|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 3)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 10|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff100|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80250|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 10|nSend the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 3)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff125|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80300|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 4)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 13|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff125|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80300|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 13|nSend the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 4)
     call BlzSetAbilityTooltip('AOz3', "Command: Protect [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Send the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff150|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80400|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 5)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Command: Protect [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "|cffffcc00Requires hero level 16|r|n|nSend the ball to an ally. It damages enemies on the way and heals allies on arrival.|n|n|cffffcc00Travel damage:|r |cff80dfff150|r magic and |cff80dfff25% slow for 2 sec|r|n|cffffcc00Arrival heal:|r |cff80ff80400|r in |cff80dfff200|r radius|n|cffffcc00Speed:|r |cff80ff80+10%|r for |cff80dfff5|r sec on target; |cff80dfff2|r sec on nearby allies|n|cffffcc00Cast range:|r |cff80dfff1000|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 16|nSend the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 5)
     call BlzSetAbilityTooltip('AOz4', "Command: Shockwave [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz4', "After a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Radius:|r |cff80dfff~265|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Requires hero level 6|r|n|nAfter a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Radius:|r |cff80dfff~265|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 6|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
     call BlzSetAbilityTooltip('AOz4', "Command: Shockwave [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz4', "After a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff275|r magic|n|cffffcc00Radius:|r |cff80dfff~318|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 1)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Requires hero level 11|r|n|nAfter a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff275|r magic|n|cffffcc00Radius:|r |cff80dfff~318|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 11|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 1)
     call BlzSetAbilityTooltip('AOz4', "Command: Shockwave [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz4', "After a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Radius:|r |cff80dfff~371|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Command: Shockwave [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "|cffffcc00Requires hero level 16|r|n|nAfter a short windup, pull nearby ground enemies toward the ball.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Radius:|r |cff80dfff~371|r|n|cffffcc00Windup:|r |cff80dfff0.5 sec|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 1|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 4|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff180|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 7|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff180|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff240|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 10|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff240|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 13|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff550|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 16|r|n|nRoll a barrel to a point. Press |cffffcc00Z|r again to detonate it early.|n|n|cffffcc00Damage:|r |cff80dfff550|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nExplodes |cff80dfff2|r seconds after arrival if left alone.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+5|r|n|cffffcc00Magic reduction:|r |cff80ff8010%|r|n|cffffcc00Healing:|r |cff80ff8020 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff50|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 1|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+5|r|n|cffffcc00Magic reduction:|r |cff80ff8010%|r|n|cffffcc00Healing:|r |cff80ff8020 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff50|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+7|r|n|cffffcc00Magic reduction:|r |cff80ff8015%|r|n|cffffcc00Healing:|r |cff80ff8030 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 4|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+7|r|n|cffffcc00Magic reduction:|r |cff80ff8015%|r|n|cffffcc00Healing:|r |cff80ff8030 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+9|r|n|cffffcc00Magic reduction:|r |cff80ff8020%|r|n|cffffcc00Healing:|r |cff80ff8040 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 7|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+9|r|n|cffffcc00Magic reduction:|r |cff80ff8020%|r|n|cffffcc00Healing:|r |cff80ff8040 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+11|r|n|cffffcc00Magic reduction:|r |cff80ff8025%|r|n|cffffcc00Healing:|r |cff80ff8050 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 10|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+11|r|n|cffffcc00Magic reduction:|r |cff80ff8025%|r|n|cffffcc00Healing:|r |cff80ff8050 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+13|r|n|cffffcc00Magic reduction:|r |cff80ff8030%|r|n|cffffcc00Healing:|r |cff80ff8060 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 13|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+13|r|n|cffffcc00Magic reduction:|r |cff80ff8030%|r|n|cffffcc00Healing:|r |cff80ff8060 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+15|r|n|cffffcc00Magic reduction:|r |cff80ff8035%|r|n|cffffcc00Healing:|r |cff80ff8070 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 16|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+15|r|n|cffffcc00Magic reduction:|r |cff80ff8035%|r|n|cffffcc00Healing:|r |cff80ff8070 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 1|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nCharge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 4|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nCharge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 7|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nCharge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff175|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 10|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff175|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nCharge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 13|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nCharge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 16|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nCharge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 6|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 11|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 16|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
     call BlzSetAbilityTooltip('AGr8', "Detonate Barrel [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your active barrel immediately, using the damage of your current |cffffcc00Barrel Roll|r rank.|n|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
     call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your active barrel immediately, using the damage of your current |cffffcc00Barrel Roll|r rank.|n|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
 endfunction
 
 function DK_GroundZ takes real x, real y returns real
@@ -51094,237 +51110,237 @@ endfunction
 
 function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff30|r magic|n|cffffcc00Stun:|r |cff80dfff0.5 sec|r|n|cffffcc00Travel:|r |cff80dfff700|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897930|r damage and stuns marked enemies for 0.5s.", 0)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 1|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff30|r magic|n|cffffcc00Stun:|r |cff80dfff0.5 sec|r|n|cffffcc00Travel:|r |cff80dfff700|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897930|r damage and stuns marked enemies for 0.5s.", 0)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff40|r magic|n|cffffcc00Stun:|r |cff80dfff0.75 sec|r|n|cffffcc00Travel:|r |cff80dfff800|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897940|r damage and stuns marked enemies for 0.75s.", 1)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 4|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff40|r magic|n|cffffcc00Stun:|r |cff80dfff0.75 sec|r|n|cffffcc00Travel:|r |cff80dfff800|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff897940|r damage and stuns marked enemies for 0.75s.", 1)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff50|r magic|n|cffffcc00Stun:|r |cff80dfff1 sec|r|n|cffffcc00Travel:|r |cff80dfff900|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897950|r damage and stuns marked enemies for 1s.", 2)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 7|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff50|r magic|n|cffffcc00Stun:|r |cff80dfff1 sec|r|n|cffffcc00Travel:|r |cff80dfff900|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 7|nMark enemies in the orb's path. On arrival, it deals |cffff897950|r damage and stuns marked enemies for 1s.", 2)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff60|r magic|n|cffffcc00Stun:|r |cff80dfff1.25 sec|r|n|cffffcc00Travel:|r |cff80dfff1000|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff125|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897960|r damage and stuns marked enemies for 1.25s.", 3)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 10|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff60|r magic|n|cffffcc00Stun:|r |cff80dfff1.25 sec|r|n|cffffcc00Travel:|r |cff80dfff1000|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff125|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff897960|r damage and stuns marked enemies for 1.25s.", 3)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff70|r magic|n|cffffcc00Stun:|r |cff80dfff1.5 sec|r|n|cffffcc00Travel:|r |cff80dfff1100|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff135|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897970|r damage and stuns marked enemies for 1.5s.", 4)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 13|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff70|r magic|n|cffffcc00Stun:|r |cff80dfff1.5 sec|r|n|cffffcc00Travel:|r |cff80dfff1100|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff135|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff897970|r damage and stuns marked enemies for 1.5s.", 4)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Fire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Stun:|r |cff80dfff1.75 sec|r|n|cffffcc00Travel:|r |cff80dfff1200|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff135|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897980|r damage and stuns marked enemies for 1.75s.", 5)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "|cffffcc00Requires hero level 16|r|n|nFire an orb to the chosen point; it marks enemies, then damages and stuns them when it bursts at its destination.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Stun:|r |cff80dfff1.75 sec|r|n|cffffcc00Travel:|r |cff80dfff1200|r|n|cffffcc00Radius:|r |cff80dfff280|r|n|n|cffffcc00Mana:|r |cff80dfff135|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff897980|r damage and stuns marked enemies for 1.75s.", 5)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff897960|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 60   Cooldown: 6 sec", 0)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 1|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff897960|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 60   Cooldown: 6 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 1|nSend the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff897990|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 65   Cooldown: 6 sec", 1)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 4|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff897990|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 65   Cooldown: 6 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 4|nSend the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 1)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979120|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 70   Cooldown: 6 sec", 2)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 7|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979120|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 70   Cooldown: 6 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 7|nSend the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 2)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979160|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 75   Cooldown: 6 sec", 3)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 10|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979160|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 75   Cooldown: 6 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 10|nSend the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 3)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979200|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 80   Cooldown: 6 sec", 4)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 13|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979200|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 80   Cooldown: 6 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 13|nSend the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 4)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz1', "Hurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979225|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 90   Cooldown: 6 sec", 5)
+    call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 16|n|nHurl the fel orb toward the target point. It burns and slows enemies in its path.|n|nDamage: |cffff8979225|r|nSlow: 25% for 2 sec|nCast range: 1000|n|nMana: 90   Cooldown: 6 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 16|nSend the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 5)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff897975|r|nRadius: ~260|nSlow: 25% for 2 sec|n|nMana: 75   Cooldown: 12 sec", 0)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 1|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff897975|r|nRadius: ~260|nSlow: 25% for 2 sec|n|nMana: 75   Cooldown: 12 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 1|nPulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979100|r|nRadius: ~282|nSlow: 25% for 2 sec|n|nMana: 85   Cooldown: 12 sec", 1)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 1)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 4|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979100|r|nRadius: ~282|nSlow: 25% for 2 sec|n|nMana: 85   Cooldown: 12 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 4|nPulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 1)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979125|r|nRadius: ~303|nSlow: 25% for 2 sec|n|nMana: 95   Cooldown: 12 sec", 2)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 2)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 7|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979125|r|nRadius: ~303|nSlow: 25% for 2 sec|n|nMana: 95   Cooldown: 12 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 7|nPulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 2)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979185|r|nRadius: ~346|nSlow: 25% for 2 sec|n|nMana: 110   Cooldown: 12 sec", 3)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 3)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 10|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979185|r|nRadius: ~346|nSlow: 25% for 2 sec|n|nMana: 110   Cooldown: 12 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 10|nPulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 3)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979225|r|nRadius: ~390|nSlow: 25% for 2 sec|n|nMana: 130   Cooldown: 12 sec", 4)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 4)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 13|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979225|r|nRadius: ~390|nSlow: 25% for 2 sec|n|nMana: 130   Cooldown: 12 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 13|nPulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 4)
     call BlzSetAbilityTooltip('AOz2', "Felfire Pulse [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz2', "Ignite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979500|r|nRadius: ~433|nSlow: 25% for 2 sec|n|nMana: 150   Cooldown: 12 sec", 5)
+    call BlzSetAbilityExtendedTooltip('AOz2', "Pulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 5)
     call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 16|n|nIgnite the fel orb to send a pulse of felfire through nearby enemies, damaging and slowing them.|n|nDamage: |cffff8979500|r|nRadius: ~433|nSlow: 25% for 2 sec|n|nMana: 150   Cooldown: 12 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 16|nPulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 5)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897930|r and 25% slow for 2 sec|nArrival heal: |cff86e99d100|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 60   Cooldown: 15 sec", 0)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 1|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897930|r and 25% slow for 2 sec|nArrival heal: |cff86e99d100|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 60   Cooldown: 15 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 1|nSend the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897950|r and 25% slow for 2 sec|nArrival heal: |cff86e99d150|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 70   Cooldown: 15 sec", 1)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 1)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 4|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897950|r and 25% slow for 2 sec|nArrival heal: |cff86e99d150|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 70   Cooldown: 15 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 4|nSend the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 1)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897975|r and 25% slow for 2 sec|nArrival heal: |cff86e99d200|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 80   Cooldown: 15 sec", 2)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 2)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 7|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff897975|r and 25% slow for 2 sec|nArrival heal: |cff86e99d200|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 80   Cooldown: 15 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 7|nSend the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 2)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979100|r and 25% slow for 2 sec|nArrival heal: |cff86e99d250|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 90   Cooldown: 15 sec", 3)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 3)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 10|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979100|r and 25% slow for 2 sec|nArrival heal: |cff86e99d250|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 90   Cooldown: 15 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 10|nSend the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 3)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979125|r and 25% slow for 2 sec|nArrival heal: |cff86e99d300|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 100   Cooldown: 15 sec", 4)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 4)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 13|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979125|r and 25% slow for 2 sec|nArrival heal: |cff86e99d300|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 100   Cooldown: 15 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 13|nSend the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 4)
     call BlzSetAbilityTooltip('AOz3', "Soul Pact [C] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AOz3', "Bind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979150|r and 25% slow for 2 sec|nArrival heal: |cff86e99d400|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 110   Cooldown: 15 sec", 5)
+    call BlzSetAbilityExtendedTooltip('AOz3', "Send the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 5)
     call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 16|n|nBind the fel orb to an ally. It scorches and slows enemies along its path, then heals nearby allies and grants a burst of speed.|n|nTravel damage: |cffff8979150|r and 25% slow for 2 sec|nArrival heal: |cff86e99d400|r in 200 radius|nSpeed: +10% for 5 sec on target; 2 sec on nearby allies|nCast range: 1000|n|nMana: 110   Cooldown: 15 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 16|nSend the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 5)
     call BlzSetAbilityTooltip('AOz4', "Nether Vortex [V] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AOz4', "Open a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979200|r|nRadius: ~265|nWindup: 0.5 sec|n|nMana: 150   Cooldown: 200 sec", 0)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 6|n|nOpen a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979200|r|nRadius: ~265|nWindup: 0.5 sec|n|nMana: 150   Cooldown: 200 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 6|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
     call BlzSetAbilityTooltip('AOz4', "Nether Vortex [V] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AOz4', "Open a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979275|r|nRadius: ~318|nWindup: 0.5 sec|n|nMana: 175   Cooldown: 200 sec", 1)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 1)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 11|n|nOpen a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979275|r|nRadius: ~318|nWindup: 0.5 sec|n|nMana: 175   Cooldown: 200 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 11|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 1)
     call BlzSetAbilityTooltip('AOz4', "Nether Vortex [V] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AOz4', "Open a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979400|r|nRadius: ~371|nWindup: 0.5 sec|n|nMana: 200   Cooldown: 200 sec", 2)
+    call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|n|nOpen a rift at the fel orb. After a short windup, it drags nearby ground enemies inward and deals damage.|n|nDamage: |cffff8979400|r|nRadius: ~371|nWindup: 0.5 sec|n|nMana: 200   Cooldown: 200 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 1|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff80|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 4|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff120|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff180|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 7|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff180|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff240|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 10|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff240|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 13|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
     call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff550|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
     call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "|cffffcc00Requires hero level 16|r|n|nRoll a barrel to a point. Once it lands, press |cffffcc00Z|r again to detonate.|n|n|cffffcc00Damage:|r |cff80dfff550|r magic|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r|nSpins down in place for 2 seconds, then swells and twitches for 0.5 seconds before exploding.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+5|r|n|cffffcc00Magic reduction:|r |cff80ff8010%|r|n|cffffcc00Healing:|r |cff80ff8020 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff50|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 1|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+5|r|n|cffffcc00Magic reduction:|r |cff80ff8010%|r|n|cffffcc00Healing:|r |cff80ff8020 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff50|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+7|r|n|cffffcc00Magic reduction:|r |cff80ff8015%|r|n|cffffcc00Healing:|r |cff80ff8030 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 4|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+7|r|n|cffffcc00Magic reduction:|r |cff80ff8015%|r|n|cffffcc00Healing:|r |cff80ff8030 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+9|r|n|cffffcc00Magic reduction:|r |cff80ff8020%|r|n|cffffcc00Healing:|r |cff80ff8040 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 7|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+9|r|n|cffffcc00Magic reduction:|r |cff80ff8020%|r|n|cffffcc00Healing:|r |cff80ff8040 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+11|r|n|cffffcc00Magic reduction:|r |cff80ff8025%|r|n|cffffcc00Healing:|r |cff80ff8050 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 10|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+11|r|n|cffffcc00Magic reduction:|r |cff80ff8025%|r|n|cffffcc00Healing:|r |cff80ff8050 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+13|r|n|cffffcc00Magic reduction:|r |cff80ff8030%|r|n|cffffcc00Healing:|r |cff80ff8060 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 13|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+13|r|n|cffffcc00Magic reduction:|r |cff80ff8030%|r|n|cffffcc00Healing:|r |cff80ff8060 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
     call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr2', "Drink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+15|r|n|cffffcc00Magic reduction:|r |cff80ff8035%|r|n|cffffcc00Healing:|r |cff80ff8070 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "|cffffcc00Requires hero level 16|r|n|nDrink to fortify yourself for |cff80dfff5 sec|r.|n|n|cffffcc00Armor:|r |cff80ff80+15|r|n|cffffcc00Magic reduction:|r |cff80ff8035%|r|n|cffffcc00Healing:|r |cff80ff8070 HP/sec|r|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 1|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff75|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff75|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nCharge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 4|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff100|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff85|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nCharge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 7|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff125|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff95|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nCharge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff175|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 10|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff175|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nCharge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 13|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff130|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nCharge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
     call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
     call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "|cffffcc00Requires hero level 16|r|n|nCharge forward, damaging and stunning ground enemies on impact.|n|n|cffffcc00Damage:|r |cff80dfff225|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Impact radius:|r |cff80dfff220|r|n|cffffcc00Charge range:|r |cff80dfff600|r|nBlocked terrain stops the charge.|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff15 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nCharge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 6|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff200|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff150|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 11|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff300|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff175|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "|cffffcc00Requires hero level 16|r|n|nThrow an explosive cask that damages, stuns and knocks back ground enemies.|n|n|cffffcc00Damage:|r |cff80dfff400|r magic|n|cffffcc00Stun:|r |cff80dfff0.6 sec|r|n|cffffcc00Radius:|r |cff80dfff430|r|n|cffffcc00Knockback:|r |cff80dfffup to 400|r|n|n|cffffcc00Mana:|r |cff80dfff200|r   |cffffcc00Cooldown:|r |cff80dfff200 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
     call BlzSetAbilityTooltip('AGr8', "Detonate Barrel [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your landed barrel immediately, using the damage of your current |cffffcc00Barrel Roll|r rank.|n|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
     call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel immediately, using the damage of your current |cffffcc00Barrel Roll|r rank.|n|n|cffffcc00Radius:|r |cff80dfff260|r|n|cffffcc00Slow:|r |cff80dfff25% for 2 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 150 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 90 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 0)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d150|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "|cffffcc00Requires hero level 6|r|n|nFor 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 150 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 90 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 20s, nearby allies gain |cff86e99d150|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 175 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 120 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 1)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d175|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "|cffffcc00Requires hero level 11|r|n|nFor 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 175 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 120 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 20s, nearby allies gain |cff86e99d175|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 200 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 150 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 2)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "|cffffcc00Requires hero level 16|r|n|nFor 20 seconds, a dome follows Guardian through teleportation and invulnerability. Every second, allies within 600 recover 200 HP and 15 mana. Enemies are slowed, lose up to 30 mana and take 150 magic damage. Each heal or damage pulse has a 25% chance to double.|n|nCooldown: 160 seconds from cast.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff897960|r|nRange: 1450|n|nMana: 60   Cooldown: 6 sec", 0)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff897960|r|nRange: 1450|n|nMana: 60   Cooldown: 6 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979110|r|nRange: 1500|n|nMana: 70   Cooldown: 6 sec", 1)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.", 1)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979110|r|nRange: 1500|n|nMana: 70   Cooldown: 6 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.", 1)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979160|r|nRange: 1550|n|nMana: 80   Cooldown: 6 sec", 2)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.", 2)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979160|r|nRange: 1550|n|nMana: 80   Cooldown: 6 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979210|r|nRange: 1600|n|nMana: 90   Cooldown: 6 sec", 3)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.", 3)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979210|r|nRange: 1600|n|nMana: 90   Cooldown: 6 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.", 3)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979260|r|nRange: 1650|n|nMana: 100   Cooldown: 6 sec", 4)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.", 4)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979260|r|nRange: 1650|n|nMana: 100   Cooldown: 6 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.", 4)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979310|r|nRange: 1700|n|nMana: 110   Cooldown: 6 sec", 5)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|n|nThrow three spinning, piercing cards; each enemy can be hit once per cast.|n|nDamage: |cffff8979310|r|nRange: 1700|n|nMana: 110   Cooldown: 6 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 700|nMana and cooldown begin on throw.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 1", 0)
@@ -51450,53 +51466,53 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('ATfc', "Learn Gate - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('ATfc', "Press V over your destination to channel, then teleport once to a walkable destination while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff100|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff4 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 0)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 100 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 1|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff100|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff4 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff60|r   |cffffcc00Cooldown:|r |cff80dfff13 sec|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 1|nPlace a pylon to shield nearby allied heroes for 100 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff140|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff5 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 140 and pull one allied hero to you. The tether heals allies and slows enemies.", 1)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 4|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff140|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff5 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff70|r   |cffffcc00Cooldown:|r |cff80dfff12 sec|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 4|nPlace a pylon to shield nearby allied heroes for 140 and pull one allied hero to you. The tether heals allies and slows enemies.", 1)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff180|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff6 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 2)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 180 and pull one allied hero to you. The tether heals allies and slows enemies.", 2)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 7|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff180|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff6 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff80|r   |cffffcc00Cooldown:|r |cff80dfff11 sec|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 7|nPlace a pylon to shield nearby allied heroes for 180 and pull one allied hero to you. The tether heals allies and slows enemies.", 2)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff220|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff7 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 3)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 220 and pull one allied hero to you. The tether heals allies and slows enemies.", 3)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 10|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff220|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff7 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff90|r   |cffffcc00Cooldown:|r |cff80dfff10 sec|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 10|nPlace a pylon to shield nearby allied heroes for 220 and pull one allied hero to you. The tether heals allies and slows enemies.", 3)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff260|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff8 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff9 sec|r", 4)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 260 and pull one allied hero to you. The tether heals allies and slows enemies.", 4)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 13|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff260|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff8 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff100|r   |cffffcc00Cooldown:|r |cff80dfff9 sec|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 13|nPlace a pylon to shield nearby allied heroes for 260 and pull one allied hero to you. The tether heals allies and slows enemies.", 4)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATfd', "Deploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff300|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff9 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff8 sec|r", 5)
+    call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 300 and pull one allied hero to you. The tether heals allies and slows enemies.", 5)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATfd', "|cffffcc00Requires hero level 16|r|n|nDeploy a psionic pylon that shields nearby allied heroes and pulls one allied hero to you safely.|n|n|cffffcc00Shield:|r |cff74baff300|r for |cff80dfff4|r sec|n|cffffcc00Pylon:|r |cff80dfff9 sec|r|n|cffffcc00Guardian:|r Enemies entering the pylon and heroes crossed by a passenger are stunned |cff80dfff0.5 sec|r.|n|cffffcc00Chain:|r Allies gain |cff74baff3 armor|r and heal |cff74baff10 + 20/sec|r; riders heal |cff80dfff40|r/sec. Enemies lose |cff80dfff3|r armor and are slowed; armor effects last |cff80dfff2|r sec after leaving.|n|n|cffffcc00Mana:|r |cff80dfff110|r   |cffffcc00Cooldown:|r |cff80dfff8 sec|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 16|nPlace a pylon to shield nearby allied heroes for 300 and pull one allied hero to you. The tether heals allies and slows enemies.", 5)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff0.5 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 0)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 1|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff0.5 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff0.7 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 1)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 4|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff0.7 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3.5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 2)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 7|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff3.5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff4 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.25 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 3)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 10|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff4 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.25 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.5 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 4)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 13|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.5 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.75 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 5)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "|cffffcc00Requires hero level 16|r|n|nPlace up to |cff80dfff5|r barriers in |cff80dfff4|r seconds. Each blocks movement and stuns nearby enemies on expiry.|n|n|cffffcc00Field duration:|r |cff80dfff5 sec|r|n|cffffcc00Expiry stun:|r |cff80dfff1.75 sec|r|n|cffffcc00Cost:|r |cff80dfff25 mana per field|r|n|cffffcc00Recovery:|r |cff80dfff30 sec after burst|r", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 0)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 1", 0)
@@ -53910,6 +53926,7 @@ function SpellKeysClick takes nothing returns nothing
     if GetLocalPlayer() == GetTriggerPlayer() then
         call BlzFrameSetEnable(clicked, false)
         call BlzFrameSetEnable(clicked, true)
+        call BlzFrameSetFocus(clicked, false)
         if clicked == spellKeysToggle or clicked == spellKeysClose then
             set spellKeysOpen = clicked == spellKeysToggle and not spellKeysOpen
             if spellKeysOpen and DPS_Panel != null then
@@ -53966,6 +53983,29 @@ function SpellKeysStore takes nothing returns nothing
     endif
 endfunction
 
+function SpellKeysSelection takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local unit u = GetTriggerUnit()
+    local integer id = GetPlayerId(p)
+    if GetTriggerEventId() == EVENT_PLAYER_UNIT_SELECTED then
+        if GetOwningPlayer(u) == p and IsUnitType(u, UNIT_TYPE_HERO) then
+            set spellKeysSelectedHero[id] = u
+        endif
+    elseif spellKeysSelectedHero[id] == u then
+        set spellKeysSelectedHero[id] = null
+    endif
+    set u = null
+    set p = null
+endfunction
+
+function SpellKeysHero takes player p returns unit
+    local unit u = spellKeysSelectedHero[GetPlayerId(p)]
+    if u == null then
+        return udg_herO[GetPlayerId(p)+1]
+    endif
+    return u
+endfunction
+
 function SpellKeysInput takes nothing returns nothing
     local player p = GetTriggerPlayer()
     local integer key = GetHandleId(BlzGetTriggerPlayerKey())
@@ -53989,12 +54029,12 @@ function SpellKeysInput takes nothing returns nothing
             set spellKeysEditing = -1
             call SpellKeysStore()
             call SpellKeysRefresh()
-        elseif not spellKeysOpen and IsUnitSelected(udg_herO[GetPlayerId(p) + 1], p) then
+        elseif IsUnitSelected(SpellKeysHero(p), p) then
             loop
                 exitwhen i == 10
                 if spellKeysBinding[i] == key then
                     if i < 4 then
-                        call ForceUIKey(SpellKeysNative(udg_herO[GetPlayerId(p)+1], i))
+                        call ForceUIKey(SpellKeysNative(SpellKeysHero(p), i))
                     else
                         call BlzSendSyncData("FFItemKey", I2S(i-4))
                     endif
@@ -54045,7 +54085,7 @@ endfunction
 function SpellKeysTarget takes nothing returns nothing
     local player p = GetTriggerPlayer()
     local integer id = GetPlayerId(p)
-    local unit hero = udg_herO[id+1]
+    local unit hero = spellKeysItemCaster[id]
     local item it = spellKeysTargetItem[id]
     local string data = BlzGetTriggerSyncData()
     local integer a = SpellKeysFieldEnd(data,0)
@@ -54089,19 +54129,38 @@ endfunction
 function SpellKeysUseItem takes nothing returns nothing
     local player p = GetTriggerPlayer()
     local integer id = GetPlayerId(p)
-    local unit hero = udg_herO[id+1]
+    local unit hero = SpellKeysHero(p)
     local integer slot = S2I(BlzGetTriggerSyncData())
     local item it
+    local item pending = spellKeysTargetItem[id]
+    local unit previousHero = spellKeysItemCaster[id]
+    local unit home = udg_base[id+1]
+    set spellKeysItemCaster[id] = null
     set spellKeysTargetItem[id] = null
     if slot >= 0 and slot < 6 and hero != null and GetOwningPlayer(hero) == p then
         set it = UnitItemInSlot(hero,slot)
-        if it != null and BlzGetItemBooleanField(it,ITEM_BF_ACTIVELY_USED) then
+        if GetItemTypeId(it) == 'stwp' then
+            if it == pending and previousHero == hero and TimerGetRemaining(spellKeysTapWindow[id]) > 0.0 and GetWidgetLife(home) > 0.405 then
+                if not UnitUseItemTarget(hero,it,home) then
+                    call UnitUseItemPoint(hero,it,GetUnitX(home),GetUnitY(home))
+                endif
+            else
+                set spellKeysTargetItem[id] = it
+                set spellKeysItemCaster[id] = hero
+                call TimerStart(spellKeysTapWindow[id],0.60,false,null)
+                call DisplayTimedTextToPlayer(p,0,0,2,"Press the same hotkey again to teleport home, or click a destination.")
+            endif
+        elseif it != null and BlzGetItemBooleanField(it,ITEM_BF_ACTIVELY_USED) then
             if not UnitUseItem(hero,it) then
                 set spellKeysTargetItem[id] = it
+                set spellKeysItemCaster[id] = hero
                 call DisplayTimedTextToPlayer(p,0,0,3,"Click the item target or ground. Right-click to cancel.")
             endif
         endif
     endif
+    set pending = null
+    set previousHero = null
+    set home = null
     set it = null
     set hero = null
     set p = null
@@ -54109,6 +54168,7 @@ endfunction
 
 function SpellKeysInit takes framehandle ui returns nothing
     local trigger click = CreateTrigger()
+    local trigger selection = CreateTrigger()
     local trigger input = CreateTrigger()
     local integer i = 0
     local integer k
@@ -54458,22 +54518,27 @@ function SpellKeysInit takes framehandle ui returns nothing
     loop
         exitwhen i == 12
         if GetPlayerController(Player(i)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
+            call TriggerRegisterPlayerUnitEvent(selection, Player(i), EVENT_PLAYER_UNIT_SELECTED, null)
+            call TriggerRegisterPlayerUnitEvent(selection, Player(i), EVENT_PLAYER_UNIT_DESELECTED, null)
+            set spellKeysTapWindow[i] = CreateTimer()
             call BlzTriggerRegisterPlayerSyncEvent(items, Player(i), "FFItemKey", false)
             call BlzTriggerRegisterPlayerSyncEvent(target, Player(i), "FFItemAim", false)
             call TriggerRegisterPlayerEvent(aim, Player(i), EVENT_PLAYER_MOUSE_DOWN)
-            call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), OSKEY_BACKSPACE, 0, true)
+            call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), OSKEY_BACKSPACE, 0, false)
             set k = 65
             loop
                 exitwhen k > 105
                 if k <= 90 or k >= 96 then
-                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 0, true)
-                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 4, true)
+                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 0, false)
+                    call BlzTriggerRegisterPlayerKeyEvent(input, Player(i), ConvertOsKeyType(k), 4, false)
                 endif
                 set k = k + 1
             endloop
         endif
         set i = i + 1
     endloop
+    call TriggerAddAction(selection, function SpellKeysSelection)
+    set selection = null
     call TriggerAddAction(input, function SpellKeysInput)
     call TriggerAddAction(click, function SpellKeysClick)
     call TriggerAddAction(items,function SpellKeysUseItem)
@@ -55704,6 +55769,7 @@ function TF33_Close takes unit c, real cooldown returns nothing
     call UnitRemoveAbility(c,'ATf6')
     call UnitRemoveAbility(c,'ATf7')
     call UnitRemoveAbility(c,'ATf8')
+    call ShowUnit(LoadUnitHandle(TF33_H,h,2),false)
     call RemoveUnit(LoadUnitHandle(TF33_H,h,2))
     call BlzUnitHideAbility(c,'ATf2',false)
     if cooldown>0. then
@@ -55821,6 +55887,7 @@ function TF33_Flight takes nothing returns nothing
         set done=true
     endif
     if done then
+        call ShowUnit(orb,false)
         call RemoveUnit(orb)
         call FlushChildHashtable(TF33_H,h)
         call PauseTimer(t)
@@ -56323,7 +56390,7 @@ function TFP_wildCards___c takes nothing returns boolean
             set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle + TFP_wildCards___OFFSET_ANGLE)
             set TFP_s__wildCards___cardDat_struckUnits[tempDat]=CreateGroup()
             set TFP_s__wildCards___cardDat_caster[tempDat]=tU
-            set TFP_s__wildCards___cardDat_damage[tempDat]=10. + 50. * GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)
+            set TFP_s__wildCards___cardDat_damage[tempDat]=TFP_WildDamage[GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)]
             set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex + 1
             set TFP_wildCards___datDB[TFP_wildCards___dbIndex]=tempDat
             if TFP_wildCards___dbIndex == 0 then
@@ -56341,7 +56408,13 @@ function TFP_wildCards___i takes nothing returns nothing
         call TriggerAddCondition(t, Condition(function TFP_wildCards___c))
         set TFP_wildCards___cdrTable=TFP_s__HandleTable__allocate()
         set t=null
-    endfunction
+        set TFP_WildDamage[1] = 90.0
+    set TFP_WildDamage[2] = 175.0
+    set TFP_WildDamage[3] = 225.0
+    set TFP_WildDamage[4] = 300.0
+    set TFP_WildDamage[5] = 400.0
+    set TFP_WildDamage[6] = 550.0
+endfunction
 
 function TFP_Init takes nothing returns nothing
     call TFP_tfConsts___i()
@@ -57007,7 +57080,6 @@ function VG_Init takes nothing returns nothing
         exitwhen i >= 12
         set i = i + 1
     endloop
-    call TriggerAddAction(chat, function VG_Summon)
     set cast = null
     set chat = null
 endfunction
@@ -57085,6 +57157,10 @@ function DraftRefreshPub takes integer team returns nothing
     if DraftPage[team]*10 >= shown then
         set DraftPage[team] = 0
     endif
+    call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
+    if DraftPage[team] == 0 then
+        call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
+    endif
     set i = 0
     loop
         exitwhen i >= 10
@@ -57126,6 +57202,10 @@ function DraftRefresh takes integer team returns nothing
         call DraftRefreshPub(team)
         return
     endif
+    call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
+    if DraftPage[team] == 0 then
+        call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
+    endif
     set i = 0
     loop
         exitwhen i >= 8 or DraftPage[team]*8+i >= DraftCount[team]
@@ -57163,6 +57243,20 @@ function AddAPHeroesToDraft takes nothing returns nothing
     endif
 endfunction
 
+function FF_GiveRandomBoots takes unit hero returns nothing
+    local integer slot = UnitInventorySize(hero) - 1
+    loop
+        exitwhen slot < 0
+        if UnitItemInSlot(hero, slot) == null then
+            if UnitAddItemToSlotById(hero, 'bspd', slot) then
+                return
+            endif
+        endif
+        set slot = slot - 1
+    endloop
+    call CreateItem('bspd', GetUnitX(hero), GetUnitY(hero))
+endfunction
+
 function DraftSale takes nothing returns nothing
     local unit shop = GetSellingUnit()
     local unit sold = GetSoldUnit()
@@ -57179,6 +57273,7 @@ function DraftSale takes nothing returns nothing
         return
     endif
     if id == 'hTNP' then
+        call StartSoundForPlayerBJ(p, FF_DraftPageClick)
         call RemoveUnit(sold)
         set DraftPage[team] = DraftPage[team] + 1
         if not DraftPubSD() and DraftPage[team]*8 >= DraftCount[team] then
@@ -57189,7 +57284,7 @@ function DraftSale takes nothing returns nothing
     elseif id == 'hTRZ' then
         call RemoveUnit(sold)
         if DraftCount[team] > 0 then
-            call CreateUnitAtLoc(p, DraftPool[team*256+GetRandomInt(1,DraftCount[team])], udg_loc_tavern, bj_UNIT_FACING)
+            call FF_GiveRandomBoots(CreateUnitAtLoc(p, DraftPool[team*256+GetRandomInt(1,DraftCount[team])], udg_loc_tavern, bj_UNIT_FACING))
         endif
     elseif IsUnitType(sold, UNIT_TYPE_HERO) then
         if not DraftEligible(team,id) then
@@ -57379,6 +57474,10 @@ function GSI_Start takes unit caster returns nothing
     local integer i = GetPlayerId(GetOwningPlayer(caster))
     local real x = GetRectCenterX(GSI_Bounds)
     local real y = GetRectCenterY(GSI_Bounds)
+    if GSI_Used then
+        return
+    endif
+    set GSI_Used = true
     if GSI_Source[i] == null then
         set GSI_Source[i] = CreateUnit(Player(i), 'hGs1', x, y, 0.0)
         call SetUnitPathing(GSI_Source[i], false)
@@ -57403,9 +57502,33 @@ function GSI_UseItem takes nothing returns nothing
     endif
 endfunction
 
+function GSI_Purchase takes nothing returns nothing
+    local item scroll = GetSoldItem()
+    local unit shop
+    if GetItemTypeId(scroll) == 'IGs1' then
+        if GSI_Purchased then
+            call RemoveItem(scroll)
+            call AdjustPlayerStateBJ(6000, GetOwningPlayer(GetBuyingUnit()), PLAYER_STATE_RESOURCE_GOLD)
+        else
+            set GSI_Purchased = true
+            loop
+                set shop = FirstOfGroup(GSI_Shops)
+                exitwhen shop == null
+                call RemoveItemFromStock(shop, 'IGs1')
+                call GroupRemoveUnit(GSI_Shops, shop)
+            endloop
+        endif
+    endif
+    set scroll = null
+    set shop = null
+endfunction
+
 function GSI_Init takes nothing returns nothing
     local trigger t = CreateTrigger()
     local timer pulse = CreateTimer()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SELL_ITEM)
+    call TriggerAddAction(t, function GSI_Purchase)
+    set t = CreateTrigger()
     set GSI_Bounds = GetWorldBounds()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
     call TriggerAddAction(t, function GSI_Guard)
@@ -57416,6 +57539,40 @@ function GSI_Init takes nothing returns nothing
     set pulse = null
     set t = null
 endfunction
+function FF_DebugTwistedFate takes nothing returns nothing
+    local player p = GetTriggerPlayer()
+    local integer slot = GetPlayerId(p)
+    local integer start = GetPlayerStartLocation(p)
+    local unit hero
+    if udg_mode_debugmode then
+        set hero = FF_DebugFate[slot]
+        if GetUnitTypeId(hero) == 0 then
+            set hero = CreateUnit(p, 'HTf1', GetStartLocationX(start), GetStartLocationY(start), 270.0)
+            set FF_DebugFate[slot] = hero
+            call FF_TestExtraHero(hero)
+        else
+            if IsUnitType(hero, UNIT_TYPE_DEAD) then
+                call ReviveHero(hero, GetStartLocationX(start), GetStartLocationY(start), true)
+            endif
+            call SelectUnitForPlayerSingle(hero, p)
+        endif
+    endif
+    set hero = null
+    set p = null
+endfunction
+
+function FF_InitDebugTwistedFate takes nothing returns nothing
+    local trigger chat = CreateTrigger()
+    local integer slot = 0
+    loop
+        exitwhen slot >= 12
+        call TriggerRegisterPlayerChatEvent(chat, Player(slot), "-tf", true)
+        set slot = slot + 1
+    endloop
+    call TriggerAddAction(chat, function FF_DebugTwistedFate)
+    set chat = null
+endfunction
+
 function main takes nothing returns nothing
     call SetCameraBounds(- 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), - 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
     call SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
@@ -57436,7 +57593,9 @@ call ExecuteFunc("jasshelper__initstructs604298953")
 call ExecuteFunc("TimerUtils___init")
 
     call InitGlobals()
+    set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
     call InitCustomTriggers()
+    call FF_InitDebugTwistedFate()
     call FF_Init()
     call FF_MapInit()
     call RunInitializationTriggers()
@@ -58073,6 +58232,7 @@ function TFP_pickACard___dummyP takes nothing returns nothing
             elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_GOLD_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf8') > 0 then
                 call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55)
             else
+                call BlzSetSpecialEffectAlpha(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 0)
                 call DestroyEffect(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
                 set TFP_s__pickACard___dummyCardDat_dummy[tempDat]=null
                 set TFP_s__pickACard___dummyCardDat_fate[tempDat]=null

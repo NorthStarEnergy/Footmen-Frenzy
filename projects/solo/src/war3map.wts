@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-Solo Foots UPDATE25
+Solo Foots UPDATE38
 }
 
 STRING 2
@@ -1241,7 +1241,7 @@ Increased Mana Regeneration by 150%
 Increased movement speed
 |cffffcc00Requires:|r
 Sobi Mask
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 |cffffcc00Total Cost:|r 200
 }
 
@@ -2789,7 +2789,7 @@ Increased Mana Regeneration by 150%
 Increased movement speed
 |cffffcc00Requires:|r
 Sobi Mask
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 |cffffcc00Total Cost:|r 200
 }
 
@@ -6751,7 +6751,7 @@ Level 5 Summoner Mastery 35 mins
 STRING 1091
 // Units: N027 (Mad Wizard), Propernames (Proper Names)
 {
-|cffffcc00miRaculix.|r
+|cffffcc00RJE.|r
 }
 
 STRING 1092
@@ -9521,7 +9521,7 @@ W
 }
 
 STRING 1541
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
 {
 X
 }
@@ -9580,7 +9580,7 @@ Blocks a negative spell that an enemy casts on the Hero once every <ANss,Cool1> 
 }
 
 STRING 1551
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Hotkey (Hotkey)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Hotkey (Hotkey)
 {
 W
 }
@@ -12864,7 +12864,7 @@ Ability to cast Speed Scroll
 |cffffcc00Cooldown|r 35s
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 nMedallion of Glim
 |cffffcc00Cost|r 500
 }
@@ -13399,7 +13399,7 @@ Ability to cast Speed Scroll
 |cffffcc00Cooldown|r 35s
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 nMedallion of Glim
 |cffffcc00Cost|r 500
 }
@@ -13637,7 +13637,7 @@ Slams the ground, dealing <A010,DataA6> damage to nearby enemy land units and sl
 }
 
 STRING 2212
-// Items: I001 (miRaculix' Amulet of Power), Hotkey (Hotkey)
+// Items: I001 (RJE's Amulet of Power), Hotkey (Hotkey)
 {
 C
 }
@@ -14408,7 +14408,7 @@ E
 }
 
 STRING 2339
-// Items: I01O (miRaculix' special brew), Hotkey (Hotkey)
+// Items: I01O (RJE's special brew), Hotkey (Hotkey)
 {
 C
 }
@@ -20305,7 +20305,7 @@ STRING 3312
 STRING 3313
 // Abilities: AIrl (Healing Salve), EditorSuffix (Editor Suffix)
 {
-(miRa Brew)
+(RJE Brew)
 }
 
 STRING 3314
@@ -20811,9 +20811,9 @@ STRING 3395
 }
 
 STRING 3396
-// Items: I001 (miRaculix' Amulet of Power), Tip (Tooltip - Basic)
+// Items: I001 (RJE's Amulet of Power), Tip (Tooltip - Basic)
 {
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 }
 
 STRING 3397
@@ -21047,7 +21047,9 @@ Summon |cffffcc00Zündler|r
 
 STRING 3435
 {
-Made for 1v1 or FFA games!
+join our Discord:|cff7878ff tiny.cc/footmen|r
+
+Map by RJE, based on work by miRaculix
 
 }
 
@@ -21127,9 +21129,9 @@ STRING 3447
 }
 
 STRING 3448
-// Items: I001 (miRaculix' Amulet of Power), Name (Name)
+// Items: I001 (RJE's Amulet of Power), Name (Name)
 {
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 }
 
 STRING 3449
@@ -34702,9 +34704,9 @@ Attack Speed Bonus - [|cffffcc00Level 4|r]
 }
 
 STRING 5623
-// Items: hslv (miRaculix' special brew), Name (Name)
+// Items: hslv (RJE's special brew), Name (Name)
 {
-miRaculix' special brew
+RJE's special brew
 }
 
 STRING 5624
@@ -35287,9 +35289,9 @@ STRING 5719
 }
 
 STRING 5720
-// Items: hslv (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: hslv (RJE's special brew), Tip (Tooltip - Basic)
 {
-Purchase miRaculix' special brew
+Purchase RJE's special brew
 }
 
 STRING 5721
@@ -36325,7 +36327,7 @@ collect |cffffff00Gold |rfrom this player. |nIf you have another active Ally, th
 }
 
 STRING 5886
-// Items: hslv (miRaculix' special brew), Description (Description)
+// Items: hslv (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
@@ -37766,7 +37768,7 @@ Summon |cffffcc00Archangel|r
 }
 
 STRING 6119
-// Items: I001 (miRaculix' Amulet of Power), Ubertip (Tooltip - Extended)
+// Items: I001 (RJE's Amulet of Power), Ubertip (Tooltip - Extended)
 {
 +150 HP
 +100 MP|n|cffd45e19this item now also includes the speed bonus of the 'Boots of Speed'|r
@@ -37779,9 +37781,9 @@ Archangel
 }
 
 STRING 6121
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Name (Name)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Name (Name)
 {
-miRaculix' Amulet of Ultimate Power Recipe
+RJE's Amulet of Ultimate Power Recipe
 }
 
 STRING 6122
@@ -37803,15 +37805,15 @@ Heals a target friendly non-mechanical wounded unit for 250 hit points.
 }
 
 STRING 6125
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Tip (Tooltip - Basic)
+// Items: I012 (RJE's Amulet of Ultimate Power), Tip (Tooltip - Basic)
 {
-|cffffcc00Z|r miRaculix' Amulet of Ultimate Power
+|cffffcc00Z|r RJE's Amulet of Ultimate Power
 }
 
 STRING 6126
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Name (Name)
+// Items: I012 (RJE's Amulet of Ultimate Power), Name (Name)
 {
-miRaculix' Amulet of Ultimate Power
+RJE's Amulet of Ultimate Power
 }
 
 STRING 6127
@@ -46574,7 +46576,7 @@ Train Pack Horse
 }
 
 STRING 7521
-// Items: hslv (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: hslv (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains <hslv,uses> charges.
 }
@@ -47863,21 +47865,21 @@ STRING 7724
 }
 
 STRING 7725
-// Items: I01O (miRaculix' special brew), Description (Description)
+// Items: I01O (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 7726
-// Items: I01O (miRaculix' special brew), Name (Name)
+// Items: I01O (RJE's special brew), Name (Name)
 {
-miRaculix' special brew
+RJE's special brew
 }
 
 STRING 7727
-// Items: I01O (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: I01O (RJE's special brew), Tip (Tooltip - Basic)
 {
-Purchase miRaculix' special brew
+Purchase RJE's special brew
 }
 
 STRING 7728
@@ -64900,7 +64902,7 @@ STRING 10404
 |cff808080Skill level:|r Hard
 |cff808080Category:|r Hero Killer
 
-|cff808080Pro Tip:|r Invest in a miRaculix amulet recipe for bonus HP and mana. 
+|cff808080Pro Tip:|r Invest in a RJE amulet recipe for bonus HP and mana. 
 |cff8080801st skill:|r Thunderclap
 
 |cffffcc00Attacks land units.|r
@@ -65262,25 +65264,25 @@ STRING 10451
 }
 
 STRING 10452
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Name (Name)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Name (Name)
 {
-miRaculix' special brew |cffffffffSPT|r
+RJE's special brew |cffffffffSPT|r
 }
 
 STRING 10453
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
 {
-Purchase miRaculix' special brew
+Purchase RJE's special brew
 }
 
 STRING 10454
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Description (Description)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 10455
-// Items: I01O (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: I01O (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 1 charge.
 }
@@ -72631,7 +72633,7 @@ Mad Wizard
 STRING 11622
 // Units: N031 (Mad Wizard), Propernames (Proper Names)
 {
-|cffffcc00miRaculix.|r
+|cffffcc00RJE.|r
 }
 
 STRING 11623
@@ -72674,7 +72676,7 @@ Ability to cast Rejuvination
 |cffffcc00Cooldown|r 40s
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 Sobi Mask
 Ring of Regeneration
 |cffffcc00Cost|r 300
@@ -72768,7 +72770,7 @@ Ability to cast Rejuvination
 |cffffcc00Cooldown|r 40s
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 Sobi Mask
 Ring of Regeneration
 |cffffcc00Cost|r 300
@@ -76382,9 +76384,9 @@ STRING 12208
 }
 
 STRING 12209
-// Abilities: A0JY (Mira dust), Name (Name)
+// Abilities: A0JY (RJE dust), Name (Name)
 {
-Mira dust
+RJE dust
 }
 
 STRING 12210
@@ -77075,7 +77077,7 @@ Q
 STRING 12316
 // Abilities: A0JZ (Brilliance Aura), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12317
@@ -77870,7 +77872,7 @@ Mirror Image
 STRING 12438
 // Abilities: A0K0 (Mana Regen), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12439
@@ -77892,7 +77894,7 @@ After a moment of aiming, fire a precise round which instantly shreds through en
 STRING 12441
 // Abilities: A0K1 (Item Move Speed Bonus), EditorSuffix (Editor Suffix)
 {
-(mira amulet clarity)
+(RJE amulet clarity)
 }
 
 STRING 12442
@@ -81803,35 +81805,35 @@ Abilties - |cffffff00Cleaving|r 70% |r | |cffffff00Immolation|r | |cffffff00Taun
 }
 
 STRING 13028
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
 +450 MP
 +Movement Speed
 |cffffcc00Requires:|r
-miRaculix'  Amulet of Power
+RJE's  Amulet of Power
 Periapt of Vitality
 Pendant of Mana
 |cffffcc00Total Cost:|r 1050
 }
 
 STRING 13029
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Description (Description)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Description (Description)
 {
 |cffffcc00Gives:|r
 +600 HP
 +450 MP
 +Movement Speed
 |cffffcc00Requires:|r
-miRaculix'  Amulet of Power
+RJE's  Amulet of Power
 Periapt of Vitality
 Pendant of Mana
 |cffffcc00Total Cost:|r 1050
 }
 
 STRING 13030
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
+// Items: I012 (RJE's Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -82728,7 +82730,7 @@ Movement Speed Increase: 10%
 Cooldown: 45s
 
 |cffffcc00Requires:|r
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 Circlet of Nobility
 |cffffcc00Total Cost:|r 4000
 
@@ -82754,7 +82756,7 @@ Movement Speed Increase: 10%
 Cooldown: 45s
 
 |cffffcc00Requires:|r
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 Circlet of Nobility
 |cffffcc00Total Cost:|r 4000
 
@@ -86612,7 +86614,7 @@ STRING 13767
 STRING 13768
 // Items: I013 (Info 1), Ubertip (Tooltip - Extended)
 {
-map created by |cffffff00miRaculix., RJE|r
+map created by |cffffff00RJE., RJE|r
 
 Map Co-Creators:
 |cff00ff00OH.noes |r
@@ -86623,7 +86625,7 @@ Map Co-Creators:
 
 like the map & want to contribute / support, so we can continue releasing new versions?
 |cff7878ffpaypal.me/footmenfrenzy
-patreon.com/miRaculix|r
+patreon.com/RJE|r
 }
 
 STRING 13769
@@ -89997,7 +89999,7 @@ Dark Abominations gain Burrow and +200 maximum health.
 }
 
 STRING 14309
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 3 charges.
 }
@@ -101100,7 +101102,7 @@ Increased Movement speed
 Item carrier receives a Spell Shield (60s cooldown)
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 Amulet of Spell Shield
 |cffffcc00Cost|r 1000
 }
@@ -101115,7 +101117,7 @@ Increased Movement speed
 Item carrier receives a Spell Shield (60s cooldown)
 
 |cffffcc00Requires:|r
-miRaculix's Amulet
+RJE's Amulet
 Amulet of Spell Shield
 |cffffcc00Cost|r 1000
 }
@@ -101652,9 +101654,9 @@ Purchase Claws of Ultimate Devastation
 }
 
 STRING 17708
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
 {
-miRaculix' Amulet of Ultimate Power Recipe
+RJE's Amulet of Ultimate Power Recipe
 }
 
 STRING 17709
