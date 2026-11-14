@@ -4384,6 +4384,7 @@ function TFP_wildCards___c takes nothing returns boolean
         local timer cdrClock
         if GetSpellAbilityId() == TFP_tfConsts_WILD_CARDS_ID then
             set tU=GetTriggerUnit()
+            call BlzStartUnitAbilityCooldown(tU, TFP_tfConsts_WILD_CARDS_ID, 10.0)
             set owner=GetOwningPlayer(tU)
             set tX=GetSpellTargetX()
             set tY=GetSpellTargetY()
@@ -4620,6 +4621,14 @@ function TF33_Tint takes unit u, integer color returns nothing
     endif
 endfunction
 
+function TF_CardBurst takes string model, real x, real y, integer red, integer green, integer blue, real scale returns nothing
+    local effect burst = AddSpecialEffect(model,x,y)
+    call BlzSetSpecialEffectColor(burst,red,green,blue)
+    call BlzSetSpecialEffectScale(burst,scale)
+    call DestroyEffect(burst)
+    set burst = null
+endfunction
+
 function TF33_Impact takes unit c, unit v, integer color, integer rank, real multiplier returns nothing
     local group g=CreateGroup()
     local unit u
@@ -4631,6 +4640,7 @@ function TF33_Impact takes unit c, unit v, integer color, integer rank, real mul
     local effect healFx
     if color == 1 then
         call TFP_DamageType_dealCodeDamage(c,v,(90.+60.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
+        call TF_CardBurst("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",x,y,255,65,30,1.55)
         call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl",x,y))
         call GroupEnumUnitsInRange(g,x,y,250.,null)
         loop
@@ -4648,10 +4658,12 @@ function TF33_Impact takes unit c, unit v, integer color, integer rank, real mul
             call TFP_TF_CardDebuff(c,v,'ATfa',rank,"thunderbolt")
         endif
         call TFP_DamageType_dealCodeDamage(c,v,(75.+50.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
+        call TF_CardBurst("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl",x,y,255,210,65,1.85)
         call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___GOLDFX,v,"origin"))
     else
         call TFP_DamageType_dealCodeDamage(c,v,(40.+40.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
         if TFP_TF_Alive(c) then
+            call TF_CardBurst("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",GetUnitX(c),GetUnitY(c),65,205,255,1.55)
             call GroupEnumUnitsInRange(g,GetUnitX(c),GetUnitY(c),300.,null)
             loop
                 set u=FirstOfGroup(g)
@@ -4659,6 +4671,7 @@ function TF33_Impact takes unit c, unit v, integer color, integer rank, real mul
                 call GroupRemoveUnit(g,u)
                 if TFP_TF_Alive(u) and IsUnitAlly(u,GetOwningPlayer(c)) and not IsUnitType(u,UNIT_TYPE_STRUCTURE) and not IsUnitType(u,UNIT_TYPE_MECHANICAL) then
                     if GetWidgetLife(u)<GetUnitState(u,UNIT_STATE_MAX_LIFE) then
+                        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\HealingWave\\HealingWaveTarget.mdl",u,"chest"))
                         set healed=true
                     endif
                     if IsUnitType(u,UNIT_TYPE_HERO) then
@@ -4680,7 +4693,7 @@ function TF33_Impact takes unit c, unit v, integer color, integer rank, real mul
             call KillSoundWhenDone(healSound)
                     set healFx=AddSpecialEffectTarget("Abilities\\Spells\\Orc\\HealingWave\\HealingWaveTarget.mdl",c,"origin")
                     call BlzSetSpecialEffectColor(healFx,65,255,100)
-                    call BlzSetSpecialEffectScale(healFx,0.45)
+                    call BlzSetSpecialEffectScale(healFx,1.35)
                     call DestroyEffect(healFx)
             endif
         endif
@@ -4760,10 +4773,10 @@ function TF33_Show takes unit c returns nothing
     if LoadBoolean(TF33_H,h,5) and ticks<8 then
         set pulse=Sin(3.14159265*I2R(ticks)/8.)
     endif
-    set scale=1.8*(1.+.08*pulse)
+    set scale=1.35*(1.+.08*pulse)
     call SetUnitX(orb,GetUnitX(c))
     call SetUnitY(orb,GetUnitY(c))
-    call SetUnitFlyHeight(orb,GetUnitFlyHeight(c)+250.+12.*pulse,0.)
+    call SetUnitFlyHeight(orb,GetUnitFlyHeight(c)+120.+6.*pulse,0.)
     call SetUnitScale(orb,scale,scale,scale)
     call TF33_Tint(orb,LoadInteger(TF33_H,h,4))
     set orb=null
@@ -4806,12 +4819,12 @@ function TF33_SelectTick takes nothing returns nothing
         call TF33_Close(c,0.)
     else
         call SaveInteger(TF33_H,h,6,ticks)
-        if not LoadBoolean(TF33_H,h,5) and ticks>=100 then
+        if not LoadBoolean(TF33_H,h,5) and ticks>=90 then
             call TF33_Close(c,0.)
             set c=null
             set t=null
             return
-        elseif not LoadBoolean(TF33_H,h,5) and ModuloInteger(ticks,12)==0 then
+        elseif not LoadBoolean(TF33_H,h,5) and ModuloInteger(ticks,10)==0 then
             call UnitRemoveAbility(c,TFP_s__tfConsts_CARD_ID[color])
             set color=ModuloInteger(color+1,3)
             call SaveInteger(TF33_H,h,4,color)
@@ -4841,7 +4854,6 @@ function TF33_Cast takes nothing returns nothing
         call SaveInteger(TF33_H,h,4,1)
         call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
         call BlzUnitHideAbility(c,'ATf2',true)
-        call BlzEndUnitAbilityCooldown(c,'ATf2')
         call UnitAddAbility(c,'ATf4')
         call TF33_Show(c)
         call TimerStart(t,.05,true,function TF33_SelectTick)
@@ -4861,7 +4873,7 @@ function TF33_Cast takes nothing returns nothing
             call SaveInteger(TF33_H,GetHandleId(t),4,color)
             call SaveInteger(TF33_H,GetHandleId(t),5,rank)
             call TimerStart(t,.03,true,function TF33_Flight)
-            call TF33_Close(c,9.)
+            call TF33_Close(c,6.)
         endif
     endif
     set c=null
@@ -4875,25 +4887,13 @@ function TF45_Odds takes unit u returns real
     return 50. + RMinBJ(10.,LoadReal(TF33_G,h,1)/90.) + 2.*I2R(IMinBJ(5,LoadInteger(TF33_G,h,2)))
 endfunction
 
-function TF_GatePointer takes nothing returns nothing
-    local integer h=GetPlayerId(GetTriggerPlayer())
-    call SaveReal(TF46_H,h,1,BlzGetTriggerPlayerMouseX())
-    call SaveReal(TF46_H,h,2,BlzGetTriggerPlayerMouseY())
-endfunction
 
 function TF45_Track takes unit u returns nothing
-    local player owner=GetOwningPlayer(u)
-    local integer pid=GetPlayerId(owner)
-    local trigger pointer
     if GetUnitTypeId(u)=='HTf1' and not IsUnitIllusion(u) then
-        if pid < 12 and not HaveSavedHandle(TF46_H,pid,8) then
-            set pointer=CreateTrigger()
-            call TriggerRegisterPlayerEvent(pointer,owner,EVENT_PLAYER_MOUSE_MOVE)
-            call TriggerAddAction(pointer,function TF_GatePointer)
-            call SaveTriggerHandle(TF46_H,pid,8,pointer)
-            set pointer=null
+        if not IsUnitInGroup(u, TF33_Heroes) then
+            call BlzSetUnitAttackCooldown(u, 1.8, 0)
+            call GroupAddUnit(TF33_Heroes,u)
         endif
-        call GroupAddUnit(TF33_Heroes,u)
     endif
 endfunction
 
@@ -5044,16 +5044,11 @@ function TF_CardAttack takes nothing returns nothing
     local integer h=GetHandleId(c)
     local integer rank
     local integer color
-    local real cost
     if BlzGetEventIsAttack() and GetEventDamage()>0.0 and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
         set rank=GetUnitAbilityLevel(c,'ATf2')
         set color=LoadInteger(TF33_H,h,4)
-        set cost=50.+10.*rank
-        if GetUnitState(c,UNIT_STATE_MANA)>=cost then
-            call SetUnitState(c,UNIT_STATE_MANA,GetUnitState(c,UNIT_STATE_MANA)-cost)
-            call TF33_Close(c,9.)
-            call TF33_Impact(c,v,color,rank,1.2)
-        endif
+        call TF33_Close(c,6.)
+        call TF33_Impact(c,v,color,rank,1.2)
     endif
     set c=null
     set v=null
@@ -5167,8 +5162,8 @@ function TF45_GateStart takes unit u, real x, real y returns nothing
     local real distance=SquareRoot(dx*dx+dy*dy)
     if GetUnitAbilityLevel(u,'ATfc')>0 and TFP_TF_Alive(u) and not HaveSavedHandle(TF45_Gate,h,0) then
         if distance>5500. then
-            set x=GetUnitX(u)+5500.*dx/distance
-            set y=GetUnitY(u)+5500.*dy/distance
+            call DisplayTextToPlayer(GetOwningPlayer(u),0.,0.,"Gate destination is beyond 5500 range.")
+            return
         endif
         call SaveReal(TF45_Gate,h,5,x)
         call SaveReal(TF45_Gate,h,6,y)
@@ -5186,35 +5181,8 @@ function TF45_GateStart takes unit u, real x, real y returns nothing
 endfunction
 
 
-function TF_GateKey takes nothing returns nothing
-    local integer h=GetHandleId(GetTriggeringTrigger())
-    local unit c=LoadUnitHandle(TF46_H,h,0)
-    local integer pointer=GetPlayerId(GetTriggerPlayer())
-    if HaveSavedReal(TF46_H,pointer,1) and TFP_TF_Alive(c) and IsUnitSelected(c,GetTriggerPlayer()) and GetUnitAbilityLevel(c,'ATfc')>0 and not HaveSavedHandle(TF45_Gate,GetHandleId(c),0) then
-        call TF45_GateStart(c,LoadReal(TF46_H,pointer,1),LoadReal(TF46_H,pointer,2))
-    endif
-    set c=null
-endfunction
 
-function TF_GateInputEnd takes unit c returns nothing
-    local integer h=GetHandleId(c)
-    local trigger key=LoadTriggerHandle(TF46_H,h,2)
-    if key!=null then
-        call FlushChildHashtable(TF46_H,GetHandleId(key))
-        call DestroyTrigger(key)
-        call RemoveSavedHandle(TF46_H,h,2)
-    endif
-    set key=null
-endfunction
 
-function TF_GateInputStart takes unit c returns nothing
-    local trigger key=CreateTrigger()
-    call BlzTriggerRegisterPlayerKeyEvent(key,GetOwningPlayer(c),OSKEY_V,0,true)
-    call TriggerAddAction(key,function TF_GateKey)
-    call SaveTriggerHandle(TF46_H,GetHandleId(c),2,key)
-    call SaveUnitHandle(TF46_H,GetHandleId(key),0,c)
-    set key=null
-endfunction
 
 function TF46_RevealEnd takes nothing returns nothing
     local timer t=GetExpiredTimer()
@@ -5232,7 +5200,7 @@ function TF46_RevealEnd takes nothing returns nothing
     call DestroyGroup(g)
     call FogModifierStop(fog)
     call DestroyFogModifier(fog)
-    call TF_GateInputEnd(c)    
+
     call TF45_GateClear(c)
     if GetUnitAbilityLevel(c,'ATfc')>0 then
         call UnitRemoveAbility(c,'ATfc')
@@ -5252,8 +5220,6 @@ function TFP_destiny___c takes nothing returns boolean
     local unit c=GetTriggerUnit()
     local unit u
     local player p=GetOwningPlayer(c)
-    local integer rank=GetUnitAbilityLevel(c,'ATfb')
-    local real duration=10.
     local rect bounds
     local real x
     local real y
@@ -5263,11 +5229,6 @@ function TFP_destiny___c takes nothing returns boolean
     local fogmodifier fog
     if GetSpellAbilityId()=='ATfb' and not HaveSavedHandle(TF46_H,GetHandleId(c),0) then
         call TF45_Track(c)
-        if rank==2 then
-            set duration=13.
-        elseif rank>=3 then
-            set duration=15.
-        endif
         set bounds=GetWorldBounds()
         set t=CreateTimer()
         set h=GetHandleId(t)
@@ -5292,8 +5253,8 @@ function TFP_destiny___c takes nothing returns boolean
         call SaveTimerHandle(TF46_H,GetHandleId(c),0,t)
         call BlzUnitHideAbility(c,'ATfb',true)
         call UnitAddAbility(c,'ATfc')
-        call TF_GateInputStart(c)
-        call TimerStart(t,duration,false,function TF46_RevealEnd)
+
+        call TimerStart(t,5.0,false,function TF46_RevealEnd)
         call RemoveRect(bounds)
     endif
     set c=null
@@ -6286,7 +6247,7 @@ function TFP_Init takes nothing returns nothing
 endfunction
 
 function FF_IsStandardPub takes nothing returns boolean
-    return udg_mode_pub and not FFR4Pro and not udg_mode_debugmode and not FFMode4K
+    return udg_mode_pub and not FFR4Pro and not FFMode4K
 endfunction
 
 function PBI_Allowed takes nothing returns boolean
@@ -13875,21 +13836,38 @@ function F35_MassEnabled takes nothing returns boolean
     return udg_mode_pub and not udg_mode_inhouse and not udg_mode_no_mass
 endfunction
 
-// Each quarter has 21 positions across its front. Extra ranks go toward the corner.
-function F35_WallX takes integer team, real column, integer rank returns real
-    local real distance = 640.0 + 40.0 * column + 48.0 * I2R(rank)
-    if team == 0 or team == 3 then
-        return GetRectCenterX(gg_rct_MAP_CENTER) - distance
+// Fill nested L-shaped ranks from the center-facing edges, alternating arms.
+function F35_WallOffset takes integer slot, boolean horizontal returns real
+    local integer depth=0
+    local integer width=41
+    local integer step
+    loop
+        exitwhen slot < width or width <= 1
+        set slot=slot-width
+        set width=width-2
+        set depth=depth+1
+    endloop
+    set step=depth
+    if (horizontal and ModuloInteger(slot,2)==1) or (not horizontal and ModuloInteger(slot,2)==0) then
+        set step=step+(slot+1)/2
     endif
-    return GetRectCenterX(gg_rct_MAP_CENTER) + distance
+    return 96.0+64.0*I2R(step)
 endfunction
 
-function F35_WallY takes integer team, real column, integer rank returns real
-    local real distance = 640.0 + 40.0 * (20.0 - column) + 48.0 * I2R(rank)
-    if team == 2 or team == 3 then
-        return GetRectCenterY(gg_rct_MAP_CENTER) - distance
+function F35_WallX takes integer team, integer slot returns real
+    local real offset=F35_WallOffset(slot,true)
+    if team == 0 or team == 3 then
+        set offset=-offset
     endif
-    return GetRectCenterY(gg_rct_MAP_CENTER) + distance
+    return GetRectCenterX(gg_rct_MAP_CENTER)+offset
+endfunction
+
+function F35_WallY takes integer team, integer slot returns real
+    local real offset=F35_WallOffset(slot,false)
+    if team == 2 or team == 3 then
+        set offset=-offset
+    endif
+    return GetRectCenterY(gg_rct_MAP_CENTER)+offset
 endfunction
 
 function F35_StageFootman takes unit u, integer pn returns nothing
@@ -13906,12 +13884,7 @@ function F35_ReleaseMass takes nothing returns nothing
     local integer i=0
     local integer pn
     local integer team
-    local integer array total
     local integer array placed
-    local integer ranks
-    local integer slots
-    local integer rank
-    local real column
     local real x
     local real y
     local unit u
@@ -13924,29 +13897,11 @@ function F35_ReleaseMass takes nothing returns nothing
         set u=F35_MassPool[i]
         set pn=GetPlayerId(GetOwningPlayer(u)) + 1
         if GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and pn >= 1 and pn <= 12 and udg_player_active[pn] and IsUnitAliveBJ(udg_base[pn]) then
-            set team=(pn-1)/3
-            set total[team]=total[team]+1
-        endif
-        set i=i+1
-    endloop
-    set i=0
-    loop
-        exitwhen i >= F35_MassPoolCount
-        set u=F35_MassPool[i]
-        set pn=GetPlayerId(GetOwningPlayer(u)) + 1
-        if GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and pn >= 1 and pn <= 12 and udg_player_active[pn] and IsUnitAliveBJ(udg_base[pn]) then
             call FFGS_ComputeStats(0, pn)
             call FFGS_ApplyUnit(u, 0, pn)
             set team=(pn-1)/3
-            set ranks=(total[team]+20)/21
-            set rank=ModuloInteger(placed[team], ranks)
-            set slots=(total[team]-1-rank)/ranks+1
-            set column=10.0
-            if slots > 1 then
-                set column=20.0*I2R(placed[team]/ranks)/I2R(slots-1)
-            endif
-            set x=F35_WallX(team,column,rank)
-            set y=F35_WallY(team,column,rank)
+            set x=F35_WallX(team,placed[team])
+            set y=F35_WallY(team,placed[team])
             call SetUnitX(u,x)
             call SetUnitY(u,y)
             call SetUnitFacing(u,Atan2(GetRectCenterY(gg_rct_MAP_CENTER)-y,GetRectCenterX(gg_rct_MAP_CENTER)-x)*bj_RADTODEG)
@@ -13978,8 +13933,6 @@ function FFGS_SpawnForPlayer takes integer idx, integer pn, integer count return
     local real heading = bj_UNIT_FACING
     local integer team = (pn - 1) / 3
     local integer sequence
-    local integer rank
-    local real column
     local integer i = 1
     local boolean stage=idx == 0 and not F35_MassReleased and F35_MassEnabled()
 
@@ -13987,11 +13940,8 @@ function FFGS_SpawnForPlayer takes integer idx, integer pn, integer count return
         exitwhen i > count
         if idx == 0 then
             set sequence=F35_TeamSpawnSlot[team]
-            // Spread each wave across the team's Mass line, then fill the next rank.
-            set column=I2R(ModuloInteger(sequence*8,21))
-            set rank=sequence/21
-            set x=F35_WallX(team,column,rank)
-            set y=F35_WallY(team,column,rank)
+            set x=F35_WallX(team,sequence)
+            set y=F35_WallY(team,sequence)
             set heading=Atan2(GetRectCenterY(gg_rct_MAP_CENTER)-y,GetRectCenterX(gg_rct_MAP_CENTER)-x)*bj_RADTODEG
             set F35_TeamSpawnSlot[team]=ModuloInteger(sequence+1,210)
         endif
@@ -26116,6 +26066,9 @@ function Trig_admin_level_Func002Func002C takes nothing returns boolean
 endfunction
 
 function Trig_admin_level_Func002Func004Func002C takes nothing returns boolean
+    if udg_orig_player_name[udg_X] == "ToXin#11623" then
+        return true
+    endif
     if ( ( udg_orig_player_name[udg_X] == "RJE#11113" ) ) then
         return true
     endif
@@ -27561,14 +27514,7 @@ function Trig_MODE_GUI_execute_Actions takes nothing returns nothing
         elseif clicked == udg_dlg_btn_mode_04[pn] then
             call FFMode_Resolve()
             set FFR4Pro=false
-            set FFR4NoPool=false
-            set FFMode4K=false
-            set FFModePrivateVote=false
-            set udg_FFCH_Mode=false
-            set udg_mode_overdrive=false
-            set udg_mode_inhouse=false
-            set udg_mode_pub=true
-            set udg_mode_koth=true
+            set FFR4NoPool=true
             call EnableTrigger(gg_trg_debugmode)
             call ConditionalTriggerExecute(gg_trg_debugmode)
         elseif clicked == udg_dlg_btn_mode_03[pn] then
@@ -30828,7 +30774,7 @@ endfunction
 // a nearby owned unit, so supply inert buyers without restoring the old menu.
 // Pub early progression. All rewards still originate from kills.
 function P67_Enabled takes nothing returns boolean
-    return udg_mode_pub and not FFR4Pro and not udg_mode_promode and not FFMode4K and not FFModePrivateVote and not udg_mode_inhouse and not udg_mode_debugmode and not udg_mode_overdrive and not udg_FFCH_Mode and not udg_mode_no_mass and udg_colossal_on
+    return udg_mode_pub and not FFR4Pro and not udg_mode_promode and not FFMode4K and not FFModePrivateVote and not udg_mode_inhouse and not udg_mode_overdrive and not udg_FFCH_Mode and not udg_mode_no_mass and udg_colossal_on
 endfunction
 
 function P67_ValidHero takes unit u returns boolean
@@ -31752,13 +31698,6 @@ function Trig_Start_game_Actions takes nothing returns nothing
     call DoNothing()
     call TimerDialogDisplayBJ(true, udg_timer_window_colossal)
     // MODE: DEBUGMODE
-    if ( Trig_Start_game_Func020C() ) then
-        set udg_autopoool_allowed=true
-        set udg_mode_overdrive=false
-        call SetMapFlag(MAP_LOCK_RESOURCE_TRADING, true)
-    else
-        call DoNothing()
-    endif
     // MODE: WONKY MODES
     if ( Trig_Start_game_Func022C() ) then
         set udg_autopoool_allowed=true
@@ -31769,11 +31708,7 @@ function Trig_Start_game_Actions takes nothing returns nothing
         call DoNothing()
     endif
     call SetPlayerTechResearchedSwap('R00N', 0, ConvertedPlayer(udg_X))
-    if ( Trig_Start_game_Func020C() ) then
-        call StartTimerBJ(udg_timer_upgradedelay, false, 0.00)
-    else
-        call StartTimerBJ(udg_timer_upgradedelay, false, 280.00)
-    endif
+    call StartTimerBJ(udg_timer_upgradedelay, false, 280.00)
     if ( Trig_Start_game_Func025C() ) then
         set udg_startgold=2000
         call TriggerExecute(gg_trg_MODE_777)
@@ -34467,11 +34402,11 @@ endfunction
 function F35_MassPoint takes integer pn returns location
     local integer team=(pn - 1) / 3
     local integer slot=ModuloInteger(pn - 1, 3)
-    local real column=2.0+I2R(slot)*8.0
+    local integer position=13+slot*7
     if not F35_MassEnabled() then
         return Location(GetLocationX(udg_player_start[pn]), GetLocationY(udg_player_start[pn]))
     endif
-    return Location(F35_WallX(team,column,1), F35_WallY(team,column,1))
+    return Location(F35_WallX(team,position), F35_WallY(team,position))
 endfunction
 
 function Trig_Mass_START_Actions takes nothing returns nothing
@@ -39797,6 +39732,9 @@ function Trig_debugmode_Func011Func002C takes nothing returns boolean
 endfunction
 
 function Trig_debugmode_Actions takes nothing returns nothing
+    if udg_mode_debugmode then
+        return
+    endif
     set udg_game_mode_display[1]=" Debugmode"
     set udg_game_mode_display[2]=" Automatic"
     set udg_game_mode_display[3]=" AP"
@@ -39806,6 +39744,10 @@ function Trig_debugmode_Actions takes nothing returns nothing
     set udg_mode_debugmode=true
     set udg_total_hero_count=94
     call ExecuteFunc("AddAPHeroesToDraft")
+    if udg_selected_mode == 0 then
+        call ConditionalTriggerExecute(gg_trg_MODE_set_pub_game_default)
+    endif
+    set udg_game_mode_display[1]=" Debugmode"
     set udg_version=5
     set udg_ap_number_of_heros=2
     set udg_X=1
@@ -39829,17 +39771,6 @@ function Trig_debugmode_Actions takes nothing returns nothing
         endif
         set udg_X=udg_X + 1
     endloop
-    if udg_selected_mode == 0 then
-        call EnableTrigger(gg_trg_Start_AP)
-        call ConditionalTriggerExecute(gg_trg_Start_AP)
-        call ConditionalTriggerExecute(gg_trg_Start_game)
-    endif
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_tech_delay_t1, false, 0.00)
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_tech_delay_t3, false, 0.00)
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_tech_delay_t2, false, 0.00)
     call DisplayTextToForce(udg_all_players, "TRIGSTR_1172")
 endfunction
 
@@ -39850,7 +39781,7 @@ function InitTrig_debugmode takes nothing returns nothing
 endfunction
 
 function Trig_debug_Conditions takes nothing returns boolean
-    if ( not ( udg_mode_debugmode == true ) ) then
+    if not udg_mode_debugmode and GetEventPlayerChatString() != "-debugmode" then
         return false
     endif
     if ( not ( udg_admin_level[GetConvertedPlayerId(GetTriggerPlayer())] >= 90 ) ) then
@@ -45310,7 +45241,7 @@ function GFB_Cast takes unit u returns nothing
     local integer n = LoadInteger(GFB_Data, k, 0)
     local timer t
     if n == 0 then
-        set n = 5
+        set n = 4
         set t = CreateTimer()
         call SaveTimerHandle(GFB_Data, k, 1, t)
         call SaveUnitHandle(GFB_Data, GetHandleId(t), 0, u)
@@ -45458,7 +45389,6 @@ function Trig_Guardian_Force_Field_Loop_Actions takes nothing returns nothing
                 call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl", udg_Guardian_Point[udg_Guardian_Integer[0]]))
                 set udg_Guardian_Integer[0] = udg_Guardian_Integer[0] + 1
             endloop
-            call TriggerExecute(gg_trg_Guardian_Force_Field_Damage)
             set udg_Guardian_Integer[0] = 0
             loop
                 exitwhen udg_Guardian_Integer[0] >= GFW_Count(udg_Guardian_FF_Level[udg_Guardian_FF_Loop])
@@ -65698,153 +65628,153 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
     call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.|nCooldown: 10 sec", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes |cffff897990|r damage once per cast.|nCooldown: 10 sec", 0)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.|nCooldown: 10 sec", 1)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.|nCooldown: 10 sec", 1)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.|nCooldown: 10 sec", 2)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.|nCooldown: 10 sec", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.|nCooldown: 10 sec", 3)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.|nCooldown: 10 sec", 3)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.|nCooldown: 10 sec", 4)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.|nCooldown: 10 sec", 4)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.|nCooldown: 10 sec", 5)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.|nCooldown: 10 sec", 5)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 700|nMana and cooldown begin on throw.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 700|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 60 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 1|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 700|nMana and cooldown begin on throw.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 1|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 700|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 60 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 750|nMana and cooldown begin on throw.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 750|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 70 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 4|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 750|nMana and cooldown begin on throw.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 4|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 750|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 70 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 800|nMana and cooldown begin on throw.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 800|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 80 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 7|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 800|nMana and cooldown begin on throw.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 7|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 800|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 80 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 850|nMana and cooldown begin on throw.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 850|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 90 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 10|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 850|nMana and cooldown begin on throw.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 10|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 850|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 90 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 900|nMana and cooldown begin on throw.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 900|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 100 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 13|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 900|nMana and cooldown begin on throw.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 13|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 900|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 100 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 950|nMana and cooldown begin on throw.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 950|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 110 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 16|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 950|nMana and cooldown begin on throw.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 16|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 3 rotations at 0.5 sec per color; 4.5 sec to lock|nThrow window: 10 sec|nRange: 950|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nMana: 110 on activation|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityTooltip('ATf3', "Lock Blue Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf3', "Learn Lock Blue Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf4', "Lock Red Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf4', "Learn Lock Red Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf5', "Lock Gold Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf5', "Learn Lock Gold Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 4.5 sec total; 0.5 sec per color|nThrow window: 10 sec|nActivation spends mana and starts a 10 sec cooldown. Throwing starts a fresh 6 sec cooldown.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nThrow: no additional mana. Cooldown: 6 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 10 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 150 sec", 0)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 200 sec", 0)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 6|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 10 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 150 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 6|n|nReveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 200 sec", 0)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 13 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 135 sec", 1)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 190 sec", 1)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 11|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 13 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 135 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 11|n|nReveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 190 sec", 1)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 15 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 120 sec", 2)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 180 sec", 2)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 16|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 15 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 120 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 16|n|nReveal the entire map and invisible units. Press V again, then click walkable ground to Gate once; teleporting does not end the reveal.|n|nReveal: 5 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 180 sec", 2)
     call BlzSetAbilityTooltip('ATfc', "Gate [V] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfc', "Press V over your destination to channel, then teleport once to a walkable destination while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
+    call BlzSetAbilityExtendedTooltip('ATfc', "Press V, then click walkable ground to channel and teleport there once while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
     call BlzSetAbilityResearchTooltip('ATfc', "Learn Gate - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfc', "Press V over your destination to channel, then teleport once to a walkable destination while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfc', "Press V, then click walkable ground to channel and teleport there once while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 100 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 1", 0)
@@ -65870,29 +65800,29 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 16|nPlace a pylon to shield nearby allied heroes for 300 and pull one allied hero to you. The tether heals allies and slows enemies.", 5)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 0)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 0)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 1)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 1)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3.5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 2)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 3.5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 2)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 4s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 3)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 4s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 3)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 4)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 4)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 4 barriers within 4s for 25 mana each. Each blocks movement for 5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 5)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to 4 barriers within 4s for 25 mana each. Each blocks movement for 5s. The 30s cooldown begins after the fourth cast or when the casting window ends.", 5)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 0)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 1", 0)
