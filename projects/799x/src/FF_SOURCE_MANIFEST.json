@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "19699d4ea8d14b96f9347662326629c4ab9151d5aa405772038cca81bf3589a3",
-  "runtime_functions": 3800,
+  "compiled_source_sha256": "1ff29b3b8b9afb1350581856ca3cac6c993191448556a82e649624aac327044a",
+  "runtime_functions": 3965,
   "editor_generated_functions": [
     "CreateAllUnits",
     "CreateBuildingsForPlayer0",
@@ -51,15 +51,15 @@
     "main"
   ],
   "editor_generated_globals": 165,
-  "globals_sha256": "55151d5718abb9e8baa381f401786ec5d26537138fd8770b4f526253cdcc6c10",
-  "runtime_sha256": "a29331c5c6b0934d9d789adef80917f380dfc59fefe100c23fb081fa0a5ceebe",
+  "globals_sha256": "f74dc3035a4733909e3e52df4001eb271a197f1c528ce01874f7e610ac3fc543",
+  "runtime_sha256": "56d15ed57532db63d9b1e5fc582e6eeb1ab277440c21534666c2ebc9aa25c75a",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "01877612b023b54cf2375ce74ff092b1c52f99ba64ed14bd4440be1e4bcd5ffc",
-  "revision": "FF799X_Grunts_Ghouls_v116_TEST",
+  "source_map_sha256": "85b639fd873dcfb663a6aec3d143225ae0b40af772f9bca7aee78cc148da7543",
+  "revision": "799X RC29 player casino and Wallet",
   "engine_playtest": false
 }

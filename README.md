@@ -6,10 +6,10 @@ The curated public wiki is in [`wiki/`](wiki/README.md). Build its self-containe
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | Shared Fixes v85 | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | UPDATE09 | Solo-Foots-4p | Tests/Solo Foots |
-| Mini (8 players) | v10 | Mini-Foots-8p | Tests/Mini Foots |
-| FFA + King (8 players) | v17 | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | rc30 | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | v49 | Solo-Foots-4p | Tests/Solo Foots |
+| Mini (8 players) | v61 | Mini-Foots-8p | Tests/Mini Foots |
+| FFA + King (8 players) | v77 | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 

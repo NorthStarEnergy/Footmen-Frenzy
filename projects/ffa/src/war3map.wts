@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-FFA Foots v72 - RJE
+FFA Foots v77 - RJE
 }
 
 STRING 3
@@ -27043,7 +27043,7 @@ STRING 4394
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.25s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
@@ -64331,7 +64331,7 @@ STRING 10342
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 750
-|cff808080Spawn Interval:|r 5.75s
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 10343
@@ -65214,7 +65214,7 @@ STRING 10446
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.25s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
@@ -87057,7 +87057,7 @@ STRING 13832
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6s
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 13833
@@ -101650,7 +101650,7 @@ STRING 17669
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6s
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 17670
@@ -102280,7 +102280,7 @@ STRING 17865
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 750
-|cff808080Spawn Interval:|r 5.75s
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 17866
