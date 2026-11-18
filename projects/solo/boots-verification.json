@@ -1,0 +1,15 @@
+{
+  "project": "solo",
+  "behavior_cases": 270,
+  "recipes": 6,
+  "random_boot_sale_gold": 75,
+  "normal_amulet_priority": true,
+  "requires_carried_upgrade": true,
+  "live_game_test": false,
+  "map": "Solo-Foots-v40-Test.w3x",
+  "sha256": "d9b97cc157015979eb641648fb5bad2d78a4f275f12bdb006c83b0fffc987ade",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "installed_hashes_verified": true,
+  "previous_maps_archived": true
+}

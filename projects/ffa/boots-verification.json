@@ -1,0 +1,15 @@
+{
+  "project": "ffa",
+  "behavior_cases": 270,
+  "recipes": 6,
+  "random_boot_sale_gold": 75,
+  "normal_amulet_priority": true,
+  "requires_carried_upgrade": true,
+  "live_game_test": false,
+  "map": "FFA Foots v72.w3x",
+  "sha256": "df3b986056f61521b4180f39b31416dda47142febe1cc369ad01557b81ed75ad",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "installed_hashes_verified": true,
+  "previous_maps_archived": true
+}
