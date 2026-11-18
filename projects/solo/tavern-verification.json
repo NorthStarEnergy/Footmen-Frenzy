@@ -1,0 +1,20 @@
+{
+  "changed_functions": [
+    "DraftUpdate",
+    "config"
+  ],
+  "all_four_solo_slots": true,
+  "patron_created_before_stock_and_selection": true,
+  "neutral_interaction_enabled": true,
+  "select_button_does_not_consume_hero_slot": true,
+  "repeated_updates_do_not_duplicate_units": true,
+  "cleanup_after_pick": true,
+  "item_text_unchanged": true,
+  "live_game_testing": false,
+  "map": "Solo-Foots-v38-Test.w3x",
+  "sha256": "16ed691e4b602d668eda7b3920f5038680d2c5b300531367b1cbe7762dcd9f66",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "both_installed_hashes_verified": true,
+  "previous_test_preserved": true
+}

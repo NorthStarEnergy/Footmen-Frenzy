@@ -57813,17 +57813,17 @@ function DraftUpdate takes nothing returns nothing
             set wants = udg_altar_hero_purchases[pn] == 0 and udg_player_active[pn] and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and udg_herO[pn] == null
             if wants then
                 set waiting[team] = waiting[team] + 1
+                // Neutral shops need an owned, nearby patron before stock and selection.
+                if DraftWisp[pn] == null then
+                    set DraftWisp[pn] = CreateUnit(p, 'eTWP', DraftX[team], DraftY[team]-96., 90.)
+                endif
                 if DraftShop[team] == null then
                     set DraftShop[team] = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'nTDP', DraftX[team], DraftY[team], 270.)
                     call BlzSetUnitName(DraftShop[team], "Team " + I2S(team) + " Hero Tavern")
-                    if DraftPubSD() then
-                        call BlzUnitHideAbility(DraftShop[team], 'Ane2', true)
-                    endif
                     call SetUnitTypeSlots(DraftShop[team], 12)
                     call DraftRefresh(team)
                 endif
                 if not DraftPending[pn] then
-                    set DraftWisp[pn] = CreateUnit(p, 'eTWP', DraftX[team], DraftY[team]-96., 90.)
                     call SelectUnitForPlayerSingle(DraftShop[team], p)
                     call PanCameraToTimedForPlayer(p, DraftX[team], DraftY[team], 0.25)
                 endif
@@ -58112,7 +58112,7 @@ call ExecuteFunc("TimerUtils___init")
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Solo Foots v37 - RJE")
+    call SetMapName("Solo Foots v38 - RJE")
     call SetMapDescription("join our Discord:|cff7878ff tiny.cc/footmen|r|n|nMap by RJE, based on work by miRaculix")
     call SetPlayers(16)
     call SetTeams(16)
