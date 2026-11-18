@@ -8,8 +8,9 @@ The curated public wiki is in [`wiki/`](wiki/README.md). Build its self-containe
 |---|---|---|---|
 | 799X (12 players) | rc30 | Footmen-Frenzy-12p | Tests/799X |
 | Solo (4 players) | v49 | Solo-Foots-4p | Tests/Solo Foots |
-| Mini (8 players) | v61 | Mini-Foots-8p | Tests/Mini Foots |
 | FFA + King (8 players) | v77 | FFA-Foots-8p | Tests/FFA Foots |
+
+Mini Foots (8 players) is shelved. Its last published map and editable source are preserved in [the v61 archive](https://github.com/NorthStarEnergy/Footmen-Frenzy/tree/archive/mini-foots-v61/projects/mini).
 
 ## Get the project
 
@@ -30,7 +31,6 @@ Windows, Python 3.10+, and a 64-bit StormLib DLL are required. Copy `tools.local
 ```powershell
 .\Build-Map.ps1 -Project 799x -Name FF799X_v86_TEST.w3x
 .\Build-Map.ps1 -Project solo -Name Solo_Foots_UPDATE10.w3x
-.\Build-Map.ps1 -Project mini -Name 'Mini Foots v11.w3x'
 .\Build-Map.ps1 -Project ffa -Name Solo_Foots_8P_FFA_v18.w3x
 ```
 
