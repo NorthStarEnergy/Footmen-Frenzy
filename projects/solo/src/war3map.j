@@ -2861,7 +2861,7 @@ boolean array ffgs_spawn_enabled_player
     constant integer OM_PROTECT = 'AOz3'
     constant integer OM_SHOCK = 'AOz4'
     constant real OM_TICK = 0.03125
-    constant real OM_SPEED = 1320.0
+    constant real OM_SPEED = 1742.4
     constant real OM_LEASH = 1200.0
     location OM_VisualGround = Location(0.0, 0.0)
     hashtable OM_Hash = InitHashtable()
@@ -3233,6 +3233,252 @@ constant string TFP_pickACard___TICKSOUND="Sound\\Interface\\MouseClick1.wav"
 sound TFP_pickACard___snd
 group TFP_destiny___grp=CreateGroup()
 integer array TFP_s__destiny___destinyDat_revertAbilityLevel
+
+    integer array CP_PK_Cards
+    integer array CP_PK_Stack
+    integer array CP_PK_Paid
+    integer array CP_PK_Total
+    integer array CP_PK_Street
+    integer array CP_PK_Turn
+    integer array CP_PK_Dealer
+    integer array CP_PK_Hand
+    integer array CP_PK_LastRaise
+    integer array CP_PK_Clock
+    boolean array CP_PK_Acted
+    boolean array CP_PK_Reveal
+    string array CP_PK_Note
+    framehandle array CP_PK_Dialog
+    framehandle array CP_PK_Text
+    framehandle array CP_PK_Title
+    framehandle array CP_PK_HumanLabel
+    framehandle array CP_PK_BotLabel
+    framehandle array CP_PK_PotLabel
+    framehandle array CP_PK_Status
+    framehandle array CP_PK_CallLabel
+    framehandle array CP_PK_Face
+    framehandle array CP_PK_HumanChips
+    framehandle array CP_PK_BotChips
+    framehandle array CP_PK_PotChips
+    framehandle array CP_PK_HumanDealer
+    framehandle array CP_PK_BotDealer
+    framehandle array CP_PK_Fold
+    framehandle array CP_PK_Call
+    framehandle array CP_PK_Raise
+    framehandle array CP_PK_Allin
+    framehandle array CP_PK_Next
+    framehandle array CP_PK_Hide
+    integer CP_CAS_seconds = 0
+    boolean CP_CAS_closed = false
+    boolean CP_CAS_ended = false
+    integer array CP_CAS_view
+    integer array CP_CAS_amount
+    string array CP_CAS_note
+    framehandle array CP_CAS_root
+    framehandle array CP_CAS_title
+    framehandle array CP_CAS_balance
+    framehandle array CP_CAS_status
+    framehandle array CP_CAS_footer
+    framehandle array CP_CAS_button
+    framehandle array CP_CAS_content
+    framehandle array CP_CAS_card
+    framehandle array CP_CAS_chip
+    framehandle array CP_CAS_row
+    framehandle array CP_CAS_bar
+    framehandle array CP_CAS_track
+    integer array CP_BJ_table
+    integer array CP_BJ_seat
+    integer array CP_BJ_owner
+    integer array CP_BJ_phase
+    integer array CP_BJ_clock
+    integer array CP_BJ_round
+    integer array CP_BJ_turn
+    integer array CP_BJ_card
+    integer array CP_BJ_count
+    integer array CP_BJ_total
+    integer array CP_BJ_state
+    integer array CP_BJ_bet
+    boolean array CP_BJ_split
+    integer array CP_BJ_dealerCard
+    integer array CP_BJ_dealerCount
+    integer array CP_BJ_dealerTotal
+    boolean array CP_BJ_reveal
+    boolean CP_MK_ffa = false
+    integer array CP_MK_prior
+    integer array CP_MK_quoteTotal
+    integer array CP_MK_ownedStake
+    integer array CP_MK_ownedReturn
+    integer array CP_MK_pool
+    integer array CP_MK_volume
+    boolean array CP_MK_done
+    integer array CP_MK_winner
+    boolean array CP_MK_baseScored
+    integer array CP_MK_tab
+    integer array CP_MK_pick
+    integer array CP_MK_page
+    integer array CP_DU_from
+    integer array CP_DU_to
+    integer array CP_DU_target
+    integer array CP_DU_stake
+    integer array CP_DU_expire
+    integer array CP_DU_outgoing
+    integer array CP_DU_incoming
+    integer array CP_DU_active
+    integer array CP_DU_opponent
+    integer array CP_DU_pick
+    integer array CP_CasinoLastView
+    integer array CP_LoanPrincipal
+    integer array CP_LoanFee
+    integer array CP_CreditOwner
+    integer array CP_CreditAmount
+    integer array CP_CreditOfferMode
+    integer array CP_CreditOfferRate
+    integer array CP_CreditOfferPeriod
+    integer array CP_CreditFee
+    integer array CP_CreditGeneration
+    integer array CP_CreditSeen
+    integer array CP_CreditSelected
+    integer array CP_CreditDraftMode
+    integer array CP_CreditDraftRate
+    integer array CP_CreditDraftPeriod
+    boolean array CP_CreditRequest
+    boolean array CP_CreditDraftRequest
+    boolean DPS_ProfileLoaded = false
+    integer array DPS_Prior
+    string DPS_ProfilePath
+    string DPS_LastPayload
+    integer FF_PRELOAD_MAX = 240
+    boolean FF_STATS_DAMAGE = true
+    integer array FF_st_poolOut
+    integer array FF_st_poolIn
+    integer array FF_st_kothGold
+    integer array FF_st_denyOwn
+    integer array FF_st_denyAlly
+    integer array FF_st_tmCasts
+    integer array FF_st_tmDenied
+    integer array FF_st_tmSaves
+    integer array FF_st_creeps
+    integer array FF_st_creepGold
+    integer array FF_st_teamRes
+    integer FF_ST_DMG_OUT = 0
+    integer FF_ST_DMG_BLD = 1
+    integer FF_ST_DMG_IN = 2
+    integer array FF_st_dmg
+    real array FF_st_dmgRem
+    integer array FF_st_heroLvl
+    real FF_ST_TM_WAIT = 4.0
+    integer FF_ST_TM_MAX = 32
+    unit array FF_st_tmCaster
+    unit array FF_st_tmTarget
+    integer array FF_st_tmSlot
+    real array FF_st_tmUntil
+    integer FF_st_tmN = 0
+    hashtable FF_us_ht = InitHashtable()
+    hashtable FF_us_learned = InitHashtable()
+    integer FF_US_CHAT_BURST = 4
+    integer FF_US_CMD_CAP = 999
+    integer FF_US_ITEM = 1
+    integer FF_US_UNIT = 2
+    integer FF_US_TECH = 3
+    integer FF_US_TOWER = 4
+    integer FF_US_SPELL = 5
+    integer FF_US_CMD = 6
+    integer FF_US_CATS = 6
+    integer FF_US_EVENT_MAX = 400
+    integer FF_US_SOLD_MAX = 64
+    integer FF_US_HERO_MAX = 16
+    integer FF_US_SKILL_MAX = 64
+    integer FF_US_BASE_TYPES = 50
+    integer array FF_us_n
+    string array FF_us_catName
+    boolean array FF_us_dirty
+    integer array FF_us_rowN
+    integer array FF_us_heroN
+    string array FF_us_events
+    integer FF_us_eventN = 0
+    boolean FF_us_sharedDirty = false
+    unit array FF_us_heroSeen
+    boolean array FF_us_hadHero
+    boolean array FF_us_swapSeen
+    unit array FF_us_sold
+    unit array FF_us_seller
+    integer array FF_us_soldCost
+    integer FF_us_soldN = 0
+    timer FF_us_soldTimer = null
+    integer array FF_us_kothHold
+    integer array FF_us_kothCaps
+    player FF_us_kothLast = null
+    string FF_us_modes = null
+    string array FF_us_cmd
+    integer FF_us_cmdN = 0
+    integer array FF_us_chatBurst
+    string FF_us_chars = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+hashtable PF_data = InitHashtable()
+    hashtable PF_prices = InitHashtable()
+    hashtable PF_final = InitHashtable()
+    hashtable PF_local = InitHashtable()
+    integer array PF_sent
+    integer array PF_received
+    integer array PF_logCount
+    integer array PF_recordedCost
+    integer array PF_lastHero
+    integer array PF_counts
+    integer PF_metrics = 0
+    string array PF_label
+    string array PF_key
+    string array PF_tabName
+    integer array PF_columns
+    string array PF_columnTitle
+    boolean PF_frozen = false
+    boolean PF_draw = false
+    boolean PF_dirty = false
+    integer PF_exportSlot = 0
+    framehandle PF_root = null
+    framehandle PF_title = null
+    framehandle PF_subtitle = null
+    framehandle PF_footer = null
+    framehandle PF_back = null
+    framehandle PF_continue = null
+    framehandle PF_prev = null
+    framehandle PF_next = null
+    framehandle array PF_tab
+    framehandle array PF_icon
+    framehandle array PF_line
+    framehandle array PF_value
+    framehandle array PF_board
+    framehandle array PF_band
+    boolean PF_visible = false
+    boolean PF_results = false
+    integer PF_page = 0
+    integer PF_section = 0
+    integer PF_pages = 1
+    integer array PF_careerCount
+    boolean PF_careerReady = false
+    integer PF_saveTick = 0
+    integer PF_exportStart = 0
+    integer PF_endSecond = 0
+    integer PF_casinoFirst = 0
+    integer PF_combatFirst = 0
+    integer PF_poolOutMetric = 0
+    integer PF_poolInMetric = 0
+    integer PF_sentMetric = 0
+    integer PF_receivedMetric = 0
+    integer array PF_verdict
+    string array PF_message
+    framehandle array PF_portrait
+    boolean PF_shown = false
+    integer array PF_hillSeconds
+    integer array PF_priorEco
+    string PF_lastEco = null
+    hashtable PF_history = InitHashtable()
+    integer array PF_historyN
+    integer PF_sendKind = 0
+    integer PF_sendIndex = 0
+    integer array PF_heroCount
+    integer array PF_heroXP
+    integer PF_winSide = 0
+    integer array PF_colossalKills
+    string PF_account = null
+    string PF_endTime = null
 endglobals
 
 //= FFGS-SETTINGS-BEGIN
@@ -3338,17 +3584,17 @@ function FFGS_InitSettings takes nothing returns nothing
     set ffgs_spawn_interval[14]=6.25
     set ffgs_spawn_interval[15]=6.25
     set ffgs_spawn_interval[16]=6.25
-    set ffgs_spawn_interval[17]=5.75
-    set ffgs_spawn_interval[18]=6.25
+    set ffgs_spawn_interval[17]=5.5
+    set ffgs_spawn_interval[18]=6
     set ffgs_spawn_interval[19]=6.25
     set ffgs_spawn_interval[20]=6.25
     set ffgs_spawn_interval[21]=6.50
     set ffgs_spawn_interval[22]=6.75
-    set ffgs_spawn_interval[23]=6.00
+    set ffgs_spawn_interval[23]=5.75
     set ffgs_spawn_interval[24]=7.25
     set ffgs_spawn_interval[25]=7.25
     set ffgs_spawn_interval[26]=6.50
-    set ffgs_spawn_interval[27]=6.00
+    set ffgs_spawn_interval[27]=5.75
     set ffgs_spawn_interval[28]=6.75
     set ffgs_spawn_interval[29]=7.25
     set ffgs_spawn_interval[30]=7.25
@@ -3365,11 +3611,11 @@ function FFGS_InitSettings takes nothing returns nothing
     set ffgs_spawn_interval[41]=6.75
     set ffgs_spawn_interval[42]=7.25
     set ffgs_spawn_interval[43]=6.50
-    set ffgs_spawn_interval[44]=5.75
+    set ffgs_spawn_interval[44]=5.5
     set ffgs_spawn_interval[45]=6.25
     set ffgs_spawn_interval[46]=6.25
     set ffgs_spawn_interval[47]=6.25
-    set ffgs_spawn_interval[48]=6.25
+    set ffgs_spawn_interval[48]=6
     set ffgs_spawn_interval[49]=6.25
     set ffgs_spawn_interval[50]=6.25
     set ffgs_spawn_unlock_phase[0]=0
@@ -3566,8 +3812,13 @@ endfunction
 function MF_SetAttackRange takes unit u, real desired returns nothing
     local real primary = BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 0)
     local real secondary = BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 1)
-    call BlzSetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 1, desired - primary + secondary)
+    if primary != desired then
+        call BlzSetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 1, desired - primary + secondary)
+    endif
     if GetUnitTypeId(u) == 'uban' or GetUnitTypeId(u) == 'ngh2' then
+        call BlzSetUnitWeaponBooleanField(u, UNIT_WEAPON_BF_ATTACKS_ENABLED, 0, true)
+        call BlzSetUnitWeaponBooleanField(u, UNIT_WEAPON_BF_ATTACKS_ENABLED, 1, true)
+        call SetUnitAcquireRange(u, RMaxBJ(desired, GetUnitAcquireRange(u)))
         call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0), 1)
         call BlzSetUnitDiceNumber(u, BlzGetUnitDiceNumber(u, 0), 1)
         call BlzSetUnitDiceSides(u, BlzGetUnitDiceSides(u, 0), 1)
@@ -15737,23 +15988,23 @@ function zoom___CreateSlider takes nothing returns nothing
     set zoom___slider=BlzCreateFrameByType("SLIDER", "FootmenZoomVertical", gameUI, "QuestMainListScrollBar", 0)
     set zoom___sliderLabel=BlzCreateFrame("EscMenuLabelTextTemplate", zoom___slider, 0, 0)
     call BlzFrameClearAllPoints(zoom___slider)
-    call BlzFrameSetAbsPoint(zoom___slider, FRAMEPOINT_CENTER, 0.190, 0.083)
+    call BlzFrameSetPoint(zoom___slider, FRAMEPOINT_LEFT, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_RIGHT, 0.033, 0.0)
     call BlzFrameSetSize(zoom___slider, 0.009, 0.082)
-    call BlzFrameSetAbsPoint(zoom___sliderLabel, FRAMEPOINT_CENTER, 0.190, 0.029)
-    call BlzFrameSetTextColor(zoom___sliderLabel, 0xFFFFCC00)
+    call BlzFrameSetPoint(zoom___sliderLabel, FRAMEPOINT_TOP, zoom___slider, FRAMEPOINT_BOTTOM, 0.0, -0.003)
+    call BlzFrameSetTextColor(zoom___sliderLabel, 0xFFFFFFFF)
     call BlzFrameSetScale(zoom___sliderLabel, 0.55)
     call BlzFrameSetMinMaxValue(zoom___slider, I2R(zoom___gMinDistance), I2R(zoom___gMaxDistance))
     call BlzFrameSetStepSize(zoom___slider, 100.00)
     call BlzFrameSetEnable(zoom___slider, true)
     call BlzFrameSetVisible(zoom___slider, true)
     set zoom___lockButton=BlzCreateFrame("ScriptDialogButton", gameUI, 0, 0)
-    call BlzFrameSetAbsPoint(zoom___lockButton, FRAMEPOINT_CENTER, 0.190, 0.138)
+    call BlzFrameSetPoint(zoom___lockButton, FRAMEPOINT_BOTTOM, zoom___slider, FRAMEPOINT_TOP, 0.0, 0.003)
     call BlzFrameSetSize(zoom___lockButton, 0.025, 0.020)
     call BlzFrameSetLevel(zoom___lockButton, 10)
     call BlzFrameSetText(zoom___lockButton, "")
     set zoom___lockLabel=BlzCreateFrameByType("TEXT", "", zoom___lockButton, "", 0)
-    call BlzFrameSetAbsPoint(zoom___lockLabel, FRAMEPOINT_CENTER, 0.190, 0.138)
-    call BlzFrameSetSize(zoom___lockLabel, 0.010, 0.010)
+    call BlzFrameSetPoint(zoom___lockLabel, FRAMEPOINT_CENTER, zoom___lockButton, FRAMEPOINT_CENTER, 0.0, 0.0)
+    call BlzFrameSetAllPoints(zoom___lockLabel, zoom___lockButton)
     call BlzFrameSetTextAlignment(zoom___lockLabel, TEXT_JUSTIFY_MIDDLE, TEXT_JUSTIFY_CENTER)
     call BlzFrameSetScale(zoom___lockLabel, 0.55)
     call BlzFrameSetLevel(zoom___lockLabel, 11)
@@ -16384,9 +16635,126 @@ function Trig_KOTH_Income_Func010C takes nothing returns boolean
     return true
 endfunction
 
+function FF_EndsWith takes string s, string suffix returns boolean
+    local integer ls = StringLength(s)
+    local integer lx = StringLength(suffix)
+    if lx > ls then
+        return false
+    endif
+    return SubString(s, ls - lx, ls) == suffix
+endfunction
+
+function FF_IsBotName takes string name returns boolean
+    if name == null then
+        return false
+    endif
+    // 1.0 fleet (efl-0..efl-5 / Bot-1..Bot-6; shut down 2026-09, accounts kept). The 2.0 boxes
+    // reuse two of them: efl-9v3 = CoralShark#113567, efl-obs = MangoThief#115445 (verified live
+    // 2026-09-05 from each box's "Signed in as" journal line).
+    if FF_EndsWith(name, "Vertical#11718") or FF_EndsWith(name, "Industry#11190") or FF_EndsWith(name, "BryanBoitano#1725") or FF_EndsWith(name, "LustyPuppy#1929") or FF_EndsWith(name, "CoralShark#113567") or FF_EndsWith(name, "MangoThief#115445") then
+        return true
+    endif
+    // 2.0 fleet, new account: efl-1v1-0 (the 1v1v1v1 host).
+    return FF_EndsWith(name, "OhNaahs#1537")
+endfunction
+
+function PF_SoloSeat takes integer s returns boolean
+    return s == 1 or s == 5 or s == 8 or s == 12
+endfunction
+
+function PF_Use takes integer slot, integer kind, integer id, integer quantity returns nothing
+    local integer key = slot * 10 + kind
+    if PF_frozen or slot < 1 or slot > 12 or id == 0 or quantity <= 0 then
+        return
+    endif
+    if not HaveSavedInteger(PF_data, key, id) then
+        call SaveInteger(PF_data, 300 + key, PF_counts[key], id)
+        set PF_counts[key] = PF_counts[key] + 1
+    endif
+    call SaveInteger(PF_data, key, id, LoadInteger(PF_data, key, id) + quantity)
+    set PF_dirty = true
+endfunction
+
+function PF_Appearance takes integer slot, unit u, integer count returns nothing
+    if u != null then
+        call PF_Use(slot, 4, BlzGetUnitSkin(u), count)
+    endif
+endfunction
+
+function PF_SoloArmy takes unit u returns nothing
+    local integer s = GetPlayerId(GetOwningPlayer(u))+1
+    if PF_SoloSeat(s) and GetUnitTypeId(u) != 0 then
+        call PF_Use(s,3,GetUnitTypeId(u),1)
+        call PF_Appearance(s,u,1)
+    endif
+endfunction
+
+function PF_Log takes integer slot, string actionName, integer id, integer gold, integer other returns nothing
+    local integer n
+    local integer key = 1000 + slot * 10
+    if PF_frozen or slot < 1 or slot > 24 then
+        return
+    endif
+    set n = PF_logCount[slot]
+    call SaveStr(PF_data, key, n, actionName)
+    call SaveInteger(PF_data, key+1, n, id)
+    call SaveInteger(PF_data, key+2, n, gold)
+    call SaveInteger(PF_data, key+3, n, other)
+    call SaveInteger(PF_data, key+4, n, R2I(TimerGetElapsed(FF_gameTimer)))
+    call SaveInteger(PF_data, key+5, n, GetPlayerState(Player(slot-1), PLAYER_STATE_RESOURCE_GOLD))
+    set PF_logCount[slot] = n + 1
+    set PF_dirty = true
+endfunction
+
+function PF_Transfer takes integer sender, integer target, integer amount returns nothing
+    if PF_frozen then
+        return
+    endif
+    set PF_sent[sender] = PF_sent[sender] + 1
+    set PF_received[target] = PF_received[target] + 1
+    call PF_Log(sender, "pool_sent", 0, amount, target)
+    call PF_Log(target, "pool_received", 0, amount, sender)
+endfunction
+
+function PF_ObserveBalance takes integer slot, integer balance returns nothing
+    local integer old = LoadInteger(PF_data, 800, slot)
+    if not PF_frozen and HaveSavedInteger(PF_data,800,slot) then
+        call SaveInteger(PF_data,800,slot,balance)
+        if balance < old then
+            set PF_recordedCost[slot] = PF_recordedCost[slot]+old-balance
+            call PF_Log(slot,"gold_out",0,old-balance,0)
+        endif
+    endif
+endfunction
+
+function PF_NativeResult takes player p, boolean won, string message returns nothing
+    local integer s = GetPlayerId(p)+1
+    if not PF_frozen or GetPlayerController(p) != MAP_CONTROL_USER or GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING or FF_IsBotName(GetPlayerName(p)) then
+        if won then
+            call CustomVictoryBJ(p,true,true)
+        else
+            call CustomDefeatBJ(p,message)
+        endif
+        return
+    endif
+    if PF_verdict[s] != 0 then
+        return
+    endif
+    if won and AllowVictoryDefeat(PLAYER_GAME_RESULT_VICTORY) then
+        set PF_verdict[s] = 1
+    elseif not won and AllowVictoryDefeat(PLAYER_GAME_RESULT_DEFEAT) then
+        set PF_verdict[s] = 2
+        set PF_message[s] = message
+    endif
+    if GetLocalPlayer() == p and PF_visible and PF_results then
+        call BlzFrameSetEnable(PF_continue,PF_verdict[s] > 0)
+    endif
+endfunction
+
 function Trig_KOTH_Income_Func014A takes nothing returns nothing
     local integer playerNumber=GetConvertedPlayerId(GetEnumPlayer())
     if Trig_KOTH_Income_Func006Func001C() then
+        set FF_st_kothGold[playerNumber] = FF_st_kothGold[playerNumber]+udg_KOTH_Gold_To_Add+udg_KOTH_Gold_Division_To_Add
         call AdjustPlayerStateBJ(( udg_KOTH_Gold_To_Add + udg_KOTH_Gold_Division_To_Add ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
         set udg_KOTH_Gold_Division_To_Add=0
     endif
@@ -18936,13 +19304,13 @@ function InitTrig_Set_Exp_Bonus_Rate_Upon_Leveling takes nothing returns nothing
 endfunction
 
 function Trig_MASS_timer_Actions takes nothing returns nothing
-    set udg_t_premass=40.00
+    set udg_t_premass=60.00
     //                     
     // Bonus footies 5 seconds before Mass:
     //                     
     call StartTimerBJ(udg_timer_premass, false, udg_t_premass)
     call TimerStart(sf_mass_delay_timer, ( udg_t_premass - 2.00 ), false, null)
-    call CreateTimerDialogBJ(udg_timer_premass, "TRIGSTR_1138")
+    call CreateTimerDialogBJ(udg_timer_premass, "Time until Mass:")
     set udg_timer_window_premass=GetLastCreatedTimerDialogBJ()
     call TimerDialogDisplayBJ(true, udg_timer_window_premass)
     //                     
@@ -20255,12 +20623,12 @@ function Trig_start_timers_Actions takes nothing returns nothing
     call StartTimerBJ(udg_timer_AI_hero_pick, false, 15.00)
     call StartTimerBJ(udg_timer_foots_increase, false, 480.00)
     call StartTimerBJ(udg_timer_unit_ugrades, false, 70.00)
-    call StartTimerBJ(udg_timer_tech_delay_t1, false, 90.00)
-    call StartTimerBJ(udg_timer_tech_delay_t2, false, 220.00)
-    call StartTimerBJ(udg_timer_game_starting, false, 35.00)
+    call StartTimerBJ(udg_timer_tech_delay_t1, false, 120.00)
+    call StartTimerBJ(udg_timer_tech_delay_t2, false, 250.00)
+    call StartTimerBJ(udg_timer_game_starting, false, 55.00)
     call StartTimerBJ(udg_timer_3rd_hero, false, 1800.00)
     call StartTimerBJ(udg_timer_altar_delay, false, 300.00)
-    call CreateTimerDialogBJ(udg_timer_tech_delay_t1, "TRIGSTR_10041")
+    call CreateTimerDialogBJ(udg_timer_tech_delay_t1, "Tech delay:")
     set udg_timer_window_tech_delay=GetLastCreatedTimerDialogBJ()
     call TimerDialogDisplayBJ(true, udg_timer_window_tech_delay)
     call EnableTrigger(gg_trg_MASS_timer)
@@ -20656,7 +21024,7 @@ function Trig_colossal_variables_Actions takes nothing returns nothing
     call ConditionalTriggerExecute(gg_trg_colossal_stats)
     set udg_colossal_wave=1
     set udg_colossal_wave_id=1
-    set udg_t_colossal_initial=150.00
+    set udg_t_colossal_initial=180.00
     set udg_t_colossal_reoccuring=300.00
     //                                                                                                   
     // Colossal Timers (Spawn 10 seconds after expiring)
@@ -21560,6 +21928,9 @@ endfunction
 function Trig_colossal_death_Actions takes nothing returns nothing
     set udg_col_killing_unit=GetKillingUnitBJ()
     set udg_col_killing_player=GetOwningPlayer(GetKillingUnitBJ())
+    if udg_col_killing_unit != null and not PF_frozen then
+        set PF_colossalKills[GetPlayerId(udg_col_killing_player)+1] = PF_colossalKills[GetPlayerId(udg_col_killing_player)+1]+1
+    endif
     set udg_col_dying_unit=GetTriggerUnit()
     set udg_col_dying_unit_type=GetUnitTypeId(udg_col_dying_unit)
     set udg_col_death_point=GetUnitLoc(udg_col_dying_unit)
@@ -22568,8 +22939,13 @@ function Trig_autopool_time_Actions takes nothing returns nothing
         exitwhen udg_temp_playernumber > 12
         if ( Trig_autopool_time_Func001Func001C() ) then
             set udg_goldpool[udg_temp_playernumber]=( GetPlayerState(ConvertedPlayer(udg_temp_playernumber), PLAYER_STATE_RESOURCE_GOLD) - udg_pool_threshold[udg_temp_playernumber] )
+            call PF_ObserveBalance(udg_temp_playernumber,GetPlayerState(ConvertedPlayer(udg_temp_playernumber),PLAYER_STATE_RESOURCE_GOLD))
             call SetPlayerStateBJ(ConvertedPlayer(udg_temp_playernumber), PLAYER_STATE_RESOURCE_GOLD, udg_pool_threshold[udg_temp_playernumber])
             call AdjustPlayerStateBJ(udg_goldpool[udg_temp_playernumber], ConvertedPlayer(udg_autopoolto[udg_temp_playernumber]), PLAYER_STATE_RESOURCE_GOLD)
+            call PF_ObserveBalance(udg_temp_playernumber,GetPlayerState(ConvertedPlayer(udg_temp_playernumber),PLAYER_STATE_RESOURCE_GOLD))
+            set FF_st_poolOut[udg_temp_playernumber] = FF_st_poolOut[udg_temp_playernumber]+udg_goldpool[udg_temp_playernumber]
+            set FF_st_poolIn[udg_autopoolto[udg_temp_playernumber]] = FF_st_poolIn[udg_autopoolto[udg_temp_playernumber]]+udg_goldpool[udg_temp_playernumber]
+            call PF_Transfer(udg_temp_playernumber,udg_autopoolto[udg_temp_playernumber],udg_goldpool[udg_temp_playernumber])
             set udg_temp_playergroup=GetForceOfPlayer(ConvertedPlayer(udg_temp_playernumber))
             call SoloFootsDisplayTimedMessageToForce(udg_temp_playergroup, 1.00, ( I2S(udg_goldpool[udg_temp_playernumber]) + ( " |cffffcc00Gold|r has been sent to " + GetPlayerName(ConvertedPlayer(udg_autopoolto[udg_temp_playernumber])) ) ))
             call DestroyForce(udg_temp_playergroup)
@@ -22892,7 +23268,7 @@ function Trig_draw_pressed_Func010Func001C takes nothing returns boolean
 endfunction
 
 function Trig_draw_pressed_Func011Func002Func027A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_10486")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_10486")
 endfunction
 
 function Trig_draw_pressed_Func011Func002C takes nothing returns boolean
@@ -22948,6 +23324,8 @@ function Trig_draw_pressed_Actions takes nothing returns nothing
         call SoloFootsDisplayMessageToForce(udg_all_players, ( ( ( I2S(udg_temp_int2) + " ouf of " ) + I2S(udg_temp_int) ) + " active players have voted to draw the game." ))
     else
         if ( Trig_draw_pressed_Func011Func002C() ) then
+            set PF_draw = true
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_10479")
             call ForForce(udg_all_players, function Trig_draw_pressed_Func011Func002Func027A)
         else
@@ -27509,9 +27887,21 @@ function Trig_Avalanche_Trample_Loop_Func001Func021Func007Func002C takes nothing
     return true
 endfunction
 
+function TFP_TF_CardDebuff takes unit caster, unit target, integer abilityId, integer rank, string order returns nothing
+    local unit dummy=CreateUnit(GetOwningPlayer(caster),TFP_tfConsts_CASTER_DUMMY_ID,GetUnitX(target),GetUnitY(target),0.)
+    call UnitAddAbility(dummy,abilityId)
+    call SetUnitAbilityLevel(dummy,abilityId,rank)
+    call IssueTargetOrder(dummy,order,target)
+    call UnitApplyTimedLife(dummy,'BTLF',2.)
+    set dummy=null
+endfunction
+
 function Trig_Avalanche_Trample_Loop_Func001Func021Func007A takes nothing returns nothing
     set udg_Avalanche_TR_Caster[0]=GetEnumUnit()
     if ( Trig_Avalanche_Trample_Loop_Func001Func021Func007Func002C() ) then
+        if GetUnitTypeId(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop]) == 'N03B' and not IsUnitType(udg_Avalanche_TR_Caster[0], UNIT_TYPE_FLYING) and (IsUnitType(udg_Avalanche_TR_Caster[0], UNIT_TYPE_HERO) or not IsUnitType(udg_Avalanche_TR_Caster[0], UNIT_TYPE_MECHANICAL)) then
+            call TFP_TF_CardDebuff(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop], udg_Avalanche_TR_Caster[0], 'AWcS', GetUnitAbilityLevel(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop], 'A08G'), "thunderbolt")
+        endif
         call UnitDamageTargetBJ(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop], udg_Avalanche_TR_Caster[0], udg_Avalanche_TR_Damage[udg_Avalanche_TR_Loop], ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC)
         call GroupAddUnitSimple(udg_Avalanche_TR_Caster[0], udg_Avalanche_TR_Group_Limit[udg_Avalanche_TR_Loop])
         //                                                                                                          
@@ -27636,9 +28026,11 @@ function Trig_Avalanche_Trample_Loop_Actions takes nothing returns nothing
             set udg_Avalanche_TR_Point[2]=GetUnitLoc(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop])
             //                                                                                                          
             call SetUnitPositionLoc(udg_Avalanche_TR_Dummy[udg_Avalanche_TR_Loop], udg_Avalanche_TR_Point[2])
-            call IssueImmediateOrderBJ(udg_Avalanche_TR_Dummy[udg_Avalanche_TR_Loop], "stomp")
+            if GetUnitTypeId(udg_Avalanche_TR_Caster[udg_Avalanche_TR_Loop]) != 'N03B' then
+                call IssueImmediateOrderBJ(udg_Avalanche_TR_Dummy[udg_Avalanche_TR_Loop], "stomp")
+            endif
             //                                                                                                          
-            set udg_Avalanche_TR_Group=GetUnitsInRangeOfLocAll(170.00, udg_Avalanche_TR_Point[2])
+            set udg_Avalanche_TR_Group=GetUnitsInRangeOfLocAll(185.00, udg_Avalanche_TR_Point[2])
             call ForGroupBJ(udg_Avalanche_TR_Group, function Trig_Avalanche_Trample_Loop_Func001Func021Func007A)
             //                                                                                                          
             call AddSpecialEffectLocBJ(udg_Avalanche_TR_Point[2], "Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl")
@@ -27656,7 +28048,7 @@ function Trig_Avalanche_Trample_Loop_Actions takes nothing returns nothing
         //                                                                                                          
         // Wooj dash ends early if he's disabled:
         if ( Trig_Avalanche_Trample_Loop_Func001Func028C() ) then
-            set udg_Avalanche_TR_Duration[udg_Avalanche_TR_Loop]=999999
+            set udg_Avalanche_TR_Duration[udg_Avalanche_TR_Loop]=45
         else
         endif
         //                                                                                                          
@@ -41305,7 +41697,7 @@ set udg_spawn_unit[9]='uban'
 set udg_unit_HP[9]=540
 set udg_unit_armor_type[9]=7
 set udg_unit_armor[9]=1
-set udg_unit_att_base[9]=36
+set udg_unit_att_base[9]=31
 set udg_unit_att_num_dice[9]=1
 set udg_unit_att_dice_sides[9]=4
 set udg_unit_att_CD[9]=1.2
@@ -41428,7 +41820,7 @@ set udg_unit_armor[17]=2
 set udg_unit_att_base[17]=16
 set udg_unit_att_num_dice[17]=2
 set udg_unit_att_dice_sides[17]=2
-set udg_unit_att_CD[17]=1.1
+set udg_unit_att_CD[17]=1
 set udg_unit_bounty_base[17]=34
 set udg_unit_bounty_num_dice[17]=1
 set udg_unit_bounty_dice_sides[17]=3
@@ -41470,7 +41862,7 @@ set udg_spawn_unit[20]='ngh2'
 set udg_unit_HP[20]=690
 set udg_unit_armor_type[20]=7
 set udg_unit_armor[20]=0
-set udg_unit_att_base[20]=44
+set udg_unit_att_base[20]=39
 set udg_unit_att_num_dice[20]=1
 set udg_unit_att_dice_sides[20]=3
 set udg_unit_att_CD[20]=1.2
@@ -41518,7 +41910,7 @@ set udg_unit_armor[23]=3
 set udg_unit_att_base[23]=27
 set udg_unit_att_num_dice[23]=1
 set udg_unit_att_dice_sides[23]=4
-set udg_unit_att_CD[23]=1.6
+set udg_unit_att_CD[23]=1.454545455
 set udg_unit_bounty_base[23]=35
 set udg_unit_bounty_num_dice[23]=1
 set udg_unit_bounty_dice_sides[23]=3
@@ -41579,7 +41971,7 @@ set udg_unit_armor[27]=3
 set udg_unit_att_base[27]=27
 set udg_unit_att_num_dice[27]=1
 set udg_unit_att_dice_sides[27]=4
-set udg_unit_att_CD[27]=1.6
+set udg_unit_att_CD[27]=1.454545455
 set udg_unit_bounty_base[27]=35
 set udg_unit_bounty_num_dice[27]=1
 set udg_unit_bounty_dice_sides[27]=3
@@ -41756,7 +42148,7 @@ set udg_spawn_unit[39]='uban'
 set udg_unit_HP[39]=540
 set udg_unit_armor_type[39]=7
 set udg_unit_armor[39]=1
-set udg_unit_att_base[39]=36
+set udg_unit_att_base[39]=31
 set udg_unit_att_num_dice[39]=1
 set udg_unit_att_dice_sides[39]=4
 set udg_unit_att_CD[39]=1.2
@@ -41834,7 +42226,7 @@ set udg_unit_armor[44]=2
 set udg_unit_att_base[44]=16
 set udg_unit_att_num_dice[44]=2
 set udg_unit_att_dice_sides[44]=2
-set udg_unit_att_CD[44]=1.1
+set udg_unit_att_CD[44]=1
 set udg_unit_bounty_base[44]=34
 set udg_unit_bounty_num_dice[44]=1
 set udg_unit_bounty_dice_sides[44]=3
@@ -41876,7 +42268,7 @@ set udg_spawn_unit[47]='ngh2'
 set udg_unit_HP[47]=690
 set udg_unit_armor_type[47]=7
 set udg_unit_armor[47]=0
-set udg_unit_att_base[47]=44
+set udg_unit_att_base[47]=39
 set udg_unit_att_num_dice[47]=1
 set udg_unit_att_dice_sides[47]=3
 set udg_unit_att_CD[47]=1.2
@@ -41951,17 +42343,17 @@ call DestroyTrigger(GetTriggeringTrigger())
     set SyncTicks[14]=25
     set SyncTicks[15]=25
     set SyncTicks[16]=25
-    set SyncTicks[17]=23
-    set SyncTicks[18]=25
+    set SyncTicks[17]=22
+    set SyncTicks[18]=24
     set SyncTicks[19]=25
     set SyncTicks[20]=25
     set SyncTicks[21]=26
     set SyncTicks[22]=27
-    set SyncTicks[23]=24
+    set SyncTicks[23]=23
     set SyncTicks[24]=29
     set SyncTicks[25]=29
     set SyncTicks[26]=26
-    set SyncTicks[27]=24
+    set SyncTicks[27]=23
     set SyncTicks[28]=27
     set SyncTicks[29]=29
     set SyncTicks[30]=29
@@ -41978,11 +42370,11 @@ call DestroyTrigger(GetTriggeringTrigger())
     set SyncTicks[41]=27
     set SyncTicks[42]=29
     set SyncTicks[43]=26
-    set SyncTicks[44]=23
+    set SyncTicks[44]=22
     set SyncTicks[45]=25
     set SyncTicks[46]=25
     set SyncTicks[47]=25
-    set SyncTicks[48]=25
+    set SyncTicks[48]=24
     set SyncTicks[49]=25
     set SyncTicks[50]=25
 endfunction
@@ -42447,6 +42839,7 @@ function SoloFootsMassRelease takes nothing returns nothing
         if GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 then
             call SetUnitPathing(u, true)
             call SetUnitUseFood(u, true)
+            call PF_SoloArmy(u)
             call SetUnitInvulnerable(u, false)
             call ShowUnit(u, true)
             call PauseUnit(u, false)
@@ -42498,6 +42891,7 @@ function SoloFootsSpawnForIndex takes integer playerNumber, integer spawnIndex r
         set bj_lastCreatedUnit=spawned
         set udg_spawned_unit[i]=spawned
         call SoloFootsSpawnApplyStats(spawned, playerNumber, spawnIndex)
+        call PF_SoloArmy(spawned)
         set i=i + 1
     endloop
     set spawned=null
@@ -42576,6 +42970,7 @@ function SoloFootsSpawnEarlyWave takes nothing returns nothing
             call RemoveLocation(wall)
         set spawned=CreateUnit(ConvertedPlayer(playerNumber), 'hfoo', spawnX, spawnY, bj_UNIT_FACING)
                     call SoloFootsSpawnApplyStats(spawned, playerNumber, 0)
+                    call PF_SoloArmy(spawned)
                     call SetUnitMoveSpeed(spawned, 405.00)
                     if groupIndex == 1 then
                         call SoloFootsEarlyWaveOrder(spawned, playerNumber, 1)
@@ -44833,24 +45228,24 @@ endfunction
 
 function Trig_END_Func001Func002Func036A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_12981")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func002Func037A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_12999")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_12999")
 endfunction
 
 function Trig_END_Func001Func002Func038A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13021")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13021")
 endfunction
 
 function Trig_END_Func001Func002Func039A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13022")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func002Func040A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13023")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13023")
 endfunction
 
 function Trig_END_Func001Func002C takes nothing returns boolean
@@ -44876,25 +45271,25 @@ function Trig_END_Func001Func002C takes nothing returns boolean
 endfunction
 
 function Trig_END_Func001Func004Func036A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13040")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13040")
 endfunction
 
 function Trig_END_Func001Func004Func037A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13042")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func004Func038A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13043")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func004Func039A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13045")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13045")
 endfunction
 
 function Trig_END_Func001Func004Func040A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13049")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13049")
 endfunction
 
 function Trig_END_Func001Func004C takes nothing returns boolean
@@ -44921,23 +45316,23 @@ endfunction
 
 function Trig_END_Func001Func007Func039A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13070")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func007Func040A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13071")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13071")
 endfunction
 
 function Trig_END_Func001Func007Func041A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13087")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13087")
 endfunction
 
 function Trig_END_Func001Func007Func042A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13090")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13090")
 endfunction
 
 function Trig_END_Func001Func007Func043A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13091")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13091")
 endfunction
 
 function Trig_END_Func001Func007C takes nothing returns boolean
@@ -44972,24 +45367,24 @@ function Trig_END_Func001Func007C takes nothing returns boolean
 endfunction
 
 function Trig_END_Func001Func009Func039A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13102")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13102")
 endfunction
 
 function Trig_END_Func001Func009Func040A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13113")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func009Func041A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13122")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13122")
 endfunction
 
 function Trig_END_Func001Func009Func042A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13133")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13133")
 endfunction
 
 function Trig_END_Func001Func009Func043A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13137")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13137")
 endfunction
 
 function Trig_END_Func001Func009C takes nothing returns boolean
@@ -45024,24 +45419,24 @@ function Trig_END_Func001Func009C takes nothing returns boolean
 endfunction
 
 function Trig_END_Func001Func011Func039A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13159")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13159")
 endfunction
 
 function Trig_END_Func001Func011Func041A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13160")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13160")
 endfunction
 
 function Trig_END_Func001Func011Func042A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13161")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func011Func043A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13164")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13164")
 endfunction
 
 function Trig_END_Func001Func011Func044A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13183")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13183")
 endfunction
 
 function Trig_END_Func001Func011C takes nothing returns boolean
@@ -45076,24 +45471,24 @@ function Trig_END_Func001Func011C takes nothing returns boolean
 endfunction
 
 function Trig_END_Func001Func013Func039A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13187")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13187")
 endfunction
 
 function Trig_END_Func001Func013Func040A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13188")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13188")
 endfunction
 
 function Trig_END_Func001Func013Func041A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13190")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13190")
 endfunction
 
 function Trig_END_Func001Func013Func042A takes nothing returns nothing
     call SoloFootsDisplayMessageToForce(GetForceOfPlayer(GetEnumPlayer()), "TRIGSTR_13192")
-    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+    call PF_NativeResult(GetEnumPlayer(),true,"")
 endfunction
 
 function Trig_END_Func001Func013Func043A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_13193")
+    call PF_NativeResult(GetEnumPlayer(),false, "TRIGSTR_13193")
 endfunction
 
 function Trig_END_Func001Func013C takes nothing returns boolean
@@ -45213,12 +45608,8 @@ function Trig_END_Actions takes nothing returns nothing
         endif
         // TEAM 1 WINS
         if ( Trig_END_Func001Func007C() ) then
-            set udg_X=1
-            loop
-                exitwhen udg_X > 3
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 1
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("Team 1"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_13067")
             call PlaySoundBJ(gg_snd_HumanX1)
@@ -45232,12 +45623,8 @@ function Trig_END_Actions takes nothing returns nothing
         endif
         // TEAM 2 WINS
         if ( Trig_END_Func001Func009C() ) then
-            set udg_X=4
-            loop
-                exitwhen udg_X > 6
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 2
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("Team 2"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_13096")
             call PlaySoundBJ(gg_snd_HumanX1)
@@ -45251,12 +45638,8 @@ function Trig_END_Actions takes nothing returns nothing
         endif
         // TEAM 3 WINS
         if ( Trig_END_Func001Func011C() ) then
-            set udg_X=7
-            loop
-                exitwhen udg_X > 9
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 3
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("Team 3"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_13141")
             call PlaySoundBJ(gg_snd_HumanX1)
@@ -45270,12 +45653,8 @@ function Trig_END_Actions takes nothing returns nothing
         endif
         // TEAM 4 WINS
         if ( Trig_END_Func001Func013C() ) then
-            set udg_X=10
-            loop
-                exitwhen udg_X > 12
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 4
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("Team 4"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_13186")
             call PlaySoundBJ(gg_snd_HumanX1)
@@ -45290,18 +45669,8 @@ function Trig_END_Actions takes nothing returns nothing
     else
         // TEAM WEST WINS
         if ( Trig_END_Func001Func002C() ) then
-            set udg_X=1
-            loop
-                exitwhen udg_X > 3
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
-            set udg_X=10
-            loop
-                exitwhen udg_X > 12
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 1
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("West Team"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_12979")
             call TriggerSleepAction(20.00)
@@ -45314,18 +45683,8 @@ function Trig_END_Actions takes nothing returns nothing
         endif
         // TEAM EAST WINS
         if ( Trig_END_Func001Func004C() ) then
-            set udg_X=7
-            loop
-                exitwhen udg_X > 9
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
-            set udg_X=4
-            loop
-                exitwhen udg_X > 6
-                call SetPlayerStateBJ(ConvertedPlayer(udg_X), PLAYER_STATE_GAME_RESULT, 0)
-                set udg_X=udg_X + 1
-            endloop
+            set PF_winSide = 2
+            call ExecuteFunc("FF_gr_Poll")
             call SoloFootsDisplayMessageToForce(udg_all_players, SoloFootsWinnerAnnouncement("East Team"))
             call SoloFootsDisplayMessageToForce(udg_all_players, "TRIGSTR_13026")
             call TriggerSleepAction(20.00)
@@ -47170,32 +47529,13 @@ function FF_Sanitize takes string s returns string
     return out
 endfunction
 
-function FF_EndsWith takes string s, string suffix returns boolean
-    local integer ls = StringLength(s)
-    local integer lx = StringLength(suffix)
-    if lx > ls then
-        return false
-    endif
-    return SubString(s, ls - lx, ls) == suffix
-endfunction
+
 
 function FF_UnitAlive takes unit u returns boolean
     return u != null and GetUnitTypeId(u) != 0 and not IsUnitType(u, UNIT_TYPE_DEAD)
 endfunction
 
-function FF_IsBotName takes string name returns boolean
-    if name == null then
-        return false
-    endif
-    // 1.0 fleet (efl-0..efl-5 / Bot-1..Bot-6; shut down 2026-09, accounts kept). The 2.0 boxes
-    // reuse two of them: efl-9v3 = CoralShark#113567, efl-obs = MangoThief#115445 (verified live
-    // 2026-09-05 from each box's "Signed in as" journal line).
-    if FF_EndsWith(name, "Vertical#11718") or FF_EndsWith(name, "Industry#11190") or FF_EndsWith(name, "BryanBoitano#1725") or FF_EndsWith(name, "LustyPuppy#1929") or FF_EndsWith(name, "CoralShark#113567") or FF_EndsWith(name, "MangoThief#115445") then
-        return true
-    endif
-    // 2.0 fleet, new account: efl-1v1-0 (the 1v1v1v1 host).
-    return FF_EndsWith(name, "OhNaahs#1537")
-endfunction
+
 
 function FF_LocalClientIsBot takes nothing returns boolean
     return FF_IsBotName(GetPlayerName(GetLocalPlayer()))
@@ -47372,7 +47712,7 @@ function FF_gr_SideAlive takes integer side returns boolean
     local integer p = 1
     loop
         exitwhen p > 12
-        if FF_gr_IsMember(p, side) and udg_player_active[p] then
+        if PF_SoloSeat(p) and FF_gr_IsMember(p, side) and udg_player_active[p] then
             return true
         endif
         set p = p + 1
@@ -47416,12 +47756,20 @@ function FF_gr_Flush takes nothing returns nothing
     else
         call Preload("mode,ffa")
     endif
+    call Preload("family,solo")
+    call Preload("format,2")
     call Preload("roster," + FF_gr_RosterOf(-1))
     loop
         exitwhen i >= FF_gr_eventN
-        call Preload(FF_gr_events[i])
+        if SubString(FF_gr_events[i],0,8) != "gameend," then
+            call Preload(FF_gr_events[i])
+        endif
         set i = i + 1
     endloop
+    call ExecuteFunc("PF_Export")
+    if FF_gr_ended then
+        call Preload("gameend,"+PF_endTime)
+    endif
     call PreloadGenEnd(FF_DataFile("ff_result"))
 endfunction
 
@@ -47444,7 +47792,10 @@ function FF_gr_Poll takes nothing returns nothing
     //    flips their player_active off (their base died) — the same signal END reads.
     loop
         exitwhen p > 12
-        if udg_player_active[p] then
+        if PF_SoloSeat(p) and udg_player_active[p] then
+            if not FF_gr_participant[p] then
+                set changed = true
+            endif
             set FF_gr_participant[p] = true
         elseif FF_gr_participant[p] and not FF_gr_eliminated[p] then
             set FF_gr_eliminated[p] = true
@@ -47474,7 +47825,11 @@ function FF_gr_Poll takes nothing returns nothing
     endloop
     // 3. clean victory: >=2 sides played, exactly one standing. Placement table: 1st = survivor,
     //    then the dead sides in reverse death order (last to die finished 2nd).
-    if participated >= 2 and alive == 1 then
+    if not PF_draw and (PF_winSide > 0 or (participated >= 2 and alive == 1)) then
+        if PF_winSide > 0 then
+            set lastAlive = PF_winSide
+        endif
+        set PF_winSide = lastAlive
         set FF_gr_ended = true
         call PauseTimer(FF_gr_pollTimer)
         call FF_gr_AddEvent("winner," + now + "," + FF_gr_SideLabel(lastAlive) + "," + FF_gr_RosterOf(lastAlive))
@@ -47487,7 +47842,18 @@ function FF_gr_Poll takes nothing returns nothing
             set place = place + 1
             set i = i - 1
         endloop
+        set PF_endTime = now
+        call ExecuteFunc("PF_SoloSnapshot")
         call FF_gr_AddEvent("gameend," + now)
+        set changed = true
+    endif
+    if PF_draw or (participated >= 2 and alive == 0 and not FF_gr_ended) then
+        set PF_winSide = 0
+        set FF_gr_ended = true
+        call PauseTimer(FF_gr_pollTimer)
+        set PF_endTime = now
+        call FF_gr_AddEvent("draw,"+now)
+        call ExecuteFunc("PF_SoloSnapshot")
         set changed = true
     endif
     if changed then
@@ -47770,6 +48136,7 @@ function FF_BootTick takes nothing returns nothing
     call TimerStart(FF_gameTimer, 1000000.0, false, null)
     set FF_gameToken = FF_ComputeGameToken()  // before the first flush names a file
     call FF_KillLog_Init()
+    call ExecuteFunc("PF_SoloInit")
     call FF_GameResult_Init()
     call FF_ObserverCamera_Init()
     call FF_BotVision_Init()
@@ -47788,23 +48155,23 @@ function FF_ZoomSlider_Create takes nothing returns nothing
     set zoom___slider = BlzCreateFrameByType("SLIDER", "FootmenZoomVertical", gameUI, "FFZoomSlider", 0)
     set zoom___sliderLabel = BlzCreateFrame("FFZoomLabel", zoom___slider, 0, 0)
     call BlzFrameClearAllPoints(zoom___slider)
-    call BlzFrameSetAbsPoint(zoom___slider, FRAMEPOINT_CENTER, 0.190, 0.083)
+    call BlzFrameSetPoint(zoom___slider, FRAMEPOINT_LEFT, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_RIGHT, 0.033, 0.0)
     call BlzFrameSetSize(zoom___slider, 0.009, 0.082)
-    call BlzFrameSetAbsPoint(zoom___sliderLabel, FRAMEPOINT_CENTER, 0.190, 0.029)
-    call BlzFrameSetTextColor(zoom___sliderLabel, 0xFFFFCC00)
+    call BlzFrameSetPoint(zoom___sliderLabel, FRAMEPOINT_TOP, zoom___slider, FRAMEPOINT_BOTTOM, 0.0, -0.003)
+    call BlzFrameSetTextColor(zoom___sliderLabel, 0xFFFFFFFF)
     call BlzFrameSetScale(zoom___sliderLabel, 0.55)
     call BlzFrameSetMinMaxValue(zoom___slider, I2R(zoom___gMinDistance), I2R(zoom___gMaxDistance))
     call BlzFrameSetStepSize(zoom___slider, 100.00)
     call BlzFrameSetEnable(zoom___slider, true)
     call BlzFrameSetVisible(zoom___slider, true)
     set zoom___lockButton = BlzCreateFrame("FFZoomLockButton", gameUI, 0, 0)
-    call BlzFrameSetAbsPoint(zoom___lockButton, FRAMEPOINT_CENTER, 0.190, 0.138)
+    call BlzFrameSetPoint(zoom___lockButton, FRAMEPOINT_BOTTOM, zoom___slider, FRAMEPOINT_TOP, 0.0, 0.003)
     call BlzFrameSetSize(zoom___lockButton, 0.025, 0.020)
     call BlzFrameSetLevel(zoom___lockButton, 10)
     call BlzFrameSetText(zoom___lockButton, "")
     set zoom___lockLabel = BlzCreateFrameByType("TEXT", "", zoom___lockButton, "", 0)
-    call BlzFrameSetAbsPoint(zoom___lockLabel, FRAMEPOINT_CENTER, 0.190, 0.138)
-    call BlzFrameSetSize(zoom___lockLabel, 0.010, 0.010)
+    call BlzFrameSetPoint(zoom___lockLabel, FRAMEPOINT_CENTER, zoom___lockButton, FRAMEPOINT_CENTER, 0.0, 0.0)
+    call BlzFrameSetAllPoints(zoom___lockLabel, zoom___lockButton)
     call BlzFrameSetTextAlignment(zoom___lockLabel, TEXT_JUSTIFY_MIDDLE, TEXT_JUSTIFY_CENTER)
     call BlzFrameSetScale(zoom___lockLabel, 0.55)
     call BlzFrameSetLevel(zoom___lockLabel, 11)
@@ -48329,7 +48696,13 @@ function OM_UpdateBallVisual takes integer i returns nothing
     // Front-held for Orianna; overhead for protected allies.
     // World-space positioning avoids model attachment offsets and inherited scale.
     call MoveLocation(OM_VisualGround, x, y)
-    call BlzSetSpecialEffectPosition(fx, x, y, GetLocationZ(OM_VisualGround) + GetUnitFlyHeight(OM_Ball[i]) + 20.0 * gesture)
+    if IsUnitInvisible(OM_Hero[i], GetLocalPlayer()) or not IsUnitVisible(OM_Hero[i], GetLocalPlayer()) or (OM_State[i] == 0 and not IsUnitVisible(OM_Carrier[i], GetLocalPlayer())) then
+        call BlzSetSpecialEffectAlpha(fx, 0)
+        call BlzSetSpecialEffectPosition(fx, x, y, -10000.)
+    else
+        call BlzSetSpecialEffectAlpha(fx, 255)
+        call BlzSetSpecialEffectPosition(fx, x, y, GetLocationZ(OM_VisualGround) + GetUnitFlyHeight(OM_Ball[i]) + 20.0 * gesture)
+    endif
     call OM_UpdateShockGround(i)
     set fx = null
 endfunction
@@ -48364,7 +48737,7 @@ function OM_Home takes integer i returns nothing
     call GroupClear(OM_Hit[i])
     call OM_UpdateBallVisual(i)
     if returning and OM_Alive(OM_Hero[i]) and not OM_WasDead[i] then
-        call OM_KeepEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl", OM_Ball[i], "origin"), 0.45)
+        call OM_KeepEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl", OM_Hero[i], "overhead"), 0.45)
         call OM_CommandSound(OM_Ball[i], 8)
     endif
 endfunction
@@ -49036,17 +49409,17 @@ function FS_RankDamage takes integer level, boolean slam returns real
         return 225.0
     endif
     if level <= 1 then
-        return 80.0
+        return 100.0
     elseif level <= 2 then
-        return 120.0
+        return 140.0
     elseif level <= 3 then
-        return 180.0
+        return 190.0
     elseif level <= 4 then
-        return 240.0
+        return 260.0
     elseif level <= 5 then
-        return 300.0
+        return 350.0
     endif
-    return 550.0
+    return 570.0
 endfunction
 
 function FS_Free takes integer i returns nothing
@@ -49259,7 +49632,7 @@ function FS_Area takes unit caster, player owner, real x, real y, real radius, r
         exitwhen v == null
         call GroupRemoveUnit(g, v)
         if FS_Enemy(v, owner) then
-            if (mode == 4 or mode == 3) and GetUnitAbilityLevel(v, 'BNdh') > 0 then
+            if ((mode == 4 or mode == 3) and GetUnitAbilityLevel(v, 'BNdh') > 0) or (mode == 3 and LoadTimerHandle(FS_Hash, GetHandleId(v), 71) != null) then
                 call FS_Ignite(caster, v)
             endif
             call FS_Hit(caster, v, damage)
@@ -49391,7 +49764,7 @@ endfunction
 
 function FS_BarrelBurst takes real x, real y returns nothing
     local timer t = CreateTimer()
-    local effect fx = AddSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", x, y)
+    local effect fx = AddSpecialEffect("Spells\\Orianna\\Feedback\\ShockwaveRing.mdx", x, y)
     call SaveEffectHandle(FS_Hash, GetHandleId(t), 0, fx)
     call TimerStart(t, 0.75, false, function FS_HideBurst)
     set fx = null
@@ -51102,42 +51475,4622 @@ function SpellKeysRefresh takes nothing returns nothing
     call BlzFrameSetVisible(spellKeysPanel, spellKeysOpen)
 endfunction
 
+function CP_PreviewClose takes nothing returns nothing
+    local framehandle f = BlzGetTriggerFrame()
+    if f != null then
+        call BlzFrameSetFocus(f,false)
+    endif
+    set CP_CAS_view[1] = 0
+    set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
+    set spellKeysOpen = false
+    set spellKeysEditing = -1
+    if spellKeysPanel != null then
+        call BlzFrameSetVisible(spellKeysPanel,false)
+    endif
+    if CP_CAS_root[1] != null then
+        call BlzFrameSetVisible(CP_CAS_root[1],false)
+        call BlzFrameSetVisible(CP_PK_Dialog[0],false)
+    endif
+    call BlzFrameSetVisible(DPS_Panel,false)
+    set f = null
+endfunction
+
+function CP_CAS_SafeW takes real width returns real
+    return width
+endfunction
+
+function CP_CAS_SafeX takes real x returns real
+    return x
+endfunction
+
+function CP_CAS_Tone takes integer id returns integer
+    if id == 6 or id == 10 or id == 37 or id == 38 then
+        return 1
+    elseif id == 7 or id == 8 or id == 9 or id == 11 or id == 14 or id == 32 or id == 33 or id == 36 then
+        return 2
+    elseif id == 12 then
+        return 3
+    elseif id == 15 or id == 16 or id == 34 or id == 35 then
+        return 4
+    endif
+    return 0
+endfunction
+
+function CP_CUI_Paint takes framehandle f, integer tone, boolean enabled returns nothing
+    local integer color = BlzConvertColor(255,255,250,240)
+    if not enabled then
+        set color = BlzConvertColor(255,145,158,170)
+    elseif tone == 1 then
+        set color = BlzConvertColor(255,255,155,150)
+    elseif tone == 2 or tone == 3 then
+        set color = BlzConvertColor(255,169,241,180)
+    elseif tone == 4 then
+        set color = BlzConvertColor(255,163,208,255)
+    elseif tone == 5 then
+        set color = BlzConvertColor(255,255,213,121)
+    endif
+    call BlzFrameSetTextColor(f,color)
+    if BlzFrameGetEnable(f) != enabled then
+        call BlzFrameSetEnable(f,enabled)
+    endif
+endfunction
+
+function CP_CUI_Create takes framehandle parent, integer context, real x, real y, real w, real h, string label, integer tone returns framehandle
+    local framehandle f = BlzCreateFrame("ScriptDialogButton",parent,0,context)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,y)
+    call BlzFrameSetLevel(f,65)
+    call BlzFrameSetText(f,label)
+    call CP_CUI_Paint(f,tone,true)
+    return f
+endfunction
+
+function CP_CAS_Button takes integer s, integer id, trigger click, real x, real y, real w, string label returns nothing
+    local framehandle f = CP_CUI_Create(CP_CAS_root[s],s*64+id,CP_CAS_SafeX(x),-y,CP_CAS_SafeW(w),0.027,label,CP_CAS_Tone(id))
+    if id <= 5 or id == 57 then
+        call BlzTriggerRegisterFrameEvent(click,f,FRAMEEVENT_CONTROL_CLICK)
+    else
+        call BlzFrameSetEnable(f,false)
+    endif
+    set CP_CAS_button[s*64+id] = f
+    set f = null
+endfunction
+
+function CP_CAS_Label takes integer s, real x, real y, real w, real h, real scale returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","CasinoLabel",CP_CAS_root[s],"",s)
+    call BlzFrameSetSize(f,CP_CAS_SafeW(w),h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(x),-y)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
+    call BlzFrameSetEnable(f,false)
+    call BlzFrameSetAlpha(f,145)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function CP_CAS_Texture takes integer s, string path, real x, real y, real w, real h returns framehandle
+    local framehandle f = BlzCreateFrameByType("BACKDROP","CasinoArt",CP_CAS_root[s],"",s)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetTexture(f,path,0,true)
+    call BlzFrameSetEnable(f,false)
+    call BlzFrameSetAlpha(f,145)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function CP_FF_Pad2 takes integer n returns string
+    if n < 10 then
+        return "0" + I2S(n)
+    endif
+    return I2S(n)
+endfunction
+
+function CP_CAS_Odds takes integer value returns string
+    return I2S(value/100)+"."+CP_FF_Pad2(ModuloInteger(value,100))+"x"
+endfunction
+
+function CP_CAS_ShowButton takes integer s, integer id, boolean enabled returns nothing
+    if not BlzFrameIsVisible(CP_CAS_button[s*64+id]) then
+        call BlzFrameSetVisible(CP_CAS_button[s*64+id],true)
+    endif
+    call CP_CUI_Paint(CP_CAS_button[s*64+id],CP_CAS_Tone(id),false)
+endfunction
+
+function CP_CUI_Text takes framehandle f, string label returns nothing
+    call BlzFrameSetText(f,label)
+endfunction
+
+function CP_MK_IsOpen takes integer m, integer o returns boolean
+    return false
+endfunction
+
+function CP_CAS_Name takes integer s returns string
+    if s < 1 then
+        return "Computer"
+    endif
+    return GetPlayerName(Player(s-1))
+endfunction
+
+function CP_MK_Label takes integer m, integer o returns string
+    return CP_CAS_Name(o)
+endfunction
+
+function CP_MK_Quote takes integer m, integer o, integer stake returns integer
+    local integer total = CP_MK_quoteTotal[m]+stake
+    local integer weight = CP_MK_pool[m*16+o]+CP_MK_prior[m*16+o]+stake
+    if weight <= 0 then
+        return 110
+    endif
+    return IMinBJ(2000,IMaxBJ(110,R2I(I2R(total)*100.00/I2R(weight))))
+endfunction
+
+function CP_MK_FFA takes nothing returns boolean
+    return CP_MK_ffa
+endfunction
+
+function CP_MK_Title takes integer m returns string
+    if m == 1 then
+        return "FIRST HERO KILL"
+    elseif m == 2 then
+        return "SCORES A BASE KILL"
+    elseif m == 3 then
+        return "FIRST BASE LOST"
+    elseif m == 4 then
+        return "FIRST TO LEVEL 16"
+    elseif CP_MK_FFA() then
+        return "PLAYER TO WIN"
+    endif
+    return "TEAM TO WIN"
+endfunction
+
+function CP_CAS_User takes integer s returns boolean
+    return s >= 1 and s <= 24 and GetPlayerController(Player(s-1)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(s-1)) == PLAYER_SLOT_STATE_PLAYING
+endfunction
+
+function CP_MK_Valid takes integer m, integer o returns boolean
+    return o >= 1 and o <= 12 and CP_CAS_User(o)
+endfunction
+
+function CP_CAS_BetsView takes integer s returns nothing
+    local integer m = CP_MK_tab[s]
+    local integer o
+    local integer i = 0
+    local integer k = 0
+    local integer b = s*32
+    local integer start = CP_MK_page[s]*6
+    local integer quote
+    local integer volume
+    local integer total = CP_MK_volume[m]
+    local integer tickets = 0
+    local integer invested = 0
+    local integer totalReturn = 0
+    local string label
+    call BlzFrameSetText(CP_CAS_content[b+7],"|cffe7cb88"+CP_MK_Title(m)+"|r  /  "+I2S(total)+"g")
+    call BlzFrameSetVisible(CP_CAS_content[b+7],true)
+    call BlzFrameSetText(CP_CAS_content[b+8],"OUTCOME")
+    call BlzFrameSetVisible(CP_CAS_content[b+8],true)
+    call BlzFrameSetText(CP_CAS_content[b+31],"POOL")
+    call BlzFrameSetVisible(CP_CAS_content[b+31],true)
+    call BlzFrameSetPoint(CP_CAS_content[b+6],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(0.445),-0.169)
+    call BlzFrameSetSize(CP_CAS_content[b+6],CP_CAS_SafeW(0.10),0.018)
+    call BlzFrameSetText(CP_CAS_content[b+6],"ODDS")
+    call BlzFrameSetVisible(CP_CAS_content[b+6],true)
+    set o = 1
+    loop
+        exitwhen o > 12
+        if CP_MK_Valid(m,o) then
+            if k >= start and i < 6 then
+                set volume = CP_MK_pool[m*16+o]
+                set label = CP_MK_Label(m,o)
+                if o == CP_MK_pick[s] then
+                    set label = "|cffe7cb88> "+label+"|r"
+                endif
+                call BlzFrameSetText(CP_CAS_content[b+10+i*3],label)
+                call BlzFrameSetText(CP_CAS_content[b+11+i*3],I2S(volume)+"g / "+I2S(R2I(I2R(volume)*100.0/I2R(IMaxBJ(1,total))))+"%")
+                set quote = CP_MK_Quote(m,o,0)
+                set label = CP_CAS_Odds(quote)
+                if m == 2 and CP_MK_baseScored[o] then
+                    set label = "SCORED"
+                elseif CP_MK_done[m] then
+                    set label = "SETTLED"
+                    if m == 2 then
+                        set label = "NO KILL"
+                    elseif CP_MK_winner[m] == o then
+                        set label = "|cffe7cb88WINNER|r"
+                    endif
+                elseif CP_CAS_closed or CP_CAS_seconds >= 130 then
+                    set label = "CLOSED"
+                endif
+                call BlzFrameSetText(CP_CAS_content[b+12+i*3],label)
+                call BlzFrameSetVisible(CP_CAS_content[b+10+i*3],true)
+                call BlzFrameSetVisible(CP_CAS_content[b+11+i*3],true)
+                call BlzFrameSetVisible(CP_CAS_content[b+12+i*3],true)
+                call BlzFrameSetVisible(CP_CAS_track[s*6+i],true)
+                call BlzFrameSetVisible(CP_CAS_bar[s*6+i],volume > 0)
+                call BlzFrameSetSize(CP_CAS_bar[s*6+i],IMaxBJ(1,volume)*CP_CAS_SafeW(0.115)/I2R(IMaxBJ(1,total)),0.003)
+                call CP_CAS_ShowButton(s,26+i,true)
+                call CP_CUI_Text(CP_CAS_button[s*64+26+i],"PICK")
+                if o == CP_MK_pick[s] then
+                    call CP_CUI_Paint(CP_CAS_button[s*64+26+i],5,true)
+                endif
+                set i = i+1
+            endif
+            set k = k+1
+        endif
+        set o = o+1
+    endloop
+    set invested = CP_MK_ownedStake[s*96+m*16+CP_MK_pick[s]]
+    set totalReturn = CP_MK_ownedReturn[s*96+m*16+CP_MK_pick[s]]
+    set label = "PICK AN OUTCOME"
+    if CP_MK_Valid(m,CP_MK_pick[s]) then
+        set quote = CP_MK_Quote(m,CP_MK_pick[s],CP_CAS_amount[s])
+        set label = CP_MK_Label(m,CP_MK_pick[s])+"  "+CP_CAS_Odds(quote)+"  /  RETURN "+I2S(CP_CAS_amount[s]*quote/100)+"g"
+        if invested > 0 then
+            set label = label+"|nLOCKED "+I2S(invested)+"g  /  RETURN "+I2S(totalReturn)+"g"
+        endif
+    endif
+    call BlzFrameSetText(CP_CAS_content[b+9],label)
+    call BlzFrameSetVisible(CP_CAS_content[b+9],true)
+    loop
+        exitwhen i >= 6
+        call BlzFrameSetVisible(CP_CAS_button[s*64+26+i],false)
+        set i = i+1
+    endloop
+    set i = 20
+    loop
+        exitwhen i > 24
+        call CP_CAS_ShowButton(s,i,true)
+        if i-19 == m then
+            call CP_CUI_Paint(CP_CAS_button[s*64+i],4,true)
+        endif
+        set i = i+1
+    endloop
+    call CP_CAS_ShowButton(s,25,k > 6)
+    call CP_CAS_ShowButton(s,32,CP_MK_IsOpen(m,CP_MK_pick[s]))
+endfunction
+
+function CP_BJ_Summary takes integer h returns string
+    local string text = I2S(CP_BJ_total[h])
+    if CP_BJ_total[h] > 21 then
+        return "|cffff9090BUST "+text+"|r"
+    elseif CP_BJ_state[h] == 4 then
+        return "|cffe7cb88BLACKJACK|r"
+    elseif CP_BJ_state[h] == 1 then
+        return text
+    elseif CP_BJ_state[h] == 0 then
+        return "--"
+    endif
+    return text
+endfunction
+
+function CP_BJ_Value takes integer card returns integer
+    return IMinBJ(10,ModuloInteger(card,13)+2)
+endfunction
+
+function CP_CAS_CardFace takes framehandle f, integer card, boolean back returns nothing
+    local string name = "empty"
+    if back then
+        set name = "back"
+    elseif card >= 0 then
+        set name = "card"+I2S(card)
+    endif
+    call BlzFrameSetVisible(f,true)
+    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
+endfunction
+
+function CP_PK_ChipArt takes framehandle f, integer chips returns nothing
+    local integer count = 1
+    if chips >= 500 then
+        set count = 4
+    elseif chips >= 200 then
+        set count = 3
+    elseif chips >= 50 then
+        set count = 2
+    endif
+    call BlzFrameSetVisible(f,chips > 0)
+    call BlzFrameSetTexture(f,"PokerUI\\chips"+I2S(count)+".blp",0,true)
+endfunction
+
+function CP_CAS_BlackjackView takes integer s returns nothing
+    local integer t = CP_BJ_table[s]
+    local integer h = CP_BJ_seat[s]*2
+    local integer b = s*32
+    local integer c = s*18
+    local integer i = 0
+    local integer j
+    local integer own
+    local integer card
+    local real startX
+    local real cardWidth = 0.060
+    local real cardHeight = 0.082
+    local real spacing = 0.067
+    local boolean turn = CP_BJ_phase[t] == 2 and CP_BJ_turn[t]-1 >= h and CP_BJ_turn[t]-1 <= h+1
+    local string mode = "SOLO + BOTS"
+    local string phase = "PLACE BET"
+    local string dealer = "DEALER"
+    if t == 0 then
+        set mode = "COMMUNITY"
+    endif
+    if CP_BJ_phase[t] == 1 then
+        set phase = "DEAL IN "+I2S(CP_BJ_clock[t])+"s"
+    elseif CP_BJ_phase[t] == 2 then
+        set phase = CP_CAS_Name(CP_BJ_owner[(CP_BJ_turn[t]-1)/2])+" / "+I2S(CP_BJ_clock[t])+"s"
+        if turn then
+            set phase = "|cffe7cb88YOUR TURN / "+I2S(CP_BJ_clock[t])+"s|r"
+        endif
+    elseif CP_BJ_phase[t] == 3 then
+        set phase = "DEALER'S TURN"
+    elseif CP_BJ_phase[t] == 4 then
+        set phase = "NEXT ROUND"
+    endif
+    call BlzFrameSetText(CP_CAS_content[b],mode+"  /  #"+I2S(CP_BJ_round[t]))
+    call BlzFrameSetVisible(CP_CAS_content[b],true)
+    call BlzFrameSetText(CP_CAS_content[b+1],phase)
+    call BlzFrameSetSize(CP_CAS_content[b+1],CP_CAS_SafeW(0.17),0.035)
+    call BlzFrameSetVisible(CP_CAS_content[b+1],true)
+    if CP_BJ_reveal[t] then
+        set dealer = dealer+" / "+I2S(CP_BJ_dealerTotal[t])
+    endif
+    call BlzFrameSetText(CP_CAS_content[b+2],dealer)
+    call BlzFrameSetVisible(CP_CAS_content[b+2],true)
+    call BlzFrameSetText(CP_CAS_content[b+3],"|cffe7cb88YOU  "+CP_BJ_Summary(h)+"|r|nBET "+I2S(CP_BJ_bet[h]))
+    call BlzFrameSetVisible(CP_CAS_content[b+3],true)
+    call BlzFrameSetText(CP_CAS_content[b+4],"2 DECKS|nPAYS 3:2")
+    call BlzFrameSetVisible(CP_CAS_content[b+4],true)
+    loop
+        exitwhen i >= 6
+        set startX = 0.435-I2R(IMaxBJ(2,IMinBJ(6,CP_BJ_dealerCount[t])))*0.067/2.0
+        call BlzFrameSetPoint(CP_CAS_card[c+i],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,startX+I2R(i)*0.067,-0.164)
+        call BlzFrameSetSize(CP_CAS_card[c+i],0.054,0.078)
+        set card = -1
+        if i < CP_BJ_dealerCount[t] then
+            set card = CP_BJ_dealerCard[t*22+i]
+        endif
+        call CP_CAS_CardFace(CP_CAS_card[c+i],card,i == 1 and CP_BJ_dealerCount[t] > 1 and not CP_BJ_reveal[t])
+        call BlzFrameSetVisible(CP_CAS_card[c+i],i < IMaxBJ(2,CP_BJ_dealerCount[t]))
+        set card = -1
+        if i < CP_BJ_count[h] then
+            set card = CP_BJ_card[h*22+i]
+        endif
+        set startX = 0.435-I2R(IMaxBJ(2,IMinBJ(6,CP_BJ_count[h])))*0.067/2.0
+        if CP_BJ_split[h] then
+            set startX = 0.205
+            set cardWidth = 0.043
+            set cardHeight = 0.062
+            set spacing = 0.028
+        endif
+        call BlzFrameSetPoint(CP_CAS_card[c+6+i],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,startX+I2R(i)*spacing,-0.280)
+        call BlzFrameSetSize(CP_CAS_card[c+6+i],cardWidth,cardHeight)
+        call CP_CAS_CardFace(CP_CAS_card[c+6+i],card,false)
+        call BlzFrameSetVisible(CP_CAS_card[c+6+i],i < IMaxBJ(2,CP_BJ_count[h]))
+        if CP_BJ_split[h] then
+            set card = -1
+            if i < CP_BJ_count[h+1] then
+                set card = CP_BJ_card[(h+1)*22+i]
+            endif
+            call CP_CAS_CardFace(CP_CAS_card[c+12+i],card,false)
+            call BlzFrameSetVisible(CP_CAS_card[c+12+i],i < IMaxBJ(2,CP_BJ_count[h+1]))
+        endif
+        set own = CP_BJ_owner[t*6+i]
+        set j = (t*6+i)*2
+        if own == 0 then
+            set phase = "OPEN"
+        else
+            set phase = CP_CAS_Name(own)+" / "+CP_BJ_Summary(j)
+            if CP_BJ_split[j] then
+                set phase = phase+" + "+CP_BJ_Summary(j+1)
+            endif
+        endif
+        call BlzFrameSetVisible(CP_CAS_row[s*6+i],true)
+        call BlzFrameSetText(CP_CAS_row[s*6+i],phase)
+        set i = i+1
+    endloop
+    if CP_BJ_split[h] then
+        call BlzFrameSetText(CP_CAS_content[b+5],"HAND 2 / "+CP_BJ_Summary(h+1))
+        call BlzFrameSetVisible(CP_CAS_content[b+5],true)
+    endif
+    if CP_BJ_count[h] > 6 or CP_BJ_count[h+1] > 6 or CP_BJ_dealerCount[t] > 6 then
+        call BlzFrameSetPoint(CP_CAS_content[b+6],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(0.19),-0.348)
+        call BlzFrameSetSize(CP_CAS_content[b+6],CP_CAS_SafeW(0.22),0.018)
+        call BlzFrameSetText(CP_CAS_content[b+6],"First 6 cards shown")
+        call BlzFrameSetVisible(CP_CAS_content[b+6],true)
+    endif
+    call BlzFrameSetVisible(CP_CAS_chip[s],true)
+    call CP_PK_ChipArt(CP_CAS_chip[s],CP_BJ_bet[h]+CP_BJ_bet[h+1])
+    call CP_CAS_ShowButton(s,11,CP_BJ_phase[t] == 0 or CP_BJ_phase[t] == 4 or (CP_BJ_phase[t] == 1 and CP_BJ_bet[h] == 0))
+    call CP_CAS_ShowButton(s,12,turn)
+    call CP_CAS_ShowButton(s,13,turn)
+    call CP_CAS_ShowButton(s,14,turn and CP_BJ_count[CP_BJ_turn[t]-1] == 2)
+    call CP_CAS_ShowButton(s,15,turn and not CP_BJ_split[h] and CP_BJ_count[h] == 2 and CP_BJ_Value(CP_BJ_card[h*22]) == CP_BJ_Value(CP_BJ_card[h*22+1]) and (ModuloInteger(CP_BJ_card[h*22],13) == 12) == (ModuloInteger(CP_BJ_card[h*22+1],13) == 12))
+    call CP_CAS_ShowButton(s,16,CP_BJ_phase[t] == 0 or CP_BJ_phase[t] == 4 or CP_BJ_bet[h] == 0)
+    if t == 0 then
+        call CP_CUI_Text(CP_CAS_button[s*64+16],"Solo")
+    else
+        call CP_CUI_Text(CP_CAS_button[s*64+16],"Community")
+    endif
+endfunction
+
+function CP_CAS_DuelsView takes integer s returns nothing
+    local integer b = s*32
+    local integer id = CP_DU_incoming[s]
+    local string label = "PICK A PLAYER + WINNER|nEqual stakes. Both must accept."
+    if CP_DU_active[s] > 0 then
+        set id = CP_DU_active[s]
+        set label = "|cffe7cb88LIVE / POT "+I2S(CP_DU_stake[id]*2)+"g|r|n"+CP_CAS_Name(CP_DU_from[id])+": "+CP_MK_Label(5,CP_DU_target[id])+" WINS|n"+CP_CAS_Name(CP_DU_to[id])+": DOES NOT WIN"
+    elseif id > 0 then
+        set label = "|cffe7cb88FROM "+CP_CAS_Name(CP_DU_from[id])+"|r|nThey back "+CP_MK_Label(5,CP_DU_target[id])+" TO WIN.|nYou back DOES NOT WIN / "+I2S(CP_DU_stake[id])+"g|nPOT "+I2S(CP_DU_stake[id]*2)+"g / "+I2S(IMaxBJ(0,CP_DU_expire[id]-CP_CAS_seconds))+"s"
+    elseif CP_DU_outgoing[s] > 0 then
+        set id = CP_DU_outgoing[s]
+        set label = "|cffe7cb88WAITING / "+I2S(IMaxBJ(0,CP_DU_expire[id]-CP_CAS_seconds))+"s|r|n"+CP_CAS_Name(CP_DU_to[id])+"|nYou back "+CP_MK_Label(5,CP_DU_target[id])+" TO WIN|nHELD "+I2S(CP_DU_stake[id])+"g"
+    endif
+    call BlzFrameSetText(CP_CAS_content[b+28],label)
+    call BlzFrameSetVisible(CP_CAS_content[b+28],true)
+    call BlzFrameSetText(CP_CAS_content[b+29],"VS "+CP_CAS_Name(CP_DU_opponent[s])+"  /  BACK "+CP_MK_Label(5,CP_DU_pick[s]))
+    call BlzFrameSetVisible(CP_CAS_content[b+29],true)
+    call CP_CAS_ShowButton(s,33,CP_DU_active[s] == 0 and CP_DU_outgoing[s] == 0 and CP_CAS_User(CP_DU_opponent[s]) and CP_MK_Valid(5,CP_DU_pick[s]) and not CP_CAS_ended)
+    call CP_CAS_ShowButton(s,34,CP_DU_active[s] == 0)
+    call CP_CAS_ShowButton(s,35,CP_DU_active[s] == 0)
+    call CP_CAS_ShowButton(s,36,CP_DU_incoming[s] > 0 and CP_DU_active[s] == 0 and not CP_CAS_ended)
+    call CP_CAS_ShowButton(s,37,CP_DU_incoming[s] > 0)
+    call CP_CAS_ShowButton(s,38,CP_DU_outgoing[s] > 0)
+endfunction
+
+function CP_CreditTerms takes integer mode, integer rate, integer period, integer fee returns string
+    if mode == 2 then
+        return I2S(rate)+"% every "+I2S(period)+" played min on unpaid principal. Earnings repay automatically."
+    elseif mode == 1 then
+        return I2S(rate)+"% fixed ("+I2S(fee)+"g). Repay in one payment."
+    endif
+    return I2S(fee)+"g fixed fee. Earnings repay automatically."
+endfunction
+
+function CP_CreditView takes integer s returns nothing
+    local integer id = CP_CreditSelected[s]
+    local integer owner = CP_CreditOwner[id]
+    local integer i = 40
+    local string kind = "Lend"
+    local string offer = "No offer selected. Use Next to browse."
+    local string draft
+    if CP_CreditSeen[s] != CP_CreditGeneration[id] then
+        set owner = 0
+    endif
+    if CP_CreditDraftRequest[s] then
+        set kind = "Borrow"
+    endif
+    set draft = kind+" "+I2S(CP_CAS_amount[s])+"g  /  "+CP_CreditTerms(CP_CreditDraftMode[s],CP_CreditDraftRate[s],CP_CreditDraftPeriod[s],CP_CAS_amount[s]*CP_CreditDraftRate[s]/100)
+    if owner != 0 then
+        set offer = GetPlayerName(Player(owner-1))+" offers "+I2S(CP_CreditAmount[id])+"g"
+        if CP_CreditRequest[id] then
+            set offer = GetPlayerName(Player(owner-1))+" requests "+I2S(CP_CreditAmount[id])+"g"
+        endif
+        set offer = offer+"|n"+CP_CreditTerms(CP_CreditOfferMode[id],CP_CreditOfferRate[id],CP_CreditOfferPeriod[id],CP_CreditFee[id])
+    endif
+    call BlzFrameSetText(CP_CAS_content[s*32+28],"YOUR TERMS|n"+draft)
+    call BlzFrameSetVisible(CP_CAS_content[s*32+28],true)
+    call BlzFrameSetText(CP_CAS_content[s*32+29],offer)
+    call BlzFrameSetVisible(CP_CAS_content[s*32+29],true)
+    loop
+        exitwhen i > 52
+        call CP_CAS_ShowButton(s,i,true)
+        set i = i+1
+    endloop
+    call CP_CAS_ShowButton(s,48,CP_CreditDraftMode[s] == 2)
+    call CP_CAS_ShowButton(s,51,owner != 0 and (owner == s or not CP_CAS_ended))
+    if owner == s then
+        call CP_CUI_Text(CP_CAS_button[s*64+51],"Cancel offer")
+    else
+        call CP_CUI_Text(CP_CAS_button[s*64+51],"Accept offer")
+    endif
+    call CP_CAS_ShowButton(s,52,CP_LoanPrincipal[s]+CP_LoanFee[s] > 0)
+endfunction
+
+function CP_CAS_Render takes integer s returns nothing
+    local integer i = 0
+    local integer b = s*32
+    local string label = "|cffe7cb88RULES|r"
+    if CP_CAS_root[s] == null then
+        return
+    endif
+    if true then
+        call BlzFrameSetVisible(CP_CAS_root[s],CP_CAS_view[s] > 0)
+    endif
+    if CP_CAS_view[s] == 0 then
+        return
+    endif
+    set i = 0
+    loop
+        exitwhen i > 3
+        if i+1 == CP_CAS_view[s] then
+            call CP_CUI_Paint(CP_CAS_button[s*64+i],5,true)
+        else
+            call CP_CUI_Paint(CP_CAS_button[s*64+i],0,true)
+        endif
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 32
+        if CP_CAS_content[b+i] != null then
+            call BlzFrameSetVisible(CP_CAS_content[b+i],false)
+        endif
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 18
+        call BlzFrameSetVisible(CP_CAS_card[s*18+i],false)
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 6
+        call BlzFrameSetVisible(CP_CAS_row[s*6+i],false)
+        call BlzFrameSetVisible(CP_CAS_track[s*6+i],false)
+        call BlzFrameSetVisible(CP_CAS_bar[s*6+i],false)
+        set i = i+1
+    endloop
+    if CP_CasinoLastView[s] != CP_CAS_view[s] then
+    set i = 11
+    loop
+        exitwhen i >= 57
+        if CP_CAS_button[s*64+i] != null then
+            call BlzFrameSetVisible(CP_CAS_button[s*64+i],false)
+        endif
+        set i = i+1
+    endloop
+        set CP_CasinoLastView[s] = CP_CAS_view[s]
+    endif
+    call BlzFrameSetVisible(CP_CAS_chip[s],false)
+    set i = 6
+    loop
+        exitwhen i > 10
+        call BlzFrameSetVisible(CP_CAS_button[s*64+i],CP_CAS_view[s] != 5)
+        set i = i+1
+    endloop
+    if CP_CAS_view[s] == 1 then
+        call BlzFrameSetTexture(CP_CAS_root[s],"PokerUI\\table.blp",0,true)
+        set label = "|cffe7cb88BLACKJACK|r"
+        call CP_CAS_BlackjackView(s)
+    elseif CP_CAS_view[s] == 2 then
+        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+        set label = "|cffe7cb88MATCH BETS|r"
+        call CP_CAS_BetsView(s)
+    elseif CP_CAS_view[s] == 3 then
+        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+        set label = "|cffe7cb88CHALLENGES|r"
+        call CP_CAS_DuelsView(s)
+    elseif CP_CAS_view[s] == 5 then
+        set label = "|cffe7cb88CREDIT|r"
+        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+        call CP_CreditView(s)
+    else
+        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+        call BlzFrameSetVisible(CP_CAS_content[b+30],true)
+        call BlzFrameSetText(CP_CAS_content[b+30],"|cffe7cb88BLACKJACK|r|nOpening wager 10-100g / 2 decks / S17 / blackjack 3:2 / win 1:1 / ties push|nDouble first 2 cards. Split once. Split aces: 1 card.|nSplit 21 pays 1:1. Timeout stands. No insurance/surrender.|n|n|cffe7cb88MATCH BETS|r|nClose 2:10 / warning 2:00 / accepted odds stay locked|nBase kill: any enemy base. No first event or draw: refund.|n|n|cffe7cb88CHALLENGES|r|nEqual stakes. Accept to back the opposite result.|n|n|cffe7cb88GOLD|r|nStakes use locally saved account gold. Open bets are at risk if you quit.")
+    endif
+    call BlzFrameSetText(CP_CAS_title[s],label)
+    call BlzFrameSetText(CP_CAS_balance[s],"")
+    call BlzFrameSetText(CP_CAS_status[s],"")
+    call BlzFrameSetText(CP_CAS_footer[s],"")
+endfunction
+
+function CP_PreviewClick takes nothing returns nothing
+    local framehandle f = BlzGetTriggerFrame()
+    local integer i = 0
+    if GetTriggerPlayer() == GetLocalPlayer() then
+        call BlzFrameSetFocus(f,false)
+        if f == CP_CAS_button[68] or f == CP_PK_Hide[0] then
+            call CP_PreviewClose()
+        else
+            set CP_CAS_view[1] = 1
+            if f == CP_CAS_button[65] then
+                set CP_CAS_view[1] = 2
+            elseif f == CP_CAS_button[66] then
+                set CP_CAS_view[1] = 3
+            elseif f == CP_CAS_button[67] then
+                set CP_CAS_view[1] = 4
+            elseif f == CP_CAS_button[121] then
+                set CP_CAS_view[1] = 5
+            endif
+            call BlzFrameSetVisible(DPS_Panel,false)
+            call BlzFrameSetVisible(CP_PK_Dialog[0],f == CP_CAS_button[69])
+            if f == CP_CAS_button[69] then
+                call BlzFrameSetVisible(CP_CAS_root[1],false)
+            else
+                call CP_CAS_Render(1)
+                loop
+                    exitwhen i >= 64
+                    if CP_CAS_button[64+i] != null and i >= 6 and i != 57 then
+                        call BlzFrameSetEnable(CP_CAS_button[64+i],false)
+                    endif
+                    set i = i+1
+                endloop
+            endif
+        endif
+    endif
+    set f = null
+endfunction
+
+function CP_CAS_BuildPlayer takes integer s returns nothing
+    local integer i = 0
+    local integer b = s*32
+    local integer c = s*18
+    local real x
+    local real y
+    local trigger click = CreateTrigger()
+    set CP_CreditDraftMode[s] = 1
+    set CP_CreditDraftRate[s] = 5
+    set CP_CreditDraftPeriod[s] = 5
+    set CP_CAS_amount[s] = 50
+    set CP_CAS_note[s] = "Exact bet: -stake 250"
+    set CP_MK_tab[s] = 1
+    set CP_BJ_table[s] = s
+    set CP_BJ_seat[s] = s*6
+    set CP_BJ_owner[s*6] = s
+    set CP_BJ_owner[s*6+1] = -1
+    set CP_BJ_owner[s*6+2] = -1
+    set CP_CAS_root[s] = BlzCreateFrameByType("BACKDROP","CasinoTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",s)
+    call BlzFrameSetSize(CP_CAS_root[s],0.70,0.48)
+    call BlzFrameSetPoint(CP_CAS_root[s],FRAMEPOINT_CENTER,DPS_Panel,FRAMEPOINT_CENTER,0.,0.)
+    call BlzFrameSetTexture(CP_CAS_root[s],"PokerUI\\table.blp",0,true)
+    call BlzFrameSetLevel(CP_CAS_root[s],60)
+    call BlzFrameSetVisible(CP_CAS_root[s],false)
+    set CP_CAS_title[s] = CP_CAS_Label(s,0.025,0.016,0.53,0.027,1.15)
+    set CP_CAS_balance[s] = CP_CAS_Label(s,0.025,0.043,0.65,0.024,1.0)
+    set CP_CAS_status[s] = CP_CAS_Label(s,0.025,0.366,0.65,0.024,1.08)
+    set CP_CAS_footer[s] = CP_CAS_Label(s,0.025,0.452,0.65,0.024,0.85)
+    call CP_CAS_Button(s,0,click,0.025,0.073,0.13,"Blackjack")
+    call CP_CAS_Button(s,1,click,0.16,0.073,0.12,"Match bets")
+    call CP_CAS_Button(s,2,click,0.285,0.073,0.13,"Duels")
+    call CP_CAS_Button(s,3,click,0.42,0.073,0.10,"Rules")
+    call CP_CAS_Button(s,4,click,0.575,0.014,0.10,"X")
+    call CP_CAS_Button(s,5,click,0.520,0.073,0.075,"Poker")
+    call CP_CAS_Button(s,57,click,0.600,0.073,0.085,"Credit")
+    call CP_CAS_Button(s,40,click,0.025,0.174,0.130,"Lend / Borrow")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+40],false)
+    call CP_CAS_Button(s,41,click,0.160,0.174,0.075,"-10g")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+41],false)
+    call CP_CAS_Button(s,42,click,0.240,0.174,0.075,"+10g")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+42],false)
+    call CP_CAS_Button(s,43,click,0.320,0.174,0.085,"+100g")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+43],false)
+    call CP_CAS_Button(s,44,click,0.410,0.174,0.075,"-1%")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+44],false)
+    call CP_CAS_Button(s,45,click,0.490,0.174,0.075,"+1%")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+45],false)
+    call CP_CAS_Button(s,46,click,0.025,0.208,0.130,"Repay type")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+46],false)
+    call CP_CAS_Button(s,47,click,0.445,0.208,0.120,"Post offer")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+47],false)
+    call CP_CAS_Button(s,48,click,0.160,0.208,0.130,"Interval +")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+48],false)
+    call CP_CAS_Button(s,49,click,0.025,0.302,0.120,"Previous")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+49],false)
+    call CP_CAS_Button(s,50,click,0.150,0.302,0.120,"Next")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+50],false)
+    call CP_CAS_Button(s,51,click,0.275,0.302,0.150,"Accept offer")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+51],false)
+    call CP_CAS_Button(s,52,click,0.445,0.302,0.120,"Repay debt")
+    call BlzFrameSetVisible(CP_CAS_button[s*64+52],false)
+    call CP_CAS_Button(s,6,click,0.025,0.394,0.075,"-10")
+    call CP_CAS_Button(s,7,click,0.105,0.394,0.075,"+10")
+    call CP_CAS_Button(s,8,click,0.185,0.394,0.075,"+50")
+    call CP_CAS_Button(s,9,click,0.265,0.394,0.075,"2x")
+    call CP_CAS_Button(s,10,click,0.345,0.394,0.075,"Half")
+    call CP_CAS_Button(s,11,click,0.43,0.394,0.245,"BET")
+    call CP_CAS_Button(s,12,click,0.025,0.423,0.10,"Hit")
+    call CP_CAS_Button(s,13,click,0.13,0.423,0.10,"Stand")
+    call CP_CAS_Button(s,14,click,0.235,0.423,0.12,"Double")
+    call CP_CAS_Button(s,15,click,0.36,0.423,0.10,"Split")
+    call CP_CAS_Button(s,16,click,0.465,0.423,0.21,"Community")
+    call CP_CAS_Button(s,20,click,0.025,0.110,0.125,"Hero kill")
+    call CP_CAS_Button(s,21,click,0.155,0.110,0.125,"Base kill")
+    call CP_CAS_Button(s,22,click,0.285,0.110,0.125,"Base lost")
+    call CP_CAS_Button(s,23,click,0.415,0.110,0.125,"Level 16")
+    call CP_CAS_Button(s,24,click,0.545,0.110,0.13,"Win match")
+    call CP_CAS_Button(s,25,click,0.555,0.336,0.12,"MORE")
+    call CP_CAS_Button(s,32,click,0.43,0.394,0.245,"BET")
+    call CP_CAS_Button(s,33,click,0.43,0.394,0.245,"CHALLENGE")
+    call CP_CAS_Button(s,34,click,0.025,0.298,0.20,"Opponent >")
+    call CP_CAS_Button(s,35,click,0.235,0.298,0.20,"Winner >")
+    call CP_CAS_Button(s,36,click,0.025,0.333,0.20,"Accept")
+    call CP_CAS_Button(s,37,click,0.235,0.333,0.20,"Decline")
+    call CP_CAS_Button(s,38,click,0.445,0.333,0.23,"Cancel")
+    set CP_CAS_content[b] = CP_CAS_Label(s,0.025,0.109,0.65,0.023,0.90)
+    set CP_CAS_content[b+1] = CP_CAS_Label(s,0.025,0.136,0.65,0.022,0.95)
+    set CP_CAS_content[b+2] = CP_CAS_Label(s,0.195,0.140,0.48,0.023,0.90)
+    set CP_CAS_content[b+3] = CP_CAS_Label(s,0.025,0.280,0.19,0.055,1.15)
+    set CP_CAS_content[b+4] = CP_CAS_Label(s,0.025,0.190,0.16,0.040,0.85)
+    set CP_CAS_content[b+5] = CP_CAS_Label(s,0.43,0.347,0.245,0.018,0.80)
+    set CP_CAS_content[b+6] = CP_CAS_Label(s,0.19,0.252,0.48,0.020,0.80)
+    set CP_CAS_content[b+7] = CP_CAS_Label(s,0.025,0.143,0.65,0.021,0.95)
+    set CP_CAS_content[b+8] = CP_CAS_Label(s,0.035,0.169,0.64,0.018,0.80)
+    set CP_CAS_content[b+9] = CP_CAS_Label(s,0.025,0.330,0.52,0.035,0.85)
+    set CP_CAS_content[b+28] = CP_CAS_Label(s,0.04,0.125,0.62,0.115,1.0)
+    set CP_CAS_content[b+29] = CP_CAS_Label(s,0.04,0.245,0.62,0.045,1.0)
+    set CP_CAS_content[b+30] = CP_CAS_Label(s,0.04,0.112,0.62,0.25,0.86)
+    // Unused label 31 is still created for a uniform visibility loop.
+    set CP_CAS_content[b+31] = CP_CAS_Label(s,0.300,0.169,0.13,0.018,0.8)
+    loop
+        exitwhen i >= 6
+        set y = 0.190+I2R(i)*0.023
+        set CP_CAS_content[b+10+i*3] = CP_CAS_Label(s,0.035,y,0.255,0.021,0.90)
+        set CP_CAS_content[b+11+i*3] = CP_CAS_Label(s,0.300,y,0.13,0.021,0.86)
+        set CP_CAS_content[b+12+i*3] = CP_CAS_Label(s,0.445,y,0.10,0.021,0.93)
+        set CP_CAS_track[s*6+i] = CP_CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CP_CAS_SafeX(0.300),y+0.018,CP_CAS_SafeW(0.115),0.003)
+        call BlzFrameSetVertexColor(CP_CAS_track[s*6+i],BlzConvertColor(255,30,55,49))
+        set CP_CAS_bar[s*6+i] = CP_CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CP_CAS_SafeX(0.300),y+0.018,CP_CAS_SafeW(0.115),0.003)
+        call BlzFrameSetVertexColor(CP_CAS_bar[s*6+i],BlzConvertColor(255,214,184,106))
+        call CP_CAS_Button(s,26+i,click,0.555,y-0.003,0.12,"Select")
+        call BlzFrameSetSize(CP_CAS_button[s*64+26+i],CP_CAS_SafeW(0.12),0.023)
+        set x = 0.025
+        if i >= 3 then
+            set x = 0.355
+        endif
+        set CP_CAS_row[s*6+i] = CP_CAS_Label(s,x,0.245+I2R(ModuloInteger(i,3))*0.0115,0.30,0.011,0.73)
+        set CP_CAS_card[c+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.195+I2R(i)*0.067,0.178,0.054,0.060)
+        set CP_CAS_card[c+6+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.205+I2R(i)*0.028,0.274,0.050,0.072)
+        set CP_CAS_card[c+12+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.430+I2R(i)*0.028,0.274,0.050,0.060)
+        set i = i+1
+    endloop
+    set CP_CAS_chip[s] = CP_CAS_Texture(s,"PokerUI\\chips1.blp",0.025,0.322,0.10,0.033)
+    call TriggerAddAction(click,function CP_PreviewClick)
+    set click = null
+endfunction
+
+function CP_PK_Button takes integer p, trigger t, real x, real y, real width, string label returns framehandle
+    local framehandle f = CP_CUI_Create(CP_PK_Dialog[p],p,x,y,width,0.029,label,0)
+    if label == "X" then
+        call BlzTriggerRegisterFrameEvent(t,f,FRAMEEVENT_CONTROL_CLICK)
+    else
+        call BlzFrameSetEnable(f,false)
+    endif
+    return f
+endfunction
+
+function CP_PK_Label takes integer p, real x, real y, real w, real h, real scale returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","PokerLabel",CP_PK_Dialog[p],"",p)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
+    call BlzFrameSetEnable(f,false)
+    call BlzFrameSetAlpha(f,145)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function CP_PK_BoardCount takes integer p returns integer
+    if CP_PK_Street[p] == 0 then
+        return 0
+    endif
+    return IMinBJ(5,CP_PK_Street[p]+2)
+endfunction
+
+function CP_PK_Limit takes integer p, integer seat returns integer
+    local integer x = p*2+seat
+    local integer y = p*2+1-seat
+    return IMinBJ(CP_PK_Paid[x]+CP_PK_Stack[x],CP_PK_Paid[y]+CP_PK_Stack[y])
+endfunction
+
+function CP_PK_Render takes integer p returns nothing
+    local integer x = p*2
+    local integer b = p*9
+    local integer i = 0
+    local integer due = IMaxBJ(0,CP_PK_Paid[x+1]-CP_PK_Paid[x])
+    local integer top = IMaxBJ(CP_PK_Paid[x],CP_PK_Paid[x+1])
+    local integer pot = CP_PK_Total[x]+CP_PK_Total[x+1]
+    local string phase = "PREFLOP"
+    local string label = "Check"
+    local string path = ""
+    local boolean raiseOK = false
+    local integer callTone = 0
+    if CP_PK_Street[p] == 1 then
+        set phase = "FLOP"
+    elseif CP_PK_Street[p] == 2 then
+        set phase = "TURN"
+    elseif CP_PK_Street[p] == 3 then
+        set phase = "RIVER"
+    endif
+    call BlzFrameSetText(CP_PK_Title[p],"|cffe7cb88POKER|r|n|cffabc1ba"+phase+" / #"+I2S(CP_PK_Hand[p])+"|r")
+    call BlzFrameSetText(CP_PK_HumanLabel[p],"|cffe7cb88YOU|r|n"+I2S(CP_PK_Stack[x]))
+    call BlzFrameSetText(CP_PK_BotLabel[p],"BOT|n"+I2S(CP_PK_Stack[x+1]))
+    call BlzFrameSetText(CP_PK_PotLabel[p],"|cffffd579POT  "+I2S(pot)+"|r")
+    if CP_PK_Note[p] == "Blinds 1/2. Raise button adds one minimum raise." then
+        call BlzFrameSetText(CP_PK_Text[p],"BLINDS 1/2 / MAX BUY-IN 300g")
+    else
+        call BlzFrameSetText(CP_PK_Text[p],CP_PK_Note[p])
+    endif
+    call BlzFrameSetText(CP_PK_CallLabel[p],"CALL "+I2S(due))
+    call CP_PK_ChipArt(CP_PK_HumanChips[p],CP_PK_Stack[x])
+    call CP_PK_ChipArt(CP_PK_BotChips[p],CP_PK_Stack[x+1])
+    call CP_PK_ChipArt(CP_PK_PotChips[p],pot)
+    call BlzFrameSetVisible(CP_PK_HumanDealer[p],CP_PK_Dealer[p] == 0)
+    call BlzFrameSetVisible(CP_PK_BotDealer[p],CP_PK_Dealer[p] == 1)
+    loop
+        exitwhen i >= 9
+        if i < 2 then
+            set path = "card"+I2S(CP_PK_Cards[b+i])
+        elseif i < 4 then
+            set path = "back"
+            if CP_PK_Reveal[p] then
+                set path = "card"+I2S(CP_PK_Cards[b+i])
+            endif
+        else
+            set path = "empty"
+            if i-4 < CP_PK_BoardCount(p) then
+                set path = "card"+I2S(CP_PK_Cards[b+i])
+            endif
+        endif
+        call BlzFrameSetTexture(CP_PK_Face[b+i],"PokerUI\\"+path+".blp",0,true)
+        set i = i+1
+    endloop
+    if CP_PK_Turn[p] == 0 then
+        call BlzFrameSetText(CP_PK_Status[p],"|cffffd579YOUR TURN / "+I2S(CP_PK_Clock[p])+"s|r")
+            if due > 0 then
+            set label = "Call "+I2S(due)
+            set callTone = 3
+        endif
+            call CP_CUI_Text(CP_PK_Call[p],label)
+        if CP_PK_Limit(p,0) > top and (not CP_PK_Acted[x] or due >= CP_PK_LastRaise[p]) then
+                    set raiseOK = true
+            call CP_CUI_Text(CP_PK_Raise[p],"Raise "+I2S(IMinBJ(top+CP_PK_LastRaise[p],CP_PK_Limit(p,0))))
+                    call CP_CUI_Text(CP_PK_Allin[p],"All-in "+I2S(CP_PK_Limit(p,0)))
+        endif
+    elseif CP_PK_Turn[p] == 1 then
+        call BlzFrameSetText(CP_PK_Status[p],"BOT'S TURN")
+    else
+        call BlzFrameSetText(CP_PK_Status[p],"NEXT HAND")
+        endif
+    call CP_CUI_Paint(CP_PK_Hide[p],0,true)
+endfunction
+
+function CP_PK_Texture takes integer p, string name, real x, real y, real w, real h returns framehandle
+    local framehandle f = BlzCreateFrameByType("BACKDROP","PokerArtwork",CP_PK_Dialog[p],"",p)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
+    call BlzFrameSetEnable(f,false)
+    call BlzFrameSetAlpha(f,145)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function CP_PK_Start takes nothing returns nothing
+    local integer p = 0
+    local integer i
+    local trigger click
+            set CP_PK_Dialog[p] = BlzCreateFrameByType("BACKDROP","PokerTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",p)
+            call BlzFrameSetSize(CP_PK_Dialog[p],0.70,0.48)
+            call BlzFrameSetPoint(CP_PK_Dialog[p],FRAMEPOINT_CENTER,DPS_Panel,FRAMEPOINT_CENTER,0.,0.)
+            call BlzFrameSetTexture(CP_PK_Dialog[p],"PokerUI\\table.blp",0,true)
+            call BlzFrameSetLevel(CP_PK_Dialog[p],50)
+            call BlzFrameSetVisible(CP_PK_Dialog[p],false)
+            set CP_PK_Title[p] = CP_PK_Label(p,0.025,0.018,0.50,0.05,1.15)
+            set CP_PK_BotLabel[p] = CP_PK_Label(p,0.08,0.085,0.16,0.052,1.35)
+            set CP_PK_HumanLabel[p] = CP_PK_Label(p,0.08,0.315,0.16,0.052,1.35)
+            set CP_PK_PotLabel[p] = CP_PK_Label(p,0.34,0.16,0.16,0.027,1.25)
+            set CP_PK_Status[p] = CP_PK_Label(p,0.46,0.298,0.19,0.027,1.0)
+            set CP_PK_CallLabel[p] = CP_PK_Label(p,0.46,0.369,0.18,0.025,1.05)
+            set CP_PK_Text[p] = CP_PK_Label(p,0.025,0.405,0.65,0.027,1.0)
+            set CP_PK_HumanChips[p] = CP_PK_Texture(p,"chips4",0.46,0.325,0.075,0.045)
+            set CP_PK_BotChips[p] = CP_PK_Texture(p,"chips4",0.46,0.09,0.075,0.045)
+            set CP_PK_PotChips[p] = CP_PK_Texture(p,"chips1",0.275,0.158,0.052,0.026)
+            set CP_PK_HumanDealer[p] = CP_PK_Texture(p,"dealer",0.245,0.335,0.022,0.022)
+            set CP_PK_BotDealer[p] = CP_PK_Texture(p,"dealer",0.245,0.095,0.022,0.022)
+            set CP_PK_Face[p*9] = CP_PK_Texture(p,"empty",0.285,0.305,0.06,0.087)
+            set CP_PK_Face[p*9+1] = CP_PK_Texture(p,"empty",0.353,0.305,0.06,0.087)
+            set CP_PK_Face[p*9+2] = CP_PK_Texture(p,"back",0.285,0.067,0.058,0.084)
+            set CP_PK_Face[p*9+3] = CP_PK_Texture(p,"back",0.351,0.067,0.058,0.084)
+            set i = 0
+            loop
+                exitwhen i >= 5
+                set CP_PK_Face[p*9+4+i] = CP_PK_Texture(p,"empty",0.187+I2R(i)*0.066,0.196,0.06,0.086)
+                set i = i+1
+            endloop
+            set click = CreateTrigger()
+            set CP_PK_Fold[p] = CP_PK_Button(p,click,0.025,-0.439,0.105,"Fold")
+            set CP_PK_Call[p] = CP_PK_Button(p,click,0.135,-0.439,0.12,"Check / Call")
+            set CP_PK_Raise[p] = CP_PK_Button(p,click,0.26,-0.439,0.12,"Raise")
+            set CP_PK_Allin[p] = CP_PK_Button(p,click,0.385,-0.439,0.13,"All-in")
+            set CP_PK_Next[p] = CP_PK_Button(p,click,0.52,-0.439,0.155,"Next hand")
+            set CP_PK_Hide[p] = CP_PK_Button(p,click,0.565,-0.018,0.11,"X")
+    set CP_PK_Turn[p] = -1
+    call CP_PK_Render(p)
+    call BlzFrameSetVisible(CP_PK_Dialog[p],false)
+    call TriggerAddAction(click,function CP_PreviewClick)
+endfunction
+
+function CP_PreviewBanner takes framehandle parent returns nothing
+    local framehandle label = BlzCreateFrameByType("TEXT","",parent,"",0)
+    call BlzFrameSetPoint(label,FRAMEPOINT_TOP,parent,FRAMEPOINT_TOP,0.,-0.018)
+    call BlzFrameSetText(label,"Coming soon")
+    call BlzFrameSetScale(label,1.28)
+    call BlzFrameSetLevel(label,75)
+    call BlzFrameSetEnable(label,false)
+    set label = null
+endfunction
+
+function CP_PreviewInit takes framehandle launch returns nothing
+    local trigger t = CreateTrigger()
+    call CP_CAS_BuildPlayer(1)
+    call CP_PK_Start()
+    call CP_PreviewBanner(CP_CAS_root[1])
+    call CP_PreviewBanner(CP_PK_Dialog[0])
+    call BlzFrameSetVertexColor(CP_CAS_root[1],BlzConvertColor(255,145,145,145))
+    call BlzFrameSetVertexColor(CP_PK_Dialog[0],BlzConvertColor(255,145,145,145))
+    call BlzTriggerRegisterFrameEvent(t,launch,FRAMEEVENT_CONTROL_CLICK)
+    call TriggerAddAction(t,function CP_PreviewClick)
+    set t = null
+endfunction
+
+function FF_us_CountKey takes integer slot, integer cat returns integer
+    return slot * 8 + cat
+endfunction
+
+function FF_us_OrderKey takes integer slot, integer cat returns integer
+    return 1000 + slot * 8 + cat
+endfunction
+
+function FF_us_Put takes integer slot, integer cat, integer oid, integer v, boolean assign returns nothing
+    local integer key = FF_us_CountKey(slot, cat)
+    if PF_frozen then
+        return
+    endif
+    if slot < 1 or slot > 12 then
+        return
+    endif
+    if not HaveSavedInteger(FF_us_ht, key, oid) then
+        call SaveInteger(FF_us_ht, FF_us_OrderKey(slot, cat), FF_us_n[key], oid)
+        set FF_us_n[key] = FF_us_n[key] + 1
+        call SaveInteger(FF_us_ht, key, oid, 0)
+    endif
+    if not assign then
+        set v = LoadInteger(FF_us_ht, key, oid) + v
+    endif
+    call SaveInteger(FF_us_ht, key, oid, v)
+    set FF_us_dirty[slot] = true
+endfunction
+
+function FF_us_Add takes integer slot, integer cat, integer oid returns nothing
+    call FF_us_Put(slot, cat, oid, 1, false)
+endfunction
+
+function FF_us_AddEvent takes string line returns nothing
+    if PF_frozen then
+        return
+    endif
+    if FF_us_eventN < FF_US_EVENT_MAX then
+        set FF_us_events[FF_us_eventN] = line
+        set FF_us_eventN = FF_us_eventN + 1
+        set FF_us_sharedDirty = true
+    endif
+endfunction
+
+function FF_us_Char takes integer c returns string
+    if c < 32 or c > 126 then
+        return "?"
+    endif
+    return SubString(FF_us_chars, c - 32, c - 31)
+endfunction
+
+function FF_us_Id2S takes integer id returns string
+    return FF_us_Char(id / 16777216) + FF_us_Char(ModuloInteger(id / 65536, 256)) + FF_us_Char(ModuloInteger(id / 256, 256)) + FF_us_Char(ModuloInteger(id, 256))
+endfunction
+
+function PF_Hero takes integer slot, unit u returns nothing
+    local integer id = GetUnitTypeId(u)
+    if not PF_frozen and id != 0 and IsUnitType(u, UNIT_TYPE_HERO) and not IsUnitIllusion(u) and not HaveSavedHandle(PF_data, 900 + slot, GetHandleId(u)) then
+        call SaveUnitHandle(PF_data, 900 + slot, GetHandleId(u), u)
+        call SaveUnitHandle(PF_data, 950 + slot, PF_heroCount[slot], u)
+        set PF_heroCount[slot] = PF_heroCount[slot]+1
+        call PF_Use(slot, 1, id, 1)
+        call PF_Appearance(slot, u, 1)
+        set PF_lastHero[slot] = id
+    endif
+endfunction
+
+function PF_Price takes integer id, integer level returns integer
+    if not HaveSavedInteger(PF_prices, 1, id) then
+        return -1
+    endif
+    return LoadInteger(PF_prices, 1, id) + IMaxBJ(0, level-1) * LoadInteger(PF_prices, 2, id)
+endfunction
+
+function PF_Purchase takes integer slot, string kind, integer id, integer price returns nothing
+    call PF_Log(slot, kind, id, price, 0)
+endfunction
+
+function FF_us_OnSoldTick takes nothing returns nothing
+    local integer i = 0
+    local unit u
+    local integer s
+    local integer id
+    loop
+        exitwhen i >= FF_us_soldN
+        set u = FF_us_sold[i]
+        set id = GetUnitTypeId(u)
+        if id != 0 then
+            set s = FF_st_Slot(GetOwningPlayer(u))
+            if s > 0 then
+                call FF_us_Add(s, FF_US_UNIT, id)
+                if IsUnitType(u,UNIT_TYPE_HERO) then
+                    call PF_Hero(s,u)
+                else
+                    call PF_Use(s,3,id,1)
+                    call PF_Appearance(s,u,1)
+                endif
+                if FF_us_soldCost[i] > 0 then
+                    call PF_Purchase(s,"hire",id,FF_us_soldCost[i])
+                else
+                    call PF_Purchase(s,"hire",id,PF_Price(id,1))
+                endif
+                if IsUnitType(u, UNIT_TYPE_HERO) then
+                    // 'hhou': Solo's hero altar
+                    if GetUnitTypeId(FF_us_seller[i]) == 'hhou' then
+                        call FF_us_AddEvent("pick," + FF_Elapsed() + "," + I2S(s) + "," + FF_us_Id2S(id) + ",altar")
+                    endif
+                elseif FF_us_soldCost[i] > 0 then
+                    set FF_st_creeps[s] = FF_st_creeps[s] + 1
+                    set FF_st_creepGold[s] = FF_st_creepGold[s] + FF_us_soldCost[i]
+                endif
+            endif
+        endif
+        set FF_us_sold[i] = null
+        set FF_us_seller[i] = null
+        set i = i + 1
+    endloop
+    set FF_us_soldN = 0
+    set u = null
+endfunction
+
+function PF_HeroExperience takes integer s returns nothing
+    local integer i = 0
+    local integer xp
+    local integer prev
+    local unit hero
+    loop
+        exitwhen i >= PF_heroCount[s]
+        set hero = LoadUnitHandle(PF_data,950+s,i)
+        if GetUnitTypeId(hero) != 0 then
+            set FF_st_heroLvl[s] = IMaxBJ(FF_st_heroLvl[s],GetHeroLevel(hero))
+            set xp = GetHeroXP(hero)
+            set prev = LoadInteger(PF_data,980+s,i)
+            if xp > prev then
+                set PF_heroXP[s] = PF_heroXP[s]+xp-prev
+                call SaveInteger(PF_data,980+s,i,xp)
+            endif
+        endif
+        set i = i+1
+    endloop
+    set hero = null
+endfunction
+
+function FF_us_PollPicks takes nothing returns nothing
+    local integer s = 1
+    local unit u
+    local string how
+    loop
+        exitwhen s > 12
+        if not PF_frozen then
+            call PF_HeroExperience(s)
+        endif
+        set u = udg_herO[s]
+        if u != FF_us_heroSeen[s] then
+            if u != null then
+                call PF_Hero(s,u)
+                call PF_Log(s,"hero",GetUnitTypeId(u),-1,0)
+                set how = "pick"
+                if udg_swapped[s] and not FF_us_swapSeen[s] then
+                    set how = "swap"
+                    set FF_us_swapSeen[s] = true
+                elseif FF_us_hadHero[s] then
+                    set how = "repick"
+                endif
+                call FF_us_AddEvent("pick," + FF_Elapsed() + "," + I2S(s) + "," + FF_us_Id2S(GetUnitTypeId(u)) + "," + how)
+                set FF_us_hadHero[s] = true
+            endif
+            set FF_us_heroSeen[s] = u
+        endif
+        set s = s + 1
+    endloop
+    set u = null
+endfunction
+
+function FF_SideOf takes integer slot returns integer
+    if udg_mode_6v6 then
+        if (slot >= 1 and slot <= 3) or (slot >= 10 and slot <= 12) then
+            return 1
+        endif
+        return 2
+    endif
+    return (slot - 1) / 3 + 1
+endfunction
+
+function FF_st_Tech takes integer slot, integer techid returns integer
+    return GetPlayerTechCount(Player(slot - 1), techid, true)
+endfunction
+
+function FF_st_RaceLevel takes integer slot returns integer
+    return IMaxBJ(IMaxBJ(FF_st_Tech(slot, 'Robs'), FF_st_Tech(slot, 'Rugf')), IMaxBJ(FF_st_Tech(slot, 'Rhan'), FF_st_Tech(slot, 'R004')))
+endfunction
+
+function PF_Average takes integer gold, integer count returns integer
+    if count == 0 then
+        return 0
+    endif
+    return gold / count
+endfunction
+
+function PF_Live takes integer s, integer k returns integer
+    if k == 0 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_UNITS_TRAINED)
+    elseif k == 1 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_UNITS_KILLED)
+    elseif k == 2 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_STRUCT_BUILT)
+    elseif k == 3 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_STRUCT_RAZED)
+    elseif k == 4 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_TECH_PERCENT)
+    elseif k == 5 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_FOOD_MAXPROD)
+    elseif k == 6 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_FOOD_MAXUSED)
+    elseif k == 7 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_HEROES_KILLED)
+    elseif k == 8 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_ITEMS_GAINED)
+    elseif k == 9 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_MERCS_HIRED)
+    elseif k == 10 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_MINED_TOTAL)
+    elseif k == 11 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_MINED_UPKEEP)
+    elseif k == 12 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_LOST_UPKEEP)
+    elseif k == 13 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_LOST_TAX)
+    elseif k == 14 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_GIVEN) + FF_st_poolOut[s]
+    elseif k == 15 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_GOLD_RECEIVED) + FF_st_poolIn[s]
+    elseif k == 16 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_LUMBER_TOTAL)
+    elseif k == 17 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_LUMBER_LOST_UPKEEP)
+    elseif k == 18 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_LUMBER_LOST_TAX)
+    elseif k == 19 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_LUMBER_GIVEN)
+    elseif k == 20 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_LUMBER_RECEIVED)
+    elseif k == 21 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_UNIT_TOTAL)
+    elseif k == 22 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_HERO_TOTAL)
+    elseif k == 23 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_RESOURCE_TOTAL)
+    elseif k == 24 then
+        return GetPlayerScore(Player(s-1), PLAYER_SCORE_TOTAL)
+    elseif k == 25 then
+        return IMaxBJ(FF_st_heroLvl[s], GetHeroLevel(udg_herO[s]))
+    elseif k == 26 then
+        return udg_unit_kills[s]
+    elseif k == 27 then
+        return udg_unit_deaths[s]
+    elseif k == 28 then
+        return DPS_Assists[s]
+    elseif k == 29 then
+        return udg_hero_kills[s]
+    elseif k == 30 then
+        return udg_hero_deaths[s]
+    elseif k == 31 then
+        return DPS_Caps[s]
+    elseif k == 32 then
+        return DPS_Buildings[s]
+    elseif k == 33 then
+        return FF_st_tmHits[s]
+    elseif k == 34 then
+        return FF_st_dmg[s*3+FF_ST_DMG_OUT] + FF_st_dmg[s*3+FF_ST_DMG_BLD]
+    elseif k == 35 then
+        return FF_st_dmg[s*3+FF_ST_DMG_BLD]
+    elseif k == 36 then
+        return FF_st_dmg[s*3+FF_ST_DMG_IN]
+    elseif k == 37 then
+        return PF_recordedCost[s]
+    elseif k == 38 then
+        return FF_st_poolOut[s]
+    elseif k == 39 then
+        return FF_st_poolIn[s]
+    elseif k == 40 then
+        return PF_sent[s]
+    elseif k == 41 then
+        return PF_received[s]
+    elseif k == 42 then
+        return PF_Average(FF_st_poolOut[s], PF_sent[s])
+    elseif k == 43 then
+        return PF_Average(FF_st_poolIn[s], PF_received[s])
+    elseif k == 44 then
+        return FF_st_kothGold[s]
+    elseif k == 45 then
+        return FF_st_denyOwn[s]
+    elseif k == 46 then
+        return FF_st_denyAlly[s]
+    elseif k == 47 then
+        return FF_st_tmCasts[s]
+    elseif k == 48 then
+        return FF_st_tmDenied[s]
+    elseif k == 49 then
+        return FF_st_tmSaves[s]
+    elseif k == 50 then
+        return FF_st_creeps[s]
+    elseif k == 51 then
+        return FF_st_creepGold[s]
+    elseif k == 52 then
+        return FF_st_Tech(s, 'Rhme')
+    elseif k == 53 then
+        return FF_st_Tech(s, 'Rhar')
+    elseif k == 54 then
+        return FF_st_RaceLevel(s)
+    elseif k == 55 then
+        return FF_st_teamRes[s]
+    elseif k == 56 then
+        return PF_heroCount[s]
+    elseif k == 57 then
+        return PF_heroXP[s]
+    elseif k == 58 then
+        return PF_colossalKills[s]
+    elseif k == 59 then
+        return FF_us_kothHold[FF_SideOf(s)]
+    endif
+    return 0
+endfunction
+
+function PF_Freeze takes nothing returns nothing
+    local integer s = 1
+    local integer k
+    if PF_frozen then
+        return
+    endif
+    loop
+        exitwhen s > 24
+        if s <= 4 then
+            set PF_hillSeconds[s] = FF_us_kothHold[s]
+        endif
+        if s <= 12 then
+            call PF_HeroExperience(s)
+            call PF_ObserveBalance(s,GetPlayerState(Player(s-1),PLAYER_STATE_RESOURCE_GOLD))
+        endif
+        set k = 0
+        if s > 12 then
+            set k = PF_casinoFirst
+        endif
+        loop
+            exitwhen k >= PF_metrics
+            call SaveInteger(PF_final,s,k,PF_Live(s,k))
+            set k = k+1
+        endloop
+        set s = s+1
+    endloop
+    set PF_frozen = true
+endfunction
+
+function PF_SoloSnapshot takes nothing returns nothing
+    set PF_endSecond = R2I(TimerGetElapsed(FF_gameTimer))
+    call FF_us_OnSoldTick()
+    call FF_us_PollPicks()
+    call PF_Freeze()
+    set PF_dirty = false
+endfunction
+
+function FF_us_OnItemSold takes nothing returns nothing
+    local integer s = FF_st_Slot(GetOwningPlayer(GetBuyingUnit()))
+    local item it = GetSoldItem()
+    local integer id = GetItemTypeId(it)
+    if s > 0 and id != 0 then
+        call SaveStr(PF_prices,3,id,BlzGetItemIconPath(it))
+        call PF_Use(s,2,id,1)
+        call PF_Purchase(s,"item",id,PF_Price(id,1))
+    endif
+    set it = null
+    call FF_us_Add(FF_st_Slot(GetOwningPlayer(GetBuyingUnit())), FF_US_ITEM, GetItemTypeId(GetSoldItem()))
+endfunction
+
+function FF_EarlyInit takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SELL_ITEM)
+    call TriggerAddAction(t, function FF_us_OnItemSold)
+    set t = null
+endfunction
+
+function FF_st_AddDamage takes integer slot, integer kind, real d returns nothing
+    local integer i = slot * 3 + kind
+    local real r = FF_st_dmgRem[i] + d
+    set FF_st_dmg[i] = FF_st_dmg[i] + R2I(r)
+    set FF_st_dmgRem[i] = r - I2R(R2I(r))
+endfunction
+
+function FF_st_OnDamage takes nothing returns boolean
+    local unit src = GetEventDamageSource()
+    local unit tgt = GetTriggerUnit()
+    local real d = GetEventDamage()
+    local player ps
+    local player pt
+    local integer s
+    local integer t
+    if src != null and d > 0.0 then
+        set ps = GetOwningPlayer(src)
+        set pt = GetOwningPlayer(tgt)
+        if ps != pt and not IsPlayerAlly(ps, pt) then
+            set s = FF_st_Slot(ps)
+            set t = FF_st_Slot(pt)
+            if s >= 1 and s <= 12 then
+                if IsUnitType(tgt, UNIT_TYPE_STRUCTURE) then
+                    call FF_st_AddDamage(s, FF_ST_DMG_BLD, d)
+                else
+                    call FF_st_AddDamage(s, FF_ST_DMG_OUT, d)
+                endif
+            endif
+            if t >= 1 and t <= 12 then
+                call FF_st_AddDamage(t, FF_ST_DMG_IN, d)
+            endif
+        endif
+        set ps = null
+        set pt = null
+    endif
+    set src = null
+    set tgt = null
+    return false
+endfunction
+
+function FF_st_IsFeedUnit takes integer id returns boolean
+    return id == 'hfoo' or id == 'earc' or id == 'hrif' or id == 'uban' or id == 'otbk' or id == 'ugho'
+endfunction
+
+function FF_st_TmDrop takes integer i returns nothing
+    set FF_st_tmN = FF_st_tmN - 1
+    set FF_st_tmCaster[i] = FF_st_tmCaster[FF_st_tmN]
+    set FF_st_tmTarget[i] = FF_st_tmTarget[FF_st_tmN]
+    set FF_st_tmSlot[i] = FF_st_tmSlot[FF_st_tmN]
+    set FF_st_tmUntil[i] = FF_st_tmUntil[FF_st_tmN]
+    set FF_st_tmCaster[FF_st_tmN] = null
+    set FF_st_tmTarget[FF_st_tmN] = null
+endfunction
+
+function FF_st_OnDeath takes nothing returns nothing
+    local unit victim = GetTriggerUnit()
+    local unit killer = GetKillingUnit()
+    local player vp = GetOwningPlayer(victim)
+    local player kp = null
+    local integer ks = 0
+    local integer i = FF_st_tmN - 1
+    if killer != null then
+        set kp = GetOwningPlayer(killer)
+        set ks = FF_st_Slot(kp)
+    endif
+    // Transmute in flight on this unit: hit, or denied (and saved, if its own side killed it).
+    loop
+        exitwhen i < 0
+        if FF_st_tmTarget[i] == victim then
+            if killer != null and killer == FF_st_tmCaster[i] then
+                set FF_st_tmHits[FF_st_tmSlot[i]] = FF_st_tmHits[FF_st_tmSlot[i]] + 1
+            else
+                set FF_st_tmDenied[FF_st_tmSlot[i]] = FF_st_tmDenied[FF_st_tmSlot[i]] + 1
+                if ks > 0 and (kp == vp or IsPlayerAlly(kp, vp)) then
+                    set FF_st_tmSaves[ks] = FF_st_tmSaves[ks] + 1
+                endif
+            endif
+            call FF_st_TmDrop(i)
+        endif
+        set i = i - 1
+    endloop
+    // Denies: a feed unit of the killer's own or an allied base.
+    if ks > 0 and FF_st_IsFeedUnit(GetUnitTypeId(victim)) and not IsUnitIllusion(victim) then
+        if kp == vp then
+            set FF_st_denyOwn[ks] = FF_st_denyOwn[ks] + 1
+        elseif IsPlayerAlly(kp, vp) then
+            set FF_st_denyAlly[ks] = FF_st_denyAlly[ks] + 1
+        endif
+    endif
+    set victim = null
+    set killer = null
+    set vp = null
+    set kp = null
+endfunction
+
+function FF_st_OnSpell takes nothing returns nothing
+    local integer id = GetSpellAbilityId()
+    local integer s
+    if (id == 'ANtm' or id == 'A0G0') and FF_st_tmN < FF_ST_TM_MAX then
+        set s = FF_st_Slot(GetOwningPlayer(GetTriggerUnit()))
+        if s > 0 and GetSpellTargetUnit() != null then
+            set FF_st_tmCasts[s] = FF_st_tmCasts[s] + 1
+            set FF_st_tmCaster[FF_st_tmN] = GetTriggerUnit()
+            set FF_st_tmTarget[FF_st_tmN] = GetSpellTargetUnit()
+            set FF_st_tmSlot[FF_st_tmN] = s
+            set FF_st_tmUntil[FF_st_tmN] = TimerGetElapsed(FF_gameTimer) + FF_ST_TM_WAIT
+            set FF_st_tmN = FF_st_tmN + 1
+        endif
+    endif
+endfunction
+
+function FF_Stats_Init takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddAction(t, function FF_st_OnSpell)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddAction(t, function FF_st_OnDeath)
+    if FF_STATS_DAMAGE then
+        set t = CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGED)
+        call TriggerAddCondition(t, Condition(function FF_st_OnDamage))
+    endif
+    set t = null
+endfunction
+
+function FF_us_OnChat takes nothing returns nothing
+    local integer s = FF_st_Slot(GetTriggerPlayer())
+    local string msg
+    local integer len
+    local integer cl
+    local integer i = 0
+    if s == 0 then
+        return
+    endif
+    set FF_us_chatBurst[s] = FF_us_chatBurst[s] + 1
+    if FF_us_chatBurst[s] > FF_US_CHAT_BURST then
+        return
+    endif
+    set msg = GetEventPlayerChatString()
+    if SubString(msg, 0, 1) != "-" then
+        return
+    endif
+    set len = StringLength(msg)
+    loop
+        exitwhen i >= FF_us_cmdN
+        set cl = StringLength(FF_us_cmd[i])
+        if len >= cl and SubString(msg, 0, cl) == FF_us_cmd[i] and (len == cl or SubString(msg, cl, cl + 1) == " ") then
+            if LoadInteger(FF_us_ht, FF_us_CountKey(s, FF_US_CMD), i) < FF_US_CMD_CAP then
+                call FF_us_Add(s, FF_US_CMD, i)
+            endif
+            return
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
+function FF_us_OnResearch takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    local player p = GetOwningPlayer(u)
+    local integer s = FF_st_Slot(p)
+    local integer oid = GetResearched()
+    if PF_frozen then
+        return
+    endif
+    if s > 0 then
+        call PF_Purchase(s,"research",oid,PF_Price(oid,GetPlayerTechCount(p,oid,true)))
+        call FF_us_Put(s, FF_US_TECH, oid, GetPlayerTechCount(p, oid, true), true)
+        if GetUnitTypeId(u) == 'n003' then
+            set FF_st_teamRes[s] = FF_st_teamRes[s] + 1
+        endif
+    endif
+    set u = null
+    set p = null
+endfunction
+
+function FF_us_HeroSlotKey takes integer slot, integer h returns integer
+    return 6000 + slot * 16 + h
+endfunction
+
+function FF_us_HeroKey takes integer slot, unit hero returns integer
+    local integer h = 0
+    local integer hid = GetHandleId(hero)
+    local integer key
+    call PF_Hero(slot,hero)
+    loop
+        exitwhen h >= FF_us_heroN[slot]
+        set key = FF_us_HeroSlotKey(slot, h)
+        if LoadInteger(FF_us_ht, key, -2) == hid then
+            return key
+        endif
+        set h = h + 1
+    endloop
+    if h >= FF_US_HERO_MAX then
+        return 0
+    endif
+    set key = FF_us_HeroSlotKey(slot, h)
+    set FF_us_heroN[slot] = h + 1
+    call SaveInteger(FF_us_ht, key, -1, GetUnitTypeId(hero))
+    call SaveInteger(FF_us_ht, key, -2, hid)
+    call SaveInteger(FF_us_ht, key, -3, 0)
+    return key
+endfunction
+
+function FF_us_OnSkill takes nothing returns nothing
+    local unit hero = GetTriggerUnit()
+    local integer s = FF_st_Slot(GetOwningPlayer(hero))
+    local integer abil = GetLearnedSkill()
+    local integer key
+    local integer n
+    if PF_frozen then
+        return
+    endif
+    call SaveBoolean(FF_us_learned, GetHandleId(hero), abil, true)
+    if s > 0 then
+        set key = FF_us_HeroKey(s, hero)
+        if key > 0 then
+            set n = LoadInteger(FF_us_ht, key, -3)
+            if n < FF_US_SKILL_MAX then
+                call PF_Log(s,"skill",abil,-1,0)
+                call SaveInteger(FF_us_ht, key, n, abil)
+                call SaveInteger(FF_us_ht, key, -3, n + 1)
+                set FF_us_dirty[s] = true
+            endif
+        endif
+    endif
+    set hero = null
+endfunction
+
+function FF_us_OnSpell takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    local integer abil = GetSpellAbilityId()
+    if IsUnitType(u, UNIT_TYPE_HERO) and not IsUnitIllusion(u) and LoadBoolean(FF_us_learned, GetHandleId(u), abil) then
+        call FF_us_Add(FF_st_Slot(GetOwningPlayer(u)), FF_US_SPELL, abil)
+    endif
+    set u = null
+endfunction
+
+function FF_us_OnUnitSold takes nothing returns nothing
+    local unit u = GetSoldUnit()
+    local integer cost = BlzGetUnitIntegerField(u, UNIT_IF_LUMBER_BOUNTY_AWARDED_BASE)
+    // The map's creep-limit trigger reads and clears that field; if it handled this very sale first, its globals
+    // hold the sold unit and its price.
+    if cost == 0 and udg_temp_unit == u then
+        set cost = udg_creep_gold_cost
+    endif
+    if FF_us_soldN < FF_US_SOLD_MAX then
+        set FF_us_sold[FF_us_soldN] = u
+        set FF_us_seller[FF_us_soldN] = GetSellingUnit()
+        set FF_us_soldCost[FF_us_soldN] = cost
+        set FF_us_soldN = FF_us_soldN + 1
+        call TimerStart(FF_us_soldTimer, 0.0, false, function FF_us_OnSoldTick)
+    endif
+    set u = null
+endfunction
+
+function FF_us_IsBase takes unit u returns boolean
+    local integer id = GetUnitTypeId(u)
+    local integer i = 0
+    if IsUnitType(u, UNIT_TYPE_TOWNHALL) then
+        return true
+    endif
+    loop
+        exitwhen i > FF_US_BASE_TYPES
+        if udg_base_type[i] == id then
+            return true
+        endif
+        set i = i + 1
+    endloop
+    return false
+endfunction
+
+function FF_us_IsTower takes integer id returns boolean
+    return id == 'hwtw' or id == 'etrp' or id == 'hgtw' or id == 'h05U' or id == 'hctw' or id == 'hatw' or id == 'h00S' or id == 'emow' or id == 'otrb' or id == 'owtw' or id == 'o01D'
+endfunction
+
+function FF_us_OnUpgrade takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    local integer s = FF_st_Slot(GetOwningPlayer(u))
+    local integer id = GetUnitTypeId(u)
+    if PF_frozen then
+        return
+    endif
+    if s > 0 then
+        call PF_Purchase(s,"upgrade",id,PF_Price(id,1))
+        if FF_us_IsBase(u) then
+            call FF_us_AddEvent("baseup," + FF_Elapsed() + "," + I2S(s) + "," + FF_us_Id2S(id))
+        elseif FF_us_IsTower(id) then
+            call FF_us_Add(s, FF_US_TOWER, id)
+        endif
+    endif
+    set u = null
+endfunction
+
+function FF_st_TmExpire takes nothing returns nothing
+    local real now = TimerGetElapsed(FF_gameTimer)
+    local integer i = FF_st_tmN - 1
+    loop
+        exitwhen i < 0
+        if now > FF_st_tmUntil[i] then
+            call FF_st_TmDrop(i)
+        endif
+        set i = i - 1
+    endloop
+endfunction
+
+function FF_us_PollKoth takes nothing returns nothing
+    local integer ks
+    local integer side
+    if udg_KOTH_Player == null then
+        return
+    endif
+    set ks = FF_st_Slot(udg_KOTH_Player)
+    if ks > 0 then
+        set side = FF_SideOf(ks)
+        set FF_us_kothHold[side] = FF_us_kothHold[side] + 1
+        if udg_KOTH_Player != FF_us_kothLast then
+            set FF_us_kothCaps[side] = FF_us_kothCaps[side] + 1
+        endif
+        set FF_us_sharedDirty = true
+    endif
+    set FF_us_kothLast = udg_KOTH_Player
+endfunction
+
+function FF_us_ResetChatBurst takes nothing returns nothing
+    local integer s = 1
+    loop
+        exitwhen s > 12
+        set FF_us_chatBurst[s] = 0
+        set s = s + 1
+    endloop
+endfunction
+
+function FF_us_Poll takes nothing returns nothing
+    if PF_frozen then
+        return
+    endif
+    call FF_us_ResetChatBurst()
+    call FF_us_PollPicks()
+    call FF_us_PollKoth()
+    call FF_st_TmExpire()
+endfunction
+
+function FF_us_SetCommands takes string list returns nothing
+    local integer len = StringLength(list)
+    local integer from = 0
+    local integer i = 0
+    loop
+        exitwhen i > len
+        if i == len or SubString(list, i, i + 1) == " " then
+            if i > from then
+                set FF_us_cmd[FF_us_cmdN] = SubString(list, from, i)
+                set FF_us_cmdN = FF_us_cmdN + 1
+            endif
+            set from = i + 1
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
+function PF_OrderEvent takes nothing returns nothing
+    local eventid e = GetTriggerEventId()
+    local integer s = GetPlayerId(GetTriggerPlayer())+1
+    local integer id
+    local unit u
+    if s > 12 then
+        return
+    endif
+    if e == EVENT_PLAYER_UNIT_RESEARCH_START then
+        set id = GetResearched()
+        call PF_Purchase(s,"research_start",id,PF_Price(id,1+GetPlayerTechCount(Player(s-1),id,true)))
+    elseif e == EVENT_PLAYER_UNIT_RESEARCH_CANCEL then
+        call PF_Log(s,"research_cancel",GetResearched(),-1,0)
+    elseif e == EVENT_PLAYER_UNIT_TRAIN_FINISH then
+        set u = GetTrainedUnit()
+        if IsUnitType(u,UNIT_TYPE_HERO) then
+            call PF_Hero(s,u)
+        else
+            call PF_Use(s,3,GetUnitTypeId(u),1)
+            call PF_Appearance(s,u,1)
+        endif
+        call PF_Log(s,"train",GetUnitTypeId(u),-1,0)
+    elseif e == EVENT_PLAYER_UNIT_TRAIN_START then
+        set id = GetTrainedUnitType()
+        call PF_Purchase(s,"train_start",id,PF_Price(id,1))
+    elseif e == EVENT_PLAYER_UNIT_TRAIN_CANCEL then
+        call PF_Log(s,"train_cancel",GetTrainedUnitType(),-1,0)
+    elseif e == EVENT_PLAYER_UNIT_CONSTRUCT_START then
+        set id = GetUnitTypeId(GetConstructingStructure())
+        call PF_Purchase(s,"construct_start",id,PF_Price(id,1))
+    elseif e == EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL then
+        call PF_Log(s,"construct_cancel",GetUnitTypeId(GetCancelledStructure()),-1,0)
+    else
+        call PF_Log(s,"construct",GetUnitTypeId(GetConstructedStructure()),-1,0)
+    endif
+    set u = null
+endfunction
+
+function PF_InitOrders takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_RESEARCH_START)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_RESEARCH_CANCEL)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_TRAIN_START)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_TRAIN_FINISH)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_TRAIN_CANCEL)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_CONSTRUCT_START)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL)
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_CONSTRUCT_FINISH)
+    call TriggerAddAction(t,function PF_OrderEvent)
+    set t = null
+endfunction
+
+function FF_Usage_Init takes nothing returns nothing
+    local trigger t
+    local integer i = 0
+    set FF_us_catName[FF_US_ITEM] = "item"
+    set FF_us_catName[FF_US_UNIT] = "unit"
+    set FF_us_catName[FF_US_TECH] = "tech"
+    set FF_us_catName[FF_US_TOWER] = "tower"
+    set FF_us_catName[FF_US_SPELL] = "spell"
+    set FF_us_catName[FF_US_CMD] = "cmd"
+    // Every chat command of both maps and the addons.
+    call FF_us_SetCommands("-votekick -commands -players -forfeit -message -killme -reveal -guided -status -bounds")
+    call FF_us_SetCommands("-bounty -repick -killa -mhoff -clear -debug -scale -mhon -time -swap -pool -next -help")
+    call FF_us_SetCommands("-hero -kick -draw -gold -fog -cam -lvl -kd -ct -vk -p -t -c -i")
+    call PF_InitOrders()
+    set FF_us_soldTimer = CreateTimer()
+    call FF_us_SetCommands("-sub -obs")
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SELL)
+    call TriggerAddAction(t, function FF_us_OnUnitSold)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_RESEARCH_FINISH)
+    call TriggerAddAction(t, function FF_us_OnResearch)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_UPGRADE_FINISH)
+    call TriggerAddAction(t, function FF_us_OnUpgrade)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_SKILL)
+    call TriggerAddAction(t, function FF_us_OnSkill)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddAction(t, function FF_us_OnSpell)
+    set t = CreateTrigger()
+    loop
+        exitwhen i >= bj_MAX_PLAYER_SLOTS
+        call TriggerRegisterPlayerChatEvent(t, Player(i), "-", false)
+        set i = i + 1
+    endloop
+    call TriggerAddAction(t, function FF_us_OnChat)
+    call TimerStart(CreateTimer(), 1.00, true, function FF_us_Poll)
+    set t = null
+endfunction
+
+function PF_ArmGold takes integer slot returns trigger
+    local trigger t = CreateTrigger()
+    call TriggerRegisterPlayerStateEvent(t, Player(slot-1), PLAYER_STATE_RESOURCE_GOLD, NOT_EQUAL, I2R(GetPlayerState(Player(slot-1), PLAYER_STATE_RESOURCE_GOLD)))
+    return t
+endfunction
+
+function PF_GoldChanged takes nothing returns nothing
+    local integer slot = GetPlayerId(GetTriggerPlayer()) + 1
+    local trigger t
+    call DestroyTrigger(GetTriggeringTrigger())
+    if not PF_frozen then
+        call PF_ObserveBalance(slot,GetPlayerState(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_GOLD))
+        set t = PF_ArmGold(slot)
+        call TriggerAddAction(t, function PF_GoldChanged)
+        set t = null
+    endif
+endfunction
+
+function PF_InitGold takes nothing returns nothing
+    local integer s = 1
+    local trigger t
+    loop
+        exitwhen s > 12
+        call SaveInteger(PF_data, 800, s, GetPlayerState(Player(s-1), PLAYER_STATE_RESOURCE_GOLD))
+        set t = PF_ArmGold(s)
+        call TriggerAddAction(t, function PF_GoldChanged)
+        set s = s + 1
+    endloop
+    set t = null
+endfunction
+
+function PF_LoadObjects takes nothing returns nothing
+    call ExecuteFunc("PF_ObjectData0")
+    call ExecuteFunc("PF_ObjectData1")
+    call ExecuteFunc("PF_ObjectData2")
+    call ExecuteFunc("PF_ObjectData3")
+    call ExecuteFunc("PF_ObjectData4")
+    call ExecuteFunc("PF_ObjectData5")
+    call ExecuteFunc("PF_ObjectData6")
+    call ExecuteFunc("PF_ObjectData7")
+    call ExecuteFunc("PF_ObjectData8")
+    call ExecuteFunc("PF_ObjectData9")
+    call ExecuteFunc("PF_ObjectData10")
+    call ExecuteFunc("PF_ObjectData11")
+    call ExecuteFunc("PF_ObjectData12")
+    call ExecuteFunc("PF_ObjectData13")
+endfunction
+
+function DPS_Field takes integer value returns string
+    local string digits = I2S(value)
+    return SubString("0000000000", 0, 10 - StringLength(digits)) + digits
+endfunction
+
+function PF_ReceiveHistory takes nothing returns nothing
+    local integer s = GetPlayerId(GetTriggerPlayer())+1
+    local string data = BlzGetTriggerSyncData()
+    local integer kind = S2I(SubString(data,0,1))
+    local integer ix = 1
+    local integer id
+    local integer amount
+    local integer key = 3000+s*10+kind
+    if not PF_SoloSeat(s) then
+        return
+    endif
+    if kind < 0 or kind > 4 or StringLength(data) > 201 or ModuloInteger(StringLength(data)-1,20) != 0 then
+        return
+    endif
+    loop
+        exitwhen ix+20 > StringLength(data)
+        set id = S2I(SubString(data,ix,ix+10))
+        set amount = S2I(SubString(data,ix+10,ix+20))
+        if id >= 0 and amount >= 0 and DPS_Field(id)+DPS_Field(amount) == SubString(data,ix,ix+20) and not HaveSavedInteger(PF_history,key,id) and PF_historyN[s*5+kind] < 4096 then
+            call SaveInteger(PF_history,key,id,amount)
+            call SaveInteger(PF_history,key+500,PF_historyN[s*5+kind],id)
+            set PF_historyN[s*5+kind] = PF_historyN[s*5+kind]+1
+            set PF_dirty = true
+        endif
+        set ix = ix+20
+    endloop
+endfunction
+
+function PF_Schema takes nothing returns nothing
+    set PF_casinoFirst = 60
+    set PF_combatFirst = 26
+    set PF_poolOutMetric = 38
+    set PF_poolInMetric = 39
+    set PF_sentMetric = 40
+    set PF_receivedMetric = 41
+    set PF_metrics = 60
+    set PF_label[0] = "Units trained"
+    set PF_key[0] = "trained"
+    set PF_label[1] = "Units killed"
+    set PF_key[1] = "killed"
+    set PF_label[2] = "Structures built"
+    set PF_key[2] = "built"
+    set PF_label[3] = "Structures razed"
+    set PF_key[3] = "razed"
+    set PF_label[4] = "Tech percentage"
+    set PF_key[4] = "tech"
+    set PF_label[5] = "Peak food produced"
+    set PF_key[5] = "food_cap"
+    set PF_label[6] = "Peak food used"
+    set PF_key[6] = "food_used"
+    set PF_label[7] = "Heroes killed"
+    set PF_key[7] = "hero_kills"
+    set PF_label[8] = "Items gained"
+    set PF_key[8] = "items"
+    set PF_label[9] = "Mercenaries hired"
+    set PF_key[9] = "mercs"
+    set PF_label[10] = "Gold mined"
+    set PF_key[10] = "mined"
+    set PF_label[11] = "Gold mined with upkeep"
+    set PF_key[11] = "gold_upkeep"
+    set PF_label[12] = "Gold lost to upkeep"
+    set PF_key[12] = "gold_lost"
+    set PF_label[13] = "Gold lost to tax"
+    set PF_key[13] = "gold_tax"
+    set PF_label[14] = "Gold given (all trades)"
+    set PF_key[14] = "given"
+    set PF_label[15] = "Gold received (all trades)"
+    set PF_key[15] = "received"
+    set PF_label[16] = "Lumber harvested"
+    set PF_key[16] = "lumber"
+    set PF_label[17] = "Lumber lost to upkeep"
+    set PF_key[17] = "lumber_lost"
+    set PF_label[18] = "Lumber lost to tax"
+    set PF_key[18] = "lumber_tax"
+    set PF_label[19] = "Lumber given"
+    set PF_key[19] = "lumber_given"
+    set PF_label[20] = "Lumber received"
+    set PF_key[20] = "lumber_received"
+    set PF_label[21] = "Unit score"
+    set PF_key[21] = "unit_score"
+    set PF_label[22] = "Hero score"
+    set PF_key[22] = "hero_score"
+    set PF_label[23] = "Resource score"
+    set PF_key[23] = "resource_score"
+    set PF_label[24] = "Total score"
+    set PF_key[24] = "score"
+    set PF_label[25] = "Highest hero level"
+    set PF_key[25] = "level"
+    set PF_label[26] = "Unit kills"
+    set PF_key[26] = "kills"
+    set PF_label[27] = "Unit deaths"
+    set PF_key[27] = "deaths"
+    set PF_label[28] = "Assists"
+    set PF_key[28] = "assists"
+    set PF_label[29] = "Hero kills"
+    set PF_key[29] = "h_kills"
+    set PF_label[30] = "Hero deaths"
+    set PF_key[30] = "h_deaths"
+    set PF_label[31] = "Hill captures"
+    set PF_key[31] = "caps"
+    set PF_label[32] = "Buildings destroyed"
+    set PF_key[32] = "buildings"
+    set PF_label[33] = "Transmutes landed"
+    set PF_key[33] = "transmutes"
+    set PF_label[34] = "Damage dealt"
+    set PF_key[34] = "damage"
+    set PF_label[35] = "Structure damage"
+    set PF_key[35] = "building_dmg"
+    set PF_label[36] = "Damage taken"
+    set PF_key[36] = "damage_in"
+    set PF_label[37] = "Gold used (includes trades)"
+    set PF_key[37] = "gold_out"
+    set PF_label[38] = "Gold pooled"
+    set PF_key[38] = "pool_out"
+    set PF_label[39] = "Pooled gold received"
+    set PF_key[39] = "pool_in"
+    set PF_label[40] = "Transfers sent"
+    set PF_key[40] = "sent_n"
+    set PF_label[41] = "Transfers received"
+    set PF_key[41] = "received_n"
+    set PF_label[42] = "Average per transfer sent"
+    set PF_key[42] = "avg_sent"
+    set PF_label[43] = "Average per transfer received"
+    set PF_key[43] = "avg_recv"
+    set PF_label[44] = "Hill gold"
+    set PF_key[44] = "hill_gold"
+    set PF_label[45] = "Own units denied"
+    set PF_key[45] = "denies"
+    set PF_label[46] = "Allied units denied"
+    set PF_key[46] = "ally_denies"
+    set PF_label[47] = "Transmutes cast"
+    set PF_key[47] = "tm_casts"
+    set PF_label[48] = "Transmutes denied"
+    set PF_key[48] = "tm_denied"
+    set PF_label[49] = "Transmute saves"
+    set PF_key[49] = "tm_saves"
+    set PF_label[50] = "Creeps hired"
+    set PF_key[50] = "creeps"
+    set PF_label[51] = "Gold spent on creeps"
+    set PF_key[51] = "creep_gold"
+    set PF_label[52] = "Attack upgrade"
+    set PF_key[52] = "atk"
+    set PF_label[53] = "Defense upgrade"
+    set PF_key[53] = "def"
+    set PF_label[54] = "Race upgrade"
+    set PF_key[54] = "race_level"
+    set PF_label[55] = "Team research"
+    set PF_key[55] = "team_research"
+    set PF_label[56] = "Heroes fielded"
+    set PF_key[56] = "heroes_used"
+    set PF_label[57] = "Hero experience"
+    set PF_key[57] = "hero_xp"
+    set PF_label[58] = "Colossals killed"
+    set PF_key[58] = "colossal_kills"
+    set PF_label[59] = "Seconds controlling the hill"
+    set PF_key[59] = "hill_seconds"
+    set PF_columns[0] = 25
+    set PF_columnTitle[0] = "Level"
+    set PF_columns[1] = 24
+    set PF_columnTitle[1] = "Score"
+    set PF_columns[2] = 26
+    set PF_columnTitle[2] = "Kills"
+    set PF_columns[3] = 34
+    set PF_columnTitle[3] = "Damage"
+    set PF_columns[4] = 37
+    set PF_columnTitle[4] = "Gold used"
+    set PF_columns[5] = 21
+    set PF_columnTitle[5] = "Unit score"
+    set PF_columns[6] = 22
+    set PF_columnTitle[6] = "Hero score"
+    set PF_columns[7] = 23
+    set PF_columnTitle[7] = "Resources"
+    set PF_columns[8] = 24
+    set PF_columnTitle[8] = "Total"
+    set PF_columns[9] = 29
+    set PF_columnTitle[9] = "Hero kills"
+    set PF_columns[10] = 38
+    set PF_columnTitle[10] = "Pooled"
+    set PF_columns[11] = 39
+    set PF_columnTitle[11] = "Received"
+    set PF_columns[12] = 40
+    set PF_columnTitle[12] = "Sends"
+    set PF_columns[13] = 42
+    set PF_columnTitle[13] = "Avg sent"
+    set PF_columns[14] = 43
+    set PF_columnTitle[14] = "Avg recv"
+    set PF_columns[15] = 0
+    set PF_columnTitle[15] = "Trained"
+    set PF_columns[16] = 2
+    set PF_columnTitle[16] = "Built"
+    set PF_columns[17] = 3
+    set PF_columnTitle[17] = "Razed"
+    set PF_columns[18] = 8
+    set PF_columnTitle[18] = "Items"
+    set PF_columns[19] = 9
+    set PF_columnTitle[19] = "Hired"
+    set PF_columns[20] = 10
+    set PF_columnTitle[20] = "Gold mined"
+    set PF_columns[21] = 14
+    set PF_columnTitle[21] = "Given"
+    set PF_columns[22] = 15
+    set PF_columnTitle[22] = "Received"
+    set PF_columns[23] = 16
+    set PF_columnTitle[23] = "Lumber"
+    set PF_columns[24] = 12
+    set PF_columnTitle[24] = "Upkeep"
+    set PF_columns[25] = 27
+    set PF_columnTitle[25] = "Deaths"
+    set PF_columns[26] = 28
+    set PF_columnTitle[26] = "Assists"
+    set PF_columns[27] = 30
+    set PF_columnTitle[27] = "Hero deaths"
+    set PF_columns[28] = 31
+    set PF_columnTitle[28] = "Hill caps"
+    set PF_columns[29] = 36
+    set PF_columnTitle[29] = "Dmg taken"
+    set PF_columns[30] = 4
+    set PF_columnTitle[30] = "Tech %"
+    set PF_columns[31] = 5
+    set PF_columnTitle[31] = "Peak supply"
+    set PF_columns[32] = 6
+    set PF_columnTitle[32] = "Food used"
+    set PF_columns[33] = 1
+    set PF_columnTitle[33] = "Units killed"
+    set PF_columns[34] = 7
+    set PF_columnTitle[34] = "Heroes killed"
+    set PF_columns[35] = 11
+    set PF_columnTitle[35] = "With upkeep"
+    set PF_columns[36] = 13
+    set PF_columnTitle[36] = "Gold tax"
+    set PF_columns[37] = 17
+    set PF_columnTitle[37] = "Wood upkeep"
+    set PF_columns[38] = 18
+    set PF_columnTitle[38] = "Wood tax"
+    set PF_columns[39] = 19
+    set PF_columnTitle[39] = "Wood given"
+    set PF_columns[40] = 20
+    set PF_columnTitle[40] = "Wood recv."
+    set PF_columns[41] = 38
+    set PF_columnTitle[41] = "Pooled"
+    set PF_columns[42] = 39
+    set PF_columnTitle[42] = "Received"
+    set PF_columns[43] = 44
+    set PF_columnTitle[43] = "Hill gold"
+    set PF_columns[44] = 37
+    set PF_columnTitle[44] = "Gold used"
+    set PF_columns[45] = 56
+    set PF_columnTitle[45] = "Heroes used"
+    set PF_columns[46] = 57
+    set PF_columnTitle[46] = "Hero XP"
+    set PF_columns[47] = 25
+    set PF_columnTitle[47] = "Level"
+    set PF_columns[48] = 8
+    set PF_columnTitle[48] = "Items gained"
+    set PF_columns[49] = 9
+    set PF_columnTitle[49] = "Mercenaries"
+    set PF_columns[50] = 58
+    set PF_columnTitle[50] = "Colossals"
+    set PF_columns[51] = 31
+    set PF_columnTitle[51] = "Hill caps"
+    set PF_columns[52] = 59
+    set PF_columnTitle[52] = "Hill seconds"
+    set PF_columns[53] = 44
+    set PF_columnTitle[53] = "Hill gold"
+    set PF_columns[54] = 34
+    set PF_columnTitle[54] = "Damage"
+endfunction
+
+function PF_SoloStatsTick takes nothing returns nothing
+    // Capture native score changes even when no journal event has fired.
+    if not FF_gr_ended or PF_dirty then
+        set PF_dirty = false
+        call FF_gr_Flush()
+    endif
+endfunction
+
+function PF_SoloInit takes nothing returns nothing
+    local integer id = 0
+    local trigger t = CreateTrigger()
+    loop
+        exitwhen id >= bj_MAX_PLAYER_SLOTS
+        call BlzTriggerRegisterPlayerSyncEvent(t,Player(id),"FFCareerSolo",false)
+        set id = id+1
+    endloop
+    call TriggerAddAction(t,function PF_ReceiveHistory)
+    call PF_Schema()
+    call PF_LoadObjects()
+    call PF_InitGold()
+    call FF_Stats_Init()
+    call FF_Usage_Init()
+    call FF_EarlyInit()
+    call TimerStart(CreateTimer(),30.,true,function PF_SoloStatsTick)
+    set t = null
+endfunction
+
+function FF_us_RowKey takes integer slot returns integer
+    return 5000 + slot
+endfunction
+
+function FF_us_PreloadSlot takes integer slot returns nothing
+    local integer i = 0
+    loop
+        exitwhen i >= FF_us_rowN[slot]
+        call Preload(LoadStr(FF_us_ht, FF_us_RowKey(slot), i))
+        set i = i + 1
+    endloop
+endfunction
+
+function FF_us_EmitRow takes integer slot, string row returns nothing
+    call SaveStr(FF_us_ht, FF_us_RowKey(slot), FF_us_rowN[slot], row)
+    set FF_us_rowN[slot] = FF_us_rowN[slot] + 1
+endfunction
+
+function FF_us_Append takes integer slot, string head, string cur, string entry, string sep returns string
+    if cur == null then
+        return head + entry
+    endif
+    if StringLength(cur) + StringLength(sep) + StringLength(entry) > FF_PRELOAD_MAX then
+        call FF_us_EmitRow(slot, cur)
+        return head + entry
+    endif
+    return cur + sep + entry
+endfunction
+
+function FF_us_Entry takes integer slot, integer cat, integer oid returns string
+    local string name
+    if cat == FF_US_CMD then
+        set name = SubString(FF_us_cmd[oid], 1, StringLength(FF_us_cmd[oid]))
+    else
+        set name = FF_us_Id2S(oid)
+    endif
+    return name + "=" + I2S(LoadInteger(FF_us_ht, FF_us_CountKey(slot, cat), oid))
+endfunction
+
+function FF_us_BuildRows takes integer slot returns nothing
+    local integer cat = 1
+    local integer key
+    local integer i
+    local integer h
+    local integer oid
+    local integer n
+    local string head
+    local string cur
+    set FF_us_rowN[slot] = 0
+    loop
+        exitwhen cat > FF_US_CATS
+        set key = FF_us_CountKey(slot, cat)
+        if FF_us_n[key] > 0 then
+            set head = "use," + I2S(slot) + "," + FF_us_catName[cat] + ","
+            set cur = null
+            set i = 0
+            loop
+                exitwhen i >= FF_us_n[key]
+                set oid = LoadInteger(FF_us_ht, FF_us_OrderKey(slot, cat), i)
+                set cur = FF_us_Append(slot, head, cur, FF_us_Entry(slot, cat, oid), ",")
+                set i = i + 1
+            endloop
+            call FF_us_EmitRow(slot, cur)
+        endif
+        set cat = cat + 1
+    endloop
+    set h = 0
+    loop
+        exitwhen h >= FF_us_heroN[slot]
+        set key = FF_us_HeroSlotKey(slot, h)
+        set n = LoadInteger(FF_us_ht, key, -3)
+        if n > 0 then
+            set head = "skills," + I2S(slot) + "," + FF_us_Id2S(LoadInteger(FF_us_ht, key, -1)) + ","
+            set cur = null
+            set i = 0
+            loop
+                exitwhen i >= n
+                set cur = FF_us_Append(slot, head, cur, FF_us_Id2S(LoadInteger(FF_us_ht, key, i)), ";")
+                set i = i + 1
+            endloop
+            call FF_us_EmitRow(slot, cur)
+        endif
+        set h = h + 1
+    endloop
+endfunction
+
+function FF_us_Refresh takes integer slot returns boolean
+    if not FF_us_dirty[slot] then
+        return false
+    endif
+    set FF_us_dirty[slot] = false
+    call FF_us_BuildRows(slot)
+    return true
+endfunction
+
+function PF_SoloExportUsage takes nothing returns nothing
+    local integer s = PF_exportSlot
+    call FF_us_Refresh(s)
+    call FF_us_PreloadSlot(s)
+endfunction
+
+function FF_us_PreloadEvents takes nothing returns nothing
+    local integer i = 0
+    loop
+        exitwhen i >= FF_us_eventN
+        call Preload(FF_us_events[i])
+        set i = i + 1
+    endloop
+endfunction
+
+function FF_SideLabel takes integer side returns string
+    if udg_mode_6v6 then
+        if side == 1 then
+            return "west"
+        endif
+        return "east"
+    endif
+    return "team" + I2S(side)
+endfunction
+
+function FF_us_PreloadShared takes nothing returns nothing
+    local integer side = 1
+    if FF_us_modes != null then
+        call Preload(FF_us_modes)
+    endif
+    loop
+        exitwhen side > 4
+        if FF_us_kothHold[side] > 0 or FF_us_kothCaps[side] > 0 then
+            call Preload("koth," + FF_SideLabel(side) + ",hold=" + I2S(FF_us_kothHold[side]) + ",caps=" + I2S(FF_us_kothCaps[side]))
+        endif
+        set side = side + 1
+    endloop
+endfunction
+
+function PF_CasinoSlot takes integer s returns integer
+    return s
+endfunction
+
+function PF_Export takes nothing returns nothing
+    call FF_us_PreloadShared()
+    call FF_us_PreloadEvents()
+    set PF_exportSlot = 1
+    loop
+        exitwhen PF_exportSlot > 24
+        if FF_gr_participant[PF_exportSlot] then
+            call Preload("profile_owner,"+I2S(PF_exportSlot)+","+FF_gr_Name(PF_exportSlot)+","+I2S(PF_CasinoSlot(PF_exportSlot)))
+            call ExecuteFunc("PF_ExportSlot")
+            call ExecuteFunc("PF_SoloExportUsage")
+            call ExecuteFunc("PF_WriteCareer")
+        endif
+        set PF_exportSlot = PF_exportSlot+1
+    endloop
+endfunction
+
+function PF_ExportJournal takes nothing returns nothing
+    local integer s = PF_exportSlot
+    local integer k = 1000+s*10
+    local integer i = PF_exportStart
+    local integer stop = IMinBJ(i+64,PF_logCount[s])
+    loop
+        exitwhen i >= stop
+        call Preload("build,"+I2S(s)+","+I2S(i+1)+","+I2S(LoadInteger(PF_data,k+4,i))+","+LoadStr(PF_data,k,i)+","+I2S(LoadInteger(PF_data,k+1,i))+","+I2S(LoadInteger(PF_data,k+2,i))+","+I2S(LoadInteger(PF_data,k+3,i))+","+I2S(LoadInteger(PF_data,k+5,i)))
+        set i = i+1
+    endloop
+endfunction
+
+function PF_Category takes integer kind returns string
+    if kind == 1 then
+        return "hero"
+    elseif kind == 2 then
+        return "item"
+    elseif kind == 3 then
+        return "unit"
+    endif
+    return "skin"
+endfunction
+
+function PF_Number takes integer s, integer k returns integer
+    if PF_frozen then
+        return LoadInteger(PF_final, s, k)
+    endif
+    return PF_Live(s,k)
+endfunction
+
+function PF_ExportSlot takes nothing returns nothing
+    local integer s = PF_exportSlot
+    local integer i = 0
+    local integer kind = 1
+    local integer k
+    local integer id
+    local string head = "profile,"+I2S(s)+","
+    local string row = head
+    local string field
+    if not FF_gr_participant[s] then
+        set i = PF_casinoFirst
+    endif
+    loop
+        exitwhen i >= PF_metrics
+        set field = PF_key[i]+"="+I2S(PF_Number(s,i))
+        if StringLength(row)+StringLength(field)+1 > FF_PRELOAD_MAX then
+            call Preload(row)
+            set row = head
+        endif
+        if row != head then
+            set row = row+","
+        endif
+        set row = row+field
+        set i = i+1
+    endloop
+    call Preload(row)
+    loop
+        exitwhen kind > 4
+        set k = s*10+kind
+        set i = 0
+        set head = "collection,"+I2S(s)+","+PF_Category(kind)+","
+        set row = head
+        loop
+            exitwhen i >= PF_counts[k]
+            set id = LoadInteger(PF_data,300+k,i)
+            set field = FF_us_Id2S(id)+"="+I2S(LoadInteger(PF_data,k,id))
+            if StringLength(row)+StringLength(field)+1 > FF_PRELOAD_MAX then
+                call Preload(row)
+                set row = head
+            endif
+            if row != head then
+                set row = row+","
+            endif
+            set row = row+field
+            set i = i+1
+        endloop
+        if row != head then
+            call Preload(row)
+        endif
+        set kind = kind+1
+    endloop
+    set PF_exportStart = 0
+    loop
+        exitwhen PF_exportStart >= PF_logCount[s]
+        call ExecuteFunc("PF_ExportJournal")
+        set PF_exportStart = PF_exportStart+64
+    endloop
+endfunction
+
+function PF_Economy takes integer s, integer i returns integer
+    if s > 12 or not FF_gr_participant[s] then
+        return 0
+    endif
+    if i == 0 then
+        return 1
+    elseif i == 1 then
+        return 1
+    elseif i == 2 then
+        return PF_Number(s,PF_poolOutMetric)
+    elseif i == 3 then
+        return PF_Number(s,PF_poolInMetric)
+    elseif i == 4 then
+        return PF_Number(s,PF_sentMetric)
+    elseif i == 5 then
+        return PF_Number(s,PF_receivedMetric)
+    else
+        if i == 6 then
+            return PF_Number(s,PF_poolOutMetric)
+        endif
+        return PF_Number(s,PF_poolInMetric)
+    endif
+    return 0
+endfunction
+
+function PF_CareerRecords takes integer account returns nothing
+    local integer kind = 0
+    local integer i
+    local integer id
+    local integer base
+    local integer total
+    local integer s = account
+    local integer k
+    local integer key
+    local string row
+    local string head
+    local string field
+    loop
+        exitwhen kind > 4
+        set k = s*10+kind
+        set key = 3000+account*10+kind
+        set head = "career,"+I2S(account)+","+I2S(kind)+","
+        set row = head
+        set i = 0
+        loop
+            exitwhen i >= PF_historyN[account*5+kind]
+            set id = LoadInteger(PF_history,key+500,i)
+            set base = LoadInteger(PF_history,key,id)
+            if kind == 0 then
+                if id < 8 then
+                    set total = base+PF_Economy(s,id)
+                elseif id < 16 then
+                    set total = base+PF_Number(s,PF_combatFirst+id-8)
+                else
+                    set total = base
+                endif
+            else
+                set total = base+LoadInteger(PF_data,k,id)
+            endif
+            set field = I2S(id)+"="+I2S(total)
+            if StringLength(row)+StringLength(field)+1 > FF_PRELOAD_MAX then
+                call Preload(row)
+                set row = head
+            endif
+            if row != head then
+                set row = row+","
+            endif
+            set row = row+field
+            set i = i+1
+        endloop
+        if kind > 0 then
+            set i = 0
+            loop
+                exitwhen i >= PF_counts[k]
+                set id = LoadInteger(PF_data,300+k,i)
+                if not HaveSavedInteger(PF_history,key,id) then
+                    set field = I2S(id)+"="+I2S(LoadInteger(PF_data,k,id))
+                    if StringLength(row)+StringLength(field)+1 > FF_PRELOAD_MAX then
+                        call Preload(row)
+                        set row = head
+                    endif
+                    if row != head then
+                        set row = row+","
+                    endif
+                    set row = row+field
+                endif
+                set i = i+1
+            endloop
+        endif
+        if row != head then
+            call Preload(row)
+        endif
+        set kind = kind+1
+    endloop
+    if HaveSavedInteger(PF_history,3000+account*10,7) then
+        set key = 3000+account*10
+        set base = LoadInteger(PF_history,key,6)+PF_Economy(s,6)
+        set total = LoadInteger(PF_history,key,1)+PF_Economy(s,1)
+        call Preload("career_pool,"+I2S(account)+",avg_solo_sent="+I2S(PF_Average(base,total))+",avg_solo_received="+I2S(PF_Average(LoadInteger(PF_history,key,7)+PF_Economy(s,7),total)))
+    endif
+endfunction
+
+function PF_WriteCareer takes nothing returns nothing
+    call PF_CareerRecords(PF_exportSlot)
+endfunction
+
+function DPS_Mask takes integer stat returns integer
+    return BlzBitAnd(StringHash(DPS_ProfilePath + "/solo/v1/" + I2S(stat)), 2147483647)
+endfunction
+
+function PF_MySlot takes nothing returns integer
+    local integer slot = GetPlayerId(GetLocalPlayer())+1
+    if SoloSub_playerForObserver[slot-1] > 0 then
+        return SoloSub_playerForObserver[slot-1]
+    endif
+    return slot
+endfunction
+
+function PF_SoloPersonal takes nothing returns nothing
+    local integer s = PF_MySlot()
+    local integer i = 0
+    local integer total
+    local string saved
+    local string payload = "P1"
+    if not PF_SoloSeat(s) or not FF_gr_participant[s] or PF_account == null or PF_account == "" or FF_LocalClientIsBot() then
+        return
+    endif
+    if not DPS_ProfileLoaded then
+        set DPS_ProfilePath = "FootmenFrenzy\\Solo\\stats-"+I2S(StringHash(PF_account))+".pld"
+        set saved = FileIO_Read(DPS_ProfilePath)
+        if SubString(saved,0,2) == "P1" and SubString(saved,82,StringLength(saved)) == I2S(StringHash(SubString(saved,0,82)+DPS_ProfilePath)) then
+            loop
+                exitwhen i >= 8
+                set DPS_Prior[i] = BlzBitXor(S2I(SubString(saved,2+10*i,12+10*i)),DPS_Mask(i))
+                set i = i+1
+            endloop
+        endif
+        set DPS_ProfileLoaded = true
+    endif
+    set i = 0
+    loop
+        exitwhen i >= 8
+        set total = DPS_Prior[i]+PF_Number(s,PF_combatFirst+i)
+        set payload = payload+DPS_Field(BlzBitXor(total,DPS_Mask(i)))
+        set i = i+1
+    endloop
+    if payload != DPS_LastPayload then
+        call FileIO_Write(DPS_ProfilePath,payload+I2S(StringHash(payload+DPS_ProfilePath)))
+        set DPS_LastPayload = payload
+    endif
+endfunction
+
+function PF_Art takes integer id returns string
+    local string art = LoadStr(PF_prices,3,id)
+    if art == null or art == "" then
+        set art = BlzGetAbilityIcon(id)
+    endif
+    if art == null or art == "" then
+        return "ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp"
+    endif
+    return art
+endfunction
+
+function PF_Card takes integer i, string title, string detail, string art returns nothing
+    call BlzFrameSetText(PF_line[i],title)
+    call BlzFrameSetText(PF_value[i],detail)
+    if art != "" and art != null then
+        call BlzFrameSetTexture(PF_icon[i],art,0,true)
+        call BlzFrameSetVisible(PF_icon[i],true)
+    endif
+endfunction
+
+function PF_Clock takes integer seconds returns string
+    return I2S(seconds/60)+":"+FF_Pad2(ModuloInteger(seconds,60))
+endfunction
+
+function PF_Name takes integer id returns string
+    local string name = GetObjectName(id)
+    if name == null or name == "" or name == "Default string" then
+        return FF_us_Id2S(id)
+    endif
+    return name
+endfunction
+
+function PF_Activity takes integer s, integer r, integer ix returns nothing
+    local integer k = 1000+s*10
+    local integer id = LoadInteger(PF_data,k+1,ix)
+    local integer gold = LoadInteger(PF_data,k+2,ix)
+    local integer other = LoadInteger(PF_data,k+3,ix)
+    local string kind = LoadStr(PF_data,k,ix)
+    local string name = LoadStr(PF_prices,4,StringHash(kind))
+    local string art = "UI\\Widgets\\ToolTips\\Human\\ToolTipGoldIcon.blp"
+    local string detail = PF_Clock(LoadInteger(PF_data,k+4,ix))
+    if id != 0 then
+        set name = name+"  "+PF_Name(id)
+        set art = PF_Art(id)
+    endif
+    if other != 0 then
+        set name = name+"  "+GetPlayerName(Player(other-1))
+    endif
+    if gold >= 0 then
+        set detail = detail+"    "+I2S(gold)+" gold"
+    endif
+    set detail = detail+"    Balance "+I2S(LoadInteger(PF_data,k+5,ix))
+    call PF_Card(r,name,detail,art)
+endfunction
+
+function PF_Paginate takes integer n returns nothing
+    set PF_pages = IMaxBJ(1,(n+13)/14)
+    set PF_page = IMinBJ(PF_page,PF_pages-1)
+endfunction
+
+function PF_ProfileView takes nothing returns nothing
+    local integer s = PF_MySlot()
+    local integer account = GetPlayerId(GetLocalPlayer())+1
+    local integer kind = PF_section
+    local integer k = s*10+kind
+    local integer count
+    local integer i = 0
+    local integer ix
+    local integer id
+    local integer amount
+    local integer start = 0
+    local string detail
+    local string art
+    if kind == 0 then
+        set count = PF_casinoFirst+4
+        if not PF_SoloSeat(s) or not FF_gr_participant[s] then
+            set count = 0
+        endif
+    elseif kind <= 4 then
+        set count = PF_careerCount[kind]
+    elseif kind == 5 then
+        set count = PF_logCount[s]
+    elseif kind == 6 then
+        set start = PF_casinoFirst
+        set count = PF_metrics-start
+    else
+        set count = FF_us_n[FF_us_CountKey(s,FF_US_TECH)]+FF_us_n[FF_us_CountKey(s,FF_US_SPELL)]+FF_us_n[FF_us_CountKey(s,FF_US_CMD)]+FF_us_n[FF_us_CountKey(s,FF_US_TOWER)]
+    endif
+    call PF_Paginate(count)
+    call BlzFrameSetText(PF_title,"|cffffcc68Player Profile|r    "+GetPlayerName(GetLocalPlayer()))
+    call BlzFrameSetText(PF_subtitle,"This match")
+    if kind >= 1 and kind <= 4 then
+        call BlzFrameSetText(PF_subtitle,"This match  /  Lifetime on this computer")
+        if kind == 4 then
+            call BlzFrameSetText(PF_subtitle,"Appearances fielded, including default skins    |    This match  /  Lifetime")
+        endif
+    elseif kind == 5 then
+        call BlzFrameSetText(PF_subtitle,"Build order   /   Oldest first. Gold debits include trades. Purchase lines show known prices.")
+    elseif kind == 6 then
+        call BlzFrameSetText(PF_subtitle,"Solo casino preview")
+    endif
+    loop
+        set ix = PF_page*14+i
+        exitwhen i >= 14 or ix >= count
+        if kind == 0 or kind == 6 then
+            set id = start+ix
+            if kind == 0 and id >= PF_casinoFirst then
+                set amount = PF_priorEco[1]+PF_Economy(s,1)
+                if id == PF_casinoFirst then
+                    call PF_Card(i,"Solo matches played",I2S(amount),"")
+                elseif id == PF_casinoFirst+1 then
+                    call PF_Card(i,"Average gold pooled / Solo match",I2S(PF_Average(PF_priorEco[6]+PF_Economy(s,6),amount)),"")
+                elseif id == PF_casinoFirst+2 then
+                    call PF_Card(i,"Average gold received / Solo match",I2S(PF_Average(PF_priorEco[7]+PF_Economy(s,7),amount)),"")
+                else
+                    call PF_Card(i,"Lifetime pooled / received",I2S(PF_priorEco[2]+PF_Economy(s,2))+" / "+I2S(PF_priorEco[3]+PF_Economy(s,3)),"")
+                endif
+            else
+            if kind == 6 then
+                set amount = PF_Number(account,id)
+            else
+                set amount = PF_Number(s,id)
+            endif
+            set detail = I2S(amount)
+            if kind == 0 and id >= PF_combatFirst and id < PF_combatFirst+8 and DPS_ProfileLoaded and s == account then
+                set detail = detail+" this match    /    "+I2S(DPS_Prior[id-PF_combatFirst]+amount)+" lifetime"
+            endif
+            call PF_Card(i,PF_label[id],detail,"")
+            endif
+        elseif kind <= 4 then
+            set id = LoadInteger(PF_local,kind+10,ix)
+            set amount = LoadInteger(PF_data,k,id)
+            set detail = I2S(amount)+" this match    /    "+I2S(amount+LoadInteger(PF_local,kind,id))+" lifetime"
+            call PF_Card(i,PF_Name(id),detail,PF_Art(id))
+        elseif kind == 5 then
+            call PF_Activity(s,i,ix)
+        else
+            set id = FF_US_TECH
+            loop
+                set k = FF_us_CountKey(s,id)
+                exitwhen ix < FF_us_n[k] or id == FF_US_TOWER
+                set ix = ix-FF_us_n[k]
+                if id == FF_US_TECH then
+                    set id = FF_US_SPELL
+                elseif id == FF_US_SPELL then
+                    set id = FF_US_CMD
+                else
+                    set id = FF_US_TOWER
+                endif
+            endloop
+            set amount = LoadInteger(FF_us_ht,FF_us_OrderKey(s,id),ix)
+            set detail = FF_us_catName[id]+"    "+I2S(LoadInteger(FF_us_ht,k,amount))
+            if id == FF_US_CMD then
+                call PF_Card(i,FF_us_cmd[amount],detail,"")
+            else
+                call PF_Card(i,PF_Name(amount),detail,PF_Art(amount))
+            endif
+        endif
+        set i = i+1
+    endloop
+    if count == 0 then
+        if kind == 6 then
+            call BlzFrameSetText(PF_line[0],"Casino preview")
+            call BlzFrameSetText(PF_value[0],"Solo has no live wagers or account payouts.")
+        else
+            call BlzFrameSetText(PF_line[0],"No entries yet")
+        endif
+    endif
+endfunction
+
+function PF_Color takes integer s returns string
+    local integer id = GetHandleId(GetPlayerColor(Player(s-1)))
+    if id < 10 then
+        return "ReplaceableTextures\\TeamColor\\TeamColor0"+I2S(id)+".blp"
+    endif
+    return "ReplaceableTextures\\TeamColor\\TeamColor"+I2S(id)+".blp"
+endfunction
+
+function PF_TeamValue takes integer side, integer metric returns string
+    local integer s = 1
+    local integer total = 0
+    local integer transfers = 0
+    if PF_key[metric] == "level" or PF_key[metric] == "tech" then
+        return ""
+    endif
+    loop
+        exitwhen s > 12
+        if FF_gr_participant[s] and FF_gr_IsMember(s,side) then
+            if PF_key[metric] == "avg_sent" then
+                set total = total+PF_Number(s,PF_poolOutMetric)
+                set transfers = transfers+PF_Number(s,PF_sentMetric)
+            elseif PF_key[metric] == "avg_recv" then
+                set total = total+PF_Number(s,PF_poolInMetric)
+                set transfers = transfers+PF_Number(s,PF_receivedMetric)
+            else
+                set total = total+PF_Number(s,metric)
+            endif
+        endif
+        set s = s+1
+    endloop
+    if PF_key[metric] == "avg_sent" or PF_key[metric] == "avg_recv" then
+        set total = PF_Average(total,transfers)
+    endif
+    return I2S(total)
+endfunction
+
+function PF_ResultsView takes nothing returns nothing
+    local integer side = 1
+    local integer s
+    local integer r = 1
+    local integer c = 0
+    local integer k
+    local string title = "Match results"
+    local string control = ""
+    local string name
+    local integer board = PF_section
+    set PF_pages = 1
+    if PF_section == 1 or PF_section == 3 or PF_section == 5 then
+        set PF_pages = 2
+    elseif PF_section == 4 then
+        set PF_pages = 3
+    endif
+    if PF_page > 0 then
+        if PF_section == 1 then
+            set board = 9
+        elseif PF_section == 5 then
+            set board = 10
+        elseif PF_section == 3 then
+            set board = 6
+        elseif PF_section == 4 then
+            set board = 6+PF_page
+        endif
+    endif
+    set s = PF_MySlot()
+    if PF_winSide == 0 then
+        set title = "Draw"
+    elseif s <= 12 and FF_gr_participant[s] then
+        if PF_winSide == -s or (PF_winSide > 0 and FF_gr_IsMember(s,PF_winSide)) then
+            set title = "Victory"
+        else
+            set title = "Defeat"
+        endif
+    endif
+    call BlzFrameSetText(PF_title,"|cffffcc68"+title+"|r     Solo Foots")
+    call BlzFrameSetText(PF_board[0],"Team  /  Player")
+    loop
+        exitwhen c >= 5
+        call BlzFrameSetText(PF_board[c+1],PF_columnTitle[board*5+c])
+        set c = c+1
+    endloop
+    loop
+        exitwhen side > FF_gr_SideCount()
+        if FF_gr_SideParticipated(side) then
+            set name = FF_gr_SideLabel(side)+"   /   Total"
+            if PF_winSide == side then
+                set name = name+"   /   Winner"
+            endif
+            call BlzFrameSetText(PF_board[r*6],"|cffffcc68"+name+"|r")
+            set c = 0
+            loop
+                exitwhen c >= 5
+                call BlzFrameSetText(PF_board[r*6+c+1],"|cffffcc68"+PF_TeamValue(side,PF_columns[board*5+c])+"|r")
+                set c = c+1
+            endloop
+            set r = r+1
+            set s = 1
+            loop
+                exitwhen s > 12
+                if FF_gr_participant[s] and FF_gr_IsMember(s,side) then
+                    call BlzFrameSetVisible(PF_band[r],true)
+                    call BlzFrameSetTexture(PF_band[r],PF_Color(s),0,true)
+                    set name = udg_orig_player_name[s]
+                    if name == null or name == "" then
+                        set name = GetPlayerName(Player(s-1))
+                    endif
+                    if PF_winSide == -s then
+                        set name = "|cffffcc68"+name+"   /   Winner|r"
+                    endif
+                    call BlzFrameSetText(PF_board[r*6],name)
+                    if PF_lastHero[s] != 0 then
+                        call BlzFrameSetTexture(PF_portrait[r],PF_Art(PF_lastHero[s]),0,true)
+                        call BlzFrameSetVisible(PF_portrait[r],true)
+                    endif
+                    set c = 0
+                    loop
+                        exitwhen c >= 5
+                        set k = PF_columns[board*5+c]
+                        call BlzFrameSetText(PF_board[r*6+c+1],I2S(PF_Number(s,k)))
+                        set c = c+1
+                    endloop
+                    set r = r+1
+                endif
+                set s = s+1
+            endloop
+            if PF_hillSeconds[side] > 0 then
+                set control = control+"    "+FF_gr_SideLabel(side)+" "+PF_Clock(PF_hillSeconds[side])
+            endif
+        endif
+        set side = side+1
+    endloop
+    if control != "" then
+        set control = "     Hill control"+control
+    endif
+    call BlzFrameSetText(PF_subtitle,"Final standings    "+PF_Clock(PF_endSecond)+control)
+endfunction
+
+function PF_Render takes nothing returns nothing
+    local integer i = 0
+    if not PF_visible then
+        return
+    endif
+    loop
+        exitwhen i >= 14
+        call BlzFrameSetText(PF_line[i],"")
+        call BlzFrameSetText(PF_value[i],"")
+        call BlzFrameSetVisible(PF_icon[i],false)
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 102
+        call BlzFrameSetText(PF_board[i],"")
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 17
+        call BlzFrameSetVisible(PF_band[i],false)
+        call BlzFrameSetVisible(PF_portrait[i],false)
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 8
+        call BlzFrameSetVisible(PF_tab[i],not PF_results or i < 6)
+        if PF_results then
+            call BlzFrameSetText(PF_tab[i],PF_tabName[10+i])
+        else
+            call BlzFrameSetText(PF_tab[i],PF_tabName[i])
+        endif
+        call BlzFrameSetEnable(PF_tab[i],i != PF_section)
+        set i = i+1
+    endloop
+    if PF_results then
+        call PF_ResultsView()
+    else
+        call PF_ProfileView()
+    endif
+    call BlzFrameSetVisible(PF_prev,PF_page > 0)
+    call BlzFrameSetVisible(PF_next,PF_page+1 < PF_pages)
+    call BlzFrameSetText(PF_footer,"")
+    if PF_pages > 1 then
+        call BlzFrameSetText(PF_footer,I2S(PF_page+1)+" / "+I2S(PF_pages))
+    endif
+    call BlzFrameSetVisible(PF_back,not PF_results)
+    call BlzFrameSetVisible(PF_continue,PF_results)
+    if PF_results then
+        call BlzFrameSetEnable(PF_continue,PF_verdict[GetPlayerId(GetLocalPlayer())+1] != 0 or IsPlayerObserver(GetLocalPlayer()) or not FF_gr_participant[GetPlayerId(GetLocalPlayer())+1])
+    endif
+endfunction
+
+function PF_Open takes boolean results returns nothing
+    local integer w = BlzGetLocalClientWidth()
+    local integer h = BlzGetLocalClientHeight()
+    set PF_visible = true
+    set PF_results = results
+    set PF_section = 0
+    set PF_page = 0
+    if h > 0 then
+        call BlzFrameSetSize(PF_root,RMaxBJ(0.8,0.6*I2R(w)/I2R(h)),0.6)
+    endif
+    call BlzFrameSetVisible(DPS_Panel,false)
+    call BlzFrameSetVisible(PF_root,true)
+    call PF_Render()
+endfunction
+
+function PF_SoloOpenProfile takes nothing returns nothing
+    if GetTriggerPlayer() == GetLocalPlayer() then
+        call PF_Open(false)
+    endif
+endfunction
+
+function PF_Button takes trigger t, real x, real y, real width returns framehandle
+    local framehandle f = BlzCreateFrame("ScriptDialogButton",PF_root,0,0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
+    call BlzFrameSetSize(f,width,0.031)
+    call BlzFrameSetLevel(f,101)
+    call BlzTriggerRegisterFrameEvent(t,f,FRAMEEVENT_CONTROL_CLICK)
+    return f
+endfunction
+
+function PF_Click takes nothing returns nothing
+    local integer s = GetPlayerId(GetTriggerPlayer())+1
+    local integer i = 0
+    local framehandle f = BlzGetTriggerFrame()
+    // Native dialogs allocate handles and must run on all clients.
+    if f == PF_continue and PF_verdict[s] > 0 then
+        if PF_verdict[s] == 1 then
+            set PF_verdict[s] = -1
+            call CustomVictoryBJ(GetTriggerPlayer(),true,true)
+        else
+            set PF_verdict[s] = -1
+            call CustomDefeatBJ(GetTriggerPlayer(),PF_message[s])
+        endif
+    endif
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        if f == PF_back or f == PF_continue then
+            set PF_visible = false
+            call BlzFrameSetVisible(PF_root,false)
+            if not PF_results then
+                call BlzFrameSetVisible(DPS_Panel,true)
+            endif
+        elseif f == PF_prev then
+            set PF_page = IMaxBJ(0,PF_page-1)
+        elseif f == PF_next then
+            set PF_page = IMinBJ(PF_pages-1,PF_page+1)
+        else
+            loop
+                exitwhen i >= 8
+                if f == PF_tab[i] then
+                    set PF_section = i
+                    set PF_page = 0
+                endif
+                set i = i+1
+            endloop
+        endif
+        call BlzFrameSetFocus(f,false)
+        call PF_Render()
+    endif
+    set f = null
+endfunction
+
+function PF_Text takes real x, real y, real width, real height, real font returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","",PF_root,"",0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
+    call BlzFrameSetSize(f,width,height)
+    call BlzFrameSetFont(f,"Fonts\\FRIZQT__.TTF",font,0)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function PF_Create takes nothing returns nothing
+    local trigger t = CreateTrigger()
+    local integer i = 0
+    local integer c
+    local real x
+    local real y
+    local real w
+    set PF_root = BlzCreateFrame("EscMenuBackdrop",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),0,0)
+    call BlzFrameSetLevel(PF_root,100)
+    call BlzFrameSetAbsPoint(PF_root,FRAMEPOINT_TOP,0.4,0.6)
+    call BlzFrameSetSize(PF_root,0.8,0.6)
+    set PF_title = PF_Text(-0.365,0.020,0.59,0.033,0.021)
+    set PF_subtitle = PF_Text(-0.365,0.059,0.735,0.021,0.011)
+    set PF_back = PF_Button(t,0.284,0.021,0.081)
+    call BlzFrameSetText(PF_back,"Back")
+    set PF_continue = PF_Button(t,0.284,0.021,0.081)
+    call BlzFrameSetText(PF_continue,"Continue")
+    loop
+        exitwhen i >= 8
+        set PF_tab[i] = PF_Button(t,-0.366+I2R(i)*0.092,0.089,0.091)
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 17
+        set y = 0.134+I2R(i)*0.024
+        set PF_band[i] = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
+        call BlzFrameSetPoint(PF_band[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.364,-y)
+        call BlzFrameSetSize(PF_band[i],0.728,0.022)
+        call BlzFrameSetAlpha(PF_band[i],74)
+        set PF_portrait[i] = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
+        call BlzFrameSetPoint(PF_portrait[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.361,-y)
+        call BlzFrameSetSize(PF_portrait[i],0.022,0.022)
+        set c = 0
+        loop
+            exitwhen c >= 6
+            if c == 0 then
+                set x = -0.333
+                set w = 0.197
+            else
+                set x = -0.135+I2R(c-1)*0.100
+                set w = 0.098
+            endif
+            set PF_board[i*6+c] = PF_Text(x,y,w,0.022,0.011)
+            set c = c+1
+        endloop
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 14
+        set x = -0.362+I2R(i/7)*0.369
+        set y = 0.146+I2R(ModuloInteger(i,7))*0.057
+        set PF_icon[i] = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
+        call BlzFrameSetPoint(PF_icon[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
+        call BlzFrameSetSize(PF_icon[i],0.039,0.039)
+        set PF_line[i] = PF_Text(x+0.045,y,0.315,0.022,0.013)
+        set PF_value[i] = PF_Text(x+0.045,y+0.022,0.315,0.021,0.010)
+        call BlzFrameSetTextColor(PF_value[i],BlzConvertColor(255,211,188,148))
+        set i = i+1
+    endloop
+    set PF_prev = PF_Button(t,-0.170,0.548,0.085)
+    set PF_next = PF_Button(t,0.084,0.548,0.085)
+    call BlzFrameSetText(PF_prev,"Previous")
+    call BlzFrameSetText(PF_next,"Next")
+    set PF_footer = PF_Text(-0.030,0.548,0.070,0.031,0.012)
+    call TriggerAddAction(t,function PF_Click)
+    call BlzFrameSetVisible(PF_root,false)
+    set t = null
+endfunction
+
+function PF_SendHistory takes nothing returns nothing
+    local string data
+    local integer id
+    local integer amount
+    local integer n = 0
+    local integer s = PF_MySlot()
+    if not PF_careerReady or PF_sendKind > 4 or (GetPlayerId(GetLocalPlayer()) < 12 and not DPS_ProfileLoaded and not IsPlayerObserver(GetLocalPlayer()) and GetPlayerController(GetLocalPlayer()) == MAP_CONTROL_USER) then
+        return
+    endif
+    set data = I2S(PF_sendKind)
+    if PF_sendKind == 0 then
+        loop
+            exitwhen n == 8 or PF_sendIndex == 16
+            set id = PF_sendIndex
+            if id < 8 then
+                set amount = PF_priorEco[id]
+            else
+                set amount = DPS_Prior[id-8]
+            endif
+            set data = data+DPS_Field(id)+DPS_Field(amount)
+            set PF_sendIndex = PF_sendIndex+1
+            set n = n+1
+        endloop
+        if PF_sendIndex == 16 then
+            set PF_sendKind = 1
+            set PF_sendIndex = 0
+        endif
+    else
+        loop
+            exitwhen n == 8 or PF_sendIndex >= PF_careerCount[PF_sendKind]
+            set id = LoadInteger(PF_local,PF_sendKind+10,PF_sendIndex)
+            set amount = LoadInteger(PF_local,PF_sendKind,id)
+            if amount > 0 then
+                set data = data+DPS_Field(id)+DPS_Field(amount)
+                set n = n+1
+            endif
+            set PF_sendIndex = PF_sendIndex+1
+        endloop
+        if PF_sendIndex >= PF_careerCount[PF_sendKind] then
+            set PF_sendKind = PF_sendKind+1
+            set PF_sendIndex = 0
+        endif
+    endif
+    if StringLength(data) > 1 then
+        call BlzSendSyncData("FFCareerSolo",data)
+    endif
+endfunction
+
+function PF_CareerPath takes integer kind, integer page returns string
+    return "FootmenFrenzy\\Solo\\collection-"+I2S(StringHash(PF_account))+"-"+I2S(kind)+"-"+I2S(page)+".pld"
+endfunction
+
+function PF_EconomyFile takes integer s returns nothing
+    local string path = PF_CareerPath(0,0)
+    local string data = "E1"
+    local string saved
+    local integer i = 0
+    if not PF_careerReady then
+        set saved = s__File_readAndClose(s__File_open(path))
+        if StringLength(saved) == 82 and SubString(saved,0,2) == "E1" then
+            loop
+                exitwhen i == 8
+                set PF_priorEco[i] = S2I(SubString(saved,2+i*10,12+i*10))
+                set i = i+1
+            endloop
+        endif
+    endif
+    set i = 0
+    loop
+        exitwhen i == 8
+        set data = data+DPS_Field(PF_priorEco[i]+PF_Economy(s,i))
+        set i = i+1
+    endloop
+    if data != PF_lastEco then
+        call s__File_close(s__File_write(s__File_open(path),data))
+        set PF_lastEco = data
+    endif
+endfunction
+
+function PF_CareerAdd takes integer kind, integer id returns nothing
+    if not HaveSavedInteger(PF_local,kind,id) then
+        call SaveInteger(PF_local,kind,id,0)
+        call SaveInteger(PF_local,kind+10,PF_careerCount[kind],id)
+        set PF_careerCount[kind] = PF_careerCount[kind]+1
+    endif
+endfunction
+
+function PF_LoadCareer takes integer kind returns nothing
+    local string data
+    local integer page = 0
+    local integer offset
+    local integer id
+    local integer n
+    loop
+        set data = s__File_readAndClose(s__File_open(PF_CareerPath(kind,page)))
+        exitwhen SubString(data,0,2) != "C1"
+        set n = StringLength(data)-2
+        exitwhen n < 0 or n > 800 or ModuloInteger(n,20) != 0
+        set offset = 2
+        loop
+            exitwhen offset > n
+            set id = S2I(SubString(data,offset,offset+10))
+            call PF_CareerAdd(kind,id)
+            call SaveInteger(PF_local,kind,id,S2I(SubString(data,offset+10,offset+20)))
+            set offset = offset+20
+        endloop
+        exitwhen n < 800
+        set page = page+1
+    endloop
+endfunction
+
+function PF_SaveCareer takes integer slot, integer kind returns nothing
+    local integer k = slot*10+kind
+    local integer i = 0
+    local integer id
+    local integer page = 0
+    local integer total
+    local string data = "C1"
+    loop
+        exitwhen i >= PF_counts[k]
+        call PF_CareerAdd(kind,LoadInteger(PF_data,300+k,i))
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= PF_careerCount[kind]
+        set id = LoadInteger(PF_local,kind+10,i)
+        set total = LoadInteger(PF_local,kind,id)+LoadInteger(PF_data,k,id)
+        set data = data+DPS_Field(id)+DPS_Field(total)
+        set i = i+1
+        if ModuloInteger(i,40) == 0 or i == PF_careerCount[kind] then
+            if data != LoadStr(PF_local,kind+20,page) then
+                call s__File_close(s__File_write(s__File_open(PF_CareerPath(kind,page)),data))
+                call SaveStr(PF_local,kind+20,page,data)
+            endif
+            set data = "C1"
+            set page = page+1
+        endif
+    endloop
+endfunction
+
+function PF_UpdateCareer takes nothing returns nothing
+    local integer kind = 1
+    local integer s = PF_MySlot()
+    if not PF_SoloSeat(s) or not FF_gr_participant[s] then
+        return
+    endif
+    if PF_account == null or PF_account == "" or FF_IsBotName(PF_account) then
+        return
+    endif
+    loop
+        exitwhen kind > 4
+        if not PF_careerReady then
+            call PF_LoadCareer(kind)
+        endif
+        call PF_SaveCareer(s,kind)
+        set kind = kind+1
+    endloop
+    call PF_EconomyFile(s)
+    set PF_careerReady = true
+endfunction
+
+function PF_ObjectData0 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'I000',150)
+    call SaveInteger(PF_prices,1,'I001',0)
+    call SaveStr(PF_prices,3,'I001',"ReplaceableTextures\\CommandButtons\\BTNHeartAmulet.blp")
+    call SaveInteger(PF_prices,1,'I002',30000)
+    call SaveInteger(PF_prices,1,'I003',2500)
+    call SaveStr(PF_prices,3,'I003',"ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp")
+    call SaveInteger(PF_prices,1,'I004',1500)
+    call SaveStr(PF_prices,3,'I004',"ReplaceableTextures\\CommandButtons\\BTNRodofEnvy.blp")
+    call SaveInteger(PF_prices,1,'I005',7500)
+    call SaveStr(PF_prices,3,'I005',"ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp")
+    call SaveInteger(PF_prices,1,'I006',1500)
+    call SaveInteger(PF_prices,1,'I007',2500)
+    call SaveInteger(PF_prices,1,'I008',1200)
+    call SaveInteger(PF_prices,1,'I009',500)
+    call SaveStr(PF_prices,3,'I009',"ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp")
+    call SaveInteger(PF_prices,1,'I00A',2500)
+    call SaveInteger(PF_prices,1,'I00B',1650)
+    call SaveStr(PF_prices,3,'I00B',"ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp")
+    call SaveInteger(PF_prices,1,'I00C',500)
+    call SaveStr(PF_prices,3,'I00C',"ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp")
+    call SaveInteger(PF_prices,1,'I00D',600)
+    call SaveStr(PF_prices,3,'I00D',"ReplaceableTextures\\CommandButtons\\BTNThoriumArmor.blp")
+    call SaveInteger(PF_prices,1,'I00E',600)
+    call SaveInteger(PF_prices,1,'I00F',650)
+    call SaveInteger(PF_prices,1,'I00G',900)
+    call SaveStr(PF_prices,3,'I00G',"ReplaceableTextures\\CommandButtons\\BTNSeigeEngineWithMissles.blp")
+    call SaveInteger(PF_prices,1,'I00H',1250)
+    call SaveStr(PF_prices,3,'I00H',"ReplaceableTextures\\CommandButtons\\BTNSkullWand.blp")
+    call SaveInteger(PF_prices,1,'I00I',13000)
+    call SaveInteger(PF_prices,1,'I00J',0)
+    call SaveStr(PF_prices,3,'I00J',"ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp")
+    call SaveInteger(PF_prices,1,'I00K',950)
+    call SaveStr(PF_prices,3,'I00K',"ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp")
+    call SaveInteger(PF_prices,1,'I00L',1500)
+    call SaveStr(PF_prices,3,'I00L',"ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp")
+    call SaveInteger(PF_prices,1,'I00M',1350)
+    call SaveStr(PF_prices,3,'I00M',"ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp")
+    call SaveInteger(PF_prices,1,'I00N',600)
+    call SaveStr(PF_prices,3,'I00N',"ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp")
+    call SaveInteger(PF_prices,1,'I00O',1000)
+    call SaveStr(PF_prices,3,'I00O',"ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp")
+    call SaveInteger(PF_prices,1,'I00P',2475)
+    call SaveStr(PF_prices,3,'I00P',"ReplaceableTextures\\CommandButtons\\BTNAmuletOftheWild.blp")
+    call SaveInteger(PF_prices,1,'I00Q',950)
+    call SaveStr(PF_prices,3,'I00Q',"ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp")
+    call SaveInteger(PF_prices,1,'I00R',5500)
+    call SaveStr(PF_prices,3,'I00R',"ReplaceableTextures\\CommandButtons\\BTNAmuletOftheWild.blp")
+    call SaveInteger(PF_prices,1,'I00S',950)
+    call SaveStr(PF_prices,3,'I00S',"ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp")
+    call SaveInteger(PF_prices,1,'I00T',2750)
+    call SaveStr(PF_prices,3,'I00T',"ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp")
+    call SaveInteger(PF_prices,1,'I00U',2850)
+    call SaveStr(PF_prices,3,'I00U',"ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp")
+    call SaveInteger(PF_prices,1,'I00V',2300)
+    call SaveStr(PF_prices,3,'I00V',"ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp")
+    call SaveInteger(PF_prices,1,'I00W',4000)
+    call SaveStr(PF_prices,3,'I00W',"ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp")
+    call SaveInteger(PF_prices,1,'I00X',2500)
+    call SaveStr(PF_prices,3,'I00X',"ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp")
+    call SaveInteger(PF_prices,1,'I00Y',1000)
+    call SaveStr(PF_prices,3,'I00Y',"ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp")
+    call SaveInteger(PF_prices,1,'I00Z',300)
+    call SaveStr(PF_prices,3,'I00Z',"ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp")
+    call SaveInteger(PF_prices,1,'I010',3000)
+    call SaveStr(PF_prices,3,'I010',"ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp")
+    call SaveInteger(PF_prices,1,'I011',0)
+    call SaveInteger(PF_prices,1,'I012',1050)
+    call SaveStr(PF_prices,3,'I012',"ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp")
+    call SaveInteger(PF_prices,1,'I013',0)
+    call SaveStr(PF_prices,3,'I013',"ReplaceableTextures\\CommandButtons\\PASBTNEngineeringUpgrade.blp")
+    call SaveInteger(PF_prices,1,'I014',0)
+    call SaveStr(PF_prices,3,'I014',"ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp")
+    call SaveInteger(PF_prices,1,'I015',2500)
+    call SaveStr(PF_prices,3,'I015',"ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp")
+    call SaveInteger(PF_prices,1,'I016',0)
+    call SaveStr(PF_prices,3,'I016',"ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp")
+    call SaveInteger(PF_prices,1,'I017',500)
+    call SaveInteger(PF_prices,1,'I018',0)
+    call SaveInteger(PF_prices,1,'I019',0)
+    call SaveInteger(PF_prices,1,'I01A',0)
+    call SaveInteger(PF_prices,1,'I01B',0)
+    call SaveInteger(PF_prices,1,'I01C',0)
+    call SaveInteger(PF_prices,1,'I01E',2000)
+    call SaveStr(PF_prices,3,'I01E',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveInteger(PF_prices,1,'I01F',0)
+    call SaveInteger(PF_prices,1,'I01G',75)
+    call SaveStr(PF_prices,3,'I01G',"ReplaceableTextures\\CommandButtons\\BTNArcaniteArchitecture.blp")
+    call SaveInteger(PF_prices,1,'I01H',2750)
+    call SaveStr(PF_prices,3,'I01H',"ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp")
+    call SaveInteger(PF_prices,1,'I01I',1000)
+    call SaveStr(PF_prices,3,'I01I',"ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp")
+    call SaveInteger(PF_prices,1,'I01J',0)
+    call SaveInteger(PF_prices,1,'I01L',0)
+    call SaveStr(PF_prices,3,'I01L',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01M',0)
+    call SaveStr(PF_prices,3,'I01M',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01N',0)
+    call SaveStr(PF_prices,3,'I01N',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01O',15)
+    call SaveStr(PF_prices,3,'I01O',"ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp")
+endfunction
+
+function PF_ObjectData1 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'I01P',275)
+    call SaveStr(PF_prices,3,'I01P',"ReplaceableTextures\\CommandButtons\\BTNGebo.BLP")
+    call SaveInteger(PF_prices,1,'I01Q',1500)
+    call SaveStr(PF_prices,3,'I01Q',"ReplaceableTextures\\CommandButtons\\BTNGlaringBeam.blp")
+    call SaveInteger(PF_prices,1,'I01R',3500)
+    call SaveStr(PF_prices,3,'I01R',"ReplaceableTextures\\CommandButtons\\BTNCoD.blp")
+    call SaveInteger(PF_prices,1,'I01S',550)
+    call SaveStr(PF_prices,3,'I01S',"ReplaceableTextures\\CommandButtons\\BTNCoD.blp")
+    call SaveInteger(PF_prices,1,'I01T',0)
+    call SaveStr(PF_prices,3,'I01T',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01U',0)
+    call SaveStr(PF_prices,3,'I01U',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01V',0)
+    call SaveStr(PF_prices,3,'I01V',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01W',0)
+    call SaveStr(PF_prices,3,'I01W',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01X',0)
+    call SaveStr(PF_prices,3,'I01X',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'I01Y',100)
+    call SaveStr(PF_prices,3,'I01Y',"ReplaceableTextures\\CommandButtons\\BTNEnsnare.blp")
+    call SaveInteger(PF_prices,1,'I01Z',10000)
+    call SaveStr(PF_prices,3,'I01Z',"ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp")
+    call SaveInteger(PF_prices,1,'I020',200)
+    call SaveStr(PF_prices,3,'I020',"ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp")
+    call SaveInteger(PF_prices,1,'I021',200)
+    call SaveStr(PF_prices,3,'I021',"ReplaceableTextures\\CommandButtons\\BTNScrollOfInferno.blp")
+    call SaveInteger(PF_prices,1,'I022',450)
+    call SaveStr(PF_prices,3,'I022',"ReplaceableTextures\\CommandButtons\\BTNPD3WizIllusion.BLP")
+    call SaveInteger(PF_prices,1,'I023',0)
+    call SaveInteger(PF_prices,1,'I026',0)
+    call SaveStr(PF_prices,3,'I026',"ReplaceableTextures\\CommandButtons\\BTNWarriorStrength.blp")
+    call SaveInteger(PF_prices,1,'I027',0)
+    call SaveInteger(PF_prices,1,'I028',0)
+    call SaveInteger(PF_prices,1,'I029',0)
+    call SaveInteger(PF_prices,1,'I02A',0)
+    call SaveInteger(PF_prices,1,'I02B',0)
+    call SaveInteger(PF_prices,1,'I02C',0)
+    call SaveStr(PF_prices,3,'I02C',"ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp")
+    call SaveInteger(PF_prices,1,'I02D',0)
+    call SaveInteger(PF_prices,1,'I02E',0)
+    call SaveInteger(PF_prices,1,'I02F',40)
+    call SaveInteger(PF_prices,1,'I02G',0)
+    call SaveInteger(PF_prices,1,'I02I',50)
+    call SaveInteger(PF_prices,1,'I02J',400)
+    call SaveStr(PF_prices,3,'I02J',"ReplaceableTextures\\CommandButtons\\BTNRing.blp")
+    call SaveInteger(PF_prices,1,'I02K',0)
+    call SaveStr(PF_prices,3,'I02K',"ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp")
+    call SaveInteger(PF_prices,1,'I02L',1100)
+    call SaveStr(PF_prices,3,'I02L',"ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp")
+    call SaveInteger(PF_prices,1,'I02M',2100)
+    call SaveStr(PF_prices,3,'I02M',"ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp")
+    call SaveInteger(PF_prices,1,'I02N',200)
+    call SaveStr(PF_prices,3,'I02N',"ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp")
+    call SaveInteger(PF_prices,1,'I02O',100)
+    call SaveStr(PF_prices,3,'I02O',"ReplaceableTextures\\CommandButtons\\BTNAmulet.blp")
+    call SaveInteger(PF_prices,1,'I02P',3000)
+    call SaveStr(PF_prices,3,'I02P',"ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp")
+    call SaveInteger(PF_prices,1,'I02Q',0)
+    call SaveInteger(PF_prices,1,'I02R',30)
+    call SaveStr(PF_prices,3,'I02R',"ReplaceableTextures\\CommandButtons\\BTNGreaterInvisibility.blp")
+    call SaveInteger(PF_prices,1,'I02S',600)
+    call SaveInteger(PF_prices,1,'I02T',800)
+    call SaveStr(PF_prices,3,'I02T',"ReplaceableTextures\\CommandButtons\\BTNPurify.blp")
+    call SaveInteger(PF_prices,1,'I02W',350)
+    call SaveStr(PF_prices,3,'I02W',"ReplaceableTextures\\CommandButtons\\BTNElemental Shield.blp")
+    call SaveInteger(PF_prices,1,'I02X',100)
+    call SaveStr(PF_prices,3,'I02X',"ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp")
+    call SaveInteger(PF_prices,1,'I030',300)
+    call SaveStr(PF_prices,3,'I030',"ReplaceableTextures\\CommandButtons\\BTNAmulet.blp")
+    call SaveInteger(PF_prices,1,'I031',1000)
+    call SaveStr(PF_prices,3,'I031',"ReplaceableTextures\\CommandButtons\\BTNElemental Shield.blp")
+    call SaveInteger(PF_prices,1,'I033',5000)
+    call SaveStr(PF_prices,3,'I033',"ReplaceableTextures\\CommandButtons\\BTNPenguin.blp")
+    call SaveInteger(PF_prices,1,'I034',2000)
+    call SaveInteger(PF_prices,1,'I03A',600)
+    call SaveStr(PF_prices,3,'I03A',"ReplaceableTextures\\CommandButtons\\BTNCarrionSwarm1.blp")
+    call SaveInteger(PF_prices,1,'I03M',50)
+    call SaveInteger(PF_prices,1,'I03N',1300)
+    call SaveInteger(PF_prices,1,'I03P',200)
+    call SaveInteger(PF_prices,1,'I03Q',0)
+    call SaveStr(PF_prices,3,'I03Q',"ReplaceableTextures\\CommandButtons\\BTNBreathOfFrost.blp")
+    call SaveInteger(PF_prices,1,'I03S',0)
+    call SaveStr(PF_prices,3,'I03S',"ReplaceableTextures\\PassiveButtons\\PASBTNCriticalStrike.blp")
+    call SaveInteger(PF_prices,1,'I03T',0)
+    call SaveStr(PF_prices,3,'I03T',"ReplaceableTextures\\PassiveButtons\\PASBTNFeedBack.blp")
+    call SaveInteger(PF_prices,1,'I03U',0)
+    call SaveStr(PF_prices,3,'I03U',"ReplaceableTextures\\CommandButtons\\BTNWarStomp.blp")
+    call SaveInteger(PF_prices,1,'I03X',300)
+    call SaveInteger(PF_prices,1,'I03Y',500)
+    call SaveStr(PF_prices,3,'I03Y',"ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp")
+    call SaveInteger(PF_prices,1,'I03Z',350)
+    call SaveStr(PF_prices,3,'I03Z',"ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp")
+    call SaveInteger(PF_prices,1,'I040',300)
+    call SaveInteger(PF_prices,1,'I041',150)
+    call SaveInteger(PF_prices,1,'I042',1350)
+    call SaveInteger(PF_prices,1,'I046',150)
+    call SaveInteger(PF_prices,1,'I048',10000)
+    call SaveStr(PF_prices,3,'I048',"ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp")
+    call SaveInteger(PF_prices,1,'I049',12000)
+    call SaveInteger(PF_prices,1,'I04A',4000)
+endfunction
+
+function PF_ObjectData2 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'I04A',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'I04B',750)
+    call SaveStr(PF_prices,3,'I04B',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'ICPP',0)
+    call SaveStr(PF_prices,3,'ICPP',"ReplaceableTextures\\WorldEditUI\\Editor-Ally-HighPriority.blp")
+    call SaveInteger(PF_prices,1,'IGs1',6000)
+    call SaveStr(PF_prices,3,'IGs1',"ReplaceableTextures\\CommandButtons\\BTNSilence.blp")
+    call SaveInteger(PF_prices,1,'IRb0',42)
+    call SaveInteger(PF_prices,1,'amrc',175)
+    call SaveStr(PF_prices,3,'amrc',"ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp")
+    call SaveInteger(PF_prices,1,'ankh',700)
+    call SaveInteger(PF_prices,1,'belv',300)
+    call SaveInteger(PF_prices,1,'bgst',250)
+    call SaveInteger(PF_prices,1,'brac',1000)
+    call SaveInteger(PF_prices,1,'ches',0)
+    call SaveInteger(PF_prices,1,'ciri',100)
+    call SaveInteger(PF_prices,1,'ckng',500)
+    call SaveInteger(PF_prices,1,'clfm',800)
+    call SaveInteger(PF_prices,1,'clsd',25)
+    call SaveInteger(PF_prices,1,'cnob',3250)
+    call SaveInteger(PF_prices,1,'crys',200)
+    call SaveInteger(PF_prices,1,'desc',1500)
+    call SaveInteger(PF_prices,1,'dust',0)
+    call SaveInteger(PF_prices,1,'evtl',350)
+    call SaveInteger(PF_prices,1,'frhg',800)
+    call SaveInteger(PF_prices,1,'gcel',250)
+    call SaveInteger(PF_prices,1,'gobm',125)
+    call SaveStr(PF_prices,3,'gobm',"ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp")
+    call SaveInteger(PF_prices,1,'gold',100)
+    call SaveInteger(PF_prices,1,'hlst',150)
+    call SaveInteger(PF_prices,1,'hslv',0)
+    call SaveStr(PF_prices,3,'hslv',"ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp")
+    call SaveInteger(PF_prices,1,'hval',400)
+    call SaveInteger(PF_prices,1,'infs',1000)
+    call SaveInteger(PF_prices,1,'lgdh',450)
+    call SaveInteger(PF_prices,1,'lhst',500)
+    call SaveInteger(PF_prices,1,'lmbr',2000)
+    call SaveInteger(PF_prices,1,'mcou',150)
+    call SaveInteger(PF_prices,1,'mnst',150)
+    call SaveInteger(PF_prices,1,'modt',300)
+    call SaveInteger(PF_prices,1,'nams',50)
+    call SaveInteger(PF_prices,1,'nspi',12000)
+    call SaveInteger(PF_prices,1,'ofro',200)
+    call SaveInteger(PF_prices,1,'olig',400)
+    call SaveInteger(PF_prices,1,'oven',300)
+    call SaveInteger(PF_prices,1,'pams',50)
+    call SaveInteger(PF_prices,1,'pclr',50)
+    call SaveStr(PF_prices,3,'pclr',"ReplaceableTextures\\CommandButtons\\BTNLesserClarityPotion.blp")
+    call SaveInteger(PF_prices,1,'penr',350)
+    call SaveInteger(PF_prices,1,'pghe',100)
+    call SaveInteger(PF_prices,1,'pgma',100)
+    call SaveInteger(PF_prices,1,'pinv',0)
+    call SaveInteger(PF_prices,1,'pmna',300)
+    call SaveInteger(PF_prices,1,'pnvl',150)
+    call SaveInteger(PF_prices,1,'pnvu',250)
+    call SaveInteger(PF_prices,1,'pres',200)
+    call SaveInteger(PF_prices,1,'prvt',500)
+    call SaveInteger(PF_prices,1,'rag1',2750)
+    call SaveInteger(PF_prices,1,'rat6',1500)
+    call SaveStr(PF_prices,3,'rat6',"ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp")
+    call SaveInteger(PF_prices,1,'rat9',800)
+    call SaveStr(PF_prices,3,'rat9',"ReplaceableTextures\\CommandButtons\\BTNKatana.blp")
+    call SaveInteger(PF_prices,1,'ratf',300)
+    call SaveInteger(PF_prices,1,'rde3',200)
+    call SaveInteger(PF_prices,1,'rhe2',0)
+    call SaveInteger(PF_prices,1,'rhth',1200)
+    call SaveInteger(PF_prices,1,'rin1',1200)
+    call SaveInteger(PF_prices,1,'rlif',100)
+    call SaveInteger(PF_prices,1,'rre2',0)
+    call SaveInteger(PF_prices,1,'rst1',2000)
+    call SaveInteger(PF_prices,1,'rwiz',100)
+    call SaveInteger(PF_prices,1,'sand',2500)
+    call SaveInteger(PF_prices,1,'sbch',500)
+    call SaveInteger(PF_prices,1,'shas',50)
+    call SaveInteger(PF_prices,1,'sman',75)
+    call SaveInteger(PF_prices,1,'spre',900)
+    call SaveInteger(PF_prices,1,'spro',400)
+    call SaveInteger(PF_prices,1,'spsh',600)
+    call SaveInteger(PF_prices,1,'sreg',50)
+    call SaveInteger(PF_prices,1,'sres',225)
+    call SaveStr(PF_prices,3,'sres',"ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp")
+    call SaveInteger(PF_prices,1,'sror',400)
+    call SaveInteger(PF_prices,1,'srrc',2500)
+    call SaveInteger(PF_prices,1,'ssil',75)
+    call SaveInteger(PF_prices,1,'stel',250)
+    call SaveInteger(PF_prices,1,'stwa',800)
+    call SaveStr(PF_prices,3,'stwa',"ReplaceableTextures\\CommandButtons\\BTNHornedSword.blp")
+    call SaveInteger(PF_prices,1,'stwp',0)
+    call SaveInteger(PF_prices,1,'tcas',125)
+    call SaveStr(PF_prices,3,'tcas',"ReplaceableTextures\\CommandButtons\\BTNRWall.blp")
+    call SaveInteger(PF_prices,1,'tgrh',125)
+    call SaveStr(PF_prices,3,'tgrh',"ReplaceableTextures\\CommandButtons\\BTNLWall.blp")
+    call SaveInteger(PF_prices,1,'tmmt',600)
+    call SaveInteger(PF_prices,1,'tret',100)
+    call SaveInteger(PF_prices,1,'ward',500)
+    call SaveInteger(PF_prices,1,'whwd',250)
+    call SaveInteger(PF_prices,1,'will',40)
+    call SaveInteger(PF_prices,1,'wneg',450)
+    call SaveStr(PF_prices,3,'wneg',"ReplaceableTextures\\CommandButtons\\BTNRodOfNecromancy.blp")
+    call SaveInteger(PF_prices,1,'wswd',75)
+endfunction
+
+function PF_ObjectData3 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'E002',0)
+    call SaveInteger(PF_prices,1,'E003',0)
+    call SaveInteger(PF_prices,1,'E005',0)
+    call SaveInteger(PF_prices,1,'E007',0)
+    call SaveInteger(PF_prices,1,'E008',0)
+    call SaveStr(PF_prices,3,'E008',"ReplaceableTextures\\CommandButtons\\BTNPenguin.blp")
+    call SaveInteger(PF_prices,1,'E00A',0)
+    call SaveStr(PF_prices,3,'E00A',"ReplaceableTextures\\CommandButtons\\BTNFacelessOne.blp")
+    call SaveInteger(PF_prices,1,'E00E',0)
+    call SaveStr(PF_prices,3,'E00E',"ReplaceableTextures\\CommandButtons\\BTNHellScream.blp")
+    call SaveInteger(PF_prices,1,'E00F',0)
+    call SaveInteger(PF_prices,1,'E00O',0)
+    call SaveStr(PF_prices,3,'E00O',"ReplaceableTextures\\CommandButtons\\BTNSatyr.blp")
+    call SaveInteger(PF_prices,1,'E00P',0)
+    call SaveStr(PF_prices,3,'E00P',"ReplaceableTextures\\CommandButtons\\BTNShips_Doctor_Kul-Tiras_HD.blp")
+    call SaveInteger(PF_prices,1,'E00T',0)
+    call SaveStr(PF_prices,3,'E00T',"ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp")
+    call SaveInteger(PF_prices,1,'E00U',0)
+    call SaveStr(PF_prices,3,'E00U',"ReplaceableTextures\\CommandButtons\\BTNShandris.blp")
+    call SaveInteger(PF_prices,1,'E00V',0)
+    call SaveInteger(PF_prices,1,'E00Y',0)
+    call SaveStr(PF_prices,3,'E00Y',"ReplaceableTextures\\CommandButtons\\BTNStormforgerIcon.blp")
+    call SaveInteger(PF_prices,1,'E00Z',0)
+    call SaveStr(PF_prices,3,'E00Z',"ReplaceableTextures\\CommandButtons\\BTNDranaiAkama.blp")
+    call SaveInteger(PF_prices,1,'E010',0)
+    call SaveStr(PF_prices,3,'E010',"ReplaceableTextures\\CommandButtons\\BTNBlackTemplar.blp")
+    call SaveInteger(PF_prices,1,'E011',0)
+    call SaveStr(PF_prices,3,'E011',"ReplaceableTextures\\CommandButtons\\BTNratling.blp")
+    call SaveInteger(PF_prices,1,'E016',0)
+    call SaveStr(PF_prices,3,'E016',"ReplaceableTextures\\CommandButtons\\BTNShips_Doctor_Kul-Tiras_HD.blp")
+    call SaveInteger(PF_prices,1,'E018',0)
+    call SaveStr(PF_prices,3,'E018',"ReplaceableTextures\\CommandButtons\\BTNJunkGolem.blp")
+    call SaveInteger(PF_prices,1,'E019',0)
+    call SaveInteger(PF_prices,1,'E01C',0)
+    call SaveStr(PF_prices,3,'E01C',"ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp")
+    call SaveInteger(PF_prices,1,'E01D',0)
+    call SaveInteger(PF_prices,1,'E01G',0)
+    call SaveStr(PF_prices,3,'E01G',"ReplaceableTextures\\CommandButtons\\BTNHellScream.blp")
+    call SaveInteger(PF_prices,1,'H005',0)
+    call SaveInteger(PF_prices,1,'H008',0)
+    call SaveInteger(PF_prices,1,'H009',0)
+    call SaveInteger(PF_prices,1,'H00A',0)
+    call SaveInteger(PF_prices,1,'H00E',0)
+    call SaveStr(PF_prices,3,'H00E',"ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp")
+    call SaveInteger(PF_prices,1,'H00K',0)
+    call SaveStr(PF_prices,3,'H00K',"ReplaceableTextures\\CommandButtons\\BTNSpiritWalker.blp")
+    call SaveInteger(PF_prices,1,'H00T',0)
+    call SaveInteger(PF_prices,1,'H00U',0)
+    call SaveStr(PF_prices,3,'H00U',"ReplaceableTextures\\CommandButtons\\BTNSheep.blp")
+    call SaveInteger(PF_prices,1,'H015',0)
+    call SaveStr(PF_prices,3,'H015',"ReplaceableTextures\\CommandButtons\\BTNPestilantPrince.blp")
+    call SaveInteger(PF_prices,1,'H01B',0)
+    call SaveStr(PF_prices,3,'H01B',"ReplaceableTextures\\CommandButtons\\BTNRevenant.blp")
+    call SaveInteger(PF_prices,1,'H01F',0)
+    call SaveStr(PF_prices,3,'H01F',"ReplaceableTextures\\CommandButtons\\BTNFemaleCaptain.blp")
+    call SaveInteger(PF_prices,1,'H01H',0)
+    call SaveStr(PF_prices,3,'H01H',"ReplaceableTextures\\CommandButtons\\BTNHydralisk.blp")
+    call SaveInteger(PF_prices,1,'H01I',0)
+    call SaveInteger(PF_prices,1,'H01R',0)
+    call SaveStr(PF_prices,3,'H01R',"ReplaceableTextures\\CommandButtons\\BTNKelThuzad.blp")
+    call SaveInteger(PF_prices,1,'H01U',0)
+    call SaveStr(PF_prices,3,'H01U',"ReplaceableTextures\\CommandButtons\\BTNChaosGrunt.blp")
+    call SaveInteger(PF_prices,1,'H02C',0)
+    call SaveStr(PF_prices,3,'H02C',"ReplaceableTextures\\CommandButtons\\BTNthrall_foot.blp")
+    call SaveInteger(PF_prices,1,'H02D',0)
+    call SaveInteger(PF_prices,1,'H02E',0)
+    call SaveInteger(PF_prices,1,'H02G',0)
+    call SaveStr(PF_prices,3,'H02G',"ReplaceableTextures\\CommandButtons\\BTNProudMoore.blp")
+    call SaveInteger(PF_prices,1,'H02I',0)
+    call SaveStr(PF_prices,3,'H02I',"ReplaceableTextures\\CommandButtons\\BTNWendigo.blp")
+    call SaveInteger(PF_prices,1,'H02J',0)
+    call SaveStr(PF_prices,3,'H02J',"ReplaceableTextures\\CommandButtons\\BTNFelGuard.blp")
+    call SaveInteger(PF_prices,1,'H02R',0)
+    call SaveStr(PF_prices,3,'H02R',"ReplaceableTextures\\CommandButtons\\BTNCloak.blp")
+    call SaveInteger(PF_prices,1,'H02W',0)
+    call SaveStr(PF_prices,3,'H02W',"ReplaceableTextures\\CommandButtons\\BTNChaosSpaceOrc.blp")
+    call SaveInteger(PF_prices,1,'H02Z',0)
+    call SaveStr(PF_prices,3,'H02Z',"ReplaceableTextures\\CommandButtons\\BTNMarine.blp")
+    call SaveInteger(PF_prices,1,'H036',0)
+    call SaveStr(PF_prices,3,'H036',"ReplaceableTextures\\CommandButtons\\BTNRifleman Lordaeron.blp")
+    call SaveInteger(PF_prices,1,'H03I',0)
+    call SaveStr(PF_prices,3,'H03I',"ReplaceableTextures\\CommandButtons\\BTNdragonpriest.blp")
+    call SaveInteger(PF_prices,1,'H03N',0)
+    call SaveStr(PF_prices,3,'H03N',"ReplaceableTextures\\CommandButtons\\BTNBattlepriest.blp")
+    call SaveInteger(PF_prices,1,'H03Q',0)
+    call SaveStr(PF_prices,3,'H03Q',"ReplaceableTextures\\CommandButtons\\BTNWolf.blp")
+    call SaveInteger(PF_prices,1,'H03U',0)
+    call SaveStr(PF_prices,3,'H03U',"ReplaceableTextures\\CommandButtons\\BTNRayofHope.blp")
+    call SaveInteger(PF_prices,1,'H043',0)
+    call SaveStr(PF_prices,3,'H043',"ReplaceableTextures\\CommandButtons\\BTNGenericProtoss.blp")
+    call SaveInteger(PF_prices,1,'H048',0)
+    call SaveStr(PF_prices,3,'H048',"ReplaceableTextures\\CommandButtons\\BTNMountainKing.blp")
+    call SaveInteger(PF_prices,1,'H04F',0)
+    call SaveStr(PF_prices,3,'H04F',"ReplaceableTextures\\CommandButtons\\BTNdog.blp")
+    call SaveInteger(PF_prices,1,'H04T',0)
+    call SaveStr(PF_prices,3,'H04T',"ReplaceableTextures\\CommandButtons\\BTNHeroKingTerenas.blp")
+    call SaveInteger(PF_prices,1,'H04U',0)
+    call SaveStr(PF_prices,3,'H04U',"ReplaceableTextures\\CommandButtons\\BTNMedivh.blp")
+    call SaveInteger(PF_prices,1,'H04W',0)
+    call SaveStr(PF_prices,3,'H04W',"ReplaceableTextures\\CommandButtons\\BTNDeadeye.BLP")
+endfunction
+
+function PF_ObjectData4 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'H04X',0)
+    call SaveStr(PF_prices,3,'H04X',"ReplaceableTextures\\CommandButtons\\BTNNerubianQueen.blp")
+    call SaveInteger(PF_prices,1,'H04Y',0)
+    call SaveStr(PF_prices,3,'H04Y',"ReplaceableTextures\\CommandButtons\\BTNWitchDoctor.blp")
+    call SaveInteger(PF_prices,1,'H04Z',0)
+    call SaveStr(PF_prices,3,'H04Z',"ReplaceableTextures\\CommandButtons\\BTNRayofHope.blp")
+    call SaveInteger(PF_prices,1,'H052',0)
+    call SaveStr(PF_prices,3,'H052',"ReplaceableTextures\\CommandButtons\\BTNthrall_foot.blp")
+    call SaveInteger(PF_prices,1,'H05E',0)
+    call SaveStr(PF_prices,3,'H05E',"ReplaceableTextures\\CommandButtons\\BTNPestilantPrince.blp")
+    call SaveInteger(PF_prices,1,'H05I',0)
+    call SaveStr(PF_prices,3,'H05I',"ReplaceableTextures\\CommandButtons\\BTNMedivh.blp")
+    call SaveInteger(PF_prices,1,'H05N',0)
+    call SaveStr(PF_prices,3,'H05N',"ReplaceableTextures\\CommandButtons\\BTNWitchDoctor.blp")
+    call SaveInteger(PF_prices,1,'H05O',0)
+    call SaveInteger(PF_prices,1,'H05P',0)
+    call SaveStr(PF_prices,3,'H05P',"ReplaceableTextures\\CommandButtons\\BTNRevenant.blp")
+    call SaveInteger(PF_prices,1,'H05R',0)
+    call SaveInteger(PF_prices,1,'H05X',0)
+    call SaveInteger(PF_prices,1,'H05Y',0)
+    call SaveStr(PF_prices,3,'H05Y',"ReplaceableTextures\\CommandButtons\\BTNHydralisk.blp")
+    call SaveInteger(PF_prices,1,'H05Z',0)
+    call SaveInteger(PF_prices,1,'H060',0)
+    call SaveStr(PF_prices,3,'H060',"ReplaceableTextures\\CommandButtons\\BTNMarine.blp")
+    call SaveInteger(PF_prices,1,'H061',0)
+    call SaveStr(PF_prices,3,'H061',"ReplaceableTextures\\CommandButtons\\BTNWolf.blp")
+    call SaveInteger(PF_prices,1,'HDk1',0)
+    call SaveStr(PF_prices,3,'HDk1',"ReplaceableTextures\\CommandButtons\\BTNChaosGrom.blp")
+    call SaveInteger(PF_prices,1,'HGr1',0)
+    call SaveStr(PF_prices,3,'HGr1',"ReplaceableTextures\\CommandButtons\\BTNFireBrewmaster.tga")
+    call SaveInteger(PF_prices,1,'HMu1',0)
+    call SaveStr(PF_prices,3,'HMu1',"ReplaceableTextures\\CommandButtons\\BTNAbomination.blp")
+    call SaveInteger(PF_prices,1,'HOr1',0)
+    call SaveStr(PF_prices,3,'HOr1',"ReplaceableTextures\\CommandButtons\\BTNGuldan.blp")
+    call SaveInteger(PF_prices,1,'HTf1',0)
+    call SaveStr(PF_prices,3,'HTf1',"ReplaceableTextures\\CommandButtons\\BTNTwistedFate.tga")
+    call SaveInteger(PF_prices,1,'HVg1',0)
+    call SaveStr(PF_prices,3,'HVg1',"ReplaceableTextures\\CommandButtons\\BTNVeigarHero.blp")
+    call SaveInteger(PF_prices,1,'N00C',0)
+    call SaveInteger(PF_prices,1,'N00D',0)
+    call SaveInteger(PF_prices,1,'N00H',0)
+    call SaveStr(PF_prices,3,'N00H',"ReplaceableTextures\\CommandButtons\\BTNSylvanasWindrunner.blp")
+    call SaveInteger(PF_prices,1,'N00I',0)
+    call SaveInteger(PF_prices,1,'N00N',0)
+    call SaveStr(PF_prices,3,'N00N',"ReplaceableTextures\\CommandButtons\\BTNArchimonde.blp")
+    call SaveInteger(PF_prices,1,'N00O',0)
+    call SaveStr(PF_prices,3,'N00O',"ReplaceableTextures\\CommandButtons\\BTNMountainGiant.blp")
+    call SaveInteger(PF_prices,1,'N00P',0)
+    call SaveInteger(PF_prices,1,'N00Z',0)
+    call SaveInteger(PF_prices,1,'N015',0)
+    call SaveStr(PF_prices,3,'N015',"ReplaceableTextures\\CommandButtons\\BTNHighElvenArcher.blp")
+    call SaveInteger(PF_prices,1,'N01C',0)
+    call SaveInteger(PF_prices,1,'N01D',0)
+    call SaveInteger(PF_prices,1,'N01L',0)
+    call SaveStr(PF_prices,3,'N01L',"ReplaceableTextures\\CommandButtons\\BTNSatyrTrickster.blp")
+    call SaveInteger(PF_prices,1,'N027',0)
+    call SaveStr(PF_prices,3,'N027',"ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp")
+    call SaveInteger(PF_prices,1,'N02F',0)
+    call SaveInteger(PF_prices,1,'N02O',0)
+    call SaveStr(PF_prices,3,'N02O',"ReplaceableTextures\\CommandButtons\\BTNNagaMyrmidonRoyalGuard.blp")
+    call SaveInteger(PF_prices,1,'N030',0)
+    call SaveStr(PF_prices,3,'N030',"ReplaceableTextures\\CommandButtons\\BTNArchimonde.blp")
+    call SaveInteger(PF_prices,1,'N031',0)
+    call SaveStr(PF_prices,3,'N031',"ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp")
+    call SaveInteger(PF_prices,1,'N032',0)
+    call SaveInteger(PF_prices,1,'N035',0)
+    call SaveStr(PF_prices,3,'N035',"ReplaceableTextures\\CommandButtons\\BTNwarrior.blp")
+    call SaveInteger(PF_prices,1,'N039',0)
+    call SaveInteger(PF_prices,1,'N03B',0)
+    call SaveStr(PF_prices,3,'N03B',"ReplaceableTextures\\CommandButtons\\BTNNecro.blp")
+    call SaveInteger(PF_prices,1,'N03J',0)
+    call SaveStr(PF_prices,3,'N03J',"ReplaceableTextures\\CommandButtons\\BTNEmberKnight.blp")
+    call SaveInteger(PF_prices,1,'N05H',0)
+    call SaveInteger(PF_prices,1,'N05M',0)
+    call SaveStr(PF_prices,3,'N05M',"ReplaceableTextures\\CommandButtons\\BTNwarrior.blp")
+    call SaveInteger(PF_prices,1,'O000',0)
+    call SaveStr(PF_prices,3,'O000',"ReplaceableTextures\\CommandButtons\\BTNChaosWarlord.blp")
+    call SaveInteger(PF_prices,1,'O003',0)
+    call SaveInteger(PF_prices,1,'O004',0)
+    call SaveInteger(PF_prices,1,'O005',0)
+    call SaveInteger(PF_prices,1,'O006',0)
+    call SaveInteger(PF_prices,1,'O008',0)
+    call SaveStr(PF_prices,3,'O008',"ReplaceableTextures\\CommandButtons\\BTNDoomGuard.blp")
+    call SaveInteger(PF_prices,1,'O00D',0)
+    call SaveInteger(PF_prices,1,'O00G',0)
+    call SaveStr(PF_prices,3,'O00G',"ReplaceableTextures\\CommandButtons\\BTNChaosBlademaster.blp")
+    call SaveInteger(PF_prices,1,'O00I',0)
+    call SaveStr(PF_prices,3,'O00I',"ReplaceableTextures\\CommandButtons\\BTNIceShard.blp")
+    call SaveInteger(PF_prices,1,'O00O',0)
+    call SaveStr(PF_prices,3,'O00O',"ReplaceableTextures\\CommandButtons\\BTNBaldie.blp")
+    call SaveInteger(PF_prices,1,'O00T',0)
+    call SaveStr(PF_prices,3,'O00T',"ReplaceableTextures\\CommandButtons\\BTNassasin_noob.blp")
+    call SaveInteger(PF_prices,1,'O00X',0)
+    call SaveStr(PF_prices,3,'O00X',"ReplaceableTextures\\CommandButtons\\BTNTigerLook.blp")
+    call SaveInteger(PF_prices,1,'O010',0)
+    call SaveStr(PF_prices,3,'O010',"ReplaceableTextures\\CommandButtons\\BTNHeroFemaleNecromancer.blp")
+    call SaveInteger(PF_prices,1,'O016',0)
+    call SaveStr(PF_prices,3,'O016',"ReplaceableTextures\\CommandButtons\\BTNTrollConjurer.blp")
+    call SaveInteger(PF_prices,1,'O01A',0)
+    call SaveInteger(PF_prices,1,'O01B',0)
+endfunction
+
+function PF_ObjectData5 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'O01B',"ReplaceableTextures\\CommandButtons\\BTNmonkeyking1.blp")
+    call SaveInteger(PF_prices,1,'O01D',0)
+    call SaveInteger(PF_prices,1,'O01G',0)
+    call SaveStr(PF_prices,3,'O01G',"ReplaceableTextures\\CommandButtons\\BTNChaosWarlord.blp")
+    call SaveInteger(PF_prices,1,'O01L',0)
+    call SaveStr(PF_prices,3,'O01L',"ReplaceableTextures\\CommandButtons\\BTNSeaGiant.blp")
+    call SaveInteger(PF_prices,1,'O01M',0)
+    call SaveStr(PF_prices,3,'O01M',"ReplaceableTextures\\CommandButtons\\BTNHeroFemaleNecromancer.blp")
+    call SaveInteger(PF_prices,1,'O01N',0)
+    call SaveInteger(PF_prices,1,'U002',0)
+    call SaveInteger(PF_prices,1,'U003',0)
+    call SaveInteger(PF_prices,1,'U004',0)
+    call SaveInteger(PF_prices,1,'U005',0)
+    call SaveInteger(PF_prices,1,'U00F',0)
+    call SaveStr(PF_prices,3,'U00F',"ReplaceableTextures\\CommandButtons\\BTNSanta.blp")
+    call SaveInteger(PF_prices,1,'U00R',0)
+    call SaveStr(PF_prices,3,'U00R',"ReplaceableTextures\\CommandButtons\\BTNWight.blp")
+    call SaveInteger(PF_prices,1,'U012',0)
+    call SaveInteger(PF_prices,1,'U013',0)
+    call SaveInteger(PF_prices,1,'U018',0)
+    call SaveInteger(PF_prices,1,'U019',0)
+    call SaveInteger(PF_prices,1,'abom',150)
+    call SaveStr(PF_prices,3,'abom',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveStr(PF_prices,3,'dmmy',"ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp")
+    call SaveInteger(PF_prices,1,'e004',400)
+    call SaveStr(PF_prices,3,'e004',"ReplaceableTextures\\CommandButtons\\BTNDryad.blp")
+    call SaveInteger(PF_prices,1,'e00D',5)
+    call SaveInteger(PF_prices,1,'e00G',2000)
+    call SaveInteger(PF_prices,1,'e00H',250)
+    call SaveStr(PF_prices,3,'e00H',"ReplaceableTextures\\CommandButtons\\BTNDruidOfTheTalon.blp")
+    call SaveInteger(PF_prices,1,'e00I',300)
+    call SaveStr(PF_prices,3,'e00I',"ReplaceableTextures\\CommandButtons\\BTNDryad.blp")
+    call SaveStr(PF_prices,3,'e00Q',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveStr(PF_prices,3,'e00W',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveStr(PF_prices,3,'e00X',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'e012',0)
+    call SaveStr(PF_prices,3,'e012',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'e013',300)
+    call SaveInteger(PF_prices,1,'e017',0)
+    call SaveStr(PF_prices,3,'e017',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'earc',170)
+    call SaveInteger(PF_prices,1,'emow',200)
+    call SaveInteger(PF_prices,1,'esen',220)
+    call SaveInteger(PF_prices,1,'etrp',400)
+    call SaveInteger(PF_prices,1,'h000',250)
+    call SaveInteger(PF_prices,1,'h002',600)
+    call SaveStr(PF_prices,3,'h002',"ReplaceableTextures\\CommandButtons\\BTNTreeOfLife.blp")
+    call SaveInteger(PF_prices,1,'h003',2000)
+    call SaveStr(PF_prices,3,'h003',"ReplaceableTextures\\CommandButtons\\BTNBeastiary.blp")
+    call SaveInteger(PF_prices,1,'h004',1900)
+    call SaveStr(PF_prices,3,'h004',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'h00B',1250)
+    call SaveStr(PF_prices,3,'h00B',"ReplaceableTextures\\CommandButtons\\BTNCrypt.blp")
+    call SaveInteger(PF_prices,1,'h00C',1250)
+    call SaveStr(PF_prices,3,'h00C',"ReplaceableTextures\\CommandButtons\\BTNStronghold.blp")
+    call SaveInteger(PF_prices,1,'h00D',1250)
+    call SaveStr(PF_prices,3,'h00D',"ReplaceableTextures\\CommandButtons\\BTNTreeOfLife.blp")
+    call SaveInteger(PF_prices,1,'h00F',1900)
+    call SaveStr(PF_prices,3,'h00F',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'h00G',1250)
+    call SaveStr(PF_prices,3,'h00G',"ReplaceableTextures\\CommandButtons\\BTNKeep.blp")
+    call SaveInteger(PF_prices,1,'h00H',600)
+    call SaveStr(PF_prices,3,'h00H',"ReplaceableTextures\\CommandButtons\\BTNGreatHall.blp")
+    call SaveInteger(PF_prices,1,'h00I',2000)
+    call SaveStr(PF_prices,3,'h00I',"ReplaceableTextures\\CommandButtons\\BTNGraveyard.blp")
+    call SaveInteger(PF_prices,1,'h00J',2000)
+    call SaveStr(PF_prices,3,'h00J',"ReplaceableTextures\\CommandButtons\\BTNTreeOfAges.blp")
+    call SaveInteger(PF_prices,1,'h00L',3500)
+    call SaveStr(PF_prices,3,'h00L',"ReplaceableTextures\\CommandButtons\\BTNTreeOfEternity.blp")
+    call SaveInteger(PF_prices,1,'h00M',3500)
+    call SaveStr(PF_prices,3,'h00M',"ReplaceableTextures\\CommandButtons\\BTNTaurenTotem.blp")
+    call SaveInteger(PF_prices,1,'h00N',3500)
+    call SaveStr(PF_prices,3,'h00N',"ReplaceableTextures\\CommandButtons\\BTNBlackCitadel.blp")
+    call SaveInteger(PF_prices,1,'h00O',12000)
+    call SaveStr(PF_prices,3,'h00O',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'h00R',500)
+    call SaveInteger(PF_prices,1,'h00S',10000)
+    call SaveStr(PF_prices,3,'h00S',"ReplaceableTextures\\CommandButtons\\BTNElvenGuardTower.blp")
+    call SaveInteger(PF_prices,1,'h00V',2000)
+    call SaveStr(PF_prices,3,'h00V',"ReplaceableTextures\\CommandButtons\\BTNArcaneSanctum.blp")
+    call SaveInteger(PF_prices,1,'h00W',600)
+    call SaveStr(PF_prices,3,'h00W',"ReplaceableTextures\\CommandButtons\\BTNHumanBarracks.blp")
+    call SaveInteger(PF_prices,1,'h00X',12000)
+    call SaveStr(PF_prices,3,'h00X',"ReplaceableTextures\\CommandButtons\\BTNTreeOfEternity.blp")
+    call SaveStr(PF_prices,3,'h00Y',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveInteger(PF_prices,1,'h00Z',600)
+    call SaveStr(PF_prices,3,'h00Z',"ReplaceableTextures\\CommandButtons\\BTNNecropolis.blp")
+    call SaveInteger(PF_prices,1,'h010',400)
+    call SaveStr(PF_prices,3,'h010',"ReplaceableTextures\\CommandButtons\\BTNHumanLumberMill.blp")
+    call SaveInteger(PF_prices,1,'h011',12000)
+    call SaveStr(PF_prices,3,'h011',"ReplaceableTextures\\CommandButtons\\BTNTaurenTotem.blp")
+    call SaveInteger(PF_prices,1,'h012',12000)
+    call SaveStr(PF_prices,3,'h012',"ReplaceableTextures\\CommandButtons\\BTNBlackCitadel.blp")
+    call SaveInteger(PF_prices,1,'h013',3500)
+    call SaveStr(PF_prices,3,'h013',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'h014',400)
+    call SaveInteger(PF_prices,1,'h016',3500)
+    call SaveInteger(PF_prices,1,'h017',12000)
+    call SaveInteger(PF_prices,1,'h018',400)
+    call SaveStr(PF_prices,3,'h018',"ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp")
+endfunction
+
+function PF_ObjectData6 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'h019',"ReplaceableTextures\\CommandButtons\\BTNChimaera.blp")
+    call SaveStr(PF_prices,3,'h01A',"ReplaceableTextures\\CommandButtons\\BTNChimaera.blp")
+    call SaveStr(PF_prices,3,'h01C',"ReplaceableTextures\\CommandButtons\\BTNChimaera.blp")
+    call SaveInteger(PF_prices,1,'h01G',1000)
+    call SaveStr(PF_prices,3,'h01G',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h01J',140)
+    call SaveStr(PF_prices,3,'h01J',"UI\\Minimap\\Minimap-Tower")
+    call SaveInteger(PF_prices,1,'h01K',50)
+    call SaveStr(PF_prices,3,'h01K',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h01L',50)
+    call SaveStr(PF_prices,3,'h01L',"ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp")
+    call SaveInteger(PF_prices,1,'h01M',50)
+    call SaveStr(PF_prices,3,'h01M',"ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp")
+    call SaveInteger(PF_prices,1,'h01N',50)
+    call SaveStr(PF_prices,3,'h01N',"ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp")
+    call SaveInteger(PF_prices,1,'h01O',50)
+    call SaveStr(PF_prices,3,'h01O',"ReplaceableTextures\\CommandButtons\\BTNFragmentationBombs.blp")
+    call SaveInteger(PF_prices,1,'h01P',300)
+    call SaveInteger(PF_prices,1,'h01S',0)
+    call SaveStr(PF_prices,3,'h01S',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveStr(PF_prices,3,'h01T',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveStr(PF_prices,3,'h01V',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveStr(PF_prices,3,'h01W',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveStr(PF_prices,3,'h01Y',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveStr(PF_prices,3,'h01Z',"ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp")
+    call SaveInteger(PF_prices,1,'h020',0)
+    call SaveStr(PF_prices,3,'h020',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveInteger(PF_prices,1,'h021',5)
+    call SaveInteger(PF_prices,1,'h022',200)
+    call SaveStr(PF_prices,3,'h022',"ReplaceableTextures\\CommandButtons\\BTNTreeOfLife.blp")
+    call SaveInteger(PF_prices,1,'h023',200)
+    call SaveStr(PF_prices,3,'h023',"ReplaceableTextures\\CommandButtons\\BTNGreatHall.blp")
+    call SaveInteger(PF_prices,1,'h024',250)
+    call SaveStr(PF_prices,3,'h024',"ReplaceableTextures\\CommandButtons\\BTNStronghold.blp")
+    call SaveInteger(PF_prices,1,'h025',300)
+    call SaveStr(PF_prices,3,'h025',"ReplaceableTextures\\CommandButtons\\BTNBeastiary.blp")
+    call SaveInteger(PF_prices,1,'h026',400)
+    call SaveStr(PF_prices,3,'h026',"ReplaceableTextures\\CommandButtons\\BTNTaurenTotem.blp")
+    call SaveInteger(PF_prices,1,'h027',250)
+    call SaveStr(PF_prices,3,'h027',"ReplaceableTextures\\CommandButtons\\BTNTreeOfLife.blp")
+    call SaveInteger(PF_prices,1,'h028',300)
+    call SaveStr(PF_prices,3,'h028',"ReplaceableTextures\\CommandButtons\\BTNTreeOfAges.blp")
+    call SaveInteger(PF_prices,1,'h029',50)
+    call SaveStr(PF_prices,3,'h029',"ReplaceableTextures\\CommandButtons\\BTNSummonWaterElemental.blp")
+    call SaveInteger(PF_prices,1,'h02A',50)
+    call SaveStr(PF_prices,3,'h02A',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h02B',50)
+    call SaveStr(PF_prices,3,'h02B',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h02H',1000)
+    call SaveStr(PF_prices,3,'h02H',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h02K',400)
+    call SaveStr(PF_prices,3,'h02K',"ReplaceableTextures\\CommandButtons\\BTNTreeOfEternity.blp")
+    call SaveInteger(PF_prices,1,'h02L',750)
+    call SaveStr(PF_prices,3,'h02L',"ReplaceableTextures\\CommandButtons\\BTNTreeOfEternity.blp")
+    call SaveInteger(PF_prices,1,'h02M',750)
+    call SaveStr(PF_prices,3,'h02M',"ReplaceableTextures\\CommandButtons\\BTNTaurenTotem.blp")
+    call SaveInteger(PF_prices,1,'h02N',200)
+    call SaveStr(PF_prices,3,'h02N',"ReplaceableTextures\\CommandButtons\\BTNHumanBarracks.blp")
+    call SaveInteger(PF_prices,1,'h02O',200)
+    call SaveStr(PF_prices,3,'h02O',"ReplaceableTextures\\CommandButtons\\BTNNecropolis.blp")
+    call SaveInteger(PF_prices,1,'h02P',50)
+    call SaveStr(PF_prices,3,'h02P',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h02Q',50)
+    call SaveStr(PF_prices,3,'h02Q',"ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp")
+    call SaveInteger(PF_prices,1,'h02S',0)
+    call SaveStr(PF_prices,3,'h02S',"ReplaceableTextures\\CommandButtons\\BTNArcaniteArchitecture.blp")
+    call SaveInteger(PF_prices,1,'h02T',0)
+    call SaveStr(PF_prices,3,'h02T',"ReplaceableTextures\\CommandButtons\\BTNArcaniteArchitecture.blp")
+    call SaveInteger(PF_prices,1,'h02U',0)
+    call SaveStr(PF_prices,3,'h02U',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h02V',0)
+    call SaveStr(PF_prices,3,'h02V',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveInteger(PF_prices,1,'h02X',0)
+    call SaveStr(PF_prices,3,'h02X',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h02Y',0)
+    call SaveStr(PF_prices,3,'h02Y',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveStr(PF_prices,3,'h030',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveStr(PF_prices,3,'h031',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveStr(PF_prices,3,'h032',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveStr(PF_prices,3,'h033',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveStr(PF_prices,3,'h034',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveStr(PF_prices,3,'h035',"ReplaceableTextures\\CommandButtons\\BTNHellSheep.blp")
+    call SaveInteger(PF_prices,1,'h037',0)
+    call SaveStr(PF_prices,3,'h037',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h038',0)
+    call SaveStr(PF_prices,3,'h038',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveInteger(PF_prices,1,'h039',250)
+    call SaveInteger(PF_prices,1,'h03A',50)
+    call SaveStr(PF_prices,3,'h03A',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h03B',250)
+    call SaveInteger(PF_prices,1,'h03C',0)
+    call SaveStr(PF_prices,3,'h03C',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h03D',0)
+    call SaveStr(PF_prices,3,'h03D',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h03E',0)
+    call SaveStr(PF_prices,3,'h03E',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h03F',0)
+    call SaveStr(PF_prices,3,'h03F',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h03G',0)
+    call SaveStr(PF_prices,3,'h03G',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+endfunction
+
+function PF_ObjectData7 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'h03H',0)
+    call SaveStr(PF_prices,3,'h03H',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h03J',250)
+    call SaveStr(PF_prices,3,'h03J',"ReplaceableTextures\\CommandButtons\\BTNCrypt.blp")
+    call SaveInteger(PF_prices,1,'h03K',300)
+    call SaveStr(PF_prices,3,'h03K',"ReplaceableTextures\\CommandButtons\\BTNGraveyard.blp")
+    call SaveInteger(PF_prices,1,'h03L',400)
+    call SaveStr(PF_prices,3,'h03L',"ReplaceableTextures\\CommandButtons\\BTNBlackCitadel.blp")
+    call SaveInteger(PF_prices,1,'h03O',0)
+    call SaveStr(PF_prices,3,'h03O',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveInteger(PF_prices,1,'h03P',0)
+    call SaveStr(PF_prices,3,'h03P',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h03R',50)
+    call SaveStr(PF_prices,3,'h03R',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h03S',0)
+    call SaveStr(PF_prices,3,'h03S',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h03T',0)
+    call SaveStr(PF_prices,3,'h03T',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveInteger(PF_prices,1,'h03V',0)
+    call SaveStr(PF_prices,3,'h03V',"ReplaceableTextures\\CommandButtons\\BTNNoTransmute.blp")
+    call SaveInteger(PF_prices,1,'h03W',750)
+    call SaveStr(PF_prices,3,'h03W',"ReplaceableTextures\\CommandButtons\\BTNBlackCitadel.blp")
+    call SaveInteger(PF_prices,1,'h03X',250)
+    call SaveStr(PF_prices,3,'h03X',"ReplaceableTextures\\CommandButtons\\BTNKeep.blp")
+    call SaveInteger(PF_prices,1,'h03Y',1000)
+    call SaveStr(PF_prices,3,'h03Y',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h03Z',0)
+    call SaveStr(PF_prices,3,'h03Z',"ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp")
+    call SaveInteger(PF_prices,1,'h040',300)
+    call SaveStr(PF_prices,3,'h040',"ReplaceableTextures\\CommandButtons\\BTNArcaneSanctum.blp")
+    call SaveInteger(PF_prices,1,'h041',400)
+    call SaveStr(PF_prices,3,'h041',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'h042',750)
+    call SaveStr(PF_prices,3,'h042',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'h044',50)
+    call SaveStr(PF_prices,3,'h044',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h045',50)
+    call SaveStr(PF_prices,3,'h045',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h046',50)
+    call SaveStr(PF_prices,3,'h046',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h047',50)
+    call SaveStr(PF_prices,3,'h047',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h049',50)
+    call SaveStr(PF_prices,3,'h049',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h04A',50)
+    call SaveStr(PF_prices,3,'h04A',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h04B',0)
+    call SaveStr(PF_prices,3,'h04B',"ReplaceableTextures\\CommandButtons\\BTNCheese.blp")
+    call SaveInteger(PF_prices,1,'h04C',400)
+    call SaveInteger(PF_prices,1,'h04D',50)
+    call SaveStr(PF_prices,3,'h04D',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h04E',50)
+    call SaveStr(PF_prices,3,'h04E',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h04G',750)
+    call SaveInteger(PF_prices,1,'h04H',0)
+    call SaveStr(PF_prices,3,'h04H',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04I',0)
+    call SaveStr(PF_prices,3,'h04I',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04J',0)
+    call SaveStr(PF_prices,3,'h04J',"ReplaceableTextures\\CommandButtons\\BTNDarknessVersusLight.blp")
+    call SaveInteger(PF_prices,1,'h04K',50)
+    call SaveStr(PF_prices,3,'h04K',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h04L',0)
+    call SaveStr(PF_prices,3,'h04L',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04M',0)
+    call SaveStr(PF_prices,3,'h04M',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04N',0)
+    call SaveStr(PF_prices,3,'h04N',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04O',0)
+    call SaveStr(PF_prices,3,'h04O',"ReplaceableTextures\\CommandButtons\\BTNAdvancedFlameTower.blp")
+    call SaveInteger(PF_prices,1,'h04P',0)
+    call SaveStr(PF_prices,3,'h04P',"ReplaceableTextures\\CommandButtons\\BTNGoldMine.blp")
+    call SaveInteger(PF_prices,1,'h04Q',1000)
+    call SaveStr(PF_prices,3,'h04Q',"ReplaceableTextures\\CommandButtons\\BTNPowerGenerator.blp")
+    call SaveInteger(PF_prices,1,'h04R',200)
+    call SaveStr(PF_prices,3,'h04R',"ReplaceableTextures\\CommandButtons\\BTNHumanArcaneTower.blp")
+    call SaveInteger(PF_prices,1,'h04S',500)
+    call SaveStr(PF_prices,3,'h04S',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h04V',50)
+    call SaveStr(PF_prices,3,'h04V',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h050',50)
+    call SaveStr(PF_prices,3,'h050',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h051',1000)
+    call SaveStr(PF_prices,3,'h051',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h053',50)
+    call SaveStr(PF_prices,3,'h053',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h054',0)
+    call SaveStr(PF_prices,3,'h054',"war3mapImported\\BTNNoKOTH.blp")
+    call SaveInteger(PF_prices,1,'h055',140)
+    call SaveInteger(PF_prices,1,'h056',140)
+    call SaveInteger(PF_prices,1,'h059',50)
+    call SaveStr(PF_prices,3,'h059',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h05A',140)
+    call SaveInteger(PF_prices,1,'h05C',171)
+    call SaveInteger(PF_prices,1,'h05D',140)
+    call SaveStr(PF_prices,3,'h05D',"UI\\Minimap\\Minimap-Tower")
+    call SaveInteger(PF_prices,1,'h05F',0)
+    call SaveStr(PF_prices,3,'h05F',"ReplaceableTextures\\CommandButtons\\BTNSorceressMaster.blp")
+    call SaveInteger(PF_prices,1,'h05G',0)
+    call SaveStr(PF_prices,3,'h05G',"ReplaceableTextures\\CommandButtons\\BTNTheCaptain.blp")
+endfunction
+
+function PF_ObjectData8 takes nothing returns nothing
+    call SaveInteger(PF_prices,1,'h05H',900)
+    call SaveStr(PF_prices,3,'h05H',"ReplaceableTextures\\CommandButtons\\BTNHumanBarracks.blp")
+    call SaveInteger(PF_prices,1,'h05J',0)
+    call SaveStr(PF_prices,3,'h05J',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
+    call SaveInteger(PF_prices,1,'h05K',0)
+    call SaveStr(PF_prices,3,'h05K',"ReplaceableTextures\\CommandButtons\\BTN_cr_LEFTbooK.blp")
+    call SaveInteger(PF_prices,1,'h05L',0)
+    call SaveStr(PF_prices,3,'h05L',"ReplaceableTextures\\CommandButtons\\BTNTheCaptain.blp")
+    call SaveInteger(PF_prices,1,'h05M',50)
+    call SaveStr(PF_prices,3,'h05M',"ReplaceableTextures\\WorldEditUI\\Editor-Force.blp")
+    call SaveInteger(PF_prices,1,'h05Q',0)
+    call SaveStr(PF_prices,3,'h05Q',"ReplaceableTextures\\CommandButtons\\BTNTheCaptain.blp")
+    call SaveInteger(PF_prices,1,'h05S',0)
+    call SaveStr(PF_prices,3,'h05S',"ReplaceableTextures\\CommandButtons\\BTNTheCaptain.blp")
+    call SaveInteger(PF_prices,1,'h05T',0)
+    call SaveStr(PF_prices,3,'h05T',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'h05U',800)
+    call SaveInteger(PF_prices,1,'h05V',140)
+    call SaveInteger(PF_prices,1,'h05W',140)
+    call SaveInteger(PF_prices,1,'h060',140)
+    call SaveInteger(PF_prices,1,'hGpy',140)
+    call SaveStr(PF_prices,3,'hGpy',"ReplaceableTextures\\CommandButtons\\BTNGuardianLantern.blp")
+    call SaveInteger(PF_prices,1,'hGs1',0)
+    call SaveInteger(PF_prices,1,'hSHC',0)
+    call SaveStr(PF_prices,3,'hSHC',"ReplaceableTextures\\CommandButtons\\BTNDranaiAkama.blp")
+    call SaveInteger(PF_prices,1,'hTNP',0)
+    call SaveStr(PF_prices,3,'hTNP',"ReplaceableTextures\\CommandButtons\\BTNReplay-SpeedUp.blp")
+    call SaveInteger(PF_prices,1,'hTRZ',0)
+    call SaveStr(PF_prices,3,'hTRZ',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'hatw',500)
+    call SaveInteger(PF_prices,1,'hbar',7500)
+    call SaveInteger(PF_prices,1,'hctw',200)
+    call SaveInteger(PF_prices,1,'hdhw',300)
+    call SaveStr(PF_prices,3,'hdhw',"ReplaceableTextures\\CommandButtons\\BTNMortarTeam.blp")
+    call SaveInteger(PF_prices,1,'hfoo',140)
+    call SaveInteger(PF_prices,1,'hgr1',140)
+    call SaveInteger(PF_prices,1,'hgtw',200)
+    call SaveInteger(PF_prices,1,'hhou',1000)
+    call SaveStr(PF_prices,3,'hhou',"ReplaceableTextures\\CommandButtons\\BTNAltarOfDarkness.blp")
+    call SaveInteger(PF_prices,1,'hkni',300)
+    call SaveInteger(PF_prices,1,'hmil',220)
+    call SaveInteger(PF_prices,1,'hor1',140)
+    call SaveStr(PF_prices,3,'hor1',"ReplaceableTextures\\CommandButtons\\BTNPhoenixEgg.blp")
+    call SaveInteger(PF_prices,1,'hor2',140)
+    call SaveStr(PF_prices,3,'hor2',"ReplaceableTextures\\CommandButtons\\BTNPhoenixEgg.blp")
+    call SaveInteger(PF_prices,1,'hor3',140)
+    call SaveStr(PF_prices,3,'hor3',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'hrdh',400)
+    call SaveInteger(PF_prices,1,'hrif',171)
+    call SaveInteger(PF_prices,1,'hspt',250)
+    call SaveInteger(PF_prices,1,'ht46',140)
+    call SaveStr(PF_prices,3,'ht46',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'htf1',140)
+    call SaveStr(PF_prices,3,'htf1',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'htf2',140)
+    call SaveStr(PF_prices,3,'htf2',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'htf3',140)
+    call SaveStr(PF_prices,3,'htf3',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'htf4',140)
+    call SaveStr(PF_prices,3,'htf4',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveInteger(PF_prices,1,'htz1',140)
+    call SaveStr(PF_prices,3,'htz1',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
+    call SaveInteger(PF_prices,1,'hwtw',0)
+    call SaveStr(PF_prices,3,'n000',"ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp")
+    call SaveInteger(PF_prices,1,'n001',450)
+    call SaveStr(PF_prices,3,'n002',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveStr(PF_prices,3,'n003',"ReplaceableTextures\\CommandButtons\\BTNDranaiHut.blp")
+    call SaveInteger(PF_prices,1,'n005',400)
+    call SaveInteger(PF_prices,1,'n006',200)
+    call SaveInteger(PF_prices,1,'n00A',200)
+    call SaveInteger(PF_prices,1,'n00Q',400)
+    call SaveInteger(PF_prices,1,'n00S',500)
+    call SaveInteger(PF_prices,1,'n00T',350)
+    call SaveInteger(PF_prices,1,'n00U',5000)
+    call SaveInteger(PF_prices,1,'n011',350)
+    call SaveStr(PF_prices,3,'n012',"ReplaceableTextures\\CommandButtons\\BTNAltarOfKings.blp")
+    call SaveInteger(PF_prices,1,'n014',400)
+    call SaveStr(PF_prices,3,'n014',"ReplaceableTextures\\CommandButtons\\BTNSkink.blp")
+    call SaveStr(PF_prices,3,'n019',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveInteger(PF_prices,1,'n01B',1000)
+    call SaveInteger(PF_prices,1,'n01M',250)
+    call SaveInteger(PF_prices,1,'n01N',1250)
+    call SaveInteger(PF_prices,1,'n01P',12000)
+    call SaveStr(PF_prices,3,'n01P',"ReplaceableTextures\\CommandButtons\\BTNnightterror.blp")
+    call SaveStr(PF_prices,3,'n01Q',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveInteger(PF_prices,1,'n01R',200)
+    call SaveStr(PF_prices,3,'n01R',"ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp")
+    call SaveStr(PF_prices,3,'n01T',"ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp")
+    call SaveStr(PF_prices,3,'n01U',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n01V',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n01W',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n01X',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveInteger(PF_prices,1,'n01Y',8000)
+    call SaveStr(PF_prices,3,'n01Y',"ReplaceableTextures\\CommandButtons\\BTNSpiritLodge.blp")
+    call SaveStr(PF_prices,3,'n020',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n021',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n022',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n023',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n024',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n025',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+endfunction
+
+function PF_ObjectData9 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'n026',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n028',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveStr(PF_prices,3,'n029',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveStr(PF_prices,3,'n02A',"ReplaceableTextures\\CommandButtons\\BTNBlackMarket.blp")
+    call SaveStr(PF_prices,3,'n02B',"ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp")
+    call SaveStr(PF_prices,3,'n02C',"ReplaceableTextures\\CommandButtons\\BTNBlackMarket.blp")
+    call SaveStr(PF_prices,3,'n02D',"ReplaceableTextures\\CommandButtons\\BTNCOP.blp")
+    call SaveStr(PF_prices,3,'n02G',"ReplaceableTextures\\CommandButtons\\BTNExpandedView.blp")
+    call SaveStr(PF_prices,3,'n02H',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveStr(PF_prices,3,'n02K',"ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp")
+    call SaveInteger(PF_prices,1,'n02L',5)
+    call SaveInteger(PF_prices,1,'n02M',50)
+    call SaveStr(PF_prices,3,'n02N',"ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp")
+    call SaveStr(PF_prices,3,'n02T',"ReplaceableTextures\\CommandButtons\\BTNChaosBlademaster.blp")
+    call SaveStr(PF_prices,3,'n02V',"ReplaceableTextures\\CommandButtons\\BTNGoldMine.blp")
+    call SaveStr(PF_prices,3,'n02W',"ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp")
+    call SaveStr(PF_prices,3,'n02X',"ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp")
+    call SaveStr(PF_prices,3,'n02Y',"ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp")
+    call SaveStr(PF_prices,3,'n02Z',"ReplaceableTextures\\CommandButtons\\BTNSpiritLodge.blp")
+    call SaveInteger(PF_prices,1,'n033',350)
+    call SaveStr(PF_prices,3,'n033',"ReplaceableTextures\\CommandButtons\\BTNSonOfAnubis.blp")
+    call SaveStr(PF_prices,3,'n034',"ReplaceableTextures\\CommandButtons\\BTNFarm.blp")
+    call SaveStr(PF_prices,3,'n03C',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveStr(PF_prices,3,'n03D',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveStr(PF_prices,3,'n03E',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'n03I',450)
+    call SaveStr(PF_prices,3,'n03I',"ReplaceableTextures\\CommandButtons\\BTNAxeMaster.blp")
+    call SaveStr(PF_prices,3,'n03K',"ReplaceableTextures\\CommandButtons\\BTNCancel.blp")
+    call SaveInteger(PF_prices,1,'n03M',400)
+    call SaveStr(PF_prices,3,'n03N',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveStr(PF_prices,3,'n03O',"ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp")
+    call SaveStr(PF_prices,3,'n03P',"ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp")
+    call SaveStr(PF_prices,3,'n03Q',"ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp")
+    call SaveStr(PF_prices,3,'n03R',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03S',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03T',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03U',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03V',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03W',"ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp")
+    call SaveStr(PF_prices,3,'n03X',"ReplaceableTextures\\CommandButtons\\BTN_CW_Death_Guard.blp")
+    call SaveStr(PF_prices,3,'n03Y',"ReplaceableTextures\\CommandButtons\\BTNSkeletonArcher.blp")
+    call SaveStr(PF_prices,3,'n03Z',"ReplaceableTextures\\CommandButtons\\BTNGoldMine.blp")
+    call SaveInteger(PF_prices,1,'n040',1300)
+    call SaveInteger(PF_prices,1,'n042',0)
+    call SaveStr(PF_prices,3,'n042',"ReplaceableTextures\\CommandButtons\\BTNTychusPortrait.blp")
+    call SaveInteger(PF_prices,1,'n043',0)
+    call SaveStr(PF_prices,3,'n043',"ReplaceableTextures\\CommandButtons\\BTNTychusPortrait.blp")
+    call SaveInteger(PF_prices,1,'n044',0)
+    call SaveStr(PF_prices,3,'n044',"ReplaceableTextures\\CommandButtons\\BTNTychusPortrait.blp")
+    call SaveStr(PF_prices,3,'n045',"ReplaceableTextures\\CommandButtons\\BTNUndeadShrine.blp")
+    call SaveStr(PF_prices,3,'n046',"ReplaceableTextures\\CommandButtons\\BTNGoldMine.blp")
+    call SaveStr(PF_prices,3,'n047',"ReplaceableTextures\\CommandButtons\\BTNOgronIconYellow.blp")
+    call SaveInteger(PF_prices,1,'n048',450)
+    call SaveStr(PF_prices,3,'n048',"ReplaceableTextures\\CommandButtons\\BTNForestTroll.blp")
+    call SaveStr(PF_prices,3,'n049',"ReplaceableTextures\\CommandButtons\\BTNSumo.blp")
+    call SaveStr(PF_prices,3,'n04C',"ReplaceableTextures\\CommandButtons\\BTNSkull.blp")
+    call SaveStr(PF_prices,3,'n04K',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'n04X',250)
+    call SaveInteger(PF_prices,1,'n052',400)
+    call SaveInteger(PF_prices,1,'n05F',0)
+    call SaveInteger(PF_prices,1,'n05G',0)
+    call SaveStr(PF_prices,3,'n05K',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05N',"ReplaceableTextures\\CommandButtons\\BTNLobstrokkRed.blp")
+    call SaveStr(PF_prices,3,'n05O',"ReplaceableTextures\\CommandButtons\\BTNLobstrokkRed.blp")
+    call SaveStr(PF_prices,3,'n05S',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05T',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05U',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05V',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05W',"ReplaceableTextures\\CommandButtons\\BTNDeathGrin.blp")
+    call SaveStr(PF_prices,3,'n05Z',"ReplaceableTextures\\CommandButtons\\BTNWarpPortal.blp")
+    call SaveStr(PF_prices,3,'n060',"ReplaceableTextures\\CommandButtons\\BTNWarpPortal.blp")
+    call SaveStr(PF_prices,3,'n061',"ReplaceableTextures\\CommandButtons\\BTNLobstrokkRed.blp")
+    call SaveStr(PF_prices,3,'n064',"ReplaceableTextures\\CommandButtons\\BTNWarpPortal.blp")
+    call SaveStr(PF_prices,3,'n06E',"ReplaceableTextures\\CommandButtons\\BTNBoneyard.blp")
+    call SaveStr(PF_prices,3,'n06P',"ReplaceableTextures\\CommandButtons\\BTNdeathwing.blp")
+    call SaveInteger(PF_prices,1,'ndr3',1900)
+    call SaveInteger(PF_prices,1,'ngh2',220)
+    call SaveInteger(PF_prices,1,'ngsp',300)
+    call SaveStr(PF_prices,3,'nnrg',"ReplaceableTextures\\CommandButtons\\BTNNagaMyrmidon.blp")
+    call SaveInteger(PF_prices,1,'nsce',190)
+    call SaveInteger(PF_prices,1,'nsgt',200)
+    call SaveInteger(PF_prices,1,'nske',0)
+    call SaveInteger(PF_prices,1,'nskf',170)
+    call SaveInteger(PF_prices,1,'nws1',450)
+    call SaveStr(PF_prices,3,'o002',"ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp")
+    call SaveInteger(PF_prices,1,'o009',400)
+    call SaveInteger(PF_prices,1,'o00A',300)
+    call SaveInteger(PF_prices,1,'o00B',15000)
+    call SaveStr(PF_prices,3,'o00B',"ReplaceableTextures\\CommandButtons\\BTNAltarOfStorms.blp")
+    call SaveInteger(PF_prices,1,'o00H',400)
+    call SaveStr(PF_prices,3,'o00J',"ReplaceableTextures\\CommandButtons\\BTNTentacle.blp")
+    call SaveInteger(PF_prices,1,'o00K',300)
+    call SaveStr(PF_prices,3,'o00K',"ReplaceableTextures\\CommandButtons\\BTNBloodElfSorceress.blp")
+    call SaveStr(PF_prices,3,'o00L',"ReplaceableTextures\\CommandButtons\\BTNWendigo_Custom.blp")
+    call SaveStr(PF_prices,3,'o00M',"ReplaceableTextures\\CommandButtons\\BTNWendigo_Custom.blp")
+    call SaveStr(PF_prices,3,'o00N',"ReplaceableTextures\\CommandButtons\\BTNWendigo_Custom.blp")
+    call SaveStr(PF_prices,3,'o00P',"ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp")
+    call SaveStr(PF_prices,3,'o00Q',"ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp")
+    call SaveStr(PF_prices,3,'o00R',"ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp")
+    call SaveStr(PF_prices,3,'o00S',"ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp")
+endfunction
+
+function PF_ObjectData10 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'o00U',"ReplaceableTextures\\CommandButtons\\BTNOrcCaptureFlag.blp")
+    call SaveStr(PF_prices,3,'o00V',"ReplaceableTextures\\CommandButtons\\BTNNecro.blp")
+    call SaveInteger(PF_prices,1,'o00Y',0)
+    call SaveStr(PF_prices,3,'o00Y',"ReplaceableTextures\\CommandButtons\\BTNForceField.blp")
+    call SaveStr(PF_prices,3,'o011',"ReplaceableTextures\\CommandButtons\\BTNDeadProphetStaff.blp")
+    call SaveInteger(PF_prices,1,'o012',150)
+    call SaveStr(PF_prices,3,'o013',"ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBoomBox.blp")
+    call SaveStr(PF_prices,3,'o017',"ReplaceableTextures\\CommandButtons\\BTNTentacle.blp")
+    call SaveStr(PF_prices,3,'o018',"ReplaceableTextures\\CommandButtons\\BTNTentacle.blp")
+    call SaveInteger(PF_prices,1,'o019',230)
+    call SaveStr(PF_prices,3,'o01E',"ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")
+    call SaveStr(PF_prices,3,'o01F',"ReplaceableTextures\\CommandButtons\\BTNBearTrap.blp")
+    call SaveInteger(PF_prices,1,'ogru',150)
+    call SaveInteger(PF_prices,1,'ohun',170)
+    call SaveInteger(PF_prices,1,'orai',250)
+    call SaveInteger(PF_prices,1,'otau',300)
+    call SaveInteger(PF_prices,1,'otbk',220)
+    call SaveInteger(PF_prices,1,'otrb',200)
+    call SaveInteger(PF_prices,1,'owtw',200)
+    call SaveInteger(PF_prices,1,'u009',400)
+    call SaveInteger(PF_prices,1,'u00B',600)
+    call SaveInteger(PF_prices,1,'u00D',0)
+    call SaveInteger(PF_prices,1,'u00E',150)
+    call SaveInteger(PF_prices,1,'u00G',200)
+    call SaveStr(PF_prices,3,'u00G',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveInteger(PF_prices,1,'u00H',250)
+    call SaveInteger(PF_prices,1,'u00I',150)
+    call SaveStr(PF_prices,3,'u00I',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveInteger(PF_prices,1,'u00K',175)
+    call SaveStr(PF_prices,3,'u00K',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveInteger(PF_prices,1,'u00L',225)
+    call SaveStr(PF_prices,3,'u00L',"ReplaceableTextures\\CommandButtons\\BTNSkeletonWarrior.blp")
+    call SaveInteger(PF_prices,1,'u00N',0)
+    call SaveInteger(PF_prices,1,'u00O',0)
+    call SaveInteger(PF_prices,1,'u00P',0)
+    call SaveInteger(PF_prices,1,'u00Q',0)
+    call SaveInteger(PF_prices,1,'u00S',150)
+    call SaveInteger(PF_prices,1,'u00T',150)
+    call SaveInteger(PF_prices,1,'u00U',150)
+    call SaveInteger(PF_prices,1,'u00V',150)
+    call SaveInteger(PF_prices,1,'u00W',150)
+    call SaveInteger(PF_prices,1,'u00X',150)
+    call SaveStr(PF_prices,3,'u00Y',"ReplaceableTextures\\CommandButtons\\BTNGargoyle.blp")
+    call SaveStr(PF_prices,3,'u00Z',"ReplaceableTextures\\CommandButtons\\BTNGargoyle.blp")
+    call SaveStr(PF_prices,3,'u010',"ReplaceableTextures\\CommandButtons\\BTNGargoyle.blp")
+    call SaveInteger(PF_prices,1,'u011',200)
+    call SaveInteger(PF_prices,1,'u014',321)
+    call SaveInteger(PF_prices,1,'u017',250)
+    call SaveInteger(PF_prices,1,'u01A',300)
+    call SaveInteger(PF_prices,1,'u01B',5)
+    call SaveInteger(PF_prices,1,'u01C',0)
+    call SaveInteger(PF_prices,1,'u01F',0)
+    call SaveStr(PF_prices,3,'u01F',"ReplaceableTextures\\CommandButtons\\BTNBookOfSummoning.blp")
+    call SaveInteger(PF_prices,1,'uabo',300)
+    call SaveInteger(PF_prices,1,'uban',170)
+    call SaveInteger(PF_prices,1,'ucrm',220)
+    call SaveInteger(PF_prices,1,'ucry',220)
+    call SaveInteger(PF_prices,1,'ugho',150)
+    call SaveStr(PF_prices,3,'umir',"ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp")
+    call SaveInteger(PF_prices,1,'uobs',400)
+    call SaveInteger(PF_prices,1,'ushd',300)
+    call SaveInteger(PF_prices,1,'uskm',250)
+    call SaveInteger(PF_prices,1,'z003',10)
+    call SaveStr(PF_prices,3,'z003',"ReplaceableTextures\\CommandButtons\\BTNDarkTroll.blp")
+    call SaveInteger(PF_prices,1,'z004',10)
+    call SaveStr(PF_prices,3,'z004',"ReplaceableTextures\\CommandButtons\\BTNDarkTroll.blp")
+    call SaveInteger(PF_prices,1,'z005',10)
+    call SaveStr(PF_prices,3,'z005',"ReplaceableTextures\\CommandButtons\\BTNDarkTroll.blp")
+    call SaveInteger(PF_prices,1,'R000',300)
+    call SaveInteger(PF_prices,2,'R000',150)
+    call SaveStr(PF_prices,3,'R000',"ReplaceableTextures\\PassiveButtons\\PASBTNDevotion.blp")
+    call SaveInteger(PF_prices,1,'R001',100)
+    call SaveInteger(PF_prices,2,'R001',50)
+    call SaveInteger(PF_prices,2,'R002',50)
+    call SaveStr(PF_prices,3,'R002',"ReplaceableTextures\\CommandButtons\\BTNPeriapt.blp")
+    call SaveInteger(PF_prices,2,'R003',50)
+    call SaveStr(PF_prices,3,'R003',"ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpOne.blp")
+    call SaveInteger(PF_prices,1,'R004',150)
+    call SaveInteger(PF_prices,2,'R004',150)
+    call SaveInteger(PF_prices,2,'R005',50)
+    call SaveStr(PF_prices,3,'R005',"ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp")
+    call SaveInteger(PF_prices,1,'R006',200)
+    call SaveInteger(PF_prices,2,'R006',50)
+    call SaveStr(PF_prices,3,'R006',"ReplaceableTextures\\CommandButtons\\BTNPotionGreen.blp")
+    call SaveInteger(PF_prices,1,'R007',200)
+    call SaveInteger(PF_prices,2,'R007',50)
+    call SaveStr(PF_prices,3,'R007',"ReplaceableTextures\\CommandButtons\\BTNPotionBlue.blp")
+    call SaveInteger(PF_prices,1,'R008',200)
+    call SaveInteger(PF_prices,2,'R008',100)
+    call SaveStr(PF_prices,3,'R008',"ReplaceableTextures\\PassiveButtons\\PASBTNDrum.blp")
+    call SaveInteger(PF_prices,1,'R009',300)
+    call SaveStr(PF_prices,3,'R009',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveInteger(PF_prices,1,'R00A',400)
+    call SaveInteger(PF_prices,2,'R00A',100)
+    call SaveStr(PF_prices,3,'R00A',"ReplaceableTextures\\CommandButtons\\BTNFrostBolt.blp")
+    call SaveStr(PF_prices,3,'R00B',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveInteger(PF_prices,1,'R00C',600)
+    call SaveStr(PF_prices,3,'R00C',"ReplaceableTextures\\CommandButtons\\BTNResStone.blp")
+    call SaveStr(PF_prices,3,'R00D',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveStr(PF_prices,3,'R00E',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+endfunction
+
+function PF_ObjectData11 takes nothing returns nothing
+    call SaveStr(PF_prices,3,'R00F',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveStr(PF_prices,3,'R00G',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveInteger(PF_prices,1,'R00H',0)
+    call SaveStr(PF_prices,3,'R00H',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveInteger(PF_prices,1,'R00I',0)
+    call SaveStr(PF_prices,3,'R00I',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveInteger(PF_prices,1,'R00J',0)
+    call SaveStr(PF_prices,3,'R00J',"ReplaceableTextures\\CommandButtons\\BTNSpeedUp.blp")
+    call SaveStr(PF_prices,3,'R00O',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveInteger(PF_prices,1,'R00P',500)
+    call SaveInteger(PF_prices,2,'R00P',300)
+    call SaveStr(PF_prices,3,'R00P',"ReplaceableTextures\\CommandButtons\\BTNSorceressAdept.blp")
+    call SaveInteger(PF_prices,1,'R00T',0)
+    call SaveStr(PF_prices,3,'R00T',"ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCarrionSwarm1.blp")
+    call SaveStr(PF_prices,3,'R00U',"ReplaceableTextures\\WorldEditUI\\Editor-Random-Building.blp")
+    call SaveInteger(PF_prices,1,'Rab1',250)
+    call SaveInteger(PF_prices,2,'Rab1',150)
+    call SaveStr(PF_prices,3,'Rab1',"ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+    call SaveInteger(PF_prices,1,'Rar1',200)
+    call SaveInteger(PF_prices,2,'Rar1',150)
+    call SaveStr(PF_prices,3,'Rar1',"ReplaceableTextures\\CommandButtons\\BTNArcher.blp")
+    call SaveInteger(PF_prices,1,'Rba1',200)
+    call SaveInteger(PF_prices,2,'Rba1',150)
+    call SaveStr(PF_prices,3,'Rba1',"ReplaceableTextures\\CommandButtons\\BTNArcher.blp")
+    call SaveInteger(PF_prices,1,'Rba2',250)
+    call SaveInteger(PF_prices,2,'Rba2',150)
+    call SaveStr(PF_prices,3,'Rba2',"ReplaceableTextures\\CommandButtons\\BTNShrine.blp")
+    call SaveInteger(PF_prices,1,'Rbn1',200)
+    call SaveInteger(PF_prices,2,'Rbn1',150)
+    call SaveStr(PF_prices,3,'Rbn1',"ReplaceableTextures\\CommandButtons\\BTNBanshee.blp")
+    call SaveInteger(PF_prices,1,'Rbz1',200)
+    call SaveInteger(PF_prices,2,'Rbz1',150)
+    call SaveStr(PF_prices,3,'Rbz1',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rbz2',250)
+    call SaveInteger(PF_prices,2,'Rbz2',150)
+    call SaveStr(PF_prices,3,'Rbz2',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rbz3',200)
+    call SaveInteger(PF_prices,2,'Rbz3',150)
+    call SaveStr(PF_prices,3,'Rbz3',"ReplaceableTextures\\CommandButtons\\BTNArcher.blp")
+    call SaveInteger(PF_prices,1,'Rbz4',250)
+    call SaveInteger(PF_prices,2,'Rbz4',150)
+    call SaveStr(PF_prices,3,'Rbz4',"ReplaceableTextures\\CommandButtons\\BTNShrine.blp")
+    call SaveInteger(PF_prices,1,'Rcp1',200)
+    call SaveInteger(PF_prices,2,'Rcp1',150)
+    call SaveStr(PF_prices,3,'Rcp1',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rcp2',250)
+    call SaveInteger(PF_prices,2,'Rcp2',150)
+    call SaveStr(PF_prices,3,'Rcp2',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rd01',250)
+    call SaveInteger(PF_prices,2,'Rd01',150)
+    call SaveStr(PF_prices,3,'Rd01',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rd02',200)
+    call SaveInteger(PF_prices,2,'Rd02',150)
+    call SaveStr(PF_prices,3,'Rd02',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rd03',200)
+    call SaveInteger(PF_prices,2,'Rd03',150)
+    call SaveStr(PF_prices,3,'Rd03',"ReplaceableTextures\\CommandButtons\\BTNShrine.blp")
+    call SaveInteger(PF_prices,1,'Rd04',200)
+    call SaveInteger(PF_prices,2,'Rd04',150)
+    call SaveStr(PF_prices,3,'Rd04',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rda1',250)
+    call SaveInteger(PF_prices,2,'Rda1',150)
+    call SaveStr(PF_prices,3,'Rda1',"ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+    call SaveInteger(PF_prices,1,'Rda2',250)
+    call SaveInteger(PF_prices,2,'Rda2',150)
+    call SaveStr(PF_prices,3,'Rda2',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rdd1',250)
+    call SaveInteger(PF_prices,2,'Rdd1',150)
+    call SaveStr(PF_prices,3,'Rdd1',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rdm1',200)
+    call SaveInteger(PF_prices,2,'Rdm1',150)
+    call SaveStr(PF_prices,3,'Rdm1',"ReplaceableTextures\\CommandButtons\\BTNWorkshop.blp")
+    call SaveInteger(PF_prices,1,'Rdm2',250)
+    call SaveInteger(PF_prices,2,'Rdm2',150)
+    call SaveStr(PF_prices,3,'Rdm2',"ReplaceableTextures\\CommandButtons\\BTNWorkshop.blp")
+    call SaveInteger(PF_prices,1,'Rdr1',200)
+    call SaveInteger(PF_prices,2,'Rdr1',150)
+    call SaveStr(PF_prices,3,'Rdr1',"ReplaceableTextures\\CommandButtons\\BTNAncientOfLore.blp")
+    call SaveInteger(PF_prices,1,'Rdt1',300)
+    call SaveInteger(PF_prices,2,'Rdt1',150)
+    call SaveStr(PF_prices,3,'Rdt1',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rdt2',300)
+    call SaveInteger(PF_prices,2,'Rdt2',150)
+    call SaveStr(PF_prices,3,'Rdt2',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rdy1',200)
+    call SaveInteger(PF_prices,2,'Rdy1',150)
+    call SaveStr(PF_prices,3,'Rdy1',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rfi1',200)
+    call SaveInteger(PF_prices,2,'Rfi1',150)
+    call SaveStr(PF_prices,3,'Rfi1',"ReplaceableTextures\\CommandButtons\\BTNCrypt.blp")
+    call SaveInteger(PF_prices,1,'Rft1',200)
+    call SaveInteger(PF_prices,2,'Rft1',150)
+    call SaveStr(PF_prices,3,'Rft1',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rft2',250)
+    call SaveInteger(PF_prices,2,'Rft2',150)
+    call SaveStr(PF_prices,3,'Rft2',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rgh1',200)
+    call SaveInteger(PF_prices,2,'Rgh1',150)
+    call SaveStr(PF_prices,3,'Rgh1',"ReplaceableTextures\\CommandButtons\\BTNGhoul.blp")
+    call SaveInteger(PF_prices,1,'Rgr1',200)
+endfunction
+
+function PF_ObjectData12 takes nothing returns nothing
+    call SaveInteger(PF_prices,2,'Rgr1',150)
+    call SaveStr(PF_prices,3,'Rgr1',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rhac',500)
+    call SaveInteger(PF_prices,2,'Rhac',150)
+    call SaveInteger(PF_prices,2,'Rhan',150)
+    call SaveInteger(PF_prices,2,'Rhar',50)
+    call SaveInteger(PF_prices,2,'Rhme',50)
+    call SaveInteger(PF_prices,1,'Rhu1',200)
+    call SaveInteger(PF_prices,2,'Rhu1',150)
+    call SaveStr(PF_prices,3,'Rhu1',"ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+    call SaveInteger(PF_prices,1,'Rhu2',250)
+    call SaveInteger(PF_prices,2,'Rhu2',150)
+    call SaveStr(PF_prices,3,'Rhu2',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rk01',200)
+    call SaveInteger(PF_prices,2,'Rk01',150)
+    call SaveStr(PF_prices,3,'Rk01',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rk02',200)
+    call SaveInteger(PF_prices,2,'Rk02',150)
+    call SaveStr(PF_prices,3,'Rk02',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rk03',200)
+    call SaveInteger(PF_prices,2,'Rk03',150)
+    call SaveStr(PF_prices,3,'Rk03',"ReplaceableTextures\\CommandButtons\\BTNShrine.blp")
+    call SaveInteger(PF_prices,1,'Rk04',200)
+    call SaveInteger(PF_prices,2,'Rk04',150)
+    call SaveStr(PF_prices,3,'Rk04',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rm01',200)
+    call SaveInteger(PF_prices,2,'Rm01',150)
+    call SaveStr(PF_prices,3,'Rm01',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rm02',200)
+    call SaveInteger(PF_prices,2,'Rm02',150)
+    call SaveStr(PF_prices,3,'Rm02',"ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+    call SaveInteger(PF_prices,1,'Rm03',200)
+    call SaveInteger(PF_prices,2,'Rm03',150)
+    call SaveStr(PF_prices,3,'Rm03',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rmg1',200)
+    call SaveInteger(PF_prices,2,'Rmg1',150)
+    call SaveStr(PF_prices,3,'Rmg1',"ReplaceableTextures\\CommandButtons\\BTNArcaneSanctum.blp")
+    call SaveInteger(PF_prices,1,'Rmo1',200)
+    call SaveInteger(PF_prices,2,'Rmo1',150)
+    call SaveStr(PF_prices,3,'Rmo1',"ReplaceableTextures\\CommandButtons\\BTNWorkshop.blp")
+    call SaveInteger(PF_prices,1,'Robs',150)
+    call SaveInteger(PF_prices,2,'Robs',150)
+    call SaveInteger(PF_prices,1,'Rorb',0)
+    call SaveInteger(PF_prices,1,'Rot1',200)
+    call SaveInteger(PF_prices,2,'Rot1',150)
+    call SaveStr(PF_prices,3,'Rot1',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rot2',250)
+    call SaveInteger(PF_prices,2,'Rot2',150)
+    call SaveStr(PF_prices,3,'Rot2',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rot3',300)
+    call SaveInteger(PF_prices,2,'Rot3',150)
+    call SaveStr(PF_prices,3,'Rot3',"ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+    call SaveInteger(PF_prices,1,'Rr01',200)
+    call SaveInteger(PF_prices,2,'Rr01',150)
+    call SaveStr(PF_prices,3,'Rr01',"ReplaceableTextures\\CommandButtons\\BTNArcher.blp")
+    call SaveInteger(PF_prices,1,'Rrd1',200)
+    call SaveInteger(PF_prices,2,'Rrd1',150)
+    call SaveStr(PF_prices,3,'Rrd1',"ReplaceableTextures\\CommandButtons\\BTNOrcBarracks.blp")
+    call SaveInteger(PF_prices,1,'Rrd2',250)
+    call SaveInteger(PF_prices,2,'Rrd2',150)
+    call SaveStr(PF_prices,3,'Rrd2',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rs01',200)
+    call SaveInteger(PF_prices,2,'Rs01',150)
+    call SaveStr(PF_prices,3,'Rs01',"ReplaceableTextures\\CommandButtons\\BTNArcher.blp")
+    call SaveInteger(PF_prices,1,'Rs02',200)
+    call SaveInteger(PF_prices,2,'Rs02',150)
+    call SaveStr(PF_prices,3,'Rs02',"ReplaceableTextures\\CommandButtons\\BTNArcaneSanctum.blp")
+    call SaveInteger(PF_prices,1,'Rsl1',200)
+    call SaveInteger(PF_prices,2,'Rsl1',150)
+    call SaveStr(PF_prices,3,'Rsl1',"ReplaceableTextures\\CommandButtons\\BTNAncientOfWar.blp")
+    call SaveInteger(PF_prices,1,'Rsl2',250)
+    call SaveInteger(PF_prices,2,'Rsl2',150)
+    call SaveStr(PF_prices,3,'Rsl2',"ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp")
+    call SaveInteger(PF_prices,1,'Rta1',250)
+    call SaveInteger(PF_prices,2,'Rta1',150)
+    call SaveStr(PF_prices,3,'Rta1',"ReplaceableTextures\\CommandButtons\\BTNBash.blp")
+    call SaveInteger(PF_prices,1,'Rta2',250)
+    call SaveInteger(PF_prices,2,'Rta2',150)
+    call SaveStr(PF_prices,3,'Rta2',"ReplaceableTextures\\CommandButtons\\BTNCastle.blp")
+    call SaveInteger(PF_prices,1,'Rugf',150)
+    call SaveInteger(PF_prices,2,'Rugf',150)
+    call SaveInteger(PF_prices,1,'Rwl1',200)
+    call SaveInteger(PF_prices,2,'Rwl1',150)
+    call SaveStr(PF_prices,3,'Rwl1',"ReplaceableTextures\\CommandButtons\\BTNShrine.blp")
+    call SaveInteger(PF_prices,1,'Rwr1',200)
+    call SaveInteger(PF_prices,2,'Rwr1',150)
+    call SaveStr(PF_prices,3,'Rwr1',"ReplaceableTextures\\CommandButtons\\BTNBanshee.blp")
+    call SaveStr(PF_prices,4,StringHash("gold_out"),"Gold debit")
+    call SaveStr(PF_prices,4,StringHash("pool_sent"),"Sent to")
+    call SaveStr(PF_prices,4,StringHash("pool_received"),"Received from")
+    call SaveStr(PF_prices,4,StringHash("item"),"Bought")
+    call SaveStr(PF_prices,4,StringHash("hire"),"Hired")
+    call SaveStr(PF_prices,4,StringHash("research"),"Research complete")
+    call SaveStr(PF_prices,4,StringHash("upgrade"),"Upgraded")
+    call SaveStr(PF_prices,4,StringHash("hero"),"Hero selected")
+    call SaveStr(PF_prices,4,StringHash("train"),"Trained")
+    call SaveStr(PF_prices,4,StringHash("construct"),"Built")
+    call SaveStr(PF_prices,4,StringHash("stake"),"Casino stake")
+    call SaveStr(PF_prices,4,StringHash("return"),"Casino return")
+    call SaveStr(PF_prices,4,StringHash("research_start"),"Research started")
+endfunction
+
+function PF_ObjectData13 takes nothing returns nothing
+    call SaveStr(PF_prices,4,StringHash("research_cancel"),"Research cancelled")
+    call SaveStr(PF_prices,4,StringHash("train_start"),"Training started")
+    call SaveStr(PF_prices,4,StringHash("train_cancel"),"Training cancelled")
+    call SaveStr(PF_prices,4,StringHash("construct_start"),"Construction started")
+    call SaveStr(PF_prices,4,StringHash("construct_cancel"),"Construction cancelled")
+    call SaveStr(PF_prices,4,StringHash("skill"),"Learned")
+    set PF_tabName[0] = "Stats"
+    set PF_tabName[1] = "Heroes"
+    set PF_tabName[2] = "Items"
+    set PF_tabName[3] = "Units"
+    set PF_tabName[4] = "Skins"
+    set PF_tabName[5] = "Build order"
+    set PF_tabName[6] = "Casino"
+    set PF_tabName[7] = "Usage"
+    set PF_tabName[8] = ""
+    set PF_tabName[9] = ""
+    set PF_tabName[10] = "Overview"
+    set PF_tabName[11] = "Scores"
+    set PF_tabName[12] = "Transfers"
+    set PF_tabName[13] = "Army"
+    set PF_tabName[14] = "Economy"
+    set PF_tabName[15] = "Combat"
+endfunction
+
 function DPS_Toggle takes nothing returns nothing
     local integer p = GetPlayerId(GetTriggerPlayer())
     // Only presentation changes are local: never create handles or change gameplay here.
     if GetLocalPlayer() == GetTriggerPlayer() then
-        set DPS_Open[p] = not DPS_Open[p]
-        if DPS_Open[p] and spellKeysPanel != null then
+        if BlzGetTriggerFrame() != DPS_Button or CP_CAS_view[1] != 0 then
+            call CP_PreviewClose()
+            return
+        endif
+        if PF_frozen then
+            call PF_Open(true)
+            return
+        endif
+        if spellKeysOpen then
             set spellKeysOpen = false
             set spellKeysEditing = -1
-            call SpellKeysRefresh()
+            call BlzFrameSetVisible(spellKeysPanel, false)
+            set DPS_Open[p] = false
+        else
+            set DPS_Open[p] = not DPS_Open[p]
         endif
         call BlzFrameSetVisible(DPS_Panel, DPS_Open[p])
-        if DPS_Open[p] then
-            call BlzFrameSetVisible(DPS_Button, true)
-    call BlzFrameSetText(DPS_Button, "Stats")
-        else
-            call BlzFrameSetVisible(DPS_Button, true)
-    call BlzFrameSetText(DPS_Button, "Stats")
-        endif
         call BlzFrameSetEnable(DPS_Button, false)
         call BlzFrameSetEnable(DPS_Button, true)
+        call BlzFrameSetFocus(DPS_Button, false)
     endif
 endfunction
 
+function FF_LinkProfile takes nothing returns nothing
+    if DPS_Panel != null and spellKeysToggle != null then
+        call BlzFrameSetParent(spellKeysToggle, DPS_Panel)
+        call BlzFrameClearAllPoints(spellKeysToggle)
+        call BlzFrameSetPoint(spellKeysToggle, FRAMEPOINT_TOPRIGHT, DPS_Panel, FRAMEPOINT_TOPRIGHT, -0.065, -0.012)
+        call BlzFrameSetSize(spellKeysToggle, 0.065, 0.025)
+    endif
+endfunction
 function DPS_Create takes nothing returns nothing
     local framehandle ui = BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
     local framehandle board = BlzGetFrameByName("Multiboard", 0)
     local framehandle f
+    local trigger personal = CreateTrigger()
     local trigger click = CreateTrigger()
     local integer s = 1
     local integer row = 0
     local real y
     set DPS_Button = BlzCreateFrame("ScriptDialogButton", ui, 0, 0)
-    call BlzFrameSetSize(DPS_Button, 0.073, 0.028)
-    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, -0.039, 0.004)
+    call BlzFrameSetScale(DPS_Button, 1.0)
+    call BlzFrameSetSize(DPS_Button, 0.066, 0.026)
+    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.0, 0.003)
     call BlzFrameSetVisible(DPS_Button, true)
-    call BlzFrameSetText(DPS_Button, "Stats")
+    call BlzFrameSetText(DPS_Button, "Profile")
     call BlzFrameSetLevel(DPS_Button, 20)
     call BlzTriggerRegisterFrameEvent(click, DPS_Button, FRAMEEVENT_CONTROL_CLICK)
     call TriggerAddAction(click, function DPS_Toggle)
@@ -51157,6 +56110,7 @@ function DPS_Create takes nothing returns nothing
     set f = DPS_Text("DPS_Level", 0.565, 0.046, 0.055, "|cffffcc00Level|r")
     loop
         exitwhen s > 12
+        if PF_SoloSeat(s) then
         set y = 0.072 + I2R(row) * 0.022 + I2R(row / 3) * 0.003
         set DPS_Icon[s] = BlzCreateFrameByType("BACKDROP", "DPS_HeroIcon", DPS_Panel, "", s)
         call BlzFrameSetPoint(DPS_Icon[s], FRAMEPOINT_TOPLEFT, DPS_Panel, FRAMEPOINT_TOPLEFT, 0.026, -y)
@@ -51172,6 +56126,7 @@ function DPS_Create takes nothing returns nothing
         set DPS_Cell[s * 10 + 7] = DPS_Text("DPS_Landed", 0.495, y, 0.060, "0")
         set DPS_Cell[s * 10 + 8] = DPS_Text("DPS_CurrentLevel", 0.565, y, 0.055, "-")
         set row = row + 1
+        endif
         set s = s + 1
     endloop
     set f = BlzCreateFrame("ScriptDialogButton", DPS_Panel, 0, 0)
@@ -51181,11 +56136,25 @@ function DPS_Create takes nothing returns nothing
     call BlzFrameSetText(f, "X")
     call BlzTriggerRegisterFrameEvent(click, f, FRAMEEVENT_CONTROL_CLICK)
     call BlzFrameSetVisible(DPS_Panel, false)
+    set f = BlzCreateFrame("ScriptDialogButton",DPS_Panel,0,0)
+    call BlzFrameSetSize(f,0.09,0.026)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPRIGHT,DPS_Panel,FRAMEPOINT_TOPRIGHT,-0.145,-0.012)
+    call BlzFrameSetText(f,"Casino")
+    call CP_PreviewInit(f)
+    set f = BlzCreateFrame("ScriptDialogButton",DPS_Panel,0,0)
+    call BlzFrameSetSize(f,0.100,0.026)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,DPS_Panel,FRAMEPOINT_TOPLEFT,0.025,-0.012)
+    call BlzFrameSetText(f,"My Profile")
+    call BlzTriggerRegisterFrameEvent(personal,f,FRAMEEVENT_CONTROL_CLICK)
+    call TriggerAddAction(personal,function PF_SoloOpenProfile)
+    set personal = null
+    call PF_Create()
     set DPS_Ready = true
     set ui = null
     set board = null
     set f = null
     set click = null
+    call FF_LinkProfile()
 endfunction
 
 function DPS_Refresh takes nothing returns nothing
@@ -51198,6 +56167,7 @@ function DPS_Refresh takes nothing returns nothing
     endif
     loop
         exitwhen s > 12
+        if PF_SoloSeat(s) then
         set i = s * 10
         set name = GetPlayerName(Player(s - 1))
         if udg_orig_player_name[s] != null and udg_orig_player_name[s] != "" then
@@ -51226,8 +56196,23 @@ function DPS_Refresh takes nothing returns nothing
             call BlzFrameSetVisible(DPS_Icon[s], false)
             call BlzFrameSetText(DPS_Cell[i + 8], "-")
         endif
+        endif
         set s = s + 1
     endloop
+    call PF_SoloPersonal()
+    set PF_saveTick = PF_saveTick+1
+    if not PF_careerReady or ModuloInteger(PF_saveTick,15) == 0 or (PF_frozen and not PF_shown) then
+        call PF_UpdateCareer()
+    endif
+    call PF_SendHistory()
+    call PF_SendHistory()
+    if PF_frozen and not PF_shown then
+        set PF_shown = true
+        call CP_PreviewClose()
+        call PF_Open(true)
+    elseif PF_visible and not PF_results then
+        call PF_Render()
+    endif
     set hero = null
 endfunction
 
@@ -51245,30 +56230,6 @@ function DPS_Init takes nothing returns nothing
 endfunction
 
 function FF_CompactHeroTooltips_Init takes nothing returns nothing
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897930|r damage and stuns marked enemies for 0.5s.", 0)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897930|r damage and stuns marked enemies for 0.5s.", 0)
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897940|r damage and stuns marked enemies for 0.75s.", 1)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff897940|r damage and stuns marked enemies for 0.75s.", 1)
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897950|r damage and stuns marked enemies for 1s.", 2)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 7|nMark enemies in the orb's path. On arrival, it deals |cffff897950|r damage and stuns marked enemies for 1s.", 2)
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897960|r damage and stuns marked enemies for 1.25s.", 3)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff897960|r damage and stuns marked enemies for 1.25s.", 3)
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897970|r damage and stuns marked enemies for 1.5s.", 4)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff897970|r damage and stuns marked enemies for 1.5s.", 4)
-    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897980|r damage and stuns marked enemies for 1.75s.", 5)
-    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff897980|r damage and stuns marked enemies for 1.75s.", 5)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 1", 0)
@@ -51353,130 +56314,6 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityExtendedTooltip('AOz4', "After 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
     call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 3", 2)
     call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 2)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff897980|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979120|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979180|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979240|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979300|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
-    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
-    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979550|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
-    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
-    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
-    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
-    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
-    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
-    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
-    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s.", 1)
-    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
-    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s.", 2)
-    call BlzSetAbilityTooltip('AGr8', "Detonate Barrel [|cffffcc00Z|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
-    call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
-    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d150|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
-    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 20s, nearby allies gain |cff86e99d150|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
-    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d175|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
-    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 20s, nearby allies gain |cff86e99d175|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
-    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
-    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897980|r damage once per cast.", 0)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes 80 damage once per cast.", 0)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979130|r damage once per cast.", 1)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes 130 damage once per cast.", 1)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979180|r damage once per cast.", 2)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes 180 damage once per cast.", 2)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979250|r damage once per cast.", 3)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes 250 damage once per cast.", 3)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979350|r damage once per cast.", 4)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes 350 damage once per cast.", 4)
-    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
-    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes 550 damage once per cast.", 5)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 1", 0)
@@ -51673,13 +56510,167 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 16|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff897985|r damage and stuns marked enemies for 0.5s.", 0)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897985|r damage and stuns marked enemies for 0.5s.", 0)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979125|r damage and stuns marked enemies for 0.75s.", 1)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979125|r damage and stuns marked enemies for 0.75s.", 1)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979200|r damage and stuns marked enemies for 1s.", 2)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 7|nMark enemies in the orb's path. On arrival, it deals |cffff8979200|r damage and stuns marked enemies for 1s.", 2)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979300|r damage and stuns marked enemies for 1.25s.", 3)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff8979300|r damage and stuns marked enemies for 1.25s.", 3)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979475|r damage and stuns marked enemies for 1.5s.", 4)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979475|r damage and stuns marked enemies for 1.5s.", 4)
+    call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 5)
+    call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 5)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979100|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff8979100|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979140|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979140|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 1)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979190|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979190|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 2)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979260|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979260|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 3)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979350|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979350|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 4)
+    call BlzSetAbilityTooltip('AGr1', "Barrel Roll [|cffffcc00Z|r] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('AGr1', "Roll a barrel that explodes for |cffff8979570|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
+    call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979570|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 5)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 1)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 2)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 3)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 4)
+    call BlzSetAbilityTooltip('AGr2', "Drunken Fortitude [|cffffcc00X|r] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
+    call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
+    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 0)
+    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 0)
+    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 1)
+    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 1)
+    call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 2)
+    call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 2)
+    call BlzSetAbilityTooltip('AGr8', "Detonate Barrel [|cffffcc00Z|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
+    call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
+    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes 90 damage once per cast.", 0)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979140|r damage once per cast.", 1)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes 140 damage once per cast.", 1)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979200|r damage once per cast.", 2)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes 200 damage once per cast.", 2)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979270|r damage once per cast.", 3)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes 270 damage once per cast.", 3)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979370|r damage once per cast.", 4)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes 370 damage once per cast.", 4)
+    call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979560|r damage once per cast.", 5)
+    call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes 560 damage once per cast.", 5)
 endfunction
 
 function GD_Pulse takes unit caster, real x, real y returns nothing
     local integer rank = GetUnitAbilityLevel(caster, GD_ABILITY)
+    local real mana = 20.0
     local real amount
     local unit u
     local player owner = GetOwningPlayer(caster)
+    if rank == 2 then
+        set mana = 25.0
+    elseif rank == 3 then
+        set mana = 35.0
+    endif
     call GroupEnumUnitsInRange(GD_Enum, x, y, 600.0, null)
     loop
         set u = FirstOfGroup(GD_Enum)
@@ -51687,7 +56678,7 @@ function GD_Pulse takes unit caster, real x, real y returns nothing
         call GroupRemoveUnit(GD_Enum, u)
         if GetWidgetLife(u) > 0.405 and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and GetUnitAbilityLevel(u, 'Aloc') == 0 then
             if IsUnitAlly(u, owner) then
-                call SetUnitState(u, UNIT_STATE_MANA, RMinBJ(GetUnitState(u, UNIT_STATE_MAX_MANA), GetUnitState(u, UNIT_STATE_MANA) + 15.0))
+                call SetUnitState(u, UNIT_STATE_MANA, RMinBJ(GetUnitState(u, UNIT_STATE_MAX_MANA), GetUnitState(u, UNIT_STATE_MANA) + mana))
                 if GetWidgetLife(u) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
                     set amount = 125.0 + 25.0 * rank
                     if GetRandomInt(1, 4) == 1 then
@@ -51783,7 +56774,7 @@ function GD_Cast takes nothing returns nothing
     call BlzSetSpecialEffectScale(GD_Dome[i], 1.27098884)
     call BlzSetSpecialEffectColorByPlayer(GD_Dome[i], Player(1))
     call BlzPlaySpecialEffect(GD_Dome[i], ANIM_TYPE_STAND)
-    set GD_Left[i] = 400.0
+    set GD_Left[i] = 300.0
     call UnitAddAbility(caster, GD_SLOW)
     if GD_Count == 1 then
         call TimerStart(GD_Timer, GD_PERIOD, true, function GD_Tick)
@@ -51791,10 +56782,23 @@ function GD_Cast takes nothing returns nothing
     set caster = null
 endfunction
 
+function GD_UsePotion takes nothing returns nothing
+    local integer potion = GetItemTypeId(GetManipulatedItem())
+    local integer i
+    if potion == 'pnvl' or potion == 'pnvu' then
+        set i = LoadInteger(GD_Data, GetHandleId(GetTriggerUnit()), 0)
+        if i != 0 then
+            call GD_Stop(i)
+        endif
+    endif
+endfunction
 function GD_Init takes nothing returns nothing
     local trigger t = CreateTrigger()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
     call TriggerAddAction(t, function GD_Cast)
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_USE_ITEM)
+    call TriggerAddAction(t, function GD_UsePotion)
     set t = null
 endfunction
 
@@ -51900,6 +56904,20 @@ function GTW_Eligible takes unit u, player owner returns boolean
     return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and IsUnitEnemy(u, owner) and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) and GetUnitAbilityLevel(u, 'Aloc') == 0
 endfunction
 
+function GTW_Damage takes integer rank returns real
+    if rank == 1 then
+        return 85.0
+    elseif rank == 2 then
+        return 125.0
+    elseif rank == 3 then
+        return 200.0
+    elseif rank == 4 then
+        return 300.0
+    elseif rank == 5 then
+        return 475.0
+    endif
+    return 575.0
+endfunction
 function GTW_Explode takes integer i returns nothing
     local unit caster = GTW_Caster[i]
     local unit target
@@ -51914,7 +56932,7 @@ function GTW_Explode takes integer i returns nothing
         call DestroyEffect(LoadEffectHandle(GTW_Marks, GetHandleId(GTW_Hit[i]), GetHandleId(target)))
         call RemoveSavedHandle(GTW_Marks, GetHandleId(GTW_Hit[i]), GetHandleId(target))
         if GTW_Eligible(target, GetOwningPlayer(caster)) then
-            call UnitDamageTarget(caster, target, 20.0 + 10.0 * I2R(GTW_Rank[i]), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
+            call UnitDamageTarget(caster, target, GTW_Damage(GTW_Rank[i]), false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
             set dummy = CreateUnit(GetOwningPlayer(caster), 'hor3', GetUnitX(target), GetUnitY(target), 0.0)
             call UnitAddAbility(dummy, 'AGtz')
             call SetUnitAbilityLevel(dummy, 'AGtz', GTW_Rank[i])
@@ -54063,11 +59081,15 @@ function SpellKeysClick takes nothing returns nothing
         call BlzFrameSetEnable(clicked, false)
         call BlzFrameSetEnable(clicked, true)
         call BlzFrameSetFocus(clicked, false)
+        if clicked == spellKeysClose then
+            call CP_PreviewClose()
+            return
+        endif
         if clicked == spellKeysToggle or clicked == spellKeysClose then
             set spellKeysOpen = clicked == spellKeysToggle and not spellKeysOpen
-            if spellKeysOpen and DPS_Panel != null then
-                set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
-                call BlzFrameSetVisible(DPS_Panel, false)
+            if DPS_Panel != null then
+                set DPS_Open[GetPlayerId(GetLocalPlayer())] = true
+                call BlzFrameSetVisible(DPS_Panel, not spellKeysOpen)
             endif
             set spellKeysEditing = -1
         else
@@ -54624,7 +59646,7 @@ function SpellKeysInit takes framehandle ui returns nothing
     set spellKeysClose = BlzCreateFrame("ScriptDialogButton", spellKeysPanel, 0, 0)
     call BlzFrameSetSize(spellKeysClose, 0.061, 0.025)
     call BlzFrameSetPoint(spellKeysClose, FRAMEPOINT_TOPRIGHT, spellKeysPanel, FRAMEPOINT_TOPRIGHT, -0.018, -0.013)
-    call BlzFrameSetText(spellKeysClose, "Close")
+    call BlzFrameSetText(spellKeysClose, "X")
     call BlzTriggerRegisterFrameEvent(click, spellKeysClose, FRAMEEVENT_CONTROL_CLICK)
     call BlzTriggerRegisterFrameEvent(click, spellKeysToggle, FRAMEEVENT_CONTROL_CLICK)
     loop
@@ -54685,6 +59707,7 @@ function SpellKeysInit takes framehandle ui returns nothing
     set target = null
     set click = null
     set input = null
+    call FF_LinkProfile()
 endfunction
 
 function TFP_TF_Alive takes unit u returns boolean
@@ -55022,12 +60045,12 @@ function TFP_wildCards___i takes nothing returns nothing
         call TriggerAddCondition(t, Condition(function TFP_wildCards___c))
         set TFP_wildCards___cdrTable=TFP_s__HandleTable__allocate()
         set t=null
-        set TFP_WildDamage[1] = 80.0
-    set TFP_WildDamage[2] = 130.0
-    set TFP_WildDamage[3] = 180.0
-    set TFP_WildDamage[4] = 250.0
-    set TFP_WildDamage[5] = 350.0
-    set TFP_WildDamage[6] = 550.0
+        set TFP_WildDamage[1] = 90.0
+    set TFP_WildDamage[2] = 140.0
+    set TFP_WildDamage[3] = 200.0
+    set TFP_WildDamage[4] = 270.0
+    set TFP_WildDamage[5] = 370.0
+    set TFP_WildDamage[6] = 560.0
 endfunction
 
 function TFP_pickACard___dummyP takes nothing returns nothing
@@ -55127,14 +60150,7 @@ function TFP_pickACard___c takes nothing returns boolean
         return false
     endfunction
 
-function TFP_TF_CardDebuff takes unit caster, unit target, integer abilityId, integer rank, string order returns nothing
-    local unit dummy=CreateUnit(GetOwningPlayer(caster),TFP_tfConsts_CASTER_DUMMY_ID,GetUnitX(target),GetUnitY(target),0.)
-    call UnitAddAbility(dummy,abilityId)
-    call SetUnitAbilityLevel(dummy,abilityId,rank)
-    call IssueTargetOrder(dummy,order,target)
-    call UnitApplyTimedLife(dummy,'BTLF',2.)
-    set dummy=null
-endfunction
+
 
 function TFP_pickACard___secondC takes nothing returns boolean
     local integer id=GetSpellAbilityId()
@@ -55475,7 +60491,14 @@ function TF45_Odds takes unit u returns real
 endfunction
 
 
+function TF_ClearPlayerGuard takes unit u returns nothing
+    if GetUnitTypeId(u) == 'HTf1' and GetPlayerId(GetOwningPlayer(u)) < 12 and not IsUnitIllusion(u) then
+        call SetUnitCreepGuard(u, false)
+        call RemoveGuardPosition(u)
+    endif
+endfunction
 function TF45_Track takes unit u returns nothing
+    call TF_ClearPlayerGuard(u)
     if GetUnitTypeId(u)=='HTf1' and not IsUnitIllusion(u) then
         if not IsUnitInGroup(u, TF33_Heroes) then
             call BlzSetUnitAttackCooldown(u, 1.8, 0)
@@ -55650,6 +60673,9 @@ function FF_FortifiedAttack takes nothing returns nothing
     set source = null
 endfunction
 
+function TF_ClearGuardOnEvent takes nothing returns nothing
+    call TF_ClearPlayerGuard(GetTriggerUnit())
+endfunction
 function TF33_Init takes nothing returns nothing
     local trigger t=CreateTrigger()
     set TF_RedDamage[1]=150.0
@@ -55689,6 +60715,10 @@ function TF33_Init takes nothing returns nothing
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGING)
     call TriggerAddAction(t, function FF_FortifiedAttack)
     call TF45_DiceInit()
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_CHANGE_OWNER)
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_REVIVE_FINISH)
+    call TriggerAddAction(t, function TF_ClearGuardOnEvent)
     set t=null
 endfunction
 
@@ -58138,6 +63168,7 @@ call ExecuteFunc("jasshelper__initstructs604298953")
 call ExecuteFunc("TimerUtils___init")
 
     call InitGlobals()
+    set PF_account = GetPlayerName(GetLocalPlayer())
     set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
     call InitCustomTriggers()
     call FF_InitDebugTwistedFate()
@@ -58165,7 +63196,7 @@ call ExecuteFunc("TimerUtils___init")
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Solo Foots v40 - RJE")
+    call SetMapName("Solo Foots v47 - RJE")
     call SetMapDescription("join our Discord:|cff7878ff tiny.cc/footmen|r|n|nMap by RJE, based on work by miRaculix")
     call SetPlayers(16)
     call SetTeams(16)

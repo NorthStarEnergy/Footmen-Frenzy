@@ -25,3 +25,17 @@ projects/**/src/** -text
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+
+projects/solo/src/** filter=lfs diff=lfs merge=lfs -text
+projects/solo/src/**/*.j -filter -diff -merge -text
+projects/solo/src/**/*.lua -filter -diff -merge -text
+projects/solo/src/**/*.txt -filter -diff -merge -text
+projects/solo/src/**/*.wts -filter -diff -merge -text
+projects/solo/src/**/*.fdf -filter -diff -merge -text
+projects/solo/src/**/*.toc -filter -diff -merge -text
+projects/solo/src/**/*.json -filter -diff -merge -text
+projects/solo/src/**/*.slk -filter -diff -merge -text
+projects/solo/src/**/*.md -filter -diff -merge -text
+projects/solo/src/**/*.ini -filter -diff -merge -text
+projects/solo/src/**/*.csv -filter -diff -merge -text
+projects/solo/src/**/*.xml -filter -diff -merge -text
