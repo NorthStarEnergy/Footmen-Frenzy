@@ -1,6 +1,6 @@
 # Current 799X integration
 
-The current test is **Reforged Footmen Frenzy v7.9.9X-T45 - Official Test - RJE.w3x**. Both installed 799X copies use the same title in Warcraft. T44 is archived.
+The current test is **Reforged Footmen Frenzy v7.9.9X-rc1.w3x**. Both installed 799X copies use the same title in Warcraft. T45 is archived.
 
 The Items catalog was introduced in **Reforged_Footmen_Frenzy_v7.9.9X-T44.w3x**.
 
