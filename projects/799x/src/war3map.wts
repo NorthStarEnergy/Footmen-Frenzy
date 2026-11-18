@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-Reforged Footmen Frenzy v7.9.9X-rc1
+Reforged Footmen Frenzy v7.9.9X-rc30
 }
 
 STRING 2
@@ -27027,7 +27027,7 @@ STRING 4394
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.25s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
@@ -65138,7 +65138,7 @@ STRING 10446
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.25s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
@@ -79397,7 +79397,7 @@ STRING 12694
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 2s
+|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 1.5s
 
 }
 
@@ -84452,7 +84452,7 @@ STRING 13477
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 2.25s
+|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 1.75s
 
 }
 
@@ -96972,26 +96972,26 @@ STRING 15412
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2.5s
+|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2s
 }
 
 STRING 15413
 // Abilities: A08G (Charge), Researchubertip (Tooltip - Learn - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 1.25s
-|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1.5s
-|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.75s
-|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 2s
-|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 2.25s
-|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2.5s
+|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 0.75s
+|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1s
+|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.25s
+|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 1.5s
+|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 1.75s
+|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2s
 }
 
 STRING 15414
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 1.25s
+|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 0.75s
 
 }
 
@@ -97005,7 +97005,7 @@ STRING 15416
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1.5s
+|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1s
 
 }
 
@@ -97013,7 +97013,7 @@ STRING 15417
 // Abilities: A08G (Charge), Ubertip (Tooltip - Normal - Extended)
 {
 Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
-|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.75s
+|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.25s
 
 }
 
