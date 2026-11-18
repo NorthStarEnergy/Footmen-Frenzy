@@ -42493,56 +42493,56 @@ set udg_unit_level[50]=57
 call DestroyTrigger(GetTriggeringTrigger())
 
     set SyncTicks[0]=32
-    set SyncTicks[1]=26
-    set SyncTicks[2]=28
-    set SyncTicks[3]=24
-    set SyncTicks[4]=26
-    set SyncTicks[5]=28
-    set SyncTicks[6]=25
-    set SyncTicks[7]=26
-    set SyncTicks[8]=28
-    set SyncTicks[9]=24
-    set SyncTicks[10]=25
-    set SyncTicks[11]=26
-    set SyncTicks[12]=28
-    set SyncTicks[13]=24
-    set SyncTicks[14]=24
-    set SyncTicks[15]=24
-    set SyncTicks[16]=24
-    set SyncTicks[17]=22
-    set SyncTicks[18]=24
-    set SyncTicks[19]=24
-    set SyncTicks[20]=24
-    set SyncTicks[21]=25
-    set SyncTicks[22]=26
-    set SyncTicks[23]=23
-    set SyncTicks[24]=28
-    set SyncTicks[25]=28
-    set SyncTicks[26]=25
-    set SyncTicks[27]=23
-    set SyncTicks[28]=26
-    set SyncTicks[29]=28
-    set SyncTicks[30]=28
-    set SyncTicks[31]=24
-    set SyncTicks[32]=26
-    set SyncTicks[33]=28
-    set SyncTicks[34]=26
-    set SyncTicks[35]=28
-    set SyncTicks[36]=24
-    set SyncTicks[37]=26
-    set SyncTicks[38]=28
-    set SyncTicks[39]=24
-    set SyncTicks[40]=25
-    set SyncTicks[41]=26
-    set SyncTicks[42]=28
-    set SyncTicks[43]=25
-    set SyncTicks[44]=22
-    set SyncTicks[45]=24
-    set SyncTicks[46]=24
-    set SyncTicks[47]=24
-    set SyncTicks[48]=24
-    set SyncTicks[49]=24
-    set SyncTicks[50]=24
+    set SyncTicks[1]=27
+    set SyncTicks[2]=29
+    set SyncTicks[3]=25
+    set SyncTicks[4]=27
+    set SyncTicks[5]=29
+    set SyncTicks[6]=26
+    set SyncTicks[7]=27
+    set SyncTicks[8]=29
+    set SyncTicks[9]=25
+    set SyncTicks[10]=26
+    set SyncTicks[11]=27
+    set SyncTicks[12]=29
+    set SyncTicks[13]=25
+    set SyncTicks[14]=25
+    set SyncTicks[15]=25
+    set SyncTicks[16]=25
+    set SyncTicks[17]=23
+    set SyncTicks[18]=25
+    set SyncTicks[19]=25
+    set SyncTicks[20]=25
+    set SyncTicks[21]=26
+    set SyncTicks[22]=27
+    set SyncTicks[23]=24
+    set SyncTicks[24]=29
+    set SyncTicks[25]=29
+    set SyncTicks[26]=26
+    set SyncTicks[27]=24
+    set SyncTicks[28]=27
+    set SyncTicks[29]=29
+    set SyncTicks[30]=29
+    set SyncTicks[31]=25
+    set SyncTicks[32]=27
+    set SyncTicks[33]=29
+    set SyncTicks[34]=27
+    set SyncTicks[35]=29
+    set SyncTicks[36]=25
+    set SyncTicks[37]=27
+    set SyncTicks[38]=29
+    set SyncTicks[39]=25
+    set SyncTicks[40]=26
+    set SyncTicks[41]=27
+    set SyncTicks[42]=29
+    set SyncTicks[43]=26
+    set SyncTicks[44]=23
+    set SyncTicks[45]=25
+    set SyncTicks[46]=25
+    set SyncTicks[47]=25
+    set SyncTicks[48]=25
+    set SyncTicks[49]=25
+    set SyncTicks[50]=25
 endfunction
 
 function InitTrig_set_spawn_variables takes nothing returns nothing
@@ -58432,7 +58432,7 @@ call ExecuteFunc("TimerUtils___init")
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("FFA Foots v70 - RJE")
+    call SetMapName("FFA Foots v71 - RJE")
     call SetMapDescription("TRIGSTR_3435")
     call SetPlayers(20)
     call SetTeams(20)
