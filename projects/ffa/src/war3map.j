@@ -3042,7 +3042,7 @@ constant integer TFP_tfConsts_GOLD_CARD=2
 integer TFP_tfConsts_hiddenCard
 constant real TFP_wildCards___OFFSET_ANGLE=18. * bj_DEGTORAD
 constant real TFP_wildCards___PROJECTILE_SPEED=1100.
-constant real TFP_wildCards___ENUM_RADIUS=32.
+constant real TFP_wildCards___ENUM_RADIUS=40.
 integer array TFP_wildCards___datDB
 integer TFP_wildCards___dbIndex=- 1
 timer TFP_wildCards___time=CreateTimer()
@@ -3117,6 +3117,10 @@ trigger MQ_FinishTrigger = CreateTrigger()
 trigger MQ_RemoveTrigger = CreateTrigger()
 hashtable MD_Hash = InitHashtable()
 hashtable MD_Types = InitHashtable()
+real array TF_RedDamage
+real array TF_RedSplash
+real array TF_GoldDamage
+real array TF_BlueDamage
 hashtable TF33_H=InitHashtable()
 hashtable TF33_G=InitHashtable()
 hashtable TF45_Gate=InitHashtable()
@@ -3143,6 +3147,12 @@ timer SyncTime=null
     boolean GSI_Used = false
     rect GSI_Bounds = null
 
+constant integer TFP_tfConsts_EYE_DUMMY_ID='htf3'
+constant real TFP_wildCards___TOTAL_DISTANCE=1450.
+constant string TFP_pickACard___TICKSOUND="Sound\\Interface\\MouseClick1.wav"
+sound TFP_pickACard___snd
+group TFP_destiny___grp=CreateGroup()
+integer array TFP_s__destiny___destinyDat_revertAbilityLevel
 endglobals
 
 
@@ -14991,6 +15001,9 @@ function Trig_admin_level_Func002Func002C takes nothing returns boolean
 endfunction
 
 function Trig_admin_level_Func002Func004Func002C takes nothing returns boolean
+    if udg_orig_player_name[udg_X] == "ToXin#11623" then
+        return true
+    endif
     if ( ( udg_orig_player_name[udg_X] == "RJE#11113" ) ) then
         return true
     endif
@@ -15347,31 +15360,31 @@ endfunction
 function Trig_MODE_set_bounties_Actions takes nothing returns nothing
 
 set udg_unit_bounty_base[0]=19
-set udg_unit_bounty_base[1]=41
-set udg_unit_bounty_base[2]=76
+set udg_unit_bounty_base[1]=38
+set udg_unit_bounty_base[2]=70
 set udg_unit_bounty_base[3]=23
-set udg_unit_bounty_base[4]=47
-set udg_unit_bounty_base[5]=94
-set udg_unit_bounty_base[6]=38
-set udg_unit_bounty_base[7]=40
-set udg_unit_bounty_base[8]=79
+set udg_unit_bounty_base[4]=43
+set udg_unit_bounty_base[5]=86
+set udg_unit_bounty_base[6]=35
+set udg_unit_bounty_base[7]=37
+set udg_unit_bounty_base[8]=73
 set udg_unit_bounty_base[9]=25
-set udg_unit_bounty_base[10]=37
-set udg_unit_bounty_base[11]=47
-set udg_unit_bounty_base[12]=94
-set udg_unit_bounty_base[13]=32
-set udg_unit_bounty_base[14]=37
-set udg_unit_bounty_base[15]=40
-set udg_unit_bounty_base[16]=29
+set udg_unit_bounty_base[10]=34
+set udg_unit_bounty_base[11]=43
+set udg_unit_bounty_base[12]=86
+set udg_unit_bounty_base[13]=29
+set udg_unit_bounty_base[14]=34
+set udg_unit_bounty_base[15]=37
+set udg_unit_bounty_base[16]=27
 set udg_unit_bounty_base[17]=14
-set udg_unit_bounty_base[18]=29
-set udg_unit_bounty_base[19]=38
-set udg_unit_bounty_base[20]=29
+set udg_unit_bounty_base[18]=27
+set udg_unit_bounty_base[19]=35
+set udg_unit_bounty_base[20]=27
 set udg_unit_bounty_base[21]=28
-set udg_unit_bounty_base[22]=33
+set udg_unit_bounty_base[22]=30
 set udg_unit_bounty_base[23]=25
-set udg_unit_bounty_base[24]=44
-set udg_unit_bounty_base[25]=79
+set udg_unit_bounty_base[24]=40
+set udg_unit_bounty_base[25]=73
 
 endfunction
 
@@ -15511,7 +15524,7 @@ endfunction
 
 function Trig_KOTH_Income_Func006Func001C takes nothing returns boolean
     local integer playerNumber=GetConvertedPlayerId(GetEnumPlayer())
-    return playerNumber <= 12 and udg_player_active[playerNumber] and GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING
+    return playerNumber <= 12 and udg_player_active[playerNumber] and GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING and IsUnitAliveBJ(udg_base[playerNumber])
 endfunction
 
 function Trig_KOTH_Income_Func006A takes nothing returns nothing
@@ -15530,7 +15543,7 @@ endfunction
 
 function Trig_KOTH_Income_Func014A takes nothing returns nothing
     local integer playerNumber=GetConvertedPlayerId(GetEnumPlayer())
-    if playerNumber <= 12 and udg_player_active[playerNumber] and GetPlayerSlotState(GetEnumPlayer()) == PLAYER_SLOT_STATE_PLAYING then
+    if Trig_KOTH_Income_Func006Func001C() then
         call AdjustPlayerStateBJ(( udg_KOTH_Gold_To_Add + udg_KOTH_Gold_Division_To_Add ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
         set udg_KOTH_Gold_Division_To_Add=0
     endif
@@ -15669,6 +15682,7 @@ function SKHillIncome takes nothing returns nothing
     local integer count=0
     local integer payout
     local integer each
+    local integer recipient=0
     local integer remainder
     if not SKActive(owner) then
         call TriggerExecute(gg_trg_KOTH_Set_Neutral_Hill)
@@ -15678,7 +15692,10 @@ function SKHillIncome takes nothing returns nothing
     loop
         exitwhen row>8
         set pn=S8Player(row)
-        if SKActive(pn) and SKKing[pn]==king then
+        if SKActive(pn) and IsUnitAliveBJ(udg_base[pn]) and SKKing[pn]==king then
+            if recipient==0 or pn==king then
+                set recipient=pn
+            endif
             set count=count+1
         endif
         set row=row+1
@@ -15694,12 +15711,12 @@ function SKHillIncome takes nothing returns nothing
     loop
         exitwhen row>8
         set pn=S8Player(row)
-        if SKActive(pn) and SKKing[pn]==king then
+        if SKActive(pn) and IsUnitAliveBJ(udg_base[pn]) and SKKing[pn]==king then
             call AdjustPlayerStateBJ(each,Player(pn-1),PLAYER_STATE_RESOURCE_GOLD)
         endif
         set row=row+1
     endloop
-    call AdjustPlayerStateBJ(remainder,Player(king-1),PLAYER_STATE_RESOURCE_GOLD)
+    call AdjustPlayerStateBJ(remainder,Player(recipient-1),PLAYER_STATE_RESOURCE_GOLD)
     set udg_KOTH_Team_Number=S8Team(king)
     set udg_KOTH_Team=udg_team[udg_KOTH_Team_Number]
     set udg_KOTH_Gold_Remaining=udg_KOTH_Gold_Remaining-payout
@@ -15722,16 +15739,19 @@ function Trig_KOTH_Income_Actions takes nothing returns nothing
         return
     endif
     // Adjust the hill gold remaining:
-    set udg_KOTH_Gold_Remaining=( udg_KOTH_Gold_Remaining - udg_KOTH_Gold_Rewarded )
     //                                                                                                     
     // Count how many active players are in the killing team:
     set udg_KOTH_Team_Size=0
     call ForForce(udg_KOTH_Team, function Trig_KOTH_Income_Func006A)
+    if udg_KOTH_Team_Size == 0 then
+        return
+    endif
+    set udg_KOTH_Gold_Remaining=( udg_KOTH_Gold_Remaining - udg_KOTH_Gold_Rewarded )
     //                                                                                                     
     // Calculate how much gold each player should earn:
     set udg_KOTH_Gold_Division_To_Add=0
     if ( Trig_KOTH_Income_Func010C() ) then
-        set udg_KOTH_Gold_Division_To_Add=udg_KOTH_Gold_Division_Bonus
+        set udg_KOTH_Gold_Division_To_Add=ModuloInteger(udg_KOTH_Gold_Rewarded, udg_KOTH_Team_Size)
     else
     endif
     set udg_KOTH_Gold_To_Add=( udg_KOTH_Gold_Rewarded / udg_KOTH_Team_Size )
@@ -17270,10 +17290,7 @@ function SF_OpenTaverns takes nothing returns nothing
 endfunction
 
 function Trig_TP_hero_Conditions takes nothing returns boolean
-    if ( not ( IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true ) ) then
-        return false
-    endif
-    return true
+    return IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) and not IsUnitIllusion(GetTriggerUnit())
 endfunction
 
 function Trig_TP_hero_Func006Func017Func001Func003C takes nothing returns boolean
@@ -17476,7 +17493,11 @@ function SF_OnSale takes nothing returns nothing
                 set randomHero = null
             endif
         elseif IsUnitType(sold, UNIT_TYPE_HERO) then
-            call SF_AcceptHero(sold)
+            if SF_Picked[p] then
+                call RemoveUnit(sold)
+            else
+                call SF_AcceptHero(sold)
+            endif
         endif
     endif
     set shop=null
@@ -18211,7 +18232,7 @@ function Trig_Unit_Experience_System_Actions takes nothing returns nothing
     if ( Trig_Unit_Experience_System_Func005C() ) then
         set udg_ExpKillingUnit=GetKillingUnitBJ()
         set udg_ExpPlayer=GetOwningPlayer(udg_ExpKillingUnit)
-        set udg_exp_sys_high=24
+        set udg_exp_sys_high=23
         set udg_exp_sys_low=20
         set udg_exp_sys_level=13
         set udg_ExpPoint=GetUnitLoc(udg_ExpDeadUnit)
@@ -18226,7 +18247,7 @@ function Trig_Unit_Experience_System_Actions takes nothing returns nothing
     if ( Trig_Unit_Experience_System_Func006C() ) then
         set udg_ExpKillingUnit_T2=GetKillingUnitBJ()
         set udg_ExpPlayer_T2=GetOwningPlayer(udg_ExpKillingUnit_T2)
-        set udg_exp_sys_high_T2=22
+        set udg_exp_sys_high_T2=21
         set udg_exp_sys_low_T2=18
         set udg_exp_sys_level_T2=13
         set udg_ExpPoint_T2=GetUnitLoc(udg_ExpDeadUnit_T2)
@@ -20380,38 +20401,7 @@ function InitTrig_Turtle_Level_2_purchase takes nothing returns nothing
     call TriggerAddAction(gg_trg_Turtle_Level_2_purchase, function Trig_Turtle_Level_2_purchase_Actions)
 endfunction
 
-function Trig_Bounty_Timer_1_Actions takes nothing returns nothing
-    call PlaySoundBJ(gg_snd_ArrangedTeamInvitation)
-    call DisplayTextToForce(GetPlayersAll(), "TRIGSTR_3460")
-    set udg_unit_bounty_base[0]=30
-    set udg_unit_bounty_base[1]=55
-    set udg_unit_bounty_base[3]=37
-    set udg_unit_bounty_base[4]=58
-    set udg_unit_bounty_base[6]=45
-    set udg_unit_bounty_base[7]=55
-    set udg_unit_bounty_base[9]=37
-    set udg_unit_bounty_base[10]=46
-    set udg_unit_bounty_base[11]=57
-    set udg_unit_bounty_base[13]=42
-    set udg_unit_bounty_base[14]=45
-    set udg_unit_bounty_base[15]=46
-    set udg_unit_bounty_base[16]=42
-    set udg_unit_bounty_base[17]=35
-    set udg_unit_bounty_base[18]=40
-    set udg_unit_bounty_base[19]=46
-    set udg_unit_bounty_base[20]=42
-    set udg_unit_bounty_base[21]=37
-    set udg_unit_bounty_base[22]=42
-    set udg_unit_bounty_base[23]=37
-    set udg_unit_bounty_base[24]=58
-    call DestroyTrigger(GetTriggeringTrigger())
-endfunction
 
-function InitTrig_Bounty_Timer_1 takes nothing returns nothing
-    set gg_trg_Bounty_Timer_1=CreateTrigger()
-    call TriggerRegisterTimerExpireEventBJ(gg_trg_Bounty_Timer_1, udg_timer_BountyIncrease)
-    call TriggerAddAction(gg_trg_Bounty_Timer_1, function Trig_Bounty_Timer_1_Actions)
-endfunction
 
 function Trig_autorevive_Conditions takes nothing returns boolean
     if ( not ( IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true ) ) then
@@ -23580,6 +23570,9 @@ function Trig_debugmode_Func011Func002C takes nothing returns boolean
 endfunction
 
 function Trig_debugmode_Actions takes nothing returns nothing
+    if udg_mode_debugmode then
+        return
+    endif
     set udg_game_mode_display[1]=" Debugmode"
     set udg_game_mode_display[2]=" Automatic"
     set udg_game_mode_display[3]=" AP"
@@ -23590,6 +23583,10 @@ function Trig_debugmode_Actions takes nothing returns nothing
     set udg_mode_debugmode=true
     set udg_total_hero_count=94
     call ExecuteFunc("AddAPHeroesToDraft")
+    if udg_selected_mode == 0 then
+        call ConditionalTriggerExecute(gg_trg_MODE_set_pub_game)
+    endif
+    set udg_game_mode_display[1]=" Debugmode"
     set udg_version=5
     set udg_ap_number_of_heros=2
     set udg_X=1
@@ -23611,14 +23608,6 @@ function Trig_debugmode_Actions takes nothing returns nothing
         endif
         set udg_X=udg_X + 1
     endloop
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_voting, false, 0.00)
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_tech_delay_t1, false, 0.00)
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_unit_ugrades, false, 0.00)
-    call TriggerSleepAction(1.00)
-    call StartTimerBJ(udg_timer_tech_delay_t2, false, 0.00)
     call DisplayTextToForce(udg_all_players, "TRIGSTR_1172")
 endfunction
 
@@ -23629,7 +23618,7 @@ function InitTrig_debugmode takes nothing returns nothing
 endfunction
 
 function Trig_debug_Conditions takes nothing returns boolean
-    if ( not ( udg_mode_debugmode == true ) ) then
+    if not udg_mode_debugmode and GetEventPlayerChatString() != "-debugmode" then
         return false
     endif
     if ( not ( udg_admin_level[GetConvertedPlayerId(GetTriggerPlayer())] >= 90 ) ) then
@@ -29408,7 +29397,7 @@ function GFB_Cast takes unit u returns nothing
     local integer n = LoadInteger(GFB_Data, k, 0)
     local timer t
     if n == 0 then
-        set n = 5
+        set n = 4
         set t = CreateTimer()
         call SaveTimerHandle(GFB_Data, k, 1, t)
         call SaveUnitHandle(GFB_Data, GetHandleId(t), 0, u)
@@ -29556,7 +29545,6 @@ function Trig_Guardian_Force_Field_Loop_Actions takes nothing returns nothing
                 call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\NightElf\\Blink\\BlinkCaster.mdl", udg_Guardian_Point[udg_Guardian_Integer[0]]))
                 set udg_Guardian_Integer[0] = udg_Guardian_Integer[0] + 1
             endloop
-            call TriggerExecute(gg_trg_Guardian_Force_Field_Damage)
             set udg_Guardian_Integer[0] = 0
             loop
                 exitwhen udg_Guardian_Integer[0] >= GFW_Count(udg_Guardian_FF_Level[udg_Guardian_FF_Loop])
@@ -29888,6 +29876,13 @@ function MF_SetAttackRange takes unit u, real desired returns nothing
     local real primary = BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 0)
     local real secondary = BlzGetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 1)
     call BlzSetUnitWeaponRealField(u, UNIT_WEAPON_RF_ATTACK_RANGE, 1, desired - primary + secondary)
+    if GetUnitTypeId(u) == 'uban' or GetUnitTypeId(u) == 'ngh2' then
+        call BlzSetUnitBaseDamage(u, BlzGetUnitBaseDamage(u, 0), 1)
+        call BlzSetUnitDiceNumber(u, BlzGetUnitDiceNumber(u, 0), 1)
+        call BlzSetUnitDiceSides(u, BlzGetUnitDiceSides(u, 0), 1)
+        call BlzSetUnitAttackCooldown(u, BlzGetUnitAttackCooldown(u, 0), 1)
+        call BlzSetUnitWeaponStringField(u, UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART, 1, BlzGetUnitWeaponStringField(u, UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART, 0))
+    endif
 endfunction
 
 function Trig_SovietSniper_Reposition_Cast_Actions takes nothing returns nothing
@@ -33545,18 +33540,26 @@ endfunction
 
 function Trig_HERO_Bill_Ulti_Actions takes nothing returns nothing
     local lightning l__udg_bill_lightning
+    local unit bill= GetTriggerUnit()
+    // Event responses are not reliable after a wait: if this trigger fires again while this
+    // thread sleeps, the natives below return the NEWER event. Locals are per-thread, so the
+    // values are captured up front and the shared globals rebuilt from them after the wait.
     call PolledWait(GetRandomReal(3.00, 5.00))
-    set udg_temp_point_caster=GetUnitLoc(GetTriggerUnit())
+    set udg_temp_point_caster=GetUnitLoc(bill)
     set udg_temp_point=GetRectCenter(GetPlayableMapRect())
-    call CreateNUnitsAtLocFacingLocBJ(1, 'n010', Player(PLAYER_NEUTRAL_AGGRESSIVE), udg_temp_point, udg_temp_point_caster)
+    call CreateNUnitsAtLocFacingLocBJ(1, 'n010', GetOwningPlayer(bill), udg_temp_point, udg_temp_point_caster)
+    call UnitRemoveAbility(GetLastCreatedUnit(), 'ANfd')
+    call BlzSetUnitWeaponBooleanField(GetLastCreatedUnit(), UNIT_WEAPON_BF_ATTACKS_ENABLED, 0, false)
+    call BlzSetUnitWeaponBooleanField(GetLastCreatedUnit(), UNIT_WEAPON_BF_ATTACKS_ENABLED, 1, false)
     call UnitApplyTimedLifeBJ(2.00, 'BTLF', GetLastCreatedUnit())
     call AddLightningLoc("AFOD", udg_temp_point, udg_temp_point_caster)
     set l__udg_bill_lightning=GetLastCreatedLightningBJ()
     call RemoveLocation(udg_temp_point)
     call RemoveLocation(udg_temp_point_caster)
     call PolledWait(2)
-    call KillUnit(GetTriggerUnit())
+    call KillUnit(bill)
     call DestroyLightningBJ(l__udg_bill_lightning)
+    set bill=null
 endfunction
 
 function InitTrig_HERO_Bill_Ulti takes nothing returns nothing
@@ -39109,14 +39112,30 @@ function Trig_ITEM_Scroll_of_Illusion_Func007A takes nothing returns nothing
 endfunction
 
 function Trig_ITEM_Scroll_of_Illusion_Actions takes nothing returns nothing
-    set udg_temp_unit=GetTriggerUnit()
-    set udg_temp_player=GetOwningPlayer(udg_temp_unit)
-    set udg_temp_AoE=400.00
-    set udg_temp_point=GetSpellTargetLoc()
-    set udg_temp_unitgroup=GetUnitsInRangeOfLocMatching(udg_temp_AoE, udg_temp_point, Condition(function Trig_ITEM_Scroll_of_Illusion_Func006002003))
-    call ForGroupBJ(udg_temp_unitgroup, function Trig_ITEM_Scroll_of_Illusion_Func007A)
-    call RemoveLocation(udg_temp_point)
-    call DestroyGroup(udg_temp_unitgroup)
+    local player owner = GetOwningPlayer(GetTriggerUnit())
+    local real x = GetSpellTargetX()
+    local real y = GetSpellTargetY()
+    local group targets = CreateGroup()
+    local unit target
+    local unit dummy
+    local item wand
+    call GroupEnumUnitsInRange(targets, x, y, 400.00, null)
+    loop
+        set target = FirstOfGroup(targets)
+        exitwhen target == null
+        call GroupRemoveUnit(targets, target)
+        if not IsUnitEnemy(target, owner) then
+            set dummy = CreateUnit(owner, 'h01K', x, y, bj_UNIT_FACING)
+            set wand = UnitAddItemById(dummy, 'I023')
+            call UnitUseItemTarget(dummy, wand, target)
+            call UnitApplyTimedLife(dummy, 'BTLF', 0.10)
+        endif
+    endloop
+    call DestroyGroup(targets)
+    set targets = null
+    set dummy = null
+    set wand = null
+    set owner = null
 endfunction
 
 function InitTrig_ITEM_Scroll_of_Illusion takes nothing returns nothing
@@ -41727,11 +41746,11 @@ set udg_unit_att_base[1]=56
 set udg_unit_att_num_dice[1]=1
 set udg_unit_att_dice_sides[1]=3
 set udg_unit_att_CD[1]=1.15
-set udg_unit_bounty_base[1]=41
+set udg_unit_bounty_base[1]=38
 set udg_unit_bounty_num_dice[1]=1
 set udg_unit_bounty_dice_sides[1]=4
 set udg_unit_range[1]=130
-set udg_unit_level[1]=4
+set udg_unit_level[1]=58
 
 // Dark Knight
 set udg_spawn_unit[2]='h014'
@@ -41742,11 +41761,11 @@ set udg_unit_att_base[2]=115
 set udg_unit_att_num_dice[2]=1
 set udg_unit_att_dice_sides[2]=3
 set udg_unit_att_CD[2]=1
-set udg_unit_bounty_base[2]=71
+set udg_unit_bounty_base[2]=65
 set udg_unit_bounty_num_dice[2]=2
 set udg_unit_bounty_dice_sides[2]=6
 set udg_unit_range[2]=150
-set udg_unit_level[2]=6
+set udg_unit_level[2]=59
 
 // Archer
 set udg_spawn_unit[3]='earc'
@@ -41772,11 +41791,11 @@ set udg_unit_att_base[4]=43
 set udg_unit_att_num_dice[4]=1
 set udg_unit_att_dice_sides[4]=3
 set udg_unit_att_CD[4]=1.2
-set udg_unit_bounty_base[4]=43
+set udg_unit_bounty_base[4]=40
 set udg_unit_bounty_num_dice[4]=1
 set udg_unit_bounty_dice_sides[4]=5
 set udg_unit_range[4]=525
-set udg_unit_level[4]=4
+set udg_unit_level[4]=58
 
 // Dark Dryad
 set udg_spawn_unit[5]='e004'
@@ -41787,11 +41806,11 @@ set udg_unit_att_base[5]=101
 set udg_unit_att_num_dice[5]=1
 set udg_unit_att_dice_sides[5]=2
 set udg_unit_att_CD[5]=1
-set udg_unit_bounty_base[5]=81
+set udg_unit_bounty_base[5]=75
 set udg_unit_bounty_num_dice[5]=2
 set udg_unit_bounty_dice_sides[5]=6
 set udg_unit_range[5]=500
-set udg_unit_level[5]=6
+set udg_unit_level[5]=59
 
 // Raider
 set udg_spawn_unit[6]='orai'
@@ -41802,11 +41821,11 @@ set udg_unit_att_base[6]=43
 set udg_unit_att_num_dice[6]=1
 set udg_unit_att_dice_sides[6]=2
 set udg_unit_att_CD[6]=1.2
-set udg_unit_bounty_base[6]=32
+set udg_unit_bounty_base[6]=29
 set udg_unit_bounty_num_dice[6]=1
 set udg_unit_bounty_dice_sides[6]=3
 set udg_unit_range[6]=150
-set udg_unit_level[6]=3
+set udg_unit_level[6]=57
 
 
 // Abomination
@@ -41818,11 +41837,11 @@ set udg_unit_att_base[7]=56
 set udg_unit_att_num_dice[7]=1
 set udg_unit_att_dice_sides[7]=3
 set udg_unit_att_CD[7]=1.3
-set udg_unit_bounty_base[7]=40
+set udg_unit_bounty_base[7]=37
 set udg_unit_bounty_num_dice[7]=1
 set udg_unit_bounty_dice_sides[7]=5
 set udg_unit_range[7]=150
-set udg_unit_level[7]=4
+set udg_unit_level[7]=58
 
 // Dark Abomination
 set udg_spawn_unit[8]='u009'
@@ -41833,11 +41852,11 @@ set udg_unit_att_base[8]=101
 set udg_unit_att_num_dice[8]=1
 set udg_unit_att_dice_sides[8]=3
 set udg_unit_att_CD[8]=1.1
-set udg_unit_bounty_base[8]=71
+set udg_unit_bounty_base[8]=65
 set udg_unit_bounty_num_dice[8]=2
 set udg_unit_bounty_dice_sides[8]=6
 set udg_unit_range[8]=150
-set udg_unit_level[8]=6
+set udg_unit_level[8]=59
 
 // Banshee
 set udg_spawn_unit[9]='uban'
@@ -41863,11 +41882,11 @@ set udg_unit_att_base[10]=34
 set udg_unit_att_num_dice[10]=1
 set udg_unit_att_dice_sides[10]=2
 set udg_unit_att_CD[10]=1.2
-set udg_unit_bounty_base[10]=32
+set udg_unit_bounty_base[10]=29
 set udg_unit_bounty_num_dice[10]=1
 set udg_unit_bounty_dice_sides[10]=3
 set udg_unit_range[10]=685
-set udg_unit_level[10]=3
+set udg_unit_level[10]=57
 
 // Mortat Bombers
 set udg_spawn_unit[11]='hdhw'
@@ -41878,11 +41897,11 @@ set udg_unit_att_base[11]=42
 set udg_unit_att_num_dice[11]=1
 set udg_unit_att_dice_sides[11]=2
 set udg_unit_att_CD[11]=1.25
-set udg_unit_bounty_base[11]=41
+set udg_unit_bounty_base[11]=38
 set udg_unit_bounty_num_dice[11]=1
 set udg_unit_bounty_dice_sides[11]=6
 set udg_unit_range[11]=775
-set udg_unit_level[11]=4
+set udg_unit_level[11]=58
 
 // Dark Mortar Bombers
 set udg_spawn_unit[12]='h018'
@@ -41893,11 +41912,11 @@ set udg_unit_att_base[12]=101
 set udg_unit_att_num_dice[12]=1
 set udg_unit_att_dice_sides[12]=2
 set udg_unit_att_CD[12]=1
-set udg_unit_bounty_base[12]=71
+set udg_unit_bounty_base[12]=65
 set udg_unit_bounty_num_dice[12]=2
 set udg_unit_bounty_dice_sides[12]=6
 set udg_unit_range[12]=800
-set udg_unit_level[12]=6
+set udg_unit_level[12]=59
 
 // Crypt Fiend
 set udg_spawn_unit[13]='ucry'
@@ -41908,11 +41927,11 @@ set udg_unit_att_base[13]=48
 set udg_unit_att_num_dice[13]=1
 set udg_unit_att_dice_sides[13]=2
 set udg_unit_att_CD[13]=1.2
-set udg_unit_bounty_base[13]=30
+set udg_unit_bounty_base[13]=28
 set udg_unit_bounty_num_dice[13]=1
 set udg_unit_bounty_dice_sides[13]=3
 set udg_unit_range[13]=710
-set udg_unit_level[13]=3
+set udg_unit_level[13]=57
 
 // Spellbreaker
 set udg_spawn_unit[14]='hspt'
@@ -41923,11 +41942,11 @@ set udg_unit_att_base[14]=39
 set udg_unit_att_num_dice[14]=1
 set udg_unit_att_dice_sides[14]=3
 set udg_unit_att_CD[14]=1.2
-set udg_unit_bounty_base[14]=32
+set udg_unit_bounty_base[14]=29
 set udg_unit_bounty_num_dice[14]=1
 set udg_unit_bounty_dice_sides[14]=3
 set udg_unit_range[14]=475
-set udg_unit_level[14]=3
+set udg_unit_level[14]=57
 
 // Druid of Talon
 set udg_spawn_unit[15]='e00H'
@@ -41938,11 +41957,11 @@ set udg_unit_att_base[15]=47
 set udg_unit_att_num_dice[15]=1
 set udg_unit_att_dice_sides[15]=2
 set udg_unit_att_CD[15]=1
-set udg_unit_bounty_base[15]=32
+set udg_unit_bounty_base[15]=29
 set udg_unit_bounty_num_dice[15]=1
 set udg_unit_bounty_dice_sides[15]=3
 set udg_unit_range[15]=570
-set udg_unit_level[15]=3
+set udg_unit_level[15]=57
 
 // Berserker
 set udg_spawn_unit[16]='otbk'
@@ -41953,11 +41972,11 @@ set udg_unit_att_base[16]=41
 set udg_unit_att_num_dice[16]=1
 set udg_unit_att_dice_sides[16]=3
 set udg_unit_att_CD[16]=1.2
-set udg_unit_bounty_base[16]=29
+set udg_unit_bounty_base[16]=27
 set udg_unit_bounty_num_dice[16]=1
 set udg_unit_bounty_dice_sides[16]=3
 set udg_unit_range[16]=690
-set udg_unit_level[16]=3
+set udg_unit_level[16]=57
 
 // Ghoul
 set udg_spawn_unit[17]='ugho'
@@ -41983,11 +42002,11 @@ set udg_unit_att_base[18]=34
 set udg_unit_att_num_dice[18]=1
 set udg_unit_att_dice_sides[18]=3
 set udg_unit_att_CD[18]=1.1
-set udg_unit_bounty_base[18]=30
+set udg_unit_bounty_base[18]=28
 set udg_unit_bounty_num_dice[18]=1
 set udg_unit_bounty_dice_sides[18]=2
 set udg_unit_range[18]=130
-set udg_unit_level[18]=2
+set udg_unit_level[18]=56
 
 // Skeletal Mage
 set udg_spawn_unit[19]='uskm'
@@ -41998,11 +42017,11 @@ set udg_unit_att_base[19]=46
 set udg_unit_att_num_dice[19]=1
 set udg_unit_att_dice_sides[19]=2
 set udg_unit_att_CD[19]=1.1
-set udg_unit_bounty_base[19]=32
+set udg_unit_bounty_base[19]=29
 set udg_unit_bounty_num_dice[19]=1
 set udg_unit_bounty_dice_sides[19]=3
 set udg_unit_range[19]=800
-set udg_unit_level[19]=3
+set udg_unit_level[19]=57
 
 // Wraith
 set udg_spawn_unit[20]='ngh2'
@@ -42013,11 +42032,11 @@ set udg_unit_att_base[20]=44
 set udg_unit_att_num_dice[20]=1
 set udg_unit_att_dice_sides[20]=3
 set udg_unit_att_CD[20]=1.2
-set udg_unit_bounty_base[20]=29
+set udg_unit_bounty_base[20]=27
 set udg_unit_bounty_num_dice[20]=1
 set udg_unit_bounty_dice_sides[20]=3
 set udg_unit_range[20]=700
-set udg_unit_level[20]=3
+set udg_unit_level[20]=57
 
 // Riflemen
 set udg_spawn_unit[21]='hrif'
@@ -42043,11 +42062,11 @@ set udg_unit_att_base[22]=31
 set udg_unit_att_num_dice[22]=1
 set udg_unit_att_dice_sides[22]=2
 set udg_unit_att_CD[22]=1.20
-set udg_unit_bounty_base[22]=30
+set udg_unit_bounty_base[22]=28
 set udg_unit_bounty_num_dice[22]=1
 set udg_unit_bounty_dice_sides[22]=3
 set udg_unit_range[22]=585
-set udg_unit_level[22]=3
+set udg_unit_level[22]=57
 
 // Grunt
 set udg_spawn_unit[23]='ogru'
@@ -42073,11 +42092,11 @@ set udg_unit_att_base[24]=57
 set udg_unit_att_num_dice[24]=1
 set udg_unit_att_dice_sides[24]=3
 set udg_unit_att_CD[24]=1.2
-set udg_unit_bounty_base[24]=42
+set udg_unit_bounty_base[24]=39
 set udg_unit_bounty_num_dice[24]=1
 set udg_unit_bounty_dice_sides[24]=4
 set udg_unit_range[24]=160
-set udg_unit_level[24]=4
+set udg_unit_level[24]=58
 
 // Dark Tauren
 set udg_spawn_unit[25]='o009'
@@ -42088,11 +42107,11 @@ set udg_unit_att_base[25]=105
 set udg_unit_att_num_dice[25]=1
 set udg_unit_att_dice_sides[25]=3
 set udg_unit_att_CD[25]=1
-set udg_unit_bounty_base[25]=71
+set udg_unit_bounty_base[25]=65
 set udg_unit_bounty_num_dice[25]=2
 set udg_unit_bounty_dice_sides[25]=6
 set udg_unit_range[25]=160
-set udg_unit_level[25]=6
+set udg_unit_level[25]=59
 
 
 // [26] Rifleman (from 21)
@@ -42134,11 +42153,11 @@ set udg_unit_att_base[28]=31
 set udg_unit_att_num_dice[28]=1
 set udg_unit_att_dice_sides[28]=2
 set udg_unit_att_CD[28]=1.20
-set udg_unit_bounty_base[28]=30
+set udg_unit_bounty_base[28]=28
 set udg_unit_bounty_num_dice[28]=1
 set udg_unit_bounty_dice_sides[28]=3
 set udg_unit_range[28]=585
-set udg_unit_level[28]=3
+set udg_unit_level[28]=57
 
 // [29] Tauren (from 24)
 set udg_spawn_unit[29]='otau'
@@ -42149,11 +42168,11 @@ set udg_unit_att_base[29]=57
 set udg_unit_att_num_dice[29]=1
 set udg_unit_att_dice_sides[29]=3
 set udg_unit_att_CD[29]=1.2
-set udg_unit_bounty_base[29]=42
+set udg_unit_bounty_base[29]=39
 set udg_unit_bounty_num_dice[29]=1
 set udg_unit_bounty_dice_sides[29]=4
 set udg_unit_range[29]=160
-set udg_unit_level[29]=4
+set udg_unit_level[29]=58
 
 // [30] Dark Tauren (from 25)
 set udg_spawn_unit[30]='o009'
@@ -42164,11 +42183,11 @@ set udg_unit_att_base[30]=105
 set udg_unit_att_num_dice[30]=1
 set udg_unit_att_dice_sides[30]=3
 set udg_unit_att_CD[30]=1
-set udg_unit_bounty_base[30]=71
+set udg_unit_bounty_base[30]=65
 set udg_unit_bounty_num_dice[30]=2
 set udg_unit_bounty_dice_sides[30]=6
 set udg_unit_range[30]=160
-set udg_unit_level[30]=6
+set udg_unit_level[30]=59
 
 // [31] Archer (from 3)
 set udg_spawn_unit[31]='earc'
@@ -42194,11 +42213,11 @@ set udg_unit_att_base[32]=43
 set udg_unit_att_num_dice[32]=1
 set udg_unit_att_dice_sides[32]=3
 set udg_unit_att_CD[32]=1.2
-set udg_unit_bounty_base[32]=43
+set udg_unit_bounty_base[32]=40
 set udg_unit_bounty_num_dice[32]=1
 set udg_unit_bounty_dice_sides[32]=5
 set udg_unit_range[32]=525
-set udg_unit_level[32]=4
+set udg_unit_level[32]=58
 
 // [33] Dark Dryad (from 5)
 set udg_spawn_unit[33]='e004'
@@ -42209,11 +42228,11 @@ set udg_unit_att_base[33]=101
 set udg_unit_att_num_dice[33]=1
 set udg_unit_att_dice_sides[33]=2
 set udg_unit_att_CD[33]=1
-set udg_unit_bounty_base[33]=79
+set udg_unit_bounty_base[33]=73
 set udg_unit_bounty_num_dice[33]=2
 set udg_unit_bounty_dice_sides[33]=6
 set udg_unit_range[33]=500
-set udg_unit_level[33]=6
+set udg_unit_level[33]=59
 
 // [34] Knight (from 1)
 set udg_spawn_unit[34]='hkni'
@@ -42224,11 +42243,11 @@ set udg_unit_att_base[34]=56
 set udg_unit_att_num_dice[34]=1
 set udg_unit_att_dice_sides[34]=3
 set udg_unit_att_CD[34]=1.15
-set udg_unit_bounty_base[34]=41
+set udg_unit_bounty_base[34]=38
 set udg_unit_bounty_num_dice[34]=1
 set udg_unit_bounty_dice_sides[34]=4
 set udg_unit_range[34]=130
-set udg_unit_level[34]=4
+set udg_unit_level[34]=58
 
 // [35] Dark Knight (from 2)
 set udg_spawn_unit[35]='h014'
@@ -42239,11 +42258,11 @@ set udg_unit_att_base[35]=115
 set udg_unit_att_num_dice[35]=1
 set udg_unit_att_dice_sides[35]=3
 set udg_unit_att_CD[35]=1
-set udg_unit_bounty_base[35]=71
+set udg_unit_bounty_base[35]=65
 set udg_unit_bounty_num_dice[35]=2
 set udg_unit_bounty_dice_sides[35]=6
 set udg_unit_range[35]=150
-set udg_unit_level[35]=6
+set udg_unit_level[35]=59
 
 // [36] Crypt Fiend (from 13)
 set udg_spawn_unit[36]='ucry'
@@ -42254,11 +42273,11 @@ set udg_unit_att_base[36]=48
 set udg_unit_att_num_dice[36]=1
 set udg_unit_att_dice_sides[36]=2
 set udg_unit_att_CD[36]=1.2
-set udg_unit_bounty_base[36]=30
+set udg_unit_bounty_base[36]=28
 set udg_unit_bounty_num_dice[36]=1
 set udg_unit_bounty_dice_sides[36]=3
 set udg_unit_range[36]=710
-set udg_unit_level[36]=3
+set udg_unit_level[36]=57
 
 // [37] Abomination (from 7)
 set udg_spawn_unit[37]='uabo'
@@ -42269,11 +42288,11 @@ set udg_unit_att_base[37]=56
 set udg_unit_att_num_dice[37]=1
 set udg_unit_att_dice_sides[37]=3
 set udg_unit_att_CD[37]=1.3
-set udg_unit_bounty_base[37]=40
+set udg_unit_bounty_base[37]=37
 set udg_unit_bounty_num_dice[37]=1
 set udg_unit_bounty_dice_sides[37]=5
 set udg_unit_range[37]=150
-set udg_unit_level[37]=4
+set udg_unit_level[37]=58
 
 // [38] Dark Abomination (from 8)
 set udg_spawn_unit[38]='u009'
@@ -42284,11 +42303,11 @@ set udg_unit_att_base[38]=101
 set udg_unit_att_num_dice[38]=1
 set udg_unit_att_dice_sides[38]=3
 set udg_unit_att_CD[38]=1.1
-set udg_unit_bounty_base[38]=71
+set udg_unit_bounty_base[38]=65
 set udg_unit_bounty_num_dice[38]=2
 set udg_unit_bounty_dice_sides[38]=6
 set udg_unit_range[38]=150
-set udg_unit_level[38]=6
+set udg_unit_level[38]=59
 
 // [39] Banshee (from 9)
 set udg_spawn_unit[39]='uban'
@@ -42314,11 +42333,11 @@ set udg_unit_att_base[40]=34
 set udg_unit_att_num_dice[40]=1
 set udg_unit_att_dice_sides[40]=2
 set udg_unit_att_CD[40]=1.2
-set udg_unit_bounty_base[40]=32
+set udg_unit_bounty_base[40]=29
 set udg_unit_bounty_num_dice[40]=1
 set udg_unit_bounty_dice_sides[40]=3
 set udg_unit_range[40]=685
-set udg_unit_level[40]=3
+set udg_unit_level[40]=57
 
 // [41] Mortar Bomber (from 11)
 set udg_spawn_unit[41]='hdhw'
@@ -42329,11 +42348,11 @@ set udg_unit_att_base[41]=42
 set udg_unit_att_num_dice[41]=1
 set udg_unit_att_dice_sides[41]=2
 set udg_unit_att_CD[41]=1.25
-set udg_unit_bounty_base[41]=41
+set udg_unit_bounty_base[41]=38
 set udg_unit_bounty_num_dice[41]=1
 set udg_unit_bounty_dice_sides[41]=6
 set udg_unit_range[41]=775
-set udg_unit_level[41]=4
+set udg_unit_level[41]=58
 
 // [42] Dark Mortar Bomber (from 12)
 set udg_spawn_unit[42]='h018'
@@ -42344,11 +42363,11 @@ set udg_unit_att_base[42]=101
 set udg_unit_att_num_dice[42]=1
 set udg_unit_att_dice_sides[42]=2
 set udg_unit_att_CD[42]=1
-set udg_unit_bounty_base[42]=71
+set udg_unit_bounty_base[42]=65
 set udg_unit_bounty_num_dice[42]=2
 set udg_unit_bounty_dice_sides[42]=6
 set udg_unit_range[42]=800
-set udg_unit_level[42]=6
+set udg_unit_level[42]=59
 
 // [43] Raider (from 6)
 set udg_spawn_unit[43]='orai'
@@ -42359,11 +42378,11 @@ set udg_unit_att_base[43]=43
 set udg_unit_att_num_dice[43]=1
 set udg_unit_att_dice_sides[43]=2
 set udg_unit_att_CD[43]=1.2
-set udg_unit_bounty_base[43]=32
+set udg_unit_bounty_base[43]=29
 set udg_unit_bounty_num_dice[43]=1
 set udg_unit_bounty_dice_sides[43]=3
 set udg_unit_range[43]=150
-set udg_unit_level[43]=3
+set udg_unit_level[43]=57
 
 // [44] Ghoul (from 17)
 set udg_spawn_unit[44]='ugho'
@@ -42389,11 +42408,11 @@ set udg_unit_att_base[45]=46
 set udg_unit_att_num_dice[45]=1
 set udg_unit_att_dice_sides[45]=2
 set udg_unit_att_CD[45]=1.1
-set udg_unit_bounty_base[45]=32
+set udg_unit_bounty_base[45]=29
 set udg_unit_bounty_num_dice[45]=1
 set udg_unit_bounty_dice_sides[45]=3
 set udg_unit_range[45]=800
-set udg_unit_level[45]=3
+set udg_unit_level[45]=57
 
 // [46] Druid of the Talon (from 15)
 set udg_spawn_unit[46]='e00H'
@@ -42404,11 +42423,11 @@ set udg_unit_att_base[46]=47
 set udg_unit_att_num_dice[46]=1
 set udg_unit_att_dice_sides[46]=2
 set udg_unit_att_CD[46]=1
-set udg_unit_bounty_base[46]=32
+set udg_unit_bounty_base[46]=29
 set udg_unit_bounty_num_dice[46]=1
 set udg_unit_bounty_dice_sides[46]=3
 set udg_unit_range[46]=570
-set udg_unit_level[46]=3
+set udg_unit_level[46]=57
 
 // [47] Wraith (from 20)
 set udg_spawn_unit[47]='ngh2'
@@ -42419,11 +42438,11 @@ set udg_unit_att_base[47]=44
 set udg_unit_att_num_dice[47]=1
 set udg_unit_att_dice_sides[47]=3
 set udg_unit_att_CD[47]=1.2
-set udg_unit_bounty_base[47]=29
+set udg_unit_bounty_base[47]=27
 set udg_unit_bounty_num_dice[47]=1
 set udg_unit_bounty_dice_sides[47]=3
 set udg_unit_range[47]=700
-set udg_unit_level[47]=3
+set udg_unit_level[47]=57
 
 // [48] Militia (from 18)
 set udg_spawn_unit[48]='hmil'
@@ -42434,11 +42453,11 @@ set udg_unit_att_base[48]=34
 set udg_unit_att_num_dice[48]=1
 set udg_unit_att_dice_sides[48]=3
 set udg_unit_att_CD[48]=1.1
-set udg_unit_bounty_base[48]=30
+set udg_unit_bounty_base[48]=28
 set udg_unit_bounty_num_dice[48]=1
 set udg_unit_bounty_dice_sides[48]=2
 set udg_unit_range[48]=130
-set udg_unit_level[48]=2
+set udg_unit_level[48]=56
 
 // [49] Spellbreaker (from 14)
 set udg_spawn_unit[49]='hspt'
@@ -42449,11 +42468,11 @@ set udg_unit_att_base[49]=39
 set udg_unit_att_num_dice[49]=1
 set udg_unit_att_dice_sides[49]=3
 set udg_unit_att_CD[49]=1.2
-set udg_unit_bounty_base[49]=32
+set udg_unit_bounty_base[49]=29
 set udg_unit_bounty_num_dice[49]=1
 set udg_unit_bounty_dice_sides[49]=3
 set udg_unit_range[49]=475
-set udg_unit_level[49]=3
+set udg_unit_level[49]=57
 
 // [50] Berserker (from 16)
 set udg_spawn_unit[50]='otbk'
@@ -42464,11 +42483,11 @@ set udg_unit_att_base[50]=41
 set udg_unit_att_num_dice[50]=1
 set udg_unit_att_dice_sides[50]=3
 set udg_unit_att_CD[50]=1.2
-set udg_unit_bounty_base[50]=29
+set udg_unit_bounty_base[50]=27
 set udg_unit_bounty_num_dice[50]=1
 set udg_unit_bounty_dice_sides[50]=3
 set udg_unit_range[50]=690
-set udg_unit_level[50]=3
+set udg_unit_level[50]=57
 
 
 call DestroyTrigger(GetTriggeringTrigger())
@@ -43006,11 +43025,7 @@ function Trig_eight_Func001Func002Func001C takes nothing returns boolean
 endfunction
 
 function SyncWallPoint takes integer pn, real angle, real cx, real cy returns location
-    local integer seq=SyncWall[pn]
-    local real side=(I2R(ModuloInteger(seq*8,21))-10.0)*40.0
-    local real radius=1480.0+I2R(seq/21)*56.0
-    set SyncWall[pn]=ModuloInteger(seq+1,210)
-    return Location(cx+radius*Cos(angle)-side*Sin(angle),cy+radius*Sin(angle)+side*Cos(angle))
+    return GetUnitLoc(udg_base[pn])
 endfunction
 
 function Trig_eight_Actions takes nothing returns nothing
@@ -45793,7 +45808,6 @@ function SoloFootsAltarStockClear takes unit altar returns nothing
         set i=i + 1
     endloop
     call RemoveUnitFromStock(altar, 'hPgN')
-    call RemoveUnitFromStock(altar, 'hPgN')
 endfunction
 
 function SoloFootsAltarStockAddPage takes unit altar,integer page returns nothing
@@ -45855,6 +45869,10 @@ function SoloFootsAltarStockPopulate takes unit altar returns nothing
     call UnitRemoveAbility(altar, 'A0GG')
     call SoloFootsAltarStockClear(altar)
     call SaveInteger(GST_Hash, altarKey, 900, 0)
+    if SF_HeroCount[GetConvertedPlayerId(GetOwningPlayer(altar))] >= 2 then
+        call SaveBoolean(GST_Hash, altarKey, 902, true)
+        return
+    endif
     // Page 1 always contains one Transmute hero and one Healing Wave hero.
     // E00E is the Transmute hero at index 18; N027 is the Healing Wave hero at index 48.
     call SaveBoolean(GST_Hash, altarKey, 18, true)
@@ -46444,7 +46462,6 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_Overdrive()
     call InitTrig_Taunt_Turtle_Upgrade()
     call InitTrig_Turtle_Level_2_purchase()
-    call InitTrig_Bounty_Timer_1()
     call InitTrig_autorevive()
     call InitTrig_change_Revive_time_based_on_level()
     call InitTrig_colossal_variables()
@@ -48211,60 +48228,1277 @@ function SF_Initialize takes nothing returns nothing
     set t=null
 endfunction
 
-function TFP_FFDP_ShieldFind takes unit u returns integer
-    local integer i = 1
-    loop
-        exitwhen i > TFP_FFDP_ShCount
-        if TFP_FFDP_ShUnit[i] == u then
-            return i
-        endif
-        set i = i + 1
-    endloop
-    return 0
+function TFP_TF_Alive takes unit u returns boolean
+    return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and not IsUnitType(u, UNIT_TYPE_DEAD)
 endfunction
 
-function TFP_FFDP_ShieldEnd takes integer i returns nothing
-    if TFP_FFDP_ShFx[i] != null then
-        call DestroyEffect(TFP_FFDP_ShFx[i])
-    endif
-    set TFP_FFDP_ShFx[i]     = TFP_FFDP_ShFx[TFP_FFDP_ShCount]
-    set TFP_FFDP_ShUnit[i]   = TFP_FFDP_ShUnit[TFP_FFDP_ShCount]
-    set TFP_FFDP_ShAmount[i] = TFP_FFDP_ShAmount[TFP_FFDP_ShCount]
-    set TFP_FFDP_ShTime[i]   = TFP_FFDP_ShTime[TFP_FFDP_ShCount]
-    set TFP_FFDP_ShFx[TFP_FFDP_ShCount]   = null
-    set TFP_FFDP_ShUnit[TFP_FFDP_ShCount] = null
-    set TFP_FFDP_ShCount = TFP_FFDP_ShCount - 1
-endfunction
-
-function TFP_FFDP_OnDamage takes nothing returns nothing
-    local unit    u   = GetTriggerUnit()
-    local real    dmg = GetEventDamage()
-    local integer i
-    if dmg <= 0.0 then
-        set u = null
-        return
-    endif
-    set i = TFP_FFDP_ShieldFind(u)
-    if i == 0 then
-        set u = null
-        return
-    endif
-    if dmg >= TFP_FFDP_ShAmount[i] then
-        call BlzSetEventDamage(dmg - TFP_FFDP_ShAmount[i])
-        call TFP_FFDP_ShieldEnd(i)
+function TFP_s__destiny___destinyDat__allocate takes nothing returns integer
+ local integer this=TFP_si__destiny___destinyDat_F
+    if (this!=0) then
+        set TFP_si__destiny___destinyDat_F=TFP_si__destiny___destinyDat_V[this]
     else
-        set TFP_FFDP_ShAmount[i] = TFP_FFDP_ShAmount[i] - dmg
-        call BlzSetEventDamage(0.0)
+        set TFP_si__destiny___destinyDat_I=TFP_si__destiny___destinyDat_I+1
+        set this=TFP_si__destiny___destinyDat_I
     endif
-    set u = null
+    if (this>8190) then
+        return 0
+    endif
+
+   set TFP_s__destiny___destinyDat_elapsedTime[this]=0.
+    set TFP_si__destiny___destinyDat_V[this]=-1
+ return this
 endfunction
 
-function TFP_FFDP_Revoke takes integer i returns nothing
-    call GroupClear(TFP_FFDP_Track[i])
+function TFP_s__destiny___destinyDat_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (TFP_si__destiny___destinyDat_V[this]!=-1) then
+        return
+    endif
+    set TFP_si__destiny___destinyDat_V[this]=TFP_si__destiny___destinyDat_F
+    set TFP_si__destiny___destinyDat_F=this
+endfunction
+
+function TFP_s__destiny___target__allocate takes nothing returns integer
+ local integer this=TFP_si__destiny___target_F
+    if (this!=0) then
+        set TFP_si__destiny___target_F=TFP_si__destiny___target_V[this]
+    else
+        set TFP_si__destiny___target_I=TFP_si__destiny___target_I+1
+        set this=TFP_si__destiny___target_I
+    endif
+    if (this>8190) then
+        return 0
+    endif
+
+    set TFP_si__destiny___target_V[this]=-1
+ return this
+endfunction
+
+function TFP_s__destiny___target_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (TFP_si__destiny___target_V[this]!=-1) then
+        return
+    endif
+    set TFP_si__destiny___target_V[this]=TFP_si__destiny___target_F
+    set TFP_si__destiny___target_F=this
+endfunction
+
+function TFP_s__pickACard___dummyCardDat__allocate takes nothing returns integer
+ local integer this=TFP_si__pickACard___dummyCardDat_F
+    if (this!=0) then
+        set TFP_si__pickACard___dummyCardDat_F=TFP_si__pickACard___dummyCardDat_V[this]
+    else
+        set TFP_si__pickACard___dummyCardDat_I=TFP_si__pickACard___dummyCardDat_I+1
+        set this=TFP_si__pickACard___dummyCardDat_I
+    endif
+    if (this>8190) then
+        return 0
+    endif
+
+    set TFP_si__pickACard___dummyCardDat_V[this]=-1
+ return this
+endfunction
+
+function TFP_s__pickACard___dummyCardDat_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (TFP_si__pickACard___dummyCardDat_V[this]!=-1) then
+        return
+    endif
+    set TFP_si__pickACard___dummyCardDat_V[this]=TFP_si__pickACard___dummyCardDat_F
+    set TFP_si__pickACard___dummyCardDat_F=this
+endfunction
+
+function TFP_s__pickACard___pickDat__allocate takes nothing returns integer
+ local integer this=TFP_si__pickACard___pickDat_F
+    if (this!=0) then
+        set TFP_si__pickACard___pickDat_F=TFP_si__pickACard___pickDat_V[this]
+    else
+        set TFP_si__pickACard___pickDat_I=TFP_si__pickACard___pickDat_I+1
+        set this=TFP_si__pickACard___pickDat_I
+    endif
+    if (this>8190) then
+        return 0
+    endif
+
+   set TFP_s__pickACard___pickDat_locked[this]=false
+   set TFP_s__pickACard___pickDat_thrown[this]=false
+   set TFP_TF_CardLocked[this]=false
+   set TFP_TF_LockedThrow[this]=0
+    set TFP_si__pickACard___pickDat_V[this]=-1
+ return this
+endfunction
+
+function TFP_s__pickACard___pickDat_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (TFP_si__pickACard___pickDat_V[this]!=-1) then
+        return
+    endif
+    set TFP_si__pickACard___pickDat_V[this]=TFP_si__pickACard___pickDat_F
+    set TFP_si__pickACard___pickDat_F=this
+endfunction
+
+function TFP_s__wildCards___cardDat__allocate takes nothing returns integer
+ local integer this=TFP_si__wildCards___cardDat_F
+    if (this!=0) then
+        set TFP_si__wildCards___cardDat_F=TFP_si__wildCards___cardDat_V[this]
+    else
+        set TFP_si__wildCards___cardDat_I=TFP_si__wildCards___cardDat_I+1
+        set this=TFP_si__wildCards___cardDat_I
+    endif
+    if (this>2729) then
+        return 0
+    endif
+    set TFP_s__wildCards___cardDat_cards[this]=(this-1)*3
+    set TFP_s__wildCards___cardDat_gradX[this]=(this-1)*3
+    set TFP_s__wildCards___cardDat_gradY[this]=(this-1)*3
+   set TFP_s__wildCards___cardDat_traveled[this]=0.
+    set TFP_si__wildCards___cardDat_V[this]=-1
+ return this
+endfunction
+
+function TFP_s__wildCards___cardDat_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (TFP_si__wildCards___cardDat_V[this]!=-1) then
+        return
+    endif
+    set TFP_si__wildCards___cardDat_V[this]=TFP_si__wildCards___cardDat_F
+    set TFP_si__wildCards___cardDat_F=this
+endfunction
+
+function TFP_s__Table___GTable__allocate takes nothing returns integer
+ local integer this=TFP_si__Table___GTable_F
+    if (this!=0) then
+        set TFP_si__Table___GTable_F=TFP_si__Table___GTable_V[this]
+    else
+        set TFP_si__Table___GTable_I=TFP_si__Table___GTable_I+1
+        set this=TFP_si__Table___GTable_I
+    endif
+    if (this>8100) then
+        return 0
+    endif
+
+    set TFP_si__Table___GTable_type[this]=3
+    set TFP_si__Table___GTable_V[this]=-1
+ return this
+endfunction
+
+function TFP_s__HandleTable__allocate takes nothing returns integer
+ local integer this=TFP_s__Table___GTable__allocate()
+ local integer kthis
+    if(this==0) then
+        return 0
+    endif
+    set TFP_si__Table___GTable_type[this]=6
+    set kthis=this
+
+ return this
+endfunction
+
+function TFP_tfConsts___i takes nothing returns nothing
+    set TFP_tfConsts_hiddenCard=TFP_s__HandleTable__allocate()
+    set TFP_s__tfConsts_CARD_ID[0]=TFP_tfConsts_BLUE_CARD_ID
+    set TFP_s__tfConsts_CARD_ID[1]=TFP_tfConsts_RED_CARD_ID
+    set TFP_s__tfConsts_CARD_ID[2]=TFP_tfConsts_GOLD_CARD_ID
+endfunction
+
+function TFP_DamageType_dealCodeDamage takes unit who, unit target, real damage, damagetype how returns nothing
+    call UnitDamageTarget(who, target, damage, false, false, ATTACK_TYPE_NORMAL, how, null)
+endfunction
+
+function TF_CardClip takes unit victim returns nothing
+    local effect cut=AddSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodFootman.mdl",victim,"chest")
+    local sound slice=CreateSound("war3mapImported\\TFCardSlice.wav",false,true,true,0,0,"SpellsEAX")
+    call BlzSetSpecialEffectScale(cut,0.38)
+    call BlzSetSpecialEffectAlpha(cut,108)
+    call BlzSetSpecialEffectTimeScale(cut,1.8)
+    call DestroyEffect(cut)
+    call SetSoundDuration(slice,105)
+    call SetSoundVolume(slice,62)
+    call SetSoundDistances(slice,250.,1100.)
+    call SetSoundPosition(slice,GetUnitX(victim),GetUnitY(victim),GetUnitFlyHeight(victim)+65.)
+    call StartSound(slice)
+    call KillSoundWhenDone(slice)
+    set cut=null
+    set slice=null
+endfunction
+
+function TF_CardProjectile takes unit u, integer lane returns nothing
+    call SetUnitTimeScale(u,1.25)
+    call SetUnitScale(u,1.6675,1.6675,1.6675)
+    if lane==0 then
+        call SetUnitVertexColor(u,70,159,255,255)
+    elseif lane==1 then
+        call SetUnitVertexColor(u,255,81,99,255)
+    else
+        call SetUnitVertexColor(u,255,213,74,255)
+    endif
+endfunction
+
+function TF45_LineHit takes real x, real y, real ax, real ay, real bx, real by returns boolean
+    local real dx=bx-ax
+    local real dy=by-ay
+    local real t=0.
+    if dx*dx+dy*dy>0. then
+        set t=RMaxBJ(0.,RMinBJ(1.,((x-ax)*dx+(y-ay)*dy)/(dx*dx+dy*dy)))
+    endif
+    set dx=x-ax-t*dx
+    set dy=y-ay-t*dy
+    return dx*dx+dy*dy<=TFP_wildCards___ENUM_RADIUS*TFP_wildCards___ENUM_RADIUS
+endfunction
+
+function TFP_wildCards___p takes nothing returns nothing
+        local integer index=0
+        local integer tripleLooper
+        local integer tempDat
+        local real oldX
+        local real oldY
+        local real uX
+        local real uY
+        local unit FoG
+        loop
+            exitwhen index > TFP_wildCards___dbIndex
+            set tempDat=TFP_wildCards___datDB[index]
+            set tripleLooper=0
+            loop
+                exitwhen tripleLooper > 2
+                set oldX=GetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper])
+                set oldY=GetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper])
+                set uX=GetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper]) + TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+tripleLooper]
+                set uY=GetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper]) + TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+tripleLooper]
+                call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper], uX)
+                call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper], uY)
+                call GroupEnumUnitsInRange(TFP_wildCards___grp, (oldX+uX)*.5, (oldY+uY)*.5, TFP_wildCards___ENUM_RADIUS+TFP_wildCards___PROJECTILE_SPEED*TFP_tfConsts_FPS*.5, null)
+                loop
+                    set FoG=FirstOfGroup(TFP_wildCards___grp)
+                    exitwhen FoG == null
+                    if TF45_LineHit(GetUnitX(FoG),GetUnitY(FoG),oldX,oldY,uX,uY) and IsUnitEnemy(FoG, GetOwningPlayer(TFP_s__wildCards___cardDat_caster[tempDat])) and IsUnitType(FoG, UNIT_TYPE_DEAD) == false and IsUnitType(FoG, UNIT_TYPE_STRUCTURE) == false and not IsUnitType(FoG, UNIT_TYPE_MAGIC_IMMUNE) and IsUnitInGroup(FoG, TFP_s__wildCards___cardDat_struckUnits[tempDat]) == false then
+                        call TFP_DamageType_dealCodeDamage(TFP_s__wildCards___cardDat_caster[tempDat] , FoG , TFP_s__wildCards___cardDat_damage[tempDat] , DAMAGE_TYPE_MAGIC)
+                        call TF_CardClip(FoG)
+                        call GroupAddUnit(TFP_s__wildCards___cardDat_struckUnits[tempDat], FoG)
+                    endif
+                    call GroupRemoveUnit(TFP_wildCards___grp, FoG)
+                endloop
+                set tripleLooper=tripleLooper + 1
+            endloop
+            set TFP_s__wildCards___cardDat_traveled[tempDat]=TFP_s__wildCards___cardDat_traveled[tempDat] + TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS
+            if TFP_s__wildCards___cardDat_traveled[tempDat] >= TF46_ZRange[tempDat] then
+                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]])
+                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1])
+                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2])
+                call DestroyGroup(TFP_s__wildCards___cardDat_struckUnits[tempDat])
+                call TFP_s__wildCards___cardDat_deallocate(tempDat)
+                set TFP_wildCards___datDB[index]=TFP_wildCards___datDB[TFP_wildCards___dbIndex]
+                set index=index - 1
+                set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex - 1
+                if TFP_wildCards___dbIndex == - 1 then
+                    call PauseTimer(TFP_wildCards___time)
+                endif
+            endif
+            set index=index + 1
+        endloop
+    endfunction
+
+function TFP_wildCards___c takes nothing returns boolean
+        local integer tempDat
+        local integer ridiculousUseOfStruct
+        local player owner
+        local unit tU
+        local real tX
+        local real tY
+        local real tUX
+        local real tUY
+        local real angle
+        local timer cdrClock
+        if GetSpellAbilityId() == TFP_tfConsts_WILD_CARDS_ID then
+            set tU=GetTriggerUnit()
+            call BlzStartUnitAbilityCooldown(tU, TFP_tfConsts_WILD_CARDS_ID, 10.0)
+            set owner=GetOwningPlayer(tU)
+            set tX=GetSpellTargetX()
+            set tY=GetSpellTargetY()
+            set tUX=GetUnitX(tU)
+            set tUY=GetUnitY(tU)
+            set angle=Atan2(tY - tUY, tX - tUX)
+            set tempDat=TFP_s__wildCards___cardDat__allocate()
+            set TF46_ZRange[tempDat]=1400.+50.*I2R(GetUnitAbilityLevel(tU,'ATf1'))
+            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]]=CreateUnit(owner, 'htz1', 0., 0., ( angle - TFP_wildCards___OFFSET_ANGLE ) * bj_RADTODEG)
+            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1]=CreateUnit(owner, 'htz1', 0., 0., angle * bj_RADTODEG)
+            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2]=CreateUnit(owner, 'htz1', 0., 0., ( angle + TFP_wildCards___OFFSET_ANGLE ) * bj_RADTODEG)
+            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]],0)
+            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1],1)
+            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2],2)
+            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]], tUX)
+            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1], tUX)
+            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2], tUX)
+            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]], tUY)
+            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1], tUY)
+            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2], tUY)
+            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle - TFP_wildCards___OFFSET_ANGLE)
+            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+1]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle)
+            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle + TFP_wildCards___OFFSET_ANGLE)
+            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle - TFP_wildCards___OFFSET_ANGLE)
+            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+1]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle)
+            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle + TFP_wildCards___OFFSET_ANGLE)
+            set TFP_s__wildCards___cardDat_struckUnits[tempDat]=CreateGroup()
+            set TFP_s__wildCards___cardDat_caster[tempDat]=tU
+            set TFP_s__wildCards___cardDat_damage[tempDat]=TFP_WildDamage[GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)]
+            set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex + 1
+            set TFP_wildCards___datDB[TFP_wildCards___dbIndex]=tempDat
+            if TFP_wildCards___dbIndex == 0 then
+                call TimerStart(TFP_wildCards___time, TFP_tfConsts_FPS, true, function TFP_wildCards___p)
+            endif
+
+            set tU=null
+        endif
+        return false
+    endfunction
+
+function TFP_wildCards___i takes nothing returns nothing
+        local trigger t=CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+        call TriggerAddCondition(t, Condition(function TFP_wildCards___c))
+        set TFP_wildCards___cdrTable=TFP_s__HandleTable__allocate()
+        set t=null
+        set TFP_WildDamage[1] = 80.0
+    set TFP_WildDamage[2] = 130.0
+    set TFP_WildDamage[3] = 180.0
+    set TFP_WildDamage[4] = 250.0
+    set TFP_WildDamage[5] = 350.0
+    set TFP_WildDamage[6] = 550.0
+endfunction
+
+function TFP_pickACard___dummyP takes nothing returns nothing
+        local integer index=0
+        local integer tempDat
+        loop
+            exitwhen index > TFP_pickACard___dummyDBIndex
+            set tempDat=TFP_pickACard___dummyDB[index]
+            if GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_BLUE_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf6') > 0 then
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 80, 80, 255)
+            elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_RED_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf7') > 0 then
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 55, 55)
+            elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_GOLD_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf8') > 0 then
+                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55)
+            else
+                call BlzSetSpecialEffectAlpha(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 0)
+                call DestroyEffect(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
+                set TFP_s__pickACard___dummyCardDat_dummy[tempDat]=null
+                set TFP_s__pickACard___dummyCardDat_fate[tempDat]=null
+                call TFP_s__pickACard___dummyCardDat_deallocate(tempDat)
+                set TFP_pickACard___dummyDB[index]=TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]
+                set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex - 1
+                set index=index - 1
+                if TFP_pickACard___dummyDBIndex == - 1 then
+                    call PauseTimer(TFP_pickACard___dummyClock)
+                endif
+            endif
+            set index=index + 1
+        endloop
+    endfunction
+
+function TFP_pickACard___p takes nothing returns nothing
+    local timer time=GetExpiredTimer()
+    local integer d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromTimer,GetHandleId(time))
+    local unit caster=TFP_s__pickACard___pickDat_fate[d]
+    local integer color=LoadInteger(TFP_Table___ht,TFP_tfConsts_hiddenCard,GetHandleId(caster))
+    set TFP_s__pickACard___pickDat_elapsedTime[d]=TFP_s__pickACard___pickDat_elapsedTime[d]+TFP_pickACard___CARD_CYCLE_PERIOD
+    if TFP_s__pickACard___pickDat_thrown[d] or not TFP_TF_Alive(caster) or TFP_s__pickACard___pickDat_elapsedTime[d]>=TFP_pickACard___CYCLE_MAX_DURATION then
+        call UnitRemoveAbility(caster,TFP_tfConsts_BLUE_CARD_ID)
+        call UnitRemoveAbility(caster,TFP_tfConsts_RED_CARD_ID)
+        call UnitRemoveAbility(caster,TFP_tfConsts_GOLD_CARD_ID)
+        call UnitRemoveAbility(caster,'ATf6')
+        call UnitRemoveAbility(caster,'ATf7')
+        call UnitRemoveAbility(caster,'ATf8')
+        set TFP_TF_CardLocked[d]=false
+        set TFP_TF_LockedThrow[d]=0
+        call BlzUnitHideAbility(caster,TFP_tfConsts_PICK_A_CARD_ID,false)
+        call BlzStartUnitAbilityCooldown(caster,TFP_tfConsts_PICK_A_CARD_ID,6.)
+        call RemoveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
+        call RemoveSavedInteger(TFP_Table___ht,TFP_pickACard___fromTimer,GetHandleId(time))
+        set TFP_s__pickACard___pickDat_fate[d]=null
+        call TFP_s__pickACard___pickDat_deallocate(d)
+        call DestroyTimer(time)
+    elseif not TFP_TF_CardLocked[d] then
+        call UnitRemoveAbility(caster,TFP_s__tfConsts_CARD_ID[color])
+        set color=ModuloInteger(color+1,3)
+        call UnitAddAbility(caster,TFP_s__tfConsts_CARD_ID[color])
+        call SaveInteger(TFP_Table___ht,TFP_tfConsts_hiddenCard,GetHandleId(caster),color)
+    endif
+    set time=null
+    set caster=null
+endfunction
+
+function TFP_pickACard___c takes nothing returns boolean
+        local integer tempDat
+        local integer tempDCDat
+        local timer time
+        if GetSpellAbilityId() == TFP_tfConsts_PICK_A_CARD_ID and not HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(GetTriggerUnit())) then
+            //store all data in struct instance
+            set tempDat=TFP_s__pickACard___pickDat__allocate()
+            set TFP_s__pickACard___pickDat_fate[tempDat]=GetTriggerUnit()
+            set TFP_s__pickACard___pickDat_revertAbilityLevel[tempDat]=GetUnitAbilityLevel(TFP_s__pickACard___pickDat_fate[tempDat], TFP_tfConsts_PICK_A_CARD_ID)
+            set TFP_s__pickACard___pickDat_elapsedTime[tempDat]=0.
+            //make the ability unavailable
+            call BlzUnitHideAbility(TFP_s__pickACard___pickDat_fate[tempDat], TFP_tfConsts_PICK_A_CARD_ID, true)
+            //add the proper ability depending on the current value stored in the table
+            call UnitAddAbility(TFP_s__pickACard___pickDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[(LoadInteger(TFP_Table___ht, ((TFP_tfConsts_hiddenCard)), GetHandleId((TFP_s__pickACard___pickDat_fate[tempDat]))))]) // INLINED!!
+            //create new timer, because sharing a periodic timer with a card cycle period between 0.3 and 0.7 seconds will not only look poor,
+            //but potentially cause problems for TF vs TF situations.
+                //begin counting towards the duration. After picking a card, this same duration will be kept, and after the max is reached,
+                //or the card is thrown, the ability will reset to the original ability.
+            set time=CreateTimer()
+            call SaveInteger(TFP_Table___ht, ((TFP_pickACard___fromTimer)), GetHandleId((time)), ( tempDat)) // INLINED!!
+            call SaveInteger(TFP_Table___ht, ((TFP_pickACard___fromFate)), GetHandleId((TFP_s__pickACard___pickDat_fate[tempDat])), ( tempDat)) // INLINED!!
+            call TimerStart(time, TFP_pickACard___CARD_CYCLE_PERIOD, true, function TFP_pickACard___p)
+            //create the dummy card and give it the proper color. we need to attach it to a different, more smooth timer. This one will be stack based.
+            set tempDCDat=TFP_s__pickACard___dummyCardDat__allocate()
+            set TFP_s__pickACard___dummyCardDat_fate[tempDCDat]=TFP_s__pickACard___pickDat_fate[tempDat]
+            set TFP_s__pickACard___dummyCardDat_dummy[tempDCDat]=AddSpecialEffectTarget("war3mapImported\\TFPickedCard.mdx", TFP_s__pickACard___pickDat_fate[tempDat], "origin")
+            set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex + 1
+            set TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]=tempDCDat
+            if TFP_pickACard___dummyDBIndex == 0 then
+                call TimerStart(TFP_pickACard___dummyClock, TFP_tfConsts_FPS, true, function TFP_pickACard___dummyP)
+            endif
+            set time=null
+        endif
+        return false
+    endfunction
+
+function TFP_TF_CardDebuff takes unit caster, unit target, integer abilityId, integer rank, string order returns nothing
+    local unit dummy=CreateUnit(GetOwningPlayer(caster),TFP_tfConsts_CASTER_DUMMY_ID,GetUnitX(target),GetUnitY(target),0.)
+    call UnitAddAbility(dummy,abilityId)
+    call SetUnitAbilityLevel(dummy,abilityId,rank)
+    call IssueTargetOrder(dummy,order,target)
+    call UnitApplyTimedLife(dummy,'BTLF',2.)
+    set dummy=null
+endfunction
+
+function TFP_pickACard___secondC takes nothing returns boolean
+    local integer id=GetSpellAbilityId()
+    local unit caster=GetTriggerUnit()
+    local unit target=GetSpellTargetUnit()
+    local unit u
+    local group g
+    local integer d
+    local integer rank
+    if (id==TFP_tfConsts_BLUE_CARD_ID or id==TFP_tfConsts_RED_CARD_ID or id==TFP_tfConsts_GOLD_CARD_ID) and HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster)) then
+        set d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
+        if not TFP_TF_CardLocked[d] and not TFP_s__pickACard___pickDat_thrown[d] and TFP_TF_Alive(caster) then
+            set TFP_TF_CardLocked[d]=true
+            set TFP_s__pickACard___pickDat_elapsedTime[d]=0.
+            if id==TFP_tfConsts_BLUE_CARD_ID then
+                set TFP_TF_LockedThrow[d]='ATf6'
+            elseif id==TFP_tfConsts_RED_CARD_ID then
+                set TFP_TF_LockedThrow[d]='ATf7'
+            else
+                set TFP_TF_LockedThrow[d]='ATf8'
+            endif
+            call UnitRemoveAbility(caster,TFP_tfConsts_BLUE_CARD_ID)
+            call UnitRemoveAbility(caster,TFP_tfConsts_RED_CARD_ID)
+            call UnitRemoveAbility(caster,TFP_tfConsts_GOLD_CARD_ID)
+            call UnitAddAbility(caster,TFP_TF_LockedThrow[d])
+        endif
+    elseif (id=='ATf6' or id=='ATf7' or id=='ATf8') and HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster)) then
+        set d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
+        set rank=TFP_s__pickACard___pickDat_revertAbilityLevel[d]
+        if TFP_TF_CardLocked[d] and id==TFP_TF_LockedThrow[d] and not TFP_s__pickACard___pickDat_thrown[d] and TFP_TF_Alive(caster) and TFP_TF_Alive(target) and IsUnitEnemy(target,GetOwningPlayer(caster)) and not IsUnitType(target,UNIT_TYPE_STRUCTURE) and not IsUnitType(target,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(target) then
+            set TFP_s__pickACard___pickDat_thrown[d]=true
+            if id=='ATf6' then
+                call TFP_DamageType_dealCodeDamage(caster,target,20.+20.*rank,DAMAGE_TYPE_MAGIC)
+                call SetUnitState(caster,UNIT_STATE_MANA,RMinBJ(GetUnitState(caster,UNIT_STATE_MAX_MANA),GetUnitState(caster,UNIT_STATE_MANA)+40.+20.*rank))
+                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___BLUEFX,target,"origin"))
+            elseif id=='ATf7' then
+                set g=CreateGroup()
+                call GroupEnumUnitsInRange(g,GetUnitX(target),GetUnitY(target),TFP_pickACard___RED_CARD_ENUM_RANGE,null)
+                loop
+                    set u=FirstOfGroup(g)
+                    exitwhen u==null
+                    call GroupRemoveUnit(g,u)
+                    if TFP_TF_Alive(u) and IsUnitEnemy(u,GetOwningPlayer(caster)) and not IsUnitType(u,UNIT_TYPE_STRUCTURE) and not IsUnitType(u,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) then
+                        call TFP_TF_CardDebuff(caster,u,TFP_tfConsts_DUMMY_SLOW_ID,rank,"slow")
+                        call TFP_DamageType_dealCodeDamage(caster,u,15.+15.*rank,DAMAGE_TYPE_MAGIC)
+                    endif
+                endloop
+                call DestroyGroup(g)
+                set g=null
+                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___REDFX,target,"origin"))
+            else
+                call TFP_TF_CardDebuff(caster,target,TFP_tfConsts_DUMMY_STUN_ID,rank,"thunderbolt")
+                call TFP_DamageType_dealCodeDamage(caster,target,7.5+7.5*rank,DAMAGE_TYPE_MAGIC)
+                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___GOLDFX,target,"origin"))
+            endif
+        endif
+    endif
+    set caster=null
+    set target=null
+    return false
+endfunction
+
+// TF v33: selection, impact projectiles and alive-only income are independent.
+function TF33_Enemy takes unit c, unit v returns boolean
+    return TFP_TF_Alive(v) and IsUnitEnemy(v,GetOwningPlayer(c)) and not IsUnitType(v,UNIT_TYPE_STRUCTURE) and not IsUnitType(v,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(v)
+endfunction
+
+function TF33_Tint takes unit u, integer color returns nothing
+    if color == 1 then
+        call SetUnitVertexColor(u,255,45,45,255)
+    elseif color == 2 then
+        call SetUnitVertexColor(u,255,210,30,255)
+    else
+        call SetUnitVertexColor(u,70,159,255,255)
+    endif
+endfunction
+
+function TF_CardBurst takes string model, real x, real y, integer red, integer green, integer blue, real scale returns nothing
+    local effect burst = AddSpecialEffect(model,x,y)
+    call BlzSetSpecialEffectColor(burst,red,green,blue)
+    call BlzSetSpecialEffectScale(burst,scale)
+    call DestroyEffect(burst)
+    set burst = null
+endfunction
+
+function TF33_Impact takes unit c, unit v, integer color, integer rank, real multiplier returns nothing
+    local group g=CreateGroup()
+    local unit u
+    local real x=GetUnitX(v)
+    local real y=GetUnitY(v)
+    local boolean healed=false
+    local real heal=(60.+40.*rank)*multiplier
+    local sound healSound
+    local effect healFx
+    if color == 1 then
+        call TFP_DamageType_dealCodeDamage(c,v,TF_RedDamage[rank]*multiplier,DAMAGE_TYPE_MAGIC)
+        call TF_CardBurst("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl",x,y,255,65,30,1.55)
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl",x,y))
+        call GroupEnumUnitsInRange(g,x,y,240.+10.*rank,null)
+        loop
+            set u=FirstOfGroup(g)
+            exitwhen u == null
+            call GroupRemoveUnit(g,u)
+            if u != v and TF33_Enemy(c,u) then
+                call TFP_DamageType_dealCodeDamage(c,u,TF_RedSplash[rank]*multiplier,DAMAGE_TYPE_MAGIC)
+            endif
+        endloop
+    elseif color == 2 then
+        if multiplier > 1.0 then
+            call TFP_TF_CardDebuff(c,v,'ATgS',rank,"thunderbolt")
+        else
+            call TFP_TF_CardDebuff(c,v,'ATfa',rank,"thunderbolt")
+        endif
+        call TFP_DamageType_dealCodeDamage(c,v,TF_GoldDamage[rank]*multiplier,DAMAGE_TYPE_MAGIC)
+        call TF_CardBurst("Abilities\\Spells\\Human\\HolyBolt\\HolyBoltSpecialArt.mdl",x,y,255,210,65,1.85)
+        call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___GOLDFX,v,"origin"))
+    else
+        call TFP_DamageType_dealCodeDamage(c,v,TF_BlueDamage[rank]*multiplier,DAMAGE_TYPE_MAGIC)
+        if TFP_TF_Alive(c) then
+            call TF_CardBurst("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",GetUnitX(c),GetUnitY(c),65,205,255,1.55)
+            call GroupEnumUnitsInRange(g,GetUnitX(c),GetUnitY(c),300.,null)
+            loop
+                set u=FirstOfGroup(g)
+                exitwhen u == null
+                call GroupRemoveUnit(g,u)
+                if TFP_TF_Alive(u) and IsUnitAlly(u,GetOwningPlayer(c)) and not IsUnitType(u,UNIT_TYPE_STRUCTURE) then
+                    if GetWidgetLife(u)<GetUnitState(u,UNIT_STATE_MAX_LIFE) then
+                        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\HealingWave\\HealingWaveTarget.mdl",u,"chest"))
+                        set healed=true
+                    endif
+                    call SetWidgetLife(u,RMinBJ(GetUnitState(u,UNIT_STATE_MAX_LIFE),GetWidgetLife(u)+heal))
+                endif
+            endloop
+            if healed then
+            set healSound=CreateSound("Spells\\Orianna\\Feedback\\Heal.wav",false,true,true,0,0,"SpellsEAX")
+            call SetSoundDuration(healSound,700)
+            call SetSoundChannel(healSound,0)
+            call SetSoundVolume(healSound,52)
+            call SetSoundDistances(healSound,300.,2400.)
+            call SetSoundDistanceCutoff(healSound,2600.)
+            call AttachSoundToUnit(healSound,c)
+            call StartSound(healSound)
+            call KillSoundWhenDone(healSound)
+                    set healFx=AddSpecialEffectTarget("Abilities\\Spells\\Orc\\HealingWave\\HealingWaveTarget.mdl",c,"origin")
+                    call BlzSetSpecialEffectColor(healFx,65,255,100)
+                    call BlzSetSpecialEffectScale(healFx,1.35)
+                    call DestroyEffect(healFx)
+            endif
+        endif
+    endif
+    call DestroyGroup(g)
+    set g=null
+    set u=null
+    set healSound=null
+    set healFx=null
+endfunction
+
+function TF33_Flight takes nothing returns nothing
+    local timer t=GetExpiredTimer()
+    local integer h=GetHandleId(t)
+    local unit c=LoadUnitHandle(TF33_H,h,0)
+    local unit v=LoadUnitHandle(TF33_H,h,1)
+    local unit orb=LoadUnitHandle(TF33_H,h,2)
+    local real dx=GetUnitX(v)-GetUnitX(orb)
+    local real dy=GetUnitY(v)-GetUnitY(orb)
+    local real distance=SquareRoot(dx*dx+dy*dy)
+    local real age=LoadReal(TF33_H,h,3)+.03
+    local boolean done=not TF33_Enemy(c,v) or GetUnitTypeId(c)==0 or age>=4.
+    if not done and distance<=33. then
+        call TF33_Impact(c,v,LoadInteger(TF33_H,h,4),LoadInteger(TF33_H,h,5),1.0)
+        set done=true
+    endif
+    if done then
+        call ShowUnit(orb,false)
+        call RemoveUnit(orb)
+        call FlushChildHashtable(TF33_H,h)
+        call PauseTimer(t)
+        call DestroyTimer(t)
+    else
+        call SetUnitFacing(orb,Atan2(dy,dx)*bj_RADTODEG)
+        call SetUnitX(orb,GetUnitX(orb)+33.*dx/distance)
+        call SetUnitY(orb,GetUnitY(orb)+33.*dy/distance)
+        call SetUnitFlyHeight(orb,GetUnitFlyHeight(v)+70.,0.)
+        call SaveReal(TF33_H,h,3,age)
+    endif
+    set t=null
+    set c=null
+    set v=null
+    set orb=null
+endfunction
+
+function TF33_Close takes unit c, real cooldown returns nothing
+    local integer h=GetHandleId(c)
+    local timer t=LoadTimerHandle(TF33_H,h,1)
+    if HaveSavedString(TF33_H,h,11) then
+        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,LoadStr(TF33_H,h,11))
+    endif
+    call UnitRemoveAbility(c,'ATf3')
+    call UnitRemoveAbility(c,'ATf4')
+    call UnitRemoveAbility(c,'ATf5')
+    call UnitRemoveAbility(c,'ATf6')
+    call UnitRemoveAbility(c,'ATf7')
+    call UnitRemoveAbility(c,'ATf8')
+    call ShowUnit(LoadUnitHandle(TF33_H,h,2),false)
+    call RemoveUnit(LoadUnitHandle(TF33_H,h,2))
+    call BlzUnitHideAbility(c,'ATf2',false)
+    if cooldown>0. then
+        call BlzStartUnitAbilityCooldown(c,'ATf2',cooldown)
+    endif
+    call FlushChildHashtable(TF33_H,GetHandleId(t))
+    call PauseTimer(t)
+    call DestroyTimer(t)
+    call FlushChildHashtable(TF33_H,h)
+    set t=null
+endfunction
+
+function TF33_Show takes unit c returns nothing
+    local integer h=GetHandleId(c)
+    local unit orb=LoadUnitHandle(TF33_H,h,2)
+    local integer ticks=LoadInteger(TF33_H,h,6)
+    local real pulse=0.
+    local real scale
+    if LoadBoolean(TF33_H,h,5) and ticks<8 then
+        set pulse=Sin(3.14159265*I2R(ticks)/8.)
+    endif
+    set scale=1.35*(1.+.08*pulse)
+    call SetUnitX(orb,GetUnitX(c))
+    call SetUnitY(orb,GetUnitY(c))
+    call SetUnitFlyHeight(orb,GetUnitFlyHeight(c)+120.+6.*pulse,0.)
+    call SetUnitScale(orb,scale,scale,scale)
+    call TF33_Tint(orb,LoadInteger(TF33_H,h,4))
+    set orb=null
+endfunction
+
+function TF47_Lock takes unit c, integer color returns nothing
+    local integer h=GetHandleId(c)
+    local integer id
+    call UnitRemoveAbility(c,TFP_s__tfConsts_CARD_ID[LoadInteger(TF33_H,h,4)])
+    call SaveInteger(TF33_H,h,4,color)
+    call SaveBoolean(TF33_H,h,5,true)
+    call SaveInteger(TF33_H,h,6,0)
+    if color==0 then
+        set id='ATf6'
+    elseif color==1 then
+        set id='ATf7'
+    else
+        set id='ATf8'
+    endif
+    call SaveStr(TF33_H,h,11,BlzGetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0))
+    if color==0 then
+        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackBlue.mdx")
+    elseif color==1 then
+        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackRed.mdx")
+    else
+        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackGold.mdx")
+    endif
+    call UnitAddAbility(c,id)
+    call SetUnitAbilityLevel(c,id,GetUnitAbilityLevel(c,'ATf2'))
+    call TF33_Show(c)
+endfunction
+
+function TF33_SelectTick takes nothing returns nothing
+    local timer t=GetExpiredTimer()
+    local unit c=LoadUnitHandle(TF33_H,GetHandleId(t),0)
+    local integer h=GetHandleId(c)
+    local integer ticks=LoadInteger(TF33_H,h,6)+1
+    local integer color=LoadInteger(TF33_H,h,4)
+    if not TFP_TF_Alive(c) or GetUnitAbilityLevel(c,'ATf2')==0 or (LoadBoolean(TF33_H,h,5) and ticks>=200) then
+        call TF33_Close(c,0.)
+    else
+        call SaveInteger(TF33_H,h,6,ticks)
+        if not LoadBoolean(TF33_H,h,5) and ticks>=90 then
+            call TF33_Close(c,0.)
+            set c=null
+            set t=null
+            return
+        elseif not LoadBoolean(TF33_H,h,5) and ModuloInteger(ticks,10)==0 then
+            call UnitRemoveAbility(c,TFP_s__tfConsts_CARD_ID[color])
+            set color=ModuloInteger(color+1,3)
+            call SaveInteger(TF33_H,h,4,color)
+            call UnitAddAbility(c,TFP_s__tfConsts_CARD_ID[color])
+        endif
+        call TF33_Show(c)
+    endif
+    set c=null
+    set t=null
+endfunction
+
+function TF33_Cast takes nothing returns nothing
+    local unit c=GetTriggerUnit()
+    local unit v=GetSpellTargetUnit()
+    local integer id=GetSpellAbilityId()
+    local integer h=GetHandleId(c)
+    local integer color
+    local integer rank=GetUnitAbilityLevel(c,'ATf2')
+    local unit orb
+    local timer t
+    if id=='ATf2' and not HaveSavedHandle(TF33_H,h,1) then
+        set t=CreateTimer()
+        set orb=CreateUnit(GetOwningPlayer(c),'htf1',GetUnitX(c),GetUnitY(c),0.)
+        call SetUnitScale(orb,0.85,0.85,0.85)
+        call SaveTimerHandle(TF33_H,h,1,t)
+        call SaveUnitHandle(TF33_H,h,2,orb)
+        call SaveInteger(TF33_H,h,4,1)
+        call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
+        call BlzUnitHideAbility(c,'ATf2',true)
+        call UnitAddAbility(c,'ATf4')
+        call TF33_Show(c)
+        call TimerStart(t,.05,true,function TF33_SelectTick)
+    elseif HaveSavedHandle(TF33_H,h,1) then
+        set color=LoadInteger(TF33_H,h,4)
+        if id==TFP_s__tfConsts_CARD_ID[color] and not LoadBoolean(TF33_H,h,5) then
+            call TF47_Lock(c,color)
+        elseif ((color==0 and id=='ATf6') or (color==1 and id=='ATf7') or (color==2 and id=='ATf8')) and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
+            set t=CreateTimer()
+            set orb=CreateUnit(GetOwningPlayer(c),'htz1',GetUnitX(c),GetUnitY(c),0.)
+            call SetUnitTimeScale(orb,0.9)
+            call SetUnitScale(orb,1.45,1.45,1.45)
+            call TF33_Tint(orb,color)
+            call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
+            call SaveUnitHandle(TF33_H,GetHandleId(t),1,v)
+            call SaveUnitHandle(TF33_H,GetHandleId(t),2,orb)
+            call SaveInteger(TF33_H,GetHandleId(t),4,color)
+            call SaveInteger(TF33_H,GetHandleId(t),5,rank)
+            call TimerStart(t,.03,true,function TF33_Flight)
+            call TF33_Close(c,6.)
+        endif
+    endif
+    set c=null
+    set v=null
+    set orb=null
+    set t=null
+endfunction
+
+function TF45_Odds takes unit u returns real
+    local integer h=GetHandleId(u)
+    return 50. + RMinBJ(10.,LoadReal(TF33_G,h,1)/90.) + 2.*I2R(IMinBJ(5,LoadInteger(TF33_G,h,2)))
+endfunction
+
+
+function TF45_Track takes unit u returns nothing
+    if GetUnitTypeId(u)=='HTf1' and not IsUnitIllusion(u) then
+        if not IsUnitInGroup(u, TF33_Heroes) then
+            call BlzSetUnitAttackCooldown(u, 1.8, 0)
+            call GroupAddUnit(TF33_Heroes,u)
+        endif
+    endif
+endfunction
+
+function TF33_IncomeHero takes nothing returns nothing
+    local unit u=GetEnumUnit()
+    local integer h=GetHandleId(u)
+    if GetUnitTypeId(u)==0 or IsUnitIllusion(u) then
+        call GroupRemoveUnit(TF33_Heroes,u)
+        call FlushChildHashtable(TF33_G,h)
+    elseif TFP_TF_Alive(u) then
+        call SaveReal(TF33_G,h,1,RMinBJ(900.,LoadReal(TF33_G,h,1)+1.))
+    else
+        call FlushChildHashtable(TF33_G,h)
+    endif
+    set u=null
+endfunction
+
+function TF45_Enter takes nothing returns nothing
+    call TF45_Track(GetTriggerUnit())
+endfunction
+
+function TF45_Existing takes nothing returns nothing
+    call TF45_Track(GetEnumUnit())
+endfunction
+
+function TF45_Death takes nothing returns nothing
+    local unit dead=GetTriggerUnit()
+    local unit killer=GetKillingUnit()
+    local integer h=GetHandleId(killer)
+    if IsUnitInGroup(dead,TF33_Heroes) then
+        call FlushChildHashtable(TF33_G,GetHandleId(dead))
+    endif
+    if killer!=null and IsUnitInGroup(killer,TF33_Heroes) and TFP_TF_Alive(killer) and IsUnitType(dead,UNIT_TYPE_HERO) and not IsUnitIllusion(dead) and IsUnitEnemy(dead,GetOwningPlayer(killer)) then
+        call SaveInteger(TF33_G,h,2,IMinBJ(5,LoadInteger(TF33_G,h,2)+1))
+    endif
+    set dead=null
+    set killer=null
+endfunction
+
+function TF45_ShareLoss takes player loser returns nothing
+    local force eligible=CreateForce()
+    local group g=CreateGroup()
+    local unit u
+    local player p
+    local integer i=0
+    local integer count=0
+    local integer remaining=50
+    local integer share
+    local integer start=GetRandomInt(0,11)
+    loop
+        exitwhen i>=12
+        set p=Player(i)
+        if p!=loser and IsPlayerEnemy(p,loser) and GetPlayerSlotState(p)==PLAYER_SLOT_STATE_PLAYING then
+            call GroupEnumUnitsOfPlayer(g,p,null)
+            loop
+                set u=FirstOfGroup(g)
+                exitwhen u==null
+                call GroupRemoveUnit(g,u)
+                if TFP_TF_Alive(u) and IsUnitType(u,UNIT_TYPE_HERO) and not IsUnitIllusion(u) then
+                    call ForceAddPlayer(eligible,p)
+                    set count=count+1
+                    call GroupClear(g)
+                endif
+            endloop
+        endif
+        set i=i+1
+    endloop
+    set i=0
+    loop
+        exitwhen i>=12 or count==0
+        set p=Player(ModuloInteger(start+i,12))
+        if IsPlayerInForce(p,eligible) then
+            set share=R2I(I2R(remaining)/I2R(count))
+            call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)+share)
+            call DisplayTextToPlayer(p,0.,0.,"|cffffcc00Loaded Dice: +"+I2S(share)+" gold from an enemy's lost roll.|r")
+            set remaining=remaining-share
+            set count=count-1
+        endif
+        set i=i+1
+    endloop
+    call DestroyGroup(g)
+    call DestroyForce(eligible)
+    set g=null
+    set eligible=null
+    set p=null
+    set u=null
+endfunction
+
+function TF45_Roll takes nothing returns nothing
+    local unit u=GetTriggerUnit()
+    local player p=GetOwningPlayer(u)
+    local integer gold=GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)
+    local real odds=TF45_Odds(u)
+    if GetSpellAbilityId()=='ATfg' then
+        if gold<50 or IsUnitIllusion(u) or not TFP_TF_Alive(u) then
+            call BlzEndUnitAbilityCooldown(u,'ATfg')
+            call DisplayTextToPlayer(p,0.,0.,"Loaded Dice requires at least 50 gold.")
+        else
+            call BlzStartUnitAbilityCooldown(u,'ATfg',60.)
+            if GetRandomReal(0.,100.)<odds then
+                call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,gold+50)
+                call DisplayTextToPlayer(p,0.,0.,"|cffffcc00Loaded Dice: WIN +50 gold!|r ("+I2S(R2I(odds))+"% win chance)")
+            else
+                call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,gold-50)
+                call TF45_ShareLoss(p)
+                call DisplayTextToPlayer(p,0.,0.,"|cffff5555Loaded Dice: LOSS -50 gold.|r ("+I2S(R2I(odds))+"% win chance)")
+            endif
+        endif
+    endif
+    set u=null
+    set p=null
+endfunction
+
+function TF45_DiceInit takes nothing returns nothing
+    local trigger t=CreateTrigger()
+    local region r=CreateRegion()
+    local group g=CreateGroup()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddAction(t,function TF45_Death)
+    set t=CreateTrigger()
+    call RegionAddRect(r,bj_mapInitialPlayableArea)
+    call TriggerRegisterEnterRegion(t,r,null)
+    call TriggerAddAction(t,function TF45_Enter)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddAction(t,function TF45_Roll)
+    call GroupEnumUnitsInRect(g,bj_mapInitialPlayableArea,null)
+    call ForGroup(g,function TF45_Existing)
+    call DestroyGroup(g)
+    set g=null
+    set r=null
+    set t=null
+endfunction
+
+function TF33_IncomeTick takes nothing returns nothing
+    call ForGroup(TF33_Heroes,function TF33_IncomeHero)
+endfunction
+
+function TF33_Learn takes nothing returns nothing
+    if GetLearnedSkill()=='ATfg' and not IsUnitIllusion(GetTriggerUnit()) then
+        call GroupAddUnit(TF33_Heroes,GetTriggerUnit())
+    endif
+endfunction
+
+function TF_CardAttack takes nothing returns nothing
+    local unit c=GetEventDamageSource()
+    local unit v=GetTriggerUnit()
+    local integer h=GetHandleId(c)
+    local integer rank
+    local integer color
+    if BlzGetEventIsAttack() and GetEventDamage()>0.0 and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
+        set rank=GetUnitAbilityLevel(c,'ATf2')
+        set color=LoadInteger(TF33_H,h,4)
+        call TF33_Close(c,6.)
+        call TF33_Impact(c,v,color,rank,1.2)
+    endif
+    set c=null
+    set v=null
+endfunction
+
+function FF_FortifiedAttack takes nothing returns nothing
+    local unit source = GetEventDamageSource()
+    local integer id = GetUnitTypeId(source)
+    if (id == 'uban' or id == 'ngh2') and BlzGetEventIsAttack() and (BlzGetUnitIntegerField(GetTriggerUnit(), UNIT_IF_DEFENSE_TYPE) == 3 or IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) or IsUnitType(GetTriggerUnit(), UNIT_TYPE_MAGIC_IMMUNE) or BlzBitAnd(BlzGetUnitIntegerField(GetTriggerUnit(), UNIT_IF_TARGETED_AS), 16) != 0) then
+        call BlzSetEventAttackType(ATTACK_TYPE_PIERCE)
+    endif
+    set source = null
+endfunction
+
+function TF33_Init takes nothing returns nothing
+    local trigger t=CreateTrigger()
+    set TF_RedDamage[1]=150.0
+    set TF_RedDamage[2]=250.0
+    set TF_RedDamage[3]=300.0
+    set TF_RedDamage[4]=350.0
+    set TF_RedDamage[5]=450.0
+    set TF_RedDamage[6]=500.0
+    set TF_RedSplash[1]=75.0
+    set TF_RedSplash[2]=110.0
+    set TF_RedSplash[3]=140.0
+    set TF_RedSplash[4]=185.0
+    set TF_RedSplash[5]=225.0
+    set TF_RedSplash[6]=250.0
+    set TF_GoldDamage[1]=150.0
+    set TF_GoldDamage[2]=200.0
+    set TF_GoldDamage[3]=250.0
+    set TF_GoldDamage[4]=300.0
+    set TF_GoldDamage[5]=400.0
+    set TF_GoldDamage[6]=450.0
+    set TF_BlueDamage[1]=100.0
+    set TF_BlueDamage[2]=150.0
+    set TF_BlueDamage[3]=175.0
+    set TF_BlueDamage[4]=225.0
+    set TF_BlueDamage[5]=300.0
+    set TF_BlueDamage[6]=350.0
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddAction(t,function TF33_Cast)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_DAMAGED)
+    call TriggerAddAction(t,function TF_CardAttack)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_HERO_SKILL)
+    call TriggerAddAction(t,function TF33_Learn)
+    call TimerStart(CreateTimer(),1.,true,function TF33_IncomeTick)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_DAMAGING)
+    call TriggerAddAction(t, function FF_FortifiedAttack)
+    call TF45_DiceInit()
+    set t=null
+endfunction
+
+function TFP_pickACard___i takes nothing returns nothing
+    call TF33_Init()
+endfunction
+
+function TFP_destiny___move takes nothing returns nothing
+        local unit enum=GetEnumUnit()
+        local integer tempDat=(LoadInteger(TFP_Table___ht, ((TFP_destiny___attachments)), GetHandleId((enum)))) // INLINED!!
+        call SetUnitX(enum, GetUnitX(TFP_s__destiny___target_who[tempDat]))
+        call SetUnitY(enum, GetUnitY(TFP_s__destiny___target_who[tempDat]))
+        set enum=null
+    endfunction
+
+function TFP_destiny___flusher takes nothing returns nothing
+        local unit enum=GetEnumUnit()
+        local integer d=LoadInteger(TFP_Table___ht,TFP_destiny___attachments,GetHandleId(enum))
+        set TFP_s__destiny___target_who[d]=null
+        call TFP_s__destiny___target_deallocate(d)
+        call RemoveSavedInteger(TFP_Table___ht, ((TFP_destiny___attachments)), GetHandleId((enum))) // INLINED!!
+        call RemoveUnit(enum)
+        set enum=null
+    endfunction
+
+function TFP_destiny___p takes nothing returns nothing
+        local integer index=0
+        local integer tempDat
+        loop
+            exitwhen index > TFP_destiny___dbIndex
+            set tempDat=TFP_destiny___destinyDB[index]
+            set TFP_s__destiny___destinyDat_elapsedTime[tempDat]=TFP_s__destiny___destinyDat_elapsedTime[tempDat] + TFP_tfConsts_FPS
+            if TFP_s__destiny___destinyDat_elapsedTime[tempDat] < TFP_s__destiny___destinyDat_duration[tempDat] then
+                call ForGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat], function TFP_destiny___move)
+            else
+                call UnitRemoveAbility(TFP_s__destiny___destinyDat_fate[tempDat], TFP_tfConsts_GATE_ID)
+                call BlzUnitHideAbility(TFP_s__destiny___destinyDat_fate[tempDat],TFP_tfConsts_DESTINY_ID,false)
+                call ForGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat], function TFP_destiny___flusher)
+                call DestroyGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat])
+                set TFP_s__destiny___destinyDat_visionDummies[tempDat]=null
+                set TFP_s__destiny___destinyDat_fate[tempDat]=null
+                call TFP_s__destiny___destinyDat_deallocate(tempDat)
+                set TFP_destiny___destinyDB[index]=TFP_destiny___destinyDB[TFP_destiny___dbIndex]
+                set TFP_destiny___dbIndex=TFP_destiny___dbIndex - 1
+                set index=index - 1
+                if TFP_destiny___dbIndex == - 1 then
+                    call PauseTimer(TFP_destiny___time)
+                endif
+            endif
+            set index=index + 1
+        endloop
+    endfunction
+
+
+
+function TF45_GateClear takes unit u returns nothing
+    local integer h=GetHandleId(u)
+    local timer t=LoadTimerHandle(TF45_Gate,h,0)
+    if t!=null then
+        if TFP_TF_Alive(u) then
+            call ResetUnitAnimation(u)
+        endif
+        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,1))
+        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,2))
+        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,3))
+        call FlushChildHashtable(TF45_Gate,GetHandleId(t))
+        call FlushChildHashtable(TF45_Gate,h)
+        call PauseTimer(t)
+        call DestroyTimer(t)
+    endif
+    set t=null
+endfunction
+
+function TF45_GateFinish takes nothing returns nothing
+    local unit u=LoadUnitHandle(TF45_Gate,GetHandleId(GetExpiredTimer()),0)
+    local integer h=GetHandleId(u)
+    local real x=LoadReal(TF45_Gate,h,5)
+    local real y=LoadReal(TF45_Gate,h,6)
+    call TF45_GateClear(u)
+    if GetUnitAbilityLevel(u,'ATfc')>0 then
+        call UnitRemoveAbility(u,'ATfc')
+        call BlzUnitHideAbility(u,'ATfb',false)
+    endif
+    if TFP_TF_Alive(u) then
+        if not IsTerrainPathable(x,y,PATHING_TYPE_WALKABILITY) then
+            call SetUnitPosition(u,x,y)
+            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl",GetUnitX(u),GetUnitY(u)))
+            call ResetUnitAnimation(u)
+        else
+            call DisplayTextToPlayer(GetOwningPlayer(u),0.,0.,"Gate requires a walkable destination.")
+        endif
+    endif
+    set u=null
+endfunction
+function TF45_GateStart takes unit u, real x, real y returns nothing
+    local integer h=GetHandleId(u)
+    local timer t
+    local real dx=x-GetUnitX(u)
+    local real dy=y-GetUnitY(u)
+    local real distance=SquareRoot(dx*dx+dy*dy)
+    if GetUnitAbilityLevel(u,'ATfc')>0 and TFP_TF_Alive(u) and not HaveSavedHandle(TF45_Gate,h,0) then
+        if IsTerrainPathable(x,y,PATHING_TYPE_WALKABILITY) then
+            call DisplayTextToPlayer(GetOwningPlayer(u),0.,0.,"Gate requires a walkable destination.")
+            return
+        endif
+        if distance>5500. then
+            call DisplayTextToPlayer(GetOwningPlayer(u),0.,0.,"Gate destination is beyond 5500 range.")
+            return
+        endif
+        call SaveReal(TF45_Gate,h,5,x)
+        call SaveReal(TF45_Gate,h,6,y)
+        set t=CreateTimer()
+        call SaveTimerHandle(TF45_Gate,h,0,t)
+        call SaveUnitHandle(TF45_Gate,GetHandleId(t),0,u)
+        call SaveEffectHandle(TF45_Gate,h,1,AddSpecialEffect("war3mapImported\\TFGateway.mdx",GetUnitX(u),GetUnitY(u)))
+        call SaveEffectHandle(TF45_Gate,h,2,AddSpecialEffect("war3mapImported\\TFGateway.mdx",x,y))
+        call SaveEffectHandle(TF45_Gate,h,3,AddSpecialEffectTarget("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",u,"origin"))
+        call SetUnitAnimation(u,"spell")
+        call TimerStart(t,2./3.,false,function TF45_GateFinish)
+    endif
+    set t=null
+    set u=null
+endfunction
+
+
+
+
+
+function TF46_RevealEnd takes nothing returns nothing
+    local timer t=GetExpiredTimer()
+    local integer h=GetHandleId(t)
+    local unit c=LoadUnitHandle(TF46_H,h,0)
+    local group g=LoadGroupHandle(TF46_H,h,1)
+    local fogmodifier fog=LoadFogModifierHandle(TF46_H,h,2)
+    local unit u
+    loop
+        set u=FirstOfGroup(g)
+        exitwhen u==null
+        call GroupRemoveUnit(g,u)
+        call RemoveUnit(u)
+    endloop
+    call DestroyGroup(g)
+    call FogModifierStop(fog)
+    call DestroyFogModifier(fog)
+
+    if GetUnitAbilityLevel(c,'ATfc')>0 and not HaveSavedHandle(TF45_Gate,GetHandleId(c),0) then
+        call UnitRemoveAbility(c,'ATfc')
+        call BlzUnitHideAbility(c,'ATfb',false)
+    endif
+    call RemoveSavedHandle(TF46_H,GetHandleId(c),0)
+    call FlushChildHashtable(TF46_H,h)
+    call DestroyTimer(t)
+    set c=null
+    set g=null
+    set fog=null
+    set t=null
+    set u=null
+endfunction
+
+function TFP_destiny___c takes nothing returns boolean
+    local unit c=GetTriggerUnit()
+    local unit u
+    local player p=GetOwningPlayer(c)
+    local rect bounds
+    local real x
+    local real y
+    local timer t
+    local integer h
+    local group g
+    local fogmodifier fog
+    if GetSpellAbilityId()=='ATfb' and not HaveSavedHandle(TF46_H,GetHandleId(c),0) then
+        call TF45_Track(c)
+        set bounds=GetWorldBounds()
+        set t=CreateTimer()
+        set h=GetHandleId(t)
+        set g=CreateGroup()
+        set fog=CreateFogModifierRect(p,FOG_OF_WAR_VISIBLE,bounds,true,false)
+        call FogModifierStart(fog)
+        set x=GetRectMinX(bounds)+900.
+        loop
+            exitwhen x>GetRectMaxX(bounds)+900.
+            set y=GetRectMinY(bounds)+900.
+            loop
+                exitwhen y>GetRectMaxY(bounds)+900.
+                set u=CreateUnit(p,'ht46',x,y,0.)
+                call GroupAddUnit(g,u)
+                set y=y+1800.
+            endloop
+            set x=x+1800.
+        endloop
+        call SaveUnitHandle(TF46_H,h,0,c)
+        call SaveGroupHandle(TF46_H,h,1,g)
+        call SaveFogModifierHandle(TF46_H,h,2,fog)
+        call SaveTimerHandle(TF46_H,GetHandleId(c),0,t)
+        call BlzUnitHideAbility(c,'ATfb',true)
+        call UnitAddAbility(c,'ATfc')
+
+        call TimerStart(t,5.0,false,function TF46_RevealEnd)
+        call RemoveRect(bounds)
+    endif
+    set c=null
+    set u=null
+    set p=null
+    set bounds=null
+    set t=null
+    set g=null
+    set fog=null
+    return false
+endfunction
+
+function TFP_destiny___gateC takes nothing returns boolean
+    if GetSpellAbilityId()=='ATfc' then
+        call TF45_GateStart(GetTriggerUnit(),GetSpellTargetX(),GetSpellTargetY())
+    endif
+    return false
+endfunction
+
+function TFP_destiny___preloadSound takes nothing returns nothing
+        local sound s=CreateSound(TFP_destiny___GATE_SOUND, false, true, true, 12700, 12700, "")
+        if s != null then
+            call SetSoundVolume(s, 1)
+            call SetSoundPosition(s, 0., 0., 100.)
+            call StartSound(s)
+            call KillSoundWhenDone(s)
+        endif
+        call DestroyTimer(GetExpiredTimer())
+        set s=null
+    endfunction
+
+function TFP_destiny___i takes nothing returns nothing
+        local trigger t=CreateTrigger()
+        local trigger gate=CreateTrigger()
+        call TriggerRegisterAnyUnitEventBJ(gate, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+        call TriggerAddCondition(gate, Condition(function TFP_destiny___gateC))
+        call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+        call TriggerAddCondition(t, Condition(function TFP_destiny___c))
+        call TimerStart(CreateTimer(), 0.01, false, function TFP_destiny___preloadSound)
+        set TFP_destiny___attachments=TFP_s__HandleTable__allocate()
+        set TFP_destiny___cdrTable=TFP_s__HandleTable__allocate()
+        set gate=null
+        set t=null
+    endfunction
+
+function TFP_FFDP_Duration takes integer level returns real
+    return 3.0 + level          // Planted lantern: 4 to 9 seconds.
+endfunction
+
+function TFP_FFDP_ShieldAmount takes integer level returns real
+    return 60.0 + 40.0 * level        // 100 ... 300
+endfunction
+
+function TFP_FFDP_ShieldTime takes integer level returns real
+    return 4.0
 endfunction
 
 function TFP_FFDP_Alive takes unit u returns boolean
     return u != null and GetUnitTypeId(u) != 0 and not IsUnitType(u, UNIT_TYPE_DEAD) and GetUnitState(u, UNIT_STATE_LIFE) > TFP_FFDP_ALIVE
+endfunction
+
+function TFP_FFDP_Z takes real x, real y returns real
+    call MoveLocation(TFP_FFDP_Loc, x, y)
+    return GetLocationZ(TFP_FFDP_Loc)
+endfunction
+
+function TFP_FFDP_Unlock takes unit u returns nothing
+    if GetUnitAbilityLevel(u, TFP_FFDP_ABIL_CROW) == 0 then
+        call UnitAddAbility(u, TFP_FFDP_ABIL_CROW)
+        call UnitRemoveAbility(u, TFP_FFDP_ABIL_CROW)
+    endif
 endfunction
 
 function TFP_FFDP_ClampX takes real x returns real
@@ -48285,6 +49519,25 @@ function TFP_FFDP_ClampY takes real y returns real
         return GetRectMaxY(bj_mapInitialPlayableArea) - 64.0
     endif
     return y
+endfunction
+
+function TFP_FFDP_Eligible takes unit u, player owner, unit skip returns boolean
+    return TFP_FFDP_Alive(u) and u != skip and IsUnitType(u, UNIT_TYPE_HERO) and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and GetUnitAbilityLevel(u, 'Aloc') == 0 and IsUnitAlly(u, owner) and not IsUnitPaused(u) and not LoadBoolean(TFP_FFDP_Refs, GetHandleId(u), 2)
+endfunction
+
+function TFP_FFDP_WithinLeash takes integer i returns boolean
+    local unit anchor = TFP_FFDP_Lantern[i]
+    local real dx
+    local real dy
+    local boolean ok
+    if TFP_FFDP_Phase[i] == 2 then
+        set anchor = TFP_FFDP_Rider[i]
+    endif
+    set dx = GetUnitX(TFP_FFDP_Caster[i]) - GetUnitX(anchor)
+    set dy = GetUnitY(TFP_FFDP_Caster[i]) - GetUnitY(anchor)
+    set ok = dx * dx + dy * dy <= TFP_FFDP_LEASH * TFP_FFDP_LEASH
+    set anchor = null
+    return ok
 endfunction
 
 function TFP_FFDP_TryLand takes unit u, real x, real y returns boolean
@@ -48337,6 +49590,90 @@ function TFP_FFDP_Land takes integer i returns nothing
         call SetUnitPosition(u, TFP_FFDP_StartX[i], TFP_FFDP_StartY[i])
     endif
     set u = null
+endfunction
+
+function TFP_FFDP_Start takes nothing returns nothing
+    if TFP_FFDP_Count + TFP_FFDP_ShCount == 1 then
+        // Restart explicitly: ResumeTimer can lose periodic repetition.
+        call TimerStart(TFP_FFDP_Clock, TFP_FFDP_TICK, true, TFP_FFDP_Callback)
+    endif
+endfunction
+
+function TFP_FFDP_ShieldFind takes unit u returns integer
+    local integer i = 1
+    loop
+        exitwhen i > TFP_FFDP_ShCount
+        if TFP_FFDP_ShUnit[i] == u then
+            return i
+        endif
+        set i = i + 1
+    endloop
+    return 0
+endfunction
+
+function TFP_FFDP_ShieldEnd takes integer i returns nothing
+    if TFP_FFDP_ShFx[i] != null then
+        call DestroyEffect(TFP_FFDP_ShFx[i])
+    endif
+    set TFP_FFDP_ShFx[i]     = TFP_FFDP_ShFx[TFP_FFDP_ShCount]
+    set TFP_FFDP_ShUnit[i]   = TFP_FFDP_ShUnit[TFP_FFDP_ShCount]
+    set TFP_FFDP_ShAmount[i] = TFP_FFDP_ShAmount[TFP_FFDP_ShCount]
+    set TFP_FFDP_ShTime[i]   = TFP_FFDP_ShTime[TFP_FFDP_ShCount]
+    set TFP_FFDP_ShFx[TFP_FFDP_ShCount]   = null
+    set TFP_FFDP_ShUnit[TFP_FFDP_ShCount] = null
+    set TFP_FFDP_ShCount = TFP_FFDP_ShCount - 1
+endfunction
+
+function TFP_FFDP_ShieldApply takes unit u, real amount, real duration returns nothing
+    local integer i
+    if not TFP_FFDP_Alive(u) or amount <= 0.0 then
+        return
+    endif
+    set i = TFP_FFDP_ShieldFind(u)
+    if i != 0 then
+        // refresh: keep the stronger shield, always reset the clock
+        if amount > TFP_FFDP_ShAmount[i] then
+            set TFP_FFDP_ShAmount[i] = amount
+        endif
+        set TFP_FFDP_ShTime[i] = duration
+        return
+    endif
+    if TFP_FFDP_ShCount >= 4096 then
+        return
+    endif
+    set TFP_FFDP_ShCount = TFP_FFDP_ShCount + 1
+    set TFP_FFDP_ShUnit[TFP_FFDP_ShCount]   = u
+    set TFP_FFDP_ShAmount[TFP_FFDP_ShCount] = amount
+    set TFP_FFDP_ShTime[TFP_FFDP_ShCount]   = duration
+    set TFP_FFDP_ShFx[TFP_FFDP_ShCount]     = null
+    call TFP_FFDP_Start()
+endfunction
+
+function TFP_FFDP_OnDamage takes nothing returns nothing
+    local unit    u   = GetTriggerUnit()
+    local real    dmg = GetEventDamage()
+    local integer i
+    if dmg <= 0.0 then
+        set u = null
+        return
+    endif
+    set i = TFP_FFDP_ShieldFind(u)
+    if i == 0 then
+        set u = null
+        return
+    endif
+    if dmg >= TFP_FFDP_ShAmount[i] then
+        call BlzSetEventDamage(dmg - TFP_FFDP_ShAmount[i])
+        call TFP_FFDP_ShieldEnd(i)
+    else
+        set TFP_FFDP_ShAmount[i] = TFP_FFDP_ShAmount[i] - dmg
+        call BlzSetEventDamage(0.0)
+    endif
+    set u = null
+endfunction
+
+function TFP_FFDP_Revoke takes integer i returns nothing
+    call GroupClear(TFP_FFDP_Track[i])
 endfunction
 
 function TFP_FFDP_Drop takes integer i returns nothing
@@ -48465,34 +49802,6 @@ function TFP_FFDP_OnMobility takes nothing returns nothing
     endif
 endfunction
 
-function TFP_FFDP_Eligible takes unit u, player owner, unit skip returns boolean
-    return TFP_FFDP_Alive(u) and u != skip and IsUnitType(u, UNIT_TYPE_HERO) and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and GetUnitAbilityLevel(u, 'Aloc') == 0 and IsUnitAlly(u, owner) and not IsUnitPaused(u) and not LoadBoolean(TFP_FFDP_Refs, GetHandleId(u), 2)
-endfunction
-
-function TFP_FFDP_CandFilter takes nothing returns boolean
-    return TFP_FFDP_Eligible(GetFilterUnit(), TFP_FFDP_FilterOwner, TFP_FFDP_FilterSkip)
-endfunction
-
-function TFP_FFDP_Z takes real x, real y returns real
-    call MoveLocation(TFP_FFDP_Loc, x, y)
-    return GetLocationZ(TFP_FFDP_Loc)
-endfunction
-
-function TFP_FFDP_WithinLeash takes integer i returns boolean
-    local unit anchor = TFP_FFDP_Lantern[i]
-    local real dx
-    local real dy
-    local boolean ok
-    if TFP_FFDP_Phase[i] == 2 then
-        set anchor = TFP_FFDP_Rider[i]
-    endif
-    set dx = GetUnitX(TFP_FFDP_Caster[i]) - GetUnitX(anchor)
-    set dy = GetUnitY(TFP_FFDP_Caster[i]) - GetUnitY(anchor)
-    set ok = dx * dx + dy * dy <= TFP_FFDP_LEASH * TFP_FFDP_LEASH
-    set anchor = null
-    return ok
-endfunction
-
 function TFP_FFDP_MovedAbruptly takes integer i returns boolean
     local real x = GetUnitX(TFP_FFDP_Caster[i])
     local real y = GetUnitY(TFP_FFDP_Caster[i])
@@ -48511,48 +49820,8 @@ function TFP_FFDP_MovedAbruptly takes integer i returns boolean
     return jumped
 endfunction
 
-function TFP_FFDP_Duration takes integer level returns real
-    return 3.0 + level          // Planted lantern: 4 to 9 seconds.
-endfunction
-
-function TFP_FFDP_ShieldAmount takes integer level returns real
-    return 60.0 + 40.0 * level        // 100 ... 300
-endfunction
-
-function TFP_FFDP_ShieldTime takes integer level returns real
-    return 4.0
-endfunction
-
-function TFP_FFDP_Start takes nothing returns nothing
-    if TFP_FFDP_Count + TFP_FFDP_ShCount == 1 then
-        // Restart explicitly: ResumeTimer can lose periodic repetition.
-        call TimerStart(TFP_FFDP_Clock, TFP_FFDP_TICK, true, TFP_FFDP_Callback)
-    endif
-endfunction
-
-function TFP_FFDP_ShieldApply takes unit u, real amount, real duration returns nothing
-    local integer i
-    if not TFP_FFDP_Alive(u) or amount <= 0.0 then
-        return
-    endif
-    set i = TFP_FFDP_ShieldFind(u)
-    if i != 0 then
-        // refresh: keep the stronger shield, always reset the clock
-        if amount > TFP_FFDP_ShAmount[i] then
-            set TFP_FFDP_ShAmount[i] = amount
-        endif
-        set TFP_FFDP_ShTime[i] = duration
-        return
-    endif
-    if TFP_FFDP_ShCount >= 4096 then
-        return
-    endif
-    set TFP_FFDP_ShCount = TFP_FFDP_ShCount + 1
-    set TFP_FFDP_ShUnit[TFP_FFDP_ShCount]   = u
-    set TFP_FFDP_ShAmount[TFP_FFDP_ShCount] = amount
-    set TFP_FFDP_ShTime[TFP_FFDP_ShCount]   = duration
-    set TFP_FFDP_ShFx[TFP_FFDP_ShCount]     = null
-    call TFP_FFDP_Start()
+function TFP_FFDP_CandFilter takes nothing returns boolean
+    return TFP_FFDP_Eligible(GetFilterUnit(), TFP_FFDP_FilterOwner, TFP_FFDP_FilterSkip)
 endfunction
 
 function TFP_FFDP_ShieldGroup takes integer level returns nothing
@@ -48587,13 +49856,6 @@ function TFP_FFDP_Plant takes integer i returns nothing
     call GroupEnumUnitsInRange(TFP_FFDP_Cand, x, y, TFP_FFDP_SHIELD_AOE, TFP_FFDP_Filt)
     call TFP_FFDP_ShieldGroup(TFP_FFDP_Level[i])
     set TFP_FFDP_FilterOwner = null
-endfunction
-
-function TFP_FFDP_Unlock takes unit u returns nothing
-    if GetUnitAbilityLevel(u, TFP_FFDP_ABIL_CROW) == 0 then
-        call UnitAddAbility(u, TFP_FFDP_ABIL_CROW)
-        call UnitRemoveAbility(u, TFP_FFDP_ABIL_CROW)
-    endif
 endfunction
 
 function TFP_FFDP_BeginRide takes integer i, unit rider returns boolean
@@ -48693,6 +49955,37 @@ function TFP_FFDP_AutoPickup takes integer i returns nothing
     set u = null
 endfunction
 
+function TFP_LinkDistanceSquared takes real px, real py, real ax, real ay, real bx, real by returns real
+    local real dx = bx - ax
+    local real dy = by - ay
+    local real len2 = dx * dx + dy * dy
+    local real t = 0.0
+    if len2 > 0.01 then
+        set t = RMaxBJ(0.0, RMinBJ(1.0, ((px - ax) * dx + (py - ay) * dy) / len2))
+    endif
+    set dx = px - (ax + t * dx)
+    set dy = py - (ay + t * dy)
+    return dx * dx + dy * dy
+endfunction
+
+function TFP_LinkEnemy takes unit u, player owner returns boolean
+    return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and IsUnitEnemy(u, owner) and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) and GetUnitAbilityLevel(u, 'Aloc') == 0
+endfunction
+
+function TFP_LinkEffect takes integer i, unit target, boolean stun returns nothing
+    local unit dummy = CreateUnit(TFP_FFDP_Owner[i], 'hor3', GetUnitX(target), GetUnitY(target), 0.0)
+    if stun then
+        call UnitAddAbility(dummy, 'AGtz')
+        call SetUnitAbilityLevel(dummy, 'AGtz', 1)
+        call IssueTargetOrder(dummy, "thunderbolt", target)
+    else
+        call UnitAddAbility(dummy, 'AGbn')
+        call IssueTargetOrder(dummy, "slow", target)
+    endif
+    call UnitApplyTimedLife(dummy, 'BTLF', 1.0)
+    set dummy = null
+endfunction
+
 function GL_ArmorExpire takes nothing returns nothing
     local timer t = GetExpiredTimer()
     local integer k = GetHandleId(t)
@@ -48723,37 +50016,6 @@ function GL_ArmorApply takes unit u, real amount returns nothing
     call SaveReal(GL_Armor, GetHandleId(t), 1, amount)
     call TimerStart(t, 2.0, false, function GL_ArmorExpire)
     set t = null
-endfunction
-
-function TFP_LinkEffect takes integer i, unit target, boolean stun returns nothing
-    local unit dummy = CreateUnit(TFP_FFDP_Owner[i], 'hor3', GetUnitX(target), GetUnitY(target), 0.0)
-    if stun then
-        call UnitAddAbility(dummy, 'AGtz')
-        call SetUnitAbilityLevel(dummy, 'AGtz', 1)
-        call IssueTargetOrder(dummy, "thunderbolt", target)
-    else
-        call UnitAddAbility(dummy, 'AGbn')
-        call IssueTargetOrder(dummy, "slow", target)
-    endif
-    call UnitApplyTimedLife(dummy, 'BTLF', 1.0)
-    set dummy = null
-endfunction
-
-function TFP_LinkEnemy takes unit u, player owner returns boolean
-    return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and IsUnitEnemy(u, owner) and not IsUnitType(u, UNIT_TYPE_STRUCTURE) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) and GetUnitAbilityLevel(u, 'Aloc') == 0
-endfunction
-
-function TFP_LinkDistanceSquared takes real px, real py, real ax, real ay, real bx, real by returns real
-    local real dx = bx - ax
-    local real dy = by - ay
-    local real len2 = dx * dx + dy * dy
-    local real t = 0.0
-    if len2 > 0.01 then
-        set t = RMaxBJ(0.0, RMinBJ(1.0, ((px - ax) * dx + (py - ay) * dy) / len2))
-    endif
-    set dx = px - (ax + t * dx)
-    set dy = py - (ay + t * dy)
-    return dx * dx + dy * dy
 endfunction
 
 function TFP_LinkGround takes integer i returns nothing
@@ -49149,6 +50411,54 @@ function TFP_InitTrig_FFDP_DarkPassage takes nothing returns nothing
     set t = null
 endfunction
 
+function TFP_Init takes nothing returns nothing
+    call TFP_tfConsts___i()
+    call TFP_wildCards___i()
+    call TFP_pickACard___i()
+    call TFP_destiny___i()
+    call TFP_InitTrig_FFDP_DarkPassage()
+endfunction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function OM_Alive takes unit u returns boolean
     return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and not IsUnitType(u, UNIT_TYPE_DEAD)
 endfunction
@@ -49349,6 +50659,16 @@ function OM_Home takes integer i returns nothing
     endif
 endfunction
 
+function OM_CreateBall takes integer i returns nothing
+    set OM_Ball[i] = CreateUnit(OM_Owner[i], 'hor1', GetUnitX(OM_Hero[i]), GetUnitY(OM_Hero[i]), 0.0)
+    call SetUnitUseFood(OM_Ball[i], false)
+    call UnitAddAbility(OM_Ball[i], 'Aloc')
+    call UnitAddAbility(OM_Ball[i], 'Avul')
+    call UnitAddAbility(OM_Ball[i], 'Arav')
+    call UnitRemoveAbility(OM_Ball[i], 'Arav')
+    call SetUnitPathing(OM_Ball[i], false)
+endfunction
+
 function OM_Register takes unit u returns integer
     local integer i = LoadInteger(OM_Hash, 0, GetHandleId(u))
     if i != 0 then
@@ -49361,13 +50681,7 @@ function OM_Register takes unit u returns integer
     set i = OM_Count
     set OM_Hero[i] = u
     set OM_Owner[i] = GetOwningPlayer(u)
-    set OM_Ball[i] = CreateUnit(OM_Owner[i], 'hor1', GetUnitX(u), GetUnitY(u), 0.0)
-    call SetUnitUseFood(OM_Ball[i], false)
-    call UnitAddAbility(OM_Ball[i], 'Aloc')
-    call UnitAddAbility(OM_Ball[i], 'Avul')
-    call UnitAddAbility(OM_Ball[i], 'Arav')
-    call UnitRemoveAbility(OM_Ball[i], 'Arav')
-    call SetUnitPathing(OM_Ball[i], false)
+    call OM_CreateBall(i)
     set OM_Carrier[i] = u
     set OM_State[i] = 0
     set OM_Hit[i] = CreateGroup()
@@ -49875,6 +51189,15 @@ function OM_Tick takes nothing returns nothing
                     set OM_WasDead[i] = true
                 endif
             else
+                if not OM_Alive(OM_Ball[i]) then
+                    call OM_StopTravelFX(i)
+                    call OM_StopWindupFX(i)
+                    call OM_ClearBallVisual(i)
+                    call FlushChildHashtable(OM_Hash, GetHandleId(OM_Ball[i]))
+                    call RemoveUnit(OM_Ball[i])
+                    call OM_CreateBall(i)
+                    call OM_Home(i)
+                endif
                 if OM_WasDead[i] then
                     set OM_WasDead[i] = false
                     call ShowUnit(OM_Ball[i], true)
@@ -50202,6 +51525,14 @@ function OM_OnCastAnimation takes nothing returns nothing
     set u = null
 endfunction
 
+function OM_RefreshHeroVisual takes nothing returns nothing
+    local integer i = OM_Register(GetTriggerUnit())
+    if i != 0 then
+        call OM_ClearBallVisual(i)
+        call OM_UpdateBallVisual(i)
+    endif
+endfunction
+
 function OM_Init takes nothing returns nothing
     local trigger t
     local region r
@@ -50210,6 +51541,10 @@ function OM_Init takes nothing returns nothing
         return
     endif
     set OM_Started = true
+    set t = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_REVIVE_FINISH)
+    call TriggerAddAction(t, function OM_RefreshHeroVisual)
     call FF_HeroTooltips_Init()
     set t = CreateTrigger()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
@@ -50503,6 +51838,44 @@ function FS_Knock takes unit victim, real x, real y, real distance returns nothi
     set FS_Expires[i] = FS_Now + 1.0
 endfunction
 
+function FS_BurnTick takes nothing returns nothing
+    local timer t = GetExpiredTimer()
+    local integer key = GetHandleId(t)
+    local unit caster = LoadUnitHandle(FS_Hash, key, 1)
+    local unit target = LoadUnitHandle(FS_Hash, key, 2)
+    local integer remaining = LoadInteger(FS_Hash, key, 3) - 1
+    if GetUnitTypeId(caster) != 0 and FS_Enemy(target, GetOwningPlayer(caster)) then
+        call SaveInteger(FS_Hash, key, 3, remaining)
+        call FS_Hit(caster, target, LoadReal(FS_Hash, key, 4))
+    else
+        set remaining = 0
+    endif
+    if remaining <= 0 or not FS_Alive(target) then
+        call RemoveSavedHandle(FS_Hash, GetHandleId(target), 71)
+        call FlushChildHashtable(FS_Hash, key)
+        call DestroyTimer(t)
+    endif
+    set t = null
+    set caster = null
+    set target = null
+endfunction
+
+function FS_Ignite takes unit caster, unit target returns nothing
+    local timer t = LoadTimerHandle(FS_Hash, GetHandleId(target), 71)
+    local integer key
+    if t == null then
+        set t = CreateTimer()
+        call SaveTimerHandle(FS_Hash, GetHandleId(target), 71, t)
+    endif
+    set key = GetHandleId(t)
+    call SaveUnitHandle(FS_Hash, key, 1, caster)
+    call SaveUnitHandle(FS_Hash, key, 2, target)
+    call SaveInteger(FS_Hash, key, 3, 4)
+    call SaveReal(FS_Hash, key, 4, 10.0 * IMaxBJ(1, GetUnitAbilityLevel(caster, FS_E)))
+    call TimerStart(t, 1.0, true, function FS_BurnTick)
+    set t = null
+endfunction
+
 function FS_Area takes unit caster, player owner, real x, real y, real radius, real damage, integer mode returns nothing
     local group g = CreateGroup()
     local unit v
@@ -50512,9 +51885,12 @@ function FS_Area takes unit caster, player owner, real x, real y, real radius, r
         exitwhen v == null
         call GroupRemoveUnit(g, v)
         if FS_Enemy(v, owner) then
+            if (mode == 4 or mode == 3) and GetUnitAbilityLevel(v, 'BNdh') > 0 then
+                call FS_Ignite(caster, v)
+            endif
             call FS_Hit(caster, v, damage)
             if FS_Enemy(v, owner) then
-                if mode == 1 then
+                if mode == 1 or mode == 4 then
                     call FS_Debuff(owner, v, false)
                 elseif mode == 2 then
                     call FS_Debuff(owner, v, true)
@@ -50581,7 +51957,7 @@ function FS_PositionBarrel takes integer i, real distance returns nothing
     local real height = FS_BarrelRadius[i]
     if FS_Kind[i] == 6 then
         set progress = 1.0 - remaining / RMaxBJ(1.0, FS_BarrelTravel[i])
-        set height = 95.0*(1.0-progress) + FS_BarrelRadius[i]*progress + 4.0*progress*(1.0-progress)*(25.0 + 0.32*FS_BarrelTravel[i])
+        set height = 95.0*(1.0-progress) + FS_BarrelRadius[i]*progress + 4.4*progress*(1.0-progress)*(25.0 + 0.32*FS_BarrelTravel[i])
     elseif distance > 0.0 then
         // Ease yaw velocity in as translational speed falls; carry the same yaw into the fuse.
         set FS_BarrelYaw[i] = FS_BarrelYaw[i] + FS_PERIOD * 3.0*bj_PI*(1.0-RMinBJ(1.0, SquareRoot(remaining/320.0)))
@@ -50662,7 +52038,7 @@ function FS_Tick takes nothing returns nothing
                     set dist = SquareRoot(dx*dx + dy*dy)
                     set step = 1000.0 * FS_PERIOD
                     if kind == 6 then
-                        set step = FS_PERIOD * FS_BarrelTravel[i] / (0.14 + 0.00072*FS_BarrelTravel[i])
+                        set step = 0.90 * FS_PERIOD * FS_BarrelTravel[i] / (0.14 + 0.00072*FS_BarrelTravel[i])
                     endif
                     if kind == 5 and dist < 320.0 then
                         // Constant braking from 1000 units/sec over the last 320 units.
@@ -50697,7 +52073,7 @@ function FS_Tick takes nothing returns nothing
                             call FS_Free(i)
                             if kind == 5 then
                                 call FS_BarrelBurst(x, y)
-                                call FS_Area(u, owner, x, y, 260.0, amount, 1)
+                                call FS_Area(u, owner, x, y, 260.0, amount, 4)
                             else
                                 call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Orc\\WarStomp\\WarStompCaster.mdl", x, y))
                                 call FS_UltimateBurst(x, y)
@@ -50866,7 +52242,7 @@ function FS_Detonate takes integer i returns nothing
     call FS_Free(i)
     if FS_Alive(u) then
         call FS_BarrelBurst(x, y)
-        call FS_Area(u, p, x, y, 260.0, amount, 1)
+        call FS_Area(u, p, x, y, 260.0, amount, 4)
     endif
     set u = null
     set p = null
@@ -50908,7 +52284,7 @@ function FS_OnCast takes nothing returns nothing
     local real dist = SquareRoot(dx*dx + dy*dy)
     local real amount
     local player owner = GetOwningPlayer(u)
-    if not FS_Alive(u) or level < 1 or (a != FS_Q and a != FS_W and a != FS_E and a != FS_R and a != FS_DETONATE) then
+    if not FS_Alive(u) or level < 1 or (a != FS_Q and a != FS_W and (not FS_LEE or a != FS_E) and a != FS_R and a != FS_DETONATE) then
         set u = null
         set target = null
         set owner = null
@@ -51010,17 +52386,6 @@ function FS_OnCast takes nothing returns nothing
             endif
             call FS_DrinkAnimation(u)
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIhe\\AIheTarget.mdl", u, "origin"))
-        elseif a == FS_E and dist > 1.0 then
-            call SetUnitAnimationByIndex(u, 9)
-            call QueueUnitAnimation(u, "stand")
-            set i = FS_Motion(3, u)
-            if i != 0 then
-                set FS_TX[i] = dx/dist
-                set FS_TY[i] = dy/dist
-                set FS_Left[i] = RMinBJ(dist, 600.0)
-                set FS_Damage[i] = FS_RankDamage(level, true)
-                set FS_Expires[i] = FS_Now + 1.0
-            endif
         endif
     endif
     set u = null
@@ -52896,59 +54261,59 @@ function DK_Init takes nothing returns nothing
     local trigger orders = CreateTrigger()
     local trigger death = CreateTrigger()
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 110 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 100 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 70. Cooldown: 10 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 110 damage each way and pulls enemies toward you on its return.", 0)
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 150 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 150 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 75. Cooldown: 10 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 150 damage each way and pulls enemies toward you on its return.", 1)
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 190 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 200 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 80. Cooldown: 10 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 190 damage each way and pulls enemies toward you on its return.", 2)
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 230 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 350 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 85. Cooldown: 10 sec.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 230 damage each way and pulls enemies toward you on its return.", 3)
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 270 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 450 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 90. Cooldown: 10 sec.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 270 damage each way and pulls enemies toward you on its return.", 4)
     call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a massive axe 1200 distance. Deals 310 magic damage once to each enemy per pass, both outward and returning. Return hits pull enemies toward you by up to 550 distance, stopping 100 away; obstacles stop the pull.|nRadius: 180. Outbound speed: 1600; return speed: 900. The returning axe follows your current position.|nMana: 95. Cooldown: 10 sec.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 310 damage each way and pulls enemies toward you on its return.", 5)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 1|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 55.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 1|nAttacks have a 25% chance to deal 55 magic damage to ground enemies around the target.", 0)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 4|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 80.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 4|nAttacks have a 25% chance to deal 80 magic damage to ground enemies around the target.", 1)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 7|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 105.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 7|nAttacks have a 25% chance to deal 105 magic damage to ground enemies around the target.", 2)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 10|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 130.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 10|nAttacks have a 25% chance to deal 130 magic damage to ground enemies around the target.", 3)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 13|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 155.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 13|nAttacks have a 25% chance to deal 155 magic damage to ground enemies around the target.", 4)
     call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ADk2', "|cffffcc00Requires hero level 16|r|n|nYour damaging attacks have a |cffffcc0025% chance|r to release a crushing shockwave around the struck enemy.|n|n|cffffcc00Magic damage:|r 180.|n|cffffcc00Radius:|r 250.|n|cffffcc00Proc cooldown:|r 2 seconds.|n|nHits ground enemies. Killing blows can trigger it; spells and illusions cannot.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 16|nAttacks have a 25% chance to deal 180 magic damage to ground enemies around the target.", 5)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 1|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 25 (magic).|n|cffffcc00Healing per mark:|r 7.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 60   |cffffcc00Cooldown:|r 12 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 1|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 25 damage and healing you for 7 per mark.", 0)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 4|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 35 (magic).|n|cffffcc00Healing per mark:|r 10.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 70   |cffffcc00Cooldown:|r 12 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 4|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 35 damage and healing you for 10 per mark.", 1)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 7|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 45 (magic).|n|cffffcc00Healing per mark:|r 13.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 80   |cffffcc00Cooldown:|r 12 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 7|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 45 damage and healing you for 13 per mark.", 2)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 10|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 55 (magic).|n|cffffcc00Healing per mark:|r 16.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 90   |cffffcc00Cooldown:|r 12 sec.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 10|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 55 damage and healing you for 16 per mark.", 3)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 13|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 65 (magic).|n|cffffcc00Healing per mark:|r 19.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 100   |cffffcc00Cooldown:|r 12 sec.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 13|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 65 damage and healing you for 19 per mark.", 4)
     call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ADk3', "|cffffcc00Requires hero level 16|r|n|n|cffffcc00Passive - Blood Marks|r|nReaping Axe and Pulverize mark enemies for 12 seconds, stacking up to 6. Further hits refresh the duration. A persistent Blood counter shows your stacks.|n|n|cffffcc00Active - Collect the Tithe|r|nConsume your marks across the battlefield with a blood burst and crimson draining beams.|n|cffffcc00Damage per mark:|r 75 (magic).|n|cffffcc00Healing per mark:|r 22.|n|nMarks belong to their caster and clear on death. Immune or invulnerable enemies cannot be consumed. Healing cannot exceed maximum health. An empty cast refunds mana and cooldown.|n|n|cffffcc00Mana:|r 110   |cffffcc00Cooldown:|r 12 sec.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 16|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 75 damage and healing you for 22 per mark.", 5)
     call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 15 sec: magic immunity, 3% maximum health regeneration/sec, 60% attack speed, 25% movement speed, and 40% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 150. Cooldown: 180 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 15s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
     call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 18 sec: magic immunity, 4% maximum health regeneration/sec, 80% attack speed, 30% movement speed, and 50% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 175. Cooldown: 150 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 18s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 1)
     call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 21 sec: magic immunity, 5% maximum health regeneration/sec, 100% attack speed, 35% movement speed, and 60% cleave in 250 radius. Become larger and crimson.|nGrants Refuse Death: lethal damage triggers a final 10 sec of life, keeping at least 1 HP against damage. This timer cannot refresh; when it ends you die even if healed.|nMana: 200. Cooldown: 120 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 21s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 2)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 1|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 120 magic damage and stunning for 0.5 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 60   |cffffcc00Cooldown:|r 12 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 1|nHook enemies in a line for 120 damage, briefly stunning and dragging them toward you.", 0)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 4|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 160 magic damage and stunning for 0.6 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 70   |cffffcc00Cooldown:|r 11.6 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 4|nHook enemies in a line for 160 damage, briefly stunning and dragging them toward you.", 1)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 7|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 200 magic damage and stunning for 0.7 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 80   |cffffcc00Cooldown:|r 11.2 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 7|nHook enemies in a line for 200 damage, briefly stunning and dragging them toward you.", 2)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 10|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 240 magic damage and stunning for 0.8 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 90   |cffffcc00Cooldown:|r 10.8 sec.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 10|nHook enemies in a line for 240 damage, briefly stunning and dragging them toward you.", 3)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 13|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 280 magic damage and stunning for 0.9 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 100   |cffffcc00Cooldown:|r 10.4 sec.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 13|nHook enemies in a line for 280 damage, briefly stunning and dragging them toward you.", 4)
     call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ADk5', "|cffffcc00Requires hero level 16|r|n|nFire a soul hook 450 distance in about 0.25 seconds. It catches every ground enemy within 150 radius, dealing 320 magic damage and stunning for 1.0 seconds, then drags each one partway back toward you: 45% of its distance, at least 150 and at most 400, never closer than 100. Obstacles stop a drag.|n|n|cffffcc00Mana:|r 110   |cffffcc00Cooldown:|r 10 sec.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 16|nHook enemies in a line for 320 damage, briefly stunning and dragging them toward you.", 5)
     set DK_Hash = InitHashtable()
     set DK_Timer = CreateTimer()
     call TriggerRegisterAnyUnitEventBJ(cast, EVENT_PLAYER_UNIT_SPELL_EFFECT)
@@ -53131,30 +54496,30 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityExtendedTooltip('AGr2', "For 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
     call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 5)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nCharge forward. On impact, deal |cffff897975|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 0)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nCharge forward. On impact, deal |cffff8979100|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 1)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nCharge forward. On impact, deal |cffff8979125|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 2)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nCharge forward. On impact, deal |cffff8979175|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 3)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nCharge forward. On impact, deal |cffff8979200|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 4)
-    call BlzSetAbilityTooltip('AGr3', "Body Slam [|cffffcc00C|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AGr3', "Charge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
-    call BlzSetAbilityResearchTooltip('AGr3', "Learn Body Slam [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nCharge forward. On impact, deal |cffff8979225|r damage and stun ground enemies for 0.6s. Blocked terrain stops the charge.", 5)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 1", 0)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 1", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 2", 1)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 2", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 1)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 3", 2)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 3", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 2)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 4", 3)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 4", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 3)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 5", 4)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 5", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 4)
+    call BlzSetAbilityTooltip('AGr3', "Drunken Haze [|cffffcc00C|r] - Level 6", 5)
+    call BlzSetAbilityExtendedTooltip('AGr3', "Slow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
+    call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 6", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 5)
     call BlzSetAbilityTooltip('AGr4', "Explosive Cask [|cffffcc00V|r] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('AGr4', "Throw a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s.", 0)
     call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
@@ -53184,153 +54549,153 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
     call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 20s, nearby allies gain |cff86e99d200|r HP and 15 mana each second. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.|nCooldown: 10 sec", 0)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897980|r damage once per cast.", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes |cffff897990|r damage once per cast.|nCooldown: 10 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes 80 damage once per cast.", 0)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.|nCooldown: 10 sec", 1)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979130|r damage once per cast.", 1)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes |cffff8979175|r damage once per cast.|nCooldown: 10 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes 130 damage once per cast.", 1)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.|nCooldown: 10 sec", 2)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979180|r damage once per cast.", 2)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes |cffff8979225|r damage once per cast.|nCooldown: 10 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes 180 damage once per cast.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.|nCooldown: 10 sec", 3)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979250|r damage once per cast.", 3)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes |cffff8979300|r damage once per cast.|nCooldown: 10 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes 250 damage once per cast.", 3)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.|nCooldown: 10 sec", 4)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979350|r damage once per cast.", 4)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes |cffff8979400|r damage once per cast.|nCooldown: 10 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes 350 damage once per cast.", 4)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.|nCooldown: 10 sec", 5)
+    call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.", 5)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes |cffff8979550|r damage once per cast.|nCooldown: 10 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes 550 damage once per cast.", 5)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 700|nMana and cooldown begin on throw.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 1|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nGold: |cffff8979125|r damage; 1 sec stun|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 700|nMana and cooldown begin on throw.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 1|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 750|nMana and cooldown begin on throw.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 1)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 4|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nGold: |cffff8979175|r damage; 1.2 sec stun|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 750|nMana and cooldown begin on throw.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 4|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 1)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 800|nMana and cooldown begin on throw.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 2)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 7|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nGold: |cffff8979225|r damage; 1.4 sec stun|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 800|nMana and cooldown begin on throw.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 7|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 2)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 850|nMana and cooldown begin on throw.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 3)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 10|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nGold: |cffff8979275|r damage; 1.6 sec stun|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 850|nMana and cooldown begin on throw.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 10|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 3)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 900|nMana and cooldown begin on throw.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 4)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 13|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nGold: |cffff8979325|r damage; 1.8 sec stun|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 900|nMana and cooldown begin on throw.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 13|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 4)
     call BlzSetAbilityTooltip('ATf2', "Pick a Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 950|nMana and cooldown begin on throw.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf2', "Press X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 5)
     call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 16|n|nPress X to cycle Red > Gold > Blue, again to lock, then attack an enemy or target one with X to throw. Excludes structures and magic-immune enemies.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nGold: |cffff8979375|r damage; 2 sec stun|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nSelection: 0.6 sec per color; 5 sec to choose, then the cards expire|nThrow window: 10 sec|nRange: 950|nMana and cooldown begin on throw.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 16|nPress X to cycle cards and again to lock one. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect.", 5)
     call BlzSetAbilityTooltip('ATf3', "Lock Blue Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf3', "Press X to lock Blue for healing. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityResearchTooltip('ATf3', "Learn Lock Blue Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf3', "Press X to lock Blue, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf3', "Press X to lock Blue for healing. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityTooltip('ATf4', "Lock Red Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf4', "Press X to lock Red for splash damage. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityResearchTooltip('ATf4', "Learn Lock Red Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf4', "Press X to lock Red, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf4', "Press X to lock Red for splash damage. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityTooltip('ATf5', "Lock Gold Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf5', "Press X to lock Gold for a stun. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityResearchTooltip('ATf5', "Learn Lock Gold Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf5', "Press X to lock Gold, then attack an enemy or target one with X to throw.|n|nUses your current Pick a Card rank and its displayed damage/healing values.|nSelection: 5 sec total; 0.6 sec per color|nThrow window: 10 sec|nMana and cooldown begin on throw.|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf5', "Press X to lock Gold for a stun. Throw with X or attack for a 20% stronger effect.", 0)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 100 damage. Heals nearby allied heroes and troops for 100.", 0)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff897980|r damage; heal |cff86e99d50|r HP to allied heroes / |cff86e99d25|r to organic nonheroes within 300 of caster|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 100 damage. Heals nearby allied heroes and troops for 100.", 0)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 150 damage. Heals nearby allied heroes and troops for 140.", 1)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979120|r damage; heal |cff86e99d70|r HP to allied heroes / |cff86e99d35|r to organic nonheroes within 300 of caster|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 150 damage. Heals nearby allied heroes and troops for 140.", 1)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 175 damage. Heals nearby allied heroes and troops for 180.", 2)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979160|r damage; heal |cff86e99d90|r HP to allied heroes / |cff86e99d45|r to organic nonheroes within 300 of caster|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 175 damage. Heals nearby allied heroes and troops for 180.", 2)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 225 damage. Heals nearby allied heroes and troops for 220.", 3)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979200|r damage; heal |cff86e99d110|r HP to allied heroes / |cff86e99d55|r to organic nonheroes within 300 of caster|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 225 damage. Heals nearby allied heroes and troops for 220.", 3)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 300 damage. Heals nearby allied heroes and troops for 260.", 4)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979240|r damage; heal |cff86e99d130|r HP to allied heroes / |cff86e99d65|r to organic nonheroes within 300 of caster|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 300 damage. Heals nearby allied heroes and troops for 260.", 4)
     call BlzSetAbilityTooltip('ATf6', "Throw Blue Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf6', "Throw Blue for 350 damage. Heals nearby allied heroes and troops for 300.", 5)
     call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw the locked Blue card at an enemy. Effects apply on impact.|n|nBlue: |cffff8979280|r damage; heal |cff86e99d150|r HP to allied heroes / |cff86e99d75|r to organic nonheroes within 300 of caster|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 350 damage. Heals nearby allied heroes and troops for 300.", 5)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 150 damage. Deals 75 splash damage within 250.", 0)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979150|r damage; |cffff897975|r splash to other enemies within 250|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 150 damage. Deals 75 splash damage within 250.", 0)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 250 damage. Deals 110 splash damage within 260.", 1)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979210|r damage; |cffff8979105|r splash to other enemies within 250|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 250 damage. Deals 110 splash damage within 260.", 1)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 300 damage. Deals 140 splash damage within 270.", 2)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979270|r damage; |cffff8979135|r splash to other enemies within 250|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 300 damage. Deals 140 splash damage within 270.", 2)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 350 damage. Deals 185 splash damage within 280.", 3)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979330|r damage; |cffff8979165|r splash to other enemies within 250|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 350 damage. Deals 185 splash damage within 280.", 3)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 450 damage. Deals 225 splash damage within 290.", 4)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979390|r damage; |cffff8979195|r splash to other enemies within 250|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 450 damage. Deals 225 splash damage within 290.", 4)
     call BlzSetAbilityTooltip('ATf7', "Throw Red Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf7', "Throw Red for 500 damage. Deals 250 splash damage within 300.", 5)
     call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw the locked Red card at an enemy. Effects apply on impact.|n|nRed: |cffff8979450|r damage; |cffff8979225|r splash to other enemies within 250|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 500 damage. Deals 250 splash damage within 300.", 5)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 150 damage. Stuns the target for 1s.", 0)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979125|r damage; 1 sec stun|nRange: 700|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 60   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 150 damage. Stuns the target for 1s.", 0)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 200 damage. Stuns the target for 1.5s.", 1)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979175|r damage; 1.2 sec stun|nRange: 750|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 70   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 200 damage. Stuns the target for 1.5s.", 1)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 250 damage. Stuns the target for 1.75s.", 2)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979225|r damage; 1.4 sec stun|nRange: 800|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 80   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 250 damage. Stuns the target for 1.75s.", 2)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 300 damage. Stuns the target for 2s.", 3)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979275|r damage; 1.6 sec stun|nRange: 850|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 90   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 300 damage. Stuns the target for 2s.", 3)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 400 damage. Stuns the target for 2.2s.", 4)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979325|r damage; 1.8 sec stun|nRange: 900|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 100   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 400 damage. Stuns the target for 2.2s.", 4)
     call BlzSetAbilityTooltip('ATf8', "Throw Gold Card [X] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityExtendedTooltip('ATf8', "Throw Gold for 450 damage. Stuns the target for 2.5s.", 5)
     call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw the locked Gold card at an enemy. Effects apply on impact.|n|nGold: |cffff8979375|r damage; 2 sec stun|nRange: 950|nThrow window: 10 sec|nNo structures or magic-immune targets.|n|nMana: 110   Cooldown: 9 sec|n|nA locked card delivered by a basic attack gains 20% at every Pick a Card rank to its damage, healing and stun duration.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 450 damage. Stuns the target for 2.5s.", 5)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 10 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 150 sec", 0)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 0)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 6|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 10 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 150   Cooldown: 150 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 6|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 0)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 13 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 135 sec", 1)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 1)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 11|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 13 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 175   Cooldown: 135 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 11|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 1)
     call BlzSetAbilityTooltip('ATfb', "Destiny [V] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 15 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 120 sec", 2)
+    call BlzSetAbilityExtendedTooltip('ATfb', "Reveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 2)
     call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 16|n|nReveal the entire map and invisible units. Press V again over the destination to Gate once; teleporting does not end the reveal.|n|nReveal: 15 sec|nGate channel: 0.67 sec|nGate range: 5500|n|nMana: 200   Cooldown: 120 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 16|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once.", 2)
     call BlzSetAbilityTooltip('ATfc', "Gate [V] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfc', "Press V over your destination to channel, then teleport once to a walkable destination while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
+    call BlzSetAbilityExtendedTooltip('ATfc', "Choose walkable ground within 5500 range to teleport there after a short channel.", 0)
     call BlzSetAbilityResearchTooltip('ATfc', "Learn Gate - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfc', "Press V over your destination to channel, then teleport once to a walkable destination while Destiny is active.|n|nChannel: 0.67 sec|nRange: 5500|nDestiny reveal continues for its remaining duration. No additional mana cost; Destiny keeps its cooldown.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfc', "Choose walkable ground within 5500 range to teleport there after a short channel.", 0)
     call BlzSetAbilityTooltip('ATfd', "Psionic Recall [|cffffcc00C|r] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATfd', "Place a pylon to shield nearby allied heroes for 100 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 1", 0)
@@ -53356,53 +54721,53 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 16|nPlace a pylon to shield nearby allied heroes for 300 and pull one allied hero to you. The tether heals allies and slows enemies.", 5)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 3s.", 0)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.5s.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to four barriers in 4s. Each blocks movement for 3s.", 0)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 3s.", 1)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3s, then stun nearby enemies for 0.7s.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to four barriers in 4s. Each blocks movement for 3s.", 1)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 3.5s.", 2)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 3.5s, then stun nearby enemies for 1s.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to four barriers in 4s. Each blocks movement for 3.5s.", 2)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 4s.", 3)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 4s, then stun nearby enemies for 1.25s.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to four barriers in 4s. Each blocks movement for 4s.", 3)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 5s.", 4)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.5s.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to four barriers in 4s. Each blocks movement for 5s.", 4)
     call BlzSetAbilityTooltip('AFg1', "Force Field [|cffffcc00X|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
+    call BlzSetAbilityExtendedTooltip('AFg1', "Place up to four barriers in 4s. Each blocks movement for 5s.", 5)
     call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to 5 barriers in 4s for 25 mana each. They block movement for 5s, then stun nearby enemies for 1.75s.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to four barriers in 4s. Each blocks movement for 5s.", 5)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 0)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 1|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 0)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 1|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 1)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 1)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 4|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 1)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 4|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 1)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 2)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 2)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 7|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 2)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 7|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 2)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 4", 3)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 3)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 3)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 10|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 3)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 10|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 3)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 4)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 4)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 13|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 4)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 13|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 4)
     call BlzSetAbilityTooltip('ATfg', "Loaded Dice [C] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('ATfg', "Roll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 5)
+    call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 16|n|nRoll for gold. Your current chance improves with time alive and enemy hero kills; death resets all luck.|n|nStake: 50 gold required|nWin: Gain 50 gold|nLoss: Lose 50 gold; split among opposing players with living non-illusion heroes|nIf no opponents qualify, lost gold is removed.|nWin chance: 50% base; up to +10 percentage points over 15 minutes alive; +2 points per hero kill (5 kills maximum)|nMaximum chance: 70%|n|nMana: 0   Cooldown: 60 sec", 5)
+    call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 16|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
 endfunction
 
 function GPS_Remove takes integer i returns nothing
@@ -54498,7 +55863,7 @@ function MDV_Update takes unit u, unit v returns nothing
         call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl", u, "chest"))
     endif
     set abilityId = MDV_Code[slot]
-    call BlzSetAbilityExtendedTooltip(abilityId, "Inside Mundo: " + GetUnitName(v) + "|nRemaining health: " + I2S(R2I(GetWidgetLife(v))) + "|nEstimated digestion time: " + I2S(R2I(left + 0.99)) + " sec.|nThe cooldown shows the estimate, updated from actual digestion damage. This is a status indicator; the meal cannot be released manually.", 0)
+    call BlzSetAbilityExtendedTooltip(abilityId, "Inside Mundo: " + GetUnitName(v) + "|nRemaining health: " + I2S(R2I(GetWidgetLife(v))) + "|nEstimated digestion time: " + I2S(R2I(left + 0.99)) + " sec.", 0)
     call BlzStartUnitAbilityCooldown(u, abilityId, RMaxBJ(0.25, left))
     set fx = null
 endfunction
@@ -55422,17 +56787,17 @@ function MU_Init takes nothing returns nothing
     local group existing = CreateGroup()
     local unit u
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 1|r|n|nEnemy heroes and creeps: flip the target up to 200 units behind Mundo (shortened by walls, cliffs or map edges), dealing 50 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 50 damage/sec, healing Mundo for 25% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 200 HP in 300 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 1|nFlip heroes and creeps behind you for 50 damage, or swallow a lesser unit. Digestion heals you and restores 200 health to nearby allies when it finishes.", 0)
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 4|r|n|nEnemy heroes and creeps: flip the target up to 230 units behind Mundo (shortened by walls, cliffs or map edges), dealing 80 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 65 damage/sec, healing Mundo for 30% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 250 HP in 350 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 4|nFlip heroes and creeps behind you for 80 damage, or swallow a lesser unit. Digestion heals you and restores 250 health to nearby allies when it finishes.", 1)
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 7|r|n|nEnemy heroes and creeps: flip the target up to 260 units behind Mundo (shortened by walls, cliffs or map edges), dealing 110 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 80 damage/sec, healing Mundo for 35% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 300 HP in 400 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 7|nFlip heroes and creeps behind you for 110 damage, or swallow a lesser unit. Digestion heals you and restores 300 health to nearby allies when it finishes.", 2)
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 10|r|n|nEnemy heroes and creeps: flip the target up to 290 units behind Mundo (shortened by walls, cliffs or map edges), dealing 140 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 95 damage/sec, healing Mundo for 40% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 350 HP in 450 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 10|nFlip heroes and creeps behind you for 140 damage, or swallow a lesser unit. Digestion heals you and restores 350 health to nearby allies when it finishes.", 3)
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 13|r|n|nEnemy heroes and creeps: flip the target up to 320 units behind Mundo (shortened by walls, cliffs or map edges), dealing 170 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 110 damage/sec, healing Mundo for 45% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 400 HP in 500 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 13|nFlip heroes and creeps behind you for 170 damage, or swallow a lesser unit. Digestion heals you and restores 400 health to nearby allies when it finishes.", 4)
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AMu3', "|cffffcc00Requires hero level 16|r|n|nEnemy heroes and creeps: flip the target up to 350 units behind Mundo (shortened by walls, cliffs or map edges), dealing 200 magic damage. Can flip while digesting.|nOther eligible units: swallow one unit; digest for 125 damage/sec, healing Mundo for 50% of actual digestion damage. On completion, burp and heal Mundo and nearby allies for 450 HP in 550 radius. Enemy meals grant normal bounty and shared XP. Allies can be eaten but give no kill rewards.|nCannot affect Colossals, flying, mechanical, magic-immune or invulnerable units. Spell-resistant units cannot be eaten. One meal at a time; unfinished meals are released if Mundo dies.|nMana: 0. Cooldown: 20 sec. Range: 250.|nWhile digesting, the D slot displays the swallowed unit icon and an estimated remaining-time cooldown. A pulsing chest effect marks an active meal.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 16|nFlip heroes and creeps behind you for 200 damage, or swallow a lesser unit. Digestion heals you and restores 450 health to nearby allies when it finishes.", 5)
     set MW_Hash = InitHashtable()
     set MU_Hash = InitHashtable()
     set MU_Timer = CreateTimer()
@@ -55459,35 +56824,35 @@ function MU_Init takes nothing returns nothing
     call RemoveRect(bounds)
     call TimerStart(MU_Timer, 0.25, true, function MU_Tick)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 80, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 50. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 80 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 120, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 60. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 120 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 1)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 160, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 70. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 160 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 2)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 200, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 80. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 200 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 3)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 240, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 90. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 240 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 4)
     call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver 1100 distance, stopping on the first visible enemy ground organic unit. Magic damage: 280, multiplied by (1 + distance / 1100) and (1 + Mundo missing health fraction at cast, before cost).|nHealth cost: 100. On hit, recover 50%-150% of this cost based on travel distance.|nCleaver Wound: stops movement for 0.2 sec, then slows movement by 70% for 2 sec. Cancels Speed Scroll haste on this target and prevents it being reapplied during the wound. Can be dispelled.|nHit or miss: the cleaver stays at its landing point for 3 sec or until your next cast. Walk into the circle within 100 to reset the cooldown and gain 25% movement speed and 2% maximum health regeneration per second for 2 sec.|nMana: 0. Cooldown: 4 sec. Cast range: 1100.|n|cffff6655Bloodied Cleaver:|r hitting a unit bloodies the dropped blade. Retrieve it to load your next throw with +50% impact damage and +50% impact healing. One charge, consumed on throw; successful hit-and-pickup cycles refresh it without stacking. A missed throw breaks the chain. Red weapon glow means loaded.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 280 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 5)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 35 to 70/sec and health drain rises from 12 to 24/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 10% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 35-70 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 50 to 100/sec and health drain rises from 16 to 32/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 14% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 50-100 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 1)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 65 to 130/sec and health drain rises from 20 to 40/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 18% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 65-130 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 2)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 4", 3)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 80 to 160/sec and health drain rises from 24 to 48/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 22% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 3)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 80-160 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 3)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 95 to 190/sec and health drain rises from 28 to 56/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 26% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 95-190 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 4)
     call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Toggle Disease Cloud. Over 10 seconds of continuous use, magic damage rises from 110 to 220/sec and health drain rises from 32 to 64/sec. Reaches full strength at 10 sec and stays there until stopped.|nLight green -> darker green -> purple/dark green -> near-black at full strength. Toggling off resets the ramp.|nAffects enemy ground organic units within 250 radius. Grants 30% spell damage resistance while active. Automatically stops before its health drain would kill Mundo.|nLeaves clouds for 3 sec; poison lingers for 2 sec. Each cloud keeps its emitted strength; overlapping clouds from Mundo do not stack.|nMana: 0. Toggle cooldown: 0.5 sec.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 110-220 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 5)
     call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Pay 20% of current health to become Undying for 15 sec: magic immunity, 3% maximum health regeneration/sec, 60% attack speed, 25% movement speed, and 40% cleave in 250 radius. Grow larger and turn crimson.|nRefuse Death: lethal damage starts a final 10 sec of life, keeping at least 1 HP against damage. Cannot refresh. You die when these 10 sec end, even if healed.|nMana: 0. Cooldown: 75 sec.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 15s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
     call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Pay 20% of current health to become Undying for 18 sec: magic immunity, 4% maximum health regeneration/sec, 80% attack speed, 30% movement speed, and 50% cleave in 250 radius. Grow larger and turn crimson.|nRefuse Death: lethal damage starts a final 10 sec of life, keeping at least 1 HP against damage. Cannot refresh. You die when these 10 sec end, even if healed.|nMana: 0. Cooldown: 75 sec.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 18s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 1)
     call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Pay 20% of current health to become Undying for 21 sec: magic immunity, 5% maximum health regeneration/sec, 100% attack speed, 35% movement speed, and 60% cleave in 250 radius. Grow larger and turn crimson.|nRefuse Death: lethal damage starts a final 10 sec of life, keeping at least 1 HP against damage. Cannot refresh. You die when these 10 sec end, even if healed.|nMana: 0. Cooldown: 75 sec.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 21s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 2)
     set cast = null
     set death = null
     set enter = null
@@ -56143,941 +57508,56 @@ function SpellKeysInit takes framehandle ui returns nothing
     set input = null
 endfunction
 
-function TF_GatePointer takes nothing returns nothing
-    local integer h=GetPlayerId(GetTriggerPlayer())
-    call SaveReal(TF46_H,h,1,BlzGetTriggerPlayerMouseX())
-    call SaveReal(TF46_H,h,2,BlzGetTriggerPlayerMouseY())
-endfunction
 
-function TF45_Track takes unit u returns nothing
-    local player owner=GetOwningPlayer(u)
-    local integer pid=GetPlayerId(owner)
-    local trigger pointer
-    if GetUnitTypeId(u)=='HTf1' and not IsUnitIllusion(u) then
-        if pid < 12 and not HaveSavedHandle(TF46_H,pid,8) then
-            set pointer=CreateTrigger()
-            call TriggerRegisterPlayerEvent(pointer,owner,EVENT_PLAYER_MOUSE_MOVE)
-            call TriggerAddAction(pointer,function TF_GatePointer)
-            call SaveTriggerHandle(TF46_H,pid,8,pointer)
-            set pointer=null
-        endif
-        call GroupAddUnit(TF33_Heroes,u)
-    endif
-endfunction
 
-function TF45_GateClear takes unit u returns nothing
-    local integer h=GetHandleId(u)
-    local timer t=LoadTimerHandle(TF45_Gate,h,0)
-    if t!=null then
-        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,1))
-        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,2))
-        call DestroyEffect(LoadEffectHandle(TF45_Gate,h,3))
-        call FlushChildHashtable(TF45_Gate,GetHandleId(t))
-        call FlushChildHashtable(TF45_Gate,h)
-        call PauseTimer(t)
-        call DestroyTimer(t)
-    endif
-    set t=null
-endfunction
 
-function TF_GateInputEnd takes unit c returns nothing
-    local integer h=GetHandleId(c)
-    local trigger key=LoadTriggerHandle(TF46_H,h,2)
-    if key!=null then
-        call FlushChildHashtable(TF46_H,GetHandleId(key))
-        call DestroyTrigger(key)
-        call RemoveSavedHandle(TF46_H,h,2)
-    endif
-    set key=null
-endfunction
 
-function TF46_RevealEnd takes nothing returns nothing
-    local timer t=GetExpiredTimer()
-    local integer h=GetHandleId(t)
-    local unit c=LoadUnitHandle(TF46_H,h,0)
-    local group g=LoadGroupHandle(TF46_H,h,1)
-    local fogmodifier fog=LoadFogModifierHandle(TF46_H,h,2)
-    local unit u
-    loop
-        set u=FirstOfGroup(g)
-        exitwhen u==null
-        call GroupRemoveUnit(g,u)
-        call RemoveUnit(u)
-    endloop
-    call DestroyGroup(g)
-    call FogModifierStop(fog)
-    call DestroyFogModifier(fog)
-    call TF_GateInputEnd(c)    
-    call TF45_GateClear(c)
-    if GetUnitAbilityLevel(c,'ATfc')>0 then
-        call UnitRemoveAbility(c,'ATfc')
-        call BlzUnitHideAbility(c,'ATfb',false)
-    endif
-    call RemoveSavedHandle(TF46_H,GetHandleId(c),0)
-    call FlushChildHashtable(TF46_H,h)
-    call DestroyTimer(t)
-    set c=null
-    set g=null
-    set fog=null
-    set t=null
-    set u=null
-endfunction
 
-function TFP_TF_Alive takes unit u returns boolean
-    return u != null and GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and not IsUnitType(u, UNIT_TYPE_DEAD)
-endfunction
 
-function TF45_GateFinish takes nothing returns nothing
-    local unit u=LoadUnitHandle(TF45_Gate,GetHandleId(GetExpiredTimer()),0)
-    local integer h=GetHandleId(u)
-    local real x=LoadReal(TF45_Gate,h,5)
-    local real y=LoadReal(TF45_Gate,h,6)
-    call TF45_GateClear(u)
-    if TFP_TF_Alive(u) and GetUnitAbilityLevel(u,'ATfc')>0 then
-        if not IsTerrainPathable(x,y,PATHING_TYPE_WALKABILITY) then
-            call SetUnitPosition(u,x,y)
-            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl",GetUnitX(u),GetUnitY(u)))
-            call UnitRemoveAbility(u,'ATfc')
-            call BlzUnitHideAbility(u,'ATfb',false)
-        else
-            call DisplayTextToPlayer(GetOwningPlayer(u),0.,0.,"Gate requires a walkable destination.")
-        endif
-    endif
-    set u=null
-endfunction
 
-function TF45_GateStart takes unit u, real x, real y returns nothing
-    local integer h=GetHandleId(u)
-    local timer t
-    local real dx=x-GetUnitX(u)
-    local real dy=y-GetUnitY(u)
-    local real distance=SquareRoot(dx*dx+dy*dy)
-    if GetUnitAbilityLevel(u,'ATfc')>0 and TFP_TF_Alive(u) and not HaveSavedHandle(TF45_Gate,h,0) then
-        if distance>5500. then
-            set x=GetUnitX(u)+5500.*dx/distance
-            set y=GetUnitY(u)+5500.*dy/distance
-        endif
-        call SaveReal(TF45_Gate,h,5,x)
-        call SaveReal(TF45_Gate,h,6,y)
-        set t=CreateTimer()
-        call SaveTimerHandle(TF45_Gate,h,0,t)
-        call SaveUnitHandle(TF45_Gate,GetHandleId(t),0,u)
-        call SaveEffectHandle(TF45_Gate,h,1,AddSpecialEffect("war3mapImported\\TFGateway.mdx",GetUnitX(u),GetUnitY(u)))
-        call SaveEffectHandle(TF45_Gate,h,2,AddSpecialEffect("war3mapImported\\TFGateway.mdx",x,y))
-        call SaveEffectHandle(TF45_Gate,h,3,AddSpecialEffectTarget("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",u,"origin"))
-        call SetUnitAnimation(u,"spell")
-        call TimerStart(t,2./3.,false,function TF45_GateFinish)
-    endif
-    set t=null
-    set u=null
-endfunction
 
-function TF_GateKey takes nothing returns nothing
-    local integer h=GetHandleId(GetTriggeringTrigger())
-    local unit c=LoadUnitHandle(TF46_H,h,0)
-    local integer pointer=GetPlayerId(GetTriggerPlayer())
-    if HaveSavedReal(TF46_H,pointer,1) and TFP_TF_Alive(c) and IsUnitSelected(c,GetTriggerPlayer()) and GetUnitAbilityLevel(c,'ATfc')>0 and not HaveSavedHandle(TF45_Gate,GetHandleId(c),0) then
-        call TF45_GateStart(c,LoadReal(TF46_H,pointer,1),LoadReal(TF46_H,pointer,2))
-    endif
-    set c=null
-endfunction
 
-function TF_GateInputStart takes unit c returns nothing
-    local trigger key=CreateTrigger()
-    call BlzTriggerRegisterPlayerKeyEvent(key,GetOwningPlayer(c),OSKEY_V,0,true)
-    call TriggerAddAction(key,function TF_GateKey)
-    call SaveTriggerHandle(TF46_H,GetHandleId(c),2,key)
-    call SaveUnitHandle(TF46_H,GetHandleId(key),0,c)
-    set key=null
-endfunction
 
-function TFP_destiny___c takes nothing returns boolean
-    local unit c=GetTriggerUnit()
-    local unit u
-    local player p=GetOwningPlayer(c)
-    local integer rank=GetUnitAbilityLevel(c,'ATfb')
-    local real duration=10.
-    local rect bounds
-    local real x
-    local real y
-    local timer t
-    local integer h
-    local group g
-    local fogmodifier fog
-    if GetSpellAbilityId()=='ATfb' and not HaveSavedHandle(TF46_H,GetHandleId(c),0) then
-        call TF45_Track(c)
-        if rank==2 then
-            set duration=13.
-        elseif rank>=3 then
-            set duration=15.
-        endif
-        set bounds=GetWorldBounds()
-        set t=CreateTimer()
-        set h=GetHandleId(t)
-        set g=CreateGroup()
-        set fog=CreateFogModifierRect(p,FOG_OF_WAR_VISIBLE,bounds,true,false)
-        call FogModifierStart(fog)
-        set x=GetRectMinX(bounds)+900.
-        loop
-            exitwhen x>GetRectMaxX(bounds)+900.
-            set y=GetRectMinY(bounds)+900.
-            loop
-                exitwhen y>GetRectMaxY(bounds)+900.
-                set u=CreateUnit(p,'ht46',x,y,0.)
-                call GroupAddUnit(g,u)
-                set y=y+1800.
-            endloop
-            set x=x+1800.
-        endloop
-        call SaveUnitHandle(TF46_H,h,0,c)
-        call SaveGroupHandle(TF46_H,h,1,g)
-        call SaveFogModifierHandle(TF46_H,h,2,fog)
-        call SaveTimerHandle(TF46_H,GetHandleId(c),0,t)
-        call BlzUnitHideAbility(c,'ATfb',true)
-        call UnitAddAbility(c,'ATfc')
-        call TF_GateInputStart(c)
-        call TimerStart(t,duration,false,function TF46_RevealEnd)
-        call RemoveRect(bounds)
-    endif
-    set c=null
-    set u=null
-    set p=null
-    set bounds=null
-    set t=null
-    set g=null
-    set fog=null
-    return false
-endfunction
 
-function TFP_destiny___gateC takes nothing returns boolean
-    if GetSpellAbilityId()=='ATfc' then
-        call TF45_GateStart(GetTriggerUnit(),GetSpellTargetX(),GetSpellTargetY())
-    endif
-    return false
-endfunction
 
-function TFP_destiny___preloadSound takes nothing returns nothing
-        local sound s=CreateSound(TFP_destiny___GATE_SOUND, false, true, true, 12700, 12700, "")
-        if s != null then
-            call SetSoundVolume(s, 1)
-            call SetSoundPosition(s, 0., 0., 100.)
-            call StartSound(s)
-            call KillSoundWhenDone(s)
-        endif
-        call DestroyTimer(GetExpiredTimer())
-        set s=null
-    endfunction
 
-function TFP_s__Table___GTable__allocate takes nothing returns integer
- local integer this=TFP_si__Table___GTable_F
-    if (this!=0) then
-        set TFP_si__Table___GTable_F=TFP_si__Table___GTable_V[this]
-    else
-        set TFP_si__Table___GTable_I=TFP_si__Table___GTable_I+1
-        set this=TFP_si__Table___GTable_I
-    endif
-    if (this>8100) then
-        return 0
-    endif
 
-    set TFP_si__Table___GTable_type[this]=3
-    set TFP_si__Table___GTable_V[this]=-1
- return this
-endfunction
 
-function TFP_s__HandleTable__allocate takes nothing returns integer
- local integer this=TFP_s__Table___GTable__allocate()
- local integer kthis
-    if(this==0) then
-        return 0
-    endif
-    set TFP_si__Table___GTable_type[this]=6
-    set kthis=this
 
- return this
-endfunction
 
-function TFP_destiny___i takes nothing returns nothing
-        local trigger t=CreateTrigger()
-        local trigger gate=CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(gate, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        call TriggerAddCondition(gate, Condition(function TFP_destiny___gateC))
-        call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        call TriggerAddCondition(t, Condition(function TFP_destiny___c))
-        call TimerStart(CreateTimer(), 0.01, false, function TFP_destiny___preloadSound)
-        set TFP_destiny___attachments=TFP_s__HandleTable__allocate()
-        set TFP_destiny___cdrTable=TFP_s__HandleTable__allocate()
-        set gate=null
-        set t=null
-    endfunction
 
-function TF33_Close takes unit c, real cooldown returns nothing
-    local integer h=GetHandleId(c)
-    local timer t=LoadTimerHandle(TF33_H,h,1)
-    if HaveSavedString(TF33_H,h,11) then
-        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,LoadStr(TF33_H,h,11))
-    endif
-    call UnitRemoveAbility(c,'ATf3')
-    call UnitRemoveAbility(c,'ATf4')
-    call UnitRemoveAbility(c,'ATf5')
-    call UnitRemoveAbility(c,'ATf6')
-    call UnitRemoveAbility(c,'ATf7')
-    call UnitRemoveAbility(c,'ATf8')
-    call ShowUnit(LoadUnitHandle(TF33_H,h,2),false)
-    call RemoveUnit(LoadUnitHandle(TF33_H,h,2))
-    call BlzUnitHideAbility(c,'ATf2',false)
-    if cooldown>0. then
-        call BlzStartUnitAbilityCooldown(c,'ATf2',cooldown)
-    endif
-    call FlushChildHashtable(TF33_H,GetHandleId(t))
-    call PauseTimer(t)
-    call DestroyTimer(t)
-    call FlushChildHashtable(TF33_H,h)
-    set t=null
-endfunction
 
-function TF33_Enemy takes unit c, unit v returns boolean
-    return TFP_TF_Alive(v) and IsUnitEnemy(v,GetOwningPlayer(c)) and not IsUnitType(v,UNIT_TYPE_STRUCTURE) and not IsUnitType(v,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(v)
-endfunction
 
-function TFP_DamageType_dealCodeDamage takes unit who, unit target, real damage, damagetype how returns nothing
-    call UnitDamageTarget(who, target, damage, false, false, ATTACK_TYPE_NORMAL, how, null)
-endfunction
 
-function TFP_TF_CardDebuff takes unit caster, unit target, integer abilityId, integer rank, string order returns nothing
-    local unit dummy=CreateUnit(GetOwningPlayer(caster),TFP_tfConsts_CASTER_DUMMY_ID,GetUnitX(target),GetUnitY(target),0.)
-    call UnitAddAbility(dummy,abilityId)
-    call SetUnitAbilityLevel(dummy,abilityId,rank)
-    call IssueTargetOrder(dummy,order,target)
-    call UnitApplyTimedLife(dummy,'BTLF',2.)
-    set dummy=null
-endfunction
 
-function TF33_Impact takes unit c, unit v, integer color, integer rank, real multiplier returns nothing
-    local group g=CreateGroup()
-    local unit u
-    local real x=GetUnitX(v)
-    local real y=GetUnitY(v)
-    local boolean healed=false
-    local real heal=(30.+20.*rank)*multiplier
-    local sound healSound
-    local effect healFx
-    if color == 1 then
-        call TFP_DamageType_dealCodeDamage(c,v,(90.+60.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
-        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl",x,y))
-        call GroupEnumUnitsInRange(g,x,y,250.,null)
-        loop
-            set u=FirstOfGroup(g)
-            exitwhen u == null
-            call GroupRemoveUnit(g,u)
-            if u != v and TF33_Enemy(c,u) then
-                call TFP_DamageType_dealCodeDamage(c,u,(45.+30.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
-            endif
-        endloop
-    elseif color == 2 then
-        if multiplier > 1.0 then
-            call TFP_TF_CardDebuff(c,v,'ATgS',rank,"thunderbolt")
-        else
-            call TFP_TF_CardDebuff(c,v,'ATfa',rank,"thunderbolt")
-        endif
-        call TFP_DamageType_dealCodeDamage(c,v,(75.+50.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
-        call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___GOLDFX,v,"origin"))
-    else
-        call TFP_DamageType_dealCodeDamage(c,v,(40.+40.*rank)*multiplier,DAMAGE_TYPE_MAGIC)
-        if TFP_TF_Alive(c) then
-            call GroupEnumUnitsInRange(g,GetUnitX(c),GetUnitY(c),300.,null)
-            loop
-                set u=FirstOfGroup(g)
-                exitwhen u == null
-                call GroupRemoveUnit(g,u)
-                if TFP_TF_Alive(u) and IsUnitAlly(u,GetOwningPlayer(c)) and not IsUnitType(u,UNIT_TYPE_STRUCTURE) and not IsUnitType(u,UNIT_TYPE_MECHANICAL) then
-                    if GetWidgetLife(u)<GetUnitState(u,UNIT_STATE_MAX_LIFE) then
-                        set healed=true
-                    endif
-                    if IsUnitType(u,UNIT_TYPE_HERO) then
-                        call SetWidgetLife(u,RMinBJ(GetUnitState(u,UNIT_STATE_MAX_LIFE),GetWidgetLife(u)+heal))
-                    else
-                        call SetWidgetLife(u,RMinBJ(GetUnitState(u,UNIT_STATE_MAX_LIFE),GetWidgetLife(u)+heal*.5))
-                    endif
-                endif
-            endloop
-            if healed then
-            set healSound=CreateSound("Spells\\Orianna\\Feedback\\Heal.wav",false,true,true,0,0,"SpellsEAX")
-            call SetSoundDuration(healSound,700)
-            call SetSoundChannel(healSound,0)
-            call SetSoundVolume(healSound,52)
-            call SetSoundDistances(healSound,300.,2400.)
-            call SetSoundDistanceCutoff(healSound,2600.)
-            call AttachSoundToUnit(healSound,c)
-            call StartSound(healSound)
-            call KillSoundWhenDone(healSound)
-                    set healFx=AddSpecialEffectTarget("Abilities\\Spells\\Orc\\HealingWave\\HealingWaveTarget.mdl",c,"origin")
-                    call BlzSetSpecialEffectColor(healFx,65,255,100)
-                    call BlzSetSpecialEffectScale(healFx,0.45)
-                    call DestroyEffect(healFx)
-            endif
-        endif
-    endif
-    call DestroyGroup(g)
-    set g=null
-    set u=null
-    set healSound=null
-    set healFx=null
-endfunction
 
-function TF33_Flight takes nothing returns nothing
-    local timer t=GetExpiredTimer()
-    local integer h=GetHandleId(t)
-    local unit c=LoadUnitHandle(TF33_H,h,0)
-    local unit v=LoadUnitHandle(TF33_H,h,1)
-    local unit orb=LoadUnitHandle(TF33_H,h,2)
-    local real dx=GetUnitX(v)-GetUnitX(orb)
-    local real dy=GetUnitY(v)-GetUnitY(orb)
-    local real distance=SquareRoot(dx*dx+dy*dy)
-    local real age=LoadReal(TF33_H,h,3)+.03
-    local boolean done=not TF33_Enemy(c,v) or GetUnitTypeId(c)==0 or age>=4.
-    if not done and distance<=33. then
-        call TF33_Impact(c,v,LoadInteger(TF33_H,h,4),LoadInteger(TF33_H,h,5),1.0)
-        set done=true
-    endif
-    if done then
-        call ShowUnit(orb,false)
-        call RemoveUnit(orb)
-        call FlushChildHashtable(TF33_H,h)
-        call PauseTimer(t)
-        call DestroyTimer(t)
-    else
-        call SetUnitFacing(orb,Atan2(dy,dx)*bj_RADTODEG)
-        call SetUnitX(orb,GetUnitX(orb)+33.*dx/distance)
-        call SetUnitY(orb,GetUnitY(orb)+33.*dy/distance)
-        call SetUnitFlyHeight(orb,GetUnitFlyHeight(v)+70.,0.)
-        call SaveReal(TF33_H,h,3,age)
-    endif
-    set t=null
-    set c=null
-    set v=null
-    set orb=null
-endfunction
 
-function TF33_Tint takes unit u, integer color returns nothing
-    if color == 1 then
-        call SetUnitVertexColor(u,255,45,45,255)
-    elseif color == 2 then
-        call SetUnitVertexColor(u,255,210,30,255)
-    else
-        call SetUnitVertexColor(u,70,159,255,255)
-    endif
-endfunction
 
-function TF33_Show takes unit c returns nothing
-    local integer h=GetHandleId(c)
-    local unit orb=LoadUnitHandle(TF33_H,h,2)
-    local integer ticks=LoadInteger(TF33_H,h,6)
-    local real pulse=0.
-    local real scale
-    if LoadBoolean(TF33_H,h,5) and ticks<8 then
-        set pulse=Sin(3.14159265*I2R(ticks)/8.)
-    endif
-    set scale=1.35*(1.+.08*pulse)
-    call SetUnitX(orb,GetUnitX(c))
-    call SetUnitY(orb,GetUnitY(c))
-    call SetUnitFlyHeight(orb,GetUnitFlyHeight(c)+120.+6.*pulse,0.)
-    call SetUnitScale(orb,scale,scale,scale)
-    call TF33_Tint(orb,LoadInteger(TF33_H,h,4))
-    set orb=null
-endfunction
 
-function TF33_SelectTick takes nothing returns nothing
-    local timer t=GetExpiredTimer()
-    local unit c=LoadUnitHandle(TF33_H,GetHandleId(t),0)
-    local integer h=GetHandleId(c)
-    local integer ticks=LoadInteger(TF33_H,h,6)+1
-    local integer color=LoadInteger(TF33_H,h,4)
-    if not TFP_TF_Alive(c) or GetUnitAbilityLevel(c,'ATf2')==0 or (LoadBoolean(TF33_H,h,5) and ticks>=200) then
-        call TF33_Close(c,0.)
-    else
-        call SaveInteger(TF33_H,h,6,ticks)
-        if not LoadBoolean(TF33_H,h,5) and ticks>=100 then
-            call TF33_Close(c,0.)
-            set c=null
-            set t=null
-            return
-        elseif not LoadBoolean(TF33_H,h,5) and ModuloInteger(ticks,12)==0 then
-            call UnitRemoveAbility(c,TFP_s__tfConsts_CARD_ID[color])
-            set color=ModuloInteger(color+1,3)
-            call SaveInteger(TF33_H,h,4,color)
-            call UnitAddAbility(c,TFP_s__tfConsts_CARD_ID[color])
-        endif
-        call TF33_Show(c)
-    endif
-    set c=null
-    set t=null
-endfunction
 
-function TF47_Lock takes unit c, integer color returns nothing
-    local integer h=GetHandleId(c)
-    local integer id
-    call UnitRemoveAbility(c,TFP_s__tfConsts_CARD_ID[LoadInteger(TF33_H,h,4)])
-    call SaveInteger(TF33_H,h,4,color)
-    call SaveBoolean(TF33_H,h,5,true)
-    call SaveInteger(TF33_H,h,6,0)
-    if color==0 then
-        set id='ATf6'
-    elseif color==1 then
-        set id='ATf7'
-    else
-        set id='ATf8'
-    endif
-    call SaveStr(TF33_H,h,11,BlzGetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0))
-    if color==0 then
-        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackBlue.mdx")
-    elseif color==1 then
-        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackRed.mdx")
-    else
-        call BlzSetUnitWeaponStringField(c,UNIT_WEAPON_SF_ATTACK_PROJECTILE_ART,0,"war3mapImported\\TFAttackGold.mdx")
-    endif
-    call UnitAddAbility(c,id)
-    call SetUnitAbilityLevel(c,id,GetUnitAbilityLevel(c,'ATf2'))
-    call TF33_Show(c)
-endfunction
 
-function TF33_Cast takes nothing returns nothing
-    local unit c=GetTriggerUnit()
-    local unit v=GetSpellTargetUnit()
-    local integer id=GetSpellAbilityId()
-    local integer h=GetHandleId(c)
-    local integer color
-    local integer rank=GetUnitAbilityLevel(c,'ATf2')
-    local unit orb
-    local timer t
-    if id=='ATf2' and not HaveSavedHandle(TF33_H,h,1) then
-        set t=CreateTimer()
-        set orb=CreateUnit(GetOwningPlayer(c),'htf1',GetUnitX(c),GetUnitY(c),0.)
-        call SetUnitScale(orb,0.85,0.85,0.85)
-        call SaveTimerHandle(TF33_H,h,1,t)
-        call SaveUnitHandle(TF33_H,h,2,orb)
-        call SaveInteger(TF33_H,h,4,1)
-        call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
-        call BlzUnitHideAbility(c,'ATf2',true)
-        call BlzEndUnitAbilityCooldown(c,'ATf2')
-        call UnitAddAbility(c,'ATf4')
-        call TF33_Show(c)
-        call TimerStart(t,.05,true,function TF33_SelectTick)
-    elseif HaveSavedHandle(TF33_H,h,1) then
-        set color=LoadInteger(TF33_H,h,4)
-        if id==TFP_s__tfConsts_CARD_ID[color] and not LoadBoolean(TF33_H,h,5) then
-            call TF47_Lock(c,color)
-        elseif ((color==0 and id=='ATf6') or (color==1 and id=='ATf7') or (color==2 and id=='ATf8')) and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
-            set t=CreateTimer()
-            set orb=CreateUnit(GetOwningPlayer(c),'htz1',GetUnitX(c),GetUnitY(c),0.)
-            call SetUnitTimeScale(orb,0.9)
-            call SetUnitScale(orb,1.45,1.45,1.45)
-            call TF33_Tint(orb,color)
-            call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
-            call SaveUnitHandle(TF33_H,GetHandleId(t),1,v)
-            call SaveUnitHandle(TF33_H,GetHandleId(t),2,orb)
-            call SaveInteger(TF33_H,GetHandleId(t),4,color)
-            call SaveInteger(TF33_H,GetHandleId(t),5,rank)
-            call TimerStart(t,.03,true,function TF33_Flight)
-            call TF33_Close(c,9.)
-        endif
-    endif
-    set c=null
-    set v=null
-    set orb=null
-    set t=null
-endfunction
 
-function TF33_IncomeHero takes nothing returns nothing
-    local unit u=GetEnumUnit()
-    local integer h=GetHandleId(u)
-    if GetUnitTypeId(u)==0 or IsUnitIllusion(u) then
-        call GroupRemoveUnit(TF33_Heroes,u)
-        call FlushChildHashtable(TF33_G,h)
-    elseif TFP_TF_Alive(u) then
-        call SaveReal(TF33_G,h,1,RMinBJ(900.,LoadReal(TF33_G,h,1)+1.))
-    else
-        call FlushChildHashtable(TF33_G,h)
-    endif
-    set u=null
-endfunction
 
-function TF33_IncomeTick takes nothing returns nothing
-    call ForGroup(TF33_Heroes,function TF33_IncomeHero)
-endfunction
 
-function TF33_Learn takes nothing returns nothing
-    if GetLearnedSkill()=='ATfg' and not IsUnitIllusion(GetTriggerUnit()) then
-        call GroupAddUnit(TF33_Heroes,GetTriggerUnit())
-    endif
-endfunction
 
-function TF45_Death takes nothing returns nothing
-    local unit dead=GetTriggerUnit()
-    local unit killer=GetKillingUnit()
-    local integer h=GetHandleId(killer)
-    if IsUnitInGroup(dead,TF33_Heroes) then
-        call FlushChildHashtable(TF33_G,GetHandleId(dead))
-    endif
-    if killer!=null and IsUnitInGroup(killer,TF33_Heroes) and TFP_TF_Alive(killer) and IsUnitType(dead,UNIT_TYPE_HERO) and not IsUnitIllusion(dead) and IsUnitEnemy(dead,GetOwningPlayer(killer)) then
-        call SaveInteger(TF33_G,h,2,IMinBJ(5,LoadInteger(TF33_G,h,2)+1))
-    endif
-    set dead=null
-    set killer=null
-endfunction
 
-function TF45_Enter takes nothing returns nothing
-    call TF45_Track(GetTriggerUnit())
-endfunction
 
-function TF45_Existing takes nothing returns nothing
-    call TF45_Track(GetEnumUnit())
-endfunction
 
-function TF45_Odds takes unit u returns real
-    local integer h=GetHandleId(u)
-    return 50. + RMinBJ(10.,LoadReal(TF33_G,h,1)/90.) + 2.*I2R(IMinBJ(5,LoadInteger(TF33_G,h,2)))
-endfunction
 
-function TF45_ShareLoss takes player loser returns nothing
-    local force eligible=CreateForce()
-    local group g=CreateGroup()
-    local unit u
-    local player p
-    local integer i=0
-    local integer count=0
-    local integer remaining=50
-    local integer share
-    local integer start=GetRandomInt(0,11)
-    loop
-        exitwhen i>=12
-        set p=Player(i)
-        if p!=loser and IsPlayerEnemy(p,loser) and GetPlayerSlotState(p)==PLAYER_SLOT_STATE_PLAYING then
-            call GroupEnumUnitsOfPlayer(g,p,null)
-            loop
-                set u=FirstOfGroup(g)
-                exitwhen u==null
-                call GroupRemoveUnit(g,u)
-                if TFP_TF_Alive(u) and IsUnitType(u,UNIT_TYPE_HERO) and not IsUnitIllusion(u) then
-                    call ForceAddPlayer(eligible,p)
-                    set count=count+1
-                    call GroupClear(g)
-                endif
-            endloop
-        endif
-        set i=i+1
-    endloop
-    set i=0
-    loop
-        exitwhen i>=12 or count==0
-        set p=Player(ModuloInteger(start+i,12))
-        if IsPlayerInForce(p,eligible) then
-            set share=R2I(I2R(remaining)/I2R(count))
-            call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)+share)
-            call DisplayTextToPlayer(p,0.,0.,"|cffffcc00Loaded Dice: +"+I2S(share)+" gold from an enemy's lost roll.|r")
-            set remaining=remaining-share
-            set count=count-1
-        endif
-        set i=i+1
-    endloop
-    call DestroyGroup(g)
-    call DestroyForce(eligible)
-    set g=null
-    set eligible=null
-    set p=null
-    set u=null
-endfunction
 
-function TF45_Roll takes nothing returns nothing
-    local unit u=GetTriggerUnit()
-    local player p=GetOwningPlayer(u)
-    local integer gold=GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)
-    local real odds=TF45_Odds(u)
-    if GetSpellAbilityId()=='ATfg' then
-        if gold<50 or IsUnitIllusion(u) or not TFP_TF_Alive(u) then
-            call BlzEndUnitAbilityCooldown(u,'ATfg')
-            call DisplayTextToPlayer(p,0.,0.,"Loaded Dice requires at least 50 gold.")
-        else
-            call BlzStartUnitAbilityCooldown(u,'ATfg',60.)
-            if GetRandomReal(0.,100.)<odds then
-                call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,gold+50)
-                call DisplayTextToPlayer(p,0.,0.,"|cffffcc00Loaded Dice: WIN +50 gold!|r ("+I2S(R2I(odds))+"% win chance)")
-            else
-                call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,gold-50)
-                call TF45_ShareLoss(p)
-                call DisplayTextToPlayer(p,0.,0.,"|cffff5555Loaded Dice: LOSS -50 gold.|r ("+I2S(R2I(odds))+"% win chance)")
-            endif
-        endif
-    endif
-    set u=null
-    set p=null
-endfunction
 
-function TF45_DiceInit takes nothing returns nothing
-    local trigger t=CreateTrigger()
-    local region r=CreateRegion()
-    local group g=CreateGroup()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_DEATH)
-    call TriggerAddAction(t,function TF45_Death)
-    set t=CreateTrigger()
-    call RegionAddRect(r,bj_mapInitialPlayableArea)
-    call TriggerRegisterEnterRegion(t,r,null)
-    call TriggerAddAction(t,function TF45_Enter)
-    set t=CreateTrigger()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    call TriggerAddAction(t,function TF45_Roll)
-    call GroupEnumUnitsInRect(g,bj_mapInitialPlayableArea,null)
-    call ForGroup(g,function TF45_Existing)
-    call DestroyGroup(g)
-    set g=null
-    set r=null
-    set t=null
-endfunction
 
-function TF_CardAttack takes nothing returns nothing
-    local unit c=GetEventDamageSource()
-    local unit v=GetTriggerUnit()
-    local integer h=GetHandleId(c)
-    local integer rank
-    local integer color
-    local real cost
-    if BlzGetEventIsAttack() and GetEventDamage()>0.0 and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
-        set rank=GetUnitAbilityLevel(c,'ATf2')
-        set color=LoadInteger(TF33_H,h,4)
-        set cost=50.+10.*rank
-        if GetUnitState(c,UNIT_STATE_MANA)>=cost then
-            call SetUnitState(c,UNIT_STATE_MANA,GetUnitState(c,UNIT_STATE_MANA)-cost)
-            call TF33_Close(c,9.)
-            call TF33_Impact(c,v,color,rank,1.2)
-        endif
-    endif
-    set c=null
-    set v=null
-endfunction
 
-function TF33_Init takes nothing returns nothing
-    local trigger t=CreateTrigger()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    call TriggerAddAction(t,function TF33_Cast)
-    set t=CreateTrigger()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_DAMAGED)
-    call TriggerAddAction(t,function TF_CardAttack)
-    set t=CreateTrigger()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_HERO_SKILL)
-    call TriggerAddAction(t,function TF33_Learn)
-    call TimerStart(CreateTimer(),1.,true,function TF33_IncomeTick)
-    call TF45_DiceInit()
-    set t=null
-endfunction
 
-function TFP_pickACard___i takes nothing returns nothing
-    call TF33_Init()
-endfunction
 
-function TFP_tfConsts___i takes nothing returns nothing
-    set TFP_tfConsts_hiddenCard=TFP_s__HandleTable__allocate()
-    set TFP_s__tfConsts_CARD_ID[0]=TFP_tfConsts_BLUE_CARD_ID
-    set TFP_s__tfConsts_CARD_ID[1]=TFP_tfConsts_RED_CARD_ID
-    set TFP_s__tfConsts_CARD_ID[2]=TFP_tfConsts_GOLD_CARD_ID
-endfunction
 
-function TFP_s__wildCards___cardDat__allocate takes nothing returns integer
- local integer this=TFP_si__wildCards___cardDat_F
-    if (this!=0) then
-        set TFP_si__wildCards___cardDat_F=TFP_si__wildCards___cardDat_V[this]
-    else
-        set TFP_si__wildCards___cardDat_I=TFP_si__wildCards___cardDat_I+1
-        set this=TFP_si__wildCards___cardDat_I
-    endif
-    if (this>2729) then
-        return 0
-    endif
-    set TFP_s__wildCards___cardDat_cards[this]=(this-1)*3
-    set TFP_s__wildCards___cardDat_gradX[this]=(this-1)*3
-    set TFP_s__wildCards___cardDat_gradY[this]=(this-1)*3
-   set TFP_s__wildCards___cardDat_traveled[this]=0.
-    set TFP_si__wildCards___cardDat_V[this]=-1
- return this
-endfunction
 
-function TF45_LineHit takes real x, real y, real ax, real ay, real bx, real by returns boolean
-    local real dx=bx-ax
-    local real dy=by-ay
-    local real t=0.
-    if dx*dx+dy*dy>0. then
-        set t=RMaxBJ(0.,RMinBJ(1.,((x-ax)*dx+(y-ay)*dy)/(dx*dx+dy*dy)))
-    endif
-    set dx=x-ax-t*dx
-    set dy=y-ay-t*dy
-    return dx*dx+dy*dy<=TFP_wildCards___ENUM_RADIUS*TFP_wildCards___ENUM_RADIUS
-endfunction
 
-function TFP_s__wildCards___cardDat_deallocate takes integer this returns nothing
-    if this==null then
-        return
-    elseif (TFP_si__wildCards___cardDat_V[this]!=-1) then
-        return
-    endif
-    set TFP_si__wildCards___cardDat_V[this]=TFP_si__wildCards___cardDat_F
-    set TFP_si__wildCards___cardDat_F=this
-endfunction
 
-function TF_CardClip takes unit victim returns nothing
-    local effect cut=AddSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodFootman.mdl",victim,"chest")
-    local sound slice=CreateSound("war3mapImported\\TFCardSlice.wav",false,true,true,0,0,"SpellsEAX")
-    call BlzSetSpecialEffectScale(cut,0.38)
-    call BlzSetSpecialEffectAlpha(cut,108)
-    call BlzSetSpecialEffectTimeScale(cut,1.8)
-    call DestroyEffect(cut)
-    call SetSoundDuration(slice,105)
-    call SetSoundVolume(slice,62)
-    call SetSoundDistances(slice,250.,1100.)
-    call SetSoundPosition(slice,GetUnitX(victim),GetUnitY(victim),GetUnitFlyHeight(victim)+65.)
-    call StartSound(slice)
-    call KillSoundWhenDone(slice)
-    set cut=null
-    set slice=null
-endfunction
 
-function TFP_wildCards___p takes nothing returns nothing
-        local integer index=0
-        local integer tripleLooper
-        local integer tempDat
-        local real oldX
-        local real oldY
-        local real uX
-        local real uY
-        local unit FoG
-        loop
-            exitwhen index > TFP_wildCards___dbIndex
-            set tempDat=TFP_wildCards___datDB[index]
-            set tripleLooper=0
-            loop
-                exitwhen tripleLooper > 2
-                set oldX=GetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper])
-                set oldY=GetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper])
-                set uX=GetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper]) + TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+tripleLooper]
-                set uY=GetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper]) + TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+tripleLooper]
-                call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper], uX)
-                call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+tripleLooper], uY)
-                call GroupEnumUnitsInRange(TFP_wildCards___grp, (oldX+uX)*.5, (oldY+uY)*.5, TFP_wildCards___ENUM_RADIUS+TFP_wildCards___PROJECTILE_SPEED*TFP_tfConsts_FPS*.5, null)
-                loop
-                    set FoG=FirstOfGroup(TFP_wildCards___grp)
-                    exitwhen FoG == null
-                    if TF45_LineHit(GetUnitX(FoG),GetUnitY(FoG),oldX,oldY,uX,uY) and IsUnitEnemy(FoG, GetOwningPlayer(TFP_s__wildCards___cardDat_caster[tempDat])) and IsUnitType(FoG, UNIT_TYPE_DEAD) == false and IsUnitType(FoG, UNIT_TYPE_STRUCTURE) == false and not IsUnitType(FoG, UNIT_TYPE_MAGIC_IMMUNE) and IsUnitInGroup(FoG, TFP_s__wildCards___cardDat_struckUnits[tempDat]) == false then
-                        call TFP_DamageType_dealCodeDamage(TFP_s__wildCards___cardDat_caster[tempDat] , FoG , TFP_s__wildCards___cardDat_damage[tempDat] , DAMAGE_TYPE_MAGIC)
-                        call TF_CardClip(FoG)
-                        call GroupAddUnit(TFP_s__wildCards___cardDat_struckUnits[tempDat], FoG)
-                    endif
-                    call GroupRemoveUnit(TFP_wildCards___grp, FoG)
-                endloop
-                set tripleLooper=tripleLooper + 1
-            endloop
-            set TFP_s__wildCards___cardDat_traveled[tempDat]=TFP_s__wildCards___cardDat_traveled[tempDat] + TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS
-            if TFP_s__wildCards___cardDat_traveled[tempDat] >= TF46_ZRange[tempDat] then
-                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]])
-                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1])
-                call RemoveUnit(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2])
-                call DestroyGroup(TFP_s__wildCards___cardDat_struckUnits[tempDat])
-                call TFP_s__wildCards___cardDat_deallocate(tempDat)
-                set TFP_wildCards___datDB[index]=TFP_wildCards___datDB[TFP_wildCards___dbIndex]
-                set index=index - 1
-                set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex - 1
-                if TFP_wildCards___dbIndex == - 1 then
-                    call PauseTimer(TFP_wildCards___time)
-                endif
-            endif
-            set index=index + 1
-        endloop
-    endfunction
 
-function TF_CardProjectile takes unit u, integer lane returns nothing
-    call SetUnitTimeScale(u,1.25)
-    call SetUnitScale(u,1.45,1.45,1.45)
-    if lane==0 then
-        call SetUnitVertexColor(u,70,159,255,255)
-    elseif lane==1 then
-        call SetUnitVertexColor(u,255,81,99,255)
-    else
-        call SetUnitVertexColor(u,255,213,74,255)
-    endif
-endfunction
 
-function TFP_wildCards___c takes nothing returns boolean
-        local integer tempDat
-        local integer ridiculousUseOfStruct
-        local player owner
-        local unit tU
-        local real tX
-        local real tY
-        local real tUX
-        local real tUY
-        local real angle
-        local timer cdrClock
-        if GetSpellAbilityId() == TFP_tfConsts_WILD_CARDS_ID then
-            set tU=GetTriggerUnit()
-            call BlzStartUnitAbilityCooldown(tU, TFP_tfConsts_WILD_CARDS_ID, 10.0)
-            set owner=GetOwningPlayer(tU)
-            set tX=GetSpellTargetX()
-            set tY=GetSpellTargetY()
-            set tUX=GetUnitX(tU)
-            set tUY=GetUnitY(tU)
-            set angle=Atan2(tY - tUY, tX - tUX)
-            set tempDat=TFP_s__wildCards___cardDat__allocate()
-            set TF46_ZRange[tempDat]=1400.+50.*I2R(GetUnitAbilityLevel(tU,'ATf1'))
-            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]]=CreateUnit(owner, 'htz1', 0., 0., ( angle - TFP_wildCards___OFFSET_ANGLE ) * bj_RADTODEG)
-            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1]=CreateUnit(owner, 'htz1', 0., 0., angle * bj_RADTODEG)
-            set TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2]=CreateUnit(owner, 'htz1', 0., 0., ( angle + TFP_wildCards___OFFSET_ANGLE ) * bj_RADTODEG)
-            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]],0)
-            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1],1)
-            call TF_CardProjectile(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2],2)
-            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]], tUX)
-            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1], tUX)
-            call SetUnitX(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2], tUX)
-            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]], tUY)
-            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+1], tUY)
-            call SetUnitY(TFP_s___wildCards___cardDat_cards[TFP_s__wildCards___cardDat_cards[tempDat]+2], tUY)
-            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle - TFP_wildCards___OFFSET_ANGLE)
-            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+1]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle)
-            set TFP_s___wildCards___cardDat_gradX[TFP_s__wildCards___cardDat_gradX[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Cos(angle + TFP_wildCards___OFFSET_ANGLE)
-            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle - TFP_wildCards___OFFSET_ANGLE)
-            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+1]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle)
-            set TFP_s___wildCards___cardDat_gradY[TFP_s__wildCards___cardDat_gradY[tempDat]+2]=TFP_wildCards___PROJECTILE_SPEED * TFP_tfConsts_FPS * Sin(angle + TFP_wildCards___OFFSET_ANGLE)
-            set TFP_s__wildCards___cardDat_struckUnits[tempDat]=CreateGroup()
-            set TFP_s__wildCards___cardDat_caster[tempDat]=tU
-            set TFP_s__wildCards___cardDat_damage[tempDat]=TFP_WildDamage[GetUnitAbilityLevel(tU, TFP_tfConsts_WILD_CARDS_ID)]
-            set TFP_wildCards___dbIndex=TFP_wildCards___dbIndex + 1
-            set TFP_wildCards___datDB[TFP_wildCards___dbIndex]=tempDat
-            if TFP_wildCards___dbIndex == 0 then
-                call TimerStart(TFP_wildCards___time, TFP_tfConsts_FPS, true, function TFP_wildCards___p)
-            endif
 
-            set tU=null
-        endif
-        return false
-    endfunction
-
-function TFP_wildCards___i takes nothing returns nothing
-        local trigger t=CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        call TriggerAddCondition(t, Condition(function TFP_wildCards___c))
-        set TFP_wildCards___cdrTable=TFP_s__HandleTable__allocate()
-        set t=null
-        set TFP_WildDamage[1] = 90.0
-    set TFP_WildDamage[2] = 175.0
-    set TFP_WildDamage[3] = 225.0
-    set TFP_WildDamage[4] = 300.0
-    set TFP_WildDamage[5] = 400.0
-    set TFP_WildDamage[6] = 550.0
-endfunction
-
-function TFP_Init takes nothing returns nothing
-    call TFP_tfConsts___i()
-    call TFP_wildCards___i()
-    call TFP_pickACard___i()
-    call TFP_destiny___i()
-    call TFP_InitTrig_FFDP_DarkPassage()
-endfunction
 
 function VG_Z takes real x, real y returns real
     local location l = Location(x, y)
@@ -57952,7 +58432,7 @@ call ExecuteFunc("TimerUtils___init")
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Solo Foots 8P FFA + King v17")
+    call SetMapName("FFA Foots v70 - RJE")
     call SetMapDescription("TRIGSTR_3435")
     call SetPlayers(20)
     call SetTeams(20)
@@ -58581,318 +59061,20 @@ function FF_st_TmExpire takes nothing returns nothing
 
 endfunction
 
-function TFP_s__pickACard___dummyCardDat_deallocate takes integer this returns nothing
-    if this==null then
-        return
-    elseif (TFP_si__pickACard___dummyCardDat_V[this]!=-1) then
-        return
-    endif
-    set TFP_si__pickACard___dummyCardDat_V[this]=TFP_si__pickACard___dummyCardDat_F
-    set TFP_si__pickACard___dummyCardDat_F=this
-endfunction
 
-function TFP_pickACard___dummyP takes nothing returns nothing
-        local integer index=0
-        local integer tempDat
-        loop
-            exitwhen index > TFP_pickACard___dummyDBIndex
-            set tempDat=TFP_pickACard___dummyDB[index]
-            if GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_BLUE_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf6') > 0 then
-                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 80, 80, 255)
-            elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_RED_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf7') > 0 then
-                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 55, 55)
-            elseif GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[TFP_tfConsts_GOLD_CARD]) > 0 or GetUnitAbilityLevel(TFP_s__pickACard___dummyCardDat_fate[tempDat], 'ATf8') > 0 then
-                call BlzSetSpecialEffectColor(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 255, 245, 55)
-            else
-                call BlzSetSpecialEffectAlpha(TFP_s__pickACard___dummyCardDat_dummy[tempDat], 0)
-                call DestroyEffect(TFP_s__pickACard___dummyCardDat_dummy[tempDat])
-                set TFP_s__pickACard___dummyCardDat_dummy[tempDat]=null
-                set TFP_s__pickACard___dummyCardDat_fate[tempDat]=null
-                call TFP_s__pickACard___dummyCardDat_deallocate(tempDat)
-                set TFP_pickACard___dummyDB[index]=TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]
-                set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex - 1
-                set index=index - 1
-                if TFP_pickACard___dummyDBIndex == - 1 then
-                    call PauseTimer(TFP_pickACard___dummyClock)
-                endif
-            endif
-            set index=index + 1
-        endloop
-    endfunction
 
-function TFP_s__destiny___destinyDat__allocate takes nothing returns integer
- local integer this=TFP_si__destiny___destinyDat_F
-    if (this!=0) then
-        set TFP_si__destiny___destinyDat_F=TFP_si__destiny___destinyDat_V[this]
-    else
-        set TFP_si__destiny___destinyDat_I=TFP_si__destiny___destinyDat_I+1
-        set this=TFP_si__destiny___destinyDat_I
-    endif
-    if (this>8190) then
-        return 0
-    endif
 
-   set TFP_s__destiny___destinyDat_elapsedTime[this]=0.
-    set TFP_si__destiny___destinyDat_V[this]=-1
- return this
-endfunction
 
-function TFP_s__pickACard___pickDat_deallocate takes integer this returns nothing
-    if this==null then
-        return
-    elseif (TFP_si__pickACard___pickDat_V[this]!=-1) then
-        return
-    endif
-    set TFP_si__pickACard___pickDat_V[this]=TFP_si__pickACard___pickDat_F
-    set TFP_si__pickACard___pickDat_F=this
-endfunction
 
-function TFP_s__destiny___target_deallocate takes integer this returns nothing
-    if this==null then
-        return
-    elseif (TFP_si__destiny___target_V[this]!=-1) then
-        return
-    endif
-    set TFP_si__destiny___target_V[this]=TFP_si__destiny___target_F
-    set TFP_si__destiny___target_F=this
-endfunction
 
-function TFP_pickACard___secondC takes nothing returns boolean
-    local integer id=GetSpellAbilityId()
-    local unit caster=GetTriggerUnit()
-    local unit target=GetSpellTargetUnit()
-    local unit u
-    local group g
-    local integer d
-    local integer rank
-    if (id==TFP_tfConsts_BLUE_CARD_ID or id==TFP_tfConsts_RED_CARD_ID or id==TFP_tfConsts_GOLD_CARD_ID) and HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster)) then
-        set d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
-        if not TFP_TF_CardLocked[d] and not TFP_s__pickACard___pickDat_thrown[d] and TFP_TF_Alive(caster) then
-            set TFP_TF_CardLocked[d]=true
-            set TFP_s__pickACard___pickDat_elapsedTime[d]=0.
-            if id==TFP_tfConsts_BLUE_CARD_ID then
-                set TFP_TF_LockedThrow[d]='ATf6'
-            elseif id==TFP_tfConsts_RED_CARD_ID then
-                set TFP_TF_LockedThrow[d]='ATf7'
-            else
-                set TFP_TF_LockedThrow[d]='ATf8'
-            endif
-            call UnitRemoveAbility(caster,TFP_tfConsts_BLUE_CARD_ID)
-            call UnitRemoveAbility(caster,TFP_tfConsts_RED_CARD_ID)
-            call UnitRemoveAbility(caster,TFP_tfConsts_GOLD_CARD_ID)
-            call UnitAddAbility(caster,TFP_TF_LockedThrow[d])
-        endif
-    elseif (id=='ATf6' or id=='ATf7' or id=='ATf8') and HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster)) then
-        set d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
-        set rank=TFP_s__pickACard___pickDat_revertAbilityLevel[d]
-        if TFP_TF_CardLocked[d] and id==TFP_TF_LockedThrow[d] and not TFP_s__pickACard___pickDat_thrown[d] and TFP_TF_Alive(caster) and TFP_TF_Alive(target) and IsUnitEnemy(target,GetOwningPlayer(caster)) and not IsUnitType(target,UNIT_TYPE_STRUCTURE) and not IsUnitType(target,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(target) then
-            set TFP_s__pickACard___pickDat_thrown[d]=true
-            if id=='ATf6' then
-                call TFP_DamageType_dealCodeDamage(caster,target,20.+20.*rank,DAMAGE_TYPE_MAGIC)
-                call SetUnitState(caster,UNIT_STATE_MANA,RMinBJ(GetUnitState(caster,UNIT_STATE_MAX_MANA),GetUnitState(caster,UNIT_STATE_MANA)+40.+20.*rank))
-                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___BLUEFX,target,"origin"))
-            elseif id=='ATf7' then
-                set g=CreateGroup()
-                call GroupEnumUnitsInRange(g,GetUnitX(target),GetUnitY(target),TFP_pickACard___RED_CARD_ENUM_RANGE,null)
-                loop
-                    set u=FirstOfGroup(g)
-                    exitwhen u==null
-                    call GroupRemoveUnit(g,u)
-                    if TFP_TF_Alive(u) and IsUnitEnemy(u,GetOwningPlayer(caster)) and not IsUnitType(u,UNIT_TYPE_STRUCTURE) and not IsUnitType(u,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) then
-                        call TFP_TF_CardDebuff(caster,u,TFP_tfConsts_DUMMY_SLOW_ID,rank,"slow")
-                        call TFP_DamageType_dealCodeDamage(caster,u,15.+15.*rank,DAMAGE_TYPE_MAGIC)
-                    endif
-                endloop
-                call DestroyGroup(g)
-                set g=null
-                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___REDFX,target,"origin"))
-            else
-                call TFP_TF_CardDebuff(caster,target,TFP_tfConsts_DUMMY_STUN_ID,rank,"thunderbolt")
-                call TFP_DamageType_dealCodeDamage(caster,target,7.5+7.5*rank,DAMAGE_TYPE_MAGIC)
-                call DestroyEffect(AddSpecialEffectTarget(TFP_pickACard___GOLDFX,target,"origin"))
-            endif
-        endif
-    endif
-    set caster=null
-    set target=null
-    return false
-endfunction
 
-function TFP_s__pickACard___dummyCardDat__allocate takes nothing returns integer
- local integer this=TFP_si__pickACard___dummyCardDat_F
-    if (this!=0) then
-        set TFP_si__pickACard___dummyCardDat_F=TFP_si__pickACard___dummyCardDat_V[this]
-    else
-        set TFP_si__pickACard___dummyCardDat_I=TFP_si__pickACard___dummyCardDat_I+1
-        set this=TFP_si__pickACard___dummyCardDat_I
-    endif
-    if (this>8190) then
-        return 0
-    endif
 
-    set TFP_si__pickACard___dummyCardDat_V[this]=-1
- return this
-endfunction
 
-function TFP_destiny___move takes nothing returns nothing
-        local unit enum=GetEnumUnit()
-        local integer tempDat=(LoadInteger(TFP_Table___ht, ((TFP_destiny___attachments)), GetHandleId((enum)))) // INLINED!!
-        call SetUnitX(enum, GetUnitX(TFP_s__destiny___target_who[tempDat]))
-        call SetUnitY(enum, GetUnitY(TFP_s__destiny___target_who[tempDat]))
-        set enum=null
-    endfunction
 
-function TFP_s__pickACard___pickDat__allocate takes nothing returns integer
- local integer this=TFP_si__pickACard___pickDat_F
-    if (this!=0) then
-        set TFP_si__pickACard___pickDat_F=TFP_si__pickACard___pickDat_V[this]
-    else
-        set TFP_si__pickACard___pickDat_I=TFP_si__pickACard___pickDat_I+1
-        set this=TFP_si__pickACard___pickDat_I
-    endif
-    if (this>8190) then
-        return 0
-    endif
 
-   set TFP_s__pickACard___pickDat_locked[this]=false
-   set TFP_s__pickACard___pickDat_thrown[this]=false
-   set TFP_TF_CardLocked[this]=false
-   set TFP_TF_LockedThrow[this]=0
-    set TFP_si__pickACard___pickDat_V[this]=-1
- return this
-endfunction
 
-function TFP_s__destiny___target__allocate takes nothing returns integer
- local integer this=TFP_si__destiny___target_F
-    if (this!=0) then
-        set TFP_si__destiny___target_F=TFP_si__destiny___target_V[this]
-    else
-        set TFP_si__destiny___target_I=TFP_si__destiny___target_I+1
-        set this=TFP_si__destiny___target_I
-    endif
-    if (this>8190) then
-        return 0
-    endif
 
-    set TFP_si__destiny___target_V[this]=-1
- return this
-endfunction
 
-function TFP_pickACard___p takes nothing returns nothing
-    local timer time=GetExpiredTimer()
-    local integer d=LoadInteger(TFP_Table___ht,TFP_pickACard___fromTimer,GetHandleId(time))
-    local unit caster=TFP_s__pickACard___pickDat_fate[d]
-    local integer color=LoadInteger(TFP_Table___ht,TFP_tfConsts_hiddenCard,GetHandleId(caster))
-    set TFP_s__pickACard___pickDat_elapsedTime[d]=TFP_s__pickACard___pickDat_elapsedTime[d]+TFP_pickACard___CARD_CYCLE_PERIOD
-    if TFP_s__pickACard___pickDat_thrown[d] or not TFP_TF_Alive(caster) or TFP_s__pickACard___pickDat_elapsedTime[d]>=TFP_pickACard___CYCLE_MAX_DURATION then
-        call UnitRemoveAbility(caster,TFP_tfConsts_BLUE_CARD_ID)
-        call UnitRemoveAbility(caster,TFP_tfConsts_RED_CARD_ID)
-        call UnitRemoveAbility(caster,TFP_tfConsts_GOLD_CARD_ID)
-        call UnitRemoveAbility(caster,'ATf6')
-        call UnitRemoveAbility(caster,'ATf7')
-        call UnitRemoveAbility(caster,'ATf8')
-        set TFP_TF_CardLocked[d]=false
-        set TFP_TF_LockedThrow[d]=0
-        call BlzUnitHideAbility(caster,TFP_tfConsts_PICK_A_CARD_ID,false)
-        call BlzStartUnitAbilityCooldown(caster,TFP_tfConsts_PICK_A_CARD_ID,6.)
-        call RemoveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(caster))
-        call RemoveSavedInteger(TFP_Table___ht,TFP_pickACard___fromTimer,GetHandleId(time))
-        set TFP_s__pickACard___pickDat_fate[d]=null
-        call TFP_s__pickACard___pickDat_deallocate(d)
-        call DestroyTimer(time)
-    elseif not TFP_TF_CardLocked[d] then
-        call UnitRemoveAbility(caster,TFP_s__tfConsts_CARD_ID[color])
-        set color=ModuloInteger(color+1,3)
-        call UnitAddAbility(caster,TFP_s__tfConsts_CARD_ID[color])
-        call SaveInteger(TFP_Table___ht,TFP_tfConsts_hiddenCard,GetHandleId(caster),color)
-    endif
-    set time=null
-    set caster=null
-endfunction
-
-function TFP_pickACard___c takes nothing returns boolean
-        local integer tempDat
-        local integer tempDCDat
-        local timer time
-        if GetSpellAbilityId() == TFP_tfConsts_PICK_A_CARD_ID and not HaveSavedInteger(TFP_Table___ht,TFP_pickACard___fromFate,GetHandleId(GetTriggerUnit())) then
-            //store all data in struct instance
-            set tempDat=TFP_s__pickACard___pickDat__allocate()
-            set TFP_s__pickACard___pickDat_fate[tempDat]=GetTriggerUnit()
-            set TFP_s__pickACard___pickDat_revertAbilityLevel[tempDat]=GetUnitAbilityLevel(TFP_s__pickACard___pickDat_fate[tempDat], TFP_tfConsts_PICK_A_CARD_ID)
-            set TFP_s__pickACard___pickDat_elapsedTime[tempDat]=0.
-            //make the ability unavailable
-            call BlzUnitHideAbility(TFP_s__pickACard___pickDat_fate[tempDat], TFP_tfConsts_PICK_A_CARD_ID, true)
-            //add the proper ability depending on the current value stored in the table
-            call UnitAddAbility(TFP_s__pickACard___pickDat_fate[tempDat], TFP_s__tfConsts_CARD_ID[(LoadInteger(TFP_Table___ht, ((TFP_tfConsts_hiddenCard)), GetHandleId((TFP_s__pickACard___pickDat_fate[tempDat]))))]) // INLINED!!
-            //create new timer, because sharing a periodic timer with a card cycle period between 0.3 and 0.7 seconds will not only look poor,
-            //but potentially cause problems for TF vs TF situations.
-                //begin counting towards the duration. After picking a card, this same duration will be kept, and after the max is reached,
-                //or the card is thrown, the ability will reset to the original ability.
-            set time=CreateTimer()
-            call SaveInteger(TFP_Table___ht, ((TFP_pickACard___fromTimer)), GetHandleId((time)), ( tempDat)) // INLINED!!
-            call SaveInteger(TFP_Table___ht, ((TFP_pickACard___fromFate)), GetHandleId((TFP_s__pickACard___pickDat_fate[tempDat])), ( tempDat)) // INLINED!!
-            call TimerStart(time, TFP_pickACard___CARD_CYCLE_PERIOD, true, function TFP_pickACard___p)
-            //create the dummy card and give it the proper color. we need to attach it to a different, more smooth timer. This one will be stack based.
-            set tempDCDat=TFP_s__pickACard___dummyCardDat__allocate()
-            set TFP_s__pickACard___dummyCardDat_fate[tempDCDat]=TFP_s__pickACard___pickDat_fate[tempDat]
-            set TFP_s__pickACard___dummyCardDat_dummy[tempDCDat]=AddSpecialEffectTarget("war3mapImported\\TFPickedCard.mdx", TFP_s__pickACard___pickDat_fate[tempDat], "origin")
-            set TFP_pickACard___dummyDBIndex=TFP_pickACard___dummyDBIndex + 1
-            set TFP_pickACard___dummyDB[TFP_pickACard___dummyDBIndex]=tempDCDat
-            if TFP_pickACard___dummyDBIndex == 0 then
-                call TimerStart(TFP_pickACard___dummyClock, TFP_tfConsts_FPS, true, function TFP_pickACard___dummyP)
-            endif
-            set time=null
-        endif
-        return false
-    endfunction
-
-function TFP_s__destiny___destinyDat_deallocate takes integer this returns nothing
-    if this==null then
-        return
-    elseif (TFP_si__destiny___destinyDat_V[this]!=-1) then
-        return
-    endif
-    set TFP_si__destiny___destinyDat_V[this]=TFP_si__destiny___destinyDat_F
-    set TFP_si__destiny___destinyDat_F=this
-endfunction
-
-function TFP_destiny___flusher takes nothing returns nothing
-        local unit enum=GetEnumUnit()
-        local integer d=LoadInteger(TFP_Table___ht,TFP_destiny___attachments,GetHandleId(enum))
-        set TFP_s__destiny___target_who[d]=null
-        call TFP_s__destiny___target_deallocate(d)
-        call RemoveSavedInteger(TFP_Table___ht, ((TFP_destiny___attachments)), GetHandleId((enum))) // INLINED!!
-        call RemoveUnit(enum)
-        set enum=null
-    endfunction
-
-function TFP_destiny___p takes nothing returns nothing
-        local integer index=0
-        local integer tempDat
-        loop
-            exitwhen index > TFP_destiny___dbIndex
-            set tempDat=TFP_destiny___destinyDB[index]
-            set TFP_s__destiny___destinyDat_elapsedTime[tempDat]=TFP_s__destiny___destinyDat_elapsedTime[tempDat] + TFP_tfConsts_FPS
-            if TFP_s__destiny___destinyDat_elapsedTime[tempDat] < TFP_s__destiny___destinyDat_duration[tempDat] then
-                call ForGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat], function TFP_destiny___move)
-            else
-                call UnitRemoveAbility(TFP_s__destiny___destinyDat_fate[tempDat], TFP_tfConsts_GATE_ID)
-                call BlzUnitHideAbility(TFP_s__destiny___destinyDat_fate[tempDat],TFP_tfConsts_DESTINY_ID,false)
-                call ForGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat], function TFP_destiny___flusher)
-                call DestroyGroup(TFP_s__destiny___destinyDat_visionDummies[tempDat])
-                set TFP_s__destiny___destinyDat_visionDummies[tempDat]=null
-                set TFP_s__destiny___destinyDat_fate[tempDat]=null
-                call TFP_s__destiny___destinyDat_deallocate(tempDat)
-                set TFP_destiny___destinyDB[index]=TFP_destiny___destinyDB[TFP_destiny___dbIndex]
-                set TFP_destiny___dbIndex=TFP_destiny___dbIndex - 1
-                set index=index - 1
-                if TFP_destiny___dbIndex == - 1 then
-                    call PauseTimer(TFP_destiny___time)
-                endif
-            endif
-            set index=index + 1
-        endloop
-    endfunction
 
 function VG_StunVisualTick takes nothing returns nothing
     local timer t = GetExpiredTimer()
