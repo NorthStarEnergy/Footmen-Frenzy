@@ -1,5 +1,73 @@
 globals
-    hashtable DraftStock = InitHashtable()
+    // BEGIN ITEMS CATALOG GLOBALS
+    hashtable IC_Data = InitHashtable()
+    integer IC_Count = 0
+    integer IC_Sections = 0
+    integer IC_LoadIndex = 1
+    integer IC_Selected = 0
+    integer IC_Tab = 0
+    integer IC_Page = 0
+    integer IC_TextPage = 0
+    integer IC_TextPages = 1
+    integer IC_HistoryCount = 0
+    integer array IC_History
+    integer array IC_Id
+    integer array IC_Gold
+    integer array IC_Lumber
+    integer array IC_Total
+    integer array IC_Recipe
+    integer array IC_Result
+    integer array IC_Ingredients
+    integer array IC_IngredientCount
+    integer array IC_Spell
+    integer array IC_SectionStart
+    integer array IC_SectionCount
+    integer array IC_Stock
+    integer array IC_TileItem
+    string array IC_Name
+    string array IC_Icon
+    string array IC_Description
+    string array IC_Stats
+    string array IC_Location
+    string array IC_Note
+    string array IC_SectionName
+    string array IC_SectionIcon
+    string IC_Query = ""
+    boolean IC_Ready = false
+    framehandle IC_Header
+    framehandle IC_Search
+    framehandle IC_SearchButton
+    framehandle IC_Back
+    framehandle IC_Close
+    framehandle IC_Previous
+    framehandle IC_Next
+    framehandle IC_Footer
+    framehandle IC_Browse
+    framehandle IC_Detail
+    framehandle IC_DetailIcon
+    framehandle IC_DetailName
+    framehandle IC_DetailCost
+    framehandle IC_Body
+    framehandle array IC_TabButton
+    framehandle array IC_SectionArt
+    framehandle array IC_SectionTitle
+    framehandle array IC_Tile
+    framehandle array IC_TileArt
+    framehandle array IC_TileLabel
+    framehandle array IC_Link
+    framehandle array IC_LinkArt
+    framehandle array IC_LinkLabel
+    integer array IC_LinkItem
+    timer IC_LoadTimer = null
+    // END ITEMS CATALOG GLOBALS
+
+        framehandle FFUI_Root = null
+        framehandle FFUI_Toggle = null
+        framehandle FFUI_Items = null
+        framehandle FFUI_ItemsButton = null
+        boolean FFUI_Hidden = false
+        boolean FFUI_ItemsOpen = false
+        hashtable DraftStock = InitHashtable()
     unit array DraftShop
     unit array DraftWisp
     integer array DraftPool
@@ -3631,6 +3699,15 @@ real array sf_glaive_x
 real array sf_glaive_y
 integer sf_page_target_type=0
 endglobals
+
+// All custom controls share a parent; hiding it also hides refreshed children.
+function FFUI_GetRoot takes nothing returns framehandle
+    if FFUI_Root == null then
+        set FFUI_Root = BlzCreateFrameByType("FRAME", "FFUI_Root", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), "", 0)
+        call BlzFrameSetAllPoints(FFUI_Root, BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0))
+    endif
+    return FFUI_Root
+endfunction
 // The persistent Cloud field supplies native silence; Tornado aura supplies an undispellable marker.
 // The channel guard uses active source timers, never a removable buff, to close dispel/application gaps.
 // Item custom values 1..24 store the bound player's zero-based index plus one.
@@ -26377,6 +26454,10 @@ function SpellKeysClick takes nothing returns nothing
         call BlzFrameSetEnable(clicked, true)
         call BlzFrameSetFocus(clicked, false)
         if clicked == spellKeysToggle or clicked == spellKeysClose then
+            set FFUI_ItemsOpen = false
+            if FFUI_Items != null then
+                call BlzFrameSetVisible(FFUI_Items, false)
+            endif
             set spellKeysOpen = clicked == spellKeysToggle and not spellKeysOpen
             if spellKeysOpen and DPS_Panel != null then
                 set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
@@ -26584,7 +26665,7 @@ function SpellKeysInput takes nothing returns nothing
     local player p = GetTriggerPlayer()
     local integer key = GetHandleId(BlzGetTriggerPlayerKey())
     local integer i = 0
-    if GetLocalPlayer() == p then
+    if GetLocalPlayer() == p and (not FFUI_ItemsOpen or FFUI_Hidden) then
         if BlzGetTriggerPlayerMetaKey() == 4 then
             set key = key + 256
         endif
@@ -26936,7 +27017,7 @@ function SpellKeysInit takes framehandle ui returns nothing
     call SaveStr(spellKeysNativeKeys,'mDFE',0,"D")
     call SaveStr(spellKeysNativeKeys,'mDFF',0,"D")
     set spellKeysToggle = BlzCreateFrame("ScriptDialogButton", ui, 0, 0)
-    call BlzFrameSetPoint(spellKeysToggle, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.039, 0.004)
+    call BlzFrameSetPoint(spellKeysToggle, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.037, -0.004)
     call BlzFrameSetSize(spellKeysToggle, 0.073, 0.028)
     call BlzFrameSetText(spellKeysToggle, "Hotkeys")
     call BlzFrameSetLevel(spellKeysToggle, 20)
@@ -27016,7 +27097,7 @@ function SpellKeysInit takes framehandle ui returns nothing
 endfunction
 
 function zoom__CreateSlider takes nothing returns nothing
-    local framehandle gameUI= BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
+    local framehandle gameUI= FFUI_GetRoot()
     local framehandle minimap=BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0)
     local trigger sliderTrigger= CreateTrigger()
     local trigger lockTrigger= CreateTrigger()
@@ -65616,6 +65697,8 @@ function DPS_Toggle takes nothing returns nothing
     local integer p = GetPlayerId(GetTriggerPlayer())
     // Only presentation changes are local: never create handles or change gameplay here.
     if GetLocalPlayer() == GetTriggerPlayer() then
+        set FFUI_ItemsOpen = false
+        call BlzFrameSetVisible(FFUI_Items, false)
         set DPS_Open[p] = not DPS_Open[p]
         if DPS_Open[p] and spellKeysPanel != null then
             set spellKeysOpen = false
@@ -65635,8 +65718,10788 @@ function DPS_Toggle takes nothing returns nothing
     endif
 endfunction
 
+// BEGIN ITEMS CATALOG DATA
+function IC_Data0 takes nothing returns nothing
+    set IC_Id[1] = 'I000'
+    set IC_Gold[1] = 150
+    set IC_Lumber[1] = 0
+    set IC_Name[1] = "Scroll of Town Portal"
+    set IC_Icon[1] = "ReplaceableTextures\\CommandButtons\\BTNScrollUber.blp"
+    set IC_Description[1] = "Teleports the Hero and any of its nearby troops to a target friendly town hall.|n|cff00ff00Charges:|r 1"
+    set IC_Stats[1] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[1] = "Archvault"
+    set IC_Note[1] = ""
+    set IC_Id[2] = 'shas'
+    set IC_Gold[2] = 50
+    set IC_Lumber[2] = 0
+    set IC_Name[2] = "Scroll of Speed"
+    set IC_Icon[2] = "ReplaceableTextures\\CommandButtons\\BTNScrollOfHaste.blp"
+    set IC_Description[2] = "Increases the movement speed of the Hero and nearby allied units to the maximum movement speed. |nLasts 35 seconds.|n|cff00ff00Charges:|r 3"
+    set IC_Stats[2] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[2] = "Archvault"
+    set IC_Note[2] = ""
+    set IC_Id[3] = 'pnvl'
+    set IC_Gold[3] = 150
+    set IC_Lumber[3] = 0
+    set IC_Name[3] = "Potion of Lesser Invulnerability"
+    set IC_Icon[3] = "ReplaceableTextures\\CommandButtons\\BTNLesserInvulneralbility.blp"
+    set IC_Description[3] = "Makes the carrier invulnerable for 3 seconds."
+    set IC_Stats[3] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[3] = "Archvault"
+    set IC_Note[3] = ""
+    set IC_Id[4] = 'pghe'
+    set IC_Gold[4] = 100
+    set IC_Lumber[4] = 0
+    set IC_Name[4] = "Potion of Greater Healing"
+    set IC_Icon[4] = "ReplaceableTextures\\CommandButtons\\BTNPotionGreen.blp"
+    set IC_Description[4] = "Instantly restores 750 health to the carrier."
+    set IC_Stats[4] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[4] = "Archvault"
+    set IC_Note[4] = ""
+    set IC_Id[5] = 'pgma'
+    set IC_Gold[5] = 100
+    set IC_Lumber[5] = 0
+    set IC_Name[5] = "Potion of Greater Mana"
+    set IC_Icon[5] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[5] = "Instantly restores 600 mana to the carrier."
+    set IC_Stats[5] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[5] = "Archvault"
+    set IC_Note[5] = ""
+    set IC_Id[6] = 'wneg'
+    set IC_Gold[6] = 450
+    set IC_Lumber[6] = 0
+    set IC_Name[6] = "Wand of Negation"
+    set IC_Icon[6] = "ReplaceableTextures\\CommandButtons\\BTNRodOfNecromancy.blp"
+    set IC_Description[6] = "Dispels all magical effects on a single target.  |n|cffffcc00Deals 200 damage to summoned units.|r|n|cff00ff00Charges:|r 2"
+    set IC_Stats[6] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[6] = "Archvault"
+    set IC_Note[6] = ""
+    set IC_Id[7] = 'nams'
+    set IC_Gold[7] = 50
+    set IC_Lumber[7] = 0
+    set IC_Name[7] = "Anti-Magic Potion"
+    set IC_Icon[7] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyPotion.blp"
+    set IC_Description[7] = "Creates a barrier that stops 750 points of spell damage from affecting a target unit. Does not grant spell immunity!|nLasts 45 seconds.|n|cff00ff00Charges:|r 1"
+    set IC_Stats[7] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[7] = "Archvault"
+    set IC_Note[7] = ""
+    set IC_Id[8] = 'whwd'
+    set IC_Gold[8] = 250
+    set IC_Lumber[8] = 0
+    set IC_Name[8] = "Healing Wards"
+    set IC_Icon[8] = "ReplaceableTextures\\CommandButtons\\BTNHealingWard.blp"
+    set IC_Description[8] = "Summons an immovable ward that heals 1.5% of nearby friendly non-mechanical unit's hit points per second. |nContains 4 charges. |nLasts 30 seconds. "
+    set IC_Stats[8] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[8] = "Archvault"
+    set IC_Note[8] = ""
+    set IC_Id[9] = 'I01O'
+    set IC_Gold[9] = 15
+    set IC_Lumber[9] = 0
+    set IC_Name[9] = "miRaculix' special brew"
+    set IC_Icon[9] = "ReplaceableTextures\\CommandButtons\\BTNEnergyPotion.blp"
+    set IC_Description[9] = "|cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by 600 and mana points by 200 over 20 seconds when used. |nContains 1 charge."
+    set IC_Stats[9] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[9] = "Archvault"
+    set IC_Note[9] = ""
+    set IC_Id[10] = 'pres'
+    set IC_Gold[10] = 200
+    set IC_Lumber[10] = 0
+    set IC_Name[10] = "Potion of Restoration"
+    set IC_Icon[10] = "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp"
+    set IC_Description[10] = "Instantly restores 1500 health and 1250 mana to the carrier."
+    set IC_Stats[10] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[10] = "Archvault"
+    set IC_Note[10] = ""
+    set IC_Id[11] = 'dust'
+    set IC_Gold[11] = 0
+    set IC_Lumber[11] = 0
+    set IC_Name[11] = "Dust of Appearance"
+    set IC_Icon[11] = "ReplaceableTextures\\CommandButtons\\BTNDustOfAppearance.blp"
+    set IC_Description[11] = "Reveals invisible enemies in a 750 radius for 15 seconds. Does not create vision outside the detection effect."
+    set IC_Stats[11] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[11] = "Archvault"
+    set IC_Note[11] = ""
+    set IC_Id[12] = 'hval'
+    set IC_Gold[12] = 400
+    set IC_Lumber[12] = 0
+    set IC_Name[12] = "Soldier's Mask"
+    set IC_Icon[12] = "ReplaceableTextures\\CommandButtons\\BTNHelmOfValor.blp"
+    set IC_Description[12] = "When worn, grants a 15% chance to evade damage and a 15% chance to stun a target.|n|n|cffff0000|cffff0000Can only carry one of the following items at the time:|r\n|cffffdc00Talisman of Evasion, Soldier's Mask or Slippers of Agility"
+    set IC_Stats[12] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[12] = "Armor Shop"
+    set IC_Note[12] = ""
+    set IC_Id[13] = 'evtl'
+    set IC_Gold[13] = 350
+    set IC_Lumber[13] = 0
+    set IC_Name[13] = "Talisman of Evasion"
+    set IC_Icon[13] = "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp"
+    set IC_Description[13] = "Causes attacks against the wearer to miss 25% of the time.|n |n|cffff0000Does not stack. |n|n|cffff0000Can only carry one of the following items at the time:|r\n|cffffdc00Talisman of Evasion, Soldier's Mask or Slippers of Agility|r|n|n|cffff0000Banned on:|r\n|cffffdc00Demon Hunter, Naga Seawitch, Shere-Khan & Monkey King|r"
+    set IC_Stats[13] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[13] = "Armor Shop"
+    set IC_Note[13] = ""
+    set IC_Id[14] = 'ckng'
+    set IC_Gold[14] = 500
+    set IC_Lumber[14] = 0
+    set IC_Name[14] = "Crown of Kings"
+    set IC_Icon[14] = "ReplaceableTextures\\CommandButtons\\BTNHelmutPurple.blp"
+    set IC_Description[14] = "Grants an additonal +11 Strength, and +11 Intelligence when worn. |n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[14] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[14] = "Armor Shop"
+    set IC_Note[14] = ""
+    set IC_Id[15] = 'bgst'
+    set IC_Gold[15] = 250
+    set IC_Lumber[15] = 0
+    set IC_Name[15] = "Belt of Giant Strength +10"
+    set IC_Icon[15] = "ReplaceableTextures\\CommandButtons\\BTNBelt.blp"
+    set IC_Description[15] = "Increase Strength of the Hero by 10 when worn.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[15] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[15] = "Armor Shop"
+    set IC_Note[15] = ""
+    set IC_Id[16] = 'belv'
+    set IC_Gold[16] = 300
+    set IC_Lumber[16] = 0
+    set IC_Name[16] = "Boots of Quel'Thalas +7"
+    set IC_Icon[16] = "ReplaceableTextures\\CommandButtons\\BTNBoots.blp"
+    set IC_Description[16] = "Increases the Agility of the Hero by 7 when worn.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[16] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[16] = "Armor Shop"
+    set IC_Note[16] = ""
+    set IC_Id[17] = 'ciri'
+    set IC_Gold[17] = 100
+    set IC_Lumber[17] = 0
+    set IC_Name[17] = "Robe of the Magi +10"
+    set IC_Icon[17] = "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp"
+    set IC_Description[17] = "Increases the Intelligence of the Hero by 10 when worn.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[17] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[17] = "Armor Shop"
+    set IC_Note[17] = ""
+    set IC_Id[18] = 'rde3'
+    set IC_Gold[18] = 200
+    set IC_Lumber[18] = 0
+    set IC_Name[18] = "Ring of Protection +5"
+    set IC_Icon[18] = "ReplaceableTextures\\CommandButtons\\BTNRingGreen.blp"
+    set IC_Description[18] = "Increases the armor of the Hero by 5 when worn and grants +4 Strength|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[18] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+endfunction
+
+function IC_Data1 takes nothing returns nothing
+    set IC_Location[18] = "Armor Shop"
+    set IC_Note[18] = ""
+    set IC_Id[19] = 'mcou'
+    set IC_Gold[19] = 150
+    set IC_Lumber[19] = 0
+    set IC_Name[19] = "Medaillon of Glim"
+    set IC_Icon[19] = "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp"
+    set IC_Description[19] = "Increases the Armor of the Hero by 4 and mana by 100.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[19] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[19] = "Armor Shop"
+    set IC_Note[19] = ""
+    set IC_Id[20] = 'pmna'
+    set IC_Gold[20] = 300
+    set IC_Lumber[20] = 0
+    set IC_Name[20] = "Pendant of Mana"
+    set IC_Icon[20] = "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp"
+    set IC_Description[20] = "Increases the mana capacity of the Hero by 300 when worn."
+    set IC_Stats[20] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[20] = "Armor Shop"
+    set IC_Note[20] = ""
+    set IC_Id[21] = 'rwiz'
+    set IC_Gold[21] = 100
+    set IC_Lumber[21] = 0
+    set IC_Name[21] = "Sobi Mask"
+    set IC_Icon[21] = "ReplaceableTextures\\CommandButtons\\BTNSobiMask.blp"
+    set IC_Description[21] = "Increases the Hero's rate of mana regeneration by 125% when worn & grants an additonal 50 Mana.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[21] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[21] = "Armor Shop"
+    set IC_Note[21] = ""
+    set IC_Id[22] = 'rlif'
+    set IC_Gold[22] = 100
+    set IC_Lumber[22] = 0
+    set IC_Name[22] = "Ring of Regeneration"
+    set IC_Icon[22] = "ReplaceableTextures\\CommandButtons\\BTNRingSkull.blp"
+    set IC_Description[22] = "Increases the Hero's hit point regeneration by 5 hit points per second.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[22] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[22] = "Armor Shop"
+    set IC_Note[22] = ""
+    set IC_Id[23] = 'ofro'
+    set IC_Gold[23] = 200
+    set IC_Lumber[23] = 0
+    set IC_Name[23] = "Orb of Frost"
+    set IC_Icon[23] = "ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp"
+    set IC_Description[23] = "Adds 10 bonus cold damage to the attack of a Hero when carried. The Hero's attacks also become ranged when attacking air and slow the movement speed and attack rate of the enemy for 3 seconds.|n|n|cffff0000Does not stack."
+    set IC_Stats[23] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[23] = "Weapons Shop"
+    set IC_Note[23] = ""
+    set IC_Id[24] = 'I02J'
+    set IC_Gold[24] = 400
+    set IC_Lumber[24] = 0
+    set IC_Name[24] = "Ring of Resilience"
+    set IC_Icon[24] = "ReplaceableTextures\\CommandButtons\\BTNRing.blp"
+    set IC_Description[24] = "+100 HP\n10% Spell Resistance|n|n|cffffdc00You may only carry 1.|r"
+    set IC_Stats[24] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[24] = "Weapons Shop"
+    set IC_Note[24] = ""
+    set IC_Id[25] = 'I03C'
+    set IC_Gold[25] = 250
+    set IC_Lumber[25] = 0
+    set IC_Name[25] = "Gloves of Haste"
+    set IC_Icon[25] = "ReplaceableTextures\\CommandButtons\\BTNGlove.blp"
+    set IC_Description[25] = "Increases the attack speed of the Hero by 20% when worn.|n|n|cffff0000You may only carry 1|r"
+    set IC_Stats[25] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[25] = "Weapons Shop"
+    set IC_Note[25] = ""
+    set IC_Id[26] = 'olig'
+    set IC_Gold[26] = 400
+    set IC_Lumber[26] = 0
+    set IC_Name[26] = "Orb of Lightning"
+    set IC_Icon[26] = "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp"
+    set IC_Description[26] = "Adds 1 bonus damage to the attack of a Hero when carried. The Hero's attacks also become ranged when attacking air, dispel magic and slow the movement speed of the enemy for 3 (0.3) seconds. |n|cffffcc00Deals 250 bonus damage to summoned units.|n|cffff0000Does not stack."
+    set IC_Stats[26] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[26] = "Weapons Shop"
+    set IC_Note[26] = ""
+    set IC_Id[27] = 'sror'
+    set IC_Gold[27] = 400
+    set IC_Lumber[27] = 0
+    set IC_Name[27] = "Scroll of the Beast"
+    set IC_Icon[27] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp"
+    set IC_Description[27] = "|cff00ff00AoE:|r 1000\n|cff00ff00Duration:|r 45 sec\n|cff00ff00Damage:|r +75%|n|cff00ff00Charges:|r 3"
+    set IC_Stats[27] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[27] = "Weapons Shop"
+    set IC_Note[27] = ""
+    set IC_Id[28] = 'sbch'
+    set IC_Gold[28] = 500
+    set IC_Lumber[28] = 0
+    set IC_Name[28] = "Scourge Bone Chimes"
+    set IC_Icon[28] = "ReplaceableTextures\\CommandButtons\\BTNBoneChimes.blp"
+    set IC_Description[28] = "Grants a melee Hero and friendly nearby melee units life stealing attacks which take 20% of the damage they deal and convert it into life. |n|cffff0000Does not stack with Vampiric Aura.|r"
+    set IC_Stats[28] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[28] = "Weapons Shop"
+    set IC_Note[28] = ""
+    set IC_Id[29] = 'I00C'
+    set IC_Gold[29] = 500
+    set IC_Lumber[29] = 0
+    set IC_Name[29] = "Undead Frenzy Soul"
+    set IC_Icon[29] = "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp"
+    set IC_Description[29] = "Increases the attack speed of nearby friendly units by 15% and movement speed by 10% when worn. |cffff0000Does not stack with Endurance Aura.|r"
+    set IC_Stats[29] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[29] = "Weapons Shop"
+    set IC_Note[29] = ""
+    set IC_Id[30] = 'ratf'
+    set IC_Gold[30] = 300
+    set IC_Lumber[30] = 0
+    set IC_Name[30] = "Claws of Attack +25"
+    set IC_Icon[30] = "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp"
+    set IC_Description[30] = "Increase the attack damage of the Hero by 25 when worn.|n|cffff0000Item carry limit of 1 per hero.|r"
+    set IC_Stats[30] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[30] = "Weapons Shop"
+    set IC_Note[30] = ""
+    set IC_Id[31] = 'tmmt'
+    set IC_Gold[31] = 600
+    set IC_Lumber[31] = 0
+    set IC_Name[31] = "Totem of Might"
+    set IC_Icon[31] = "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp"
+    set IC_Description[31] = "Boosts agility by 10 and adds 5 attack damage when worn.|n|n|cffff0000Item carry limit of 1 per hero.|r"
+    set IC_Stats[31] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[31] = "Weapons Shop"
+    set IC_Note[31] = ""
+    set IC_Id[32] = 'ward'
+    set IC_Gold[32] = 500
+    set IC_Lumber[32] = 0
+    set IC_Name[32] = "Warsong Battle Drums"
+    set IC_Icon[32] = "ReplaceableTextures\\CommandButtons\\BTNDrum.blp"
+    set IC_Description[32] = "Increases the attack damage of nearby friendly units by 15% when worn. |n|cffff0000Does not stack with Command Aura.|r"
+    set IC_Stats[32] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[32] = "Weapons Shop"
+    set IC_Note[32] = ""
+    set IC_Id[33] = 'oven'
+    set IC_Gold[33] = 300
+    set IC_Lumber[33] = 0
+    set IC_Name[33] = "Orb of Venom"
+    set IC_Icon[33] = "ReplaceableTextures\\CommandButtons\\BTNOrbOfVenom.blp"
+    set IC_Description[33] = "Adds 10 bonus damage to the attack of a Hero when carried. The Hero's attacks also become ranged when attacking air and poison enemy units which deals 15/s damage for 2(1) seconds. "
+    set IC_Stats[33] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[33] = "Weapons Shop"
+    set IC_Note[33] = ""
+    set IC_Id[34] = 'stel'
+    set IC_Gold[34] = 250
+    set IC_Lumber[34] = 0
+    set IC_Name[34] = "Staff of Teleportation"
+    set IC_Icon[34] = "ReplaceableTextures\\CommandButtons\\BTNStaffOfTeleportation.blp"
+    set IC_Description[34] = "Teleports the carrier to a targeted allied ground unit or structure after a 3-second casting delay. Long-range cast; only the carrier is transported."
+    set IC_Stats[34] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[34] = "Personal Shop"
+    set IC_Note[34] = ""
+    set IC_Id[35] = 'pinv'
+    set IC_Gold[35] = 0
+    set IC_Lumber[35] = 0
+    set IC_Name[35] = "Potion of Invisibility"
+    set IC_Icon[35] = "ReplaceableTextures\\CommandButtons\\BTNLesserInvisibility.blp"
+    set IC_Description[35] = "Makes the carrier invisible for 30 seconds. Attacking or casting ends the invisibility."
+    set IC_Stats[35] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[35] = "Personal Shop"
+    set IC_Note[35] = ""
+    set IC_Id[36] = 'pnvu'
+    set IC_Gold[36] = 250
+    set IC_Lumber[36] = 0
+    set IC_Name[36] = "Potion of Invulnerability"
+    set IC_Icon[36] = "ReplaceableTextures\\CommandButtons\\BTNGreaterInvulneralbility.blp"
+endfunction
+
+function IC_Data2 takes nothing returns nothing
+    set IC_Description[36] = "Makes the carrier invulnerable for 11 seconds."
+    set IC_Stats[36] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[36] = "Personal Shop"
+    set IC_Note[36] = ""
+    set IC_Id[37] = 'I01Y'
+    set IC_Gold[37] = 40
+    set IC_Lumber[37] = 0
+    set IC_Name[37] = "Super Net"
+    set IC_Icon[37] = "ReplaceableTextures\\CommandButtons\\BTNEnsnare.blp"
+    set IC_Description[37] = "Causes a target enemy unit to be bound to the ground so that it cannot move for 6(1) seconds. Air units that are ensnared can be attacked as though they were land units."
+    set IC_Stats[37] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[37] = "Personal Shop"
+    set IC_Note[37] = ""
+    set IC_Id[38] = 'I02F'
+    set IC_Gold[38] = 40
+    set IC_Lumber[38] = 0
+    set IC_Name[38] = "Wand of Illusion "
+    set IC_Icon[38] = "ReplaceableTextures\\CommandButtons\\BTNWand.blp"
+    set IC_Description[38] = "Create an illusory double of the targeted unit when used. The illusory double deals no damage to enemy units, takes 2 times the damage from enemy attacks, and will disappear after 60 seconds or when its hit points reach zero. |n|cff00ff00Charges:|r 1"
+    set IC_Stats[38] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[38] = "Personal Shop"
+    set IC_Note[38] = ""
+    set IC_Id[39] = 'ssil'
+    set IC_Gold[39] = 75
+    set IC_Lumber[39] = 0
+    set IC_Name[39] = "Staff of Silence"
+    set IC_Icon[39] = "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp"
+    set IC_Description[39] = "Silences enemy organic ground/air units in a 225 target radius: 12 seconds on normal units and 6 seconds on heroes; cast range 700."
+    set IC_Stats[39] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[39] = "Personal Shop"
+    set IC_Note[39] = ""
+    set IC_Id[40] = 'tcas'
+    set IC_Gold[40] = 125
+    set IC_Lumber[40] = 0
+    set IC_Name[40] = "Pub Wall /"
+    set IC_Icon[40] = "ReplaceableTextures\\CommandButtons\\BTNRWall.blp"
+    set IC_Description[40] = "Walls last for 40s."
+    set IC_Stats[40] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[40] = "Personal Shop"
+    set IC_Note[40] = ""
+    set IC_Id[41] = 'tgrh'
+    set IC_Gold[41] = 125
+    set IC_Lumber[41] = 0
+    set IC_Name[41] = "Pub Wall \\"
+    set IC_Icon[41] = "ReplaceableTextures\\CommandButtons\\BTNLWall.blp"
+    set IC_Description[41] = "Walls last for 40s."
+    set IC_Stats[41] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[41] = "Personal Shop"
+    set IC_Note[41] = ""
+    set IC_Id[42] = 'IGs1'
+    set IC_Gold[42] = 6000
+    set IC_Lumber[42] = 0
+    set IC_Name[42] = "Scroll of Global Silence"
+    set IC_Icon[42] = "ReplaceableTextures\\CommandButtons\\BTNSilence.blp"
+    set IC_Description[42] = "Silences enemy non-item spells across the map for 120 seconds. One charge. Only one scroll can be purchased per game, shared across all shops."
+    set IC_Stats[42] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[42] = "Personal Shop"
+    set IC_Note[42] = ""
+    set IC_Id[43] = 'nspi'
+    set IC_Gold[43] = 12000
+    set IC_Lumber[43] = 0
+    set IC_Name[43] = "Necklace of Spell Immunity"
+    set IC_Icon[43] = "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp"
+    set IC_Description[43] = "Renders the Hero invulnerable to magic.|n|n|cffff0000|cffff0000This item is banned on:|r\n|cffffdc00Blademaster"
+    set IC_Stats[43] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[43] = "Altar of Legends"
+    set IC_Note[43] = ""
+    set IC_Id[44] = 'I01Z'
+    set IC_Gold[44] = 10000
+    set IC_Lumber[44] = 0
+    set IC_Name[44] = "Sword of a Thousand Truths"
+    set IC_Icon[44] = "ReplaceableTextures\\CommandButtons\\BTNNobleSword.blp"
+    set IC_Description[44] = "+100 Damage|n+100 to all Stats"
+    set IC_Stats[44] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[44] = "Altar of Legends"
+    set IC_Note[44] = ""
+    set IC_Id[45] = 'I00I'
+    set IC_Gold[45] = 13000
+    set IC_Lumber[45] = 0
+    set IC_Name[45] = "Talisman of Chaos"
+    set IC_Icon[45] = "ReplaceableTextures\\CommandButtons\\BTNStone.blp"
+    set IC_Description[45] = "This mystic stone summons 12 Penguins of Chaos to fight for you for 120 seconds. Penguins are heavy-armored, fast-attacking units."
+    set IC_Stats[45] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[45] = "Altar of Legends"
+    set IC_Note[45] = ""
+    set IC_Id[46] = 'I003'
+    set IC_Gold[46] = 2500
+    set IC_Lumber[46] = 0
+    set IC_Name[46] = "Claws of Ultimate Devastation"
+    set IC_Icon[46] = "ReplaceableTextures\\CommandButtons\\BTNGoldClaw.blp"
+    set IC_Description[46] = "Increases the attack damage of your Hero by 100 when worn."
+    set IC_Stats[46] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[46] = "Altar of Legends"
+    set IC_Note[46] = ""
+    set IC_Id[47] = 'I002'
+    set IC_Gold[47] = 30000
+    set IC_Lumber[47] = 0
+    set IC_Name[47] = "Ring of J33Bus"
+    set IC_Icon[47] = "ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.blp"
+    set IC_Description[47] = "If you can afford this item then\na) you should have already won and\nb) prepare yourself for some crazy shit!"
+    set IC_Stats[47] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[47] = "Altar of Legends"
+    set IC_Note[47] = ""
+    set IC_Id[48] = 'stwa'
+    set IC_Gold[48] = 800
+    set IC_Lumber[48] = 0
+    set IC_Name[48] = "Tusk of the Pitlord"
+    set IC_Icon[48] = "ReplaceableTextures\\CommandButtons\\BTNHornedSword.blp"
+    set IC_Description[48] = "Grants the wearer 60% cleaving in an AoE of 250.|n|n|cffffdc00This item only works for Melee Heros.|r|n|n|cffff0000Banned on:|r\n|cffffdc00Blademaster|n|cffffdc00Shere-Khan"
+    set IC_Stats[48] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[48] = "Altar of Legends"
+    set IC_Note[48] = ""
+    set IC_Id[49] = 'rat9'
+    set IC_Gold[49] = 800
+    set IC_Lumber[49] = 0
+    set IC_Name[49] = "Critical Katana"
+    set IC_Icon[49] = "ReplaceableTextures\\CommandButtons\\BTNKatana.blp"
+    set IC_Description[49] = "Grants the wearer +20% attack speed and 15% to do 2x the damage.|n|n|cffff0000You may only carry 1|r\n\n|cffff0000Banned on:|r\n|cffffdc00Blademaster|n|cffffdc00Shere-Khan"
+    set IC_Stats[49] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[49] = "Altar of Legends"
+    set IC_Note[49] = ""
+    set IC_Id[50] = 'I006'
+    set IC_Gold[50] = 1500
+    set IC_Lumber[50] = 0
+    set IC_Name[50] = "Cursed Axe of Slaying"
+    set IC_Icon[50] = "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp"
+    set IC_Description[50] = "Increases your agility and strengh by +20, but drains your Health and Mana.|n|nYou may only carry 2 Cursed Axe of Slaying"
+    set IC_Stats[50] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[50] = "Altar of Legends"
+    set IC_Note[50] = ""
+    set IC_Id[51] = 'modt'
+    set IC_Gold[51] = 300
+    set IC_Lumber[51] = 0
+    set IC_Name[51] = "Mask of Death"
+    set IC_Icon[51] = "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp"
+    set IC_Description[51] = "While wearing this mask, a Hero will recover hit points equal to 40% of the attack damage dealt to an enemy unit.|n |n|cffff0000Banned on|r:|n|cffffdc00Ranger|r"
+    set IC_Stats[51] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[51] = "Protection Shop"
+    set IC_Note[51] = ""
+    set IC_Id[52] = 'I00D'
+    set IC_Gold[52] = 600
+    set IC_Lumber[52] = 0
+    set IC_Name[52] = "Shield of the Gods"
+    set IC_Icon[52] = "ReplaceableTextures\\CommandButtons\\BTNThoriumArmor.blp"
+    set IC_Description[52] = "Increases the Hero´s armor by 8 and HP by 300."
+    set IC_Stats[52] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[52] = "Protection Shop"
+    set IC_Note[52] = ""
+    set IC_Id[53] = 'I00F'
+    set IC_Gold[53] = 650
+    set IC_Lumber[53] = 0
+    set IC_Name[53] = "Amulet of Spell Shield"
+    set IC_Icon[53] = "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp"
+    set IC_Description[53] = "Blocks a negative spell that an enemy casts on the Hero once every 75 seconds|n|nAmulet component: miRaculix's Amulet is consumed first. Boots of Speed may substitute only while this hero carries a completed amulet upgrade; that upgrade is kept."
+    set IC_Stats[53] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[53] = "Protection Shop"
+    set IC_Note[53] = ""
+    set IC_Id[54] = 'brac'
+    set IC_Gold[54] = 1000
+    set IC_Lumber[54] = 0
+endfunction
+
+function IC_Data3 takes nothing returns nothing
+    set IC_Name[54] = "Runed Bracers"
+    set IC_Icon[54] = "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp"
+    set IC_Description[54] = "Reduced Magic damage dealt to the Hero by 33%."
+    set IC_Stats[54] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[54] = "Protection Shop"
+    set IC_Note[54] = ""
+    set IC_Id[55] = 'ankh'
+    set IC_Gold[55] = 700
+    set IC_Lumber[55] = 0
+    set IC_Name[55] = "Ankh of Reincarnation"
+    set IC_Icon[55] = "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp"
+    set IC_Description[55] = "Automatically brings the Hero back to life with 2500 hit points when the Hero wearing the Ankh dies."
+    set IC_Stats[55] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[55] = "Protection Shop"
+    set IC_Note[55] = ""
+    set IC_Id[56] = 'prvt'
+    set IC_Gold[56] = 500
+    set IC_Lumber[56] = 0
+    set IC_Name[56] = "Periapt of Vitality"
+    set IC_Icon[56] = "ReplaceableTextures\\CommandButtons\\BTNPeriapt.blp"
+    set IC_Description[56] = "Increases the hit points of the Hero by 400 when worn."
+    set IC_Stats[56] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[56] = "Protection Shop"
+    set IC_Note[56] = ""
+    set IC_Id[57] = 'clfm'
+    set IC_Gold[57] = 800
+    set IC_Lumber[57] = 0
+    set IC_Name[57] = "Cloak of Flames"
+    set IC_Icon[57] = "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp"
+    set IC_Description[57] = "|cffff0000Grants:|r|nPermanent immolation (40 DPS)|n+200HP|n+4 armor|n+5 HPS Health Regeneration"
+    set IC_Stats[57] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[57] = "Protection Shop"
+    set IC_Note[57] = ""
+    set IC_Id[58] = 'clsd'
+    set IC_Gold[58] = 25
+    set IC_Lumber[58] = 0
+    set IC_Name[58] = "Cloak of Shadows"
+    set IC_Icon[58] = "ReplaceableTextures\\CommandButtons\\BTNCloak.blp"
+    set IC_Description[58] = "Shadow Meld grants invisibility while stationary at night; 1.5-second fade duration. Moving, attacking, or casting breaks concealment."
+    set IC_Stats[58] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[58] = "Protection Shop"
+    set IC_Note[58] = ""
+    set IC_Id[59] = 'gobm'
+    set IC_Gold[59] = 125
+    set IC_Lumber[59] = 0
+    set IC_Name[59] = "Stasis Trap"
+    set IC_Icon[59] = "ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp"
+    set IC_Description[59] = "Summons an invisible and immovable ward that stuns enemy land units for 3(1.5) seconds. The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect. The Trap lasts for 60 seconds."
+    set IC_Stats[59] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[59] = "Protection Shop"
+    set IC_Note[59] = ""
+    set IC_Id[60] = 'I02T'
+    set IC_Gold[60] = 800
+    set IC_Lumber[60] = 0
+    set IC_Name[60] = "Wand of Purification"
+    set IC_Icon[60] = "ReplaceableTextures\\CommandButtons\\BTNPurify.blp"
+    set IC_Description[60] = "Removes all corpses from an area of 750|n|cff00ff00Charges:|r 1"
+    set IC_Stats[60] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[60] = "Assault Shop"
+    set IC_Note[60] = ""
+    set IC_Id[61] = 'I020'
+    set IC_Gold[61] = 200
+    set IC_Lumber[61] = 0
+    set IC_Name[61] = "Scroll of Recall"
+    set IC_Icon[61] = "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp"
+    set IC_Description[61] = "Hero channels for 1.5s, then transports up to 24 nearby friendly units to a target friendly town hall.|n|cff00ff00Charges:|r 1"
+    set IC_Stats[61] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[61] = "Assault Shop"
+    set IC_Note[61] = ""
+    set IC_Id[62] = 'I02P'
+    set IC_Gold[62] = 3000
+    set IC_Lumber[62] = 0
+    set IC_Name[62] = "Scroll of Frenzy"
+    set IC_Icon[62] = "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp"
+    set IC_Description[62] = "Casts a movement and attack speed buff on units around the caster that cannot be dispelled\n|cff00ff00AoE:|r 1200 \n|cff00ff00Attack Speed Bonus:|r 200%\n|cff00ff00Movement Speed Bonus:|r 150%|n|cff00ff00Duration:|r 20s|n|cff00ff00Charges:|r 3\n"
+    set IC_Stats[62] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[62] = "Assault Shop"
+    set IC_Note[62] = ""
+    set IC_Id[63] = 'I017'
+    set IC_Gold[63] = 500
+    set IC_Lumber[63] = 0
+    set IC_Name[63] = "Miles' Scroll of Invisibility"
+    set IC_Icon[63] = "ReplaceableTextures\\CommandButtons\\BTNScroll.blp"
+    set IC_Description[63] = "Temporarily grants nearby units invisibility.|n|cff00ff00AoE:|r 500 \n|cff00ff00Duration:|r 45s \n|cff00ff00Charges:|r 2"
+    set IC_Stats[63] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[63] = "Assault Shop"
+    set IC_Note[63] = ""
+    set IC_Id[64] = 'I01P'
+    set IC_Gold[64] = 275
+    set IC_Lumber[64] = 0
+    set IC_Name[64] = "Scroll of Anti-Magic"
+    set IC_Icon[64] = "ReplaceableTextures\\CommandButtons\\BTNGebo.BLP"
+    set IC_Description[64] = "Casts an Anti-Magic shield on surrounding friendly units.\n|cff00ff00AoE:|r 400 \n|cff00ff00Shield Life:|r 200s\n|cff00ff00Duration:|r 40s\n|cff00ff00Charges:|r 3|n|cffff0000This will only work for up to 26 units!|r"
+    set IC_Stats[64] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[64] = "Assault Shop"
+    set IC_Note[64] = ""
+    set IC_Id[65] = 'sres'
+    set IC_Gold[65] = 225
+    set IC_Lumber[65] = 0
+    set IC_Name[65] = "Scroll of Healing"
+    set IC_Icon[65] = "ReplaceableTextures\\CommandButtons\\BTNScrollOfTownPortal.blp"
+    set IC_Description[65] = "Restores 300 hit points of friendly non-mechanical units in an area of 700 around your hero.|n|cff00ff00Charges:|r 2"
+    set IC_Stats[65] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[65] = "Assault Shop"
+    set IC_Note[65] = ""
+    set IC_Id[66] = 'I008'
+    set IC_Gold[66] = 1200
+    set IC_Lumber[66] = 0
+    set IC_Name[66] = "Scroll of Beating"
+    set IC_Icon[66] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollGreen.blp"
+    set IC_Description[66] = "|cff00ff00AoE:|r 1200\n|cff00ff00Duration:|r 180 sec\n|cff00ff00Damage:|r +150%|n|cff00ff00Charges:|r 1"
+    set IC_Stats[66] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[66] = "Assault Shop"
+    set IC_Note[66] = ""
+    set IC_Id[67] = 'srrc'
+    set IC_Gold[67] = 2500
+    set IC_Lumber[67] = 0
+    set IC_Name[67] = "Scroll of Resurrection"
+    set IC_Icon[67] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyScroll.blp"
+    set IC_Description[67] = "Brings up to 50 of your nearby dead units back to life in an AoE of 1200|n|cff00ff00Charges:|r 1"
+    set IC_Stats[67] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[67] = "Assault Shop"
+    set IC_Note[67] = ""
+    set IC_Id[68] = 'sand'
+    set IC_Gold[68] = 2500
+    set IC_Lumber[68] = 0
+    set IC_Name[68] = "Scroll of Animate Dead"
+    set IC_Icon[68] = "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.blp"
+    set IC_Description[68] = "Raises 40 nearby dead units to fight for 40 seconds.|n|cff00ff00Charges:|r 1"
+    set IC_Stats[68] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[68] = "Assault Shop"
+    set IC_Note[68] = ""
+    set IC_Id[69] = 'I00G'
+    set IC_Gold[69] = 900
+    set IC_Lumber[69] = 0
+    set IC_Name[69] = "Tank Token"
+    set IC_Icon[69] = "ReplaceableTextures\\CommandButtons\\BTNSeigeEngineWithMissles.blp"
+    set IC_Description[69] = "Summons a Siege Engine to fight for you."
+    set IC_Stats[69] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[69] = "Assault Shop"
+    set IC_Note[69] = ""
+    set IC_Id[70] = 'sreg'
+    set IC_Gold[70] = 50
+    set IC_Lumber[70] = 0
+    set IC_Name[70] = "Scroll of Regeneration"
+    set IC_Icon[70] = "ReplaceableTextures\\CommandButtons\\BTNScrollOfRegenerationGreen.blp"
+    set IC_Description[70] = "|cff87ceebNon-Combat Consumable|r|nRegenerates the hit points of all friendly non-mechanical units in an area around your Hero by 600 over 12 seconds when used.|n|cff00ff00Charges:|r 3"
+    set IC_Stats[70] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[70] = "Assault Shop"
+    set IC_Note[70] = ""
+    set IC_Id[71] = 'I005'
+    set IC_Gold[71] = 7500
+    set IC_Lumber[71] = 0
+    set IC_Name[71] = "Healing Wards of the Gods"
+    set IC_Icon[71] = "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp"
+    set IC_Description[71] = "Summons an immovable ward that heals 30% of nearby friendly non-mechanical unit's hit points per second. |nContains 3 charges. |nLasts 90 seconds. |n|cffff0000Cooldown 30 seconds|r"
+    set IC_Stats[71] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[71] = "Assault Shop"
+    set IC_Note[71] = ""
+    set IC_Id[72] = 'I024'
+endfunction
+
+function IC_Data4 takes nothing returns nothing
+    set IC_Gold[72] = 1000
+    set IC_Lumber[72] = 0
+    set IC_Name[72] = "Null Rod"
+    set IC_Icon[72] = "ReplaceableTextures\\CommandButtons\\BTN_CR_GREENstaf.blp"
+    set IC_Description[72] = "Puts a non-Hero unit into an uninterruptible sleep for 90 seconds|n|n|cffff0000Works on Night Terror & Granite Golems|r"
+    set IC_Stats[72] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[72] = "Waveplayers Shop"
+    set IC_Note[72] = ""
+    set IC_Id[73] = 'I009'
+    set IC_Gold[73] = 500
+    set IC_Lumber[73] = 0
+    set IC_Name[73] = "Shockwave"
+    set IC_Icon[73] = "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp"
+    set IC_Description[73] = "Casts a high level shockwave which deals 500 damage to enemy land units in a straight line for a distance of 1200."
+    set IC_Stats[73] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[73] = "Waveplayers Shop"
+    set IC_Note[73] = ""
+    set IC_Id[74] = 'I01Q'
+    set IC_Gold[74] = 1500
+    set IC_Lumber[74] = 0
+    set IC_Name[74] = "Shockwave of the Gods"
+    set IC_Icon[74] = "ReplaceableTextures\\CommandButtons\\BTNGlaringBeam.blp"
+    set IC_Description[74] = "Casts a high level shockwave which deals 1400 damage to enemy land units in a straight line for a distance of 1300."
+    set IC_Stats[74] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[74] = "Waveplayers Shop"
+    set IC_Note[74] = ""
+    set IC_Id[75] = 'tkno'
+    set IC_Gold[75] = 1250
+    set IC_Lumber[75] = 0
+    set IC_Name[75] = "Tome of Power"
+    set IC_Icon[75] = "ReplaceableTextures\\CommandButtons\\BTNTomeRed.blp"
+    set IC_Description[75] = "Grants one hero level. Pickup automatically uses it below hero level 18; at level 18 or above, it is dropped.|n1 charge(s).|n|nScripted effects: Pickup automatically uses the Tome of Power only below hero level 18. At level 18 or above the item is dropped. Nonhero purchases are replaced with a ground item."
+    set IC_Stats[75] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[75] = "Waveplayers Shop"
+    set IC_Note[75] = ""
+    set IC_Id[76] = 'tgxp'
+    set IC_Gold[76] = 1000
+    set IC_Lumber[76] = 0
+    set IC_Name[76] = "Tome of Greater Experience"
+    set IC_Icon[76] = "ReplaceableTextures\\CommandButtons\\BTNManual3.blp"
+    set IC_Description[76] = "Grants the hero 800 experience.|n1 charge(s).|n|nScripted effects: Nonhero purchases are removed from the buyer and recreated on the ground. Packhorses cannot pick this up; an attempted pickup within integer distance 200 removes the ground item."
+    set IC_Stats[76] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[76] = "Waveplayers Shop"
+    set IC_Note[76] = ""
+    set IC_Id[77] = 'tret'
+    set IC_Gold[77] = 100
+    set IC_Lumber[77] = 0
+    set IC_Name[77] = "Tome of Retraining"
+    set IC_Icon[77] = "ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp"
+    set IC_Description[77] = "Unlearns all of the Hero's spells, allowing the Hero to learn different skills. |cffff0000This item only affects skills that have cooled down!|r|n|n|cffff0000Banned on:|r\n|cffffdc00Mountain King, Yeti, Hydralisk & Tinker|r"
+    set IC_Stats[77] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[77] = "Waveplayers Shop"
+    set IC_Note[77] = ""
+    set IC_Id[78] = 'desc'
+    set IC_Gold[78] = 1500
+    set IC_Lumber[78] = 0
+    set IC_Name[78] = "Kelen's Dagger of Escape"
+    set IC_Icon[78] = "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp"
+    set IC_Description[78] = "Teleports the Hero a distance of up to 1000. |n|n|cffff0000Banned on:|r\n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Akama & Shadow Shifter|r"
+    set IC_Stats[78] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[78] = "Waveplayers Shop"
+    set IC_Note[78] = ""
+    set IC_Id[79] = 'I00H'
+    set IC_Gold[79] = 1250
+    set IC_Lumber[79] = 0
+    set IC_Name[79] = "Rod of Death"
+    set IC_Icon[79] = "ReplaceableTextures\\CommandButtons\\BTNSkullWand.blp"
+    set IC_Description[79] = "Kills a Hero"
+    set IC_Stats[79] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[79] = "Waveplayers Shop"
+    set IC_Note[79] = ""
+    set IC_Id[80] = 'I004'
+    set IC_Gold[80] = 1500
+    set IC_Lumber[80] = 0
+    set IC_Name[80] = "Rod of Envy"
+    set IC_Icon[80] = "ReplaceableTextures\\CommandButtons\\BTNRodofEnvy.blp"
+    set IC_Description[80] = "Puts a Hero into an uninterruptible sleep for two minutes."
+    set IC_Stats[80] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[80] = "Waveplayers Shop"
+    set IC_Note[80] = ""
+    set IC_Id[81] = 'rag1'
+    set IC_Gold[81] = 2750
+    set IC_Lumber[81] = 0
+    set IC_Name[81] = "Slippers of Agility +25"
+    set IC_Icon[81] = "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility.blp"
+    set IC_Description[81] = "Increase the Agility of the Hero by 25 when worn.\nAlso grants 20% evasion and a 20% chance to stun a target. |n|n|cffff0000|cffff0000Can only carry one of the following items at the time:|r\n|cffffdc00Talisman of Evasion, Soldier's Mask or Slippers of Agility|r"
+    set IC_Stats[81] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[81] = "Kids Store"
+    set IC_Note[81] = ""
+    set IC_Id[82] = 'rin1'
+    set IC_Gold[82] = 1200
+    set IC_Lumber[82] = 0
+    set IC_Name[82] = "Mantle of Intelligence +25"
+    set IC_Icon[82] = "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp"
+    set IC_Description[82] = "Boosts Intelligence by 25 and grants the wearer Brilliance Aura. Brilliance Aura grants 3.5 mana per second to units within 900 range of the carrier. "
+    set IC_Stats[82] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[82] = "Kids Store"
+    set IC_Note[82] = ""
+    set IC_Id[83] = 'rst1'
+    set IC_Gold[83] = 2000
+    set IC_Lumber[83] = 0
+    set IC_Name[83] = "Gauntlets of Ogre Strength +30"
+    set IC_Icon[83] = "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower.blp"
+    set IC_Description[83] = "Boosts Strength by 30. Also adds 15 hp/s regeneration."
+    set IC_Stats[83] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[83] = "Kids Store"
+    set IC_Note[83] = ""
+    set IC_Id[84] = 'cnob'
+    set IC_Gold[84] = 3250
+    set IC_Lumber[84] = 0
+    set IC_Name[84] = "Circlet of Nobility"
+    set IC_Icon[84] = "ReplaceableTextures\\CommandButtons\\BTNCirclet.blp"
+    set IC_Description[84] = "Increases the Strengh, Agility and Intelligence of the Hero by 25 when worn and grants an additional 20% attack speed."
+    set IC_Stats[84] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[84] = "Kids Store"
+    set IC_Note[84] = ""
+    set IC_Id[85] = 'crys'
+    set IC_Gold[85] = 200
+    set IC_Lumber[85] = 0
+    set IC_Name[85] = "Crystal Ball"
+    set IC_Icon[85] = "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp"
+    set IC_Description[85] = "Grants the wearer 100 bonus mana, and grants Brilliance Aura"
+    set IC_Stats[85] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[85] = "Kids Store"
+    set IC_Note[85] = ""
+    set IC_Id[86] = 'I00E'
+    set IC_Gold[86] = 600
+    set IC_Lumber[86] = 0
+    set IC_Name[86] = "Maul of Corruption"
+    set IC_Icon[86] = "ReplaceableTextures\\CommandButtons\\BTNHammer.blp"
+    set IC_Description[86] = "Adds 10 bonus damage to the attack of a Hero when carried. The Hero´s attack also become ranged when attacking air and reduce the armor of enemy units by 5 for 3(3) seconds.  |n|cffff0000Does not stack."
+    set IC_Stats[86] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[86] = "Kids Store"
+    set IC_Note[86] = ""
+    set IC_Id[87] = 'frhg'
+    set IC_Gold[87] = 800
+    set IC_Lumber[87] = 0
+    set IC_Name[87] = "Firehand Gauntlets"
+    set IC_Icon[87] = "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp"
+    set IC_Description[87] = "Increases attack rate by 15%|cffffdc00|r, grants +15 Armor, and adds |cffffff00Incinerate|r to the Hero's attack.|n\n|cffffcc00Incinerate:|r\n|cffffff00Bonus DMG Multiplier:|r 3\n|cffffff00Death DMG Full Amount:|r 100\n|cffffff00Death Full DMG AoE:|r 150\n|cffffff00Death Half DMG Amount:|r 50\n|cffffff00Death Half DMG AoE:|r 230"
+    set IC_Stats[87] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[87] = "Kids Store"
+    set IC_Note[87] = ""
+    set IC_Id[88] = 'lgdh'
+    set IC_Gold[88] = 450
+    set IC_Lumber[88] = 0
+    set IC_Name[88] = "Legion Doom-Horn"
+    set IC_Icon[88] = "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp"
+    set IC_Description[88] = "Grants the Hero and friendly nearby units 3 HP/s life regeneration and 20% increased movement speed. |nDoes not stack with Unholy Aura."
+    set IC_Stats[88] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[88] = "Kids Store"
+    set IC_Note[88] = ""
+    set IC_Id[89] = 'I00B'
+    set IC_Gold[89] = 1650
+    set IC_Lumber[89] = 0
+    set IC_Name[89] = "Fist of the Titans Recipe"
+    set IC_Icon[89] = "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp"
+    set IC_Description[89] = "|cffffcc00Gives:|r\n+30 Strengh\n+20 Intelligence\n+7 Armor\n+20 Attack Damage\n+10HP/s Life Regeneration|n\n|cffffcc00Requires:|r\nBelt of Giant Strength\nRing of Regeneration\nCrown of Kings\n|cffffcc00Total Cost:|r 2500"
+    set IC_Stats[89] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[89] = "Recipes Shop - Page 1"
+endfunction
+
+function IC_Data5 takes nothing returns nothing
+    set IC_Note[89] = ""
+    set IC_Recipe[89] = 5
+    set IC_Total[89] = 2500
+    set IC_Id[90] = 'I02L'
+    set IC_Gold[90] = 1100
+    set IC_Lumber[90] = 0
+    set IC_Name[90] = "Nature's Blessing Recipe"
+    set IC_Icon[90] = "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp"
+    set IC_Description[90] = "|cffffcc00Gives:|r\n+550 HP\n+10 Armor\n20% Magic Resistance|nHP Regeneration 4HP/s\n\n|cffffcc00Requires:|r\nRing of Resilience\nShield of the Gods|n\n|cffffcc00Total Cost:|r 2100"
+    set IC_Stats[90] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[90] = "Recipes Shop - Page 1"
+    set IC_Note[90] = ""
+    set IC_Recipe[90] = 6
+    set IC_Total[90] = 2100
+    set IC_Id[91] = 'I00Z'
+    set IC_Gold[91] = 300
+    set IC_Lumber[91] = 0
+    set IC_Name[91] = "miRaculix' Amulet of Ultimate Power Recipe"
+    set IC_Icon[91] = "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp"
+    set IC_Description[91] = "|cffffcc00Gives:|r\n+600 HP\n+450 MP\n+Movement Speed\n|cffffcc00Requires:|r\nmiRaculix'  Amulet of Power\nPeriapt of Vitality\nPendant of Mana\n|cffffcc00Total Cost:|r 1050|n|nAmulet component: miRaculix's Amulet is consumed first. Boots of Speed may substitute only while this hero carries a completed amulet upgrade; that upgrade is kept."
+    set IC_Stats[91] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[91] = "Recipes Shop - Page 1"
+    set IC_Note[91] = "Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[91] = 1
+    set IC_Total[91] = 1100
+    set IC_Id[92] = 'I00L'
+    set IC_Gold[92] = 1500
+    set IC_Lumber[92] = 0
+    set IC_Name[92] = "Heart of the Holy Maiden Recipe"
+    set IC_Icon[92] = "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp"
+    set IC_Description[92] = "|cffffcc00Grants:|r\n+750 HP\n+15 Armor\n15 HP/s Life Regeneration|n\n|cffffcc00Requires:|r\nRing of Protection +5\nRing of Regeneration\nPeriapt of Vitality\n|cffffcc00Total Cost:|r 2300"
+    set IC_Stats[92] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[92] = "Recipes Shop - Page 1"
+    set IC_Note[92] = ""
+    set IC_Recipe[92] = 8
+    set IC_Total[92] = 2300
+    set IC_Id[93] = 'I00M'
+    set IC_Gold[93] = 1350
+    set IC_Lumber[93] = 0
+    set IC_Name[93] = "Chobos' Light Speed Shoes Recipe"
+    set IC_Icon[93] = "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp"
+    set IC_Description[93] = "|cffffcc00Grants:|r\n+30 Agility\n+40 Damage\nOrb of Corruption attack -5 armor reduction\n\n|cffffcc00Requires:|r\nBoots of Quel'Thalas\nMaul of Corruption\nTotem of Might\n|cffffcc00Total Cost:|r 2850"
+    set IC_Stats[93] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[93] = "Recipes Shop - Page 1"
+    set IC_Note[93] = ""
+    set IC_Recipe[93] = 9
+    set IC_Total[93] = 2850
+    set IC_Id[94] = 'I00Q'
+    set IC_Gold[94] = 950
+    set IC_Lumber[94] = 0
+    set IC_Name[94] = "Night Terror Armor Recipe"
+    set IC_Icon[94] = "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp"
+    set IC_Description[94] = "|cffffcc00Grants:|r\n+25 Armor\n+350 HP\n33% Spell Damage Reduction|n\n|cffffcc00Requires:|r\nRuned Bracers\nRing of Protection +5\nShield of the Gods\n|cffffcc00Total Cost:|r 2750"
+    set IC_Stats[94] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[94] = "Recipes Shop - Page 1"
+    set IC_Note[94] = ""
+    set IC_Recipe[94] = 10
+    set IC_Total[94] = 2750
+    set IC_Id[95] = 'I00O'
+    set IC_Gold[95] = 1000
+    set IC_Lumber[95] = 0
+    set IC_Name[95] = "Ring of Superiority Recipe"
+    set IC_Icon[95] = "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp"
+    set IC_Description[95] = "|cffffcc00Grants:|r\nTrueshot aura 25%\nEndurance aura (17% attack speed / 15% movement)\nCommand aura 15%\nVampiric aura 40%|n\n|cffffcc00Requires:|r\nBone Chimes\nBattle Drums\nUndead Frenzy Soul\n|cffffcc00Total Cost:|r 2500"
+    set IC_Stats[95] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[95] = "Recipes Shop - Page 1"
+    set IC_Note[95] = ""
+    set IC_Recipe[95] = 11
+    set IC_Total[95] = 2500
+    set IC_Id[96] = 'I00N'
+    set IC_Gold[96] = 600
+    set IC_Lumber[96] = 0
+    set IC_Name[96] = "Scepter of the Archmage Recipe"
+    set IC_Icon[96] = "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp"
+    set IC_Description[96] = "|cffffcc00Grants:|r\n+750 mana\n+30 intelligence|n+150% Mana Regeneration\n2 m/s Brilliance aura|n\n|cffffcc00Requires:|r\nSobi Mask\nRobe of the Magi\nCrystal Ball\n|cffffcc00Total Cost:|r 1000"
+    set IC_Stats[96] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[96] = "Recipes Shop - Page 1"
+    set IC_Note[96] = ""
+    set IC_Recipe[96] = 12
+    set IC_Total[96] = 1000
+    set IC_Id[97] = 'I02O'
+    set IC_Gold[97] = 100
+    set IC_Lumber[97] = 0
+    set IC_Name[97] = "Druid's Amulet Recipe"
+    set IC_Icon[97] = "ReplaceableTextures\\CommandButtons\\BTNAmulet.blp"
+    set IC_Description[97] = "|cffffcc00Grants:|r\n+200 HP\n+200 Mana\nIncreased Movement speed\nAbility to cast Rejuvination\n\n|cffffcc00Rejuvination|r\n|cffffcc00Health|r 550\n|cffffcc00Mana|r 50\n|cffffcc00Duration|r 10s\n|cffffcc00Cooldown|r 40s\n\n|cffffcc00Requires:|r\nmiRaculix's Amulet\nSobi Mask\nRing of Regeneration\n|cffffcc00Cost|r 300|n|nAmulet component: miRaculix's Amulet is consumed first. Boots of Speed may substitute only while this hero carries a completed amulet upgrade; that upgrade is kept."
+    set IC_Stats[97] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[97] = "Recipes Shop - Page 1"
+    set IC_Note[97] = "Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[97] = 2
+    set IC_Total[97] = 300
+    set IC_Id[98] = 'I02X'
+    set IC_Gold[98] = 100
+    set IC_Lumber[98] = 0
+    set IC_Name[98] = "Amulet of Clarity Recipe"
+    set IC_Icon[98] = "ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp"
+    set IC_Description[98] = "|cffffcc00Gives:|r\nActivated ability with enhanced Dust of Appearance (+50 Bonus Range)\n+250 HP\n+200 Mana\nIncreased Mana Regeneration by 150%\nIncreased movement speed\n|cffffcc00Requires:|r\nSobi Mask\nmiRaculix' Amulet of Power\n|cffffcc00Total Cost:|r 200|n|nAmulet component: miRaculix's Amulet is consumed first. Boots of Speed may substitute only while this hero carries a completed amulet upgrade; that upgrade is kept."
+    set IC_Stats[98] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[98] = "Recipes Shop - Page 1"
+    set IC_Note[98] = "Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[98] = 3
+    set IC_Total[98] = 200
+    set IC_Id[99] = 'I03Z'
+    set IC_Gold[99] = 350
+    set IC_Lumber[99] = 0
+    set IC_Name[99] = "Amulet of Vigor Recipe"
+    set IC_Icon[99] = "ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp"
+    set IC_Description[99] = "|cffffcc00Grants:|r\n+200 HP\n+300 Mana\n+4 Armor|nIncreased Movement speed\nAbility to cast Speed Scroll\n\n|cffffcc00Speed Scroll|r\n|cffffcc00Duration|r 20s\n|cffffcc00Cooldown|r 35s\n\n|cffffcc00Requires:|r\nmiRaculix's Amulet\nnMedallion of Glim\n|cffffcc00Cost|r 500|n|nAmulet component: miRaculix's Amulet is consumed first. Boots of Speed may substitute only while this hero carries a completed amulet upgrade; that upgrade is kept."
+    set IC_Stats[99] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[99] = "Recipes Shop - Page 1"
+    set IC_Note[99] = "Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[99] = 4
+    set IC_Total[99] = 500
+    set IC_Id[100] = 'I02U'
+    set IC_Gold[100] = 950
+    set IC_Lumber[100] = 0
+    set IC_Name[100] = "Forked Fury Recipe"
+    set IC_Icon[100] = "ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp"
+    set IC_Description[100] = "|cffffcc00Gives:|r\n+20% Attack Speed\n|cffffcc00Forked Lightning|r - Passive Ability|n|nGrants the wearer a |cffff000025%|r chance of their next auto attack casting a Forked Lightning on up to 8 targets for |cffff0000250|r damage. This ability may only trigger once every 10 seconds|n|n|cffffcc00Requires:|r\nGloves of Haste\nClaws of Attack +25\n|cffffcc00Total Cost:|r 1500g"
+    set IC_Stats[100] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[100] = "Recipes Shop - Page 2"
+    set IC_Note[100] = ""
+    set IC_Recipe[100] = 17
+    set IC_Total[100] = 1500
+    set IC_Id[101] = 'I04B'
+    set IC_Gold[101] = 750
+    set IC_Lumber[101] = 0
+    set IC_Name[101] = "Amulet of the Wind Recipe"
+    set IC_Icon[101] = "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp"
+    set IC_Description[101] = "|cffffcc00Gives:|r\nActivated ability that casts Wind Walk\n+30 All Stats\n+20% Attack Speed\n+300 HP\n+200 Mana\nIncreased movement speed\n\n|cffffcc00Wind Walk:|r\nDuration: 20s\nDamage: 50\nMovement Speed Increase: 10%\nCooldown: 45s\n\n|cffffcc00Requires:|r\nCirclet of Nobility\n|cffffcc00Total Cost:|r 4000\n\n|cffff0000Banned on:|r\n|cffffdc00Blademaster, Shere-Khan, Jaood, Shadow, Soviet Sniper & Crazy Cat|r"
+    set IC_Stats[101] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[101] = "Recipes Shop - Page 2"
+    set IC_Note[101] = ""
+    set IC_Recipe[101] = 16
+    set IC_Total[101] = 4000
+    set IC_Id[102] = 'I00S'
+    set IC_Gold[102] = 950
+    set IC_Lumber[102] = 0
+    set IC_Name[102] = "Staff of Sanctuary Recipe"
+    set IC_Icon[102] = "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp"
+    set IC_Description[102] = "|cffffcc00Grants:|r\nSpell Shield (15s Cooldown)\n50% Spell Damage Reduction|n\n|cffffcc00Requires:|r\nAmulet of Spell Shield\nRuned Bracers\nRing of Resilience\n|cffffcc00Total Cost:|r 3000"
+    set IC_Stats[102] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[102] = "Recipes Shop - Page 2"
+    set IC_Note[102] = ""
+    set IC_Recipe[102] = 13
+    set IC_Total[102] = 3000
+    set IC_Id[103] = 'I00K'
+    set IC_Gold[103] = 950
+    set IC_Lumber[103] = 0
+    set IC_Name[103] = "Frosty´s Ice Claws Recipe"
+    set IC_Icon[103] = "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp"
+    set IC_Description[103] = "|cffffcc00Gives:|r\n+150 Damage\n+20% Attack Speed\nFrost Attack|n50% Life Steal|n\n|cffffcc00Requires:|r\nClaws of Attack +25\nGloves of Haste\nClaws of Ultimate Devastation\n|cffffcc00Total Cost:|r 4000"
+    set IC_Stats[103] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[103] = "Recipes Shop - Page 2"
+    set IC_Note[103] = ""
+    set IC_Recipe[103] = 7
+    set IC_Total[103] = 4000
+    set IC_Id[104] = 'I01I'
+    set IC_Gold[104] = 1000
+    set IC_Lumber[104] = 0
+endfunction
+
+function IC_Data6 takes nothing returns nothing
+    set IC_Name[104] = "Demogorgon's Scepter Recipe"
+    set IC_Icon[104] = "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp"
+    set IC_Description[104] = "|cffffcc00Gives:|r\n+15 strength\nBlink, which causes a level 4 Flame Strike at the targeted location|n|n|cffff0000Flame Strike|r|n340 damage over first 2 seconds|n80 damage over next 2 seconds\n\n|cffffcc00Requires:|r\nBelt of Giant Strength\nKelen's Dagger of Escape\n|cffffcc00Total Cost:|r 2750|nTeleports the Hero a distance of up to 1000. |n|n|cffff0000Banned on:|r\n|cffffdc00Jaina, Warden, Edge, Pirate, Craziest Cat Ever, Warlock, Akama & Shadow Shifter|r"
+    set IC_Stats[104] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[104] = "Recipes Shop - Page 2"
+    set IC_Note[104] = ""
+    set IC_Recipe[104] = 14
+    set IC_Total[104] = 2750
+    set IC_Id[105] = 'I01S'
+    set IC_Gold[105] = 550
+    set IC_Lumber[105] = 0
+    set IC_Name[105] = "Chaos Cloak Recipe"
+    set IC_Icon[105] = "ReplaceableTextures\\CommandButtons\\BTNCoD.blp"
+    set IC_Description[105] = "|cffffcc00Grants:|r\n+30 Strength\n15HP/s Life Regeneration\n+10 Armor\nPermanent Immolation (70DMG/s)|n\n|cffffcc00Requires:|r\nGauntlet of Orge Strength\nCloak of Flames\n|cffffcc00Total Cost:|r 3500"
+    set IC_Stats[105] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[105] = "Recipes Shop - Page 2"
+    set IC_Note[105] = ""
+    set IC_Recipe[105] = 15
+    set IC_Total[105] = 3350
+    set IC_Id[106] = 'I013'
+    set IC_Gold[106] = 0
+    set IC_Lumber[106] = 0
+    set IC_Name[106] = "Info 1"
+    set IC_Icon[106] = "ReplaceableTextures\\CommandButtons\\PASBTNEngineeringUpgrade.blp"
+    set IC_Description[106] = "map created by |cffffff00miRaculix., RJE|r\n\nMap Co-Creators:\n|cff00ff00OH.noes |r\n|cff00ff00Lawyerdude|r\n|cff00ff00Morakie|r\n|cff00ff00LazyBum|r\n|cff00ff00LunarStrain|r\n\nlike the map & want to contribute / support, so we can continue releasing new versions?\n|cff7878ffpaypal.me/footmenfrenzy\npatreon.com/miRaculix|r"
+    set IC_Stats[106] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[106] = "Map information"
+    set IC_Note[106] = ""
+    set IC_Id[107] = 'I014'
+    set IC_Gold[107] = 0
+    set IC_Lumber[107] = 0
+    set IC_Name[107] = "Info 2"
+    set IC_Icon[107] = "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp"
+    set IC_Description[107] = "|cff808080Summer 2020|r - |cffffff00BreitlinG, georgious,DevilsRebel |r\n|cff808080Winter 2020|r - |cffffff00Finicky, Pho, ChrisLose|r\n|cff808080Spring 2021|r - |cffffff00StieR, TeachMe, Georgious|r\n|cff808080Summer 2021|r - |cffffff00woooeee, Path, Endy|r\n|cff808080Fall 2021|r - |cffffff00NumB, Tybern, DooMs|r\n|cff808080Spring 2022|r - |cffffff00georgious, Path, ChrisLose|r\n|cff808080Summer 2022|r - |cffffff00NaaH, Tybern, LESSDRAmA|r\n|cff808080Fall 2022|r - |cffffff00ThePunisher, ixo, DevilsRebel|r\n|cff808080Winter 2022|r - |cffffff00Finicky, woooeee, Abcrayce|r\n|cff808080Spring 2023|r - |cffffff00MightyOwl, Endy, Saladin, Rise|r\n|cff808080Winter 2024|r - |cffffff00woooeee, Mighty" + "Owl, Eren|r\n|cff808080Winter 2024|r - |cffffff00Finicky, Path, Abcrayce|r\n|cff808080Spring 2024|r - |cffffff00ThePunisher, StieR, GGG|r\n|cff808080Winter 2025|r - |cffffff00Pho, Tybern, NotSpeedy, RJE|r\n|cff808080Summer 2025|r - |cffffff00georgious, barneeeyyy, papperlabaz|r\n|cff808080Fall 2025|r - |cffffff00MightyOwl, TheBo, GGG|r\n|cff808080Winter 2025|r - |cffffff00MightyOwl, Tybern, Rechy|r\n\nCheck |cff8080fftiny.cc/footmen|r for upcoming ladder and tournament events!"
+    set IC_Stats[107] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[107] = "Map information"
+    set IC_Note[107] = ""
+    set IC_Id[108] = 'I016'
+    set IC_Gold[108] = 0
+    set IC_Lumber[108] = 0
+    set IC_Name[108] = "Info 3"
+    set IC_Icon[108] = "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp"
+    set IC_Description[108] = "Do you want your own hero?\n\nget in contact with us on discord and for a small fee you can get your own hero!\n\nplease be aware that we might have to make some adjustments to balance your hero."
+    set IC_Stats[108] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[108] = "Map information"
+    set IC_Note[108] = ""
+    set IC_Id[109] = 'I012'
+    set IC_Gold[109] = 1050
+    set IC_Lumber[109] = 0
+    set IC_Name[109] = "miRaculix' Amulet of Ultimate Power"
+    set IC_Icon[109] = "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp"
+    set IC_Description[109] = "|cffffcc00Gives:|r\n+600 HP\n+450 MP\n+Movement Speed"
+    set IC_Stats[109] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[109] = "Crafted items"
+    set IC_Note[109] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[109] = 1
+    set IC_Total[109] = 1100
+    set IC_Id[110] = 'I030'
+    set IC_Gold[110] = 300
+    set IC_Lumber[110] = 0
+    set IC_Name[110] = "Druid's Amulet"
+    set IC_Icon[110] = "ReplaceableTextures\\CommandButtons\\BTNAmulet.blp"
+    set IC_Description[110] = "|cffffcc00Grants:|r\n+200 HP\n+200 Mana\nIncreased Movement speed\nAbility to cast Rejuvination\n\n|cffffcc00Rejuvination|r\n|cffffcc00Health|r 550\n|cffffcc00Mana|r 50\n|cffffcc00Duration|r 10s\n|cffffcc00Cooldown|r 40s"
+    set IC_Stats[110] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[110] = "Crafted items"
+    set IC_Note[110] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[110] = 2
+    set IC_Total[110] = 300
+    set IC_Id[111] = 'I02N'
+    set IC_Gold[111] = 200
+    set IC_Lumber[111] = 0
+    set IC_Name[111] = "Amulet of Clarity"
+    set IC_Icon[111] = "ReplaceableTextures\\CommandButtons\\BTNSentryAmuletTier3.blp"
+    set IC_Description[111] = "|cffffcc00Gives:|r\nActivated ability with enhanced Dust of Appearance (+50 Bonus Range)\n+250 HP\n+200 Mana\nIncreased Mana Regeneration by 150%\nIncreased movement speed\n"
+    set IC_Stats[111] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[111] = "Crafted items"
+    set IC_Note[111] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[111] = 3
+    set IC_Total[111] = 200
+    set IC_Id[112] = 'I03Y'
+    set IC_Gold[112] = 500
+    set IC_Lumber[112] = 0
+    set IC_Name[112] = "Amulet of Vigor"
+    set IC_Icon[112] = "ReplaceableTextures\\CommandButtons\\BTNMoonAmulet.blp"
+    set IC_Description[112] = "|cffffcc00Grants:|r\n+200 HP\n+300 Mana\n+4 Armor|nIncreased Movement speed\nAbility to cast Speed Scroll\n\n|cffffcc00Speed Scroll|r\n|cffffcc00Duration|r 20s\n|cffffcc00Cooldown|r 55s"
+    set IC_Stats[112] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[112] = "Crafted items"
+    set IC_Note[112] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. Uses the starting amulet. After owning an amulet upgrade, the recipe also accepts Boots of Speed, Boots of Speed, Boots of Speed. The total shown uses the free starting amulet."
+    set IC_Recipe[112] = 4
+    set IC_Total[112] = 500
+    set IC_Id[113] = 'I00X'
+    set IC_Gold[113] = 2500
+    set IC_Lumber[113] = 0
+    set IC_Name[113] = "Fist of the Titans"
+    set IC_Icon[113] = "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp"
+    set IC_Description[113] = "|cffffcc00Gives:|r\n+30 Strengh\n+20 Intelligence\n+7 Armor\n+20 Attack Damage\n+10HP/s Life Regeneration"
+    set IC_Stats[113] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[113] = "Crafted items"
+    set IC_Note[113] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[113] = 5
+    set IC_Total[113] = 2500
+    set IC_Id[114] = 'I02M'
+    set IC_Gold[114] = 2100
+    set IC_Lumber[114] = 0
+    set IC_Name[114] = "Nature's Blessing"
+    set IC_Icon[114] = "ReplaceableTextures\\CommandButtons\\BTNSpell_Nature_SpiritArmor.blp"
+    set IC_Description[114] = "|cffffcc00Gives:|r\n+550 HP\n+10 Armor\n20% Magic Resistance|nHP Regeneration 4HP/s\n"
+    set IC_Stats[114] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[114] = "Crafted items"
+    set IC_Note[114] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[114] = 6
+    set IC_Total[114] = 2100
+    set IC_Id[115] = 'I00W'
+    set IC_Gold[115] = 4000
+    set IC_Lumber[115] = 0
+    set IC_Name[115] = "Frosty´s Ice Claws"
+    set IC_Icon[115] = "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp"
+    set IC_Description[115] = "|cffffcc00Gives:|r\n+150 Damage\n50% Life Steal\n+20% Attack Speed\nFrost Attack"
+    set IC_Stats[115] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[115] = "Crafted items"
+    set IC_Note[115] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[115] = 7
+    set IC_Total[115] = 4000
+    set IC_Id[116] = 'I00V'
+    set IC_Gold[116] = 2300
+    set IC_Lumber[116] = 0
+    set IC_Name[116] = "Heart of the Holy Maiden"
+    set IC_Icon[116] = "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp"
+    set IC_Description[116] = "|cffffcc00Grants:|r\n+750 HP\n+15 Armor\n15 HP/s Life Regeneration\n"
+    set IC_Stats[116] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[116] = "Crafted items"
+    set IC_Note[116] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[116] = 8
+    set IC_Total[116] = 2300
+    set IC_Id[117] = 'I00U'
+    set IC_Gold[117] = 2850
+    set IC_Lumber[117] = 0
+    set IC_Name[117] = "Chobos' Light Speed Shoes"
+    set IC_Icon[117] = "ReplaceableTextures\\CommandButtons\\BTNWirtsLeg.blp"
+    set IC_Description[117] = "|cffffcc00Grants:|r\n+30 Agility\n+40 Damage\nOrb of Corruption attack -5 armor reduction\n"
+    set IC_Stats[117] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[117] = "Crafted items"
+    set IC_Note[117] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[117] = 9
+    set IC_Total[117] = 2850
+    set IC_Id[118] = 'I00T'
+    set IC_Gold[118] = 2750
+    set IC_Lumber[118] = 0
+    set IC_Name[118] = "Night Terror Armor"
+    set IC_Icon[118] = "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp"
+    set IC_Description[118] = "|cffffcc00Grants:|r\n+25 Armor\n+350 HP\n33% Spell Damage Reduction|n\n"
+    set IC_Stats[118] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[118] = "Crafted items"
+    set IC_Note[118] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[118] = 10
+    set IC_Total[118] = 2750
+    set IC_Id[119] = 'I00A'
+    set IC_Gold[119] = 2500
+    set IC_Lumber[119] = 0
+    set IC_Name[119] = "Ring of Superiority"
+endfunction
+
+function IC_Data7 takes nothing returns nothing
+    set IC_Icon[119] = "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp"
+    set IC_Description[119] = "|cffffcc00Grants:|r\nTrueshot aura 25%\nEndurance aura (17% attack speed / 15% movement)\nCommand aura 15%\nVampiric aura 40%"
+    set IC_Stats[119] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[119] = "Crafted items"
+    set IC_Note[119] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[119] = 11
+    set IC_Total[119] = 2500
+    set IC_Id[120] = 'I00Y'
+    set IC_Gold[120] = 1000
+    set IC_Lumber[120] = 0
+    set IC_Name[120] = "Scepter of the Archmage"
+    set IC_Icon[120] = "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp"
+    set IC_Description[120] = "|cffffcc00Grants:|r\n+750 mana\n+30 intelligence|n+150% Mana Regeneration\n2 mana/s Brilliance aura"
+    set IC_Stats[120] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[120] = "Crafted items"
+    set IC_Note[120] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[120] = 12
+    set IC_Total[120] = 1000
+    set IC_Id[121] = 'I010'
+    set IC_Gold[121] = 3000
+    set IC_Lumber[121] = 0
+    set IC_Name[121] = "Staff of Sanctuary"
+    set IC_Icon[121] = "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp"
+    set IC_Description[121] = "|cffffcc00Gives:|r\nSpell Shield (15s Cooldown)\n50% Spell Damage Reduction"
+    set IC_Stats[121] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[121] = "Crafted items"
+    set IC_Note[121] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[121] = 13
+    set IC_Total[121] = 3000
+    set IC_Id[122] = 'I01H'
+    set IC_Gold[122] = 2750
+    set IC_Lumber[122] = 0
+    set IC_Name[122] = "Demogorgon's Scepter"
+    set IC_Icon[122] = "ReplaceableTextures\\CommandButtons\\BTNfireStaff.blp"
+    set IC_Description[122] = "|cffffcc00Gives:|r\n+15 strength\nBlink, which causes a level 4 Flame Strike at the targeted location|n|n|cffff0000Flame Strike|r|n340 damage over first 2 seconds|n80 damage over next 2 seconds"
+    set IC_Stats[122] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[122] = "Crafted items"
+    set IC_Note[122] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[122] = 14
+    set IC_Total[122] = 2750
+    set IC_Id[123] = 'I01R'
+    set IC_Gold[123] = 3500
+    set IC_Lumber[123] = 0
+    set IC_Name[123] = "Chaos Cloak"
+    set IC_Icon[123] = "ReplaceableTextures\\CommandButtons\\BTNCoD.blp"
+    set IC_Description[123] = "|cffffcc00Grants:|r\n+30 Strength\n15HP/s Life Regeneration\n+10 Armor\nPermanent Immolation (70DMG/s)|n\n|cffffcc00Requires:|r\nGauntlet of Orge Strength\nCloak of Flames|nChaos Cloak Recipe\n|cffffcc00Total Cost:|r 3500"
+    set IC_Stats[123] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[123] = "Crafted items"
+    set IC_Note[123] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[123] = 15
+    set IC_Total[123] = 3350
+    set IC_Id[124] = 'I04A'
+    set IC_Gold[124] = 4000
+    set IC_Lumber[124] = 0
+    set IC_Name[124] = "Amulet of the Wind"
+    set IC_Icon[124] = "ReplaceableTextures\\CommandButtons\\BTNWindWalkOn.blp"
+    set IC_Description[124] = "|cffffcc00Gives:|r\nActivated ability that casts Wind Walk\n+30 All Stats\n+20% Attack Speed\n+300 HP\n+200 Mana\nIncreased movement speed\n\n|cffffcc00Wind Walk:|r\nDuration: 20s\nDamage: 50\nMovement Speed Increase: 10%\nCooldown: 45s"
+    set IC_Stats[124] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[124] = "Crafted items"
+    set IC_Note[124] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[124] = 16
+    set IC_Total[124] = 4000
+    set IC_Id[125] = 'rat6'
+    set IC_Gold[125] = 1500
+    set IC_Lumber[125] = 0
+    set IC_Name[125] = "Forked Fury"
+    set IC_Icon[125] = "ReplaceableTextures\\CommandButtons\\BTNForkOfLightning.blp"
+    set IC_Description[125] = "|cffffcc00Gives:|r\n+20% Attack Speed\n|cffffcc00Forked Lightning|r - Passive Ability|n|nGrants the wearer a |cffff000025%|r chance of their next auto attack casting a Forked Lightning on up to 8 targets for |cffff0000250|r damage. This ability may only trigger once every 10 seconds"
+    set IC_Stats[125] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[125] = "Crafted items"
+    set IC_Note[125] = "Crafted item; not sold directly. Open Recipe for its components and total acquisition cost. "
+    set IC_Recipe[125] = 17
+    set IC_Total[125] = 1500
+    set IC_Id[126] = 'I001'
+    set IC_Gold[126] = 0
+    set IC_Lumber[126] = 0
+    set IC_Name[126] = "miRaculix' Amulet of Power"
+    set IC_Icon[126] = "ReplaceableTextures\\CommandButtons\\BTNHeartAmulet.blp"
+    set IC_Description[126] = "+150 HP\n+100 MP|n|cffd45e19this item now also includes the speed bonus of the 'Boots of Speed'|r"
+    set IC_Stats[126] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[126] = "Starting items & recipe alternatives"
+    set IC_Note[126] = "Granted starting item; free recipe component."
+    set IC_Id[127] = 'IRb0'
+    set IC_Gold[127] = 125
+    set IC_Lumber[127] = 0
+    set IC_Name[127] = "Boots of Speed"
+    set IC_Icon[127] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp"
+    set IC_Description[127] = "Random hero reward. Increases movement speed. Sells for 75 gold.|nMay replace an amulet recipe component only while this hero carries a completed amulet upgrade. A normal miRaculix's Amulet is always consumed first."
+    set IC_Stats[127] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[127] = "Starting items & recipe alternatives"
+    set IC_Note[127] = ""
+    set IC_Id[128] = 'bspd'
+    set IC_Gold[128] = 250
+    set IC_Lumber[128] = 0
+    set IC_Name[128] = "Boots of Speed"
+    set IC_Icon[128] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp"
+    set IC_Description[128] = ""
+    set IC_Stats[128] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[128] = "Starting items & recipe alternatives"
+    set IC_Note[128] = ""
+    set IC_Id[129] = 'I03P'
+    set IC_Gold[129] = 200
+    set IC_Lumber[129] = 0
+    set IC_Name[129] = "Boots of Speed"
+    set IC_Icon[129] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp"
+    set IC_Description[129] = "Increases the movement speed of the carrier by 50 when worn."
+    set IC_Stats[129] = "This item has no direct stat ability. See Overview for its recipe, information, or scripted effect."
+    set IC_Location[129] = "Starting items & recipe alternatives"
+    set IC_Note[129] = ""
+    set IC_Id[130] = 'Z001'
+    set IC_Gold[130] = 325
+    set IC_Lumber[130] = 0
+    set IC_Name[130] = "Frost Nova"
+    set IC_Icon[130] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[130] = "Teaches Frost Nova.\n\nFrost Nova (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 9\nMana cost: 100\nCast range: 800\nSpecific Target Damage: 175"
+    set IC_Stats[130] = "Frost Nova (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 9\nMana cost: 100\nCast range: 800\nSpecific Target Damage: 175"
+    set IC_Location[130] = "Custom Hero - Z spells"
+    set IC_Note[130] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[130] = 'AUfn'
+    set IC_Id[131] = 'Z002'
+    set IC_Gold[131] = 300
+    set IC_Lumber[131] = 0
+    set IC_Name[131] = "Breath of Fire"
+    set IC_Icon[131] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[131] = "Teaches Breath of Fire.\n\nBreath of Fire (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 10\nMana cost: 110\nArea of effect: 125\nCast range: 375\nDamage: 85\nMax Damage: 1200\nDistance: 400\nFinal Area: 300\nDamage Per Second: 10"
+    set IC_Stats[131] = "Breath of Fire (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 10\nMana cost: 110\nArea of effect: 125\nCast range: 375\nDamage: 85\nMax Damage: 1200\nDistance: 400\nFinal Area: 300\nDamage Per Second: 10"
+    set IC_Location[131] = "Custom Hero - Z spells"
+    set IC_Note[131] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[131] = 'ANbf'
+    set IC_Id[132] = 'Z003'
+    set IC_Gold[132] = 325
+    set IC_Lumber[132] = 0
+    set IC_Name[132] = "Fan of Knives"
+    set IC_Icon[132] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[132] = "Teaches Fan of Knives.\n\nFan of Knives (level 1)\nCooldown (seconds): 8\nMana cost: 100\nArea of effect: 500\nDamage Per Target: 110\nMaximum Total Damage: 1000\nMaximum Speed Adjustment: 100"
+    set IC_Stats[132] = "Fan of Knives (level 1)\nCooldown (seconds): 8\nMana cost: 100\nArea of effect: 500\nDamage Per Target: 110\nMaximum Total Damage: 1000\nMaximum Speed Adjustment: 100"
+    set IC_Location[132] = "Custom Hero - Z spells"
+    set IC_Note[132] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[132] = 'AEfk'
+    set IC_Id[133] = 'Z004'
+    set IC_Gold[133] = 375
+    set IC_Lumber[133] = 0
+    set IC_Name[133] = "Thunder Axe"
+    set IC_Icon[133] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[133] = "Teaches Thunder Axe.\n\nThunder Axe (level 1)\nCooldown (seconds): 9\nMana cost: 90\nCast range: 99999"
+    set IC_Stats[133] = "Thunder Axe (level 1)\nCooldown (seconds): 9\nMana cost: 90\nCast range: 99999"
+    set IC_Location[133] = "Custom Hero - Z spells"
+    set IC_Note[133] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[133] = 'A0L0'
+    set IC_Id[134] = 'Z005'
+    set IC_Gold[134] = 325
+    set IC_Lumber[134] = 0
+    set IC_Name[134] = "Chain Lightning"
+    set IC_Icon[134] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[134] = "Teaches Chain Lightning.\n\nChain Lightning (level 1)\nCooldown (seconds): 9\nMana cost: 100\nArea of effect: 550\nCast range: 700\nDamage per Target: 115\nNumber of Targets Hit: 5\nDamage Reduction per Target: 0.1"
+    set IC_Stats[134] = "Chain Lightning (level 1)\nCooldown (seconds): 9\nMana cost: 100\nArea of effect: 550\nCast range: 700\nDamage per Target: 115\nNumber of Targets Hit: 5\nDamage Reduction per Target: 0.1"
+    set IC_Location[134] = "Custom Hero - Z spells"
+    set IC_Note[134] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[134] = 'AOcl'
+    set IC_Id[135] = 'Z006'
+endfunction
+
+function IC_Data8 takes nothing returns nothing
+    set IC_Gold[135] = 300
+    set IC_Lumber[135] = 0
+    set IC_Name[135] = "Forked Lightning"
+    set IC_Icon[135] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[135] = "Teaches Forked Lightning.\n\nForked Lightning (level 1)\nDuration (seconds): 0.7\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 140\nCast range: 750\nDistance: 900\nFinal Area: 300\nDamage per Target: 110\nNumber of Targets Hit: 7"
+    set IC_Stats[135] = "Forked Lightning (level 1)\nDuration (seconds): 0.7\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 140\nCast range: 750\nDistance: 900\nFinal Area: 300\nDamage per Target: 110\nNumber of Targets Hit: 7"
+    set IC_Location[135] = "Custom Hero - Z spells"
+    set IC_Note[135] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[135] = 'ANfl'
+    set IC_Id[136] = 'Z007'
+    set IC_Gold[136] = 325
+    set IC_Lumber[136] = 0
+    set IC_Name[136] = "Carrion Swarm"
+    set IC_Icon[136] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[136] = "Teaches Carrion Swarm.\n\nCarrion Swarm (level 1)\nCooldown (seconds): 10\nMana cost: 110\nArea of effect: 100\nCast range: 700\nDamage: 85\nMax Damage: 900\nDistance: 800\nFinal Area: 315"
+    set IC_Stats[136] = "Carrion Swarm (level 1)\nCooldown (seconds): 10\nMana cost: 110\nArea of effect: 100\nCast range: 700\nDamage: 85\nMax Damage: 900\nDistance: 800\nFinal Area: 315"
+    set IC_Location[136] = "Custom Hero - Z spells"
+    set IC_Note[136] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[136] = 'AUcs'
+    set IC_Id[137] = 'Z008'
+    set IC_Gold[137] = 275
+    set IC_Lumber[137] = 0
+    set IC_Name[137] = "Shockwave"
+    set IC_Icon[137] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[137] = "Teaches Shockwave.\n\nShockwave (level 1)\nCooldown (seconds): 9\nMana cost: 130\nArea of effect: 125\nCast range: 700\nDamage: 75\nMaximum Damage: 900\nDistance: 750\nFinal Area: 125"
+    set IC_Stats[137] = "Shockwave (level 1)\nCooldown (seconds): 9\nMana cost: 130\nArea of effect: 125\nCast range: 700\nDamage: 75\nMaximum Damage: 900\nDistance: 750\nFinal Area: 125"
+    set IC_Location[137] = "Custom Hero - Z spells"
+    set IC_Note[137] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[137] = 'AOsh'
+    set IC_Id[138] = 'Z009'
+    set IC_Gold[138] = 400
+    set IC_Lumber[138] = 0
+    set IC_Name[138] = "Flamestrike"
+    set IC_Icon[138] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[138] = "Teaches Flamestrike.\n\nFlamestrike (level 1)\nCasting Time: 0.2\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 10\nMana cost: 125\nArea of effect: 220\nCast range: 800\nFull Damage Dealt: 5.5\nFull Damage Interval: 0.1\nHalf Damage Dealt: 2.2\nHalf Damage Interval: 0.1\nBuilding Reduction: 0.1\nMaximum Damage: 1200"
+    set IC_Stats[138] = "Flamestrike (level 1)\nCasting Time: 0.2\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 10\nMana cost: 125\nArea of effect: 220\nCast range: 800\nFull Damage Dealt: 5.5\nFull Damage Interval: 0.1\nHalf Damage Dealt: 2.2\nHalf Damage Interval: 0.1\nBuilding Reduction: 0.1\nMaximum Damage: 1200"
+    set IC_Location[138] = "Custom Hero - Z spells"
+    set IC_Note[138] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[138] = 'AHfs'
+    set IC_Id[139] = 'Z010'
+    set IC_Gold[139] = 500
+    set IC_Lumber[139] = 0
+    set IC_Name[139] = "Blizzard"
+    set IC_Icon[139] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[139] = "Teaches Blizzard.\n\nBlizzard (level 1)\nCasting Time: 1\nCooldown (seconds): 8\nMana cost: 125\nArea of effect: 200\nCast range: 800\nNumber of Waves: 5\nDamage: 33\nNumber of Shards: 5\nBuilding Reduction: 0.1\nMaximum Damage per Wave: 99999"
+    set IC_Stats[139] = "Blizzard (level 1)\nCasting Time: 1\nCooldown (seconds): 8\nMana cost: 125\nArea of effect: 200\nCast range: 800\nNumber of Waves: 5\nDamage: 33\nNumber of Shards: 5\nBuilding Reduction: 0.1\nMaximum Damage per Wave: 99999"
+    set IC_Location[139] = "Custom Hero - Z spells"
+    set IC_Note[139] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[139] = 'AHbz'
+    set IC_Id[140] = 'Z011'
+    set IC_Gold[140] = 350
+    set IC_Lumber[140] = 0
+    set IC_Name[140] = "Cluster Rockets"
+    set IC_Icon[140] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[140] = "Teaches Cluster Rockets.\n\nCluster Rockets (level 1)\nDuration (seconds): 1.01\nHero duration (seconds): 1.01\nCooldown (seconds): 7\nMana cost: 70\nArea of effect: 250\nCast range: 800\nDamage Amount: 17\nDamage Interval: 0.25\nMissile Count: 8\nMax Damage: 750\nBuilding Damage Factor: 0.1\nEffect Duration: 1.5"
+    set IC_Stats[140] = "Cluster Rockets (level 1)\nDuration (seconds): 1.01\nHero duration (seconds): 1.01\nCooldown (seconds): 7\nMana cost: 70\nArea of effect: 250\nCast range: 800\nDamage Amount: 17\nDamage Interval: 0.25\nMissile Count: 8\nMax Damage: 750\nBuilding Damage Factor: 0.1\nEffect Duration: 1.5"
+    set IC_Location[140] = "Custom Hero - Z spells"
+    set IC_Note[140] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[140] = 'ANcs'
+    set IC_Id[141] = 'Z012'
+    set IC_Gold[141] = 300
+    set IC_Lumber[141] = 0
+    set IC_Name[141] = "Acid Bomb"
+    set IC_Icon[141] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[141] = "Teaches Acid Bomb.\n\nAcid Bomb (level 1)\nDuration (seconds): 10\nHero duration (seconds): 10\nCooldown (seconds): 10\nMana cost: 75\nArea of effect: 200\nCast range: 700\nArmor Penalty: 3\nPrimary Damage: 11\nSecondary Damage: 8\nDamage Interval: 1"
+    set IC_Stats[141] = "Acid Bomb (level 1)\nDuration (seconds): 10\nHero duration (seconds): 10\nCooldown (seconds): 10\nMana cost: 75\nArea of effect: 200\nCast range: 700\nArmor Penalty: 3\nPrimary Damage: 11\nSecondary Damage: 8\nDamage Interval: 1"
+    set IC_Location[141] = "Custom Hero - Z spells"
+    set IC_Note[141] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[141] = 'ANab'
+    set IC_Id[142] = 'Z013'
+    set IC_Gold[142] = 275
+    set IC_Lumber[142] = 0
+    set IC_Name[142] = "Storm Bolt"
+    set IC_Icon[142] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[142] = "Teaches Storm Bolt.\n\nStorm Bolt (level 1)\nDuration (seconds): 1.5\nHero duration (seconds): 1.5\nCooldown (seconds): 10\nMana cost: 100\nCast range: 600\nDamage: 125"
+    set IC_Stats[142] = "Storm Bolt (level 1)\nDuration (seconds): 1.5\nHero duration (seconds): 1.5\nCooldown (seconds): 10\nMana cost: 100\nCast range: 600\nDamage: 125"
+    set IC_Location[142] = "Custom Hero - Z spells"
+    set IC_Note[142] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[142] = 'AHtb'
+    set IC_Id[143] = 'Z014'
+    set IC_Gold[143] = 325
+    set IC_Lumber[143] = 0
+    set IC_Name[143] = "Impale"
+    set IC_Icon[143] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[143] = "Teaches Impale.\n\nImpale (level 1)\nDuration (seconds): 0.75\nHero duration (seconds): 1\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 275\nCast range: 500\nWave Distance: 500\nWave Time (seconds): 0.3\nDamage Dealt: 65\nAir Time (seconds): 1"
+    set IC_Stats[143] = "Impale (level 1)\nDuration (seconds): 0.75\nHero duration (seconds): 1\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 275\nCast range: 500\nWave Distance: 500\nWave Time (seconds): 0.3\nDamage Dealt: 65\nAir Time (seconds): 1"
+    set IC_Location[143] = "Custom Hero - Z spells"
+    set IC_Note[143] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[143] = 'AUim'
+    set IC_Id[144] = 'Z015'
+    set IC_Gold[144] = 150
+    set IC_Lumber[144] = 0
+    set IC_Name[144] = "Firebolt"
+    set IC_Icon[144] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[144] = "Teaches Firebolt.\n\nFirebolt (level 1)\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 9\nMana cost: 75\nCast range: 750\nDamage: 100"
+    set IC_Stats[144] = "Firebolt (level 1)\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 9\nMana cost: 75\nCast range: 750\nDamage: 100"
+    set IC_Location[144] = "Custom Hero - Z spells"
+    set IC_Note[144] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[144] = 'ANfb'
+    set IC_Id[145] = 'Z016'
+    set IC_Gold[145] = 400
+    set IC_Lumber[145] = 0
+    set IC_Name[145] = "Flaming Lasso"
+    set IC_Icon[145] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[145] = "Teaches Flaming Lasso.\n\nFlaming Lasso (level 1)\nDuration (seconds): 9\nHero duration (seconds): 3\nCooldown (seconds): 10\nMana cost: 75\nCast range: 550\nDamage Per Second: 30"
+    set IC_Stats[145] = "Flaming Lasso (level 1)\nDuration (seconds): 9\nHero duration (seconds): 3\nCooldown (seconds): 10\nMana cost: 75\nCast range: 550\nDamage Per Second: 30"
+    set IC_Location[145] = "Custom Hero - Z spells"
+    set IC_Note[145] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[145] = 'Amls'
+    set IC_Id[146] = 'Z017'
+    set IC_Gold[146] = 350
+    set IC_Lumber[146] = 0
+    set IC_Name[146] = "Justice Hook"
+    set IC_Icon[146] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[146] = "Teaches Justice Hook.\n\nJustice Hook (level 1)\nCooldown (seconds): 8\nMana cost: 100\nCast range: 700\nDistance: 700"
+    set IC_Stats[146] = "Justice Hook (level 1)\nCooldown (seconds): 8\nMana cost: 100\nCast range: 700\nDistance: 700"
+    set IC_Location[146] = "Custom Hero - Z spells"
+    set IC_Note[146] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[146] = 'A0GU'
+    set IC_Id[147] = 'Z018'
+    set IC_Gold[147] = 400
+    set IC_Lumber[147] = 0
+    set IC_Name[147] = "Firestorm"
+    set IC_Icon[147] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[147] = "Teaches Firestorm.\n\nFirestorm (level 1)\nDuration (seconds): 1.01\nHero duration (seconds): 1.01\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 250\nCast range: 800\nDamage Amount: 12\nDamage Interval: 0.27\nMissile Count: 7\nMax Damage: 120\nBuilding Damage Factor: 0.1\nEffect Duration: 1.5"
+    set IC_Stats[147] = "Firestorm (level 1)\nDuration (seconds): 1.01\nHero duration (seconds): 1.01\nCooldown (seconds): 10\nMana cost: 100\nArea of effect: 250\nCast range: 800\nDamage Amount: 12\nDamage Interval: 0.27\nMissile Count: 7\nMax Damage: 120\nBuilding Damage Factor: 0.1\nEffect Duration: 1.5"
+    set IC_Location[147] = "Custom Hero - Z spells"
+    set IC_Note[147] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[147] = 'A051'
+    set IC_Id[148] = 'Z019'
+    set IC_Gold[148] = 250
+    set IC_Lumber[148] = 0
+    set IC_Name[148] = "Wind Walk"
+    set IC_Icon[148] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[148] = "Teaches Wind Walk.\n\nWind Walk (level 1)\nDuration (seconds): 18\nHero duration (seconds): 18\nCooldown (seconds): 8\nMana cost: 90\nTransition Time: 0.6\nMovement Speed Increase (%): 20%\nBackstab Damage: 90"
+    set IC_Stats[148] = "Wind Walk (level 1)\nDuration (seconds): 18\nHero duration (seconds): 18\nCooldown (seconds): 8\nMana cost: 90\nTransition Time: 0.6\nMovement Speed Increase (%): 20%\nBackstab Damage: 90"
+    set IC_Location[148] = "Custom Hero - Z spells"
+    set IC_Note[148] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[148] = 'AOwk'
+    set IC_Id[149] = 'Z020'
+    set IC_Gold[149] = 250
+    set IC_Lumber[149] = 0
+    set IC_Name[149] = "Death Coil"
+    set IC_Icon[149] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[149] = "Teaches Death Coil.\n\nDeath Coil (level 1)\nCooldown (seconds): 6\nMana cost: 100\nCast range: 800\nAmount Healed/Damaged: 200"
+    set IC_Stats[149] = "Death Coil (level 1)\nCooldown (seconds): 6\nMana cost: 100\nCast range: 800\nAmount Healed/Damaged: 200"
+    set IC_Location[149] = "Custom Hero - Z spells"
+    set IC_Note[149] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[149] = 'AUdc'
+    set IC_Id[150] = 'Z021'
+    set IC_Gold[150] = 225
+    set IC_Lumber[150] = 0
+    set IC_Name[150] = "Shadow Strike"
+    set IC_Icon[150] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[150] = "Teaches Shadow Strike.\n\nShadow Strike (level 1)\nCasting Time: 3\nDuration (seconds): 15\nHero duration (seconds): 7\nCooldown (seconds): 8\nMana cost: 75\nCast range: 400\nDecaying Damage: 20\nMovement Speed Factor: 0.75\nDecay Power: 3\nInitial Damage: 75"
+    set IC_Stats[150] = "Shadow Strike (level 1)\nCasting Time: 3\nDuration (seconds): 15\nHero duration (seconds): 7\nCooldown (seconds): 8\nMana cost: 75\nCast range: 400\nDecaying Damage: 20\nMovement Speed Factor: 0.75\nDecay Power: 3\nInitial Damage: 75"
+    set IC_Location[150] = "Custom Hero - Z spells"
+    set IC_Note[150] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[150] = 'AEsh'
+    set IC_Id[151] = 'Z022'
+endfunction
+
+function IC_Data9 takes nothing returns nothing
+    set IC_Gold[151] = 300
+    set IC_Lumber[151] = 0
+    set IC_Name[151] = "Thunder Clap"
+    set IC_Icon[151] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[151] = "Teaches Thunder Clap.\n\nThunder Clap (level 1)\nDuration (seconds): 3.5\nHero duration (seconds): 3\nCooldown (seconds): 8\nMana cost: 75\nArea of effect: 300\nAOE Damage: 75\nMovement Speed Reduction (%): 20%\nAttack Speed Reduction (%): 15%"
+    set IC_Stats[151] = "Thunder Clap (level 1)\nDuration (seconds): 3.5\nHero duration (seconds): 3\nCooldown (seconds): 8\nMana cost: 75\nArea of effect: 300\nAOE Damage: 75\nMovement Speed Reduction (%): 20%\nAttack Speed Reduction (%): 15%"
+    set IC_Location[151] = "Custom Hero - Z spells"
+    set IC_Note[151] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[151] = 'AHtc'
+    set IC_Id[152] = 'Z023'
+    set IC_Gold[152] = 325
+    set IC_Lumber[152] = 0
+    set IC_Name[152] = "War Stomp"
+    set IC_Icon[152] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[152] = "Teaches War Stomp.\n\nWar Stomp (level 1)\nDuration (seconds): 3\nHero duration (seconds): 2\nCooldown (seconds): 6\nMana cost: 90\nArea of effect: 300\nDamage: 75\nTerrain Deformation Amplitude: -50\nTerrain Deformation Duration (ms): 300"
+    set IC_Stats[152] = "War Stomp (level 1)\nDuration (seconds): 3\nHero duration (seconds): 2\nCooldown (seconds): 6\nMana cost: 90\nArea of effect: 300\nDamage: 75\nTerrain Deformation Amplitude: -50\nTerrain Deformation Duration (ms): 300"
+    set IC_Location[152] = "Custom Hero - Z spells"
+    set IC_Note[152] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[152] = 'Awrs'
+    set IC_Id[153] = 'Z024'
+    set IC_Gold[153] = 225
+    set IC_Lumber[153] = 0
+    set IC_Name[153] = "Howl of Terror"
+    set IC_Icon[153] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[153] = "Teaches Howl of Terror.\n\nHowl of Terror (level 1)\nDuration (seconds): 7\nHero duration (seconds): 7\nCooldown (seconds): 10\nMana cost: 70\nArea of effect: 600\nDamage Increase (%): 15%\nDefense Increase: 2"
+    set IC_Stats[153] = "Howl of Terror (level 1)\nDuration (seconds): 7\nHero duration (seconds): 7\nCooldown (seconds): 10\nMana cost: 70\nArea of effect: 600\nDamage Increase (%): 15%\nDefense Increase: 2"
+    set IC_Location[153] = "Custom Hero - Z spells"
+    set IC_Note[153] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[153] = 'ANht'
+    set IC_Id[154] = 'X025'
+    set IC_Gold[154] = 325
+    set IC_Lumber[154] = 0
+    set IC_Name[154] = "Silence"
+    set IC_Icon[154] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[154] = "Teaches Silence.\n\nSilence (level 1)\nDuration (seconds): 10\nHero duration (seconds): 3\nCooldown (seconds): 15\nMana cost: 100\nArea of effect: 200\nCast range: 900\nAttacks Prevented: 8"
+    set IC_Stats[154] = "Silence (level 1)\nDuration (seconds): 10\nHero duration (seconds): 3\nCooldown (seconds): 15\nMana cost: 100\nArea of effect: 200\nCast range: 900\nAttacks Prevented: 8"
+    set IC_Location[154] = "Custom Hero - X spells"
+    set IC_Note[154] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[154] = 'ANsi'
+    set IC_Id[155] = 'X026'
+    set IC_Gold[155] = 350
+    set IC_Lumber[155] = 0
+    set IC_Name[155] = "Hex"
+    set IC_Icon[155] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[155] = "Teaches Hex.\n\nHex (level 1)\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 8\nMana cost: 70\nCast range: 700\nMaximum Creep Level: 99"
+    set IC_Stats[155] = "Hex (level 1)\nDuration (seconds): 4\nHero duration (seconds): 2\nCooldown (seconds): 8\nMana cost: 70\nCast range: 700\nMaximum Creep Level: 99"
+    set IC_Location[155] = "Custom Hero - X spells"
+    set IC_Note[155] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[155] = 'AOhx'
+    set IC_Id[156] = 'X027'
+    set IC_Gold[156] = 275
+    set IC_Lumber[156] = 0
+    set IC_Name[156] = "Drunken Haze"
+    set IC_Icon[156] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[156] = "Teaches Drunken Haze.\n\nDrunken Haze (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 10\nMana cost: 90\nArea of effect: 250\nCast range: 550\nChance To Miss (%): 10%\nMovement Speed Modifier: 0.1"
+    set IC_Stats[156] = "Drunken Haze (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 10\nMana cost: 90\nArea of effect: 250\nCast range: 550\nChance To Miss (%): 10%\nMovement Speed Modifier: 0.1"
+    set IC_Location[156] = "Custom Hero - X spells"
+    set IC_Note[156] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[156] = 'ANdh'
+    set IC_Id[157] = 'X028'
+    set IC_Gold[157] = 300
+    set IC_Lumber[157] = 0
+    set IC_Name[157] = "Frost Armor"
+    set IC_Icon[157] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[157] = "Teaches Frost Armor.\n\nFrost Armor (level 1)\nDuration (seconds): 3\nHero duration (seconds): 4\nCooldown (seconds): 3\nMana cost: 40\nCast range: 800\nArmor Duration: 40\nArmor Bonus: 2"
+    set IC_Stats[157] = "Frost Armor (level 1)\nDuration (seconds): 3\nHero duration (seconds): 4\nCooldown (seconds): 3\nMana cost: 40\nCast range: 800\nArmor Duration: 40\nArmor Bonus: 2"
+    set IC_Location[157] = "Custom Hero - X spells"
+    set IC_Note[157] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[157] = 'AUfu'
+    set IC_Id[158] = 'X029'
+    set IC_Gold[158] = 325
+    set IC_Lumber[158] = 0
+    set IC_Name[158] = "Thunderclap"
+    set IC_Icon[158] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[158] = "Teaches Thunderclap.\n\nThunderclap (level 1)\nDuration (seconds): 2\nHero duration (seconds): 2\nArea of effect: 140\nMovement Speed Reduction (%): 20%"
+    set IC_Stats[158] = "Thunderclap (level 1)\nDuration (seconds): 2\nHero duration (seconds): 2\nArea of effect: 140\nMovement Speed Reduction (%): 20%"
+    set IC_Location[158] = "Custom Hero - X spells"
+    set IC_Note[158] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[158] = 'A0FZ'
+    set IC_Id[159] = 'X030'
+    set IC_Gold[159] = 250
+    set IC_Lumber[159] = 0
+    set IC_Name[159] = "Howl of Terror"
+    set IC_Icon[159] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[159] = "Teaches Howl of Terror.\n\nHowl of Terror (level 1)\nDuration (seconds): 7\nHero duration (seconds): 7\nArea of effect: 250\nDefense Increase: 1"
+    set IC_Stats[159] = "Howl of Terror (level 1)\nDuration (seconds): 7\nHero duration (seconds): 7\nArea of effect: 250\nDefense Increase: 1"
+    set IC_Location[159] = "Custom Hero - X spells"
+    set IC_Note[159] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[159] = 'A0G2'
+    set IC_Id[160] = 'X031'
+    set IC_Gold[160] = 350
+    set IC_Lumber[160] = 0
+    set IC_Name[160] = "Death Wards"
+    set IC_Icon[160] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[160] = "Teaches Death Wards.\n\nDeath Wards (level 1)\nDuration (seconds): 0.01\nHero duration (seconds): 0.01\nCooldown (seconds): 11\nMana cost: 75\nArea of effect: 450\nCast range: 550\nEffect Delay: 100\nFinal Area: 450"
+    set IC_Stats[160] = "Death Wards (level 1)\nDuration (seconds): 0.01\nHero duration (seconds): 0.01\nCooldown (seconds): 11\nMana cost: 75\nArea of effect: 450\nCast range: 550\nEffect Delay: 100\nFinal Area: 450"
+    set IC_Location[160] = "Custom Hero - X spells"
+    set IC_Note[160] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[160] = 'A0FD'
+    set IC_Id[161] = 'X032'
+    set IC_Gold[161] = 250
+    set IC_Lumber[161] = 0
+    set IC_Name[161] = "Blink"
+    set IC_Icon[161] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[161] = "Teaches Blink.\n\nBlink (level 1)\nDuration (seconds): 0.33\nCooldown (seconds): 10\nMana cost: 50\nCast range: 99999\nMaximum Range: 900\nMinimum Range: 200"
+    set IC_Stats[161] = "Blink (level 1)\nDuration (seconds): 0.33\nCooldown (seconds): 10\nMana cost: 50\nCast range: 99999\nMaximum Range: 900\nMinimum Range: 200"
+    set IC_Location[161] = "Custom Hero - X spells"
+    set IC_Note[161] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[161] = 'AEbl'
+    set IC_Id[162] = 'X033'
+    set IC_Gold[162] = 300
+    set IC_Lumber[162] = 0
+    set IC_Name[162] = "Banish"
+    set IC_Icon[162] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[162] = "Teaches Banish.\n\nBanish (level 1)\nDuration (seconds): 12\nHero duration (seconds): 4\nCooldown (seconds): 4\nMana cost: 125\nCast range: 800\nMovement Speed Reduction (%): 30%\nAttack Speed Reduction (%): 20%"
+    set IC_Stats[162] = "Banish (level 1)\nDuration (seconds): 12\nHero duration (seconds): 4\nCooldown (seconds): 4\nMana cost: 125\nCast range: 800\nMovement Speed Reduction (%): 30%\nAttack Speed Reduction (%): 20%"
+    set IC_Location[162] = "Custom Hero - X spells"
+    set IC_Note[162] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[162] = 'AHbn'
+    set IC_Id[163] = 'X034'
+    set IC_Gold[163] = 300
+    set IC_Lumber[163] = 0
+    set IC_Name[163] = "Healing Spray"
+    set IC_Icon[163] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[163] = "Teaches Healing Spray.\n\nHealing Spray (level 1)\nCooldown (seconds): 1\nMana cost: 85\nArea of effect: 250\nCast range: 800\nWave Count: 4\nDamage Amount: 40\nDamage Interval: 1\nMissile Count: 7\nMax Damage: 280\nBuilding Damage Factor: 1"
+    set IC_Stats[163] = "Healing Spray (level 1)\nCooldown (seconds): 1\nMana cost: 85\nArea of effect: 250\nCast range: 800\nWave Count: 4\nDamage Amount: 40\nDamage Interval: 1\nMissile Count: 7\nMax Damage: 280\nBuilding Damage Factor: 1"
+    set IC_Location[163] = "Custom Hero - X spells"
+    set IC_Note[163] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[163] = 'ANhs'
+    set IC_Id[164] = 'X035'
+    set IC_Gold[164] = 350
+    set IC_Lumber[164] = 0
+    set IC_Name[164] = "Divine Shield"
+    set IC_Icon[164] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[164] = "Teaches Divine Shield.\n\nDivine Shield (level 1)\nDuration (seconds): 10\nHero duration (seconds): 6\nCooldown (seconds): 60\nMana cost: 75"
+    set IC_Stats[164] = "Divine Shield (level 1)\nDuration (seconds): 10\nHero duration (seconds): 6\nCooldown (seconds): 60\nMana cost: 75"
+    set IC_Location[164] = "Custom Hero - X spells"
+    set IC_Note[164] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[164] = 'AHds'
+    set IC_Id[165] = 'X036'
+    set IC_Gold[165] = 275
+    set IC_Lumber[165] = 0
+    set IC_Name[165] = "Sleep"
+    set IC_Icon[165] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[165] = "Teaches Sleep.\n\nSleep (level 1)\nDuration (seconds): 20\nHero duration (seconds): 3\nCooldown (seconds): 10\nMana cost: 100\nCast range: 600\nStun Duration: 0.75"
+    set IC_Stats[165] = "Sleep (level 1)\nDuration (seconds): 20\nHero duration (seconds): 3\nCooldown (seconds): 10\nMana cost: 100\nCast range: 600\nStun Duration: 0.75"
+    set IC_Location[165] = "Custom Hero - X spells"
+    set IC_Note[165] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[165] = 'AUsl'
+    set IC_Id[166] = 'X037'
+    set IC_Gold[166] = 300
+    set IC_Lumber[166] = 0
+    set IC_Name[166] = "Thorns Aura"
+    set IC_Icon[166] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[166] = "Teaches Thorns Aura.\n\nThorns Aura (level 1)\nArea of effect: 900\nDamage Dealt to Attackers: 0.18"
+    set IC_Stats[166] = "Thorns Aura (level 1)\nArea of effect: 900\nDamage Dealt to Attackers: 0.18"
+    set IC_Location[166] = "Custom Hero - X spells"
+    set IC_Note[166] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[166] = 'AEah'
+    set IC_Id[167] = 'X038'
+endfunction
+
+function IC_Data10 takes nothing returns nothing
+    set IC_Gold[167] = 350
+    set IC_Lumber[167] = 0
+    set IC_Name[167] = "Vamp Aura"
+    set IC_Icon[167] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[167] = "Teaches Vamp Aura.\n\nVamp Aura (level 1)\nArea of effect: 800\nAttack Damage Stolen (%): 17%"
+    set IC_Stats[167] = "Vamp Aura (level 1)\nArea of effect: 800\nAttack Damage Stolen (%): 17%"
+    set IC_Location[167] = "Custom Hero - X spells"
+    set IC_Note[167] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[167] = 'AUav'
+    set IC_Id[168] = 'X039'
+    set IC_Gold[168] = 325
+    set IC_Lumber[168] = 0
+    set IC_Name[168] = "Brilliance Aura"
+    set IC_Icon[168] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[168] = "Teaches Brilliance Aura.\n\nBrilliance Aura (level 1)\nArea of effect: 1100\nMana Regeneration Increase: 250%"
+    set IC_Stats[168] = "Brilliance Aura (level 1)\nArea of effect: 1100\nMana Regeneration Increase: 250%"
+    set IC_Location[168] = "Custom Hero - X spells"
+    set IC_Note[168] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[168] = 'AHab'
+    set IC_Id[169] = 'X040'
+    set IC_Gold[169] = 400
+    set IC_Lumber[169] = 0
+    set IC_Name[169] = "Pocket Factory"
+    set IC_Icon[169] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[169] = "Teaches Pocket Factory.\n\nPocket Factory (level 1)\nDuration (seconds): 40\nHero duration (seconds): 42\nCooldown (seconds): 35\nMana cost: 125\nCast range: 500\nSpawn Interval: 3.5\nSpawn Unit Duration: 15\nSpawn Unit Offset: 200\nLeash Range: 1300"
+    set IC_Stats[169] = "Pocket Factory (level 1)\nDuration (seconds): 40\nHero duration (seconds): 42\nCooldown (seconds): 35\nMana cost: 125\nCast range: 500\nSpawn Interval: 3.5\nSpawn Unit Duration: 15\nSpawn Unit Offset: 200\nLeash Range: 1300"
+    set IC_Location[169] = "Custom Hero - X spells"
+    set IC_Note[169] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[169] = 'ANs1'
+    set IC_Id[170] = 'X041'
+    set IC_Gold[170] = 325
+    set IC_Lumber[170] = 0
+    set IC_Name[170] = "Preservation"
+    set IC_Icon[170] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[170] = "Teaches Preservation.\n\nPreservation (level 1)\nCooldown (seconds): 11\nMana cost: 85\nCast range: 750\nBuilding Types Allowed: 15"
+    set IC_Stats[170] = "Preservation (level 1)\nCooldown (seconds): 11\nMana cost: 85\nCast range: 750\nBuilding Types Allowed: 15"
+    set IC_Location[170] = "Custom Hero - X spells"
+    set IC_Note[170] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[170] = 'A09B'
+    set IC_Id[171] = 'X042'
+    set IC_Gold[171] = 350
+    set IC_Lumber[171] = 0
+    set IC_Name[171] = "Evasion"
+    set IC_Icon[171] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[171] = "Teaches Evasion.\n\nEvasion (level 1)\nChance to Evade: 20%"
+    set IC_Stats[171] = "Evasion (level 1)\nChance to Evade: 20%"
+    set IC_Location[171] = "Custom Hero - X spells"
+    set IC_Note[171] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[171] = 'AEev'
+    set IC_Id[172] = 'X043'
+    set IC_Gold[172] = 350
+    set IC_Lumber[172] = 0
+    set IC_Name[172] = "Bloodlust (Jaood)"
+    set IC_Icon[172] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[172] = "Teaches Bloodlust (Jaood).\n\nBloodlust (Jaood) (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 3\nMana cost: 30\nCast range: 600\nAttack Speed Increase (%): 25%\nMovement Speed Increase (%): 25%\nScaling Factor: 0.2"
+    set IC_Stats[172] = "Bloodlust (Jaood) (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 3\nMana cost: 30\nCast range: 600\nAttack Speed Increase (%): 25%\nMovement Speed Increase (%): 25%\nScaling Factor: 0.2"
+    set IC_Location[172] = "Custom Hero - X spells"
+    set IC_Note[172] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[172] = 'A0ID'
+    set IC_Id[173] = 'X044'
+    set IC_Gold[173] = 375
+    set IC_Lumber[173] = 0
+    set IC_Name[173] = "Bash"
+    set IC_Icon[173] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[173] = "Teaches Bash.\n\nBash (level 1)\nDuration (seconds): 1\nHero duration (seconds): 1\nChance to Bash: 35\nDamage Bonus: 25"
+    set IC_Stats[173] = "Bash (level 1)\nDuration (seconds): 1\nHero duration (seconds): 1\nChance to Bash: 35\nDamage Bonus: 25"
+    set IC_Location[173] = "Custom Hero - X spells"
+    set IC_Note[173] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[173] = 'ACbh'
+    set IC_Id[174] = 'X045'
+    set IC_Gold[174] = 275
+    set IC_Lumber[174] = 0
+    set IC_Name[174] = "Spiked Carapace"
+    set IC_Icon[174] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[174] = "Teaches Spiked Carapace.\n\nSpiked Carapace (level 1)\nReturned Damage Factor: 0.25\nReceived Damage Factor: 1\nDefense Bonus: 3"
+    set IC_Stats[174] = "Spiked Carapace (level 1)\nReturned Damage Factor: 0.25\nReceived Damage Factor: 1\nDefense Bonus: 3"
+    set IC_Location[174] = "Custom Hero - X spells"
+    set IC_Note[174] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[174] = 'AUts'
+    set IC_Id[175] = 'X046'
+    set IC_Gold[175] = 300
+    set IC_Lumber[175] = 0
+    set IC_Name[175] = "Incinerate"
+    set IC_Icon[175] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[175] = "Teaches Incinerate.\n\nIncinerate (level 1)\nDuration (seconds): 4.5\nHero duration (seconds): 4\nArea of effect: 10\nBonus Damage Multiplier: 1.5\nDeath Damage Full Amount: 35\nDeath Damage Full Area: 100\nDeath Damage Half Amount: 20\nDeath Damage Half Area: 200\nDeath Damage Delay: 0.2"
+    set IC_Stats[175] = "Incinerate (level 1)\nDuration (seconds): 4.5\nHero duration (seconds): 4\nArea of effect: 10\nBonus Damage Multiplier: 1.5\nDeath Damage Full Amount: 35\nDeath Damage Full Area: 100\nDeath Damage Half Amount: 20\nDeath Damage Half Area: 200\nDeath Damage Delay: 0.2"
+    set IC_Location[175] = "Custom Hero - X spells"
+    set IC_Note[175] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[175] = 'ANic'
+    set IC_Id[176] = 'X047'
+    set IC_Gold[176] = 275
+    set IC_Lumber[176] = 0
+    set IC_Name[176] = "Wind Walk"
+    set IC_Icon[176] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[176] = "Teaches Wind Walk.\n\nWind Walk (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 45\nTransition Time: 0.6\nMovement Speed Increase (%): 10%\nBackstab Damage: 50"
+    set IC_Stats[176] = "Wind Walk (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 45\nTransition Time: 0.6\nMovement Speed Increase (%): 10%\nBackstab Damage: 50"
+    set IC_Location[176] = "Custom Hero - X spells"
+    set IC_Note[176] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[176] = 'ANwk'
+    set IC_Id[177] = 'X048'
+    set IC_Gold[177] = 350
+    set IC_Lumber[177] = 0
+    set IC_Name[177] = "Polymorph"
+    set IC_Icon[177] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[177] = "Teaches Polymorph.\n\nPolymorph (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 15\nMana cost: 50\nCast range: 600\nMaximum Creep Level: 5"
+    set IC_Stats[177] = "Polymorph (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 15\nMana cost: 50\nCast range: 600\nMaximum Creep Level: 5"
+    set IC_Location[177] = "Custom Hero - X spells"
+    set IC_Note[177] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[177] = 'ACpy'
+    set IC_Id[178] = 'C049'
+    set IC_Gold[178] = 400
+    set IC_Lumber[178] = 0
+    set IC_Name[178] = "Cattlebruiser Frost Strike / Cold Strike"
+    set IC_Icon[178] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[178] = "Teaches Cattlebruiser Frost Strike / Cold Strike.\n\nCattlebruiser Frost Strike / Cold Strike (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 9\nMana cost: 100\nCast range: 800\nSpecific Target Damage: 175"
+    set IC_Stats[178] = "Cattlebruiser Frost Strike / Cold Strike (level 1)\nDuration (seconds): 4\nHero duration (seconds): 1.5\nCooldown (seconds): 9\nMana cost: 100\nCast range: 800\nSpecific Target Damage: 175"
+    set IC_Location[178] = "Custom Hero - C spells"
+    set IC_Note[178] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[178] = 'A0PZ'
+    set IC_Id[179] = 'C050'
+    set IC_Gold[179] = 300
+    set IC_Lumber[179] = 0
+    set IC_Name[179] = "Death Coil"
+    set IC_Icon[179] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[179] = "Teaches Death Coil.\n\nDeath Coil (level 1)\nCooldown (seconds): 7\nMana cost: 75\nCast range: 800\nAmount Healed/Damaged: 50"
+    set IC_Stats[179] = "Death Coil (level 1)\nCooldown (seconds): 7\nMana cost: 75\nCast range: 800\nAmount Healed/Damaged: 50"
+    set IC_Location[179] = "Custom Hero - C spells"
+    set IC_Note[179] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[179] = 'ACdc'
+    set IC_Id[180] = 'C051'
+    set IC_Gold[180] = 325
+    set IC_Lumber[180] = 0
+    set IC_Name[180] = "Healing Wave"
+    set IC_Icon[180] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[180] = "Teaches Healing Wave.\n\nHealing Wave (level 1)\nCooldown (seconds): 8.5\nMana cost: 100\nArea of effect: 500\nCast range: 700\nDamage per Target: 140\nNumber of Targets Hit: 4\nDamage Reduction per Target: 0.2"
+    set IC_Stats[180] = "Healing Wave (level 1)\nCooldown (seconds): 8.5\nMana cost: 100\nArea of effect: 500\nCast range: 700\nDamage per Target: 140\nNumber of Targets Hit: 4\nDamage Reduction per Target: 0.2"
+    set IC_Location[180] = "Custom Hero - C spells"
+    set IC_Note[180] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[180] = 'AOhw'
+    set IC_Id[181] = 'C052'
+    set IC_Gold[181] = 325
+    set IC_Lumber[181] = 0
+    set IC_Name[181] = "Endurance Aura"
+    set IC_Icon[181] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[181] = "Teaches Endurance Aura.\n\nEndurance Aura (level 1)\nArea of effect: 900\nMovement Speed Increase (%): 15%\nAttack Speed Increase (%): 5%"
+    set IC_Stats[181] = "Endurance Aura (level 1)\nArea of effect: 900\nMovement Speed Increase (%): 15%\nAttack Speed Increase (%): 5%"
+    set IC_Location[181] = "Custom Hero - C spells"
+    set IC_Note[181] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[181] = 'AOae'
+    set IC_Id[182] = 'C053'
+    set IC_Gold[182] = 350
+    set IC_Lumber[182] = 0
+    set IC_Name[182] = "Command Aura"
+    set IC_Icon[182] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[182] = "Teaches Command Aura.\n\nCommand Aura (level 1)\nArea of effect: 900\nAttack Damage Increase: 0.15"
+    set IC_Stats[182] = "Command Aura (level 1)\nArea of effect: 900\nAttack Damage Increase: 0.15"
+    set IC_Location[182] = "Custom Hero - C spells"
+    set IC_Note[182] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[182] = 'ACac'
+    set IC_Id[183] = 'C054'
+endfunction
+
+function IC_Data11 takes nothing returns nothing
+    set IC_Gold[183] = 350
+    set IC_Lumber[183] = 0
+    set IC_Name[183] = "Trueshot Aura"
+    set IC_Icon[183] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[183] = "Teaches Trueshot Aura.\n\nTrueshot Aura (level 1)\nArea of effect: 900\nDamage Bonus (%): 25%"
+    set IC_Stats[183] = "Trueshot Aura (level 1)\nArea of effect: 900\nDamage Bonus (%): 25%"
+    set IC_Location[183] = "Custom Hero - C spells"
+    set IC_Note[183] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[183] = 'AEar'
+    set IC_Id[184] = 'C055'
+    set IC_Gold[184] = 350
+    set IC_Lumber[184] = 0
+    set IC_Name[184] = "Unholy Aura"
+    set IC_Icon[184] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[184] = "Teaches Unholy Aura.\n\nUnholy Aura (level 1)\nDuration (seconds): 2\nHero duration (seconds): 2\nArea of effect: 900\nMovement Speed Increase (%): 5%\nLife Regeneration Increase (%): 280%"
+    set IC_Stats[184] = "Unholy Aura (level 1)\nDuration (seconds): 2\nHero duration (seconds): 2\nArea of effect: 900\nMovement Speed Increase (%): 5%\nLife Regeneration Increase (%): 280%"
+    set IC_Location[184] = "Custom Hero - C spells"
+    set IC_Note[184] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[184] = 'AUau'
+    set IC_Id[185] = 'C056'
+    set IC_Gold[185] = 325
+    set IC_Lumber[185] = 0
+    set IC_Name[185] = "Devotion Aura"
+    set IC_Icon[185] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[185] = "Teaches Devotion Aura.\n\nDevotion Aura (level 1)\nDuration (seconds): 4\nHero duration (seconds): 4\nArea of effect: 1000\nArmor Bonus: 4.5"
+    set IC_Stats[185] = "Devotion Aura (level 1)\nDuration (seconds): 4\nHero duration (seconds): 4\nArea of effect: 1000\nArmor Bonus: 4.5"
+    set IC_Location[185] = "Custom Hero - C spells"
+    set IC_Note[185] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[185] = 'AHad'
+    set IC_Id[186] = 'C057'
+    set IC_Gold[186] = 400
+    set IC_Lumber[186] = 0
+    set IC_Name[186] = "Tichmech Aura - Angel of Doom version"
+    set IC_Icon[186] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[186] = "Teaches Tichmech Aura - Angel of Doom version.\n\nTichmech Aura - Angel of Doom version (level 1)\nDuration (seconds): 2\nHero duration (seconds): 1\nArea of effect: 575\nCast range: 650\nArmor Bonus: -3"
+    set IC_Stats[186] = "Tichmech Aura - Angel of Doom version (level 1)\nDuration (seconds): 2\nHero duration (seconds): 1\nArea of effect: 575\nCast range: 650\nArmor Bonus: -3"
+    set IC_Location[186] = "Custom Hero - C spells"
+    set IC_Note[186] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[186] = 'A012'
+    set IC_Id[187] = 'C058'
+    set IC_Gold[187] = 275
+    set IC_Lumber[187] = 0
+    set IC_Name[187] = "Shadow Strike"
+    set IC_Icon[187] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[187] = "Teaches Shadow Strike.\n\nShadow Strike (level 1)\nCasting Time: 2.5\nDuration (seconds): 7.5\nHero duration (seconds): 7.5\nCooldown (seconds): 6\nMana cost: 65\nCast range: 500\nDecaying Damage: 20\nMovement Speed Factor: 0.75\nDecay Power: 3\nInitial Damage: 100"
+    set IC_Stats[187] = "Shadow Strike (level 1)\nCasting Time: 2.5\nDuration (seconds): 7.5\nHero duration (seconds): 7.5\nCooldown (seconds): 6\nMana cost: 65\nCast range: 500\nDecaying Damage: 20\nMovement Speed Factor: 0.75\nDecay Power: 3\nInitial Damage: 100"
+    set IC_Location[187] = "Custom Hero - C spells"
+    set IC_Note[187] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[187] = 'A0LH'
+    set IC_Id[188] = 'C059'
+    set IC_Gold[188] = 250
+    set IC_Lumber[188] = 0
+    set IC_Name[188] = "Devour Magic"
+    set IC_Icon[188] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[188] = "Teaches Devour Magic.\n\nDevour Magic (level 1)\nCooldown (seconds): 7\nArea of effect: 200\nCast range: 900\nLife Per Unit: 50\nMana Per Unit: 75\nLife Per Buff: 25\nSummoned Unit Damage: 450"
+    set IC_Stats[188] = "Devour Magic (level 1)\nCooldown (seconds): 7\nArea of effect: 200\nCast range: 900\nLife Per Unit: 50\nMana Per Unit: 75\nLife Per Buff: 25\nSummoned Unit Damage: 450"
+    set IC_Location[188] = "Custom Hero - C spells"
+    set IC_Note[188] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[188] = 'Advm'
+    set IC_Id[189] = 'C060'
+    set IC_Gold[189] = 300
+    set IC_Lumber[189] = 0
+    set IC_Name[189] = "Serpent Wards"
+    set IC_Icon[189] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[189] = "Teaches Serpent Wards.\n\nSerpent Wards (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 9\nMana cost: 40\nCast range: 500\nSummoned Unit Count: 2"
+    set IC_Stats[189] = "Serpent Wards (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 9\nMana cost: 40\nCast range: 500\nSummoned Unit Count: 2"
+    set IC_Location[189] = "Custom Hero - C spells"
+    set IC_Note[189] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[189] = 'AOsw'
+    set IC_Id[190] = 'C061'
+    set IC_Gold[190] = 325
+    set IC_Lumber[190] = 0
+    set IC_Name[190] = "Summon Bear"
+    set IC_Icon[190] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[190] = "Teaches Summon Bear.\n\nSummon Bear (level 1)\nDuration (seconds): 70\nHero duration (seconds): 70\nCooldown (seconds): 30\nMana cost: 125\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Stats[190] = "Summon Bear (level 1)\nDuration (seconds): 70\nHero duration (seconds): 70\nCooldown (seconds): 30\nMana cost: 125\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Location[190] = "Custom Hero - C spells"
+    set IC_Note[190] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[190] = 'ANsg'
+    set IC_Id[191] = 'C062'
+    set IC_Gold[191] = 250
+    set IC_Lumber[191] = 0
+    set IC_Name[191] = "Summon Quilbeast"
+    set IC_Icon[191] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[191] = "Teaches Summon Quilbeast.\n\nSummon Quilbeast (level 1)\nDuration (seconds): 50\nHero duration (seconds): 45\nCooldown (seconds): 22\nMana cost: 75\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Stats[191] = "Summon Quilbeast (level 1)\nDuration (seconds): 50\nHero duration (seconds): 45\nCooldown (seconds): 22\nMana cost: 75\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Location[191] = "Custom Hero - C spells"
+    set IC_Note[191] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[191] = 'ANsq'
+    set IC_Id[192] = 'C063'
+    set IC_Gold[192] = 225
+    set IC_Lumber[192] = 0
+    set IC_Name[192] = "Summon Hawks"
+    set IC_Icon[192] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[192] = "Teaches Summon Hawks.\n\nSummon Hawks (level 1)\nDuration (seconds): 50\nHero duration (seconds): 50\nCooldown (seconds): 40\nMana cost: 100\nArea of effect: 200\nSummoned Unit Count: 2"
+    set IC_Stats[192] = "Summon Hawks (level 1)\nDuration (seconds): 50\nHero duration (seconds): 50\nCooldown (seconds): 40\nMana cost: 100\nArea of effect: 200\nSummoned Unit Count: 2"
+    set IC_Location[192] = "Custom Hero - C spells"
+    set IC_Note[192] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[192] = 'ANsw'
+    set IC_Id[193] = 'C064'
+    set IC_Gold[193] = 275
+    set IC_Lumber[193] = 0
+    set IC_Name[193] = "Summon Beetles"
+    set IC_Icon[193] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[193] = "Teaches Summon Beetles.\n\nSummon Beetles (level 1)\nDuration (seconds): 50\nHero duration (seconds): 50\nCooldown (seconds): 15\nMana cost: 90\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 3"
+    set IC_Stats[193] = "Summon Beetles (level 1)\nDuration (seconds): 50\nHero duration (seconds): 50\nCooldown (seconds): 15\nMana cost: 90\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 3"
+    set IC_Location[193] = "Custom Hero - C spells"
+    set IC_Note[193] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[193] = 'A029'
+    set IC_Id[194] = 'C065'
+    set IC_Gold[194] = 275
+    set IC_Lumber[194] = 0
+    set IC_Name[194] = "Summon Wolves"
+    set IC_Icon[194] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[194] = "Teaches Summon Wolves.\n\nSummon Wolves (level 1)\nDuration (seconds): 60\nHero duration (seconds): 60\nCooldown (seconds): 20\nMana cost: 75\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 2"
+    set IC_Stats[194] = "Summon Wolves (level 1)\nDuration (seconds): 60\nHero duration (seconds): 60\nCooldown (seconds): 20\nMana cost: 75\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 2"
+    set IC_Location[194] = "Custom Hero - C spells"
+    set IC_Note[194] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[194] = 'AOsf'
+    set IC_Id[195] = 'C066'
+    set IC_Gold[195] = 300
+    set IC_Lumber[195] = 0
+    set IC_Name[195] = "Summon Treants"
+    set IC_Icon[195] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[195] = "Teaches Summon Treants.\n\nSummon Treants (level 1)\nDuration (seconds): 60\nHero duration (seconds): 60\nCooldown (seconds): 20\nMana cost: 50\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 3"
+    set IC_Stats[195] = "Summon Treants (level 1)\nDuration (seconds): 60\nHero duration (seconds): 60\nCooldown (seconds): 20\nMana cost: 50\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 3"
+    set IC_Location[195] = "Custom Hero - C spells"
+    set IC_Note[195] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[195] = 'A007'
+    set IC_Id[196] = 'C067'
+    set IC_Gold[196] = 350
+    set IC_Lumber[196] = 0
+    set IC_Name[196] = "Summon Clockwerk Goblins"
+    set IC_Icon[196] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[196] = "Teaches Summon Clockwerk Goblins.\n\nSummon Clockwerk Goblins (level 1)\nDuration (seconds): 25\nHero duration (seconds): 25\nCooldown (seconds): 12\nMana cost: 100\nArea of effect: 200\nSummoned Unit Count: 2"
+    set IC_Stats[196] = "Summon Clockwerk Goblins (level 1)\nDuration (seconds): 25\nHero duration (seconds): 25\nCooldown (seconds): 12\nMana cost: 100\nArea of effect: 200\nSummoned Unit Count: 2"
+    set IC_Location[196] = "Custom Hero - C spells"
+    set IC_Note[196] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[196] = 'A0AH'
+    set IC_Id[197] = 'C068'
+    set IC_Gold[197] = 325
+    set IC_Lumber[197] = 0
+    set IC_Name[197] = "Feedback"
+    set IC_Icon[197] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[197] = "Teaches Feedback.\n\nFeedback (level 1)\nCast range: 500\nMax Mana Drained - Units: 5\nDamage Ratio - Units (%): 100%\nMax Mana Drained - Heros: 10\nDamage Ratio - Heros (%): 100%"
+    set IC_Stats[197] = "Feedback (level 1)\nCast range: 500\nMax Mana Drained - Units: 5\nDamage Ratio - Units (%): 100%\nMax Mana Drained - Heros: 10\nDamage Ratio - Heros (%): 100%"
+    set IC_Location[197] = "Custom Hero - C spells"
+    set IC_Note[197] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[197] = 'Afbk'
+    set IC_Id[198] = 'C069'
+    set IC_Gold[198] = 375
+    set IC_Lumber[198] = 0
+    set IC_Name[198] = "Critical Strike"
+    set IC_Icon[198] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[198] = "Teaches Critical Strike.\n\nCritical Strike (level 1)\nCast range: 1500\nChance to Critical Strike: 20\nDamage Multiplier: 2"
+    set IC_Stats[198] = "Critical Strike (level 1)\nCast range: 1500\nChance to Critical Strike: 20\nDamage Multiplier: 2"
+    set IC_Location[198] = "Custom Hero - C spells"
+    set IC_Note[198] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[198] = 'AOcr'
+    set IC_Id[199] = 'C070'
+endfunction
+
+function IC_Data12 takes nothing returns nothing
+    set IC_Gold[199] = 375
+    set IC_Lumber[199] = 0
+    set IC_Name[199] = "Spell Shield"
+    set IC_Icon[199] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[199] = "Teaches Spell Shield.\n\nSpell Shield (level 1)\nCooldown (seconds): 60"
+    set IC_Stats[199] = "Spell Shield (level 1)\nCooldown (seconds): 60"
+    set IC_Location[199] = "Custom Hero - C spells"
+    set IC_Note[199] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[199] = 'A0QC'
+    set IC_Id[200] = 'C071'
+    set IC_Gold[200] = 300
+    set IC_Lumber[200] = 0
+    set IC_Name[200] = "Magic Resistance"
+    set IC_Icon[200] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[200] = "Teaches Magic Resistance.\n\nMagic Resistance (level 1)\nDamage Reduction: 0.25"
+    set IC_Stats[200] = "Magic Resistance (level 1)\nDamage Reduction: 0.25"
+    set IC_Location[200] = "Custom Hero - C spells"
+    set IC_Note[200] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[200] = 'A03T'
+    set IC_Id[201] = 'C072'
+    set IC_Gold[201] = 300
+    set IC_Lumber[201] = 0
+    set IC_Name[201] = "Slow Poison"
+    set IC_Icon[201] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[201] = "Teaches Slow Poison.\n\nSlow Poison (level 1)\nDuration (seconds): 5\nHero duration (seconds): 1\nDamage Per Second: 4\nMovement Speed Factor: 0.3\nAttack Speed Factor: 0.25\nStacking Type: 1"
+    set IC_Stats[201] = "Slow Poison (level 1)\nDuration (seconds): 5\nHero duration (seconds): 1\nDamage Per Second: 4\nMovement Speed Factor: 0.3\nAttack Speed Factor: 0.25\nStacking Type: 1"
+    set IC_Location[201] = "Custom Hero - C spells"
+    set IC_Note[201] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[201] = 'Aspo'
+    set IC_Id[202] = 'V073'
+    set IC_Gold[202] = 750
+    set IC_Lumber[202] = 0
+    set IC_Name[202] = "Summon Chimaeras"
+    set IC_Icon[202] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[202] = "Teaches Summon Chimaeras.\n\nSummon Chimaeras (level 1)\nCooldown (seconds): 200\nMana cost: 175\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Stats[202] = "Summon Chimaeras (level 1)\nCooldown (seconds): 200\nMana cost: 175\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Location[202] = "Custom Hero - V spells"
+    set IC_Note[202] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[202] = 'A039'
+    set IC_Id[203] = 'V074'
+    set IC_Gold[203] = 700
+    set IC_Lumber[203] = 0
+    set IC_Name[203] = "Panda Ultimate"
+    set IC_Icon[203] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[203] = "Teaches Panda Ultimate.\n\nPanda Ultimate (level 1)\nCooldown (seconds): 145\nMana cost: 175\nCast range: 450\nGold Cost Factor: 1.2\nMax Creep Level: 6"
+    set IC_Stats[203] = "Panda Ultimate (level 1)\nCooldown (seconds): 145\nMana cost: 175\nCast range: 450\nGold Cost Factor: 1.2\nMax Creep Level: 6"
+    set IC_Location[203] = "Custom Hero - V spells"
+    set IC_Note[203] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[203] = 'ANtm'
+    set IC_Id[204] = 'V075'
+    set IC_Gold[204] = 700
+    set IC_Lumber[204] = 0
+    set IC_Name[204] = "Death and Decay"
+    set IC_Icon[204] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[204] = "Teaches Death and Decay.\n\nDeath and Decay (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 180\nMana cost: 175\nArea of effect: 500\nCast range: 1300\nMax Life Drained per Second (%): 6%\nBuilding Reduction: 1"
+    set IC_Stats[204] = "Death and Decay (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 180\nMana cost: 175\nArea of effect: 500\nCast range: 1300\nMax Life Drained per Second (%): 6%\nBuilding Reduction: 1"
+    set IC_Location[204] = "Custom Hero - V spells"
+    set IC_Note[204] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[204] = 'AUdd'
+    set IC_Id[205] = 'V076'
+    set IC_Gold[205] = 700
+    set IC_Lumber[205] = 0
+    set IC_Name[205] = "Transmute"
+    set IC_Icon[205] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[205] = "Teaches Transmute.\n\nTransmute (level 1)\nCooldown (seconds): 80\nMana cost: 175\nCast range: 450\nGold Cost Factor: 1.25\nMax Creep Level: 6"
+    set IC_Stats[205] = "Transmute (level 1)\nCooldown (seconds): 80\nMana cost: 175\nCast range: 450\nGold Cost Factor: 1.25\nMax Creep Level: 6"
+    set IC_Location[205] = "Custom Hero - V spells"
+    set IC_Note[205] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[205] = 'A0G0'
+    set IC_Id[206] = 'V077'
+    set IC_Gold[206] = 750
+    set IC_Lumber[206] = 0
+    set IC_Name[206] = "Inferno"
+    set IC_Icon[206] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[206] = "Teaches Inferno.\n\nInferno (level 1)\nDuration (seconds): 2\nHero duration (seconds): 1.5\nCooldown (seconds): 180\nMana cost: 175\nArea of effect: 275\nCast range: 900\nDamage: 75\nDuration: 160\nImpact Delay: 0.3"
+    set IC_Stats[206] = "Inferno (level 1)\nDuration (seconds): 2\nHero duration (seconds): 1.5\nCooldown (seconds): 180\nMana cost: 175\nArea of effect: 275\nCast range: 900\nDamage: 75\nDuration: 160\nImpact Delay: 0.3"
+    set IC_Location[206] = "Custom Hero - V spells"
+    set IC_Note[206] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[206] = 'AUin'
+    set IC_Id[207] = 'V078'
+    set IC_Gold[207] = 650
+    set IC_Lumber[207] = 0
+    set IC_Name[207] = "Resurrection"
+    set IC_Icon[207] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[207] = "Teaches Resurrection.\n\nResurrection (level 1)\nCooldown (seconds): 180\nMana cost: 200\nArea of effect: 1000\nCast range: 400\nNumber of Corpses Raised: 10"
+    set IC_Stats[207] = "Resurrection (level 1)\nCooldown (seconds): 180\nMana cost: 200\nArea of effect: 1000\nCast range: 400\nNumber of Corpses Raised: 10"
+    set IC_Location[207] = "Custom Hero - V spells"
+    set IC_Note[207] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[207] = 'AHre'
+    set IC_Id[208] = 'V079'
+    set IC_Gold[208] = 650
+    set IC_Lumber[208] = 0
+    set IC_Name[208] = "Tranquility"
+    set IC_Icon[208] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[208] = "Teaches Tranquility.\n\nTranquility (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 60\nMana cost: 90\nArea of effect: 1000\nLife Healed: 3.75\nHeal Interval: 0.1\nBuilding Reduction: 1"
+    set IC_Stats[208] = "Tranquility (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 60\nMana cost: 90\nArea of effect: 1000\nLife Healed: 3.75\nHeal Interval: 0.1\nBuilding Reduction: 1"
+    set IC_Location[208] = "Custom Hero - V spells"
+    set IC_Note[208] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[208] = 'AEtq'
+    set IC_Id[209] = 'V080'
+    set IC_Gold[209] = 800
+    set IC_Lumber[209] = 0
+    set IC_Name[209] = "Yamamoto Cannon"
+    set IC_Icon[209] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[209] = "Teaches Yamamoto Cannon.\n\nYamamoto Cannon (level 1)\nCooldown (seconds): 375\nMana cost: 200\nCast range: 400\nGraphic Delay: 0.25\nGraphic Duration: 1\nDamage: 1000"
+    set IC_Stats[209] = "Yamamoto Cannon (level 1)\nCooldown (seconds): 375\nMana cost: 200\nCast range: 400\nGraphic Delay: 0.25\nGraphic Duration: 1\nDamage: 1000"
+    set IC_Location[209] = "Custom Hero - V spells"
+    set IC_Note[209] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[209] = 'Afod'
+    set IC_Id[210] = 'V081'
+    set IC_Gold[210] = 800
+    set IC_Lumber[210] = 0
+    set IC_Name[210] = "Shadow's Ultimate"
+    set IC_Icon[210] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[210] = "Teaches Shadow's Ultimate.\n\nShadow's Ultimate (level 1)\nCooldown (seconds): 400\nMana cost: 450\nCast range: 450\nGraphic Duration: 2\nDamage: 99999"
+    set IC_Stats[210] = "Shadow's Ultimate (level 1)\nCooldown (seconds): 400\nMana cost: 450\nCast range: 450\nGraphic Duration: 2\nDamage: 99999"
+    set IC_Location[210] = "Custom Hero - V spells"
+    set IC_Note[210] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[210] = 'A044'
+    set IC_Id[211] = 'V082'
+    set IC_Gold[211] = 800
+    set IC_Lumber[211] = 0
+    set IC_Name[211] = "Strong Man Ever's Ultimate"
+    set IC_Icon[211] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[211] = "Teaches Strong Man Ever's Ultimate.\n\nStrong Man Ever's Ultimate (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 310\nMana cost: 115\nArea of effect: 250\nCast range: 350\nDamage Dealt: 99999\nDamage Interval: 0.5"
+    set IC_Stats[211] = "Strong Man Ever's Ultimate (level 1)\nDuration (seconds): 5\nHero duration (seconds): 5\nCooldown (seconds): 310\nMana cost: 115\nArea of effect: 250\nCast range: 350\nDamage Dealt: 99999\nDamage Interval: 0.5"
+    set IC_Location[211] = "Custom Hero - V spells"
+    set IC_Note[211] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[211] = 'A030'
+    set IC_Id[212] = 'V083'
+    set IC_Gold[212] = 850
+    set IC_Lumber[212] = 0
+    set IC_Name[212] = "Zeus Ultimate"
+    set IC_Icon[212] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[212] = "Teaches Zeus Ultimate.\n\nZeus Ultimate (level 1)\nCasting Time: 0.3\nDuration (seconds): 3\nHero duration (seconds): 3\nCooldown (seconds): 220\nMana cost: 200\nArea of effect: 250\nCast range: 850\nNumber of Waves: 12\nDamage: 42\nNumber of Shards: 1\nBuilding Reduction: 0.1\nDamage Per Second: 10\nMaximum Damage per Wave: 99999"
+    set IC_Stats[212] = "Zeus Ultimate (level 1)\nCasting Time: 0.3\nDuration (seconds): 3\nHero duration (seconds): 3\nCooldown (seconds): 220\nMana cost: 200\nArea of effect: 250\nCast range: 850\nNumber of Waves: 12\nDamage: 42\nNumber of Shards: 1\nBuilding Reduction: 0.1\nDamage Per Second: 10\nMaximum Damage per Wave: 99999"
+    set IC_Location[212] = "Custom Hero - V spells"
+    set IC_Note[212] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[212] = 'A0U6'
+    set IC_Id[213] = 'V084'
+    set IC_Gold[213] = 650
+    set IC_Lumber[213] = 0
+    set IC_Name[213] = "Avatar"
+    set IC_Icon[213] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[213] = "Teaches Avatar.\n\nAvatar (level 1)\nDuration (seconds): 45\nHero duration (seconds): 45\nCooldown (seconds): 240\nMana cost: 150\nArea of effect: 0.5\nDefense Bonus: 5\nHit Point Bonus: 500\nDamage Bonus: 30"
+    set IC_Stats[213] = "Avatar (level 1)\nDuration (seconds): 45\nHero duration (seconds): 45\nCooldown (seconds): 240\nMana cost: 150\nArea of effect: 0.5\nDefense Bonus: 5\nHit Point Bonus: 500\nDamage Bonus: 30"
+    set IC_Location[213] = "Custom Hero - V spells"
+    set IC_Note[213] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[213] = 'AHav'
+    set IC_Id[214] = 'V085'
+    set IC_Gold[214] = 650
+    set IC_Lumber[214] = 0
+    set IC_Name[214] = "Doom"
+    set IC_Icon[214] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[214] = "Teaches Doom.\n\nDoom (level 1)\nCooldown (seconds): 180\nMana cost: 150\nCast range: 700\nDamage Per Second: 75\nNumber of Summoned Units: 2\nSummoned Unit Duration (seconds): 70"
+    set IC_Stats[214] = "Doom (level 1)\nCooldown (seconds): 180\nMana cost: 150\nCast range: 700\nDamage Per Second: 75\nNumber of Summoned Units: 2\nSummoned Unit Duration (seconds): 70"
+    set IC_Location[214] = "Custom Hero - V spells"
+    set IC_Note[214] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[214] = 'ANdo'
+    set IC_Id[215] = 'V086'
+endfunction
+
+function IC_Data13 takes nothing returns nothing
+    set IC_Gold[215] = 700
+    set IC_Lumber[215] = 0
+    set IC_Name[215] = "Animate Dead"
+    set IC_Icon[215] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[215] = "Teaches Animate Dead.\n\nAnimate Dead (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 140\nMana cost: 175\nArea of effect: 900\nCast range: 400\nNumber of Corpses Raised: 8"
+    set IC_Stats[215] = "Animate Dead (level 1)\nDuration (seconds): 30\nHero duration (seconds): 30\nCooldown (seconds): 140\nMana cost: 175\nArea of effect: 900\nCast range: 400\nNumber of Corpses Raised: 8"
+    set IC_Location[215] = "Custom Hero - V spells"
+    set IC_Note[215] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[215] = 'AUan'
+    set IC_Id[216] = 'V087'
+    set IC_Gold[216] = 800
+    set IC_Lumber[216] = 0
+    set IC_Name[216] = "Drunken Templar's Ultimate"
+    set IC_Icon[216] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[216] = "Teaches Drunken Templar's Ultimate.\n\nDrunken Templar's Ultimate (level 1)\nDuration (seconds): 0.01\nHero duration (seconds): 0.01\nCooldown (seconds): 160\nMana cost: 100\nArea of effect: 500\nCast range: 900"
+    set IC_Stats[216] = "Drunken Templar's Ultimate (level 1)\nDuration (seconds): 0.01\nHero duration (seconds): 0.01\nCooldown (seconds): 160\nMana cost: 100\nArea of effect: 500\nCast range: 900"
+    set IC_Location[216] = "Custom Hero - V spells"
+    set IC_Note[216] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[216] = 'A0GC'
+    set IC_Id[217] = 'V088'
+    set IC_Gold[217] = 750
+    set IC_Lumber[217] = 0
+    set IC_Name[217] = "Stampede"
+    set IC_Icon[217] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[217] = "Teaches Stampede.\n\nStampede (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 180\nMana cost: 200\nArea of effect: 1000\nCast range: 500\nBeasts Per Second: 4\nBeast Collision Radius: 56\nDamage Amount: 65\nDamage Radius: 250\nDamage Delay: 0.2"
+    set IC_Stats[217] = "Stampede (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 180\nMana cost: 200\nArea of effect: 1000\nCast range: 500\nBeasts Per Second: 4\nBeast Collision Radius: 56\nDamage Amount: 65\nDamage Radius: 250\nDamage Delay: 0.2"
+    set IC_Location[217] = "Custom Hero - V spells"
+    set IC_Note[217] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[217] = 'ANst'
+    set IC_Id[218] = 'V089'
+    set IC_Gold[218] = 800
+    set IC_Lumber[218] = 0
+    set IC_Name[218] = "Exophate's Ultimate"
+    set IC_Icon[218] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[218] = "Teaches Exophate's Ultimate.\n\nExophate's Ultimate (level 1)\nHero duration (seconds): 5\nCooldown (seconds): 160\nMana cost: 180\nArea of effect: 50\nDamage: 150\nMovement Speed Reduction: 0.5\nAttack Speed Reduction: 0.2"
+    set IC_Stats[218] = "Exophate's Ultimate (level 1)\nHero duration (seconds): 5\nCooldown (seconds): 160\nMana cost: 180\nArea of effect: 50\nDamage: 150\nMovement Speed Reduction: 0.5\nAttack Speed Reduction: 0.2"
+    set IC_Location[218] = "Custom Hero - V spells"
+    set IC_Note[218] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[218] = 'A07Q'
+    set IC_Id[219] = 'V090'
+    set IC_Gold[219] = 800
+    set IC_Lumber[219] = 0
+    set IC_Name[219] = "Starfall"
+    set IC_Icon[219] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[219] = "Teaches Starfall.\n\nStarfall (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 220\nMana cost: 200\nArea of effect: 1200\nDamage Dealt: 175\nDamage Interval: 1.25\nBuilding Reduction: 0.1"
+    set IC_Stats[219] = "Starfall (level 1)\nDuration (seconds): 15\nHero duration (seconds): 15\nCooldown (seconds): 220\nMana cost: 200\nArea of effect: 1200\nDamage Dealt: 175\nDamage Interval: 1.25\nBuilding Reduction: 0.1"
+    set IC_Location[219] = "Custom Hero - V spells"
+    set IC_Note[219] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[219] = 'AEsf'
+    set IC_Id[220] = 'V091'
+    set IC_Gold[220] = 700
+    set IC_Lumber[220] = 0
+    set IC_Name[220] = "Big Bad Voodoo"
+    set IC_Icon[220] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[220] = "Teaches Big Bad Voodoo.\n\nBig Bad Voodoo (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 160\nMana cost: 70\nArea of effect: 800"
+    set IC_Stats[220] = "Big Bad Voodoo (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 160\nMana cost: 70\nArea of effect: 800"
+    set IC_Location[220] = "Custom Hero - V spells"
+    set IC_Note[220] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[220] = 'AOvd'
+    set IC_Id[221] = 'V092'
+    set IC_Gold[221] = 750
+    set IC_Lumber[221] = 0
+    set IC_Name[221] = "Summon Phoenix"
+    set IC_Icon[221] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[221] = "Teaches Summon Phoenix.\n\nSummon Phoenix (level 1)\nCooldown (seconds): 200\nMana cost: 175\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Stats[221] = "Summon Phoenix (level 1)\nCooldown (seconds): 200\nMana cost: 175\nArea of effect: 200\nSummoned Unit Count: 1"
+    set IC_Location[221] = "Custom Hero - V spells"
+    set IC_Note[221] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[221] = 'AHpx'
+    set IC_Id[222] = 'V093'
+    set IC_Gold[222] = 750
+    set IC_Lumber[222] = 0
+    set IC_Name[222] = "Summon Druids"
+    set IC_Icon[222] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[222] = "Teaches Summon Druids.\n\nSummon Druids (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 180\nMana cost: 150\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 5"
+    set IC_Stats[222] = "Summon Druids (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 180\nMana cost: 150\nArea of effect: 200\nCast range: 800\nNumber of Summoned Units: 5"
+    set IC_Location[222] = "Custom Hero - V spells"
+    set IC_Note[222] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[222] = 'A00Y'
+    set IC_Id[223] = 'V094'
+    set IC_Gold[223] = 700
+    set IC_Lumber[223] = 0
+    set IC_Name[223] = "Locust Swarm"
+    set IC_Icon[223] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[223] = "Teaches Locust Swarm.\n\nLocust Swarm (level 1)\nDuration (seconds): 25\nHero duration (seconds): 25\nCooldown (seconds): 180\nMana cost: 150\nArea of effect: 800\nNumber of Swarm Units: 32\nUnit Release Interval (seconds): 0.01\nMax Swarm Units Per Target: 22\nDamage Return Factor: 4\nDamage Return Threshold: 20"
+    set IC_Stats[223] = "Locust Swarm (level 1)\nDuration (seconds): 25\nHero duration (seconds): 25\nCooldown (seconds): 180\nMana cost: 150\nArea of effect: 800\nNumber of Swarm Units: 32\nUnit Release Interval (seconds): 0.01\nMax Swarm Units Per Target: 22\nDamage Return Factor: 4\nDamage Return Threshold: 20"
+    set IC_Location[223] = "Custom Hero - V spells"
+    set IC_Note[223] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[223] = 'AUls'
+    set IC_Id[224] = 'V095'
+    set IC_Gold[224] = 750
+    set IC_Lumber[224] = 0
+    set IC_Name[224] = "Mass Serpent Ward"
+    set IC_Icon[224] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[224] = "Teaches Mass Serpent Ward.\n\nMass Serpent Ward (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 10\nMana cost: 40\nCast range: 500\nSummoned Unit Count: 2"
+    set IC_Stats[224] = "Mass Serpent Ward (level 1)\nDuration (seconds): 20\nHero duration (seconds): 20\nCooldown (seconds): 10\nMana cost: 40\nCast range: 500\nSummoned Unit Count: 2"
+    set IC_Location[224] = "Custom Hero - V spells"
+    set IC_Note[224] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[224] = 'A0EN'
+    set IC_Id[225] = 'V096'
+    set IC_Gold[225] = 850
+    set IC_Lumber[225] = 0
+    set IC_Name[225] = "Reincarnation"
+    set IC_Icon[225] = "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp"
+    set IC_Description[225] = "Teaches Reincarnation.\n\nReincarnation (level 1)\nCasting Time: 2\nCooldown (seconds): 400\nReincarnation Delay: 6"
+    set IC_Stats[225] = "Reincarnation (level 1)\nCasting Time: 2\nCooldown (seconds): 400\nReincarnation Delay: 6"
+    set IC_Location[225] = "Custom Hero - V spells"
+    set IC_Note[225] = "Custom Hero mode only. Buy within 45 seconds. One spell per slot and one copy per team; one Z area spell per team."
+    set IC_Spell[225] = 'AOre'
+    set IC_Result[1] = 109
+    set IC_IngredientCount[1] = 4
+    set IC_Ingredients[8] = 91
+    set IC_Ingredients[9] = 126
+    set IC_Ingredients[10] = 56
+    set IC_Ingredients[11] = 20
+    set IC_Result[2] = 110
+    set IC_IngredientCount[2] = 4
+    set IC_Ingredients[16] = 97
+    set IC_Ingredients[17] = 126
+    set IC_Ingredients[18] = 21
+    set IC_Ingredients[19] = 22
+    set IC_Result[3] = 111
+    set IC_IngredientCount[3] = 3
+    set IC_Ingredients[24] = 98
+    set IC_Ingredients[25] = 126
+    set IC_Ingredients[26] = 21
+    set IC_Result[4] = 112
+    set IC_IngredientCount[4] = 3
+    set IC_Ingredients[32] = 99
+    set IC_Ingredients[33] = 126
+    set IC_Ingredients[34] = 19
+    set IC_Result[5] = 113
+    set IC_IngredientCount[5] = 4
+    set IC_Ingredients[40] = 89
+    set IC_Ingredients[41] = 15
+    set IC_Ingredients[42] = 22
+    set IC_Ingredients[43] = 14
+    set IC_Result[6] = 114
+    set IC_IngredientCount[6] = 3
+    set IC_Ingredients[48] = 90
+    set IC_Ingredients[49] = 52
+    set IC_Ingredients[50] = 24
+    set IC_Result[7] = 115
+    set IC_IngredientCount[7] = 4
+    set IC_Ingredients[56] = 103
+    set IC_Ingredients[57] = 46
+    set IC_Ingredients[58] = 30
+    set IC_Ingredients[59] = 25
+    set IC_Result[8] = 116
+    set IC_IngredientCount[8] = 4
+    set IC_Ingredients[64] = 92
+    set IC_Ingredients[65] = 18
+    set IC_Ingredients[66] = 22
+    set IC_Ingredients[67] = 56
+    set IC_Result[9] = 117
+    set IC_IngredientCount[9] = 4
+    set IC_Ingredients[72] = 93
+    set IC_Ingredients[73] = 16
+    set IC_Ingredients[74] = 86
+    set IC_Ingredients[75] = 31
+endfunction
+
+function IC_Data14 takes nothing returns nothing
+    set IC_Result[10] = 118
+    set IC_IngredientCount[10] = 4
+    set IC_Ingredients[80] = 94
+    set IC_Ingredients[81] = 54
+    set IC_Ingredients[82] = 18
+    set IC_Ingredients[83] = 52
+    set IC_Result[11] = 119
+    set IC_IngredientCount[11] = 4
+    set IC_Ingredients[88] = 95
+    set IC_Ingredients[89] = 28
+    set IC_Ingredients[90] = 32
+    set IC_Ingredients[91] = 29
+    set IC_Result[12] = 120
+    set IC_IngredientCount[12] = 4
+    set IC_Ingredients[96] = 96
+    set IC_Ingredients[97] = 21
+    set IC_Ingredients[98] = 17
+    set IC_Ingredients[99] = 85
+    set IC_Result[13] = 121
+    set IC_IngredientCount[13] = 4
+    set IC_Ingredients[104] = 102
+    set IC_Ingredients[105] = 53
+    set IC_Ingredients[106] = 54
+    set IC_Ingredients[107] = 24
+    set IC_Result[14] = 122
+    set IC_IngredientCount[14] = 3
+    set IC_Ingredients[112] = 104
+    set IC_Ingredients[113] = 15
+    set IC_Ingredients[114] = 78
+    set IC_Result[15] = 123
+    set IC_IngredientCount[15] = 3
+    set IC_Ingredients[120] = 105
+    set IC_Ingredients[121] = 83
+    set IC_Ingredients[122] = 57
+    set IC_Result[16] = 124
+    set IC_IngredientCount[16] = 2
+    set IC_Ingredients[128] = 84
+    set IC_Ingredients[129] = 101
+    set IC_Result[17] = 125
+    set IC_IngredientCount[17] = 3
+    set IC_Ingredients[136] = 30
+    set IC_Ingredients[137] = 100
+    set IC_Ingredients[138] = 25
+    set IC_SectionName[1] = "Archvault"
+    set IC_SectionIcon[1] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[1] = 0
+    set IC_SectionCount[1] = 11
+    set IC_Stock[0] = 1
+    set IC_Stock[1] = 2
+    set IC_Stock[2] = 3
+    set IC_Stock[3] = 4
+    set IC_Stock[4] = 5
+    set IC_Stock[5] = 6
+    set IC_Stock[6] = 7
+    set IC_Stock[7] = 8
+    set IC_Stock[8] = 9
+    set IC_Stock[9] = 10
+    set IC_Stock[10] = 11
+    set IC_SectionName[2] = "Armor Shop"
+    set IC_SectionIcon[2] = "ReplaceableTextures\\CommandButtons\\BTNMarketplace.blp"
+    set IC_SectionStart[2] = 11
+    set IC_SectionCount[2] = 11
+    set IC_Stock[11] = 12
+    set IC_Stock[12] = 13
+    set IC_Stock[13] = 14
+    set IC_Stock[14] = 15
+    set IC_Stock[15] = 16
+    set IC_Stock[16] = 17
+    set IC_Stock[17] = 18
+    set IC_Stock[18] = 19
+    set IC_Stock[19] = 20
+    set IC_Stock[20] = 21
+    set IC_Stock[21] = 22
+    set IC_SectionName[3] = "Weapons Shop"
+    set IC_SectionIcon[3] = "ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp"
+    set IC_SectionStart[3] = 22
+    set IC_SectionCount[3] = 11
+    set IC_Stock[22] = 23
+    set IC_Stock[23] = 24
+    set IC_Stock[24] = 25
+    set IC_Stock[25] = 26
+    set IC_Stock[26] = 27
+    set IC_Stock[27] = 28
+    set IC_Stock[28] = 29
+    set IC_Stock[29] = 30
+    set IC_Stock[30] = 31
+    set IC_Stock[31] = 32
+    set IC_Stock[32] = 33
+    set IC_SectionName[4] = "Personal Shop"
+    set IC_SectionIcon[4] = "ReplaceableTextures\\CommandButtons\\BTNGoblinMerchant.blp"
+    set IC_SectionStart[4] = 33
+    set IC_SectionCount[4] = 9
+    set IC_Stock[33] = 34
+    set IC_Stock[34] = 35
+    set IC_Stock[35] = 36
+    set IC_Stock[36] = 37
+    set IC_Stock[37] = 38
+    set IC_Stock[38] = 39
+    set IC_Stock[39] = 40
+    set IC_Stock[40] = 41
+    set IC_Stock[41] = 42
+    set IC_SectionName[5] = "Altar of Legends"
+    set IC_SectionIcon[5] = "ReplaceableTextures\\CommandButtons\\BTNAltarOfKings.blp"
+    set IC_SectionStart[5] = 42
+    set IC_SectionCount[5] = 8
+    set IC_Stock[42] = 43
+    set IC_Stock[43] = 44
+    set IC_Stock[44] = 45
+    set IC_Stock[45] = 46
+    set IC_Stock[46] = 47
+    set IC_Stock[47] = 48
+    set IC_Stock[48] = 49
+    set IC_Stock[49] = 50
+    set IC_SectionName[6] = "Protection Shop"
+    set IC_SectionIcon[6] = "ReplaceableTextures\\CommandButtons\\BTNGreenBook.blp"
+    set IC_SectionStart[6] = 50
+    set IC_SectionCount[6] = 9
+    set IC_Stock[50] = 51
+    set IC_Stock[51] = 52
+    set IC_Stock[52] = 53
+    set IC_Stock[53] = 54
+    set IC_Stock[54] = 55
+    set IC_Stock[55] = 56
+    set IC_Stock[56] = 57
+    set IC_Stock[57] = 58
+    set IC_Stock[58] = 59
+    set IC_SectionName[7] = "Assault Shop"
+    set IC_SectionIcon[7] = "ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp"
+    set IC_SectionStart[7] = 59
+    set IC_SectionCount[7] = 12
+    set IC_Stock[59] = 60
+    set IC_Stock[60] = 61
+    set IC_Stock[61] = 62
+    set IC_Stock[62] = 63
+    set IC_Stock[63] = 64
+    set IC_Stock[64] = 65
+    set IC_Stock[65] = 66
+    set IC_Stock[66] = 67
+    set IC_Stock[67] = 68
+    set IC_Stock[68] = 69
+    set IC_Stock[69] = 70
+    set IC_Stock[70] = 71
+    set IC_SectionName[8] = "Waveplayers Shop"
+    set IC_SectionIcon[8] = "ReplaceableTextures\\CommandButtons\\BTNUndeadShrine.blp"
+    set IC_SectionStart[8] = 71
+    set IC_SectionCount[8] = 9
+    set IC_Stock[71] = 72
+    set IC_Stock[72] = 73
+    set IC_Stock[73] = 74
+    set IC_Stock[74] = 75
+    set IC_Stock[75] = 76
+    set IC_Stock[76] = 77
+    set IC_Stock[77] = 78
+    set IC_Stock[78] = 79
+    set IC_Stock[79] = 80
+    set IC_SectionName[9] = "Kids Store"
+    set IC_SectionIcon[9] = "ReplaceableTextures\\CommandButtons\\BTNGoldMine.blp"
+    set IC_SectionStart[9] = 80
+    set IC_SectionCount[9] = 8
+    set IC_Stock[80] = 81
+endfunction
+
+function IC_Data15 takes nothing returns nothing
+    set IC_Stock[81] = 82
+    set IC_Stock[82] = 83
+    set IC_Stock[83] = 84
+    set IC_Stock[84] = 85
+    set IC_Stock[85] = 86
+    set IC_Stock[86] = 87
+    set IC_Stock[87] = 88
+    set IC_SectionName[10] = "Recipes Shop - Page 1"
+    set IC_SectionIcon[10] = "ReplaceableTextures\\CommandButtons\\BTNSpiritLodge.blp"
+    set IC_SectionStart[10] = 88
+    set IC_SectionCount[10] = 11
+    set IC_Stock[88] = 89
+    set IC_Stock[89] = 90
+    set IC_Stock[90] = 91
+    set IC_Stock[91] = 92
+    set IC_Stock[92] = 93
+    set IC_Stock[93] = 94
+    set IC_Stock[94] = 95
+    set IC_Stock[95] = 96
+    set IC_Stock[96] = 97
+    set IC_Stock[97] = 98
+    set IC_Stock[98] = 99
+    set IC_SectionName[11] = "Recipes Shop - Page 2"
+    set IC_SectionIcon[11] = "ReplaceableTextures\\CommandButtons\\BTNSpiritLodge.blp"
+    set IC_SectionStart[11] = 99
+    set IC_SectionCount[11] = 6
+    set IC_Stock[99] = 100
+    set IC_Stock[100] = 101
+    set IC_Stock[101] = 102
+    set IC_Stock[102] = 103
+    set IC_Stock[103] = 104
+    set IC_Stock[104] = 105
+    set IC_SectionName[12] = "Map information"
+    set IC_SectionIcon[12] = "ReplaceableTextures\\CommandButtons\\BTNArcaneObservatory.blp"
+    set IC_SectionStart[12] = 105
+    set IC_SectionCount[12] = 3
+    set IC_Stock[105] = 106
+    set IC_Stock[106] = 107
+    set IC_Stock[107] = 108
+    set IC_SectionName[13] = "Crafted items (1/2)"
+    set IC_SectionIcon[13] = "ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp"
+    set IC_SectionStart[13] = 108
+    set IC_SectionCount[13] = 12
+    set IC_Stock[108] = 109
+    set IC_Stock[109] = 110
+    set IC_Stock[110] = 111
+    set IC_Stock[111] = 112
+    set IC_Stock[112] = 113
+    set IC_Stock[113] = 114
+    set IC_Stock[114] = 115
+    set IC_Stock[115] = 116
+    set IC_Stock[116] = 117
+    set IC_Stock[117] = 118
+    set IC_Stock[118] = 119
+    set IC_Stock[119] = 120
+    set IC_SectionName[14] = "Crafted items (2/2)"
+    set IC_SectionIcon[14] = "ReplaceableTextures\\CommandButtons\\BTNBlacksmith.blp"
+    set IC_SectionStart[14] = 120
+    set IC_SectionCount[14] = 5
+    set IC_Stock[120] = 121
+    set IC_Stock[121] = 122
+    set IC_Stock[122] = 123
+    set IC_Stock[123] = 124
+    set IC_Stock[124] = 125
+    set IC_SectionName[15] = "Starting items & recipe alternatives"
+    set IC_SectionIcon[15] = "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp"
+    set IC_SectionStart[15] = 125
+    set IC_SectionCount[15] = 4
+    set IC_Stock[125] = 126
+    set IC_Stock[126] = 127
+    set IC_Stock[127] = 128
+    set IC_Stock[128] = 129
+    set IC_SectionName[16] = "Custom Hero - Z spells (1/2)"
+    set IC_SectionIcon[16] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[16] = 129
+    set IC_SectionCount[16] = 12
+    set IC_Stock[129] = 130
+    set IC_Stock[130] = 131
+    set IC_Stock[131] = 132
+    set IC_Stock[132] = 133
+    set IC_Stock[133] = 134
+    set IC_Stock[134] = 135
+    set IC_Stock[135] = 136
+    set IC_Stock[136] = 137
+    set IC_Stock[137] = 138
+    set IC_Stock[138] = 139
+    set IC_Stock[139] = 140
+    set IC_Stock[140] = 141
+    set IC_SectionName[17] = "Custom Hero - Z spells (2/2)"
+    set IC_SectionIcon[17] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[17] = 141
+    set IC_SectionCount[17] = 12
+    set IC_Stock[141] = 142
+    set IC_Stock[142] = 143
+    set IC_Stock[143] = 144
+    set IC_Stock[144] = 145
+    set IC_Stock[145] = 146
+    set IC_Stock[146] = 147
+    set IC_Stock[147] = 148
+    set IC_Stock[148] = 149
+    set IC_Stock[149] = 150
+    set IC_Stock[150] = 151
+    set IC_Stock[151] = 152
+    set IC_Stock[152] = 153
+    set IC_SectionName[18] = "Custom Hero - X spells (1/2)"
+    set IC_SectionIcon[18] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[18] = 153
+    set IC_SectionCount[18] = 12
+    set IC_Stock[153] = 154
+    set IC_Stock[154] = 155
+    set IC_Stock[155] = 156
+    set IC_Stock[156] = 157
+    set IC_Stock[157] = 158
+    set IC_Stock[158] = 159
+    set IC_Stock[159] = 160
+    set IC_Stock[160] = 161
+    set IC_Stock[161] = 162
+    set IC_Stock[162] = 163
+    set IC_Stock[163] = 164
+    set IC_Stock[164] = 165
+    set IC_SectionName[19] = "Custom Hero - X spells (2/2)"
+    set IC_SectionIcon[19] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[19] = 165
+    set IC_SectionCount[19] = 12
+    set IC_Stock[165] = 166
+    set IC_Stock[166] = 167
+    set IC_Stock[167] = 168
+    set IC_Stock[168] = 169
+    set IC_Stock[169] = 170
+    set IC_Stock[170] = 171
+    set IC_Stock[171] = 172
+    set IC_Stock[172] = 173
+    set IC_Stock[173] = 174
+    set IC_Stock[174] = 175
+    set IC_Stock[175] = 176
+    set IC_Stock[176] = 177
+    set IC_SectionName[20] = "Custom Hero - C spells (1/2)"
+    set IC_SectionIcon[20] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[20] = 177
+    set IC_SectionCount[20] = 12
+    set IC_Stock[177] = 178
+    set IC_Stock[178] = 179
+    set IC_Stock[179] = 180
+    set IC_Stock[180] = 181
+    set IC_Stock[181] = 182
+    set IC_Stock[182] = 183
+    set IC_Stock[183] = 184
+    set IC_Stock[184] = 185
+    set IC_Stock[185] = 186
+    set IC_Stock[186] = 187
+    set IC_Stock[187] = 188
+    set IC_Stock[188] = 189
+    set IC_SectionName[21] = "Custom Hero - C spells (2/2)"
+    set IC_SectionIcon[21] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[21] = 189
+    set IC_SectionCount[21] = 12
+    set IC_Stock[189] = 190
+    set IC_Stock[190] = 191
+    set IC_Stock[191] = 192
+    set IC_Stock[192] = 193
+endfunction
+
+function IC_Data16 takes nothing returns nothing
+    set IC_Stock[193] = 194
+    set IC_Stock[194] = 195
+    set IC_Stock[195] = 196
+    set IC_Stock[196] = 197
+    set IC_Stock[197] = 198
+    set IC_Stock[198] = 199
+    set IC_Stock[199] = 200
+    set IC_Stock[200] = 201
+    set IC_SectionName[22] = "Custom Hero - V spells (1/2)"
+    set IC_SectionIcon[22] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[22] = 201
+    set IC_SectionCount[22] = 12
+    set IC_Stock[201] = 202
+    set IC_Stock[202] = 203
+    set IC_Stock[203] = 204
+    set IC_Stock[204] = 205
+    set IC_Stock[205] = 206
+    set IC_Stock[206] = 207
+    set IC_Stock[207] = 208
+    set IC_Stock[208] = 209
+    set IC_Stock[209] = 210
+    set IC_Stock[210] = 211
+    set IC_Stock[211] = 212
+    set IC_Stock[212] = 213
+    set IC_SectionName[23] = "Custom Hero - V spells (2/2)"
+    set IC_SectionIcon[23] = "ReplaceableTextures\\CommandButtons\\BTNArcaneVault.blp"
+    set IC_SectionStart[23] = 213
+    set IC_SectionCount[23] = 12
+    set IC_Stock[213] = 214
+    set IC_Stock[214] = 215
+    set IC_Stock[215] = 216
+    set IC_Stock[216] = 217
+    set IC_Stock[217] = 218
+    set IC_Stock[218] = 219
+    set IC_Stock[219] = 220
+    set IC_Stock[220] = 221
+    set IC_Stock[221] = 222
+    set IC_Stock[222] = 223
+    set IC_Stock[223] = 224
+    set IC_Stock[224] = 225
+    call SaveInteger(IC_Data,'A007',0,'acas')
+    call SaveInteger(IC_Data,'A007',1,2)
+    call SaveStr(IC_Data,'A007',2,"Casting Time")
+    call SaveInteger(IC_Data,'A007',4,'adur')
+    call SaveInteger(IC_Data,'A007',5,2)
+    call SaveStr(IC_Data,'A007',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A007',8,'ahdu')
+    call SaveInteger(IC_Data,'A007',9,2)
+    call SaveStr(IC_Data,'A007',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A007',12,'acdn')
+    call SaveInteger(IC_Data,'A007',13,2)
+    call SaveStr(IC_Data,'A007',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A007',16,'amcs')
+    call SaveInteger(IC_Data,'A007',17,1)
+    call SaveStr(IC_Data,'A007',18,"Mana cost")
+    call SaveInteger(IC_Data,'A007',20,'aare')
+    call SaveInteger(IC_Data,'A007',21,2)
+    call SaveStr(IC_Data,'A007',22,"Area of effect")
+    call SaveInteger(IC_Data,'A007',24,'aran')
+    call SaveInteger(IC_Data,'A007',25,2)
+    call SaveStr(IC_Data,'A007',26,"Cast range")
+    call SaveInteger(IC_Data,'A007',28,'Osf1')
+    call SaveInteger(IC_Data,'A007',29,1)
+    call SaveStr(IC_Data,'A007',30,"Summoned Unit")
+    call SaveInteger(IC_Data,'A007',32,'Osf2')
+    call SaveInteger(IC_Data,'A007',33,1)
+    call SaveStr(IC_Data,'A007',34,"Number of Summoned Units")
+    call SaveInteger(IC_Data,'A007',-1,9)
+    call SaveInteger(IC_Data,'A00Y',0,'acas')
+    call SaveInteger(IC_Data,'A00Y',1,2)
+    call SaveStr(IC_Data,'A00Y',2,"Casting Time")
+    call SaveInteger(IC_Data,'A00Y',4,'adur')
+    call SaveInteger(IC_Data,'A00Y',5,2)
+    call SaveStr(IC_Data,'A00Y',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A00Y',8,'ahdu')
+    call SaveInteger(IC_Data,'A00Y',9,2)
+    call SaveStr(IC_Data,'A00Y',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A00Y',12,'acdn')
+    call SaveInteger(IC_Data,'A00Y',13,2)
+    call SaveStr(IC_Data,'A00Y',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A00Y',16,'amcs')
+    call SaveInteger(IC_Data,'A00Y',17,1)
+    call SaveStr(IC_Data,'A00Y',18,"Mana cost")
+    call SaveInteger(IC_Data,'A00Y',20,'aare')
+    call SaveInteger(IC_Data,'A00Y',21,2)
+    call SaveStr(IC_Data,'A00Y',22,"Area of effect")
+    call SaveInteger(IC_Data,'A00Y',24,'aran')
+    call SaveInteger(IC_Data,'A00Y',25,2)
+    call SaveStr(IC_Data,'A00Y',26,"Cast range")
+    call SaveInteger(IC_Data,'A00Y',28,'Osf1')
+    call SaveInteger(IC_Data,'A00Y',29,1)
+    call SaveStr(IC_Data,'A00Y',30,"Summoned Unit")
+    call SaveInteger(IC_Data,'A00Y',32,'Osf2')
+    call SaveInteger(IC_Data,'A00Y',33,1)
+    call SaveStr(IC_Data,'A00Y',34,"Number of Summoned Units")
+    call SaveInteger(IC_Data,'A00Y',-1,9)
+    call SaveInteger(IC_Data,'A012',0,'acas')
+    call SaveInteger(IC_Data,'A012',1,2)
+    call SaveStr(IC_Data,'A012',2,"Casting Time")
+    call SaveInteger(IC_Data,'A012',4,'adur')
+    call SaveInteger(IC_Data,'A012',5,2)
+    call SaveStr(IC_Data,'A012',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A012',8,'ahdu')
+    call SaveInteger(IC_Data,'A012',9,2)
+    call SaveStr(IC_Data,'A012',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A012',12,'acdn')
+    call SaveInteger(IC_Data,'A012',13,2)
+    call SaveStr(IC_Data,'A012',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A012',16,'amcs')
+    call SaveInteger(IC_Data,'A012',17,1)
+    call SaveStr(IC_Data,'A012',18,"Mana cost")
+    call SaveInteger(IC_Data,'A012',20,'aare')
+    call SaveInteger(IC_Data,'A012',21,2)
+    call SaveStr(IC_Data,'A012',22,"Area of effect")
+    call SaveInteger(IC_Data,'A012',24,'aran')
+    call SaveInteger(IC_Data,'A012',25,2)
+    call SaveStr(IC_Data,'A012',26,"Cast range")
+    call SaveInteger(IC_Data,'A012',28,'Had1')
+    call SaveInteger(IC_Data,'A012',29,2)
+    call SaveStr(IC_Data,'A012',30,"Armor Bonus")
+    call SaveInteger(IC_Data,'A012',-1,8)
+    call SaveInteger(IC_Data,'A014',0,'acas')
+    call SaveInteger(IC_Data,'A014',1,2)
+    call SaveStr(IC_Data,'A014',2,"Casting Time")
+    call SaveInteger(IC_Data,'A014',4,'adur')
+    call SaveInteger(IC_Data,'A014',5,2)
+    call SaveStr(IC_Data,'A014',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A014',8,'ahdu')
+    call SaveInteger(IC_Data,'A014',9,2)
+    call SaveStr(IC_Data,'A014',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A014',12,'acdn')
+    call SaveInteger(IC_Data,'A014',13,2)
+    call SaveStr(IC_Data,'A014',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A014',16,'amcs')
+    call SaveInteger(IC_Data,'A014',17,1)
+    call SaveStr(IC_Data,'A014',18,"Mana cost")
+    call SaveInteger(IC_Data,'A014',20,'aare')
+    call SaveInteger(IC_Data,'A014',21,2)
+    call SaveStr(IC_Data,'A014',22,"Area of effect")
+    call SaveInteger(IC_Data,'A014',24,'aran')
+    call SaveInteger(IC_Data,'A014',25,2)
+    call SaveStr(IC_Data,'A014',26,"Cast range")
+    call SaveInteger(IC_Data,'A014',28,'Osh1')
+    call SaveInteger(IC_Data,'A014',29,2)
+    call SaveStr(IC_Data,'A014',30,"Damage")
+    call SaveInteger(IC_Data,'A014',32,'Osh2')
+    call SaveInteger(IC_Data,'A014',33,2)
+    call SaveStr(IC_Data,'A014',34,"Maximum Damage")
+    call SaveInteger(IC_Data,'A014',36,'Osh3')
+    call SaveInteger(IC_Data,'A014',37,2)
+    call SaveStr(IC_Data,'A014',38,"Distance")
+    call SaveInteger(IC_Data,'A014',40,'Osh4')
+    call SaveInteger(IC_Data,'A014',41,2)
+    call SaveStr(IC_Data,'A014',42,"Final Area")
+    call SaveInteger(IC_Data,'A014',-1,11)
+    call SaveInteger(IC_Data,'A01E',0,'acas')
+    call SaveInteger(IC_Data,'A01E',1,2)
+    call SaveStr(IC_Data,'A01E',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01E',4,'adur')
+    call SaveInteger(IC_Data,'A01E',5,2)
+endfunction
+
+function IC_Data17 takes nothing returns nothing
+    call SaveStr(IC_Data,'A01E',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01E',8,'ahdu')
+    call SaveInteger(IC_Data,'A01E',9,2)
+    call SaveStr(IC_Data,'A01E',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01E',12,'acdn')
+    call SaveInteger(IC_Data,'A01E',13,2)
+    call SaveStr(IC_Data,'A01E',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01E',16,'amcs')
+    call SaveInteger(IC_Data,'A01E',17,1)
+    call SaveStr(IC_Data,'A01E',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01E',20,'Iatt')
+    call SaveInteger(IC_Data,'A01E',21,1)
+    call SaveStr(IC_Data,'A01E',22,"Attack Bonus")
+    call SaveInteger(IC_Data,'A01E',24,'aare')
+    call SaveInteger(IC_Data,'A01E',25,2)
+    call SaveStr(IC_Data,'A01E',26,"Area of effect")
+    call SaveInteger(IC_Data,'A01E',28,'aran')
+    call SaveInteger(IC_Data,'A01E',29,2)
+    call SaveStr(IC_Data,'A01E',30,"Cast range")
+    call SaveInteger(IC_Data,'A01E',-1,8)
+    call SaveInteger(IC_Data,'A01G',0,'acas')
+    call SaveInteger(IC_Data,'A01G',1,2)
+    call SaveStr(IC_Data,'A01G',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01G',4,'adur')
+    call SaveInteger(IC_Data,'A01G',5,2)
+    call SaveStr(IC_Data,'A01G',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01G',8,'ahdu')
+    call SaveInteger(IC_Data,'A01G',9,2)
+    call SaveStr(IC_Data,'A01G',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01G',12,'acdn')
+    call SaveInteger(IC_Data,'A01G',13,2)
+    call SaveStr(IC_Data,'A01G',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01G',16,'amcs')
+    call SaveInteger(IC_Data,'A01G',17,1)
+    call SaveStr(IC_Data,'A01G',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01G',20,'Iagi')
+    call SaveInteger(IC_Data,'A01G',21,1)
+    call SaveStr(IC_Data,'A01G',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A01G',24,'Iint')
+    call SaveInteger(IC_Data,'A01G',25,1)
+    call SaveStr(IC_Data,'A01G',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A01G',28,'Istr')
+    call SaveInteger(IC_Data,'A01G',29,1)
+    call SaveStr(IC_Data,'A01G',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A01G',32,'aare')
+    call SaveInteger(IC_Data,'A01G',33,2)
+    call SaveStr(IC_Data,'A01G',34,"Area of effect")
+    call SaveInteger(IC_Data,'A01G',36,'aran')
+    call SaveInteger(IC_Data,'A01G',37,2)
+    call SaveStr(IC_Data,'A01G',38,"Cast range")
+    call SaveInteger(IC_Data,'A01G',-1,10)
+    call SaveInteger(IC_Data,'A01M',0,'acas')
+    call SaveInteger(IC_Data,'A01M',1,2)
+    call SaveStr(IC_Data,'A01M',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01M',4,'adur')
+    call SaveInteger(IC_Data,'A01M',5,2)
+    call SaveStr(IC_Data,'A01M',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01M',8,'ahdu')
+    call SaveInteger(IC_Data,'A01M',9,2)
+    call SaveStr(IC_Data,'A01M',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01M',12,'acdn')
+    call SaveInteger(IC_Data,'A01M',13,2)
+    call SaveStr(IC_Data,'A01M',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01M',16,'amcs')
+    call SaveInteger(IC_Data,'A01M',17,1)
+    call SaveStr(IC_Data,'A01M',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01M',20,'Iagi')
+    call SaveInteger(IC_Data,'A01M',21,1)
+    call SaveStr(IC_Data,'A01M',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A01M',24,'Iint')
+    call SaveInteger(IC_Data,'A01M',25,1)
+    call SaveStr(IC_Data,'A01M',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A01M',28,'Istr')
+    call SaveInteger(IC_Data,'A01M',29,1)
+    call SaveStr(IC_Data,'A01M',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A01M',32,'aare')
+    call SaveInteger(IC_Data,'A01M',33,2)
+    call SaveStr(IC_Data,'A01M',34,"Area of effect")
+    call SaveInteger(IC_Data,'A01M',36,'aran')
+    call SaveInteger(IC_Data,'A01M',37,2)
+    call SaveStr(IC_Data,'A01M',38,"Cast range")
+    call SaveInteger(IC_Data,'A01M',-1,10)
+    call SaveInteger(IC_Data,'A01O',0,'acas')
+    call SaveInteger(IC_Data,'A01O',1,2)
+    call SaveStr(IC_Data,'A01O',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01O',4,'adur')
+    call SaveInteger(IC_Data,'A01O',5,2)
+    call SaveStr(IC_Data,'A01O',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01O',8,'ahdu')
+    call SaveInteger(IC_Data,'A01O',9,2)
+    call SaveStr(IC_Data,'A01O',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01O',12,'acdn')
+    call SaveInteger(IC_Data,'A01O',13,2)
+    call SaveStr(IC_Data,'A01O',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01O',16,'amcs')
+    call SaveInteger(IC_Data,'A01O',17,1)
+    call SaveStr(IC_Data,'A01O',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01O',20,'Iman')
+    call SaveInteger(IC_Data,'A01O',21,1)
+    call SaveStr(IC_Data,'A01O',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'A01O',24,'aare')
+    call SaveInteger(IC_Data,'A01O',25,2)
+    call SaveStr(IC_Data,'A01O',26,"Area of effect")
+    call SaveInteger(IC_Data,'A01O',28,'aran')
+    call SaveInteger(IC_Data,'A01O',29,2)
+    call SaveStr(IC_Data,'A01O',30,"Cast range")
+    call SaveInteger(IC_Data,'A01O',-1,8)
+    call SaveInteger(IC_Data,'A01P',0,'acas')
+    call SaveInteger(IC_Data,'A01P',1,2)
+    call SaveStr(IC_Data,'A01P',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01P',4,'adur')
+    call SaveInteger(IC_Data,'A01P',5,2)
+    call SaveStr(IC_Data,'A01P',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01P',8,'ahdu')
+    call SaveInteger(IC_Data,'A01P',9,2)
+    call SaveStr(IC_Data,'A01P',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01P',12,'acdn')
+    call SaveInteger(IC_Data,'A01P',13,2)
+    call SaveStr(IC_Data,'A01P',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01P',16,'amcs')
+    call SaveInteger(IC_Data,'A01P',17,1)
+    call SaveStr(IC_Data,'A01P',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01P',20,'Ilif')
+    call SaveInteger(IC_Data,'A01P',21,1)
+    call SaveStr(IC_Data,'A01P',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A01P',24,'aare')
+    call SaveInteger(IC_Data,'A01P',25,2)
+    call SaveStr(IC_Data,'A01P',26,"Area of effect")
+    call SaveInteger(IC_Data,'A01P',28,'aran')
+    call SaveInteger(IC_Data,'A01P',29,2)
+    call SaveStr(IC_Data,'A01P',30,"Cast range")
+    call SaveInteger(IC_Data,'A01P',-1,8)
+    call SaveInteger(IC_Data,'A01Z',0,'acas')
+    call SaveInteger(IC_Data,'A01Z',1,2)
+    call SaveStr(IC_Data,'A01Z',2,"Casting Time")
+    call SaveInteger(IC_Data,'A01Z',4,'adur')
+    call SaveInteger(IC_Data,'A01Z',5,2)
+    call SaveStr(IC_Data,'A01Z',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A01Z',8,'ahdu')
+    call SaveInteger(IC_Data,'A01Z',9,2)
+    call SaveStr(IC_Data,'A01Z',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A01Z',12,'acdn')
+    call SaveInteger(IC_Data,'A01Z',13,2)
+    call SaveStr(IC_Data,'A01Z',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A01Z',16,'amcs')
+    call SaveInteger(IC_Data,'A01Z',17,1)
+    call SaveStr(IC_Data,'A01Z',18,"Mana cost")
+    call SaveInteger(IC_Data,'A01Z',20,'aran')
+    call SaveInteger(IC_Data,'A01Z',21,2)
+    call SaveStr(IC_Data,'A01Z',22,"Cast range")
+    call SaveInteger(IC_Data,'A01Z',24,'Nfd1')
+    call SaveInteger(IC_Data,'A01Z',25,2)
+    call SaveStr(IC_Data,'A01Z',26,"Graphic Delay")
+    call SaveInteger(IC_Data,'A01Z',28,'Nfd2')
+    call SaveInteger(IC_Data,'A01Z',29,2)
+    call SaveStr(IC_Data,'A01Z',30,"Graphic Duration")
+    call SaveInteger(IC_Data,'A01Z',32,'Nfd3')
+    call SaveInteger(IC_Data,'A01Z',33,2)
+    call SaveStr(IC_Data,'A01Z',34,"Damage")
+    call SaveInteger(IC_Data,'A01Z',36,'aare')
+endfunction
+
+function IC_Data18 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A01Z',37,2)
+    call SaveStr(IC_Data,'A01Z',38,"Area of effect")
+    call SaveInteger(IC_Data,'A01Z',-1,10)
+    call SaveInteger(IC_Data,'A023',0,'acas')
+    call SaveInteger(IC_Data,'A023',1,2)
+    call SaveStr(IC_Data,'A023',2,"Casting Time")
+    call SaveInteger(IC_Data,'A023',4,'adur')
+    call SaveInteger(IC_Data,'A023',5,2)
+    call SaveStr(IC_Data,'A023',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A023',8,'ahdu')
+    call SaveInteger(IC_Data,'A023',9,2)
+    call SaveStr(IC_Data,'A023',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A023',12,'acdn')
+    call SaveInteger(IC_Data,'A023',13,2)
+    call SaveStr(IC_Data,'A023',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A023',16,'amcs')
+    call SaveInteger(IC_Data,'A023',17,1)
+    call SaveStr(IC_Data,'A023',18,"Mana cost")
+    call SaveInteger(IC_Data,'A023',20,'Ilif')
+    call SaveInteger(IC_Data,'A023',21,1)
+    call SaveStr(IC_Data,'A023',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A023',24,'aare')
+    call SaveInteger(IC_Data,'A023',25,2)
+    call SaveStr(IC_Data,'A023',26,"Area of effect")
+    call SaveInteger(IC_Data,'A023',28,'aran')
+    call SaveInteger(IC_Data,'A023',29,2)
+    call SaveStr(IC_Data,'A023',30,"Cast range")
+    call SaveInteger(IC_Data,'A023',-1,8)
+    call SaveInteger(IC_Data,'A025',0,'acas')
+    call SaveInteger(IC_Data,'A025',1,2)
+    call SaveStr(IC_Data,'A025',2,"Casting Time")
+    call SaveInteger(IC_Data,'A025',4,'adur')
+    call SaveInteger(IC_Data,'A025',5,2)
+    call SaveStr(IC_Data,'A025',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A025',8,'ahdu')
+    call SaveInteger(IC_Data,'A025',9,2)
+    call SaveStr(IC_Data,'A025',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A025',12,'acdn')
+    call SaveInteger(IC_Data,'A025',13,2)
+    call SaveStr(IC_Data,'A025',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A025',16,'amcs')
+    call SaveInteger(IC_Data,'A025',17,1)
+    call SaveStr(IC_Data,'A025',18,"Mana cost")
+    call SaveInteger(IC_Data,'A025',20,'aare')
+    call SaveInteger(IC_Data,'A025',21,2)
+    call SaveStr(IC_Data,'A025',22,"Area of effect")
+    call SaveInteger(IC_Data,'A025',24,'Isn1')
+    call SaveInteger(IC_Data,'A025',25,1)
+    call SaveStr(IC_Data,'A025',26,"Summon 1 - Amount")
+    call SaveInteger(IC_Data,'A025',28,'aran')
+    call SaveInteger(IC_Data,'A025',29,2)
+    call SaveStr(IC_Data,'A025',30,"Cast range")
+    call SaveInteger(IC_Data,'A025',-1,8)
+    call SaveInteger(IC_Data,'A026',0,'acas')
+    call SaveInteger(IC_Data,'A026',1,2)
+    call SaveStr(IC_Data,'A026',2,"Casting Time")
+    call SaveInteger(IC_Data,'A026',4,'adur')
+    call SaveInteger(IC_Data,'A026',5,2)
+    call SaveStr(IC_Data,'A026',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A026',8,'ahdu')
+    call SaveInteger(IC_Data,'A026',9,2)
+    call SaveStr(IC_Data,'A026',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A026',12,'acdn')
+    call SaveInteger(IC_Data,'A026',13,2)
+    call SaveStr(IC_Data,'A026',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A026',16,'amcs')
+    call SaveInteger(IC_Data,'A026',17,1)
+    call SaveStr(IC_Data,'A026',18,"Mana cost")
+    call SaveInteger(IC_Data,'A026',20,'Iagi')
+    call SaveInteger(IC_Data,'A026',21,1)
+    call SaveStr(IC_Data,'A026',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A026',24,'Iint')
+    call SaveInteger(IC_Data,'A026',25,1)
+    call SaveStr(IC_Data,'A026',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A026',28,'Istr')
+    call SaveInteger(IC_Data,'A026',29,1)
+    call SaveStr(IC_Data,'A026',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A026',32,'aare')
+    call SaveInteger(IC_Data,'A026',33,2)
+    call SaveStr(IC_Data,'A026',34,"Area of effect")
+    call SaveInteger(IC_Data,'A026',36,'aran')
+    call SaveInteger(IC_Data,'A026',37,2)
+    call SaveStr(IC_Data,'A026',38,"Cast range")
+    call SaveInteger(IC_Data,'A026',-1,10)
+    call SaveInteger(IC_Data,'A029',0,'acas')
+    call SaveInteger(IC_Data,'A029',1,2)
+    call SaveStr(IC_Data,'A029',2,"Casting Time")
+    call SaveInteger(IC_Data,'A029',4,'adur')
+    call SaveInteger(IC_Data,'A029',5,2)
+    call SaveStr(IC_Data,'A029',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A029',8,'ahdu')
+    call SaveInteger(IC_Data,'A029',9,2)
+    call SaveStr(IC_Data,'A029',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A029',12,'acdn')
+    call SaveInteger(IC_Data,'A029',13,2)
+    call SaveStr(IC_Data,'A029',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A029',16,'amcs')
+    call SaveInteger(IC_Data,'A029',17,1)
+    call SaveStr(IC_Data,'A029',18,"Mana cost")
+    call SaveInteger(IC_Data,'A029',20,'aare')
+    call SaveInteger(IC_Data,'A029',21,2)
+    call SaveStr(IC_Data,'A029',22,"Area of effect")
+    call SaveInteger(IC_Data,'A029',24,'aran')
+    call SaveInteger(IC_Data,'A029',25,2)
+    call SaveStr(IC_Data,'A029',26,"Cast range")
+    call SaveInteger(IC_Data,'A029',28,'Osf1')
+    call SaveInteger(IC_Data,'A029',29,1)
+    call SaveStr(IC_Data,'A029',30,"Summoned Unit")
+    call SaveInteger(IC_Data,'A029',32,'Osf2')
+    call SaveInteger(IC_Data,'A029',33,1)
+    call SaveStr(IC_Data,'A029',34,"Number of Summoned Units")
+    call SaveInteger(IC_Data,'A029',-1,9)
+    call SaveInteger(IC_Data,'A02E',0,'acas')
+    call SaveInteger(IC_Data,'A02E',1,2)
+    call SaveStr(IC_Data,'A02E',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02E',4,'adur')
+    call SaveInteger(IC_Data,'A02E',5,2)
+    call SaveStr(IC_Data,'A02E',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02E',8,'ahdu')
+    call SaveInteger(IC_Data,'A02E',9,2)
+    call SaveStr(IC_Data,'A02E',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02E',12,'acdn')
+    call SaveInteger(IC_Data,'A02E',13,2)
+    call SaveStr(IC_Data,'A02E',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02E',16,'amcs')
+    call SaveInteger(IC_Data,'A02E',17,1)
+    call SaveStr(IC_Data,'A02E',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02E',20,'aare')
+    call SaveInteger(IC_Data,'A02E',21,2)
+    call SaveStr(IC_Data,'A02E',22,"Area of effect")
+    call SaveInteger(IC_Data,'A02E',24,'nca1')
+    call SaveInteger(IC_Data,'A02E',25,2)
+    call SaveStr(IC_Data,'A02E',26,"Distributed Damage Factor")
+    call SaveInteger(IC_Data,'A02E',28,'aran')
+    call SaveInteger(IC_Data,'A02E',29,2)
+    call SaveStr(IC_Data,'A02E',30,"Cast range")
+    call SaveInteger(IC_Data,'A02E',-1,8)
+    call SaveInteger(IC_Data,'A02F',0,'acas')
+    call SaveInteger(IC_Data,'A02F',1,2)
+    call SaveStr(IC_Data,'A02F',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02F',4,'adur')
+    call SaveInteger(IC_Data,'A02F',5,2)
+    call SaveStr(IC_Data,'A02F',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02F',8,'ahdu')
+    call SaveInteger(IC_Data,'A02F',9,2)
+    call SaveStr(IC_Data,'A02F',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02F',12,'acdn')
+    call SaveInteger(IC_Data,'A02F',13,2)
+    call SaveStr(IC_Data,'A02F',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02F',16,'amcs')
+    call SaveInteger(IC_Data,'A02F',17,1)
+    call SaveStr(IC_Data,'A02F',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02F',20,'aare')
+    call SaveInteger(IC_Data,'A02F',21,2)
+    call SaveStr(IC_Data,'A02F',22,"Area of effect")
+    call SaveInteger(IC_Data,'A02F',24,'aran')
+    call SaveInteger(IC_Data,'A02F',25,2)
+    call SaveStr(IC_Data,'A02F',26,"Cast range")
+    call SaveInteger(IC_Data,'A02F',28,'Uan1')
+    call SaveInteger(IC_Data,'A02F',29,1)
+endfunction
+
+function IC_Data19 takes nothing returns nothing
+    call SaveStr(IC_Data,'A02F',30,"Number of Corpses Raised")
+    call SaveInteger(IC_Data,'A02F',-1,8)
+    call SaveInteger(IC_Data,'A02H',0,'acas')
+    call SaveInteger(IC_Data,'A02H',1,2)
+    call SaveStr(IC_Data,'A02H',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02H',4,'adur')
+    call SaveInteger(IC_Data,'A02H',5,2)
+    call SaveStr(IC_Data,'A02H',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02H',8,'ahdu')
+    call SaveInteger(IC_Data,'A02H',9,2)
+    call SaveStr(IC_Data,'A02H',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02H',12,'acdn')
+    call SaveInteger(IC_Data,'A02H',13,2)
+    call SaveStr(IC_Data,'A02H',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02H',16,'amcs')
+    call SaveInteger(IC_Data,'A02H',17,1)
+    call SaveStr(IC_Data,'A02H',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02H',20,'Iagi')
+    call SaveInteger(IC_Data,'A02H',21,1)
+    call SaveStr(IC_Data,'A02H',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A02H',24,'Iint')
+    call SaveInteger(IC_Data,'A02H',25,1)
+    call SaveStr(IC_Data,'A02H',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A02H',28,'Istr')
+    call SaveInteger(IC_Data,'A02H',29,1)
+    call SaveStr(IC_Data,'A02H',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A02H',32,'aare')
+    call SaveInteger(IC_Data,'A02H',33,2)
+    call SaveStr(IC_Data,'A02H',34,"Area of effect")
+    call SaveInteger(IC_Data,'A02H',36,'aran')
+    call SaveInteger(IC_Data,'A02H',37,2)
+    call SaveStr(IC_Data,'A02H',38,"Cast range")
+    call SaveInteger(IC_Data,'A02H',-1,10)
+    call SaveInteger(IC_Data,'A02J',0,'acas')
+    call SaveInteger(IC_Data,'A02J',1,2)
+    call SaveStr(IC_Data,'A02J',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02J',4,'adur')
+    call SaveInteger(IC_Data,'A02J',5,2)
+    call SaveStr(IC_Data,'A02J',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02J',8,'ahdu')
+    call SaveInteger(IC_Data,'A02J',9,2)
+    call SaveStr(IC_Data,'A02J',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02J',12,'acdn')
+    call SaveInteger(IC_Data,'A02J',13,2)
+    call SaveStr(IC_Data,'A02J',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02J',16,'aare')
+    call SaveInteger(IC_Data,'A02J',17,2)
+    call SaveStr(IC_Data,'A02J',18,"Area of effect")
+    call SaveInteger(IC_Data,'A02J',20,'Hab1')
+    call SaveInteger(IC_Data,'A02J',21,2)
+    call SaveStr(IC_Data,'A02J',22,"Mana Regeneration Increase")
+    call SaveBoolean(IC_Data,'A02J',23,true)
+    call SaveInteger(IC_Data,'A02J',24,'amcs')
+    call SaveInteger(IC_Data,'A02J',25,1)
+    call SaveStr(IC_Data,'A02J',26,"Mana cost")
+    call SaveInteger(IC_Data,'A02J',28,'aran')
+    call SaveInteger(IC_Data,'A02J',29,2)
+    call SaveStr(IC_Data,'A02J',30,"Cast range")
+    call SaveInteger(IC_Data,'A02J',-1,8)
+    call SaveInteger(IC_Data,'A02L',0,'acas')
+    call SaveInteger(IC_Data,'A02L',1,2)
+    call SaveStr(IC_Data,'A02L',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02L',4,'adur')
+    call SaveInteger(IC_Data,'A02L',5,2)
+    call SaveStr(IC_Data,'A02L',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02L',8,'ahdu')
+    call SaveInteger(IC_Data,'A02L',9,2)
+    call SaveStr(IC_Data,'A02L',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02L',12,'acdn')
+    call SaveInteger(IC_Data,'A02L',13,2)
+    call SaveStr(IC_Data,'A02L',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02L',16,'aare')
+    call SaveInteger(IC_Data,'A02L',17,2)
+    call SaveStr(IC_Data,'A02L',18,"Area of effect")
+    call SaveInteger(IC_Data,'A02L',20,'Uau1')
+    call SaveInteger(IC_Data,'A02L',21,2)
+    call SaveStr(IC_Data,'A02L',22,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A02L',23,true)
+    call SaveInteger(IC_Data,'A02L',24,'Uau2')
+    call SaveInteger(IC_Data,'A02L',25,2)
+    call SaveStr(IC_Data,'A02L',26,"Life Regeneration Increase (%)")
+    call SaveBoolean(IC_Data,'A02L',27,true)
+    call SaveInteger(IC_Data,'A02L',28,'amcs')
+    call SaveInteger(IC_Data,'A02L',29,1)
+    call SaveStr(IC_Data,'A02L',30,"Mana cost")
+    call SaveInteger(IC_Data,'A02L',32,'aran')
+    call SaveInteger(IC_Data,'A02L',33,2)
+    call SaveStr(IC_Data,'A02L',34,"Cast range")
+    call SaveInteger(IC_Data,'A02L',-1,9)
+    call SaveInteger(IC_Data,'A02O',0,'acas')
+    call SaveInteger(IC_Data,'A02O',1,2)
+    call SaveStr(IC_Data,'A02O',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02O',4,'adur')
+    call SaveInteger(IC_Data,'A02O',5,2)
+    call SaveStr(IC_Data,'A02O',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02O',8,'ahdu')
+    call SaveInteger(IC_Data,'A02O',9,2)
+    call SaveStr(IC_Data,'A02O',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02O',12,'acdn')
+    call SaveInteger(IC_Data,'A02O',13,2)
+    call SaveStr(IC_Data,'A02O',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02O',16,'amcs')
+    call SaveInteger(IC_Data,'A02O',17,1)
+    call SaveStr(IC_Data,'A02O',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02O',20,'Iman')
+    call SaveInteger(IC_Data,'A02O',21,1)
+    call SaveStr(IC_Data,'A02O',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'A02O',24,'aare')
+    call SaveInteger(IC_Data,'A02O',25,2)
+    call SaveStr(IC_Data,'A02O',26,"Area of effect")
+    call SaveInteger(IC_Data,'A02O',28,'aran')
+    call SaveInteger(IC_Data,'A02O',29,2)
+    call SaveStr(IC_Data,'A02O',30,"Cast range")
+    call SaveInteger(IC_Data,'A02O',-1,8)
+    call SaveInteger(IC_Data,'A02R',0,'acas')
+    call SaveInteger(IC_Data,'A02R',1,2)
+    call SaveStr(IC_Data,'A02R',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02R',4,'adur')
+    call SaveInteger(IC_Data,'A02R',5,2)
+    call SaveStr(IC_Data,'A02R',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02R',8,'ahdu')
+    call SaveInteger(IC_Data,'A02R',9,2)
+    call SaveStr(IC_Data,'A02R',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02R',12,'acdn')
+    call SaveInteger(IC_Data,'A02R',13,2)
+    call SaveStr(IC_Data,'A02R',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02R',16,'amcs')
+    call SaveInteger(IC_Data,'A02R',17,1)
+    call SaveStr(IC_Data,'A02R',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02R',20,'aare')
+    call SaveInteger(IC_Data,'A02R',21,2)
+    call SaveStr(IC_Data,'A02R',22,"Area of effect")
+    call SaveInteger(IC_Data,'A02R',24,'Roa1')
+    call SaveInteger(IC_Data,'A02R',25,2)
+    call SaveStr(IC_Data,'A02R',26,"Damage Increase (%)")
+    call SaveBoolean(IC_Data,'A02R',27,true)
+    call SaveInteger(IC_Data,'A02R',28,'Roa2')
+    call SaveInteger(IC_Data,'A02R',29,1)
+    call SaveStr(IC_Data,'A02R',30,"Defense Increase")
+    call SaveInteger(IC_Data,'A02R',32,'Roa3')
+    call SaveInteger(IC_Data,'A02R',33,2)
+    call SaveStr(IC_Data,'A02R',34,"Life Regeneration Rate")
+    call SaveInteger(IC_Data,'A02R',36,'Roa4')
+    call SaveInteger(IC_Data,'A02R',37,2)
+    call SaveStr(IC_Data,'A02R',38,"Mana Regen")
+    call SaveInteger(IC_Data,'A02R',40,'Roa7')
+    call SaveInteger(IC_Data,'A02R',41,1)
+    call SaveStr(IC_Data,'A02R',42,"Max Units")
+    call SaveInteger(IC_Data,'A02R',44,'aran')
+    call SaveInteger(IC_Data,'A02R',45,2)
+    call SaveStr(IC_Data,'A02R',46,"Cast range")
+    call SaveInteger(IC_Data,'A02R',-1,12)
+    call SaveInteger(IC_Data,'A02Y',0,'acas')
+    call SaveInteger(IC_Data,'A02Y',1,2)
+    call SaveStr(IC_Data,'A02Y',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02Y',4,'adur')
+    call SaveInteger(IC_Data,'A02Y',5,2)
+    call SaveStr(IC_Data,'A02Y',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02Y',8,'ahdu')
+    call SaveInteger(IC_Data,'A02Y',9,2)
+endfunction
+
+function IC_Data20 takes nothing returns nothing
+    call SaveStr(IC_Data,'A02Y',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02Y',12,'acdn')
+    call SaveInteger(IC_Data,'A02Y',13,2)
+    call SaveStr(IC_Data,'A02Y',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02Y',16,'amcs')
+    call SaveInteger(IC_Data,'A02Y',17,1)
+    call SaveStr(IC_Data,'A02Y',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02Y',20,'Iatt')
+    call SaveInteger(IC_Data,'A02Y',21,1)
+    call SaveStr(IC_Data,'A02Y',22,"Attack Bonus")
+    call SaveInteger(IC_Data,'A02Y',24,'aare')
+    call SaveInteger(IC_Data,'A02Y',25,2)
+    call SaveStr(IC_Data,'A02Y',26,"Area of effect")
+    call SaveInteger(IC_Data,'A02Y',28,'aran')
+    call SaveInteger(IC_Data,'A02Y',29,2)
+    call SaveStr(IC_Data,'A02Y',30,"Cast range")
+    call SaveInteger(IC_Data,'A02Y',-1,8)
+    call SaveInteger(IC_Data,'A02Z',0,'acas')
+    call SaveInteger(IC_Data,'A02Z',1,2)
+    call SaveStr(IC_Data,'A02Z',2,"Casting Time")
+    call SaveInteger(IC_Data,'A02Z',4,'adur')
+    call SaveInteger(IC_Data,'A02Z',5,2)
+    call SaveStr(IC_Data,'A02Z',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A02Z',8,'ahdu')
+    call SaveInteger(IC_Data,'A02Z',9,2)
+    call SaveStr(IC_Data,'A02Z',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A02Z',12,'acdn')
+    call SaveInteger(IC_Data,'A02Z',13,2)
+    call SaveStr(IC_Data,'A02Z',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A02Z',16,'amcs')
+    call SaveInteger(IC_Data,'A02Z',17,1)
+    call SaveStr(IC_Data,'A02Z',18,"Mana cost")
+    call SaveInteger(IC_Data,'A02Z',20,'aran')
+    call SaveInteger(IC_Data,'A02Z',21,2)
+    call SaveStr(IC_Data,'A02Z',22,"Cast range")
+    call SaveInteger(IC_Data,'A02Z',24,'Usl1')
+    call SaveInteger(IC_Data,'A02Z',25,2)
+    call SaveStr(IC_Data,'A02Z',26,"Stun Duration")
+    call SaveInteger(IC_Data,'A02Z',28,'aare')
+    call SaveInteger(IC_Data,'A02Z',29,2)
+    call SaveStr(IC_Data,'A02Z',30,"Area of effect")
+    call SaveInteger(IC_Data,'A02Z',-1,8)
+    call SaveInteger(IC_Data,'A030',0,'acas')
+    call SaveInteger(IC_Data,'A030',1,2)
+    call SaveStr(IC_Data,'A030',2,"Casting Time")
+    call SaveInteger(IC_Data,'A030',4,'adur')
+    call SaveInteger(IC_Data,'A030',5,2)
+    call SaveStr(IC_Data,'A030',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A030',8,'ahdu')
+    call SaveInteger(IC_Data,'A030',9,2)
+    call SaveStr(IC_Data,'A030',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A030',12,'acdn')
+    call SaveInteger(IC_Data,'A030',13,2)
+    call SaveStr(IC_Data,'A030',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A030',16,'amcs')
+    call SaveInteger(IC_Data,'A030',17,1)
+    call SaveStr(IC_Data,'A030',18,"Mana cost")
+    call SaveInteger(IC_Data,'A030',20,'aare')
+    call SaveInteger(IC_Data,'A030',21,2)
+    call SaveStr(IC_Data,'A030',22,"Area of effect")
+    call SaveInteger(IC_Data,'A030',24,'aran')
+    call SaveInteger(IC_Data,'A030',25,2)
+    call SaveStr(IC_Data,'A030',26,"Cast range")
+    call SaveInteger(IC_Data,'A030',28,'Esf1')
+    call SaveInteger(IC_Data,'A030',29,2)
+    call SaveStr(IC_Data,'A030',30,"Damage Dealt")
+    call SaveInteger(IC_Data,'A030',32,'Esf2')
+    call SaveInteger(IC_Data,'A030',33,2)
+    call SaveStr(IC_Data,'A030',34,"Damage Interval")
+    call SaveInteger(IC_Data,'A030',36,'Esf3')
+    call SaveInteger(IC_Data,'A030',37,2)
+    call SaveStr(IC_Data,'A030',38,"Building Reduction")
+    call SaveInteger(IC_Data,'A030',-1,10)
+    call SaveInteger(IC_Data,'A031',0,'acas')
+    call SaveInteger(IC_Data,'A031',1,2)
+    call SaveStr(IC_Data,'A031',2,"Casting Time")
+    call SaveInteger(IC_Data,'A031',4,'adur')
+    call SaveInteger(IC_Data,'A031',5,2)
+    call SaveStr(IC_Data,'A031',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A031',8,'ahdu')
+    call SaveInteger(IC_Data,'A031',9,2)
+    call SaveStr(IC_Data,'A031',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A031',12,'acdn')
+    call SaveInteger(IC_Data,'A031',13,2)
+    call SaveStr(IC_Data,'A031',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A031',16,'amcs')
+    call SaveInteger(IC_Data,'A031',17,1)
+    call SaveStr(IC_Data,'A031',18,"Mana cost")
+    call SaveInteger(IC_Data,'A031',20,'Idef')
+    call SaveInteger(IC_Data,'A031',21,1)
+    call SaveStr(IC_Data,'A031',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'A031',24,'aare')
+    call SaveInteger(IC_Data,'A031',25,2)
+    call SaveStr(IC_Data,'A031',26,"Area of effect")
+    call SaveInteger(IC_Data,'A031',28,'aran')
+    call SaveInteger(IC_Data,'A031',29,2)
+    call SaveStr(IC_Data,'A031',30,"Cast range")
+    call SaveInteger(IC_Data,'A031',-1,8)
+    call SaveInteger(IC_Data,'A032',0,'acas')
+    call SaveInteger(IC_Data,'A032',1,2)
+    call SaveStr(IC_Data,'A032',2,"Casting Time")
+    call SaveInteger(IC_Data,'A032',4,'adur')
+    call SaveInteger(IC_Data,'A032',5,2)
+    call SaveStr(IC_Data,'A032',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A032',8,'ahdu')
+    call SaveInteger(IC_Data,'A032',9,2)
+    call SaveStr(IC_Data,'A032',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A032',12,'acdn')
+    call SaveInteger(IC_Data,'A032',13,2)
+    call SaveStr(IC_Data,'A032',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A032',16,'amcs')
+    call SaveInteger(IC_Data,'A032',17,1)
+    call SaveStr(IC_Data,'A032',18,"Mana cost")
+    call SaveInteger(IC_Data,'A032',20,'Iagi')
+    call SaveInteger(IC_Data,'A032',21,1)
+    call SaveStr(IC_Data,'A032',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A032',24,'Iint')
+    call SaveInteger(IC_Data,'A032',25,1)
+    call SaveStr(IC_Data,'A032',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A032',28,'Istr')
+    call SaveInteger(IC_Data,'A032',29,1)
+    call SaveStr(IC_Data,'A032',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A032',32,'aare')
+    call SaveInteger(IC_Data,'A032',33,2)
+    call SaveStr(IC_Data,'A032',34,"Area of effect")
+    call SaveInteger(IC_Data,'A032',36,'aran')
+    call SaveInteger(IC_Data,'A032',37,2)
+    call SaveStr(IC_Data,'A032',38,"Cast range")
+    call SaveInteger(IC_Data,'A032',-1,10)
+    call SaveInteger(IC_Data,'A039',0,'acas')
+    call SaveInteger(IC_Data,'A039',1,2)
+    call SaveStr(IC_Data,'A039',2,"Casting Time")
+    call SaveInteger(IC_Data,'A039',4,'adur')
+    call SaveInteger(IC_Data,'A039',5,2)
+    call SaveStr(IC_Data,'A039',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A039',8,'ahdu')
+    call SaveInteger(IC_Data,'A039',9,2)
+    call SaveStr(IC_Data,'A039',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A039',12,'acdn')
+    call SaveInteger(IC_Data,'A039',13,2)
+    call SaveStr(IC_Data,'A039',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A039',16,'amcs')
+    call SaveInteger(IC_Data,'A039',17,1)
+    call SaveStr(IC_Data,'A039',18,"Mana cost")
+    call SaveInteger(IC_Data,'A039',20,'aare')
+    call SaveInteger(IC_Data,'A039',21,2)
+    call SaveStr(IC_Data,'A039',22,"Area of effect")
+    call SaveInteger(IC_Data,'A039',24,'Hwe1')
+    call SaveInteger(IC_Data,'A039',25,1)
+    call SaveStr(IC_Data,'A039',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'A039',28,'Hwe2')
+    call SaveInteger(IC_Data,'A039',29,1)
+    call SaveStr(IC_Data,'A039',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'A039',32,'aran')
+    call SaveInteger(IC_Data,'A039',33,2)
+    call SaveStr(IC_Data,'A039',34,"Cast range")
+    call SaveInteger(IC_Data,'A039',-1,9)
+    call SaveInteger(IC_Data,'A03C',0,'acas')
+    call SaveInteger(IC_Data,'A03C',1,2)
+    call SaveStr(IC_Data,'A03C',2,"Casting Time")
+endfunction
+
+function IC_Data21 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A03C',4,'adur')
+    call SaveInteger(IC_Data,'A03C',5,2)
+    call SaveStr(IC_Data,'A03C',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A03C',8,'ahdu')
+    call SaveInteger(IC_Data,'A03C',9,2)
+    call SaveStr(IC_Data,'A03C',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A03C',12,'acdn')
+    call SaveInteger(IC_Data,'A03C',13,2)
+    call SaveStr(IC_Data,'A03C',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A03C',16,'amcs')
+    call SaveInteger(IC_Data,'A03C',17,1)
+    call SaveStr(IC_Data,'A03C',18,"Mana cost")
+    call SaveInteger(IC_Data,'A03C',20,'Iagi')
+    call SaveInteger(IC_Data,'A03C',21,1)
+    call SaveStr(IC_Data,'A03C',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A03C',24,'Iint')
+    call SaveInteger(IC_Data,'A03C',25,1)
+    call SaveStr(IC_Data,'A03C',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A03C',28,'Istr')
+    call SaveInteger(IC_Data,'A03C',29,1)
+    call SaveStr(IC_Data,'A03C',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A03C',32,'aare')
+    call SaveInteger(IC_Data,'A03C',33,2)
+    call SaveStr(IC_Data,'A03C',34,"Area of effect")
+    call SaveInteger(IC_Data,'A03C',36,'aran')
+    call SaveInteger(IC_Data,'A03C',37,2)
+    call SaveStr(IC_Data,'A03C',38,"Cast range")
+    call SaveInteger(IC_Data,'A03C',-1,10)
+    call SaveInteger(IC_Data,'A03D',0,'acas')
+    call SaveInteger(IC_Data,'A03D',1,2)
+    call SaveStr(IC_Data,'A03D',2,"Casting Time")
+    call SaveInteger(IC_Data,'A03D',4,'adur')
+    call SaveInteger(IC_Data,'A03D',5,2)
+    call SaveStr(IC_Data,'A03D',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A03D',8,'ahdu')
+    call SaveInteger(IC_Data,'A03D',9,2)
+    call SaveStr(IC_Data,'A03D',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A03D',12,'acdn')
+    call SaveInteger(IC_Data,'A03D',13,2)
+    call SaveStr(IC_Data,'A03D',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A03D',16,'amcs')
+    call SaveInteger(IC_Data,'A03D',17,1)
+    call SaveStr(IC_Data,'A03D',18,"Mana cost")
+    call SaveInteger(IC_Data,'A03D',20,'Iagi')
+    call SaveInteger(IC_Data,'A03D',21,1)
+    call SaveStr(IC_Data,'A03D',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A03D',24,'Iint')
+    call SaveInteger(IC_Data,'A03D',25,1)
+    call SaveStr(IC_Data,'A03D',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A03D',28,'Istr')
+    call SaveInteger(IC_Data,'A03D',29,1)
+    call SaveStr(IC_Data,'A03D',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A03D',32,'aare')
+    call SaveInteger(IC_Data,'A03D',33,2)
+    call SaveStr(IC_Data,'A03D',34,"Area of effect")
+    call SaveInteger(IC_Data,'A03D',36,'aran')
+    call SaveInteger(IC_Data,'A03D',37,2)
+    call SaveStr(IC_Data,'A03D',38,"Cast range")
+    call SaveInteger(IC_Data,'A03D',-1,10)
+    call SaveInteger(IC_Data,'A03E',0,'acas')
+    call SaveInteger(IC_Data,'A03E',1,2)
+    call SaveStr(IC_Data,'A03E',2,"Casting Time")
+    call SaveInteger(IC_Data,'A03E',4,'adur')
+    call SaveInteger(IC_Data,'A03E',5,2)
+    call SaveStr(IC_Data,'A03E',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A03E',8,'ahdu')
+    call SaveInteger(IC_Data,'A03E',9,2)
+    call SaveStr(IC_Data,'A03E',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A03E',12,'acdn')
+    call SaveInteger(IC_Data,'A03E',13,2)
+    call SaveStr(IC_Data,'A03E',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A03E',16,'amcs')
+    call SaveInteger(IC_Data,'A03E',17,1)
+    call SaveStr(IC_Data,'A03E',18,"Mana cost")
+    call SaveInteger(IC_Data,'A03E',20,'Iagi')
+    call SaveInteger(IC_Data,'A03E',21,1)
+    call SaveStr(IC_Data,'A03E',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A03E',24,'Iint')
+    call SaveInteger(IC_Data,'A03E',25,1)
+    call SaveStr(IC_Data,'A03E',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A03E',28,'Istr')
+    call SaveInteger(IC_Data,'A03E',29,1)
+    call SaveStr(IC_Data,'A03E',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A03E',32,'aare')
+    call SaveInteger(IC_Data,'A03E',33,2)
+    call SaveStr(IC_Data,'A03E',34,"Area of effect")
+    call SaveInteger(IC_Data,'A03E',36,'aran')
+    call SaveInteger(IC_Data,'A03E',37,2)
+    call SaveStr(IC_Data,'A03E',38,"Cast range")
+    call SaveInteger(IC_Data,'A03E',-1,10)
+    call SaveInteger(IC_Data,'A03L',0,'acas')
+    call SaveInteger(IC_Data,'A03L',1,2)
+    call SaveStr(IC_Data,'A03L',2,"Casting Time")
+    call SaveInteger(IC_Data,'A03L',4,'adur')
+    call SaveInteger(IC_Data,'A03L',5,2)
+    call SaveStr(IC_Data,'A03L',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A03L',8,'ahdu')
+    call SaveInteger(IC_Data,'A03L',9,2)
+    call SaveStr(IC_Data,'A03L',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A03L',12,'acdn')
+    call SaveInteger(IC_Data,'A03L',13,2)
+    call SaveStr(IC_Data,'A03L',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A03L',16,'amcs')
+    call SaveInteger(IC_Data,'A03L',17,1)
+    call SaveStr(IC_Data,'A03L',18,"Mana cost")
+    call SaveInteger(IC_Data,'A03L',20,'Iman')
+    call SaveInteger(IC_Data,'A03L',21,1)
+    call SaveStr(IC_Data,'A03L',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'A03L',24,'aare')
+    call SaveInteger(IC_Data,'A03L',25,2)
+    call SaveStr(IC_Data,'A03L',26,"Area of effect")
+    call SaveInteger(IC_Data,'A03L',28,'aran')
+    call SaveInteger(IC_Data,'A03L',29,2)
+    call SaveStr(IC_Data,'A03L',30,"Cast range")
+    call SaveInteger(IC_Data,'A03L',-1,8)
+    call SaveInteger(IC_Data,'A03T',0,'acas')
+    call SaveInteger(IC_Data,'A03T',1,2)
+    call SaveStr(IC_Data,'A03T',2,"Casting Time")
+    call SaveInteger(IC_Data,'A03T',4,'adur')
+    call SaveInteger(IC_Data,'A03T',5,2)
+    call SaveStr(IC_Data,'A03T',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A03T',8,'ahdu')
+    call SaveInteger(IC_Data,'A03T',9,2)
+    call SaveStr(IC_Data,'A03T',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A03T',12,'acdn')
+    call SaveInteger(IC_Data,'A03T',13,2)
+    call SaveStr(IC_Data,'A03T',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A03T',16,'amcs')
+    call SaveInteger(IC_Data,'A03T',17,1)
+    call SaveStr(IC_Data,'A03T',18,"Mana cost")
+    call SaveInteger(IC_Data,'A03T',20,'isr1')
+    call SaveInteger(IC_Data,'A03T',21,2)
+    call SaveStr(IC_Data,'A03T',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'A03T',24,'isr2')
+    call SaveInteger(IC_Data,'A03T',25,2)
+    call SaveStr(IC_Data,'A03T',26,"Damage Reduction")
+    call SaveInteger(IC_Data,'A03T',28,'aare')
+    call SaveInteger(IC_Data,'A03T',29,2)
+    call SaveStr(IC_Data,'A03T',30,"Area of effect")
+    call SaveInteger(IC_Data,'A03T',32,'aran')
+    call SaveInteger(IC_Data,'A03T',33,2)
+    call SaveStr(IC_Data,'A03T',34,"Cast range")
+    call SaveInteger(IC_Data,'A03T',-1,9)
+    call SaveInteger(IC_Data,'A044',0,'acas')
+    call SaveInteger(IC_Data,'A044',1,2)
+    call SaveStr(IC_Data,'A044',2,"Casting Time")
+    call SaveInteger(IC_Data,'A044',4,'adur')
+    call SaveInteger(IC_Data,'A044',5,2)
+    call SaveStr(IC_Data,'A044',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A044',8,'ahdu')
+    call SaveInteger(IC_Data,'A044',9,2)
+    call SaveStr(IC_Data,'A044',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A044',12,'acdn')
+    call SaveInteger(IC_Data,'A044',13,2)
+    call SaveStr(IC_Data,'A044',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A044',16,'amcs')
+    call SaveInteger(IC_Data,'A044',17,1)
+    call SaveStr(IC_Data,'A044',18,"Mana cost")
+    call SaveInteger(IC_Data,'A044',20,'aran')
+    call SaveInteger(IC_Data,'A044',21,2)
+endfunction
+
+function IC_Data22 takes nothing returns nothing
+    call SaveStr(IC_Data,'A044',22,"Cast range")
+    call SaveInteger(IC_Data,'A044',24,'Nfd1')
+    call SaveInteger(IC_Data,'A044',25,2)
+    call SaveStr(IC_Data,'A044',26,"Graphic Delay")
+    call SaveInteger(IC_Data,'A044',28,'Nfd2')
+    call SaveInteger(IC_Data,'A044',29,2)
+    call SaveStr(IC_Data,'A044',30,"Graphic Duration")
+    call SaveInteger(IC_Data,'A044',32,'Nfd3')
+    call SaveInteger(IC_Data,'A044',33,2)
+    call SaveStr(IC_Data,'A044',34,"Damage")
+    call SaveInteger(IC_Data,'A044',36,'aare')
+    call SaveInteger(IC_Data,'A044',37,2)
+    call SaveStr(IC_Data,'A044',38,"Area of effect")
+    call SaveInteger(IC_Data,'A044',-1,10)
+    call SaveInteger(IC_Data,'A04I',0,'acas')
+    call SaveInteger(IC_Data,'A04I',1,2)
+    call SaveStr(IC_Data,'A04I',2,"Casting Time")
+    call SaveInteger(IC_Data,'A04I',4,'adur')
+    call SaveInteger(IC_Data,'A04I',5,2)
+    call SaveStr(IC_Data,'A04I',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A04I',8,'ahdu')
+    call SaveInteger(IC_Data,'A04I',9,2)
+    call SaveStr(IC_Data,'A04I',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A04I',12,'acdn')
+    call SaveInteger(IC_Data,'A04I',13,2)
+    call SaveStr(IC_Data,'A04I',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A04I',16,'aare')
+    call SaveInteger(IC_Data,'A04I',17,2)
+    call SaveStr(IC_Data,'A04I',18,"Area of effect")
+    call SaveInteger(IC_Data,'A04I',20,'Oae1')
+    call SaveInteger(IC_Data,'A04I',21,2)
+    call SaveStr(IC_Data,'A04I',22,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A04I',23,true)
+    call SaveInteger(IC_Data,'A04I',24,'Oae2')
+    call SaveInteger(IC_Data,'A04I',25,2)
+    call SaveStr(IC_Data,'A04I',26,"Attack Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A04I',27,true)
+    call SaveInteger(IC_Data,'A04I',28,'amcs')
+    call SaveInteger(IC_Data,'A04I',29,1)
+    call SaveStr(IC_Data,'A04I',30,"Mana cost")
+    call SaveInteger(IC_Data,'A04I',32,'aran')
+    call SaveInteger(IC_Data,'A04I',33,2)
+    call SaveStr(IC_Data,'A04I',34,"Cast range")
+    call SaveInteger(IC_Data,'A04I',-1,9)
+    call SaveInteger(IC_Data,'A04J',0,'acas')
+    call SaveInteger(IC_Data,'A04J',1,2)
+    call SaveStr(IC_Data,'A04J',2,"Casting Time")
+    call SaveInteger(IC_Data,'A04J',4,'adur')
+    call SaveInteger(IC_Data,'A04J',5,2)
+    call SaveStr(IC_Data,'A04J',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A04J',8,'ahdu')
+    call SaveInteger(IC_Data,'A04J',9,2)
+    call SaveStr(IC_Data,'A04J',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A04J',12,'acdn')
+    call SaveInteger(IC_Data,'A04J',13,2)
+    call SaveStr(IC_Data,'A04J',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A04J',16,'amcs')
+    call SaveInteger(IC_Data,'A04J',17,1)
+    call SaveStr(IC_Data,'A04J',18,"Mana cost")
+    call SaveInteger(IC_Data,'A04J',20,'Ilif')
+    call SaveInteger(IC_Data,'A04J',21,1)
+    call SaveStr(IC_Data,'A04J',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A04J',24,'aare')
+    call SaveInteger(IC_Data,'A04J',25,2)
+    call SaveStr(IC_Data,'A04J',26,"Area of effect")
+    call SaveInteger(IC_Data,'A04J',28,'aran')
+    call SaveInteger(IC_Data,'A04J',29,2)
+    call SaveStr(IC_Data,'A04J',30,"Cast range")
+    call SaveInteger(IC_Data,'A04J',-1,8)
+    call SaveInteger(IC_Data,'A04L',0,'acas')
+    call SaveInteger(IC_Data,'A04L',1,2)
+    call SaveStr(IC_Data,'A04L',2,"Casting Time")
+    call SaveInteger(IC_Data,'A04L',4,'adur')
+    call SaveInteger(IC_Data,'A04L',5,2)
+    call SaveStr(IC_Data,'A04L',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A04L',8,'ahdu')
+    call SaveInteger(IC_Data,'A04L',9,2)
+    call SaveStr(IC_Data,'A04L',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A04L',12,'acdn')
+    call SaveInteger(IC_Data,'A04L',13,2)
+    call SaveStr(IC_Data,'A04L',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A04L',16,'amcs')
+    call SaveInteger(IC_Data,'A04L',17,1)
+    call SaveStr(IC_Data,'A04L',18,"Mana cost")
+    call SaveInteger(IC_Data,'A04L',20,'Idef')
+    call SaveInteger(IC_Data,'A04L',21,1)
+    call SaveStr(IC_Data,'A04L',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'A04L',24,'aare')
+    call SaveInteger(IC_Data,'A04L',25,2)
+    call SaveStr(IC_Data,'A04L',26,"Area of effect")
+    call SaveInteger(IC_Data,'A04L',28,'aran')
+    call SaveInteger(IC_Data,'A04L',29,2)
+    call SaveStr(IC_Data,'A04L',30,"Cast range")
+    call SaveInteger(IC_Data,'A04L',-1,8)
+    call SaveInteger(IC_Data,'A04M',0,'acas')
+    call SaveInteger(IC_Data,'A04M',1,2)
+    call SaveStr(IC_Data,'A04M',2,"Casting Time")
+    call SaveInteger(IC_Data,'A04M',4,'adur')
+    call SaveInteger(IC_Data,'A04M',5,2)
+    call SaveStr(IC_Data,'A04M',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A04M',8,'ahdu')
+    call SaveInteger(IC_Data,'A04M',9,2)
+    call SaveStr(IC_Data,'A04M',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A04M',12,'acdn')
+    call SaveInteger(IC_Data,'A04M',13,2)
+    call SaveStr(IC_Data,'A04M',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A04M',16,'amcs')
+    call SaveInteger(IC_Data,'A04M',17,1)
+    call SaveStr(IC_Data,'A04M',18,"Mana cost")
+    call SaveInteger(IC_Data,'A04M',20,'Ilif')
+    call SaveInteger(IC_Data,'A04M',21,1)
+    call SaveStr(IC_Data,'A04M',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A04M',24,'aare')
+    call SaveInteger(IC_Data,'A04M',25,2)
+    call SaveStr(IC_Data,'A04M',26,"Area of effect")
+    call SaveInteger(IC_Data,'A04M',28,'aran')
+    call SaveInteger(IC_Data,'A04M',29,2)
+    call SaveStr(IC_Data,'A04M',30,"Cast range")
+    call SaveInteger(IC_Data,'A04M',-1,8)
+    call SaveInteger(IC_Data,'A04R',0,'acas')
+    call SaveInteger(IC_Data,'A04R',1,2)
+    call SaveStr(IC_Data,'A04R',2,"Casting Time")
+    call SaveInteger(IC_Data,'A04R',4,'adur')
+    call SaveInteger(IC_Data,'A04R',5,2)
+    call SaveStr(IC_Data,'A04R',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A04R',8,'ahdu')
+    call SaveInteger(IC_Data,'A04R',9,2)
+    call SaveStr(IC_Data,'A04R',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A04R',12,'acdn')
+    call SaveInteger(IC_Data,'A04R',13,2)
+    call SaveStr(IC_Data,'A04R',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A04R',16,'amcs')
+    call SaveInteger(IC_Data,'A04R',17,1)
+    call SaveStr(IC_Data,'A04R',18,"Mana cost")
+    call SaveInteger(IC_Data,'A04R',20,'Iagi')
+    call SaveInteger(IC_Data,'A04R',21,1)
+    call SaveStr(IC_Data,'A04R',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A04R',24,'Iint')
+    call SaveInteger(IC_Data,'A04R',25,1)
+    call SaveStr(IC_Data,'A04R',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A04R',28,'Istr')
+    call SaveInteger(IC_Data,'A04R',29,1)
+    call SaveStr(IC_Data,'A04R',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A04R',32,'aare')
+    call SaveInteger(IC_Data,'A04R',33,2)
+    call SaveStr(IC_Data,'A04R',34,"Area of effect")
+    call SaveInteger(IC_Data,'A04R',36,'aran')
+    call SaveInteger(IC_Data,'A04R',37,2)
+    call SaveStr(IC_Data,'A04R',38,"Cast range")
+    call SaveInteger(IC_Data,'A04R',-1,10)
+    call SaveInteger(IC_Data,'A051',0,'acas')
+    call SaveInteger(IC_Data,'A051',1,2)
+    call SaveStr(IC_Data,'A051',2,"Casting Time")
+    call SaveInteger(IC_Data,'A051',4,'adur')
+    call SaveInteger(IC_Data,'A051',5,2)
+    call SaveStr(IC_Data,'A051',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A051',8,'ahdu')
+    call SaveInteger(IC_Data,'A051',9,2)
+    call SaveStr(IC_Data,'A051',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A051',12,'acdn')
+endfunction
+
+function IC_Data23 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A051',13,2)
+    call SaveStr(IC_Data,'A051',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A051',16,'amcs')
+    call SaveInteger(IC_Data,'A051',17,1)
+    call SaveStr(IC_Data,'A051',18,"Mana cost")
+    call SaveInteger(IC_Data,'A051',20,'aare')
+    call SaveInteger(IC_Data,'A051',21,2)
+    call SaveStr(IC_Data,'A051',22,"Area of effect")
+    call SaveInteger(IC_Data,'A051',24,'aran')
+    call SaveInteger(IC_Data,'A051',25,2)
+    call SaveStr(IC_Data,'A051',26,"Cast range")
+    call SaveInteger(IC_Data,'A051',28,'Ncs1')
+    call SaveInteger(IC_Data,'A051',29,2)
+    call SaveStr(IC_Data,'A051',30,"Damage Amount")
+    call SaveInteger(IC_Data,'A051',32,'Ncs2')
+    call SaveInteger(IC_Data,'A051',33,2)
+    call SaveStr(IC_Data,'A051',34,"Damage Interval")
+    call SaveInteger(IC_Data,'A051',36,'Ncs3')
+    call SaveInteger(IC_Data,'A051',37,1)
+    call SaveStr(IC_Data,'A051',38,"Missile Count")
+    call SaveInteger(IC_Data,'A051',40,'Ncs4')
+    call SaveInteger(IC_Data,'A051',41,2)
+    call SaveStr(IC_Data,'A051',42,"Max Damage")
+    call SaveInteger(IC_Data,'A051',44,'Ncs5')
+    call SaveInteger(IC_Data,'A051',45,2)
+    call SaveStr(IC_Data,'A051',46,"Building Damage Factor")
+    call SaveInteger(IC_Data,'A051',48,'Ncs6')
+    call SaveInteger(IC_Data,'A051',49,2)
+    call SaveStr(IC_Data,'A051',50,"Effect Duration")
+    call SaveInteger(IC_Data,'A051',-1,13)
+    call SaveInteger(IC_Data,'A056',0,'acas')
+    call SaveInteger(IC_Data,'A056',1,2)
+    call SaveStr(IC_Data,'A056',2,"Casting Time")
+    call SaveInteger(IC_Data,'A056',4,'adur')
+    call SaveInteger(IC_Data,'A056',5,2)
+    call SaveStr(IC_Data,'A056',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A056',8,'ahdu')
+    call SaveInteger(IC_Data,'A056',9,2)
+    call SaveStr(IC_Data,'A056',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A056',12,'acdn')
+    call SaveInteger(IC_Data,'A056',13,2)
+    call SaveStr(IC_Data,'A056',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A056',16,'amcs')
+    call SaveInteger(IC_Data,'A056',17,1)
+    call SaveStr(IC_Data,'A056',18,"Mana cost")
+    call SaveInteger(IC_Data,'A056',20,'aare')
+    call SaveInteger(IC_Data,'A056',21,2)
+    call SaveStr(IC_Data,'A056',22,"Area of effect")
+    call SaveInteger(IC_Data,'A056',24,'Isn1')
+    call SaveInteger(IC_Data,'A056',25,1)
+    call SaveStr(IC_Data,'A056',26,"Summon 1 - Amount")
+    call SaveInteger(IC_Data,'A056',28,'aran')
+    call SaveInteger(IC_Data,'A056',29,2)
+    call SaveStr(IC_Data,'A056',30,"Cast range")
+    call SaveInteger(IC_Data,'A056',-1,8)
+    call SaveInteger(IC_Data,'A05I',0,'acas')
+    call SaveInteger(IC_Data,'A05I',1,2)
+    call SaveStr(IC_Data,'A05I',2,"Casting Time")
+    call SaveInteger(IC_Data,'A05I',4,'adur')
+    call SaveInteger(IC_Data,'A05I',5,2)
+    call SaveStr(IC_Data,'A05I',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A05I',8,'ahdu')
+    call SaveInteger(IC_Data,'A05I',9,2)
+    call SaveStr(IC_Data,'A05I',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A05I',12,'acdn')
+    call SaveInteger(IC_Data,'A05I',13,2)
+    call SaveStr(IC_Data,'A05I',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A05I',16,'amcs')
+    call SaveInteger(IC_Data,'A05I',17,1)
+    call SaveStr(IC_Data,'A05I',18,"Mana cost")
+    call SaveInteger(IC_Data,'A05I',20,'Iman')
+    call SaveInteger(IC_Data,'A05I',21,1)
+    call SaveStr(IC_Data,'A05I',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'A05I',24,'aare')
+    call SaveInteger(IC_Data,'A05I',25,2)
+    call SaveStr(IC_Data,'A05I',26,"Area of effect")
+    call SaveInteger(IC_Data,'A05I',28,'aran')
+    call SaveInteger(IC_Data,'A05I',29,2)
+    call SaveStr(IC_Data,'A05I',30,"Cast range")
+    call SaveInteger(IC_Data,'A05I',-1,8)
+    call SaveInteger(IC_Data,'A05J',0,'acas')
+    call SaveInteger(IC_Data,'A05J',1,2)
+    call SaveStr(IC_Data,'A05J',2,"Casting Time")
+    call SaveInteger(IC_Data,'A05J',4,'adur')
+    call SaveInteger(IC_Data,'A05J',5,2)
+    call SaveStr(IC_Data,'A05J',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A05J',8,'ahdu')
+    call SaveInteger(IC_Data,'A05J',9,2)
+    call SaveStr(IC_Data,'A05J',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A05J',12,'acdn')
+    call SaveInteger(IC_Data,'A05J',13,2)
+    call SaveStr(IC_Data,'A05J',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A05J',16,'amcs')
+    call SaveInteger(IC_Data,'A05J',17,1)
+    call SaveStr(IC_Data,'A05J',18,"Mana cost")
+    call SaveInteger(IC_Data,'A05J',20,'Ilif')
+    call SaveInteger(IC_Data,'A05J',21,1)
+    call SaveStr(IC_Data,'A05J',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A05J',24,'aare')
+    call SaveInteger(IC_Data,'A05J',25,2)
+    call SaveStr(IC_Data,'A05J',26,"Area of effect")
+    call SaveInteger(IC_Data,'A05J',28,'aran')
+    call SaveInteger(IC_Data,'A05J',29,2)
+    call SaveStr(IC_Data,'A05J',30,"Cast range")
+    call SaveInteger(IC_Data,'A05J',-1,8)
+    call SaveInteger(IC_Data,'A05S',0,'acas')
+    call SaveInteger(IC_Data,'A05S',1,2)
+    call SaveStr(IC_Data,'A05S',2,"Casting Time")
+    call SaveInteger(IC_Data,'A05S',4,'adur')
+    call SaveInteger(IC_Data,'A05S',5,2)
+    call SaveStr(IC_Data,'A05S',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A05S',8,'ahdu')
+    call SaveInteger(IC_Data,'A05S',9,2)
+    call SaveStr(IC_Data,'A05S',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A05S',12,'acdn')
+    call SaveInteger(IC_Data,'A05S',13,2)
+    call SaveStr(IC_Data,'A05S',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A05S',16,'amcs')
+    call SaveInteger(IC_Data,'A05S',17,1)
+    call SaveStr(IC_Data,'A05S',18,"Mana cost")
+    call SaveInteger(IC_Data,'A05S',20,'Idef')
+    call SaveInteger(IC_Data,'A05S',21,1)
+    call SaveStr(IC_Data,'A05S',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'A05S',24,'aare')
+    call SaveInteger(IC_Data,'A05S',25,2)
+    call SaveStr(IC_Data,'A05S',26,"Area of effect")
+    call SaveInteger(IC_Data,'A05S',28,'aran')
+    call SaveInteger(IC_Data,'A05S',29,2)
+    call SaveStr(IC_Data,'A05S',30,"Cast range")
+    call SaveInteger(IC_Data,'A05S',-1,8)
+    call SaveInteger(IC_Data,'A06E',0,'acas')
+    call SaveInteger(IC_Data,'A06E',1,2)
+    call SaveStr(IC_Data,'A06E',2,"Casting Time")
+    call SaveInteger(IC_Data,'A06E',4,'adur')
+    call SaveInteger(IC_Data,'A06E',5,2)
+    call SaveStr(IC_Data,'A06E',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A06E',8,'ahdu')
+    call SaveInteger(IC_Data,'A06E',9,2)
+    call SaveStr(IC_Data,'A06E',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A06E',12,'acdn')
+    call SaveInteger(IC_Data,'A06E',13,2)
+    call SaveStr(IC_Data,'A06E',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A06E',16,'amcs')
+    call SaveInteger(IC_Data,'A06E',17,1)
+    call SaveStr(IC_Data,'A06E',18,"Mana cost")
+    call SaveInteger(IC_Data,'A06E',20,'aare')
+    call SaveInteger(IC_Data,'A06E',21,2)
+    call SaveStr(IC_Data,'A06E',22,"Area of effect")
+    call SaveInteger(IC_Data,'A06E',24,'aran')
+    call SaveInteger(IC_Data,'A06E',25,2)
+    call SaveStr(IC_Data,'A06E',26,"Cast range")
+    call SaveInteger(IC_Data,'A06E',28,'Nsi1')
+    call SaveInteger(IC_Data,'A06E',29,1)
+    call SaveStr(IC_Data,'A06E',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'A06E',32,'Nsi2')
+    call SaveInteger(IC_Data,'A06E',33,2)
+    call SaveStr(IC_Data,'A06E',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'A06E',35,true)
+    call SaveInteger(IC_Data,'A06E',36,'Nsi3')
+    call SaveInteger(IC_Data,'A06E',37,2)
+endfunction
+
+function IC_Data24 takes nothing returns nothing
+    call SaveStr(IC_Data,'A06E',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'A06E',40,'Nsi4')
+    call SaveInteger(IC_Data,'A06E',41,2)
+    call SaveStr(IC_Data,'A06E',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'A06E',-1,11)
+    call SaveInteger(IC_Data,'A06N',0,'acas')
+    call SaveInteger(IC_Data,'A06N',1,2)
+    call SaveStr(IC_Data,'A06N',2,"Casting Time")
+    call SaveInteger(IC_Data,'A06N',4,'adur')
+    call SaveInteger(IC_Data,'A06N',5,2)
+    call SaveStr(IC_Data,'A06N',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A06N',8,'ahdu')
+    call SaveInteger(IC_Data,'A06N',9,2)
+    call SaveStr(IC_Data,'A06N',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A06N',12,'acdn')
+    call SaveInteger(IC_Data,'A06N',13,2)
+    call SaveStr(IC_Data,'A06N',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A06N',16,'amcs')
+    call SaveInteger(IC_Data,'A06N',17,1)
+    call SaveStr(IC_Data,'A06N',18,"Mana cost")
+    call SaveInteger(IC_Data,'A06N',20,'aare')
+    call SaveInteger(IC_Data,'A06N',21,2)
+    call SaveStr(IC_Data,'A06N',22,"Area of effect")
+    call SaveInteger(IC_Data,'A06N',24,'Ocr1')
+    call SaveInteger(IC_Data,'A06N',25,2)
+    call SaveStr(IC_Data,'A06N',26,"Chance to Critical Strike")
+    call SaveInteger(IC_Data,'A06N',28,'Ocr2')
+    call SaveInteger(IC_Data,'A06N',29,2)
+    call SaveStr(IC_Data,'A06N',30,"Damage Multiplier")
+    call SaveInteger(IC_Data,'A06N',32,'Ocr3')
+    call SaveInteger(IC_Data,'A06N',33,2)
+    call SaveStr(IC_Data,'A06N',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'A06N',36,'Ocr4')
+    call SaveInteger(IC_Data,'A06N',37,2)
+    call SaveStr(IC_Data,'A06N',38,"Chance to Evade")
+    call SaveInteger(IC_Data,'A06N',40,'aran')
+    call SaveInteger(IC_Data,'A06N',41,2)
+    call SaveStr(IC_Data,'A06N',42,"Cast range")
+    call SaveInteger(IC_Data,'A06N',-1,11)
+    call SaveInteger(IC_Data,'A06R',0,'acas')
+    call SaveInteger(IC_Data,'A06R',1,2)
+    call SaveStr(IC_Data,'A06R',2,"Casting Time")
+    call SaveInteger(IC_Data,'A06R',4,'adur')
+    call SaveInteger(IC_Data,'A06R',5,2)
+    call SaveStr(IC_Data,'A06R',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A06R',8,'ahdu')
+    call SaveInteger(IC_Data,'A06R',9,2)
+    call SaveStr(IC_Data,'A06R',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A06R',12,'acdn')
+    call SaveInteger(IC_Data,'A06R',13,2)
+    call SaveStr(IC_Data,'A06R',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A06R',16,'amcs')
+    call SaveInteger(IC_Data,'A06R',17,1)
+    call SaveStr(IC_Data,'A06R',18,"Mana cost")
+    call SaveInteger(IC_Data,'A06R',20,'aare')
+    call SaveInteger(IC_Data,'A06R',21,2)
+    call SaveStr(IC_Data,'A06R',22,"Area of effect")
+    call SaveInteger(IC_Data,'A06R',24,'aran')
+    call SaveInteger(IC_Data,'A06R',25,2)
+    call SaveStr(IC_Data,'A06R',26,"Cast range")
+    call SaveInteger(IC_Data,'A06R',28,'Ufn1')
+    call SaveInteger(IC_Data,'A06R',29,2)
+    call SaveStr(IC_Data,'A06R',30,"Area of Effect Damage")
+    call SaveInteger(IC_Data,'A06R',32,'Ufn2')
+    call SaveInteger(IC_Data,'A06R',33,2)
+    call SaveStr(IC_Data,'A06R',34,"Specific Target Damage")
+    call SaveInteger(IC_Data,'A06R',-1,9)
+    call SaveInteger(IC_Data,'A06U',0,'acas')
+    call SaveInteger(IC_Data,'A06U',1,2)
+    call SaveStr(IC_Data,'A06U',2,"Casting Time")
+    call SaveInteger(IC_Data,'A06U',4,'adur')
+    call SaveInteger(IC_Data,'A06U',5,2)
+    call SaveStr(IC_Data,'A06U',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A06U',8,'ahdu')
+    call SaveInteger(IC_Data,'A06U',9,2)
+    call SaveStr(IC_Data,'A06U',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A06U',12,'acdn')
+    call SaveInteger(IC_Data,'A06U',13,2)
+    call SaveStr(IC_Data,'A06U',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A06U',16,'aare')
+    call SaveInteger(IC_Data,'A06U',17,2)
+    call SaveStr(IC_Data,'A06U',18,"Area of effect")
+    call SaveInteger(IC_Data,'A06U',20,'Hab1')
+    call SaveInteger(IC_Data,'A06U',21,2)
+    call SaveStr(IC_Data,'A06U',22,"Mana Regeneration Increase")
+    call SaveBoolean(IC_Data,'A06U',23,true)
+    call SaveInteger(IC_Data,'A06U',24,'amcs')
+    call SaveInteger(IC_Data,'A06U',25,1)
+    call SaveStr(IC_Data,'A06U',26,"Mana cost")
+    call SaveInteger(IC_Data,'A06U',28,'aran')
+    call SaveInteger(IC_Data,'A06U',29,2)
+    call SaveStr(IC_Data,'A06U',30,"Cast range")
+    call SaveInteger(IC_Data,'A06U',-1,8)
+    call SaveInteger(IC_Data,'A06Z',0,'acas')
+    call SaveInteger(IC_Data,'A06Z',1,2)
+    call SaveStr(IC_Data,'A06Z',2,"Casting Time")
+    call SaveInteger(IC_Data,'A06Z',4,'adur')
+    call SaveInteger(IC_Data,'A06Z',5,2)
+    call SaveStr(IC_Data,'A06Z',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A06Z',8,'ahdu')
+    call SaveInteger(IC_Data,'A06Z',9,2)
+    call SaveStr(IC_Data,'A06Z',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A06Z',12,'acdn')
+    call SaveInteger(IC_Data,'A06Z',13,2)
+    call SaveStr(IC_Data,'A06Z',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A06Z',16,'Eev1')
+    call SaveInteger(IC_Data,'A06Z',17,2)
+    call SaveStr(IC_Data,'A06Z',18,"Chance to Evade")
+    call SaveBoolean(IC_Data,'A06Z',19,true)
+    call SaveInteger(IC_Data,'A06Z',20,'amcs')
+    call SaveInteger(IC_Data,'A06Z',21,1)
+    call SaveStr(IC_Data,'A06Z',22,"Mana cost")
+    call SaveInteger(IC_Data,'A06Z',24,'aare')
+    call SaveInteger(IC_Data,'A06Z',25,2)
+    call SaveStr(IC_Data,'A06Z',26,"Area of effect")
+    call SaveInteger(IC_Data,'A06Z',28,'aran')
+    call SaveInteger(IC_Data,'A06Z',29,2)
+    call SaveStr(IC_Data,'A06Z',30,"Cast range")
+    call SaveInteger(IC_Data,'A06Z',-1,8)
+    call SaveInteger(IC_Data,'A070',0,'acas')
+    call SaveInteger(IC_Data,'A070',1,2)
+    call SaveStr(IC_Data,'A070',2,"Casting Time")
+    call SaveInteger(IC_Data,'A070',4,'adur')
+    call SaveInteger(IC_Data,'A070',5,2)
+    call SaveStr(IC_Data,'A070',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A070',8,'ahdu')
+    call SaveInteger(IC_Data,'A070',9,2)
+    call SaveStr(IC_Data,'A070',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A070',12,'acdn')
+    call SaveInteger(IC_Data,'A070',13,2)
+    call SaveStr(IC_Data,'A070',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A070',16,'amcs')
+    call SaveInteger(IC_Data,'A070',17,1)
+    call SaveStr(IC_Data,'A070',18,"Mana cost")
+    call SaveInteger(IC_Data,'A070',20,'aare')
+    call SaveInteger(IC_Data,'A070',21,2)
+    call SaveStr(IC_Data,'A070',22,"Area of effect")
+    call SaveInteger(IC_Data,'A070',24,'Hbh1')
+    call SaveInteger(IC_Data,'A070',25,2)
+    call SaveStr(IC_Data,'A070',26,"Chance to Bash")
+    call SaveInteger(IC_Data,'A070',28,'Hbh2')
+    call SaveInteger(IC_Data,'A070',29,2)
+    call SaveStr(IC_Data,'A070',30,"Damage Multiplier")
+    call SaveInteger(IC_Data,'A070',32,'Hbh3')
+    call SaveInteger(IC_Data,'A070',33,2)
+    call SaveStr(IC_Data,'A070',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'A070',36,'Hbh4')
+    call SaveInteger(IC_Data,'A070',37,2)
+    call SaveStr(IC_Data,'A070',38,"Chance to Miss")
+    call SaveInteger(IC_Data,'A070',40,'aran')
+    call SaveInteger(IC_Data,'A070',41,2)
+    call SaveStr(IC_Data,'A070',42,"Cast range")
+    call SaveInteger(IC_Data,'A070',-1,11)
+    call SaveInteger(IC_Data,'A073',0,'acas')
+    call SaveInteger(IC_Data,'A073',1,2)
+    call SaveStr(IC_Data,'A073',2,"Casting Time")
+    call SaveInteger(IC_Data,'A073',4,'adur')
+    call SaveInteger(IC_Data,'A073',5,2)
+    call SaveStr(IC_Data,'A073',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A073',8,'ahdu')
+endfunction
+
+function IC_Data25 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A073',9,2)
+    call SaveStr(IC_Data,'A073',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A073',12,'acdn')
+    call SaveInteger(IC_Data,'A073',13,2)
+    call SaveStr(IC_Data,'A073',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A073',16,'amcs')
+    call SaveInteger(IC_Data,'A073',17,1)
+    call SaveStr(IC_Data,'A073',18,"Mana cost")
+    call SaveInteger(IC_Data,'A073',20,'Ihpr')
+    call SaveInteger(IC_Data,'A073',21,1)
+    call SaveStr(IC_Data,'A073',22,"Hit Points Regenerated Per Second")
+    call SaveInteger(IC_Data,'A073',24,'aare')
+    call SaveInteger(IC_Data,'A073',25,2)
+    call SaveStr(IC_Data,'A073',26,"Area of effect")
+    call SaveInteger(IC_Data,'A073',28,'aran')
+    call SaveInteger(IC_Data,'A073',29,2)
+    call SaveStr(IC_Data,'A073',30,"Cast range")
+    call SaveInteger(IC_Data,'A073',-1,8)
+    call SaveInteger(IC_Data,'A076',0,'acas')
+    call SaveInteger(IC_Data,'A076',1,2)
+    call SaveStr(IC_Data,'A076',2,"Casting Time")
+    call SaveInteger(IC_Data,'A076',4,'adur')
+    call SaveInteger(IC_Data,'A076',5,2)
+    call SaveStr(IC_Data,'A076',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A076',8,'ahdu')
+    call SaveInteger(IC_Data,'A076',9,2)
+    call SaveStr(IC_Data,'A076',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A076',12,'acdn')
+    call SaveInteger(IC_Data,'A076',13,2)
+    call SaveStr(IC_Data,'A076',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A076',16,'amcs')
+    call SaveInteger(IC_Data,'A076',17,1)
+    call SaveStr(IC_Data,'A076',18,"Mana cost")
+    call SaveInteger(IC_Data,'A076',20,'aran')
+    call SaveInteger(IC_Data,'A076',21,2)
+    call SaveStr(IC_Data,'A076',22,"Cast range")
+    call SaveInteger(IC_Data,'A076',24,'Ebl1')
+    call SaveInteger(IC_Data,'A076',25,2)
+    call SaveStr(IC_Data,'A076',26,"Maximum Range")
+    call SaveInteger(IC_Data,'A076',28,'Ebl2')
+    call SaveInteger(IC_Data,'A076',29,2)
+    call SaveStr(IC_Data,'A076',30,"Minimum Range")
+    call SaveInteger(IC_Data,'A076',32,'aare')
+    call SaveInteger(IC_Data,'A076',33,2)
+    call SaveStr(IC_Data,'A076',34,"Area of effect")
+    call SaveInteger(IC_Data,'A076',-1,9)
+    call SaveInteger(IC_Data,'A07G',0,'acas')
+    call SaveInteger(IC_Data,'A07G',1,2)
+    call SaveStr(IC_Data,'A07G',2,"Casting Time")
+    call SaveInteger(IC_Data,'A07G',4,'adur')
+    call SaveInteger(IC_Data,'A07G',5,2)
+    call SaveStr(IC_Data,'A07G',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A07G',8,'ahdu')
+    call SaveInteger(IC_Data,'A07G',9,2)
+    call SaveStr(IC_Data,'A07G',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A07G',12,'acdn')
+    call SaveInteger(IC_Data,'A07G',13,2)
+    call SaveStr(IC_Data,'A07G',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A07G',16,'amcs')
+    call SaveInteger(IC_Data,'A07G',17,1)
+    call SaveStr(IC_Data,'A07G',18,"Mana cost")
+    call SaveInteger(IC_Data,'A07G',20,'aare')
+    call SaveInteger(IC_Data,'A07G',21,2)
+    call SaveStr(IC_Data,'A07G',22,"Area of effect")
+    call SaveInteger(IC_Data,'A07G',24,'nca1')
+    call SaveInteger(IC_Data,'A07G',25,2)
+    call SaveStr(IC_Data,'A07G',26,"Distributed Damage Factor")
+    call SaveInteger(IC_Data,'A07G',28,'aran')
+    call SaveInteger(IC_Data,'A07G',29,2)
+    call SaveStr(IC_Data,'A07G',30,"Cast range")
+    call SaveInteger(IC_Data,'A07G',-1,8)
+    call SaveInteger(IC_Data,'A07Q',0,'acas')
+    call SaveInteger(IC_Data,'A07Q',1,2)
+    call SaveStr(IC_Data,'A07Q',2,"Casting Time")
+    call SaveInteger(IC_Data,'A07Q',4,'adur')
+    call SaveInteger(IC_Data,'A07Q',5,2)
+    call SaveStr(IC_Data,'A07Q',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A07Q',8,'ahdu')
+    call SaveInteger(IC_Data,'A07Q',9,2)
+    call SaveStr(IC_Data,'A07Q',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A07Q',12,'acdn')
+    call SaveInteger(IC_Data,'A07Q',13,2)
+    call SaveStr(IC_Data,'A07Q',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A07Q',16,'amcs')
+    call SaveInteger(IC_Data,'A07Q',17,1)
+    call SaveStr(IC_Data,'A07Q',18,"Mana cost")
+    call SaveInteger(IC_Data,'A07Q',20,'aare')
+    call SaveInteger(IC_Data,'A07Q',21,2)
+    call SaveStr(IC_Data,'A07Q',22,"Area of effect")
+    call SaveInteger(IC_Data,'A07Q',24,'Ctc1')
+    call SaveInteger(IC_Data,'A07Q',25,2)
+    call SaveStr(IC_Data,'A07Q',26,"Damage")
+    call SaveInteger(IC_Data,'A07Q',28,'Ctc2')
+    call SaveInteger(IC_Data,'A07Q',29,2)
+    call SaveStr(IC_Data,'A07Q',30,"Extra Damage To Target")
+    call SaveInteger(IC_Data,'A07Q',32,'Ctc3')
+    call SaveInteger(IC_Data,'A07Q',33,2)
+    call SaveStr(IC_Data,'A07Q',34,"Movement Speed Reduction")
+    call SaveInteger(IC_Data,'A07Q',36,'Ctc4')
+    call SaveInteger(IC_Data,'A07Q',37,2)
+    call SaveStr(IC_Data,'A07Q',38,"Attack Speed Reduction")
+    call SaveInteger(IC_Data,'A07Q',40,'aran')
+    call SaveInteger(IC_Data,'A07Q',41,2)
+    call SaveStr(IC_Data,'A07Q',42,"Cast range")
+    call SaveInteger(IC_Data,'A07Q',-1,11)
+    call SaveInteger(IC_Data,'A07T',0,'acas')
+    call SaveInteger(IC_Data,'A07T',1,2)
+    call SaveStr(IC_Data,'A07T',2,"Casting Time")
+    call SaveInteger(IC_Data,'A07T',4,'adur')
+    call SaveInteger(IC_Data,'A07T',5,2)
+    call SaveStr(IC_Data,'A07T',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A07T',8,'ahdu')
+    call SaveInteger(IC_Data,'A07T',9,2)
+    call SaveStr(IC_Data,'A07T',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A07T',12,'acdn')
+    call SaveInteger(IC_Data,'A07T',13,2)
+    call SaveStr(IC_Data,'A07T',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A07T',16,'amcs')
+    call SaveInteger(IC_Data,'A07T',17,1)
+    call SaveStr(IC_Data,'A07T',18,"Mana cost")
+    call SaveInteger(IC_Data,'A07T',20,'aare')
+    call SaveInteger(IC_Data,'A07T',21,2)
+    call SaveStr(IC_Data,'A07T',22,"Area of effect")
+    call SaveInteger(IC_Data,'A07T',24,'aran')
+    call SaveInteger(IC_Data,'A07T',25,2)
+    call SaveStr(IC_Data,'A07T',26,"Cast range")
+    call SaveInteger(IC_Data,'A07T',28,'Nsi1')
+    call SaveInteger(IC_Data,'A07T',29,1)
+    call SaveStr(IC_Data,'A07T',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'A07T',32,'Nsi2')
+    call SaveInteger(IC_Data,'A07T',33,2)
+    call SaveStr(IC_Data,'A07T',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'A07T',35,true)
+    call SaveInteger(IC_Data,'A07T',36,'Nsi3')
+    call SaveInteger(IC_Data,'A07T',37,2)
+    call SaveStr(IC_Data,'A07T',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'A07T',40,'Nsi4')
+    call SaveInteger(IC_Data,'A07T',41,2)
+    call SaveStr(IC_Data,'A07T',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'A07T',-1,11)
+    call SaveInteger(IC_Data,'A081',0,'acas')
+    call SaveInteger(IC_Data,'A081',1,2)
+    call SaveStr(IC_Data,'A081',2,"Casting Time")
+    call SaveInteger(IC_Data,'A081',4,'adur')
+    call SaveInteger(IC_Data,'A081',5,2)
+    call SaveStr(IC_Data,'A081',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A081',8,'ahdu')
+    call SaveInteger(IC_Data,'A081',9,2)
+    call SaveStr(IC_Data,'A081',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A081',12,'acdn')
+    call SaveInteger(IC_Data,'A081',13,2)
+    call SaveStr(IC_Data,'A081',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A081',16,'amcs')
+    call SaveInteger(IC_Data,'A081',17,1)
+    call SaveStr(IC_Data,'A081',18,"Mana cost")
+    call SaveInteger(IC_Data,'A081',20,'Iagi')
+    call SaveInteger(IC_Data,'A081',21,1)
+    call SaveStr(IC_Data,'A081',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A081',24,'Iint')
+    call SaveInteger(IC_Data,'A081',25,1)
+endfunction
+
+function IC_Data26 takes nothing returns nothing
+    call SaveStr(IC_Data,'A081',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A081',28,'Istr')
+    call SaveInteger(IC_Data,'A081',29,1)
+    call SaveStr(IC_Data,'A081',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A081',32,'aare')
+    call SaveInteger(IC_Data,'A081',33,2)
+    call SaveStr(IC_Data,'A081',34,"Area of effect")
+    call SaveInteger(IC_Data,'A081',36,'aran')
+    call SaveInteger(IC_Data,'A081',37,2)
+    call SaveStr(IC_Data,'A081',38,"Cast range")
+    call SaveInteger(IC_Data,'A081',-1,10)
+    call SaveInteger(IC_Data,'A089',0,'acas')
+    call SaveInteger(IC_Data,'A089',1,2)
+    call SaveStr(IC_Data,'A089',2,"Casting Time")
+    call SaveInteger(IC_Data,'A089',4,'adur')
+    call SaveInteger(IC_Data,'A089',5,2)
+    call SaveStr(IC_Data,'A089',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A089',8,'ahdu')
+    call SaveInteger(IC_Data,'A089',9,2)
+    call SaveStr(IC_Data,'A089',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A089',12,'acdn')
+    call SaveInteger(IC_Data,'A089',13,2)
+    call SaveStr(IC_Data,'A089',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A089',16,'amcs')
+    call SaveInteger(IC_Data,'A089',17,1)
+    call SaveStr(IC_Data,'A089',18,"Mana cost")
+    call SaveInteger(IC_Data,'A089',20,'Isx1')
+    call SaveInteger(IC_Data,'A089',21,2)
+    call SaveStr(IC_Data,'A089',22,"Attack Speed Increase")
+    call SaveBoolean(IC_Data,'A089',23,true)
+    call SaveInteger(IC_Data,'A089',24,'aare')
+    call SaveInteger(IC_Data,'A089',25,2)
+    call SaveStr(IC_Data,'A089',26,"Area of effect")
+    call SaveInteger(IC_Data,'A089',28,'aran')
+    call SaveInteger(IC_Data,'A089',29,2)
+    call SaveStr(IC_Data,'A089',30,"Cast range")
+    call SaveInteger(IC_Data,'A089',-1,8)
+    call SaveInteger(IC_Data,'A08I',0,'acas')
+    call SaveInteger(IC_Data,'A08I',1,2)
+    call SaveStr(IC_Data,'A08I',2,"Casting Time")
+    call SaveInteger(IC_Data,'A08I',4,'adur')
+    call SaveInteger(IC_Data,'A08I',5,2)
+    call SaveStr(IC_Data,'A08I',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A08I',8,'ahdu')
+    call SaveInteger(IC_Data,'A08I',9,2)
+    call SaveStr(IC_Data,'A08I',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A08I',12,'acdn')
+    call SaveInteger(IC_Data,'A08I',13,2)
+    call SaveStr(IC_Data,'A08I',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A08I',16,'amcs')
+    call SaveInteger(IC_Data,'A08I',17,1)
+    call SaveStr(IC_Data,'A08I',18,"Mana cost")
+    call SaveInteger(IC_Data,'A08I',20,'aran')
+    call SaveInteger(IC_Data,'A08I',21,2)
+    call SaveStr(IC_Data,'A08I',22,"Cast range")
+    call SaveInteger(IC_Data,'A08I',24,'Ebl1')
+    call SaveInteger(IC_Data,'A08I',25,2)
+    call SaveStr(IC_Data,'A08I',26,"Maximum Range")
+    call SaveInteger(IC_Data,'A08I',28,'Ebl2')
+    call SaveInteger(IC_Data,'A08I',29,2)
+    call SaveStr(IC_Data,'A08I',30,"Minimum Range")
+    call SaveInteger(IC_Data,'A08I',32,'aare')
+    call SaveInteger(IC_Data,'A08I',33,2)
+    call SaveStr(IC_Data,'A08I',34,"Area of effect")
+    call SaveInteger(IC_Data,'A08I',-1,9)
+    call SaveInteger(IC_Data,'A09B',0,'acas')
+    call SaveInteger(IC_Data,'A09B',1,2)
+    call SaveStr(IC_Data,'A09B',2,"Casting Time")
+    call SaveInteger(IC_Data,'A09B',4,'adur')
+    call SaveInteger(IC_Data,'A09B',5,2)
+    call SaveStr(IC_Data,'A09B',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A09B',8,'ahdu')
+    call SaveInteger(IC_Data,'A09B',9,2)
+    call SaveStr(IC_Data,'A09B',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A09B',12,'acdn')
+    call SaveInteger(IC_Data,'A09B',13,2)
+    call SaveStr(IC_Data,'A09B',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A09B',16,'amcs')
+    call SaveInteger(IC_Data,'A09B',17,1)
+    call SaveStr(IC_Data,'A09B',18,"Mana cost")
+    call SaveInteger(IC_Data,'A09B',20,'aran')
+    call SaveInteger(IC_Data,'A09B',21,2)
+    call SaveStr(IC_Data,'A09B',22,"Cast range")
+    call SaveInteger(IC_Data,'A09B',24,'Npr1')
+    call SaveInteger(IC_Data,'A09B',25,1)
+    call SaveStr(IC_Data,'A09B',26,"Building Types Allowed")
+    call SaveInteger(IC_Data,'A09B',28,'aare')
+    call SaveInteger(IC_Data,'A09B',29,2)
+    call SaveStr(IC_Data,'A09B',30,"Area of effect")
+    call SaveInteger(IC_Data,'A09B',-1,8)
+    call SaveInteger(IC_Data,'A09G',0,'acas')
+    call SaveInteger(IC_Data,'A09G',1,2)
+    call SaveStr(IC_Data,'A09G',2,"Casting Time")
+    call SaveInteger(IC_Data,'A09G',4,'adur')
+    call SaveInteger(IC_Data,'A09G',5,2)
+    call SaveStr(IC_Data,'A09G',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A09G',8,'ahdu')
+    call SaveInteger(IC_Data,'A09G',9,2)
+    call SaveStr(IC_Data,'A09G',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A09G',12,'acdn')
+    call SaveInteger(IC_Data,'A09G',13,2)
+    call SaveStr(IC_Data,'A09G',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A09G',16,'amcs')
+    call SaveInteger(IC_Data,'A09G',17,1)
+    call SaveStr(IC_Data,'A09G',18,"Mana cost")
+    call SaveInteger(IC_Data,'A09G',20,'aare')
+    call SaveInteger(IC_Data,'A09G',21,2)
+    call SaveStr(IC_Data,'A09G',22,"Area of effect")
+    call SaveInteger(IC_Data,'A09G',24,'aran')
+    call SaveInteger(IC_Data,'A09G',25,2)
+    call SaveStr(IC_Data,'A09G',26,"Cast range")
+    call SaveInteger(IC_Data,'A09G',28,'Osh1')
+    call SaveInteger(IC_Data,'A09G',29,2)
+    call SaveStr(IC_Data,'A09G',30,"Damage")
+    call SaveInteger(IC_Data,'A09G',32,'Osh2')
+    call SaveInteger(IC_Data,'A09G',33,2)
+    call SaveStr(IC_Data,'A09G',34,"Maximum Damage")
+    call SaveInteger(IC_Data,'A09G',36,'Osh3')
+    call SaveInteger(IC_Data,'A09G',37,2)
+    call SaveStr(IC_Data,'A09G',38,"Distance")
+    call SaveInteger(IC_Data,'A09G',40,'Osh4')
+    call SaveInteger(IC_Data,'A09G',41,2)
+    call SaveStr(IC_Data,'A09G',42,"Final Area")
+    call SaveInteger(IC_Data,'A09G',-1,11)
+    call SaveInteger(IC_Data,'A09I',0,'acas')
+    call SaveInteger(IC_Data,'A09I',1,2)
+    call SaveStr(IC_Data,'A09I',2,"Casting Time")
+    call SaveInteger(IC_Data,'A09I',4,'adur')
+    call SaveInteger(IC_Data,'A09I',5,2)
+    call SaveStr(IC_Data,'A09I',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A09I',8,'ahdu')
+    call SaveInteger(IC_Data,'A09I',9,2)
+    call SaveStr(IC_Data,'A09I',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A09I',12,'acdn')
+    call SaveInteger(IC_Data,'A09I',13,2)
+    call SaveStr(IC_Data,'A09I',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A09I',16,'amcs')
+    call SaveInteger(IC_Data,'A09I',17,1)
+    call SaveStr(IC_Data,'A09I',18,"Mana cost")
+    call SaveInteger(IC_Data,'A09I',20,'aare')
+    call SaveInteger(IC_Data,'A09I',21,2)
+    call SaveStr(IC_Data,'A09I',22,"Area of effect")
+    call SaveInteger(IC_Data,'A09I',24,'Icfd')
+    call SaveInteger(IC_Data,'A09I',25,1)
+    call SaveStr(IC_Data,'A09I',26,"Damage Per Duration")
+    call SaveInteger(IC_Data,'A09I',28,'Icfm')
+    call SaveInteger(IC_Data,'A09I',29,1)
+    call SaveStr(IC_Data,'A09I',30,"Mana Used Per Second")
+    call SaveInteger(IC_Data,'A09I',32,'Icfx')
+    call SaveInteger(IC_Data,'A09I',33,1)
+    call SaveStr(IC_Data,'A09I',34,"Extra Mana Required")
+    call SaveInteger(IC_Data,'A09I',36,'aran')
+    call SaveInteger(IC_Data,'A09I',37,2)
+    call SaveStr(IC_Data,'A09I',38,"Cast range")
+    call SaveInteger(IC_Data,'A09I',-1,10)
+    call SaveInteger(IC_Data,'A0A7',0,'acas')
+    call SaveInteger(IC_Data,'A0A7',1,2)
+    call SaveStr(IC_Data,'A0A7',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0A7',4,'adur')
+    call SaveInteger(IC_Data,'A0A7',5,2)
+endfunction
+
+function IC_Data27 takes nothing returns nothing
+    call SaveStr(IC_Data,'A0A7',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0A7',8,'ahdu')
+    call SaveInteger(IC_Data,'A0A7',9,2)
+    call SaveStr(IC_Data,'A0A7',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0A7',12,'acdn')
+    call SaveInteger(IC_Data,'A0A7',13,2)
+    call SaveStr(IC_Data,'A0A7',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0A7',16,'amcs')
+    call SaveInteger(IC_Data,'A0A7',17,1)
+    call SaveStr(IC_Data,'A0A7',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0A7',20,'aran')
+    call SaveInteger(IC_Data,'A0A7',21,2)
+    call SaveStr(IC_Data,'A0A7',22,"Cast range")
+    call SaveInteger(IC_Data,'A0A7',24,'Ams1')
+    call SaveInteger(IC_Data,'A0A7',25,2)
+    call SaveStr(IC_Data,'A0A7',26,"Summoned Unit Damage")
+    call SaveInteger(IC_Data,'A0A7',28,'Ams2')
+    call SaveInteger(IC_Data,'A0A7',29,2)
+    call SaveStr(IC_Data,'A0A7',30,"Magic Damage Reduction")
+    call SaveInteger(IC_Data,'A0A7',32,'Ams3')
+    call SaveInteger(IC_Data,'A0A7',33,1)
+    call SaveStr(IC_Data,'A0A7',34,"Shield Life")
+    call SaveInteger(IC_Data,'A0A7',36,'Ams4')
+    call SaveInteger(IC_Data,'A0A7',37,1)
+    call SaveStr(IC_Data,'A0A7',38,"Mana Loss")
+    call SaveInteger(IC_Data,'A0A7',40,'aare')
+    call SaveInteger(IC_Data,'A0A7',41,2)
+    call SaveStr(IC_Data,'A0A7',42,"Area of effect")
+    call SaveInteger(IC_Data,'A0A7',-1,11)
+    call SaveInteger(IC_Data,'A0AH',0,'acas')
+    call SaveInteger(IC_Data,'A0AH',1,2)
+    call SaveStr(IC_Data,'A0AH',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0AH',4,'adur')
+    call SaveInteger(IC_Data,'A0AH',5,2)
+    call SaveStr(IC_Data,'A0AH',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0AH',8,'ahdu')
+    call SaveInteger(IC_Data,'A0AH',9,2)
+    call SaveStr(IC_Data,'A0AH',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0AH',12,'acdn')
+    call SaveInteger(IC_Data,'A0AH',13,2)
+    call SaveStr(IC_Data,'A0AH',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0AH',16,'amcs')
+    call SaveInteger(IC_Data,'A0AH',17,1)
+    call SaveStr(IC_Data,'A0AH',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0AH',20,'aare')
+    call SaveInteger(IC_Data,'A0AH',21,2)
+    call SaveStr(IC_Data,'A0AH',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0AH',24,'Hwe1')
+    call SaveInteger(IC_Data,'A0AH',25,1)
+    call SaveStr(IC_Data,'A0AH',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'A0AH',28,'Hwe2')
+    call SaveInteger(IC_Data,'A0AH',29,1)
+    call SaveStr(IC_Data,'A0AH',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'A0AH',32,'aran')
+    call SaveInteger(IC_Data,'A0AH',33,2)
+    call SaveStr(IC_Data,'A0AH',34,"Cast range")
+    call SaveInteger(IC_Data,'A0AH',-1,9)
+    call SaveInteger(IC_Data,'A0BG',0,'acas')
+    call SaveInteger(IC_Data,'A0BG',1,2)
+    call SaveStr(IC_Data,'A0BG',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0BG',4,'adur')
+    call SaveInteger(IC_Data,'A0BG',5,2)
+    call SaveStr(IC_Data,'A0BG',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0BG',8,'ahdu')
+    call SaveInteger(IC_Data,'A0BG',9,2)
+    call SaveStr(IC_Data,'A0BG',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0BG',12,'acdn')
+    call SaveInteger(IC_Data,'A0BG',13,2)
+    call SaveStr(IC_Data,'A0BG',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0BG',16,'amcs')
+    call SaveInteger(IC_Data,'A0BG',17,1)
+    call SaveStr(IC_Data,'A0BG',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0BG',20,'aran')
+    call SaveInteger(IC_Data,'A0BG',21,2)
+    call SaveStr(IC_Data,'A0BG',22,"Cast range")
+    call SaveInteger(IC_Data,'A0BG',24,'Ens1')
+    call SaveInteger(IC_Data,'A0BG',25,2)
+    call SaveStr(IC_Data,'A0BG',26,"Air Unit Lower Duration")
+    call SaveInteger(IC_Data,'A0BG',28,'Ens2')
+    call SaveInteger(IC_Data,'A0BG',29,2)
+    call SaveStr(IC_Data,'A0BG',30,"Air Unit Height")
+    call SaveInteger(IC_Data,'A0BG',32,'Ens3')
+    call SaveInteger(IC_Data,'A0BG',33,2)
+    call SaveStr(IC_Data,'A0BG',34,"Melee Attack Range")
+    call SaveInteger(IC_Data,'A0BG',36,'aare')
+    call SaveInteger(IC_Data,'A0BG',37,2)
+    call SaveStr(IC_Data,'A0BG',38,"Area of effect")
+    call SaveInteger(IC_Data,'A0BG',-1,10)
+    call SaveInteger(IC_Data,'A0BL',0,'acas')
+    call SaveInteger(IC_Data,'A0BL',1,2)
+    call SaveStr(IC_Data,'A0BL',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0BL',4,'adur')
+    call SaveInteger(IC_Data,'A0BL',5,2)
+    call SaveStr(IC_Data,'A0BL',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0BL',8,'ahdu')
+    call SaveInteger(IC_Data,'A0BL',9,2)
+    call SaveStr(IC_Data,'A0BL',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0BL',12,'acdn')
+    call SaveInteger(IC_Data,'A0BL',13,2)
+    call SaveStr(IC_Data,'A0BL',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0BL',16,'amcs')
+    call SaveInteger(IC_Data,'A0BL',17,1)
+    call SaveStr(IC_Data,'A0BL',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0BL',20,'Owk1')
+    call SaveInteger(IC_Data,'A0BL',21,2)
+    call SaveStr(IC_Data,'A0BL',22,"Transition Time")
+    call SaveInteger(IC_Data,'A0BL',24,'Owk2')
+    call SaveInteger(IC_Data,'A0BL',25,2)
+    call SaveStr(IC_Data,'A0BL',26,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A0BL',27,true)
+    call SaveInteger(IC_Data,'A0BL',28,'Owk3')
+    call SaveInteger(IC_Data,'A0BL',29,2)
+    call SaveStr(IC_Data,'A0BL',30,"Backstab Damage")
+    call SaveInteger(IC_Data,'A0BL',32,'aare')
+    call SaveInteger(IC_Data,'A0BL',33,2)
+    call SaveStr(IC_Data,'A0BL',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0BL',36,'aran')
+    call SaveInteger(IC_Data,'A0BL',37,2)
+    call SaveStr(IC_Data,'A0BL',38,"Cast range")
+    call SaveInteger(IC_Data,'A0BL',-1,10)
+    call SaveInteger(IC_Data,'A0BT',0,'acas')
+    call SaveInteger(IC_Data,'A0BT',1,2)
+    call SaveStr(IC_Data,'A0BT',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0BT',4,'adur')
+    call SaveInteger(IC_Data,'A0BT',5,2)
+    call SaveStr(IC_Data,'A0BT',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0BT',8,'ahdu')
+    call SaveInteger(IC_Data,'A0BT',9,2)
+    call SaveStr(IC_Data,'A0BT',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0BT',12,'acdn')
+    call SaveInteger(IC_Data,'A0BT',13,2)
+    call SaveStr(IC_Data,'A0BT',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0BT',16,'amcs')
+    call SaveInteger(IC_Data,'A0BT',17,1)
+    call SaveStr(IC_Data,'A0BT',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0BT',20,'Iagi')
+    call SaveInteger(IC_Data,'A0BT',21,1)
+    call SaveStr(IC_Data,'A0BT',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A0BT',24,'Iint')
+    call SaveInteger(IC_Data,'A0BT',25,1)
+    call SaveStr(IC_Data,'A0BT',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A0BT',28,'Istr')
+    call SaveInteger(IC_Data,'A0BT',29,1)
+    call SaveStr(IC_Data,'A0BT',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A0BT',32,'aare')
+    call SaveInteger(IC_Data,'A0BT',33,2)
+    call SaveStr(IC_Data,'A0BT',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0BT',36,'aran')
+    call SaveInteger(IC_Data,'A0BT',37,2)
+    call SaveStr(IC_Data,'A0BT',38,"Cast range")
+    call SaveInteger(IC_Data,'A0BT',-1,10)
+    call SaveInteger(IC_Data,'A0EN',0,'acas')
+    call SaveInteger(IC_Data,'A0EN',1,2)
+    call SaveStr(IC_Data,'A0EN',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0EN',4,'adur')
+    call SaveInteger(IC_Data,'A0EN',5,2)
+    call SaveStr(IC_Data,'A0EN',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0EN',8,'ahdu')
+    call SaveInteger(IC_Data,'A0EN',9,2)
+    call SaveStr(IC_Data,'A0EN',10,"Hero duration (seconds)")
+endfunction
+
+function IC_Data28 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0EN',12,'acdn')
+    call SaveInteger(IC_Data,'A0EN',13,2)
+    call SaveStr(IC_Data,'A0EN',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0EN',16,'amcs')
+    call SaveInteger(IC_Data,'A0EN',17,1)
+    call SaveStr(IC_Data,'A0EN',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0EN',20,'aran')
+    call SaveInteger(IC_Data,'A0EN',21,2)
+    call SaveStr(IC_Data,'A0EN',22,"Cast range")
+    call SaveInteger(IC_Data,'A0EN',24,'Hwe1')
+    call SaveInteger(IC_Data,'A0EN',25,1)
+    call SaveStr(IC_Data,'A0EN',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'A0EN',28,'Hwe2')
+    call SaveInteger(IC_Data,'A0EN',29,1)
+    call SaveStr(IC_Data,'A0EN',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'A0EN',32,'aare')
+    call SaveInteger(IC_Data,'A0EN',33,2)
+    call SaveStr(IC_Data,'A0EN',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0EN',-1,9)
+    call SaveInteger(IC_Data,'A0EX',0,'acas')
+    call SaveInteger(IC_Data,'A0EX',1,2)
+    call SaveStr(IC_Data,'A0EX',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0EX',4,'adur')
+    call SaveInteger(IC_Data,'A0EX',5,2)
+    call SaveStr(IC_Data,'A0EX',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0EX',8,'ahdu')
+    call SaveInteger(IC_Data,'A0EX',9,2)
+    call SaveStr(IC_Data,'A0EX',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0EX',12,'acdn')
+    call SaveInteger(IC_Data,'A0EX',13,2)
+    call SaveStr(IC_Data,'A0EX',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0EX',16,'amcs')
+    call SaveInteger(IC_Data,'A0EX',17,1)
+    call SaveStr(IC_Data,'A0EX',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0EX',20,'Nic1')
+    call SaveInteger(IC_Data,'A0EX',21,2)
+    call SaveStr(IC_Data,'A0EX',22,"Bonus Damage Multiplier")
+    call SaveInteger(IC_Data,'A0EX',24,'Nic2')
+    call SaveInteger(IC_Data,'A0EX',25,2)
+    call SaveStr(IC_Data,'A0EX',26,"Death Damage Full Amount")
+    call SaveInteger(IC_Data,'A0EX',28,'Nic3')
+    call SaveInteger(IC_Data,'A0EX',29,2)
+    call SaveStr(IC_Data,'A0EX',30,"Death Damage Full Area")
+    call SaveInteger(IC_Data,'A0EX',32,'Nic4')
+    call SaveInteger(IC_Data,'A0EX',33,2)
+    call SaveStr(IC_Data,'A0EX',34,"Death Damage Half Amount")
+    call SaveInteger(IC_Data,'A0EX',36,'Nic5')
+    call SaveInteger(IC_Data,'A0EX',37,2)
+    call SaveStr(IC_Data,'A0EX',38,"Death Damage Half Area")
+    call SaveInteger(IC_Data,'A0EX',40,'Nic6')
+    call SaveInteger(IC_Data,'A0EX',41,2)
+    call SaveStr(IC_Data,'A0EX',42,"Death Damage Delay")
+    call SaveInteger(IC_Data,'A0EX',44,'aare')
+    call SaveInteger(IC_Data,'A0EX',45,2)
+    call SaveStr(IC_Data,'A0EX',46,"Area of effect")
+    call SaveInteger(IC_Data,'A0EX',48,'aran')
+    call SaveInteger(IC_Data,'A0EX',49,2)
+    call SaveStr(IC_Data,'A0EX',50,"Cast range")
+    call SaveInteger(IC_Data,'A0EX',-1,13)
+    call SaveInteger(IC_Data,'A0FD',0,'acas')
+    call SaveInteger(IC_Data,'A0FD',1,2)
+    call SaveStr(IC_Data,'A0FD',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0FD',4,'adur')
+    call SaveInteger(IC_Data,'A0FD',5,2)
+    call SaveStr(IC_Data,'A0FD',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0FD',8,'ahdu')
+    call SaveInteger(IC_Data,'A0FD',9,2)
+    call SaveStr(IC_Data,'A0FD',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0FD',12,'acdn')
+    call SaveInteger(IC_Data,'A0FD',13,2)
+    call SaveStr(IC_Data,'A0FD',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0FD',16,'amcs')
+    call SaveInteger(IC_Data,'A0FD',17,1)
+    call SaveStr(IC_Data,'A0FD',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0FD',20,'aare')
+    call SaveInteger(IC_Data,'A0FD',21,2)
+    call SaveStr(IC_Data,'A0FD',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0FD',24,'aran')
+    call SaveInteger(IC_Data,'A0FD',25,2)
+    call SaveStr(IC_Data,'A0FD',26,"Cast range")
+    call SaveInteger(IC_Data,'A0FD',28,'Oeq1')
+    call SaveInteger(IC_Data,'A0FD',29,2)
+    call SaveStr(IC_Data,'A0FD',30,"Effect Delay")
+    call SaveInteger(IC_Data,'A0FD',32,'Oeq2')
+    call SaveInteger(IC_Data,'A0FD',33,2)
+    call SaveStr(IC_Data,'A0FD',34,"Damage per Second to Buildings")
+    call SaveInteger(IC_Data,'A0FD',36,'Oeq3')
+    call SaveInteger(IC_Data,'A0FD',37,2)
+    call SaveStr(IC_Data,'A0FD',38,"Units Slowed (%)")
+    call SaveBoolean(IC_Data,'A0FD',39,true)
+    call SaveInteger(IC_Data,'A0FD',40,'Oeq4')
+    call SaveInteger(IC_Data,'A0FD',41,2)
+    call SaveStr(IC_Data,'A0FD',42,"Final Area")
+    call SaveInteger(IC_Data,'A0FD',-1,11)
+    call SaveInteger(IC_Data,'A0FZ',0,'acas')
+    call SaveInteger(IC_Data,'A0FZ',1,2)
+    call SaveStr(IC_Data,'A0FZ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0FZ',4,'adur')
+    call SaveInteger(IC_Data,'A0FZ',5,2)
+    call SaveStr(IC_Data,'A0FZ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0FZ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0FZ',9,2)
+    call SaveStr(IC_Data,'A0FZ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0FZ',12,'acdn')
+    call SaveInteger(IC_Data,'A0FZ',13,2)
+    call SaveStr(IC_Data,'A0FZ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0FZ',16,'amcs')
+    call SaveInteger(IC_Data,'A0FZ',17,1)
+    call SaveStr(IC_Data,'A0FZ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0FZ',20,'aare')
+    call SaveInteger(IC_Data,'A0FZ',21,2)
+    call SaveStr(IC_Data,'A0FZ',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0FZ',24,'Htc1')
+    call SaveInteger(IC_Data,'A0FZ',25,2)
+    call SaveStr(IC_Data,'A0FZ',26,"AOE Damage")
+    call SaveInteger(IC_Data,'A0FZ',28,'Htc2')
+    call SaveInteger(IC_Data,'A0FZ',29,2)
+    call SaveStr(IC_Data,'A0FZ',30,"Specific Target Damage")
+    call SaveInteger(IC_Data,'A0FZ',32,'Htc3')
+    call SaveInteger(IC_Data,'A0FZ',33,2)
+    call SaveStr(IC_Data,'A0FZ',34,"Movement Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'A0FZ',35,true)
+    call SaveInteger(IC_Data,'A0FZ',36,'Htc4')
+    call SaveInteger(IC_Data,'A0FZ',37,2)
+    call SaveStr(IC_Data,'A0FZ',38,"Attack Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'A0FZ',39,true)
+    call SaveInteger(IC_Data,'A0FZ',40,'aran')
+    call SaveInteger(IC_Data,'A0FZ',41,2)
+    call SaveStr(IC_Data,'A0FZ',42,"Cast range")
+    call SaveInteger(IC_Data,'A0FZ',-1,11)
+    call SaveInteger(IC_Data,'A0G0',0,'acas')
+    call SaveInteger(IC_Data,'A0G0',1,2)
+    call SaveStr(IC_Data,'A0G0',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0G0',4,'adur')
+    call SaveInteger(IC_Data,'A0G0',5,2)
+    call SaveStr(IC_Data,'A0G0',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0G0',8,'ahdu')
+    call SaveInteger(IC_Data,'A0G0',9,2)
+    call SaveStr(IC_Data,'A0G0',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0G0',12,'acdn')
+    call SaveInteger(IC_Data,'A0G0',13,2)
+    call SaveStr(IC_Data,'A0G0',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0G0',16,'amcs')
+    call SaveInteger(IC_Data,'A0G0',17,1)
+    call SaveStr(IC_Data,'A0G0',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0G0',20,'aran')
+    call SaveInteger(IC_Data,'A0G0',21,2)
+    call SaveStr(IC_Data,'A0G0',22,"Cast range")
+    call SaveInteger(IC_Data,'A0G0',24,'Ntm1')
+    call SaveInteger(IC_Data,'A0G0',25,2)
+    call SaveStr(IC_Data,'A0G0',26,"Gold Cost Factor")
+    call SaveInteger(IC_Data,'A0G0',28,'Ntm2')
+    call SaveInteger(IC_Data,'A0G0',29,2)
+    call SaveStr(IC_Data,'A0G0',30,"Lumber Cost Factor")
+    call SaveInteger(IC_Data,'A0G0',32,'Ntm3')
+    call SaveInteger(IC_Data,'A0G0',33,1)
+    call SaveStr(IC_Data,'A0G0',34,"Max Creep Level")
+    call SaveInteger(IC_Data,'A0G0',36,'aare')
+    call SaveInteger(IC_Data,'A0G0',37,2)
+    call SaveStr(IC_Data,'A0G0',38,"Area of effect")
+endfunction
+
+function IC_Data29 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0G0',-1,10)
+    call SaveInteger(IC_Data,'A0G2',0,'acas')
+    call SaveInteger(IC_Data,'A0G2',1,2)
+    call SaveStr(IC_Data,'A0G2',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0G2',4,'adur')
+    call SaveInteger(IC_Data,'A0G2',5,2)
+    call SaveStr(IC_Data,'A0G2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0G2',8,'ahdu')
+    call SaveInteger(IC_Data,'A0G2',9,2)
+    call SaveStr(IC_Data,'A0G2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0G2',12,'acdn')
+    call SaveInteger(IC_Data,'A0G2',13,2)
+    call SaveStr(IC_Data,'A0G2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0G2',16,'amcs')
+    call SaveInteger(IC_Data,'A0G2',17,1)
+    call SaveStr(IC_Data,'A0G2',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0G2',20,'aare')
+    call SaveInteger(IC_Data,'A0G2',21,2)
+    call SaveStr(IC_Data,'A0G2',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0G2',24,'Roa1')
+    call SaveInteger(IC_Data,'A0G2',25,2)
+    call SaveStr(IC_Data,'A0G2',26,"Damage Increase (%)")
+    call SaveBoolean(IC_Data,'A0G2',27,true)
+    call SaveInteger(IC_Data,'A0G2',28,'Roa2')
+    call SaveInteger(IC_Data,'A0G2',29,1)
+    call SaveStr(IC_Data,'A0G2',30,"Defense Increase")
+    call SaveInteger(IC_Data,'A0G2',32,'Roa3')
+    call SaveInteger(IC_Data,'A0G2',33,2)
+    call SaveStr(IC_Data,'A0G2',34,"Life Regeneration Rate")
+    call SaveInteger(IC_Data,'A0G2',36,'Roa4')
+    call SaveInteger(IC_Data,'A0G2',37,2)
+    call SaveStr(IC_Data,'A0G2',38,"Mana Regen")
+    call SaveInteger(IC_Data,'A0G2',40,'Roa7')
+    call SaveInteger(IC_Data,'A0G2',41,1)
+    call SaveStr(IC_Data,'A0G2',42,"Max Units")
+    call SaveInteger(IC_Data,'A0G2',44,'aran')
+    call SaveInteger(IC_Data,'A0G2',45,2)
+    call SaveStr(IC_Data,'A0G2',46,"Cast range")
+    call SaveInteger(IC_Data,'A0G2',-1,12)
+    call SaveInteger(IC_Data,'A0GB',0,'acas')
+    call SaveInteger(IC_Data,'A0GB',1,2)
+    call SaveStr(IC_Data,'A0GB',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0GB',4,'adur')
+    call SaveInteger(IC_Data,'A0GB',5,2)
+    call SaveStr(IC_Data,'A0GB',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0GB',8,'ahdu')
+    call SaveInteger(IC_Data,'A0GB',9,2)
+    call SaveStr(IC_Data,'A0GB',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0GB',12,'acdn')
+    call SaveInteger(IC_Data,'A0GB',13,2)
+    call SaveStr(IC_Data,'A0GB',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0GB',16,'amcs')
+    call SaveInteger(IC_Data,'A0GB',17,1)
+    call SaveStr(IC_Data,'A0GB',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0GB',20,'aare')
+    call SaveInteger(IC_Data,'A0GB',21,2)
+    call SaveStr(IC_Data,'A0GB',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0GB',24,'aran')
+    call SaveInteger(IC_Data,'A0GB',25,2)
+    call SaveStr(IC_Data,'A0GB',26,"Cast range")
+    call SaveInteger(IC_Data,'A0GB',28,'Nsi1')
+    call SaveInteger(IC_Data,'A0GB',29,1)
+    call SaveStr(IC_Data,'A0GB',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'A0GB',32,'Nsi2')
+    call SaveInteger(IC_Data,'A0GB',33,2)
+    call SaveStr(IC_Data,'A0GB',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'A0GB',35,true)
+    call SaveInteger(IC_Data,'A0GB',36,'Nsi3')
+    call SaveInteger(IC_Data,'A0GB',37,2)
+    call SaveStr(IC_Data,'A0GB',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'A0GB',40,'Nsi4')
+    call SaveInteger(IC_Data,'A0GB',41,2)
+    call SaveStr(IC_Data,'A0GB',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'A0GB',-1,11)
+    call SaveInteger(IC_Data,'A0GC',0,'acas')
+    call SaveInteger(IC_Data,'A0GC',1,2)
+    call SaveStr(IC_Data,'A0GC',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0GC',4,'adur')
+    call SaveInteger(IC_Data,'A0GC',5,2)
+    call SaveStr(IC_Data,'A0GC',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0GC',8,'ahdu')
+    call SaveInteger(IC_Data,'A0GC',9,2)
+    call SaveStr(IC_Data,'A0GC',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0GC',12,'acdn')
+    call SaveInteger(IC_Data,'A0GC',13,2)
+    call SaveStr(IC_Data,'A0GC',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0GC',16,'amcs')
+    call SaveInteger(IC_Data,'A0GC',17,1)
+    call SaveStr(IC_Data,'A0GC',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0GC',20,'aare')
+    call SaveInteger(IC_Data,'A0GC',21,2)
+    call SaveStr(IC_Data,'A0GC',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0GC',24,'aran')
+    call SaveInteger(IC_Data,'A0GC',25,2)
+    call SaveStr(IC_Data,'A0GC',26,"Cast range")
+    call SaveInteger(IC_Data,'A0GC',28,'Nsi1')
+    call SaveInteger(IC_Data,'A0GC',29,1)
+    call SaveStr(IC_Data,'A0GC',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'A0GC',32,'Nsi2')
+    call SaveInteger(IC_Data,'A0GC',33,2)
+    call SaveStr(IC_Data,'A0GC',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'A0GC',35,true)
+    call SaveInteger(IC_Data,'A0GC',36,'Nsi3')
+    call SaveInteger(IC_Data,'A0GC',37,2)
+    call SaveStr(IC_Data,'A0GC',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'A0GC',40,'Nsi4')
+    call SaveInteger(IC_Data,'A0GC',41,2)
+    call SaveStr(IC_Data,'A0GC',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'A0GC',-1,11)
+    call SaveInteger(IC_Data,'A0GD',0,'acas')
+    call SaveInteger(IC_Data,'A0GD',1,2)
+    call SaveStr(IC_Data,'A0GD',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0GD',4,'adur')
+    call SaveInteger(IC_Data,'A0GD',5,2)
+    call SaveStr(IC_Data,'A0GD',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0GD',8,'ahdu')
+    call SaveInteger(IC_Data,'A0GD',9,2)
+    call SaveStr(IC_Data,'A0GD',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0GD',12,'acdn')
+    call SaveInteger(IC_Data,'A0GD',13,2)
+    call SaveStr(IC_Data,'A0GD',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0GD',16,'amcs')
+    call SaveInteger(IC_Data,'A0GD',17,1)
+    call SaveStr(IC_Data,'A0GD',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0GD',20,'Iagi')
+    call SaveInteger(IC_Data,'A0GD',21,1)
+    call SaveStr(IC_Data,'A0GD',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A0GD',24,'Iint')
+    call SaveInteger(IC_Data,'A0GD',25,1)
+    call SaveStr(IC_Data,'A0GD',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A0GD',28,'Istr')
+    call SaveInteger(IC_Data,'A0GD',29,1)
+    call SaveStr(IC_Data,'A0GD',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A0GD',32,'aare')
+    call SaveInteger(IC_Data,'A0GD',33,2)
+    call SaveStr(IC_Data,'A0GD',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0GD',36,'aran')
+    call SaveInteger(IC_Data,'A0GD',37,2)
+    call SaveStr(IC_Data,'A0GD',38,"Cast range")
+    call SaveInteger(IC_Data,'A0GD',-1,10)
+    call SaveInteger(IC_Data,'A0GU',0,'acas')
+    call SaveInteger(IC_Data,'A0GU',1,2)
+    call SaveStr(IC_Data,'A0GU',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0GU',4,'adur')
+    call SaveInteger(IC_Data,'A0GU',5,2)
+    call SaveStr(IC_Data,'A0GU',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0GU',8,'ahdu')
+    call SaveInteger(IC_Data,'A0GU',9,2)
+    call SaveStr(IC_Data,'A0GU',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0GU',12,'acdn')
+    call SaveInteger(IC_Data,'A0GU',13,2)
+    call SaveStr(IC_Data,'A0GU',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0GU',16,'amcs')
+    call SaveInteger(IC_Data,'A0GU',17,1)
+    call SaveStr(IC_Data,'A0GU',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0GU',20,'aare')
+    call SaveInteger(IC_Data,'A0GU',21,2)
+    call SaveStr(IC_Data,'A0GU',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0GU',24,'aran')
+    call SaveInteger(IC_Data,'A0GU',25,2)
+endfunction
+
+function IC_Data30 takes nothing returns nothing
+    call SaveStr(IC_Data,'A0GU',26,"Cast range")
+    call SaveInteger(IC_Data,'A0GU',28,'Ucs1')
+    call SaveInteger(IC_Data,'A0GU',29,2)
+    call SaveStr(IC_Data,'A0GU',30,"Damage")
+    call SaveInteger(IC_Data,'A0GU',32,'Ucs2')
+    call SaveInteger(IC_Data,'A0GU',33,2)
+    call SaveStr(IC_Data,'A0GU',34,"Max Damage")
+    call SaveInteger(IC_Data,'A0GU',36,'Ucs3')
+    call SaveInteger(IC_Data,'A0GU',37,2)
+    call SaveStr(IC_Data,'A0GU',38,"Distance")
+    call SaveInteger(IC_Data,'A0GU',40,'Ucs4')
+    call SaveInteger(IC_Data,'A0GU',41,2)
+    call SaveStr(IC_Data,'A0GU',42,"Final Area")
+    call SaveInteger(IC_Data,'A0GU',-1,11)
+    call SaveInteger(IC_Data,'A0H2',0,'acas')
+    call SaveInteger(IC_Data,'A0H2',1,2)
+    call SaveStr(IC_Data,'A0H2',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0H2',4,'adur')
+    call SaveInteger(IC_Data,'A0H2',5,2)
+    call SaveStr(IC_Data,'A0H2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0H2',8,'ahdu')
+    call SaveInteger(IC_Data,'A0H2',9,2)
+    call SaveStr(IC_Data,'A0H2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0H2',12,'acdn')
+    call SaveInteger(IC_Data,'A0H2',13,2)
+    call SaveStr(IC_Data,'A0H2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0H2',16,'amcs')
+    call SaveInteger(IC_Data,'A0H2',17,1)
+    call SaveStr(IC_Data,'A0H2',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0H2',20,'Iman')
+    call SaveInteger(IC_Data,'A0H2',21,1)
+    call SaveStr(IC_Data,'A0H2',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'A0H2',24,'aare')
+    call SaveInteger(IC_Data,'A0H2',25,2)
+    call SaveStr(IC_Data,'A0H2',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0H2',28,'aran')
+    call SaveInteger(IC_Data,'A0H2',29,2)
+    call SaveStr(IC_Data,'A0H2',30,"Cast range")
+    call SaveInteger(IC_Data,'A0H2',-1,8)
+    call SaveInteger(IC_Data,'A0HH',0,'acas')
+    call SaveInteger(IC_Data,'A0HH',1,2)
+    call SaveStr(IC_Data,'A0HH',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0HH',4,'adur')
+    call SaveInteger(IC_Data,'A0HH',5,2)
+    call SaveStr(IC_Data,'A0HH',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0HH',8,'ahdu')
+    call SaveInteger(IC_Data,'A0HH',9,2)
+    call SaveStr(IC_Data,'A0HH',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0HH',12,'acdn')
+    call SaveInteger(IC_Data,'A0HH',13,2)
+    call SaveStr(IC_Data,'A0HH',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0HH',16,'amcs')
+    call SaveInteger(IC_Data,'A0HH',17,1)
+    call SaveStr(IC_Data,'A0HH',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0HH',20,'aare')
+    call SaveInteger(IC_Data,'A0HH',21,2)
+    call SaveStr(IC_Data,'A0HH',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0HH',24,'aran')
+    call SaveInteger(IC_Data,'A0HH',25,2)
+    call SaveStr(IC_Data,'A0HH',26,"Cast range")
+    call SaveInteger(IC_Data,'A0HH',28,'Itpm')
+    call SaveInteger(IC_Data,'A0HH',29,1)
+    call SaveStr(IC_Data,'A0HH',30,"Maximum Number of Units")
+    call SaveInteger(IC_Data,'A0HH',-1,8)
+    call SaveInteger(IC_Data,'A0HZ',0,'acas')
+    call SaveInteger(IC_Data,'A0HZ',1,2)
+    call SaveStr(IC_Data,'A0HZ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0HZ',4,'adur')
+    call SaveInteger(IC_Data,'A0HZ',5,2)
+    call SaveStr(IC_Data,'A0HZ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0HZ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0HZ',9,2)
+    call SaveStr(IC_Data,'A0HZ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0HZ',12,'acdn')
+    call SaveInteger(IC_Data,'A0HZ',13,2)
+    call SaveStr(IC_Data,'A0HZ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0HZ',16,'amcs')
+    call SaveInteger(IC_Data,'A0HZ',17,1)
+    call SaveStr(IC_Data,'A0HZ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0HZ',20,'aran')
+    call SaveInteger(IC_Data,'A0HZ',21,2)
+    call SaveStr(IC_Data,'A0HZ',22,"Cast range")
+    call SaveInteger(IC_Data,'A0HZ',24,'Ihpg')
+    call SaveInteger(IC_Data,'A0HZ',25,1)
+    call SaveStr(IC_Data,'A0HZ',26,"Hit Points Gained")
+    call SaveInteger(IC_Data,'A0HZ',28,'aare')
+    call SaveInteger(IC_Data,'A0HZ',29,2)
+    call SaveStr(IC_Data,'A0HZ',30,"Area of effect")
+    call SaveInteger(IC_Data,'A0HZ',-1,8)
+    call SaveInteger(IC_Data,'A0I8',0,'acas')
+    call SaveInteger(IC_Data,'A0I8',1,2)
+    call SaveStr(IC_Data,'A0I8',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0I8',4,'adur')
+    call SaveInteger(IC_Data,'A0I8',5,2)
+    call SaveStr(IC_Data,'A0I8',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0I8',8,'ahdu')
+    call SaveInteger(IC_Data,'A0I8',9,2)
+    call SaveStr(IC_Data,'A0I8',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0I8',12,'acdn')
+    call SaveInteger(IC_Data,'A0I8',13,2)
+    call SaveStr(IC_Data,'A0I8',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0I8',16,'amcs')
+    call SaveInteger(IC_Data,'A0I8',17,1)
+    call SaveStr(IC_Data,'A0I8',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0I8',20,'aran')
+    call SaveInteger(IC_Data,'A0I8',21,2)
+    call SaveStr(IC_Data,'A0I8',22,"Cast range")
+    call SaveInteger(IC_Data,'A0I8',24,'Ncl1')
+    call SaveInteger(IC_Data,'A0I8',25,2)
+    call SaveStr(IC_Data,'A0I8',26,"Follow Through Time")
+    call SaveInteger(IC_Data,'A0I8',28,'Ncl2')
+    call SaveInteger(IC_Data,'A0I8',29,1)
+    call SaveStr(IC_Data,'A0I8',30,"Target Type")
+    call SaveInteger(IC_Data,'A0I8',32,'Ncl3')
+    call SaveInteger(IC_Data,'A0I8',33,1)
+    call SaveStr(IC_Data,'A0I8',34,"Options")
+    call SaveInteger(IC_Data,'A0I8',36,'Ncl4')
+    call SaveInteger(IC_Data,'A0I8',37,2)
+    call SaveStr(IC_Data,'A0I8',38,"Art Duration")
+    call SaveInteger(IC_Data,'A0I8',40,'aare')
+    call SaveInteger(IC_Data,'A0I8',41,2)
+    call SaveStr(IC_Data,'A0I8',42,"Area of effect")
+    call SaveInteger(IC_Data,'A0I8',-1,11)
+    call SaveInteger(IC_Data,'A0IC',0,'acas')
+    call SaveInteger(IC_Data,'A0IC',1,2)
+    call SaveStr(IC_Data,'A0IC',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0IC',4,'adur')
+    call SaveInteger(IC_Data,'A0IC',5,2)
+    call SaveStr(IC_Data,'A0IC',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0IC',8,'ahdu')
+    call SaveInteger(IC_Data,'A0IC',9,2)
+    call SaveStr(IC_Data,'A0IC',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0IC',12,'acdn')
+    call SaveInteger(IC_Data,'A0IC',13,2)
+    call SaveStr(IC_Data,'A0IC',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0IC',16,'amcs')
+    call SaveInteger(IC_Data,'A0IC',17,1)
+    call SaveStr(IC_Data,'A0IC',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0IC',20,'Ilif')
+    call SaveInteger(IC_Data,'A0IC',21,1)
+    call SaveStr(IC_Data,'A0IC',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A0IC',24,'aare')
+    call SaveInteger(IC_Data,'A0IC',25,2)
+    call SaveStr(IC_Data,'A0IC',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0IC',28,'aran')
+    call SaveInteger(IC_Data,'A0IC',29,2)
+    call SaveStr(IC_Data,'A0IC',30,"Cast range")
+    call SaveInteger(IC_Data,'A0IC',-1,8)
+    call SaveInteger(IC_Data,'A0ID',0,'acas')
+    call SaveInteger(IC_Data,'A0ID',1,2)
+    call SaveStr(IC_Data,'A0ID',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0ID',4,'adur')
+    call SaveInteger(IC_Data,'A0ID',5,2)
+    call SaveStr(IC_Data,'A0ID',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0ID',8,'ahdu')
+    call SaveInteger(IC_Data,'A0ID',9,2)
+    call SaveStr(IC_Data,'A0ID',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0ID',12,'acdn')
+    call SaveInteger(IC_Data,'A0ID',13,2)
+    call SaveStr(IC_Data,'A0ID',14,"Cooldown (seconds)")
+endfunction
+
+function IC_Data31 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0ID',16,'amcs')
+    call SaveInteger(IC_Data,'A0ID',17,1)
+    call SaveStr(IC_Data,'A0ID',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0ID',20,'aran')
+    call SaveInteger(IC_Data,'A0ID',21,2)
+    call SaveStr(IC_Data,'A0ID',22,"Cast range")
+    call SaveInteger(IC_Data,'A0ID',24,'Blo1')
+    call SaveInteger(IC_Data,'A0ID',25,2)
+    call SaveStr(IC_Data,'A0ID',26,"Attack Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A0ID',27,true)
+    call SaveInteger(IC_Data,'A0ID',28,'Blo2')
+    call SaveInteger(IC_Data,'A0ID',29,2)
+    call SaveStr(IC_Data,'A0ID',30,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A0ID',31,true)
+    call SaveInteger(IC_Data,'A0ID',32,'Blo3')
+    call SaveInteger(IC_Data,'A0ID',33,2)
+    call SaveStr(IC_Data,'A0ID',34,"Scaling Factor")
+    call SaveInteger(IC_Data,'A0ID',36,'aare')
+    call SaveInteger(IC_Data,'A0ID',37,2)
+    call SaveStr(IC_Data,'A0ID',38,"Area of effect")
+    call SaveInteger(IC_Data,'A0ID',-1,10)
+    call SaveInteger(IC_Data,'A0JR',0,'acas')
+    call SaveInteger(IC_Data,'A0JR',1,2)
+    call SaveStr(IC_Data,'A0JR',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0JR',4,'adur')
+    call SaveInteger(IC_Data,'A0JR',5,2)
+    call SaveStr(IC_Data,'A0JR',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0JR',8,'ahdu')
+    call SaveInteger(IC_Data,'A0JR',9,2)
+    call SaveStr(IC_Data,'A0JR',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0JR',12,'acdn')
+    call SaveInteger(IC_Data,'A0JR',13,2)
+    call SaveStr(IC_Data,'A0JR',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0JR',16,'amcs')
+    call SaveInteger(IC_Data,'A0JR',17,1)
+    call SaveStr(IC_Data,'A0JR',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0JR',20,'Ihpr')
+    call SaveInteger(IC_Data,'A0JR',21,1)
+    call SaveStr(IC_Data,'A0JR',22,"Hit Points Regenerated Per Second")
+    call SaveInteger(IC_Data,'A0JR',24,'aare')
+    call SaveInteger(IC_Data,'A0JR',25,2)
+    call SaveStr(IC_Data,'A0JR',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0JR',28,'aran')
+    call SaveInteger(IC_Data,'A0JR',29,2)
+    call SaveStr(IC_Data,'A0JR',30,"Cast range")
+    call SaveInteger(IC_Data,'A0JR',-1,8)
+    call SaveInteger(IC_Data,'A0JS',0,'acas')
+    call SaveInteger(IC_Data,'A0JS',1,2)
+    call SaveStr(IC_Data,'A0JS',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0JS',4,'adur')
+    call SaveInteger(IC_Data,'A0JS',5,2)
+    call SaveStr(IC_Data,'A0JS',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0JS',8,'ahdu')
+    call SaveInteger(IC_Data,'A0JS',9,2)
+    call SaveStr(IC_Data,'A0JS',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0JS',12,'acdn')
+    call SaveInteger(IC_Data,'A0JS',13,2)
+    call SaveStr(IC_Data,'A0JS',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0JS',16,'amcs')
+    call SaveInteger(IC_Data,'A0JS',17,1)
+    call SaveStr(IC_Data,'A0JS',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0JS',20,'Ilif')
+    call SaveInteger(IC_Data,'A0JS',21,1)
+    call SaveStr(IC_Data,'A0JS',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A0JS',24,'aare')
+    call SaveInteger(IC_Data,'A0JS',25,2)
+    call SaveStr(IC_Data,'A0JS',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0JS',28,'aran')
+    call SaveInteger(IC_Data,'A0JS',29,2)
+    call SaveStr(IC_Data,'A0JS',30,"Cast range")
+    call SaveInteger(IC_Data,'A0JS',-1,8)
+    call SaveInteger(IC_Data,'A0JT',0,'acas')
+    call SaveInteger(IC_Data,'A0JT',1,2)
+    call SaveStr(IC_Data,'A0JT',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0JT',4,'adur')
+    call SaveInteger(IC_Data,'A0JT',5,2)
+    call SaveStr(IC_Data,'A0JT',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0JT',8,'ahdu')
+    call SaveInteger(IC_Data,'A0JT',9,2)
+    call SaveStr(IC_Data,'A0JT',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0JT',12,'acdn')
+    call SaveInteger(IC_Data,'A0JT',13,2)
+    call SaveStr(IC_Data,'A0JT',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0JT',16,'amcs')
+    call SaveInteger(IC_Data,'A0JT',17,1)
+    call SaveStr(IC_Data,'A0JT',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0JT',20,'isr1')
+    call SaveInteger(IC_Data,'A0JT',21,2)
+    call SaveStr(IC_Data,'A0JT',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'A0JT',24,'isr2')
+    call SaveInteger(IC_Data,'A0JT',25,2)
+    call SaveStr(IC_Data,'A0JT',26,"Damage Reduction")
+    call SaveInteger(IC_Data,'A0JT',28,'aare')
+    call SaveInteger(IC_Data,'A0JT',29,2)
+    call SaveStr(IC_Data,'A0JT',30,"Area of effect")
+    call SaveInteger(IC_Data,'A0JT',32,'aran')
+    call SaveInteger(IC_Data,'A0JT',33,2)
+    call SaveStr(IC_Data,'A0JT',34,"Cast range")
+    call SaveInteger(IC_Data,'A0JT',-1,9)
+    call SaveInteger(IC_Data,'A0JU',0,'acas')
+    call SaveInteger(IC_Data,'A0JU',1,2)
+    call SaveStr(IC_Data,'A0JU',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0JU',4,'adur')
+    call SaveInteger(IC_Data,'A0JU',5,2)
+    call SaveStr(IC_Data,'A0JU',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0JU',8,'ahdu')
+    call SaveInteger(IC_Data,'A0JU',9,2)
+    call SaveStr(IC_Data,'A0JU',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0JU',12,'acdn')
+    call SaveInteger(IC_Data,'A0JU',13,2)
+    call SaveStr(IC_Data,'A0JU',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0JU',16,'amcs')
+    call SaveInteger(IC_Data,'A0JU',17,1)
+    call SaveStr(IC_Data,'A0JU',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0JU',20,'isr1')
+    call SaveInteger(IC_Data,'A0JU',21,2)
+    call SaveStr(IC_Data,'A0JU',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'A0JU',24,'isr2')
+    call SaveInteger(IC_Data,'A0JU',25,2)
+    call SaveStr(IC_Data,'A0JU',26,"Damage Reduction")
+    call SaveInteger(IC_Data,'A0JU',28,'aare')
+    call SaveInteger(IC_Data,'A0JU',29,2)
+    call SaveStr(IC_Data,'A0JU',30,"Area of effect")
+    call SaveInteger(IC_Data,'A0JU',32,'aran')
+    call SaveInteger(IC_Data,'A0JU',33,2)
+    call SaveStr(IC_Data,'A0JU',34,"Cast range")
+    call SaveInteger(IC_Data,'A0JU',-1,9)
+    call SaveInteger(IC_Data,'A0JY',0,'acas')
+    call SaveInteger(IC_Data,'A0JY',1,2)
+    call SaveStr(IC_Data,'A0JY',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0JY',4,'adur')
+    call SaveInteger(IC_Data,'A0JY',5,2)
+    call SaveStr(IC_Data,'A0JY',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0JY',8,'ahdu')
+    call SaveInteger(IC_Data,'A0JY',9,2)
+    call SaveStr(IC_Data,'A0JY',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0JY',12,'acdn')
+    call SaveInteger(IC_Data,'A0JY',13,2)
+    call SaveStr(IC_Data,'A0JY',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0JY',16,'amcs')
+    call SaveInteger(IC_Data,'A0JY',17,1)
+    call SaveStr(IC_Data,'A0JY',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0JY',20,'aare')
+    call SaveInteger(IC_Data,'A0JY',21,2)
+    call SaveStr(IC_Data,'A0JY',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0JY',24,'Det1')
+    call SaveInteger(IC_Data,'A0JY',25,1)
+    call SaveStr(IC_Data,'A0JY',26,"Detection Type")
+    call SaveInteger(IC_Data,'A0JY',28,'aran')
+    call SaveInteger(IC_Data,'A0JY',29,2)
+    call SaveStr(IC_Data,'A0JY',30,"Cast range")
+    call SaveInteger(IC_Data,'A0JY',-1,8)
+    call SaveInteger(IC_Data,'A0K1',0,'acas')
+    call SaveInteger(IC_Data,'A0K1',1,2)
+    call SaveStr(IC_Data,'A0K1',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0K1',4,'adur')
+    call SaveInteger(IC_Data,'A0K1',5,2)
+    call SaveStr(IC_Data,'A0K1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0K1',8,'ahdu')
+    call SaveInteger(IC_Data,'A0K1',9,2)
+endfunction
+
+function IC_Data32 takes nothing returns nothing
+    call SaveStr(IC_Data,'A0K1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0K1',12,'acdn')
+    call SaveInteger(IC_Data,'A0K1',13,2)
+    call SaveStr(IC_Data,'A0K1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0K1',16,'amcs')
+    call SaveInteger(IC_Data,'A0K1',17,1)
+    call SaveStr(IC_Data,'A0K1',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0K1',20,'Imvb')
+    call SaveInteger(IC_Data,'A0K1',21,1)
+    call SaveStr(IC_Data,'A0K1',22,"Movement Speed Bonus")
+    call SaveInteger(IC_Data,'A0K1',24,'aare')
+    call SaveInteger(IC_Data,'A0K1',25,2)
+    call SaveStr(IC_Data,'A0K1',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0K1',28,'aran')
+    call SaveInteger(IC_Data,'A0K1',29,2)
+    call SaveStr(IC_Data,'A0K1',30,"Cast range")
+    call SaveInteger(IC_Data,'A0K1',-1,8)
+    call SaveInteger(IC_Data,'A0K7',0,'acas')
+    call SaveInteger(IC_Data,'A0K7',1,2)
+    call SaveStr(IC_Data,'A0K7',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0K7',4,'adur')
+    call SaveInteger(IC_Data,'A0K7',5,2)
+    call SaveStr(IC_Data,'A0K7',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0K7',8,'ahdu')
+    call SaveInteger(IC_Data,'A0K7',9,2)
+    call SaveStr(IC_Data,'A0K7',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0K7',12,'acdn')
+    call SaveInteger(IC_Data,'A0K7',13,2)
+    call SaveStr(IC_Data,'A0K7',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0K7',16,'amcs')
+    call SaveInteger(IC_Data,'A0K7',17,1)
+    call SaveStr(IC_Data,'A0K7',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0K7',20,'aare')
+    call SaveInteger(IC_Data,'A0K7',21,2)
+    call SaveStr(IC_Data,'A0K7',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0K7',24,'aran')
+    call SaveInteger(IC_Data,'A0K7',25,2)
+    call SaveStr(IC_Data,'A0K7',26,"Cast range")
+    call SaveInteger(IC_Data,'A0K7',-1,7)
+    call SaveInteger(IC_Data,'A0K8',0,'acas')
+    call SaveInteger(IC_Data,'A0K8',1,2)
+    call SaveStr(IC_Data,'A0K8',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0K8',4,'adur')
+    call SaveInteger(IC_Data,'A0K8',5,2)
+    call SaveStr(IC_Data,'A0K8',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0K8',8,'ahdu')
+    call SaveInteger(IC_Data,'A0K8',9,2)
+    call SaveStr(IC_Data,'A0K8',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0K8',12,'acdn')
+    call SaveInteger(IC_Data,'A0K8',13,2)
+    call SaveStr(IC_Data,'A0K8',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0K8',16,'amcs')
+    call SaveInteger(IC_Data,'A0K8',17,1)
+    call SaveStr(IC_Data,'A0K8',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0K8',20,'isr1')
+    call SaveInteger(IC_Data,'A0K8',21,2)
+    call SaveStr(IC_Data,'A0K8',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'A0K8',24,'isr2')
+    call SaveInteger(IC_Data,'A0K8',25,2)
+    call SaveStr(IC_Data,'A0K8',26,"Damage Reduction")
+    call SaveInteger(IC_Data,'A0K8',28,'aare')
+    call SaveInteger(IC_Data,'A0K8',29,2)
+    call SaveStr(IC_Data,'A0K8',30,"Area of effect")
+    call SaveInteger(IC_Data,'A0K8',32,'aran')
+    call SaveInteger(IC_Data,'A0K8',33,2)
+    call SaveStr(IC_Data,'A0K8',34,"Cast range")
+    call SaveInteger(IC_Data,'A0K8',-1,9)
+    call SaveInteger(IC_Data,'A0KF',0,'acas')
+    call SaveInteger(IC_Data,'A0KF',1,2)
+    call SaveStr(IC_Data,'A0KF',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0KF',4,'adur')
+    call SaveInteger(IC_Data,'A0KF',5,2)
+    call SaveStr(IC_Data,'A0KF',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0KF',8,'ahdu')
+    call SaveInteger(IC_Data,'A0KF',9,2)
+    call SaveStr(IC_Data,'A0KF',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0KF',12,'acdn')
+    call SaveInteger(IC_Data,'A0KF',13,2)
+    call SaveStr(IC_Data,'A0KF',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0KF',16,'amcs')
+    call SaveInteger(IC_Data,'A0KF',17,1)
+    call SaveStr(IC_Data,'A0KF',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0KF',20,'Iatt')
+    call SaveInteger(IC_Data,'A0KF',21,1)
+    call SaveStr(IC_Data,'A0KF',22,"Attack Bonus")
+    call SaveInteger(IC_Data,'A0KF',24,'aare')
+    call SaveInteger(IC_Data,'A0KF',25,2)
+    call SaveStr(IC_Data,'A0KF',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0KF',28,'aran')
+    call SaveInteger(IC_Data,'A0KF',29,2)
+    call SaveStr(IC_Data,'A0KF',30,"Cast range")
+    call SaveInteger(IC_Data,'A0KF',-1,8)
+    call SaveInteger(IC_Data,'A0KZ',0,'acas')
+    call SaveInteger(IC_Data,'A0KZ',1,2)
+    call SaveStr(IC_Data,'A0KZ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0KZ',4,'adur')
+    call SaveInteger(IC_Data,'A0KZ',5,2)
+    call SaveStr(IC_Data,'A0KZ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0KZ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0KZ',9,2)
+    call SaveStr(IC_Data,'A0KZ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0KZ',12,'acdn')
+    call SaveInteger(IC_Data,'A0KZ',13,2)
+    call SaveStr(IC_Data,'A0KZ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0KZ',16,'amcs')
+    call SaveInteger(IC_Data,'A0KZ',17,1)
+    call SaveStr(IC_Data,'A0KZ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0KZ',20,'bsk1')
+    call SaveInteger(IC_Data,'A0KZ',21,2)
+    call SaveStr(IC_Data,'A0KZ',22,"Movement Speed Increase")
+    call SaveInteger(IC_Data,'A0KZ',24,'bsk2')
+    call SaveInteger(IC_Data,'A0KZ',25,2)
+    call SaveStr(IC_Data,'A0KZ',26,"Attack Speed Increase")
+    call SaveInteger(IC_Data,'A0KZ',28,'bsk3')
+    call SaveInteger(IC_Data,'A0KZ',29,2)
+    call SaveStr(IC_Data,'A0KZ',30,"Damage Taken Increase")
+    call SaveInteger(IC_Data,'A0KZ',32,'aare')
+    call SaveInteger(IC_Data,'A0KZ',33,2)
+    call SaveStr(IC_Data,'A0KZ',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0KZ',36,'aran')
+    call SaveInteger(IC_Data,'A0KZ',37,2)
+    call SaveStr(IC_Data,'A0KZ',38,"Cast range")
+    call SaveInteger(IC_Data,'A0KZ',-1,10)
+    call SaveInteger(IC_Data,'A0L0',0,'acas')
+    call SaveInteger(IC_Data,'A0L0',1,2)
+    call SaveStr(IC_Data,'A0L0',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0L0',4,'adur')
+    call SaveInteger(IC_Data,'A0L0',5,2)
+    call SaveStr(IC_Data,'A0L0',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0L0',8,'ahdu')
+    call SaveInteger(IC_Data,'A0L0',9,2)
+    call SaveStr(IC_Data,'A0L0',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0L0',12,'acdn')
+    call SaveInteger(IC_Data,'A0L0',13,2)
+    call SaveStr(IC_Data,'A0L0',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0L0',16,'amcs')
+    call SaveInteger(IC_Data,'A0L0',17,1)
+    call SaveStr(IC_Data,'A0L0',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0L0',20,'aare')
+    call SaveInteger(IC_Data,'A0L0',21,2)
+    call SaveStr(IC_Data,'A0L0',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0L0',24,'aran')
+    call SaveInteger(IC_Data,'A0L0',25,2)
+    call SaveStr(IC_Data,'A0L0',26,"Cast range")
+    call SaveInteger(IC_Data,'A0L0',28,'Ucs1')
+    call SaveInteger(IC_Data,'A0L0',29,2)
+    call SaveStr(IC_Data,'A0L0',30,"Damage")
+    call SaveInteger(IC_Data,'A0L0',32,'Ucs2')
+    call SaveInteger(IC_Data,'A0L0',33,2)
+    call SaveStr(IC_Data,'A0L0',34,"Max Damage")
+    call SaveInteger(IC_Data,'A0L0',36,'Ucs3')
+    call SaveInteger(IC_Data,'A0L0',37,2)
+    call SaveStr(IC_Data,'A0L0',38,"Distance")
+    call SaveInteger(IC_Data,'A0L0',40,'Ucs4')
+    call SaveInteger(IC_Data,'A0L0',41,2)
+    call SaveStr(IC_Data,'A0L0',42,"Final Area")
+    call SaveInteger(IC_Data,'A0L0',-1,11)
+    call SaveInteger(IC_Data,'A0LH',0,'acas')
+    call SaveInteger(IC_Data,'A0LH',1,2)
+    call SaveStr(IC_Data,'A0LH',2,"Casting Time")
+endfunction
+
+function IC_Data33 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0LH',4,'adur')
+    call SaveInteger(IC_Data,'A0LH',5,2)
+    call SaveStr(IC_Data,'A0LH',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0LH',8,'ahdu')
+    call SaveInteger(IC_Data,'A0LH',9,2)
+    call SaveStr(IC_Data,'A0LH',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0LH',12,'acdn')
+    call SaveInteger(IC_Data,'A0LH',13,2)
+    call SaveStr(IC_Data,'A0LH',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0LH',16,'amcs')
+    call SaveInteger(IC_Data,'A0LH',17,1)
+    call SaveStr(IC_Data,'A0LH',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0LH',20,'aran')
+    call SaveInteger(IC_Data,'A0LH',21,2)
+    call SaveStr(IC_Data,'A0LH',22,"Cast range")
+    call SaveInteger(IC_Data,'A0LH',24,'Esh1')
+    call SaveInteger(IC_Data,'A0LH',25,2)
+    call SaveStr(IC_Data,'A0LH',26,"Decaying Damage")
+    call SaveInteger(IC_Data,'A0LH',28,'Esh2')
+    call SaveInteger(IC_Data,'A0LH',29,2)
+    call SaveStr(IC_Data,'A0LH',30,"Movement Speed Factor")
+    call SaveInteger(IC_Data,'A0LH',32,'Esh3')
+    call SaveInteger(IC_Data,'A0LH',33,2)
+    call SaveStr(IC_Data,'A0LH',34,"Attack Speed Factor")
+    call SaveInteger(IC_Data,'A0LH',36,'Esh4')
+    call SaveInteger(IC_Data,'A0LH',37,2)
+    call SaveStr(IC_Data,'A0LH',38,"Decay Power")
+    call SaveInteger(IC_Data,'A0LH',40,'Esh5')
+    call SaveInteger(IC_Data,'A0LH',41,2)
+    call SaveStr(IC_Data,'A0LH',42,"Initial Damage")
+    call SaveInteger(IC_Data,'A0LH',44,'aare')
+    call SaveInteger(IC_Data,'A0LH',45,2)
+    call SaveStr(IC_Data,'A0LH',46,"Area of effect")
+    call SaveInteger(IC_Data,'A0LH',-1,12)
+    call SaveInteger(IC_Data,'A0MM',0,'acas')
+    call SaveInteger(IC_Data,'A0MM',1,2)
+    call SaveStr(IC_Data,'A0MM',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0MM',4,'adur')
+    call SaveInteger(IC_Data,'A0MM',5,2)
+    call SaveStr(IC_Data,'A0MM',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0MM',8,'ahdu')
+    call SaveInteger(IC_Data,'A0MM',9,2)
+    call SaveStr(IC_Data,'A0MM',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0MM',12,'acdn')
+    call SaveInteger(IC_Data,'A0MM',13,2)
+    call SaveStr(IC_Data,'A0MM',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0MM',16,'amcs')
+    call SaveInteger(IC_Data,'A0MM',17,1)
+    call SaveStr(IC_Data,'A0MM',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0MM',20,'aare')
+    call SaveInteger(IC_Data,'A0MM',21,2)
+    call SaveStr(IC_Data,'A0MM',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0MM',24,'aran')
+    call SaveInteger(IC_Data,'A0MM',25,2)
+    call SaveStr(IC_Data,'A0MM',26,"Cast range")
+    call SaveInteger(IC_Data,'A0MM',28,'Ihps')
+    call SaveInteger(IC_Data,'A0MM',29,1)
+    call SaveStr(IC_Data,'A0MM',30,"Hit Points Restored")
+    call SaveInteger(IC_Data,'A0MM',32,'Imps')
+    call SaveInteger(IC_Data,'A0MM',33,1)
+    call SaveStr(IC_Data,'A0MM',34,"Mana Points Restored")
+    call SaveInteger(IC_Data,'A0MM',-1,9)
+    call SaveInteger(IC_Data,'A0O8',0,'acas')
+    call SaveInteger(IC_Data,'A0O8',1,2)
+    call SaveStr(IC_Data,'A0O8',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0O8',4,'adur')
+    call SaveInteger(IC_Data,'A0O8',5,2)
+    call SaveStr(IC_Data,'A0O8',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0O8',8,'ahdu')
+    call SaveInteger(IC_Data,'A0O8',9,2)
+    call SaveStr(IC_Data,'A0O8',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0O8',12,'acdn')
+    call SaveInteger(IC_Data,'A0O8',13,2)
+    call SaveStr(IC_Data,'A0O8',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0O8',16,'amcs')
+    call SaveInteger(IC_Data,'A0O8',17,1)
+    call SaveStr(IC_Data,'A0O8',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0O8',20,'aare')
+    call SaveInteger(IC_Data,'A0O8',21,2)
+    call SaveStr(IC_Data,'A0O8',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0O8',24,'aran')
+    call SaveInteger(IC_Data,'A0O8',25,2)
+    call SaveStr(IC_Data,'A0O8',26,"Cast range")
+    call SaveInteger(IC_Data,'A0O8',28,'Oeq1')
+    call SaveInteger(IC_Data,'A0O8',29,2)
+    call SaveStr(IC_Data,'A0O8',30,"Effect Delay")
+    call SaveInteger(IC_Data,'A0O8',32,'Oeq2')
+    call SaveInteger(IC_Data,'A0O8',33,2)
+    call SaveStr(IC_Data,'A0O8',34,"Damage per Second to Buildings")
+    call SaveInteger(IC_Data,'A0O8',36,'Oeq3')
+    call SaveInteger(IC_Data,'A0O8',37,2)
+    call SaveStr(IC_Data,'A0O8',38,"Units Slowed (%)")
+    call SaveBoolean(IC_Data,'A0O8',39,true)
+    call SaveInteger(IC_Data,'A0O8',40,'Oeq4')
+    call SaveInteger(IC_Data,'A0O8',41,2)
+    call SaveStr(IC_Data,'A0O8',42,"Final Area")
+    call SaveInteger(IC_Data,'A0O8',-1,11)
+    call SaveInteger(IC_Data,'A0OJ',0,'acas')
+    call SaveInteger(IC_Data,'A0OJ',1,2)
+    call SaveStr(IC_Data,'A0OJ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0OJ',4,'adur')
+    call SaveInteger(IC_Data,'A0OJ',5,2)
+    call SaveStr(IC_Data,'A0OJ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0OJ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0OJ',9,2)
+    call SaveStr(IC_Data,'A0OJ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0OJ',12,'acdn')
+    call SaveInteger(IC_Data,'A0OJ',13,2)
+    call SaveStr(IC_Data,'A0OJ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0OJ',16,'amcs')
+    call SaveInteger(IC_Data,'A0OJ',17,1)
+    call SaveStr(IC_Data,'A0OJ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0OJ',20,'Iagi')
+    call SaveInteger(IC_Data,'A0OJ',21,1)
+    call SaveStr(IC_Data,'A0OJ',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A0OJ',24,'Iint')
+    call SaveInteger(IC_Data,'A0OJ',25,1)
+    call SaveStr(IC_Data,'A0OJ',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A0OJ',28,'Istr')
+    call SaveInteger(IC_Data,'A0OJ',29,1)
+    call SaveStr(IC_Data,'A0OJ',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A0OJ',32,'aare')
+    call SaveInteger(IC_Data,'A0OJ',33,2)
+    call SaveStr(IC_Data,'A0OJ',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0OJ',36,'aran')
+    call SaveInteger(IC_Data,'A0OJ',37,2)
+    call SaveStr(IC_Data,'A0OJ',38,"Cast range")
+    call SaveInteger(IC_Data,'A0OJ',-1,10)
+    call SaveInteger(IC_Data,'A0PZ',0,'acas')
+    call SaveInteger(IC_Data,'A0PZ',1,2)
+    call SaveStr(IC_Data,'A0PZ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0PZ',4,'adur')
+    call SaveInteger(IC_Data,'A0PZ',5,2)
+    call SaveStr(IC_Data,'A0PZ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0PZ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0PZ',9,2)
+    call SaveStr(IC_Data,'A0PZ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0PZ',12,'acdn')
+    call SaveInteger(IC_Data,'A0PZ',13,2)
+    call SaveStr(IC_Data,'A0PZ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0PZ',16,'amcs')
+    call SaveInteger(IC_Data,'A0PZ',17,1)
+    call SaveStr(IC_Data,'A0PZ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0PZ',20,'aare')
+    call SaveInteger(IC_Data,'A0PZ',21,2)
+    call SaveStr(IC_Data,'A0PZ',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0PZ',24,'aran')
+    call SaveInteger(IC_Data,'A0PZ',25,2)
+    call SaveStr(IC_Data,'A0PZ',26,"Cast range")
+    call SaveInteger(IC_Data,'A0PZ',28,'Ufn1')
+    call SaveInteger(IC_Data,'A0PZ',29,2)
+    call SaveStr(IC_Data,'A0PZ',30,"Area of Effect Damage")
+    call SaveInteger(IC_Data,'A0PZ',32,'Ufn2')
+    call SaveInteger(IC_Data,'A0PZ',33,2)
+    call SaveStr(IC_Data,'A0PZ',34,"Specific Target Damage")
+    call SaveInteger(IC_Data,'A0PZ',-1,9)
+    call SaveInteger(IC_Data,'A0QB',0,'acas')
+    call SaveInteger(IC_Data,'A0QB',1,2)
+    call SaveStr(IC_Data,'A0QB',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0QB',4,'adur')
+endfunction
+
+function IC_Data34 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0QB',5,2)
+    call SaveStr(IC_Data,'A0QB',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0QB',8,'ahdu')
+    call SaveInteger(IC_Data,'A0QB',9,2)
+    call SaveStr(IC_Data,'A0QB',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0QB',12,'acdn')
+    call SaveInteger(IC_Data,'A0QB',13,2)
+    call SaveStr(IC_Data,'A0QB',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0QB',16,'amcs')
+    call SaveInteger(IC_Data,'A0QB',17,1)
+    call SaveStr(IC_Data,'A0QB',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0QB',20,'aran')
+    call SaveInteger(IC_Data,'A0QB',21,2)
+    call SaveStr(IC_Data,'A0QB',22,"Cast range")
+    call SaveInteger(IC_Data,'A0QB',24,'Rej1')
+    call SaveInteger(IC_Data,'A0QB',25,2)
+    call SaveStr(IC_Data,'A0QB',26,"Hit Points Gained")
+    call SaveInteger(IC_Data,'A0QB',28,'Rej2')
+    call SaveInteger(IC_Data,'A0QB',29,2)
+    call SaveStr(IC_Data,'A0QB',30,"Mana Points Gained")
+    call SaveInteger(IC_Data,'A0QB',32,'Rej3')
+    call SaveInteger(IC_Data,'A0QB',33,1)
+    call SaveStr(IC_Data,'A0QB',34,"Allow When Full")
+    call SaveInteger(IC_Data,'A0QB',36,'aare')
+    call SaveInteger(IC_Data,'A0QB',37,2)
+    call SaveStr(IC_Data,'A0QB',38,"Area of effect")
+    call SaveInteger(IC_Data,'A0QB',-1,10)
+    call SaveInteger(IC_Data,'A0QC',0,'acas')
+    call SaveInteger(IC_Data,'A0QC',1,2)
+    call SaveStr(IC_Data,'A0QC',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0QC',4,'adur')
+    call SaveInteger(IC_Data,'A0QC',5,2)
+    call SaveStr(IC_Data,'A0QC',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0QC',8,'ahdu')
+    call SaveInteger(IC_Data,'A0QC',9,2)
+    call SaveStr(IC_Data,'A0QC',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0QC',12,'acdn')
+    call SaveInteger(IC_Data,'A0QC',13,2)
+    call SaveStr(IC_Data,'A0QC',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0QC',16,'amcs')
+    call SaveInteger(IC_Data,'A0QC',17,1)
+    call SaveStr(IC_Data,'A0QC',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0QC',20,'aare')
+    call SaveInteger(IC_Data,'A0QC',21,2)
+    call SaveStr(IC_Data,'A0QC',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0QC',24,'aran')
+    call SaveInteger(IC_Data,'A0QC',25,2)
+    call SaveStr(IC_Data,'A0QC',26,"Cast range")
+    call SaveInteger(IC_Data,'A0QC',-1,7)
+    call SaveInteger(IC_Data,'A0RJ',0,'acas')
+    call SaveInteger(IC_Data,'A0RJ',1,2)
+    call SaveStr(IC_Data,'A0RJ',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0RJ',4,'adur')
+    call SaveInteger(IC_Data,'A0RJ',5,2)
+    call SaveStr(IC_Data,'A0RJ',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0RJ',8,'ahdu')
+    call SaveInteger(IC_Data,'A0RJ',9,2)
+    call SaveStr(IC_Data,'A0RJ',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0RJ',12,'acdn')
+    call SaveInteger(IC_Data,'A0RJ',13,2)
+    call SaveStr(IC_Data,'A0RJ',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0RJ',16,'amcs')
+    call SaveInteger(IC_Data,'A0RJ',17,1)
+    call SaveStr(IC_Data,'A0RJ',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0RJ',20,'Ilif')
+    call SaveInteger(IC_Data,'A0RJ',21,1)
+    call SaveStr(IC_Data,'A0RJ',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A0RJ',24,'aare')
+    call SaveInteger(IC_Data,'A0RJ',25,2)
+    call SaveStr(IC_Data,'A0RJ',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0RJ',28,'aran')
+    call SaveInteger(IC_Data,'A0RJ',29,2)
+    call SaveStr(IC_Data,'A0RJ',30,"Cast range")
+    call SaveInteger(IC_Data,'A0RJ',-1,8)
+    call SaveInteger(IC_Data,'A0RM',0,'acas')
+    call SaveInteger(IC_Data,'A0RM',1,2)
+    call SaveStr(IC_Data,'A0RM',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0RM',4,'adur')
+    call SaveInteger(IC_Data,'A0RM',5,2)
+    call SaveStr(IC_Data,'A0RM',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0RM',8,'ahdu')
+    call SaveInteger(IC_Data,'A0RM',9,2)
+    call SaveStr(IC_Data,'A0RM',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0RM',12,'acdn')
+    call SaveInteger(IC_Data,'A0RM',13,2)
+    call SaveStr(IC_Data,'A0RM',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0RM',16,'amcs')
+    call SaveInteger(IC_Data,'A0RM',17,1)
+    call SaveStr(IC_Data,'A0RM',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0RM',20,'Idef')
+    call SaveInteger(IC_Data,'A0RM',21,1)
+    call SaveStr(IC_Data,'A0RM',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'A0RM',24,'aare')
+    call SaveInteger(IC_Data,'A0RM',25,2)
+    call SaveStr(IC_Data,'A0RM',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0RM',28,'aran')
+    call SaveInteger(IC_Data,'A0RM',29,2)
+    call SaveStr(IC_Data,'A0RM',30,"Cast range")
+    call SaveInteger(IC_Data,'A0RM',-1,8)
+    call SaveInteger(IC_Data,'A0RN',0,'acas')
+    call SaveInteger(IC_Data,'A0RN',1,2)
+    call SaveStr(IC_Data,'A0RN',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0RN',4,'adur')
+    call SaveInteger(IC_Data,'A0RN',5,2)
+    call SaveStr(IC_Data,'A0RN',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0RN',8,'ahdu')
+    call SaveInteger(IC_Data,'A0RN',9,2)
+    call SaveStr(IC_Data,'A0RN',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0RN',12,'acdn')
+    call SaveInteger(IC_Data,'A0RN',13,2)
+    call SaveStr(IC_Data,'A0RN',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0RN',16,'amcs')
+    call SaveInteger(IC_Data,'A0RN',17,1)
+    call SaveStr(IC_Data,'A0RN',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0RN',20,'Ilif')
+    call SaveInteger(IC_Data,'A0RN',21,1)
+    call SaveStr(IC_Data,'A0RN',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A0RN',24,'aare')
+    call SaveInteger(IC_Data,'A0RN',25,2)
+    call SaveStr(IC_Data,'A0RN',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0RN',28,'aran')
+    call SaveInteger(IC_Data,'A0RN',29,2)
+    call SaveStr(IC_Data,'A0RN',30,"Cast range")
+    call SaveInteger(IC_Data,'A0RN',-1,8)
+    call SaveInteger(IC_Data,'A0RR',0,'acas')
+    call SaveInteger(IC_Data,'A0RR',1,2)
+    call SaveStr(IC_Data,'A0RR',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0RR',4,'adur')
+    call SaveInteger(IC_Data,'A0RR',5,2)
+    call SaveStr(IC_Data,'A0RR',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0RR',8,'ahdu')
+    call SaveInteger(IC_Data,'A0RR',9,2)
+    call SaveStr(IC_Data,'A0RR',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0RR',12,'acdn')
+    call SaveInteger(IC_Data,'A0RR',13,2)
+    call SaveStr(IC_Data,'A0RR',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0RR',16,'amcs')
+    call SaveInteger(IC_Data,'A0RR',17,1)
+    call SaveStr(IC_Data,'A0RR',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0RR',20,'aare')
+    call SaveInteger(IC_Data,'A0RR',21,2)
+    call SaveStr(IC_Data,'A0RR',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0RR',24,'Uav1')
+    call SaveInteger(IC_Data,'A0RR',25,2)
+    call SaveStr(IC_Data,'A0RR',26,"Attack Damage Stolen (%)")
+    call SaveBoolean(IC_Data,'A0RR',27,true)
+    call SaveInteger(IC_Data,'A0RR',28,'aran')
+    call SaveInteger(IC_Data,'A0RR',29,2)
+    call SaveStr(IC_Data,'A0RR',30,"Cast range")
+    call SaveInteger(IC_Data,'A0RR',-1,8)
+    call SaveInteger(IC_Data,'A0SW',0,'acas')
+    call SaveInteger(IC_Data,'A0SW',1,2)
+    call SaveStr(IC_Data,'A0SW',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0SW',4,'adur')
+    call SaveInteger(IC_Data,'A0SW',5,2)
+    call SaveStr(IC_Data,'A0SW',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0SW',8,'ahdu')
+    call SaveInteger(IC_Data,'A0SW',9,2)
+    call SaveStr(IC_Data,'A0SW',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0SW',12,'acdn')
+endfunction
+
+function IC_Data35 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0SW',13,2)
+    call SaveStr(IC_Data,'A0SW',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0SW',16,'aare')
+    call SaveInteger(IC_Data,'A0SW',17,2)
+    call SaveStr(IC_Data,'A0SW',18,"Area of effect")
+    call SaveInteger(IC_Data,'A0SW',20,'Oae1')
+    call SaveInteger(IC_Data,'A0SW',21,2)
+    call SaveStr(IC_Data,'A0SW',22,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A0SW',23,true)
+    call SaveInteger(IC_Data,'A0SW',24,'Oae2')
+    call SaveInteger(IC_Data,'A0SW',25,2)
+    call SaveStr(IC_Data,'A0SW',26,"Attack Speed Increase (%)")
+    call SaveBoolean(IC_Data,'A0SW',27,true)
+    call SaveInteger(IC_Data,'A0SW',28,'amcs')
+    call SaveInteger(IC_Data,'A0SW',29,1)
+    call SaveStr(IC_Data,'A0SW',30,"Mana cost")
+    call SaveInteger(IC_Data,'A0SW',32,'aran')
+    call SaveInteger(IC_Data,'A0SW',33,2)
+    call SaveStr(IC_Data,'A0SW',34,"Cast range")
+    call SaveInteger(IC_Data,'A0SW',-1,9)
+    call SaveInteger(IC_Data,'A0TB',0,'acas')
+    call SaveInteger(IC_Data,'A0TB',1,2)
+    call SaveStr(IC_Data,'A0TB',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0TB',4,'adur')
+    call SaveInteger(IC_Data,'A0TB',5,2)
+    call SaveStr(IC_Data,'A0TB',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0TB',8,'ahdu')
+    call SaveInteger(IC_Data,'A0TB',9,2)
+    call SaveStr(IC_Data,'A0TB',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0TB',12,'acdn')
+    call SaveInteger(IC_Data,'A0TB',13,2)
+    call SaveStr(IC_Data,'A0TB',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0TB',16,'amcs')
+    call SaveInteger(IC_Data,'A0TB',17,1)
+    call SaveStr(IC_Data,'A0TB',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0TB',20,'Imvb')
+    call SaveInteger(IC_Data,'A0TB',21,1)
+    call SaveStr(IC_Data,'A0TB',22,"Movement Speed Bonus")
+    call SaveInteger(IC_Data,'A0TB',24,'aare')
+    call SaveInteger(IC_Data,'A0TB',25,2)
+    call SaveStr(IC_Data,'A0TB',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0TB',28,'aran')
+    call SaveInteger(IC_Data,'A0TB',29,2)
+    call SaveStr(IC_Data,'A0TB',30,"Cast range")
+    call SaveInteger(IC_Data,'A0TB',-1,8)
+    call SaveInteger(IC_Data,'A0U6',0,'acas')
+    call SaveInteger(IC_Data,'A0U6',1,2)
+    call SaveStr(IC_Data,'A0U6',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0U6',4,'adur')
+    call SaveInteger(IC_Data,'A0U6',5,2)
+    call SaveStr(IC_Data,'A0U6',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0U6',8,'ahdu')
+    call SaveInteger(IC_Data,'A0U6',9,2)
+    call SaveStr(IC_Data,'A0U6',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0U6',12,'acdn')
+    call SaveInteger(IC_Data,'A0U6',13,2)
+    call SaveStr(IC_Data,'A0U6',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0U6',16,'amcs')
+    call SaveInteger(IC_Data,'A0U6',17,1)
+    call SaveStr(IC_Data,'A0U6',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0U6',20,'aare')
+    call SaveInteger(IC_Data,'A0U6',21,2)
+    call SaveStr(IC_Data,'A0U6',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0U6',24,'aran')
+    call SaveInteger(IC_Data,'A0U6',25,2)
+    call SaveStr(IC_Data,'A0U6',26,"Cast range")
+    call SaveInteger(IC_Data,'A0U6',28,'Hbz1')
+    call SaveInteger(IC_Data,'A0U6',29,1)
+    call SaveStr(IC_Data,'A0U6',30,"Number of Waves")
+    call SaveInteger(IC_Data,'A0U6',32,'Hbz2')
+    call SaveInteger(IC_Data,'A0U6',33,2)
+    call SaveStr(IC_Data,'A0U6',34,"Damage")
+    call SaveInteger(IC_Data,'A0U6',36,'Hbz3')
+    call SaveInteger(IC_Data,'A0U6',37,1)
+    call SaveStr(IC_Data,'A0U6',38,"Number of Shards")
+    call SaveInteger(IC_Data,'A0U6',40,'Hbz4')
+    call SaveInteger(IC_Data,'A0U6',41,2)
+    call SaveStr(IC_Data,'A0U6',42,"Building Reduction")
+    call SaveInteger(IC_Data,'A0U6',44,'Hbz5')
+    call SaveInteger(IC_Data,'A0U6',45,2)
+    call SaveStr(IC_Data,'A0U6',46,"Damage Per Second")
+    call SaveInteger(IC_Data,'A0U6',48,'Hbz6')
+    call SaveInteger(IC_Data,'A0U6',49,2)
+    call SaveStr(IC_Data,'A0U6',50,"Maximum Damage per Wave")
+    call SaveInteger(IC_Data,'A0U6',-1,13)
+    call SaveInteger(IC_Data,'A0U7',0,'acas')
+    call SaveInteger(IC_Data,'A0U7',1,2)
+    call SaveStr(IC_Data,'A0U7',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0U7',4,'adur')
+    call SaveInteger(IC_Data,'A0U7',5,2)
+    call SaveStr(IC_Data,'A0U7',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0U7',8,'ahdu')
+    call SaveInteger(IC_Data,'A0U7',9,2)
+    call SaveStr(IC_Data,'A0U7',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0U7',12,'acdn')
+    call SaveInteger(IC_Data,'A0U7',13,2)
+    call SaveStr(IC_Data,'A0U7',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0U7',16,'amcs')
+    call SaveInteger(IC_Data,'A0U7',17,1)
+    call SaveStr(IC_Data,'A0U7',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0U7',20,'Idef')
+    call SaveInteger(IC_Data,'A0U7',21,1)
+    call SaveStr(IC_Data,'A0U7',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'A0U7',24,'aare')
+    call SaveInteger(IC_Data,'A0U7',25,2)
+    call SaveStr(IC_Data,'A0U7',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0U7',28,'aran')
+    call SaveInteger(IC_Data,'A0U7',29,2)
+    call SaveStr(IC_Data,'A0U7',30,"Cast range")
+    call SaveInteger(IC_Data,'A0U7',-1,8)
+    call SaveInteger(IC_Data,'A0U8',0,'acas')
+    call SaveInteger(IC_Data,'A0U8',1,2)
+    call SaveStr(IC_Data,'A0U8',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0U8',4,'adur')
+    call SaveInteger(IC_Data,'A0U8',5,2)
+    call SaveStr(IC_Data,'A0U8',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0U8',8,'ahdu')
+    call SaveInteger(IC_Data,'A0U8',9,2)
+    call SaveStr(IC_Data,'A0U8',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0U8',12,'acdn')
+    call SaveInteger(IC_Data,'A0U8',13,2)
+    call SaveStr(IC_Data,'A0U8',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0U8',16,'amcs')
+    call SaveInteger(IC_Data,'A0U8',17,1)
+    call SaveStr(IC_Data,'A0U8',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0U8',20,'Iagi')
+    call SaveInteger(IC_Data,'A0U8',21,1)
+    call SaveStr(IC_Data,'A0U8',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'A0U8',24,'Iint')
+    call SaveInteger(IC_Data,'A0U8',25,1)
+    call SaveStr(IC_Data,'A0U8',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'A0U8',28,'Istr')
+    call SaveInteger(IC_Data,'A0U8',29,1)
+    call SaveStr(IC_Data,'A0U8',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'A0U8',32,'aare')
+    call SaveInteger(IC_Data,'A0U8',33,2)
+    call SaveStr(IC_Data,'A0U8',34,"Area of effect")
+    call SaveInteger(IC_Data,'A0U8',36,'aran')
+    call SaveInteger(IC_Data,'A0U8',37,2)
+    call SaveStr(IC_Data,'A0U8',38,"Cast range")
+    call SaveInteger(IC_Data,'A0U8',-1,10)
+    call SaveInteger(IC_Data,'A0V3',0,'acas')
+    call SaveInteger(IC_Data,'A0V3',1,2)
+    call SaveStr(IC_Data,'A0V3',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0V3',4,'adur')
+    call SaveInteger(IC_Data,'A0V3',5,2)
+    call SaveStr(IC_Data,'A0V3',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0V3',8,'ahdu')
+    call SaveInteger(IC_Data,'A0V3',9,2)
+    call SaveStr(IC_Data,'A0V3',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0V3',12,'acdn')
+    call SaveInteger(IC_Data,'A0V3',13,2)
+    call SaveStr(IC_Data,'A0V3',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0V3',16,'amcs')
+    call SaveInteger(IC_Data,'A0V3',17,1)
+    call SaveStr(IC_Data,'A0V3',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0V3',20,'aare')
+    call SaveInteger(IC_Data,'A0V3',21,2)
+    call SaveStr(IC_Data,'A0V3',22,"Area of effect")
+    call SaveInteger(IC_Data,'A0V3',24,'Ispi')
+endfunction
+
+function IC_Data36 takes nothing returns nothing
+    call SaveInteger(IC_Data,'A0V3',25,2)
+    call SaveStr(IC_Data,'A0V3',26,"Movement Speed Increase")
+    call SaveInteger(IC_Data,'A0V3',28,'aran')
+    call SaveInteger(IC_Data,'A0V3',29,2)
+    call SaveStr(IC_Data,'A0V3',30,"Cast range")
+    call SaveInteger(IC_Data,'A0V3',-1,8)
+    call SaveInteger(IC_Data,'A0VF',0,'acas')
+    call SaveInteger(IC_Data,'A0VF',1,2)
+    call SaveStr(IC_Data,'A0VF',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0VF',4,'adur')
+    call SaveInteger(IC_Data,'A0VF',5,2)
+    call SaveStr(IC_Data,'A0VF',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0VF',8,'ahdu')
+    call SaveInteger(IC_Data,'A0VF',9,2)
+    call SaveStr(IC_Data,'A0VF',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0VF',12,'acdn')
+    call SaveInteger(IC_Data,'A0VF',13,2)
+    call SaveStr(IC_Data,'A0VF',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0VF',16,'amcs')
+    call SaveInteger(IC_Data,'A0VF',17,1)
+    call SaveStr(IC_Data,'A0VF',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0VF',20,'Ihpr')
+    call SaveInteger(IC_Data,'A0VF',21,1)
+    call SaveStr(IC_Data,'A0VF',22,"Hit Points Regenerated Per Second")
+    call SaveInteger(IC_Data,'A0VF',24,'aare')
+    call SaveInteger(IC_Data,'A0VF',25,2)
+    call SaveStr(IC_Data,'A0VF',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0VF',28,'aran')
+    call SaveInteger(IC_Data,'A0VF',29,2)
+    call SaveStr(IC_Data,'A0VF',30,"Cast range")
+    call SaveInteger(IC_Data,'A0VF',-1,8)
+    call SaveInteger(IC_Data,'A0VO',0,'acas')
+    call SaveInteger(IC_Data,'A0VO',1,2)
+    call SaveStr(IC_Data,'A0VO',2,"Casting Time")
+    call SaveInteger(IC_Data,'A0VO',4,'adur')
+    call SaveInteger(IC_Data,'A0VO',5,2)
+    call SaveStr(IC_Data,'A0VO',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'A0VO',8,'ahdu')
+    call SaveInteger(IC_Data,'A0VO',9,2)
+    call SaveStr(IC_Data,'A0VO',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'A0VO',12,'acdn')
+    call SaveInteger(IC_Data,'A0VO',13,2)
+    call SaveStr(IC_Data,'A0VO',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'A0VO',16,'amcs')
+    call SaveInteger(IC_Data,'A0VO',17,1)
+    call SaveStr(IC_Data,'A0VO',18,"Mana cost")
+    call SaveInteger(IC_Data,'A0VO',20,'Ilif')
+    call SaveInteger(IC_Data,'A0VO',21,1)
+    call SaveStr(IC_Data,'A0VO',22,"Max Life Gained")
+    call SaveInteger(IC_Data,'A0VO',24,'aare')
+    call SaveInteger(IC_Data,'A0VO',25,2)
+    call SaveStr(IC_Data,'A0VO',26,"Area of effect")
+    call SaveInteger(IC_Data,'A0VO',28,'aran')
+    call SaveInteger(IC_Data,'A0VO',29,2)
+    call SaveStr(IC_Data,'A0VO',30,"Cast range")
+    call SaveInteger(IC_Data,'A0VO',-1,8)
+    call SaveInteger(IC_Data,'ACac',0,'acas')
+    call SaveInteger(IC_Data,'ACac',1,2)
+    call SaveStr(IC_Data,'ACac',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACac',4,'adur')
+    call SaveInteger(IC_Data,'ACac',5,2)
+    call SaveStr(IC_Data,'ACac',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACac',8,'ahdu')
+    call SaveInteger(IC_Data,'ACac',9,2)
+    call SaveStr(IC_Data,'ACac',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACac',12,'acdn')
+    call SaveInteger(IC_Data,'ACac',13,2)
+    call SaveStr(IC_Data,'ACac',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACac',16,'amcs')
+    call SaveInteger(IC_Data,'ACac',17,1)
+    call SaveStr(IC_Data,'ACac',18,"Mana cost")
+    call SaveInteger(IC_Data,'ACac',20,'aare')
+    call SaveInteger(IC_Data,'ACac',21,2)
+    call SaveStr(IC_Data,'ACac',22,"Area of effect")
+    call SaveInteger(IC_Data,'ACac',24,'Cac1')
+    call SaveInteger(IC_Data,'ACac',25,2)
+    call SaveStr(IC_Data,'ACac',26,"Attack Damage Increase")
+    call SaveInteger(IC_Data,'ACac',28,'aran')
+    call SaveInteger(IC_Data,'ACac',29,2)
+    call SaveStr(IC_Data,'ACac',30,"Cast range")
+    call SaveInteger(IC_Data,'ACac',-1,8)
+    call SaveInteger(IC_Data,'ACba',0,'acas')
+    call SaveInteger(IC_Data,'ACba',1,2)
+    call SaveStr(IC_Data,'ACba',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACba',4,'adur')
+    call SaveInteger(IC_Data,'ACba',5,2)
+    call SaveStr(IC_Data,'ACba',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACba',8,'ahdu')
+    call SaveInteger(IC_Data,'ACba',9,2)
+    call SaveStr(IC_Data,'ACba',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACba',12,'acdn')
+    call SaveInteger(IC_Data,'ACba',13,2)
+    call SaveStr(IC_Data,'ACba',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACba',16,'amcs')
+    call SaveInteger(IC_Data,'ACba',17,1)
+    call SaveStr(IC_Data,'ACba',18,"Mana cost")
+    call SaveInteger(IC_Data,'ACba',20,'aare')
+    call SaveInteger(IC_Data,'ACba',21,2)
+    call SaveStr(IC_Data,'ACba',22,"Area of effect")
+    call SaveInteger(IC_Data,'ACba',24,'Hab1')
+    call SaveInteger(IC_Data,'ACba',25,2)
+    call SaveStr(IC_Data,'ACba',26,"Mana Regeneration Increase")
+    call SaveBoolean(IC_Data,'ACba',27,true)
+    call SaveInteger(IC_Data,'ACba',28,'aran')
+    call SaveInteger(IC_Data,'ACba',29,2)
+    call SaveStr(IC_Data,'ACba',30,"Cast range")
+    call SaveInteger(IC_Data,'ACba',-1,8)
+    call SaveInteger(IC_Data,'ACbh',0,'acas')
+    call SaveInteger(IC_Data,'ACbh',1,2)
+    call SaveStr(IC_Data,'ACbh',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACbh',4,'adur')
+    call SaveInteger(IC_Data,'ACbh',5,2)
+    call SaveStr(IC_Data,'ACbh',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACbh',8,'ahdu')
+    call SaveInteger(IC_Data,'ACbh',9,2)
+    call SaveStr(IC_Data,'ACbh',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACbh',12,'acdn')
+    call SaveInteger(IC_Data,'ACbh',13,2)
+    call SaveStr(IC_Data,'ACbh',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACbh',16,'amcs')
+    call SaveInteger(IC_Data,'ACbh',17,1)
+    call SaveStr(IC_Data,'ACbh',18,"Mana cost")
+    call SaveInteger(IC_Data,'ACbh',20,'aare')
+    call SaveInteger(IC_Data,'ACbh',21,2)
+    call SaveStr(IC_Data,'ACbh',22,"Area of effect")
+    call SaveInteger(IC_Data,'ACbh',24,'Hbh1')
+    call SaveInteger(IC_Data,'ACbh',25,2)
+    call SaveStr(IC_Data,'ACbh',26,"Chance to Bash")
+    call SaveInteger(IC_Data,'ACbh',28,'Hbh2')
+    call SaveInteger(IC_Data,'ACbh',29,2)
+    call SaveStr(IC_Data,'ACbh',30,"Damage Multiplier")
+    call SaveInteger(IC_Data,'ACbh',32,'Hbh3')
+    call SaveInteger(IC_Data,'ACbh',33,2)
+    call SaveStr(IC_Data,'ACbh',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'ACbh',36,'Hbh4')
+    call SaveInteger(IC_Data,'ACbh',37,2)
+    call SaveStr(IC_Data,'ACbh',38,"Chance to Miss")
+    call SaveInteger(IC_Data,'ACbh',40,'aran')
+    call SaveInteger(IC_Data,'ACbh',41,2)
+    call SaveStr(IC_Data,'ACbh',42,"Cast range")
+    call SaveInteger(IC_Data,'ACbh',-1,11)
+    call SaveInteger(IC_Data,'ACdc',0,'acas')
+    call SaveInteger(IC_Data,'ACdc',1,2)
+    call SaveStr(IC_Data,'ACdc',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACdc',4,'adur')
+    call SaveInteger(IC_Data,'ACdc',5,2)
+    call SaveStr(IC_Data,'ACdc',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACdc',8,'ahdu')
+    call SaveInteger(IC_Data,'ACdc',9,2)
+    call SaveStr(IC_Data,'ACdc',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACdc',12,'acdn')
+    call SaveInteger(IC_Data,'ACdc',13,2)
+    call SaveStr(IC_Data,'ACdc',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACdc',16,'amcs')
+    call SaveInteger(IC_Data,'ACdc',17,1)
+    call SaveStr(IC_Data,'ACdc',18,"Mana cost")
+    call SaveInteger(IC_Data,'ACdc',20,'aran')
+    call SaveInteger(IC_Data,'ACdc',21,2)
+    call SaveStr(IC_Data,'ACdc',22,"Cast range")
+    call SaveInteger(IC_Data,'ACdc',24,'Udc1')
+endfunction
+
+function IC_Data37 takes nothing returns nothing
+    call SaveInteger(IC_Data,'ACdc',25,2)
+    call SaveStr(IC_Data,'ACdc',26,"Amount Healed/Damaged")
+    call SaveInteger(IC_Data,'ACdc',28,'aare')
+    call SaveInteger(IC_Data,'ACdc',29,2)
+    call SaveStr(IC_Data,'ACdc',30,"Area of effect")
+    call SaveInteger(IC_Data,'ACdc',-1,8)
+    call SaveInteger(IC_Data,'ACev',0,'acas')
+    call SaveInteger(IC_Data,'ACev',1,2)
+    call SaveStr(IC_Data,'ACev',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACev',4,'adur')
+    call SaveInteger(IC_Data,'ACev',5,2)
+    call SaveStr(IC_Data,'ACev',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACev',8,'ahdu')
+    call SaveInteger(IC_Data,'ACev',9,2)
+    call SaveStr(IC_Data,'ACev',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACev',12,'acdn')
+    call SaveInteger(IC_Data,'ACev',13,2)
+    call SaveStr(IC_Data,'ACev',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACev',16,'Eev1')
+    call SaveInteger(IC_Data,'ACev',17,2)
+    call SaveStr(IC_Data,'ACev',18,"Chance to Evade")
+    call SaveBoolean(IC_Data,'ACev',19,true)
+    call SaveInteger(IC_Data,'ACev',20,'amcs')
+    call SaveInteger(IC_Data,'ACev',21,1)
+    call SaveStr(IC_Data,'ACev',22,"Mana cost")
+    call SaveInteger(IC_Data,'ACev',24,'aare')
+    call SaveInteger(IC_Data,'ACev',25,2)
+    call SaveStr(IC_Data,'ACev',26,"Area of effect")
+    call SaveInteger(IC_Data,'ACev',28,'aran')
+    call SaveInteger(IC_Data,'ACev',29,2)
+    call SaveStr(IC_Data,'ACev',30,"Cast range")
+    call SaveInteger(IC_Data,'ACev',-1,8)
+    call SaveInteger(IC_Data,'ACpy',0,'acas')
+    call SaveInteger(IC_Data,'ACpy',1,2)
+    call SaveStr(IC_Data,'ACpy',2,"Casting Time")
+    call SaveInteger(IC_Data,'ACpy',4,'adur')
+    call SaveInteger(IC_Data,'ACpy',5,2)
+    call SaveStr(IC_Data,'ACpy',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ACpy',8,'ahdu')
+    call SaveInteger(IC_Data,'ACpy',9,2)
+    call SaveStr(IC_Data,'ACpy',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ACpy',12,'acdn')
+    call SaveInteger(IC_Data,'ACpy',13,2)
+    call SaveStr(IC_Data,'ACpy',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ACpy',16,'amcs')
+    call SaveInteger(IC_Data,'ACpy',17,1)
+    call SaveStr(IC_Data,'ACpy',18,"Mana cost")
+    call SaveInteger(IC_Data,'ACpy',20,'aran')
+    call SaveInteger(IC_Data,'ACpy',21,2)
+    call SaveStr(IC_Data,'ACpy',22,"Cast range")
+    call SaveInteger(IC_Data,'ACpy',24,'Ply1')
+    call SaveInteger(IC_Data,'ACpy',25,1)
+    call SaveStr(IC_Data,'ACpy',26,"Maximum Creep Level")
+    call SaveInteger(IC_Data,'ACpy',28,'aare')
+    call SaveInteger(IC_Data,'ACpy',29,2)
+    call SaveStr(IC_Data,'ACpy',30,"Area of effect")
+    call SaveInteger(IC_Data,'ACpy',-1,8)
+    call SaveInteger(IC_Data,'AEah',0,'acas')
+    call SaveInteger(IC_Data,'AEah',1,2)
+    call SaveStr(IC_Data,'AEah',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEah',4,'adur')
+    call SaveInteger(IC_Data,'AEah',5,2)
+    call SaveStr(IC_Data,'AEah',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEah',8,'ahdu')
+    call SaveInteger(IC_Data,'AEah',9,2)
+    call SaveStr(IC_Data,'AEah',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEah',12,'acdn')
+    call SaveInteger(IC_Data,'AEah',13,2)
+    call SaveStr(IC_Data,'AEah',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEah',16,'aare')
+    call SaveInteger(IC_Data,'AEah',17,2)
+    call SaveStr(IC_Data,'AEah',18,"Area of effect")
+    call SaveInteger(IC_Data,'AEah',20,'Eah1')
+    call SaveInteger(IC_Data,'AEah',21,2)
+    call SaveStr(IC_Data,'AEah',22,"Damage Dealt to Attackers")
+    call SaveInteger(IC_Data,'AEah',24,'amcs')
+    call SaveInteger(IC_Data,'AEah',25,1)
+    call SaveStr(IC_Data,'AEah',26,"Mana cost")
+    call SaveInteger(IC_Data,'AEah',28,'aran')
+    call SaveInteger(IC_Data,'AEah',29,2)
+    call SaveStr(IC_Data,'AEah',30,"Cast range")
+    call SaveInteger(IC_Data,'AEah',-1,8)
+    call SaveInteger(IC_Data,'AEar',0,'acas')
+    call SaveInteger(IC_Data,'AEar',1,2)
+    call SaveStr(IC_Data,'AEar',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEar',4,'adur')
+    call SaveInteger(IC_Data,'AEar',5,2)
+    call SaveStr(IC_Data,'AEar',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEar',8,'ahdu')
+    call SaveInteger(IC_Data,'AEar',9,2)
+    call SaveStr(IC_Data,'AEar',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEar',12,'acdn')
+    call SaveInteger(IC_Data,'AEar',13,2)
+    call SaveStr(IC_Data,'AEar',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEar',16,'aare')
+    call SaveInteger(IC_Data,'AEar',17,2)
+    call SaveStr(IC_Data,'AEar',18,"Area of effect")
+    call SaveInteger(IC_Data,'AEar',20,'Ear1')
+    call SaveInteger(IC_Data,'AEar',21,2)
+    call SaveStr(IC_Data,'AEar',22,"Damage Bonus (%)")
+    call SaveBoolean(IC_Data,'AEar',23,true)
+    call SaveInteger(IC_Data,'AEar',24,'amcs')
+    call SaveInteger(IC_Data,'AEar',25,1)
+    call SaveStr(IC_Data,'AEar',26,"Mana cost")
+    call SaveInteger(IC_Data,'AEar',28,'aran')
+    call SaveInteger(IC_Data,'AEar',29,2)
+    call SaveStr(IC_Data,'AEar',30,"Cast range")
+    call SaveInteger(IC_Data,'AEar',-1,8)
+    call SaveInteger(IC_Data,'AEbl',0,'acas')
+    call SaveInteger(IC_Data,'AEbl',1,2)
+    call SaveStr(IC_Data,'AEbl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEbl',4,'adur')
+    call SaveInteger(IC_Data,'AEbl',5,2)
+    call SaveStr(IC_Data,'AEbl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEbl',8,'ahdu')
+    call SaveInteger(IC_Data,'AEbl',9,2)
+    call SaveStr(IC_Data,'AEbl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEbl',12,'acdn')
+    call SaveInteger(IC_Data,'AEbl',13,2)
+    call SaveStr(IC_Data,'AEbl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEbl',16,'amcs')
+    call SaveInteger(IC_Data,'AEbl',17,1)
+    call SaveStr(IC_Data,'AEbl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AEbl',20,'aran')
+    call SaveInteger(IC_Data,'AEbl',21,2)
+    call SaveStr(IC_Data,'AEbl',22,"Cast range")
+    call SaveInteger(IC_Data,'AEbl',24,'Ebl1')
+    call SaveInteger(IC_Data,'AEbl',25,2)
+    call SaveStr(IC_Data,'AEbl',26,"Maximum Range")
+    call SaveInteger(IC_Data,'AEbl',28,'Ebl2')
+    call SaveInteger(IC_Data,'AEbl',29,2)
+    call SaveStr(IC_Data,'AEbl',30,"Minimum Range")
+    call SaveInteger(IC_Data,'AEbl',32,'aare')
+    call SaveInteger(IC_Data,'AEbl',33,2)
+    call SaveStr(IC_Data,'AEbl',34,"Area of effect")
+    call SaveInteger(IC_Data,'AEbl',-1,9)
+    call SaveInteger(IC_Data,'AEev',0,'acas')
+    call SaveInteger(IC_Data,'AEev',1,2)
+    call SaveStr(IC_Data,'AEev',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEev',4,'adur')
+    call SaveInteger(IC_Data,'AEev',5,2)
+    call SaveStr(IC_Data,'AEev',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEev',8,'ahdu')
+    call SaveInteger(IC_Data,'AEev',9,2)
+    call SaveStr(IC_Data,'AEev',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEev',12,'acdn')
+    call SaveInteger(IC_Data,'AEev',13,2)
+    call SaveStr(IC_Data,'AEev',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEev',16,'Eev1')
+    call SaveInteger(IC_Data,'AEev',17,2)
+    call SaveStr(IC_Data,'AEev',18,"Chance to Evade")
+    call SaveBoolean(IC_Data,'AEev',19,true)
+    call SaveInteger(IC_Data,'AEev',20,'amcs')
+    call SaveInteger(IC_Data,'AEev',21,1)
+    call SaveStr(IC_Data,'AEev',22,"Mana cost")
+    call SaveInteger(IC_Data,'AEev',24,'aare')
+    call SaveInteger(IC_Data,'AEev',25,2)
+    call SaveStr(IC_Data,'AEev',26,"Area of effect")
+    call SaveInteger(IC_Data,'AEev',28,'aran')
+    call SaveInteger(IC_Data,'AEev',29,2)
+endfunction
+
+function IC_Data38 takes nothing returns nothing
+    call SaveStr(IC_Data,'AEev',30,"Cast range")
+    call SaveInteger(IC_Data,'AEev',-1,8)
+    call SaveInteger(IC_Data,'AEfk',0,'acas')
+    call SaveInteger(IC_Data,'AEfk',1,2)
+    call SaveStr(IC_Data,'AEfk',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEfk',4,'adur')
+    call SaveInteger(IC_Data,'AEfk',5,2)
+    call SaveStr(IC_Data,'AEfk',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEfk',8,'ahdu')
+    call SaveInteger(IC_Data,'AEfk',9,2)
+    call SaveStr(IC_Data,'AEfk',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEfk',12,'acdn')
+    call SaveInteger(IC_Data,'AEfk',13,2)
+    call SaveStr(IC_Data,'AEfk',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEfk',16,'amcs')
+    call SaveInteger(IC_Data,'AEfk',17,1)
+    call SaveStr(IC_Data,'AEfk',18,"Mana cost")
+    call SaveInteger(IC_Data,'AEfk',20,'aare')
+    call SaveInteger(IC_Data,'AEfk',21,2)
+    call SaveStr(IC_Data,'AEfk',22,"Area of effect")
+    call SaveInteger(IC_Data,'AEfk',24,'Efk1')
+    call SaveInteger(IC_Data,'AEfk',25,2)
+    call SaveStr(IC_Data,'AEfk',26,"Damage Per Target")
+    call SaveInteger(IC_Data,'AEfk',28,'Efk2')
+    call SaveInteger(IC_Data,'AEfk',29,2)
+    call SaveStr(IC_Data,'AEfk',30,"Maximum Total Damage")
+    call SaveInteger(IC_Data,'AEfk',32,'Efk3')
+    call SaveInteger(IC_Data,'AEfk',33,1)
+    call SaveStr(IC_Data,'AEfk',34,"Maximum Number of Targets")
+    call SaveInteger(IC_Data,'AEfk',36,'Efk4')
+    call SaveInteger(IC_Data,'AEfk',37,2)
+    call SaveStr(IC_Data,'AEfk',38,"Maximum Speed Adjustment")
+    call SaveInteger(IC_Data,'AEfk',40,'aran')
+    call SaveInteger(IC_Data,'AEfk',41,2)
+    call SaveStr(IC_Data,'AEfk',42,"Cast range")
+    call SaveInteger(IC_Data,'AEfk',-1,11)
+    call SaveInteger(IC_Data,'AEsf',0,'acas')
+    call SaveInteger(IC_Data,'AEsf',1,2)
+    call SaveStr(IC_Data,'AEsf',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEsf',4,'adur')
+    call SaveInteger(IC_Data,'AEsf',5,2)
+    call SaveStr(IC_Data,'AEsf',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEsf',8,'ahdu')
+    call SaveInteger(IC_Data,'AEsf',9,2)
+    call SaveStr(IC_Data,'AEsf',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEsf',12,'acdn')
+    call SaveInteger(IC_Data,'AEsf',13,2)
+    call SaveStr(IC_Data,'AEsf',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEsf',16,'amcs')
+    call SaveInteger(IC_Data,'AEsf',17,1)
+    call SaveStr(IC_Data,'AEsf',18,"Mana cost")
+    call SaveInteger(IC_Data,'AEsf',20,'aare')
+    call SaveInteger(IC_Data,'AEsf',21,2)
+    call SaveStr(IC_Data,'AEsf',22,"Area of effect")
+    call SaveInteger(IC_Data,'AEsf',24,'Esf1')
+    call SaveInteger(IC_Data,'AEsf',25,2)
+    call SaveStr(IC_Data,'AEsf',26,"Damage Dealt")
+    call SaveInteger(IC_Data,'AEsf',28,'Esf2')
+    call SaveInteger(IC_Data,'AEsf',29,2)
+    call SaveStr(IC_Data,'AEsf',30,"Damage Interval")
+    call SaveInteger(IC_Data,'AEsf',32,'Esf3')
+    call SaveInteger(IC_Data,'AEsf',33,2)
+    call SaveStr(IC_Data,'AEsf',34,"Building Reduction")
+    call SaveInteger(IC_Data,'AEsf',36,'aran')
+    call SaveInteger(IC_Data,'AEsf',37,2)
+    call SaveStr(IC_Data,'AEsf',38,"Cast range")
+    call SaveInteger(IC_Data,'AEsf',-1,10)
+    call SaveInteger(IC_Data,'AEsh',0,'acas')
+    call SaveInteger(IC_Data,'AEsh',1,2)
+    call SaveStr(IC_Data,'AEsh',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEsh',4,'adur')
+    call SaveInteger(IC_Data,'AEsh',5,2)
+    call SaveStr(IC_Data,'AEsh',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEsh',8,'ahdu')
+    call SaveInteger(IC_Data,'AEsh',9,2)
+    call SaveStr(IC_Data,'AEsh',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEsh',12,'acdn')
+    call SaveInteger(IC_Data,'AEsh',13,2)
+    call SaveStr(IC_Data,'AEsh',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEsh',16,'amcs')
+    call SaveInteger(IC_Data,'AEsh',17,1)
+    call SaveStr(IC_Data,'AEsh',18,"Mana cost")
+    call SaveInteger(IC_Data,'AEsh',20,'aran')
+    call SaveInteger(IC_Data,'AEsh',21,2)
+    call SaveStr(IC_Data,'AEsh',22,"Cast range")
+    call SaveInteger(IC_Data,'AEsh',24,'Esh1')
+    call SaveInteger(IC_Data,'AEsh',25,2)
+    call SaveStr(IC_Data,'AEsh',26,"Decaying Damage")
+    call SaveInteger(IC_Data,'AEsh',28,'Esh2')
+    call SaveInteger(IC_Data,'AEsh',29,2)
+    call SaveStr(IC_Data,'AEsh',30,"Movement Speed Factor")
+    call SaveInteger(IC_Data,'AEsh',32,'Esh3')
+    call SaveInteger(IC_Data,'AEsh',33,2)
+    call SaveStr(IC_Data,'AEsh',34,"Attack Speed Factor")
+    call SaveInteger(IC_Data,'AEsh',36,'Esh4')
+    call SaveInteger(IC_Data,'AEsh',37,2)
+    call SaveStr(IC_Data,'AEsh',38,"Decay Power")
+    call SaveInteger(IC_Data,'AEsh',40,'Esh5')
+    call SaveInteger(IC_Data,'AEsh',41,2)
+    call SaveStr(IC_Data,'AEsh',42,"Initial Damage")
+    call SaveInteger(IC_Data,'AEsh',44,'aare')
+    call SaveInteger(IC_Data,'AEsh',45,2)
+    call SaveStr(IC_Data,'AEsh',46,"Area of effect")
+    call SaveInteger(IC_Data,'AEsh',-1,12)
+    call SaveInteger(IC_Data,'AEtq',0,'acas')
+    call SaveInteger(IC_Data,'AEtq',1,2)
+    call SaveStr(IC_Data,'AEtq',2,"Casting Time")
+    call SaveInteger(IC_Data,'AEtq',4,'adur')
+    call SaveInteger(IC_Data,'AEtq',5,2)
+    call SaveStr(IC_Data,'AEtq',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AEtq',8,'ahdu')
+    call SaveInteger(IC_Data,'AEtq',9,2)
+    call SaveStr(IC_Data,'AEtq',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AEtq',12,'acdn')
+    call SaveInteger(IC_Data,'AEtq',13,2)
+    call SaveStr(IC_Data,'AEtq',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AEtq',16,'amcs')
+    call SaveInteger(IC_Data,'AEtq',17,1)
+    call SaveStr(IC_Data,'AEtq',18,"Mana cost")
+    call SaveInteger(IC_Data,'AEtq',20,'aare')
+    call SaveInteger(IC_Data,'AEtq',21,2)
+    call SaveStr(IC_Data,'AEtq',22,"Area of effect")
+    call SaveInteger(IC_Data,'AEtq',24,'Etq1')
+    call SaveInteger(IC_Data,'AEtq',25,2)
+    call SaveStr(IC_Data,'AEtq',26,"Life Healed")
+    call SaveInteger(IC_Data,'AEtq',28,'Etq2')
+    call SaveInteger(IC_Data,'AEtq',29,2)
+    call SaveStr(IC_Data,'AEtq',30,"Heal Interval")
+    call SaveInteger(IC_Data,'AEtq',32,'Etq3')
+    call SaveInteger(IC_Data,'AEtq',33,2)
+    call SaveStr(IC_Data,'AEtq',34,"Building Reduction")
+    call SaveInteger(IC_Data,'AEtq',36,'aran')
+    call SaveInteger(IC_Data,'AEtq',37,2)
+    call SaveStr(IC_Data,'AEtq',38,"Cast range")
+    call SaveInteger(IC_Data,'AEtq',-1,10)
+    call SaveInteger(IC_Data,'AFv1',0,'acas')
+    call SaveInteger(IC_Data,'AFv1',1,2)
+    call SaveStr(IC_Data,'AFv1',2,"Casting Time")
+    call SaveInteger(IC_Data,'AFv1',4,'adur')
+    call SaveInteger(IC_Data,'AFv1',5,2)
+    call SaveStr(IC_Data,'AFv1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AFv1',8,'ahdu')
+    call SaveInteger(IC_Data,'AFv1',9,2)
+    call SaveStr(IC_Data,'AFv1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AFv1',12,'acdn')
+    call SaveInteger(IC_Data,'AFv1',13,2)
+    call SaveStr(IC_Data,'AFv1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AFv1',16,'amcs')
+    call SaveInteger(IC_Data,'AFv1',17,1)
+    call SaveStr(IC_Data,'AFv1',18,"Mana cost")
+    call SaveInteger(IC_Data,'AFv1',20,'aare')
+    call SaveInteger(IC_Data,'AFv1',21,2)
+    call SaveStr(IC_Data,'AFv1',22,"Area of effect")
+    call SaveInteger(IC_Data,'AFv1',24,'Uav1')
+    call SaveInteger(IC_Data,'AFv1',25,2)
+    call SaveStr(IC_Data,'AFv1',26,"Attack Damage Stolen (%)")
+    call SaveBoolean(IC_Data,'AFv1',27,true)
+    call SaveInteger(IC_Data,'AFv1',28,'aran')
+    call SaveInteger(IC_Data,'AFv1',29,2)
+    call SaveStr(IC_Data,'AFv1',30,"Cast range")
+endfunction
+
+function IC_Data39 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AFv1',-1,8)
+    call SaveInteger(IC_Data,'AGs1',0,'acas')
+    call SaveInteger(IC_Data,'AGs1',1,2)
+    call SaveStr(IC_Data,'AGs1',2,"Casting Time")
+    call SaveInteger(IC_Data,'AGs1',4,'adur')
+    call SaveInteger(IC_Data,'AGs1',5,2)
+    call SaveStr(IC_Data,'AGs1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AGs1',8,'ahdu')
+    call SaveInteger(IC_Data,'AGs1',9,2)
+    call SaveStr(IC_Data,'AGs1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AGs1',12,'acdn')
+    call SaveInteger(IC_Data,'AGs1',13,2)
+    call SaveStr(IC_Data,'AGs1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AGs1',16,'amcs')
+    call SaveInteger(IC_Data,'AGs1',17,1)
+    call SaveStr(IC_Data,'AGs1',18,"Mana cost")
+    call SaveInteger(IC_Data,'AGs1',20,'aare')
+    call SaveInteger(IC_Data,'AGs1',21,2)
+    call SaveStr(IC_Data,'AGs1',22,"Area of effect")
+    call SaveInteger(IC_Data,'AGs1',24,'Roa1')
+    call SaveInteger(IC_Data,'AGs1',25,2)
+    call SaveStr(IC_Data,'AGs1',26,"Damage Increase (%)")
+    call SaveBoolean(IC_Data,'AGs1',27,true)
+    call SaveInteger(IC_Data,'AGs1',28,'Roa2')
+    call SaveInteger(IC_Data,'AGs1',29,1)
+    call SaveStr(IC_Data,'AGs1',30,"Defense Increase")
+    call SaveInteger(IC_Data,'AGs1',32,'Roa3')
+    call SaveInteger(IC_Data,'AGs1',33,2)
+    call SaveStr(IC_Data,'AGs1',34,"Life Regeneration Rate")
+    call SaveInteger(IC_Data,'AGs1',36,'Roa4')
+    call SaveInteger(IC_Data,'AGs1',37,2)
+    call SaveStr(IC_Data,'AGs1',38,"Mana Regen")
+    call SaveInteger(IC_Data,'AGs1',40,'Roa7')
+    call SaveInteger(IC_Data,'AGs1',41,1)
+    call SaveStr(IC_Data,'AGs1',42,"Max Units")
+    call SaveInteger(IC_Data,'AGs1',44,'aran')
+    call SaveInteger(IC_Data,'AGs1',45,2)
+    call SaveStr(IC_Data,'AGs1',46,"Cast range")
+    call SaveInteger(IC_Data,'AGs1',-1,12)
+    call SaveInteger(IC_Data,'AHab',0,'acas')
+    call SaveInteger(IC_Data,'AHab',1,2)
+    call SaveStr(IC_Data,'AHab',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHab',4,'adur')
+    call SaveInteger(IC_Data,'AHab',5,2)
+    call SaveStr(IC_Data,'AHab',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHab',8,'ahdu')
+    call SaveInteger(IC_Data,'AHab',9,2)
+    call SaveStr(IC_Data,'AHab',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHab',12,'acdn')
+    call SaveInteger(IC_Data,'AHab',13,2)
+    call SaveStr(IC_Data,'AHab',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHab',16,'aare')
+    call SaveInteger(IC_Data,'AHab',17,2)
+    call SaveStr(IC_Data,'AHab',18,"Area of effect")
+    call SaveInteger(IC_Data,'AHab',20,'Hab1')
+    call SaveInteger(IC_Data,'AHab',21,2)
+    call SaveStr(IC_Data,'AHab',22,"Mana Regeneration Increase")
+    call SaveBoolean(IC_Data,'AHab',23,true)
+    call SaveInteger(IC_Data,'AHab',24,'amcs')
+    call SaveInteger(IC_Data,'AHab',25,1)
+    call SaveStr(IC_Data,'AHab',26,"Mana cost")
+    call SaveInteger(IC_Data,'AHab',28,'aran')
+    call SaveInteger(IC_Data,'AHab',29,2)
+    call SaveStr(IC_Data,'AHab',30,"Cast range")
+    call SaveInteger(IC_Data,'AHab',-1,8)
+    call SaveInteger(IC_Data,'AHad',0,'acas')
+    call SaveInteger(IC_Data,'AHad',1,2)
+    call SaveStr(IC_Data,'AHad',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHad',4,'adur')
+    call SaveInteger(IC_Data,'AHad',5,2)
+    call SaveStr(IC_Data,'AHad',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHad',8,'ahdu')
+    call SaveInteger(IC_Data,'AHad',9,2)
+    call SaveStr(IC_Data,'AHad',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHad',12,'acdn')
+    call SaveInteger(IC_Data,'AHad',13,2)
+    call SaveStr(IC_Data,'AHad',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHad',16,'amcs')
+    call SaveInteger(IC_Data,'AHad',17,1)
+    call SaveStr(IC_Data,'AHad',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHad',20,'aare')
+    call SaveInteger(IC_Data,'AHad',21,2)
+    call SaveStr(IC_Data,'AHad',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHad',24,'Had1')
+    call SaveInteger(IC_Data,'AHad',25,2)
+    call SaveStr(IC_Data,'AHad',26,"Armor Bonus")
+    call SaveInteger(IC_Data,'AHad',28,'aran')
+    call SaveInteger(IC_Data,'AHad',29,2)
+    call SaveStr(IC_Data,'AHad',30,"Cast range")
+    call SaveInteger(IC_Data,'AHad',-1,8)
+    call SaveInteger(IC_Data,'AHav',0,'acas')
+    call SaveInteger(IC_Data,'AHav',1,2)
+    call SaveStr(IC_Data,'AHav',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHav',4,'adur')
+    call SaveInteger(IC_Data,'AHav',5,2)
+    call SaveStr(IC_Data,'AHav',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHav',8,'ahdu')
+    call SaveInteger(IC_Data,'AHav',9,2)
+    call SaveStr(IC_Data,'AHav',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHav',12,'acdn')
+    call SaveInteger(IC_Data,'AHav',13,2)
+    call SaveStr(IC_Data,'AHav',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHav',16,'amcs')
+    call SaveInteger(IC_Data,'AHav',17,1)
+    call SaveStr(IC_Data,'AHav',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHav',20,'aare')
+    call SaveInteger(IC_Data,'AHav',21,2)
+    call SaveStr(IC_Data,'AHav',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHav',24,'Hav1')
+    call SaveInteger(IC_Data,'AHav',25,2)
+    call SaveStr(IC_Data,'AHav',26,"Defense Bonus")
+    call SaveInteger(IC_Data,'AHav',28,'Hav2')
+    call SaveInteger(IC_Data,'AHav',29,2)
+    call SaveStr(IC_Data,'AHav',30,"Hit Point Bonus")
+    call SaveInteger(IC_Data,'AHav',32,'Hav3')
+    call SaveInteger(IC_Data,'AHav',33,2)
+    call SaveStr(IC_Data,'AHav',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'AHav',36,'Hav4')
+    call SaveInteger(IC_Data,'AHav',37,2)
+    call SaveStr(IC_Data,'AHav',38,"Magic Damage Reduction")
+    call SaveInteger(IC_Data,'AHav',40,'aran')
+    call SaveInteger(IC_Data,'AHav',41,2)
+    call SaveStr(IC_Data,'AHav',42,"Cast range")
+    call SaveInteger(IC_Data,'AHav',-1,11)
+    call SaveInteger(IC_Data,'AHbn',0,'acas')
+    call SaveInteger(IC_Data,'AHbn',1,2)
+    call SaveStr(IC_Data,'AHbn',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHbn',4,'adur')
+    call SaveInteger(IC_Data,'AHbn',5,2)
+    call SaveStr(IC_Data,'AHbn',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHbn',8,'ahdu')
+    call SaveInteger(IC_Data,'AHbn',9,2)
+    call SaveStr(IC_Data,'AHbn',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHbn',12,'acdn')
+    call SaveInteger(IC_Data,'AHbn',13,2)
+    call SaveStr(IC_Data,'AHbn',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHbn',16,'amcs')
+    call SaveInteger(IC_Data,'AHbn',17,1)
+    call SaveStr(IC_Data,'AHbn',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHbn',20,'aran')
+    call SaveInteger(IC_Data,'AHbn',21,2)
+    call SaveStr(IC_Data,'AHbn',22,"Cast range")
+    call SaveInteger(IC_Data,'AHbn',24,'Hbn1')
+    call SaveInteger(IC_Data,'AHbn',25,2)
+    call SaveStr(IC_Data,'AHbn',26,"Movement Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'AHbn',27,true)
+    call SaveInteger(IC_Data,'AHbn',28,'Hbn2')
+    call SaveInteger(IC_Data,'AHbn',29,2)
+    call SaveStr(IC_Data,'AHbn',30,"Attack Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'AHbn',31,true)
+    call SaveInteger(IC_Data,'AHbn',32,'aare')
+    call SaveInteger(IC_Data,'AHbn',33,2)
+    call SaveStr(IC_Data,'AHbn',34,"Area of effect")
+    call SaveInteger(IC_Data,'AHbn',-1,9)
+    call SaveInteger(IC_Data,'AHbz',0,'acas')
+    call SaveInteger(IC_Data,'AHbz',1,2)
+    call SaveStr(IC_Data,'AHbz',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHbz',4,'adur')
+    call SaveInteger(IC_Data,'AHbz',5,2)
+    call SaveStr(IC_Data,'AHbz',6,"Duration (seconds)")
+endfunction
+
+function IC_Data40 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AHbz',8,'ahdu')
+    call SaveInteger(IC_Data,'AHbz',9,2)
+    call SaveStr(IC_Data,'AHbz',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHbz',12,'acdn')
+    call SaveInteger(IC_Data,'AHbz',13,2)
+    call SaveStr(IC_Data,'AHbz',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHbz',16,'amcs')
+    call SaveInteger(IC_Data,'AHbz',17,1)
+    call SaveStr(IC_Data,'AHbz',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHbz',20,'aare')
+    call SaveInteger(IC_Data,'AHbz',21,2)
+    call SaveStr(IC_Data,'AHbz',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHbz',24,'aran')
+    call SaveInteger(IC_Data,'AHbz',25,2)
+    call SaveStr(IC_Data,'AHbz',26,"Cast range")
+    call SaveInteger(IC_Data,'AHbz',28,'Hbz1')
+    call SaveInteger(IC_Data,'AHbz',29,1)
+    call SaveStr(IC_Data,'AHbz',30,"Number of Waves")
+    call SaveInteger(IC_Data,'AHbz',32,'Hbz2')
+    call SaveInteger(IC_Data,'AHbz',33,2)
+    call SaveStr(IC_Data,'AHbz',34,"Damage")
+    call SaveInteger(IC_Data,'AHbz',36,'Hbz3')
+    call SaveInteger(IC_Data,'AHbz',37,1)
+    call SaveStr(IC_Data,'AHbz',38,"Number of Shards")
+    call SaveInteger(IC_Data,'AHbz',40,'Hbz4')
+    call SaveInteger(IC_Data,'AHbz',41,2)
+    call SaveStr(IC_Data,'AHbz',42,"Building Reduction")
+    call SaveInteger(IC_Data,'AHbz',44,'Hbz5')
+    call SaveInteger(IC_Data,'AHbz',45,2)
+    call SaveStr(IC_Data,'AHbz',46,"Damage Per Second")
+    call SaveInteger(IC_Data,'AHbz',48,'Hbz6')
+    call SaveInteger(IC_Data,'AHbz',49,2)
+    call SaveStr(IC_Data,'AHbz',50,"Maximum Damage per Wave")
+    call SaveInteger(IC_Data,'AHbz',-1,13)
+    call SaveInteger(IC_Data,'AHds',0,'acas')
+    call SaveInteger(IC_Data,'AHds',1,2)
+    call SaveStr(IC_Data,'AHds',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHds',4,'adur')
+    call SaveInteger(IC_Data,'AHds',5,2)
+    call SaveStr(IC_Data,'AHds',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHds',8,'ahdu')
+    call SaveInteger(IC_Data,'AHds',9,2)
+    call SaveStr(IC_Data,'AHds',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHds',12,'acdn')
+    call SaveInteger(IC_Data,'AHds',13,2)
+    call SaveStr(IC_Data,'AHds',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHds',16,'amcs')
+    call SaveInteger(IC_Data,'AHds',17,1)
+    call SaveStr(IC_Data,'AHds',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHds',20,'aare')
+    call SaveInteger(IC_Data,'AHds',21,2)
+    call SaveStr(IC_Data,'AHds',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHds',24,'aran')
+    call SaveInteger(IC_Data,'AHds',25,2)
+    call SaveStr(IC_Data,'AHds',26,"Cast range")
+    call SaveInteger(IC_Data,'AHds',-1,7)
+    call SaveInteger(IC_Data,'AHfs',0,'acas')
+    call SaveInteger(IC_Data,'AHfs',1,2)
+    call SaveStr(IC_Data,'AHfs',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHfs',4,'adur')
+    call SaveInteger(IC_Data,'AHfs',5,2)
+    call SaveStr(IC_Data,'AHfs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHfs',8,'ahdu')
+    call SaveInteger(IC_Data,'AHfs',9,2)
+    call SaveStr(IC_Data,'AHfs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHfs',12,'acdn')
+    call SaveInteger(IC_Data,'AHfs',13,2)
+    call SaveStr(IC_Data,'AHfs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHfs',16,'amcs')
+    call SaveInteger(IC_Data,'AHfs',17,1)
+    call SaveStr(IC_Data,'AHfs',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHfs',20,'aare')
+    call SaveInteger(IC_Data,'AHfs',21,2)
+    call SaveStr(IC_Data,'AHfs',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHfs',24,'aran')
+    call SaveInteger(IC_Data,'AHfs',25,2)
+    call SaveStr(IC_Data,'AHfs',26,"Cast range")
+    call SaveInteger(IC_Data,'AHfs',28,'Hfs1')
+    call SaveInteger(IC_Data,'AHfs',29,2)
+    call SaveStr(IC_Data,'AHfs',30,"Full Damage Dealt")
+    call SaveInteger(IC_Data,'AHfs',32,'Hfs2')
+    call SaveInteger(IC_Data,'AHfs',33,2)
+    call SaveStr(IC_Data,'AHfs',34,"Full Damage Interval")
+    call SaveInteger(IC_Data,'AHfs',36,'Hfs3')
+    call SaveInteger(IC_Data,'AHfs',37,2)
+    call SaveStr(IC_Data,'AHfs',38,"Half Damage Dealt")
+    call SaveInteger(IC_Data,'AHfs',40,'Hfs4')
+    call SaveInteger(IC_Data,'AHfs',41,2)
+    call SaveStr(IC_Data,'AHfs',42,"Half Damage Interval")
+    call SaveInteger(IC_Data,'AHfs',44,'Hfs5')
+    call SaveInteger(IC_Data,'AHfs',45,2)
+    call SaveStr(IC_Data,'AHfs',46,"Building Reduction")
+    call SaveInteger(IC_Data,'AHfs',48,'Hfs6')
+    call SaveInteger(IC_Data,'AHfs',49,2)
+    call SaveStr(IC_Data,'AHfs',50,"Maximum Damage")
+    call SaveInteger(IC_Data,'AHfs',-1,13)
+    call SaveInteger(IC_Data,'AHpx',0,'acas')
+    call SaveInteger(IC_Data,'AHpx',1,2)
+    call SaveStr(IC_Data,'AHpx',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHpx',4,'adur')
+    call SaveInteger(IC_Data,'AHpx',5,2)
+    call SaveStr(IC_Data,'AHpx',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHpx',8,'ahdu')
+    call SaveInteger(IC_Data,'AHpx',9,2)
+    call SaveStr(IC_Data,'AHpx',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHpx',12,'acdn')
+    call SaveInteger(IC_Data,'AHpx',13,2)
+    call SaveStr(IC_Data,'AHpx',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHpx',16,'amcs')
+    call SaveInteger(IC_Data,'AHpx',17,1)
+    call SaveStr(IC_Data,'AHpx',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHpx',20,'aare')
+    call SaveInteger(IC_Data,'AHpx',21,2)
+    call SaveStr(IC_Data,'AHpx',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHpx',24,'Hwe1')
+    call SaveInteger(IC_Data,'AHpx',25,1)
+    call SaveStr(IC_Data,'AHpx',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'AHpx',28,'Hwe2')
+    call SaveInteger(IC_Data,'AHpx',29,1)
+    call SaveStr(IC_Data,'AHpx',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'AHpx',32,'aran')
+    call SaveInteger(IC_Data,'AHpx',33,2)
+    call SaveStr(IC_Data,'AHpx',34,"Cast range")
+    call SaveInteger(IC_Data,'AHpx',-1,9)
+    call SaveInteger(IC_Data,'AHre',0,'acas')
+    call SaveInteger(IC_Data,'AHre',1,2)
+    call SaveStr(IC_Data,'AHre',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHre',4,'adur')
+    call SaveInteger(IC_Data,'AHre',5,2)
+    call SaveStr(IC_Data,'AHre',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHre',8,'ahdu')
+    call SaveInteger(IC_Data,'AHre',9,2)
+    call SaveStr(IC_Data,'AHre',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHre',12,'acdn')
+    call SaveInteger(IC_Data,'AHre',13,2)
+    call SaveStr(IC_Data,'AHre',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHre',16,'amcs')
+    call SaveInteger(IC_Data,'AHre',17,1)
+    call SaveStr(IC_Data,'AHre',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHre',20,'aare')
+    call SaveInteger(IC_Data,'AHre',21,2)
+    call SaveStr(IC_Data,'AHre',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHre',24,'aran')
+    call SaveInteger(IC_Data,'AHre',25,2)
+    call SaveStr(IC_Data,'AHre',26,"Cast range")
+    call SaveInteger(IC_Data,'AHre',28,'Hre1')
+    call SaveInteger(IC_Data,'AHre',29,1)
+    call SaveStr(IC_Data,'AHre',30,"Number of Corpses Raised")
+    call SaveInteger(IC_Data,'AHre',-1,8)
+    call SaveInteger(IC_Data,'AHtb',0,'acas')
+    call SaveInteger(IC_Data,'AHtb',1,2)
+    call SaveStr(IC_Data,'AHtb',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHtb',4,'adur')
+    call SaveInteger(IC_Data,'AHtb',5,2)
+    call SaveStr(IC_Data,'AHtb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHtb',8,'ahdu')
+    call SaveInteger(IC_Data,'AHtb',9,2)
+    call SaveStr(IC_Data,'AHtb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHtb',12,'acdn')
+    call SaveInteger(IC_Data,'AHtb',13,2)
+endfunction
+
+function IC_Data41 takes nothing returns nothing
+    call SaveStr(IC_Data,'AHtb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHtb',16,'amcs')
+    call SaveInteger(IC_Data,'AHtb',17,1)
+    call SaveStr(IC_Data,'AHtb',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHtb',20,'aran')
+    call SaveInteger(IC_Data,'AHtb',21,2)
+    call SaveStr(IC_Data,'AHtb',22,"Cast range")
+    call SaveInteger(IC_Data,'AHtb',24,'Htb1')
+    call SaveInteger(IC_Data,'AHtb',25,2)
+    call SaveStr(IC_Data,'AHtb',26,"Damage")
+    call SaveInteger(IC_Data,'AHtb',28,'aare')
+    call SaveInteger(IC_Data,'AHtb',29,2)
+    call SaveStr(IC_Data,'AHtb',30,"Area of effect")
+    call SaveInteger(IC_Data,'AHtb',-1,8)
+    call SaveInteger(IC_Data,'AHtc',0,'acas')
+    call SaveInteger(IC_Data,'AHtc',1,2)
+    call SaveStr(IC_Data,'AHtc',2,"Casting Time")
+    call SaveInteger(IC_Data,'AHtc',4,'adur')
+    call SaveInteger(IC_Data,'AHtc',5,2)
+    call SaveStr(IC_Data,'AHtc',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AHtc',8,'ahdu')
+    call SaveInteger(IC_Data,'AHtc',9,2)
+    call SaveStr(IC_Data,'AHtc',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AHtc',12,'acdn')
+    call SaveInteger(IC_Data,'AHtc',13,2)
+    call SaveStr(IC_Data,'AHtc',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AHtc',16,'amcs')
+    call SaveInteger(IC_Data,'AHtc',17,1)
+    call SaveStr(IC_Data,'AHtc',18,"Mana cost")
+    call SaveInteger(IC_Data,'AHtc',20,'aare')
+    call SaveInteger(IC_Data,'AHtc',21,2)
+    call SaveStr(IC_Data,'AHtc',22,"Area of effect")
+    call SaveInteger(IC_Data,'AHtc',24,'Htc1')
+    call SaveInteger(IC_Data,'AHtc',25,2)
+    call SaveStr(IC_Data,'AHtc',26,"AOE Damage")
+    call SaveInteger(IC_Data,'AHtc',28,'Htc2')
+    call SaveInteger(IC_Data,'AHtc',29,2)
+    call SaveStr(IC_Data,'AHtc',30,"Specific Target Damage")
+    call SaveInteger(IC_Data,'AHtc',32,'Htc3')
+    call SaveInteger(IC_Data,'AHtc',33,2)
+    call SaveStr(IC_Data,'AHtc',34,"Movement Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'AHtc',35,true)
+    call SaveInteger(IC_Data,'AHtc',36,'Htc4')
+    call SaveInteger(IC_Data,'AHtc',37,2)
+    call SaveStr(IC_Data,'AHtc',38,"Attack Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'AHtc',39,true)
+    call SaveInteger(IC_Data,'AHtc',40,'aran')
+    call SaveInteger(IC_Data,'AHtc',41,2)
+    call SaveStr(IC_Data,'AHtc',42,"Cast range")
+    call SaveInteger(IC_Data,'AHtc',-1,11)
+    call SaveInteger(IC_Data,'AI2m',0,'acas')
+    call SaveInteger(IC_Data,'AI2m',1,2)
+    call SaveStr(IC_Data,'AI2m',2,"Casting Time")
+    call SaveInteger(IC_Data,'AI2m',4,'adur')
+    call SaveInteger(IC_Data,'AI2m',5,2)
+    call SaveStr(IC_Data,'AI2m',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AI2m',8,'ahdu')
+    call SaveInteger(IC_Data,'AI2m',9,2)
+    call SaveStr(IC_Data,'AI2m',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AI2m',12,'acdn')
+    call SaveInteger(IC_Data,'AI2m',13,2)
+    call SaveStr(IC_Data,'AI2m',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AI2m',16,'amcs')
+    call SaveInteger(IC_Data,'AI2m',17,1)
+    call SaveStr(IC_Data,'AI2m',18,"Mana cost")
+    call SaveInteger(IC_Data,'AI2m',20,'Iman')
+    call SaveInteger(IC_Data,'AI2m',21,1)
+    call SaveStr(IC_Data,'AI2m',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'AI2m',24,'aare')
+    call SaveInteger(IC_Data,'AI2m',25,2)
+    call SaveStr(IC_Data,'AI2m',26,"Area of effect")
+    call SaveInteger(IC_Data,'AI2m',28,'aran')
+    call SaveInteger(IC_Data,'AI2m',29,2)
+    call SaveStr(IC_Data,'AI2m',30,"Cast range")
+    call SaveInteger(IC_Data,'AI2m',-1,8)
+    call SaveInteger(IC_Data,'AIar',0,'acas')
+    call SaveInteger(IC_Data,'AIar',1,2)
+    call SaveStr(IC_Data,'AIar',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIar',4,'adur')
+    call SaveInteger(IC_Data,'AIar',5,2)
+    call SaveStr(IC_Data,'AIar',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIar',8,'ahdu')
+    call SaveInteger(IC_Data,'AIar',9,2)
+    call SaveStr(IC_Data,'AIar',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIar',12,'acdn')
+    call SaveInteger(IC_Data,'AIar',13,2)
+    call SaveStr(IC_Data,'AIar',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIar',16,'amcs')
+    call SaveInteger(IC_Data,'AIar',17,1)
+    call SaveStr(IC_Data,'AIar',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIar',20,'aare')
+    call SaveInteger(IC_Data,'AIar',21,2)
+    call SaveStr(IC_Data,'AIar',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIar',24,'Ear1')
+    call SaveInteger(IC_Data,'AIar',25,2)
+    call SaveStr(IC_Data,'AIar',26,"Damage Bonus (%)")
+    call SaveBoolean(IC_Data,'AIar',27,true)
+    call SaveInteger(IC_Data,'AIar',28,'aran')
+    call SaveInteger(IC_Data,'AIar',29,2)
+    call SaveStr(IC_Data,'AIar',30,"Cast range")
+    call SaveInteger(IC_Data,'AIar',-1,8)
+    call SaveInteger(IC_Data,'AIau',0,'acas')
+    call SaveInteger(IC_Data,'AIau',1,2)
+    call SaveStr(IC_Data,'AIau',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIau',4,'adur')
+    call SaveInteger(IC_Data,'AIau',5,2)
+    call SaveStr(IC_Data,'AIau',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIau',8,'ahdu')
+    call SaveInteger(IC_Data,'AIau',9,2)
+    call SaveStr(IC_Data,'AIau',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIau',12,'acdn')
+    call SaveInteger(IC_Data,'AIau',13,2)
+    call SaveStr(IC_Data,'AIau',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIau',16,'amcs')
+    call SaveInteger(IC_Data,'AIau',17,1)
+    call SaveStr(IC_Data,'AIau',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIau',20,'aare')
+    call SaveInteger(IC_Data,'AIau',21,2)
+    call SaveStr(IC_Data,'AIau',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIau',24,'Uau1')
+    call SaveInteger(IC_Data,'AIau',25,2)
+    call SaveStr(IC_Data,'AIau',26,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'AIau',27,true)
+    call SaveInteger(IC_Data,'AIau',28,'Uau2')
+    call SaveInteger(IC_Data,'AIau',29,2)
+    call SaveStr(IC_Data,'AIau',30,"Life Regeneration Increase (%)")
+    call SaveBoolean(IC_Data,'AIau',31,true)
+    call SaveInteger(IC_Data,'AIau',32,'aran')
+    call SaveInteger(IC_Data,'AIau',33,2)
+    call SaveStr(IC_Data,'AIau',34,"Cast range")
+    call SaveInteger(IC_Data,'AIau',-1,9)
+    call SaveInteger(IC_Data,'AIav',0,'acas')
+    call SaveInteger(IC_Data,'AIav',1,2)
+    call SaveStr(IC_Data,'AIav',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIav',4,'adur')
+    call SaveInteger(IC_Data,'AIav',5,2)
+    call SaveStr(IC_Data,'AIav',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIav',8,'ahdu')
+    call SaveInteger(IC_Data,'AIav',9,2)
+    call SaveStr(IC_Data,'AIav',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIav',12,'acdn')
+    call SaveInteger(IC_Data,'AIav',13,2)
+    call SaveStr(IC_Data,'AIav',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIav',16,'amcs')
+    call SaveInteger(IC_Data,'AIav',17,1)
+    call SaveStr(IC_Data,'AIav',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIav',20,'aare')
+    call SaveInteger(IC_Data,'AIav',21,2)
+    call SaveStr(IC_Data,'AIav',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIav',24,'Uav1')
+    call SaveInteger(IC_Data,'AIav',25,2)
+    call SaveStr(IC_Data,'AIav',26,"Attack Damage Stolen (%)")
+    call SaveBoolean(IC_Data,'AIav',27,true)
+    call SaveInteger(IC_Data,'AIav',28,'aran')
+    call SaveInteger(IC_Data,'AIav',29,2)
+    call SaveStr(IC_Data,'AIav',30,"Cast range")
+    call SaveInteger(IC_Data,'AIav',-1,8)
+    call SaveInteger(IC_Data,'AIaz',0,'acas')
+    call SaveInteger(IC_Data,'AIaz',1,2)
+    call SaveStr(IC_Data,'AIaz',2,"Casting Time")
+endfunction
+
+function IC_Data42 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AIaz',4,'adur')
+    call SaveInteger(IC_Data,'AIaz',5,2)
+    call SaveStr(IC_Data,'AIaz',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIaz',8,'ahdu')
+    call SaveInteger(IC_Data,'AIaz',9,2)
+    call SaveStr(IC_Data,'AIaz',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIaz',12,'acdn')
+    call SaveInteger(IC_Data,'AIaz',13,2)
+    call SaveStr(IC_Data,'AIaz',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIaz',16,'amcs')
+    call SaveInteger(IC_Data,'AIaz',17,1)
+    call SaveStr(IC_Data,'AIaz',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIaz',20,'Iagi')
+    call SaveInteger(IC_Data,'AIaz',21,1)
+    call SaveStr(IC_Data,'AIaz',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIaz',24,'Iint')
+    call SaveInteger(IC_Data,'AIaz',25,1)
+    call SaveStr(IC_Data,'AIaz',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIaz',28,'Istr')
+    call SaveInteger(IC_Data,'AIaz',29,1)
+    call SaveStr(IC_Data,'AIaz',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'AIaz',32,'aare')
+    call SaveInteger(IC_Data,'AIaz',33,2)
+    call SaveStr(IC_Data,'AIaz',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIaz',36,'aran')
+    call SaveInteger(IC_Data,'AIaz',37,2)
+    call SaveStr(IC_Data,'AIaz',38,"Cast range")
+    call SaveInteger(IC_Data,'AIaz',-1,10)
+    call SaveInteger(IC_Data,'AIba',0,'acas')
+    call SaveInteger(IC_Data,'AIba',1,2)
+    call SaveStr(IC_Data,'AIba',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIba',4,'adur')
+    call SaveInteger(IC_Data,'AIba',5,2)
+    call SaveStr(IC_Data,'AIba',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIba',8,'ahdu')
+    call SaveInteger(IC_Data,'AIba',9,2)
+    call SaveStr(IC_Data,'AIba',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIba',12,'acdn')
+    call SaveInteger(IC_Data,'AIba',13,2)
+    call SaveStr(IC_Data,'AIba',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIba',16,'amcs')
+    call SaveInteger(IC_Data,'AIba',17,1)
+    call SaveStr(IC_Data,'AIba',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIba',20,'aare')
+    call SaveInteger(IC_Data,'AIba',21,2)
+    call SaveStr(IC_Data,'AIba',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIba',24,'Hab1')
+    call SaveInteger(IC_Data,'AIba',25,2)
+    call SaveStr(IC_Data,'AIba',26,"Mana Regeneration Increase")
+    call SaveBoolean(IC_Data,'AIba',27,true)
+    call SaveInteger(IC_Data,'AIba',28,'aran')
+    call SaveInteger(IC_Data,'AIba',29,2)
+    call SaveStr(IC_Data,'AIba',30,"Cast range")
+    call SaveInteger(IC_Data,'AIba',-1,8)
+    call SaveInteger(IC_Data,'AIbg',0,'acas')
+    call SaveInteger(IC_Data,'AIbg',1,2)
+    call SaveStr(IC_Data,'AIbg',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIbg',4,'adur')
+    call SaveInteger(IC_Data,'AIbg',5,2)
+    call SaveStr(IC_Data,'AIbg',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIbg',8,'ahdu')
+    call SaveInteger(IC_Data,'AIbg',9,2)
+    call SaveStr(IC_Data,'AIbg',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIbg',12,'acdn')
+    call SaveInteger(IC_Data,'AIbg',13,2)
+    call SaveStr(IC_Data,'AIbg',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIbg',16,'amcs')
+    call SaveInteger(IC_Data,'AIbg',17,1)
+    call SaveStr(IC_Data,'AIbg',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIbg',20,'aran')
+    call SaveInteger(IC_Data,'AIbg',21,2)
+    call SaveStr(IC_Data,'AIbg',22,"Cast range")
+    call SaveInteger(IC_Data,'AIbg',24,'aare')
+    call SaveInteger(IC_Data,'AIbg',25,2)
+    call SaveStr(IC_Data,'AIbg',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIbg',-1,7)
+    call SaveInteger(IC_Data,'AIbl',0,'acas')
+    call SaveInteger(IC_Data,'AIbl',1,2)
+    call SaveStr(IC_Data,'AIbl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIbl',4,'adur')
+    call SaveInteger(IC_Data,'AIbl',5,2)
+    call SaveStr(IC_Data,'AIbl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIbl',8,'ahdu')
+    call SaveInteger(IC_Data,'AIbl',9,2)
+    call SaveStr(IC_Data,'AIbl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIbl',12,'acdn')
+    call SaveInteger(IC_Data,'AIbl',13,2)
+    call SaveStr(IC_Data,'AIbl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIbl',16,'amcs')
+    call SaveInteger(IC_Data,'AIbl',17,1)
+    call SaveStr(IC_Data,'AIbl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIbl',20,'aran')
+    call SaveInteger(IC_Data,'AIbl',21,2)
+    call SaveStr(IC_Data,'AIbl',22,"Cast range")
+    call SaveInteger(IC_Data,'AIbl',24,'aare')
+    call SaveInteger(IC_Data,'AIbl',25,2)
+    call SaveStr(IC_Data,'AIbl',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIbl',-1,7)
+    call SaveInteger(IC_Data,'AIbx',0,'acas')
+    call SaveInteger(IC_Data,'AIbx',1,2)
+    call SaveStr(IC_Data,'AIbx',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIbx',4,'adur')
+    call SaveInteger(IC_Data,'AIbx',5,2)
+    call SaveStr(IC_Data,'AIbx',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIbx',8,'ahdu')
+    call SaveInteger(IC_Data,'AIbx',9,2)
+    call SaveStr(IC_Data,'AIbx',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIbx',12,'acdn')
+    call SaveInteger(IC_Data,'AIbx',13,2)
+    call SaveStr(IC_Data,'AIbx',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIbx',16,'amcs')
+    call SaveInteger(IC_Data,'AIbx',17,1)
+    call SaveStr(IC_Data,'AIbx',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIbx',20,'aare')
+    call SaveInteger(IC_Data,'AIbx',21,2)
+    call SaveStr(IC_Data,'AIbx',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIbx',24,'Hbh1')
+    call SaveInteger(IC_Data,'AIbx',25,2)
+    call SaveStr(IC_Data,'AIbx',26,"Chance to Bash")
+    call SaveInteger(IC_Data,'AIbx',28,'Hbh2')
+    call SaveInteger(IC_Data,'AIbx',29,2)
+    call SaveStr(IC_Data,'AIbx',30,"Damage Multiplier")
+    call SaveInteger(IC_Data,'AIbx',32,'Hbh3')
+    call SaveInteger(IC_Data,'AIbx',33,2)
+    call SaveStr(IC_Data,'AIbx',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'AIbx',36,'Hbh4')
+    call SaveInteger(IC_Data,'AIbx',37,2)
+    call SaveStr(IC_Data,'AIbx',38,"Chance to Miss")
+    call SaveInteger(IC_Data,'AIbx',40,'aran')
+    call SaveInteger(IC_Data,'AIbx',41,2)
+    call SaveStr(IC_Data,'AIbx',42,"Cast range")
+    call SaveInteger(IC_Data,'AIbx',-1,11)
+    call SaveInteger(IC_Data,'AIcb',0,'acas')
+    call SaveInteger(IC_Data,'AIcb',1,2)
+    call SaveStr(IC_Data,'AIcb',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIcb',4,'adur')
+    call SaveInteger(IC_Data,'AIcb',5,2)
+    call SaveStr(IC_Data,'AIcb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIcb',8,'ahdu')
+    call SaveInteger(IC_Data,'AIcb',9,2)
+    call SaveStr(IC_Data,'AIcb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIcb',12,'acdn')
+    call SaveInteger(IC_Data,'AIcb',13,2)
+    call SaveStr(IC_Data,'AIcb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIcb',16,'amcs')
+    call SaveInteger(IC_Data,'AIcb',17,1)
+    call SaveStr(IC_Data,'AIcb',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIcb',20,'Idic')
+    call SaveInteger(IC_Data,'AIcb',21,1)
+    call SaveStr(IC_Data,'AIcb',22,"Damage Bonus Dice")
+    call SaveInteger(IC_Data,'AIcb',24,'Iarp')
+    call SaveInteger(IC_Data,'AIcb',25,1)
+    call SaveStr(IC_Data,'AIcb',26,"Armor Penalty")
+    call SaveInteger(IC_Data,'AIcb',28,'Iob5')
+    call SaveInteger(IC_Data,'AIcb',29,1)
+    call SaveStr(IC_Data,'AIcb',30,"Enabled Attack Index")
+    call SaveInteger(IC_Data,'AIcb',32,'aare')
+    call SaveInteger(IC_Data,'AIcb',33,2)
+    call SaveStr(IC_Data,'AIcb',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIcb',36,'aran')
+endfunction
+
+function IC_Data43 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AIcb',37,2)
+    call SaveStr(IC_Data,'AIcb',38,"Cast range")
+    call SaveInteger(IC_Data,'AIcb',-1,10)
+    call SaveInteger(IC_Data,'AIcd',0,'acas')
+    call SaveInteger(IC_Data,'AIcd',1,2)
+    call SaveStr(IC_Data,'AIcd',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIcd',4,'adur')
+    call SaveInteger(IC_Data,'AIcd',5,2)
+    call SaveStr(IC_Data,'AIcd',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIcd',8,'ahdu')
+    call SaveInteger(IC_Data,'AIcd',9,2)
+    call SaveStr(IC_Data,'AIcd',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIcd',12,'acdn')
+    call SaveInteger(IC_Data,'AIcd',13,2)
+    call SaveStr(IC_Data,'AIcd',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIcd',16,'amcs')
+    call SaveInteger(IC_Data,'AIcd',17,1)
+    call SaveStr(IC_Data,'AIcd',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIcd',20,'aare')
+    call SaveInteger(IC_Data,'AIcd',21,2)
+    call SaveStr(IC_Data,'AIcd',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIcd',24,'Cac1')
+    call SaveInteger(IC_Data,'AIcd',25,2)
+    call SaveStr(IC_Data,'AIcd',26,"Attack Damage Increase")
+    call SaveInteger(IC_Data,'AIcd',28,'aran')
+    call SaveInteger(IC_Data,'AIcd',29,2)
+    call SaveStr(IC_Data,'AIcd',30,"Cast range")
+    call SaveInteger(IC_Data,'AIcd',-1,8)
+    call SaveInteger(IC_Data,'AIcf',0,'acas')
+    call SaveInteger(IC_Data,'AIcf',1,2)
+    call SaveStr(IC_Data,'AIcf',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIcf',4,'adur')
+    call SaveInteger(IC_Data,'AIcf',5,2)
+    call SaveStr(IC_Data,'AIcf',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIcf',8,'ahdu')
+    call SaveInteger(IC_Data,'AIcf',9,2)
+    call SaveStr(IC_Data,'AIcf',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIcf',12,'acdn')
+    call SaveInteger(IC_Data,'AIcf',13,2)
+    call SaveStr(IC_Data,'AIcf',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIcf',16,'amcs')
+    call SaveInteger(IC_Data,'AIcf',17,1)
+    call SaveStr(IC_Data,'AIcf',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIcf',20,'aare')
+    call SaveInteger(IC_Data,'AIcf',21,2)
+    call SaveStr(IC_Data,'AIcf',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIcf',24,'Icfd')
+    call SaveInteger(IC_Data,'AIcf',25,1)
+    call SaveStr(IC_Data,'AIcf',26,"Damage Per Duration")
+    call SaveInteger(IC_Data,'AIcf',28,'Icfm')
+    call SaveInteger(IC_Data,'AIcf',29,1)
+    call SaveStr(IC_Data,'AIcf',30,"Mana Used Per Second")
+    call SaveInteger(IC_Data,'AIcf',32,'Icfx')
+    call SaveInteger(IC_Data,'AIcf',33,1)
+    call SaveStr(IC_Data,'AIcf',34,"Extra Mana Required")
+    call SaveInteger(IC_Data,'AIcf',36,'aran')
+    call SaveInteger(IC_Data,'AIcf',37,2)
+    call SaveStr(IC_Data,'AIcf',38,"Cast range")
+    call SaveInteger(IC_Data,'AIcf',-1,10)
+    call SaveInteger(IC_Data,'AId0',0,'acas')
+    call SaveInteger(IC_Data,'AId0',1,2)
+    call SaveStr(IC_Data,'AId0',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId0',4,'adur')
+    call SaveInteger(IC_Data,'AId0',5,2)
+    call SaveStr(IC_Data,'AId0',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId0',8,'ahdu')
+    call SaveInteger(IC_Data,'AId0',9,2)
+    call SaveStr(IC_Data,'AId0',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId0',12,'acdn')
+    call SaveInteger(IC_Data,'AId0',13,2)
+    call SaveStr(IC_Data,'AId0',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId0',16,'amcs')
+    call SaveInteger(IC_Data,'AId0',17,1)
+    call SaveStr(IC_Data,'AId0',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId0',20,'Idef')
+    call SaveInteger(IC_Data,'AId0',21,1)
+    call SaveStr(IC_Data,'AId0',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId0',24,'aare')
+    call SaveInteger(IC_Data,'AId0',25,2)
+    call SaveStr(IC_Data,'AId0',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId0',28,'aran')
+    call SaveInteger(IC_Data,'AId0',29,2)
+    call SaveStr(IC_Data,'AId0',30,"Cast range")
+    call SaveInteger(IC_Data,'AId0',-1,8)
+    call SaveInteger(IC_Data,'AId1',0,'acas')
+    call SaveInteger(IC_Data,'AId1',1,2)
+    call SaveStr(IC_Data,'AId1',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId1',4,'adur')
+    call SaveInteger(IC_Data,'AId1',5,2)
+    call SaveStr(IC_Data,'AId1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId1',8,'ahdu')
+    call SaveInteger(IC_Data,'AId1',9,2)
+    call SaveStr(IC_Data,'AId1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId1',12,'acdn')
+    call SaveInteger(IC_Data,'AId1',13,2)
+    call SaveStr(IC_Data,'AId1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId1',16,'amcs')
+    call SaveInteger(IC_Data,'AId1',17,1)
+    call SaveStr(IC_Data,'AId1',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId1',20,'Idef')
+    call SaveInteger(IC_Data,'AId1',21,1)
+    call SaveStr(IC_Data,'AId1',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId1',24,'aare')
+    call SaveInteger(IC_Data,'AId1',25,2)
+    call SaveStr(IC_Data,'AId1',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId1',28,'aran')
+    call SaveInteger(IC_Data,'AId1',29,2)
+    call SaveStr(IC_Data,'AId1',30,"Cast range")
+    call SaveInteger(IC_Data,'AId1',-1,8)
+    call SaveInteger(IC_Data,'AId4',0,'acas')
+    call SaveInteger(IC_Data,'AId4',1,2)
+    call SaveStr(IC_Data,'AId4',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId4',4,'adur')
+    call SaveInteger(IC_Data,'AId4',5,2)
+    call SaveStr(IC_Data,'AId4',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId4',8,'ahdu')
+    call SaveInteger(IC_Data,'AId4',9,2)
+    call SaveStr(IC_Data,'AId4',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId4',12,'acdn')
+    call SaveInteger(IC_Data,'AId4',13,2)
+    call SaveStr(IC_Data,'AId4',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId4',16,'amcs')
+    call SaveInteger(IC_Data,'AId4',17,1)
+    call SaveStr(IC_Data,'AId4',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId4',20,'Idef')
+    call SaveInteger(IC_Data,'AId4',21,1)
+    call SaveStr(IC_Data,'AId4',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId4',24,'aare')
+    call SaveInteger(IC_Data,'AId4',25,2)
+    call SaveStr(IC_Data,'AId4',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId4',28,'aran')
+    call SaveInteger(IC_Data,'AId4',29,2)
+    call SaveStr(IC_Data,'AId4',30,"Cast range")
+    call SaveInteger(IC_Data,'AId4',-1,8)
+    call SaveInteger(IC_Data,'AId5',0,'acas')
+    call SaveInteger(IC_Data,'AId5',1,2)
+    call SaveStr(IC_Data,'AId5',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId5',4,'adur')
+    call SaveInteger(IC_Data,'AId5',5,2)
+    call SaveStr(IC_Data,'AId5',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId5',8,'ahdu')
+    call SaveInteger(IC_Data,'AId5',9,2)
+    call SaveStr(IC_Data,'AId5',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId5',12,'acdn')
+    call SaveInteger(IC_Data,'AId5',13,2)
+    call SaveStr(IC_Data,'AId5',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId5',16,'amcs')
+    call SaveInteger(IC_Data,'AId5',17,1)
+    call SaveStr(IC_Data,'AId5',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId5',20,'Idef')
+    call SaveInteger(IC_Data,'AId5',21,1)
+    call SaveStr(IC_Data,'AId5',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId5',24,'aare')
+    call SaveInteger(IC_Data,'AId5',25,2)
+    call SaveStr(IC_Data,'AId5',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId5',28,'aran')
+    call SaveInteger(IC_Data,'AId5',29,2)
+    call SaveStr(IC_Data,'AId5',30,"Cast range")
+    call SaveInteger(IC_Data,'AId5',-1,8)
+    call SaveInteger(IC_Data,'AId7',0,'acas')
+endfunction
+
+function IC_Data44 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AId7',1,2)
+    call SaveStr(IC_Data,'AId7',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId7',4,'adur')
+    call SaveInteger(IC_Data,'AId7',5,2)
+    call SaveStr(IC_Data,'AId7',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId7',8,'ahdu')
+    call SaveInteger(IC_Data,'AId7',9,2)
+    call SaveStr(IC_Data,'AId7',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId7',12,'acdn')
+    call SaveInteger(IC_Data,'AId7',13,2)
+    call SaveStr(IC_Data,'AId7',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId7',16,'amcs')
+    call SaveInteger(IC_Data,'AId7',17,1)
+    call SaveStr(IC_Data,'AId7',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId7',20,'Idef')
+    call SaveInteger(IC_Data,'AId7',21,1)
+    call SaveStr(IC_Data,'AId7',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId7',24,'aare')
+    call SaveInteger(IC_Data,'AId7',25,2)
+    call SaveStr(IC_Data,'AId7',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId7',28,'aran')
+    call SaveInteger(IC_Data,'AId7',29,2)
+    call SaveStr(IC_Data,'AId7',30,"Cast range")
+    call SaveInteger(IC_Data,'AId7',-1,8)
+    call SaveInteger(IC_Data,'AId8',0,'acas')
+    call SaveInteger(IC_Data,'AId8',1,2)
+    call SaveStr(IC_Data,'AId8',2,"Casting Time")
+    call SaveInteger(IC_Data,'AId8',4,'adur')
+    call SaveInteger(IC_Data,'AId8',5,2)
+    call SaveStr(IC_Data,'AId8',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AId8',8,'ahdu')
+    call SaveInteger(IC_Data,'AId8',9,2)
+    call SaveStr(IC_Data,'AId8',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AId8',12,'acdn')
+    call SaveInteger(IC_Data,'AId8',13,2)
+    call SaveStr(IC_Data,'AId8',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AId8',16,'amcs')
+    call SaveInteger(IC_Data,'AId8',17,1)
+    call SaveStr(IC_Data,'AId8',18,"Mana cost")
+    call SaveInteger(IC_Data,'AId8',20,'Idef')
+    call SaveInteger(IC_Data,'AId8',21,1)
+    call SaveStr(IC_Data,'AId8',22,"Defense Bonus")
+    call SaveInteger(IC_Data,'AId8',24,'aare')
+    call SaveInteger(IC_Data,'AId8',25,2)
+    call SaveStr(IC_Data,'AId8',26,"Area of effect")
+    call SaveInteger(IC_Data,'AId8',28,'aran')
+    call SaveInteger(IC_Data,'AId8',29,2)
+    call SaveStr(IC_Data,'AId8',30,"Cast range")
+    call SaveInteger(IC_Data,'AId8',-1,8)
+    call SaveInteger(IC_Data,'AIdi',0,'acas')
+    call SaveInteger(IC_Data,'AIdi',1,2)
+    call SaveStr(IC_Data,'AIdi',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIdi',4,'adur')
+    call SaveInteger(IC_Data,'AIdi',5,2)
+    call SaveStr(IC_Data,'AIdi',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIdi',8,'ahdu')
+    call SaveInteger(IC_Data,'AIdi',9,2)
+    call SaveStr(IC_Data,'AIdi',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIdi',12,'acdn')
+    call SaveInteger(IC_Data,'AIdi',13,2)
+    call SaveStr(IC_Data,'AIdi',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIdi',16,'amcs')
+    call SaveInteger(IC_Data,'AIdi',17,1)
+    call SaveStr(IC_Data,'AIdi',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIdi',20,'aare')
+    call SaveInteger(IC_Data,'AIdi',21,2)
+    call SaveStr(IC_Data,'AIdi',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIdi',24,'aran')
+    call SaveInteger(IC_Data,'AIdi',25,2)
+    call SaveStr(IC_Data,'AIdi',26,"Cast range")
+    call SaveInteger(IC_Data,'AIdi',28,'Idim')
+    call SaveInteger(IC_Data,'AIdi',29,1)
+    call SaveStr(IC_Data,'AIdi',30,"Mana Loss Per Unit")
+    call SaveInteger(IC_Data,'AIdi',32,'Idid')
+    call SaveInteger(IC_Data,'AIdi',33,1)
+    call SaveStr(IC_Data,'AIdi',34,"Damage To Summoned Units")
+    call SaveInteger(IC_Data,'AIdi',-1,9)
+    call SaveInteger(IC_Data,'AIe2',0,'acas')
+    call SaveInteger(IC_Data,'AIe2',1,2)
+    call SaveStr(IC_Data,'AIe2',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIe2',4,'adur')
+    call SaveInteger(IC_Data,'AIe2',5,2)
+    call SaveStr(IC_Data,'AIe2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIe2',8,'ahdu')
+    call SaveInteger(IC_Data,'AIe2',9,2)
+    call SaveStr(IC_Data,'AIe2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIe2',12,'acdn')
+    call SaveInteger(IC_Data,'AIe2',13,2)
+    call SaveStr(IC_Data,'AIe2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIe2',16,'amcs')
+    call SaveInteger(IC_Data,'AIe2',17,1)
+    call SaveStr(IC_Data,'AIe2',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIe2',20,'Ixpg')
+    call SaveInteger(IC_Data,'AIe2',21,1)
+    call SaveStr(IC_Data,'AIe2',22,"Experience Gained")
+    call SaveInteger(IC_Data,'AIe2',24,'aare')
+    call SaveInteger(IC_Data,'AIe2',25,2)
+    call SaveStr(IC_Data,'AIe2',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIe2',28,'aran')
+    call SaveInteger(IC_Data,'AIe2',29,2)
+    call SaveStr(IC_Data,'AIe2',30,"Cast range")
+    call SaveInteger(IC_Data,'AIe2',-1,8)
+    call SaveInteger(IC_Data,'AIev',0,'acas')
+    call SaveInteger(IC_Data,'AIev',1,2)
+    call SaveStr(IC_Data,'AIev',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIev',4,'adur')
+    call SaveInteger(IC_Data,'AIev',5,2)
+    call SaveStr(IC_Data,'AIev',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIev',8,'ahdu')
+    call SaveInteger(IC_Data,'AIev',9,2)
+    call SaveStr(IC_Data,'AIev',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIev',12,'acdn')
+    call SaveInteger(IC_Data,'AIev',13,2)
+    call SaveStr(IC_Data,'AIev',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIev',16,'amcs')
+    call SaveInteger(IC_Data,'AIev',17,1)
+    call SaveStr(IC_Data,'AIev',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIev',20,'Eev1')
+    call SaveInteger(IC_Data,'AIev',21,2)
+    call SaveStr(IC_Data,'AIev',22,"Chance to Evade")
+    call SaveBoolean(IC_Data,'AIev',23,true)
+    call SaveInteger(IC_Data,'AIev',24,'aare')
+    call SaveInteger(IC_Data,'AIev',25,2)
+    call SaveStr(IC_Data,'AIev',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIev',28,'aran')
+    call SaveInteger(IC_Data,'AIev',29,2)
+    call SaveStr(IC_Data,'AIev',30,"Cast range")
+    call SaveInteger(IC_Data,'AIev',-1,8)
+    call SaveInteger(IC_Data,'AIh2',0,'acas')
+    call SaveInteger(IC_Data,'AIh2',1,2)
+    call SaveStr(IC_Data,'AIh2',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIh2',4,'adur')
+    call SaveInteger(IC_Data,'AIh2',5,2)
+    call SaveStr(IC_Data,'AIh2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIh2',8,'ahdu')
+    call SaveInteger(IC_Data,'AIh2',9,2)
+    call SaveStr(IC_Data,'AIh2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIh2',12,'acdn')
+    call SaveInteger(IC_Data,'AIh2',13,2)
+    call SaveStr(IC_Data,'AIh2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIh2',16,'amcs')
+    call SaveInteger(IC_Data,'AIh2',17,1)
+    call SaveStr(IC_Data,'AIh2',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIh2',20,'aran')
+    call SaveInteger(IC_Data,'AIh2',21,2)
+    call SaveStr(IC_Data,'AIh2',22,"Cast range")
+    call SaveInteger(IC_Data,'AIh2',24,'Ihpg')
+    call SaveInteger(IC_Data,'AIh2',25,1)
+    call SaveStr(IC_Data,'AIh2',26,"Hit Points Gained")
+    call SaveInteger(IC_Data,'AIh2',28,'aare')
+    call SaveInteger(IC_Data,'AIh2',29,2)
+    call SaveStr(IC_Data,'AIh2',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIh2',-1,8)
+    call SaveInteger(IC_Data,'AIhw',0,'acas')
+    call SaveInteger(IC_Data,'AIhw',1,2)
+    call SaveStr(IC_Data,'AIhw',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIhw',4,'adur')
+    call SaveInteger(IC_Data,'AIhw',5,2)
+    call SaveStr(IC_Data,'AIhw',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIhw',8,'ahdu')
+endfunction
+
+function IC_Data45 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AIhw',9,2)
+    call SaveStr(IC_Data,'AIhw',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIhw',12,'acdn')
+    call SaveInteger(IC_Data,'AIhw',13,2)
+    call SaveStr(IC_Data,'AIhw',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIhw',16,'amcs')
+    call SaveInteger(IC_Data,'AIhw',17,1)
+    call SaveStr(IC_Data,'AIhw',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIhw',20,'aran')
+    call SaveInteger(IC_Data,'AIhw',21,2)
+    call SaveStr(IC_Data,'AIhw',22,"Cast range")
+    call SaveInteger(IC_Data,'AIhw',24,'hwdu')
+    call SaveInteger(IC_Data,'AIhw',25,1)
+    call SaveStr(IC_Data,'AIhw',26,"Ward Unit Type")
+    call SaveInteger(IC_Data,'AIhw',28,'aare')
+    call SaveInteger(IC_Data,'AIhw',29,2)
+    call SaveStr(IC_Data,'AIhw',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIhw',-1,8)
+    call SaveInteger(IC_Data,'AIi4',0,'acas')
+    call SaveInteger(IC_Data,'AIi4',1,2)
+    call SaveStr(IC_Data,'AIi4',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIi4',4,'adur')
+    call SaveInteger(IC_Data,'AIi4',5,2)
+    call SaveStr(IC_Data,'AIi4',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIi4',8,'ahdu')
+    call SaveInteger(IC_Data,'AIi4',9,2)
+    call SaveStr(IC_Data,'AIi4',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIi4',12,'acdn')
+    call SaveInteger(IC_Data,'AIi4',13,2)
+    call SaveStr(IC_Data,'AIi4',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIi4',16,'amcs')
+    call SaveInteger(IC_Data,'AIi4',17,1)
+    call SaveStr(IC_Data,'AIi4',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIi4',20,'Iagi')
+    call SaveInteger(IC_Data,'AIi4',21,1)
+    call SaveStr(IC_Data,'AIi4',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIi4',24,'Iint')
+    call SaveInteger(IC_Data,'AIi4',25,1)
+    call SaveStr(IC_Data,'AIi4',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIi4',28,'Istr')
+    call SaveInteger(IC_Data,'AIi4',29,1)
+    call SaveStr(IC_Data,'AIi4',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'AIi4',32,'aare')
+    call SaveInteger(IC_Data,'AIi4',33,2)
+    call SaveStr(IC_Data,'AIi4',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIi4',36,'aran')
+    call SaveInteger(IC_Data,'AIi4',37,2)
+    call SaveStr(IC_Data,'AIi4',38,"Cast range")
+    call SaveInteger(IC_Data,'AIi4',-1,10)
+    call SaveInteger(IC_Data,'AIi6',0,'acas')
+    call SaveInteger(IC_Data,'AIi6',1,2)
+    call SaveStr(IC_Data,'AIi6',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIi6',4,'adur')
+    call SaveInteger(IC_Data,'AIi6',5,2)
+    call SaveStr(IC_Data,'AIi6',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIi6',8,'ahdu')
+    call SaveInteger(IC_Data,'AIi6',9,2)
+    call SaveStr(IC_Data,'AIi6',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIi6',12,'acdn')
+    call SaveInteger(IC_Data,'AIi6',13,2)
+    call SaveStr(IC_Data,'AIi6',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIi6',16,'amcs')
+    call SaveInteger(IC_Data,'AIi6',17,1)
+    call SaveStr(IC_Data,'AIi6',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIi6',20,'Iagi')
+    call SaveInteger(IC_Data,'AIi6',21,1)
+    call SaveStr(IC_Data,'AIi6',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIi6',24,'Iint')
+    call SaveInteger(IC_Data,'AIi6',25,1)
+    call SaveStr(IC_Data,'AIi6',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIi6',28,'Istr')
+    call SaveInteger(IC_Data,'AIi6',29,1)
+    call SaveStr(IC_Data,'AIi6',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'AIi6',32,'aare')
+    call SaveInteger(IC_Data,'AIi6',33,2)
+    call SaveStr(IC_Data,'AIi6',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIi6',36,'aran')
+    call SaveInteger(IC_Data,'AIi6',37,2)
+    call SaveStr(IC_Data,'AIi6',38,"Cast range")
+    call SaveInteger(IC_Data,'AIi6',-1,10)
+    call SaveInteger(IC_Data,'AIil',0,'acas')
+    call SaveInteger(IC_Data,'AIil',1,2)
+    call SaveStr(IC_Data,'AIil',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIil',4,'adur')
+    call SaveInteger(IC_Data,'AIil',5,2)
+    call SaveStr(IC_Data,'AIil',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIil',8,'ahdu')
+    call SaveInteger(IC_Data,'AIil',9,2)
+    call SaveStr(IC_Data,'AIil',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIil',12,'acdn')
+    call SaveInteger(IC_Data,'AIil',13,2)
+    call SaveStr(IC_Data,'AIil',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIil',16,'amcs')
+    call SaveInteger(IC_Data,'AIil',17,1)
+    call SaveStr(IC_Data,'AIil',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIil',20,'aare')
+    call SaveInteger(IC_Data,'AIil',21,2)
+    call SaveStr(IC_Data,'AIil',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIil',24,'aran')
+    call SaveInteger(IC_Data,'AIil',25,2)
+    call SaveStr(IC_Data,'AIil',26,"Cast range")
+    call SaveInteger(IC_Data,'AIil',28,'Iild')
+    call SaveInteger(IC_Data,'AIil',29,2)
+    call SaveStr(IC_Data,'AIil',30,"Damage Dealt (% of normal)")
+    call SaveBoolean(IC_Data,'AIil',31,true)
+    call SaveInteger(IC_Data,'AIil',32,'Iilw')
+    call SaveInteger(IC_Data,'AIil',33,2)
+    call SaveStr(IC_Data,'AIil',34,"Damage Received Multiplier")
+    call SaveInteger(IC_Data,'AIil',-1,9)
+    call SaveInteger(IC_Data,'AIlb',0,'acas')
+    call SaveInteger(IC_Data,'AIlb',1,2)
+    call SaveStr(IC_Data,'AIlb',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIlb',4,'adur')
+    call SaveInteger(IC_Data,'AIlb',5,2)
+    call SaveStr(IC_Data,'AIlb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIlb',8,'ahdu')
+    call SaveInteger(IC_Data,'AIlb',9,2)
+    call SaveStr(IC_Data,'AIlb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIlb',12,'acdn')
+    call SaveInteger(IC_Data,'AIlb',13,2)
+    call SaveStr(IC_Data,'AIlb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIlb',16,'amcs')
+    call SaveInteger(IC_Data,'AIlb',17,1)
+    call SaveStr(IC_Data,'AIlb',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIlb',20,'Idic')
+    call SaveInteger(IC_Data,'AIlb',21,1)
+    call SaveStr(IC_Data,'AIlb',22,"Damage Bonus Dice")
+    call SaveInteger(IC_Data,'AIlb',24,'Idam')
+    call SaveInteger(IC_Data,'AIlb',25,2)
+    call SaveStr(IC_Data,'AIlb',26,"Damage Bonus")
+    call SaveInteger(IC_Data,'AIlb',28,'Iob5')
+    call SaveInteger(IC_Data,'AIlb',29,1)
+    call SaveStr(IC_Data,'AIlb',30,"Enabled Attack Index")
+    call SaveInteger(IC_Data,'AIlb',32,'aare')
+    call SaveInteger(IC_Data,'AIlb',33,2)
+    call SaveStr(IC_Data,'AIlb',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIlb',36,'aran')
+    call SaveInteger(IC_Data,'AIlb',37,2)
+    call SaveStr(IC_Data,'AIlb',38,"Cast range")
+    call SaveInteger(IC_Data,'AIlb',-1,10)
+    call SaveInteger(IC_Data,'AIlm',0,'acas')
+    call SaveInteger(IC_Data,'AIlm',1,2)
+    call SaveStr(IC_Data,'AIlm',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIlm',4,'adur')
+    call SaveInteger(IC_Data,'AIlm',5,2)
+    call SaveStr(IC_Data,'AIlm',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIlm',8,'ahdu')
+    call SaveInteger(IC_Data,'AIlm',9,2)
+    call SaveStr(IC_Data,'AIlm',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIlm',12,'acdn')
+    call SaveInteger(IC_Data,'AIlm',13,2)
+    call SaveStr(IC_Data,'AIlm',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIlm',16,'amcs')
+    call SaveInteger(IC_Data,'AIlm',17,1)
+    call SaveStr(IC_Data,'AIlm',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIlm',20,'Ilev')
+    call SaveInteger(IC_Data,'AIlm',21,1)
+    call SaveStr(IC_Data,'AIlm',22,"Levels Gained")
+    call SaveInteger(IC_Data,'AIlm',24,'aare')
+    call SaveInteger(IC_Data,'AIlm',25,2)
+endfunction
+
+function IC_Data46 takes nothing returns nothing
+    call SaveStr(IC_Data,'AIlm',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIlm',28,'aran')
+    call SaveInteger(IC_Data,'AIlm',29,2)
+    call SaveStr(IC_Data,'AIlm',30,"Cast range")
+    call SaveInteger(IC_Data,'AIlm',-1,8)
+    call SaveInteger(IC_Data,'AIlp',0,'acas')
+    call SaveInteger(IC_Data,'AIlp',1,2)
+    call SaveStr(IC_Data,'AIlp',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIlp',4,'adur')
+    call SaveInteger(IC_Data,'AIlp',5,2)
+    call SaveStr(IC_Data,'AIlp',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIlp',8,'ahdu')
+    call SaveInteger(IC_Data,'AIlp',9,2)
+    call SaveStr(IC_Data,'AIlp',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIlp',12,'acdn')
+    call SaveInteger(IC_Data,'AIlp',13,2)
+    call SaveStr(IC_Data,'AIlp',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIlp',16,'amcs')
+    call SaveInteger(IC_Data,'AIlp',17,1)
+    call SaveStr(IC_Data,'AIlp',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIlp',20,'Prg1')
+    call SaveInteger(IC_Data,'AIlp',21,1)
+    call SaveStr(IC_Data,'AIlp',22,"Movement Update Frequency")
+    call SaveInteger(IC_Data,'AIlp',24,'Prg2')
+    call SaveInteger(IC_Data,'AIlp',25,1)
+    call SaveStr(IC_Data,'AIlp',26,"Attack Update Frequency")
+    call SaveInteger(IC_Data,'AIlp',28,'Prg3')
+    call SaveInteger(IC_Data,'AIlp',29,2)
+    call SaveStr(IC_Data,'AIlp',30,"Summoned Unit Damage")
+    call SaveInteger(IC_Data,'AIlp',32,'Prg4')
+    call SaveInteger(IC_Data,'AIlp',33,2)
+    call SaveStr(IC_Data,'AIlp',34,"Unit Pause Duration")
+    call SaveInteger(IC_Data,'AIlp',36,'Prg5')
+    call SaveInteger(IC_Data,'AIlp',37,2)
+    call SaveStr(IC_Data,'AIlp',38,"Hero Pause Duration")
+    call SaveInteger(IC_Data,'AIlp',40,'Prg6')
+    call SaveInteger(IC_Data,'AIlp',41,1)
+    call SaveStr(IC_Data,'AIlp',42,"Mana Loss")
+    call SaveInteger(IC_Data,'AIlp',44,'aare')
+    call SaveInteger(IC_Data,'AIlp',45,2)
+    call SaveStr(IC_Data,'AIlp',46,"Area of effect")
+    call SaveInteger(IC_Data,'AIlp',48,'aran')
+    call SaveInteger(IC_Data,'AIlp',49,2)
+    call SaveStr(IC_Data,'AIlp',50,"Cast range")
+    call SaveInteger(IC_Data,'AIlp',-1,13)
+    call SaveInteger(IC_Data,'AIm2',0,'acas')
+    call SaveInteger(IC_Data,'AIm2',1,2)
+    call SaveStr(IC_Data,'AIm2',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIm2',4,'adur')
+    call SaveInteger(IC_Data,'AIm2',5,2)
+    call SaveStr(IC_Data,'AIm2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIm2',8,'ahdu')
+    call SaveInteger(IC_Data,'AIm2',9,2)
+    call SaveStr(IC_Data,'AIm2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIm2',12,'acdn')
+    call SaveInteger(IC_Data,'AIm2',13,2)
+    call SaveStr(IC_Data,'AIm2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIm2',16,'amcs')
+    call SaveInteger(IC_Data,'AIm2',17,1)
+    call SaveStr(IC_Data,'AIm2',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIm2',20,'aran')
+    call SaveInteger(IC_Data,'AIm2',21,2)
+    call SaveStr(IC_Data,'AIm2',22,"Cast range")
+    call SaveInteger(IC_Data,'AIm2',24,'Impg')
+    call SaveInteger(IC_Data,'AIm2',25,1)
+    call SaveStr(IC_Data,'AIm2',26,"Mana Points Gained")
+    call SaveInteger(IC_Data,'AIm2',28,'aare')
+    call SaveInteger(IC_Data,'AIm2',29,2)
+    call SaveStr(IC_Data,'AIm2',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIm2',-1,8)
+    call SaveInteger(IC_Data,'AIms',0,'acas')
+    call SaveInteger(IC_Data,'AIms',1,2)
+    call SaveStr(IC_Data,'AIms',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIms',4,'adur')
+    call SaveInteger(IC_Data,'AIms',5,2)
+    call SaveStr(IC_Data,'AIms',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIms',8,'ahdu')
+    call SaveInteger(IC_Data,'AIms',9,2)
+    call SaveStr(IC_Data,'AIms',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIms',12,'acdn')
+    call SaveInteger(IC_Data,'AIms',13,2)
+    call SaveStr(IC_Data,'AIms',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIms',16,'amcs')
+    call SaveInteger(IC_Data,'AIms',17,1)
+    call SaveStr(IC_Data,'AIms',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIms',20,'Imvb')
+    call SaveInteger(IC_Data,'AIms',21,1)
+    call SaveStr(IC_Data,'AIms',22,"Movement Speed Bonus")
+    call SaveInteger(IC_Data,'AIms',24,'aare')
+    call SaveInteger(IC_Data,'AIms',25,2)
+    call SaveStr(IC_Data,'AIms',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIms',28,'aran')
+    call SaveInteger(IC_Data,'AIms',29,2)
+    call SaveStr(IC_Data,'AIms',30,"Cast range")
+    call SaveInteger(IC_Data,'AIms',-1,8)
+    call SaveInteger(IC_Data,'AImt',0,'acas')
+    call SaveInteger(IC_Data,'AImt',1,2)
+    call SaveStr(IC_Data,'AImt',2,"Casting Time")
+    call SaveInteger(IC_Data,'AImt',4,'adur')
+    call SaveInteger(IC_Data,'AImt',5,2)
+    call SaveStr(IC_Data,'AImt',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AImt',8,'ahdu')
+    call SaveInteger(IC_Data,'AImt',9,2)
+    call SaveStr(IC_Data,'AImt',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AImt',12,'acdn')
+    call SaveInteger(IC_Data,'AImt',13,2)
+    call SaveStr(IC_Data,'AImt',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AImt',16,'amcs')
+    call SaveInteger(IC_Data,'AImt',17,1)
+    call SaveStr(IC_Data,'AImt',18,"Mana cost")
+    call SaveInteger(IC_Data,'AImt',20,'aare')
+    call SaveInteger(IC_Data,'AImt',21,2)
+    call SaveStr(IC_Data,'AImt',22,"Area of effect")
+    call SaveInteger(IC_Data,'AImt',24,'aran')
+    call SaveInteger(IC_Data,'AImt',25,2)
+    call SaveStr(IC_Data,'AImt',26,"Cast range")
+    call SaveInteger(IC_Data,'AImt',28,'Hmt1')
+    call SaveInteger(IC_Data,'AImt',29,1)
+    call SaveStr(IC_Data,'AImt',30,"Number of Units Teleported")
+    call SaveInteger(IC_Data,'AImt',32,'Hmt2')
+    call SaveInteger(IC_Data,'AImt',33,2)
+    call SaveStr(IC_Data,'AImt',34,"Casting Delay")
+    call SaveInteger(IC_Data,'AImt',-1,9)
+    call SaveInteger(IC_Data,'AImx',0,'acas')
+    call SaveInteger(IC_Data,'AImx',1,2)
+    call SaveStr(IC_Data,'AImx',2,"Casting Time")
+    call SaveInteger(IC_Data,'AImx',4,'adur')
+    call SaveInteger(IC_Data,'AImx',5,2)
+    call SaveStr(IC_Data,'AImx',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AImx',8,'ahdu')
+    call SaveInteger(IC_Data,'AImx',9,2)
+    call SaveStr(IC_Data,'AImx',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AImx',12,'acdn')
+    call SaveInteger(IC_Data,'AImx',13,2)
+    call SaveStr(IC_Data,'AImx',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AImx',16,'amcs')
+    call SaveInteger(IC_Data,'AImx',17,1)
+    call SaveStr(IC_Data,'AImx',18,"Mana cost")
+    call SaveInteger(IC_Data,'AImx',20,'mim1')
+    call SaveInteger(IC_Data,'AImx',21,2)
+    call SaveStr(IC_Data,'AImx',22,"Magic Damage Factor")
+    call SaveInteger(IC_Data,'AImx',24,'aare')
+    call SaveInteger(IC_Data,'AImx',25,2)
+    call SaveStr(IC_Data,'AImx',26,"Area of effect")
+    call SaveInteger(IC_Data,'AImx',28,'aran')
+    call SaveInteger(IC_Data,'AImx',29,2)
+    call SaveStr(IC_Data,'AImx',30,"Cast range")
+    call SaveInteger(IC_Data,'AImx',-1,8)
+    call SaveInteger(IC_Data,'AImz',0,'acas')
+    call SaveInteger(IC_Data,'AImz',1,2)
+    call SaveStr(IC_Data,'AImz',2,"Casting Time")
+    call SaveInteger(IC_Data,'AImz',4,'adur')
+    call SaveInteger(IC_Data,'AImz',5,2)
+    call SaveStr(IC_Data,'AImz',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AImz',8,'ahdu')
+    call SaveInteger(IC_Data,'AImz',9,2)
+    call SaveStr(IC_Data,'AImz',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AImz',12,'acdn')
+    call SaveInteger(IC_Data,'AImz',13,2)
+    call SaveStr(IC_Data,'AImz',14,"Cooldown (seconds)")
+endfunction
+
+function IC_Data47 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AImz',16,'amcs')
+    call SaveInteger(IC_Data,'AImz',17,1)
+    call SaveStr(IC_Data,'AImz',18,"Mana cost")
+    call SaveInteger(IC_Data,'AImz',20,'Iman')
+    call SaveInteger(IC_Data,'AImz',21,1)
+    call SaveStr(IC_Data,'AImz',22,"Max Mana Gained")
+    call SaveInteger(IC_Data,'AImz',24,'aare')
+    call SaveInteger(IC_Data,'AImz',25,2)
+    call SaveStr(IC_Data,'AImz',26,"Area of effect")
+    call SaveInteger(IC_Data,'AImz',28,'aran')
+    call SaveInteger(IC_Data,'AImz',29,2)
+    call SaveStr(IC_Data,'AImz',30,"Cast range")
+    call SaveInteger(IC_Data,'AImz',-1,8)
+    call SaveInteger(IC_Data,'AIob',0,'acas')
+    call SaveInteger(IC_Data,'AIob',1,2)
+    call SaveStr(IC_Data,'AIob',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIob',4,'adur')
+    call SaveInteger(IC_Data,'AIob',5,2)
+    call SaveStr(IC_Data,'AIob',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIob',8,'ahdu')
+    call SaveInteger(IC_Data,'AIob',9,2)
+    call SaveStr(IC_Data,'AIob',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIob',12,'acdn')
+    call SaveInteger(IC_Data,'AIob',13,2)
+    call SaveStr(IC_Data,'AIob',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIob',16,'amcs')
+    call SaveInteger(IC_Data,'AIob',17,1)
+    call SaveStr(IC_Data,'AIob',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIob',20,'Idam')
+    call SaveInteger(IC_Data,'AIob',21,2)
+    call SaveStr(IC_Data,'AIob',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'AIob',24,'Iob5')
+    call SaveInteger(IC_Data,'AIob',25,1)
+    call SaveStr(IC_Data,'AIob',26,"Enabled Attack Index")
+    call SaveInteger(IC_Data,'AIob',28,'aare')
+    call SaveInteger(IC_Data,'AIob',29,2)
+    call SaveStr(IC_Data,'AIob',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIob',32,'aran')
+    call SaveInteger(IC_Data,'AIob',33,2)
+    call SaveStr(IC_Data,'AIob',34,"Cast range")
+    call SaveInteger(IC_Data,'AIob',-1,9)
+    call SaveInteger(IC_Data,'AIpb',0,'acas')
+    call SaveInteger(IC_Data,'AIpb',1,2)
+    call SaveStr(IC_Data,'AIpb',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIpb',4,'adur')
+    call SaveInteger(IC_Data,'AIpb',5,2)
+    call SaveStr(IC_Data,'AIpb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIpb',8,'ahdu')
+    call SaveInteger(IC_Data,'AIpb',9,2)
+    call SaveStr(IC_Data,'AIpb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIpb',12,'acdn')
+    call SaveInteger(IC_Data,'AIpb',13,2)
+    call SaveStr(IC_Data,'AIpb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIpb',16,'amcs')
+    call SaveInteger(IC_Data,'AIpb',17,1)
+    call SaveStr(IC_Data,'AIpb',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIpb',20,'Idic')
+    call SaveInteger(IC_Data,'AIpb',21,1)
+    call SaveStr(IC_Data,'AIpb',22,"Damage Bonus Dice")
+    call SaveInteger(IC_Data,'AIpb',24,'Idam')
+    call SaveInteger(IC_Data,'AIpb',25,2)
+    call SaveStr(IC_Data,'AIpb',26,"Damage Bonus")
+    call SaveInteger(IC_Data,'AIpb',28,'Iob5')
+    call SaveInteger(IC_Data,'AIpb',29,1)
+    call SaveStr(IC_Data,'AIpb',30,"Enabled Attack Index")
+    call SaveInteger(IC_Data,'AIpb',32,'aare')
+    call SaveInteger(IC_Data,'AIpb',33,2)
+    call SaveStr(IC_Data,'AIpb',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIpb',36,'aran')
+    call SaveInteger(IC_Data,'AIpb',37,2)
+    call SaveStr(IC_Data,'AIpb',38,"Cast range")
+    call SaveInteger(IC_Data,'AIpb',-1,10)
+    call SaveInteger(IC_Data,'AIrc',0,'acas')
+    call SaveInteger(IC_Data,'AIrc',1,2)
+    call SaveStr(IC_Data,'AIrc',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIrc',4,'adur')
+    call SaveInteger(IC_Data,'AIrc',5,2)
+    call SaveStr(IC_Data,'AIrc',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIrc',8,'ahdu')
+    call SaveInteger(IC_Data,'AIrc',9,2)
+    call SaveStr(IC_Data,'AIrc',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIrc',12,'acdn')
+    call SaveInteger(IC_Data,'AIrc',13,2)
+    call SaveStr(IC_Data,'AIrc',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIrc',16,'amcs')
+    call SaveInteger(IC_Data,'AIrc',17,1)
+    call SaveStr(IC_Data,'AIrc',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIrc',20,'Ircd')
+    call SaveInteger(IC_Data,'AIrc',21,1)
+    call SaveStr(IC_Data,'AIrc',22,"Delay After Death (seconds)")
+    call SaveInteger(IC_Data,'AIrc',24,'irc2')
+    call SaveInteger(IC_Data,'AIrc',25,1)
+    call SaveStr(IC_Data,'AIrc',26,"Restored Life")
+    call SaveInteger(IC_Data,'AIrc',28,'irc3')
+    call SaveInteger(IC_Data,'AIrc',29,1)
+    call SaveStr(IC_Data,'AIrc',30,"Restored Mana (-1 for current)")
+    call SaveInteger(IC_Data,'AIrc',32,'aare')
+    call SaveInteger(IC_Data,'AIrc',33,2)
+    call SaveStr(IC_Data,'AIrc',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIrc',36,'aran')
+    call SaveInteger(IC_Data,'AIrc',37,2)
+    call SaveStr(IC_Data,'AIrc',38,"Cast range")
+    call SaveInteger(IC_Data,'AIrc',-1,10)
+    call SaveInteger(IC_Data,'AIre',0,'acas')
+    call SaveInteger(IC_Data,'AIre',1,2)
+    call SaveStr(IC_Data,'AIre',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIre',4,'adur')
+    call SaveInteger(IC_Data,'AIre',5,2)
+    call SaveStr(IC_Data,'AIre',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIre',8,'ahdu')
+    call SaveInteger(IC_Data,'AIre',9,2)
+    call SaveStr(IC_Data,'AIre',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIre',12,'acdn')
+    call SaveInteger(IC_Data,'AIre',13,2)
+    call SaveStr(IC_Data,'AIre',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIre',16,'amcs')
+    call SaveInteger(IC_Data,'AIre',17,1)
+    call SaveStr(IC_Data,'AIre',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIre',20,'aran')
+    call SaveInteger(IC_Data,'AIre',21,2)
+    call SaveStr(IC_Data,'AIre',22,"Cast range")
+    call SaveInteger(IC_Data,'AIre',24,'Ihps')
+    call SaveInteger(IC_Data,'AIre',25,1)
+    call SaveStr(IC_Data,'AIre',26,"Hit Points Restored")
+    call SaveInteger(IC_Data,'AIre',28,'Imps')
+    call SaveInteger(IC_Data,'AIre',29,1)
+    call SaveStr(IC_Data,'AIre',30,"Mana Points Restored")
+    call SaveInteger(IC_Data,'AIre',32,'aare')
+    call SaveInteger(IC_Data,'AIre',33,2)
+    call SaveStr(IC_Data,'AIre',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIre',-1,9)
+    call SaveInteger(IC_Data,'AIrl',0,'acas')
+    call SaveInteger(IC_Data,'AIrl',1,2)
+    call SaveStr(IC_Data,'AIrl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIrl',4,'adur')
+    call SaveInteger(IC_Data,'AIrl',5,2)
+    call SaveStr(IC_Data,'AIrl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIrl',8,'ahdu')
+    call SaveInteger(IC_Data,'AIrl',9,2)
+    call SaveStr(IC_Data,'AIrl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIrl',12,'acdn')
+    call SaveInteger(IC_Data,'AIrl',13,2)
+    call SaveStr(IC_Data,'AIrl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIrl',16,'amcs')
+    call SaveInteger(IC_Data,'AIrl',17,1)
+    call SaveStr(IC_Data,'AIrl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIrl',20,'aran')
+    call SaveInteger(IC_Data,'AIrl',21,2)
+    call SaveStr(IC_Data,'AIrl',22,"Cast range")
+    call SaveInteger(IC_Data,'AIrl',24,'irl1')
+    call SaveInteger(IC_Data,'AIrl',25,2)
+    call SaveStr(IC_Data,'AIrl',26,"Life Regenerated")
+    call SaveInteger(IC_Data,'AIrl',28,'irl2')
+    call SaveInteger(IC_Data,'AIrl',29,2)
+    call SaveStr(IC_Data,'AIrl',30,"Mana Regenerated")
+    call SaveInteger(IC_Data,'AIrl',32,'irl3')
+    call SaveInteger(IC_Data,'AIrl',33,1)
+    call SaveStr(IC_Data,'AIrl',34,"Allow When Full")
+    call SaveInteger(IC_Data,'AIrl',36,'aare')
+    call SaveInteger(IC_Data,'AIrl',37,2)
+endfunction
+
+function IC_Data48 takes nothing returns nothing
+    call SaveStr(IC_Data,'AIrl',38,"Area of effect")
+    call SaveInteger(IC_Data,'AIrl',-1,10)
+    call SaveInteger(IC_Data,'AIrm',0,'acas')
+    call SaveInteger(IC_Data,'AIrm',1,2)
+    call SaveStr(IC_Data,'AIrm',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIrm',4,'adur')
+    call SaveInteger(IC_Data,'AIrm',5,2)
+    call SaveStr(IC_Data,'AIrm',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIrm',8,'ahdu')
+    call SaveInteger(IC_Data,'AIrm',9,2)
+    call SaveStr(IC_Data,'AIrm',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIrm',12,'acdn')
+    call SaveInteger(IC_Data,'AIrm',13,2)
+    call SaveStr(IC_Data,'AIrm',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIrm',16,'amcs')
+    call SaveInteger(IC_Data,'AIrm',17,1)
+    call SaveStr(IC_Data,'AIrm',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIrm',20,'Imrp')
+    call SaveInteger(IC_Data,'AIrm',21,2)
+    call SaveStr(IC_Data,'AIrm',22,"Mana Regeneration Bonus (as fraction of normal)")
+    call SaveBoolean(IC_Data,'AIrm',23,true)
+    call SaveInteger(IC_Data,'AIrm',24,'aare')
+    call SaveInteger(IC_Data,'AIrm',25,2)
+    call SaveStr(IC_Data,'AIrm',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIrm',28,'aran')
+    call SaveInteger(IC_Data,'AIrm',29,2)
+    call SaveStr(IC_Data,'AIrm',30,"Cast range")
+    call SaveInteger(IC_Data,'AIrm',-1,8)
+    call SaveInteger(IC_Data,'AIrn',0,'acas')
+    call SaveInteger(IC_Data,'AIrn',1,2)
+    call SaveStr(IC_Data,'AIrn',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIrn',4,'adur')
+    call SaveInteger(IC_Data,'AIrn',5,2)
+    call SaveStr(IC_Data,'AIrn',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIrn',8,'ahdu')
+    call SaveInteger(IC_Data,'AIrn',9,2)
+    call SaveStr(IC_Data,'AIrn',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIrn',12,'acdn')
+    call SaveInteger(IC_Data,'AIrn',13,2)
+    call SaveStr(IC_Data,'AIrn',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIrn',16,'amcs')
+    call SaveInteger(IC_Data,'AIrn',17,1)
+    call SaveStr(IC_Data,'AIrn',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIrn',20,'Imrp')
+    call SaveInteger(IC_Data,'AIrn',21,2)
+    call SaveStr(IC_Data,'AIrn',22,"Mana Regeneration Bonus (as fraction of normal)")
+    call SaveBoolean(IC_Data,'AIrn',23,true)
+    call SaveInteger(IC_Data,'AIrn',24,'aare')
+    call SaveInteger(IC_Data,'AIrn',25,2)
+    call SaveStr(IC_Data,'AIrn',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIrn',28,'aran')
+    call SaveInteger(IC_Data,'AIrn',29,2)
+    call SaveStr(IC_Data,'AIrn',30,"Cast range")
+    call SaveInteger(IC_Data,'AIrn',-1,8)
+    call SaveInteger(IC_Data,'AIrs',0,'acas')
+    call SaveInteger(IC_Data,'AIrs',1,2)
+    call SaveStr(IC_Data,'AIrs',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIrs',4,'adur')
+    call SaveInteger(IC_Data,'AIrs',5,2)
+    call SaveStr(IC_Data,'AIrs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIrs',8,'ahdu')
+    call SaveInteger(IC_Data,'AIrs',9,2)
+    call SaveStr(IC_Data,'AIrs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIrs',12,'acdn')
+    call SaveInteger(IC_Data,'AIrs',13,2)
+    call SaveStr(IC_Data,'AIrs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIrs',16,'amcs')
+    call SaveInteger(IC_Data,'AIrs',17,1)
+    call SaveStr(IC_Data,'AIrs',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIrs',20,'aare')
+    call SaveInteger(IC_Data,'AIrs',21,2)
+    call SaveStr(IC_Data,'AIrs',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIrs',24,'aran')
+    call SaveInteger(IC_Data,'AIrs',25,2)
+    call SaveStr(IC_Data,'AIrs',26,"Cast range")
+    call SaveInteger(IC_Data,'AIrs',28,'Hre1')
+    call SaveInteger(IC_Data,'AIrs',29,1)
+    call SaveStr(IC_Data,'AIrs',30,"Number of Corpses Raised")
+    call SaveInteger(IC_Data,'AIrs',-1,8)
+    call SaveInteger(IC_Data,'AIs2',0,'acas')
+    call SaveInteger(IC_Data,'AIs2',1,2)
+    call SaveStr(IC_Data,'AIs2',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIs2',4,'adur')
+    call SaveInteger(IC_Data,'AIs2',5,2)
+    call SaveStr(IC_Data,'AIs2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIs2',8,'ahdu')
+    call SaveInteger(IC_Data,'AIs2',9,2)
+    call SaveStr(IC_Data,'AIs2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIs2',12,'acdn')
+    call SaveInteger(IC_Data,'AIs2',13,2)
+    call SaveStr(IC_Data,'AIs2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIs2',16,'amcs')
+    call SaveInteger(IC_Data,'AIs2',17,1)
+    call SaveStr(IC_Data,'AIs2',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIs2',20,'Isx1')
+    call SaveInteger(IC_Data,'AIs2',21,2)
+    call SaveStr(IC_Data,'AIs2',22,"Attack Speed Increase")
+    call SaveBoolean(IC_Data,'AIs2',23,true)
+    call SaveInteger(IC_Data,'AIs2',24,'aare')
+    call SaveInteger(IC_Data,'AIs2',25,2)
+    call SaveStr(IC_Data,'AIs2',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIs2',28,'aran')
+    call SaveInteger(IC_Data,'AIs2',29,2)
+    call SaveStr(IC_Data,'AIs2',30,"Cast range")
+    call SaveInteger(IC_Data,'AIs2',-1,8)
+    call SaveInteger(IC_Data,'AIs4',0,'acas')
+    call SaveInteger(IC_Data,'AIs4',1,2)
+    call SaveStr(IC_Data,'AIs4',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIs4',4,'adur')
+    call SaveInteger(IC_Data,'AIs4',5,2)
+    call SaveStr(IC_Data,'AIs4',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIs4',8,'ahdu')
+    call SaveInteger(IC_Data,'AIs4',9,2)
+    call SaveStr(IC_Data,'AIs4',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIs4',12,'acdn')
+    call SaveInteger(IC_Data,'AIs4',13,2)
+    call SaveStr(IC_Data,'AIs4',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIs4',16,'amcs')
+    call SaveInteger(IC_Data,'AIs4',17,1)
+    call SaveStr(IC_Data,'AIs4',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIs4',20,'Iagi')
+    call SaveInteger(IC_Data,'AIs4',21,1)
+    call SaveStr(IC_Data,'AIs4',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIs4',24,'Iint')
+    call SaveInteger(IC_Data,'AIs4',25,1)
+    call SaveStr(IC_Data,'AIs4',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIs4',28,'Istr')
+    call SaveInteger(IC_Data,'AIs4',29,1)
+    call SaveStr(IC_Data,'AIs4',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'AIs4',32,'aare')
+    call SaveInteger(IC_Data,'AIs4',33,2)
+    call SaveStr(IC_Data,'AIs4',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIs4',36,'aran')
+    call SaveInteger(IC_Data,'AIs4',37,2)
+    call SaveStr(IC_Data,'AIs4',38,"Cast range")
+    call SaveInteger(IC_Data,'AIs4',-1,10)
+    call SaveInteger(IC_Data,'AIs6',0,'acas')
+    call SaveInteger(IC_Data,'AIs6',1,2)
+    call SaveStr(IC_Data,'AIs6',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIs6',4,'adur')
+    call SaveInteger(IC_Data,'AIs6',5,2)
+    call SaveStr(IC_Data,'AIs6',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIs6',8,'ahdu')
+    call SaveInteger(IC_Data,'AIs6',9,2)
+    call SaveStr(IC_Data,'AIs6',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIs6',12,'acdn')
+    call SaveInteger(IC_Data,'AIs6',13,2)
+    call SaveStr(IC_Data,'AIs6',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIs6',16,'amcs')
+    call SaveInteger(IC_Data,'AIs6',17,1)
+    call SaveStr(IC_Data,'AIs6',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIs6',20,'Iagi')
+    call SaveInteger(IC_Data,'AIs6',21,1)
+    call SaveStr(IC_Data,'AIs6',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIs6',24,'Iint')
+    call SaveInteger(IC_Data,'AIs6',25,1)
+    call SaveStr(IC_Data,'AIs6',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIs6',28,'Istr')
+    call SaveInteger(IC_Data,'AIs6',29,1)
+    call SaveStr(IC_Data,'AIs6',30,"Strength Bonus")
+endfunction
+
+function IC_Data49 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AIs6',32,'aare')
+    call SaveInteger(IC_Data,'AIs6',33,2)
+    call SaveStr(IC_Data,'AIs6',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIs6',36,'aran')
+    call SaveInteger(IC_Data,'AIs6',37,2)
+    call SaveStr(IC_Data,'AIs6',38,"Cast range")
+    call SaveInteger(IC_Data,'AIs6',-1,10)
+    call SaveInteger(IC_Data,'AIsa',0,'acas')
+    call SaveInteger(IC_Data,'AIsa',1,2)
+    call SaveStr(IC_Data,'AIsa',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIsa',4,'adur')
+    call SaveInteger(IC_Data,'AIsa',5,2)
+    call SaveStr(IC_Data,'AIsa',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIsa',8,'ahdu')
+    call SaveInteger(IC_Data,'AIsa',9,2)
+    call SaveStr(IC_Data,'AIsa',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIsa',12,'acdn')
+    call SaveInteger(IC_Data,'AIsa',13,2)
+    call SaveStr(IC_Data,'AIsa',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIsa',16,'amcs')
+    call SaveInteger(IC_Data,'AIsa',17,1)
+    call SaveStr(IC_Data,'AIsa',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIsa',20,'aare')
+    call SaveInteger(IC_Data,'AIsa',21,2)
+    call SaveStr(IC_Data,'AIsa',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIsa',24,'Ispi')
+    call SaveInteger(IC_Data,'AIsa',25,2)
+    call SaveStr(IC_Data,'AIsa',26,"Movement Speed Increase")
+    call SaveInteger(IC_Data,'AIsa',28,'aran')
+    call SaveInteger(IC_Data,'AIsa',29,2)
+    call SaveStr(IC_Data,'AIsa',30,"Cast range")
+    call SaveInteger(IC_Data,'AIsa',-1,8)
+    call SaveInteger(IC_Data,'AIse',0,'acas')
+    call SaveInteger(IC_Data,'AIse',1,2)
+    call SaveStr(IC_Data,'AIse',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIse',4,'adur')
+    call SaveInteger(IC_Data,'AIse',5,2)
+    call SaveStr(IC_Data,'AIse',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIse',8,'ahdu')
+    call SaveInteger(IC_Data,'AIse',9,2)
+    call SaveStr(IC_Data,'AIse',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIse',12,'acdn')
+    call SaveInteger(IC_Data,'AIse',13,2)
+    call SaveStr(IC_Data,'AIse',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIse',16,'amcs')
+    call SaveInteger(IC_Data,'AIse',17,1)
+    call SaveStr(IC_Data,'AIse',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIse',20,'aare')
+    call SaveInteger(IC_Data,'AIse',21,2)
+    call SaveStr(IC_Data,'AIse',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIse',24,'aran')
+    call SaveInteger(IC_Data,'AIse',25,2)
+    call SaveStr(IC_Data,'AIse',26,"Cast range")
+    call SaveInteger(IC_Data,'AIse',28,'Nsi1')
+    call SaveInteger(IC_Data,'AIse',29,1)
+    call SaveStr(IC_Data,'AIse',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'AIse',32,'Nsi2')
+    call SaveInteger(IC_Data,'AIse',33,2)
+    call SaveStr(IC_Data,'AIse',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'AIse',35,true)
+    call SaveInteger(IC_Data,'AIse',36,'Nsi3')
+    call SaveInteger(IC_Data,'AIse',37,2)
+    call SaveStr(IC_Data,'AIse',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'AIse',40,'Nsi4')
+    call SaveInteger(IC_Data,'AIse',41,2)
+    call SaveStr(IC_Data,'AIse',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'AIse',-1,11)
+    call SaveInteger(IC_Data,'AIsl',0,'acas')
+    call SaveInteger(IC_Data,'AIsl',1,2)
+    call SaveStr(IC_Data,'AIsl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIsl',4,'adur')
+    call SaveInteger(IC_Data,'AIsl',5,2)
+    call SaveStr(IC_Data,'AIsl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIsl',8,'ahdu')
+    call SaveInteger(IC_Data,'AIsl',9,2)
+    call SaveStr(IC_Data,'AIsl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIsl',12,'acdn')
+    call SaveInteger(IC_Data,'AIsl',13,2)
+    call SaveStr(IC_Data,'AIsl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIsl',16,'amcs')
+    call SaveInteger(IC_Data,'AIsl',17,1)
+    call SaveStr(IC_Data,'AIsl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIsl',20,'aare')
+    call SaveInteger(IC_Data,'AIsl',21,2)
+    call SaveStr(IC_Data,'AIsl',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIsl',24,'irl1')
+    call SaveInteger(IC_Data,'AIsl',25,2)
+    call SaveStr(IC_Data,'AIsl',26,"Life Regenerated")
+    call SaveInteger(IC_Data,'AIsl',28,'irl2')
+    call SaveInteger(IC_Data,'AIsl',29,2)
+    call SaveStr(IC_Data,'AIsl',30,"Mana Regenerated")
+    call SaveInteger(IC_Data,'AIsl',32,'irl3')
+    call SaveInteger(IC_Data,'AIsl',33,1)
+    call SaveStr(IC_Data,'AIsl',34,"Allow When Full")
+    call SaveInteger(IC_Data,'AIsl',36,'aran')
+    call SaveInteger(IC_Data,'AIsl',37,2)
+    call SaveStr(IC_Data,'AIsl',38,"Cast range")
+    call SaveInteger(IC_Data,'AIsl',-1,10)
+    call SaveInteger(IC_Data,'AIsr',0,'acas')
+    call SaveInteger(IC_Data,'AIsr',1,2)
+    call SaveStr(IC_Data,'AIsr',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIsr',4,'adur')
+    call SaveInteger(IC_Data,'AIsr',5,2)
+    call SaveStr(IC_Data,'AIsr',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIsr',8,'ahdu')
+    call SaveInteger(IC_Data,'AIsr',9,2)
+    call SaveStr(IC_Data,'AIsr',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIsr',12,'acdn')
+    call SaveInteger(IC_Data,'AIsr',13,2)
+    call SaveStr(IC_Data,'AIsr',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIsr',16,'amcs')
+    call SaveInteger(IC_Data,'AIsr',17,1)
+    call SaveStr(IC_Data,'AIsr',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIsr',20,'isr1')
+    call SaveInteger(IC_Data,'AIsr',21,2)
+    call SaveStr(IC_Data,'AIsr',22,"Damage Bonus")
+    call SaveInteger(IC_Data,'AIsr',24,'isr2')
+    call SaveInteger(IC_Data,'AIsr',25,2)
+    call SaveStr(IC_Data,'AIsr',26,"Damage Reduction")
+    call SaveInteger(IC_Data,'AIsr',28,'aare')
+    call SaveInteger(IC_Data,'AIsr',29,2)
+    call SaveStr(IC_Data,'AIsr',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIsr',32,'aran')
+    call SaveInteger(IC_Data,'AIsr',33,2)
+    call SaveStr(IC_Data,'AIsr',34,"Cast range")
+    call SaveInteger(IC_Data,'AIsr',-1,9)
+    call SaveInteger(IC_Data,'AIsx',0,'acas')
+    call SaveInteger(IC_Data,'AIsx',1,2)
+    call SaveStr(IC_Data,'AIsx',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIsx',4,'adur')
+    call SaveInteger(IC_Data,'AIsx',5,2)
+    call SaveStr(IC_Data,'AIsx',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIsx',8,'ahdu')
+    call SaveInteger(IC_Data,'AIsx',9,2)
+    call SaveStr(IC_Data,'AIsx',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIsx',12,'acdn')
+    call SaveInteger(IC_Data,'AIsx',13,2)
+    call SaveStr(IC_Data,'AIsx',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIsx',16,'amcs')
+    call SaveInteger(IC_Data,'AIsx',17,1)
+    call SaveStr(IC_Data,'AIsx',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIsx',20,'Isx1')
+    call SaveInteger(IC_Data,'AIsx',21,2)
+    call SaveStr(IC_Data,'AIsx',22,"Attack Speed Increase")
+    call SaveBoolean(IC_Data,'AIsx',23,true)
+    call SaveInteger(IC_Data,'AIsx',24,'aare')
+    call SaveInteger(IC_Data,'AIsx',25,2)
+    call SaveStr(IC_Data,'AIsx',26,"Area of effect")
+    call SaveInteger(IC_Data,'AIsx',28,'aran')
+    call SaveInteger(IC_Data,'AIsx',29,2)
+    call SaveStr(IC_Data,'AIsx',30,"Cast range")
+    call SaveInteger(IC_Data,'AIsx',-1,8)
+    call SaveInteger(IC_Data,'AItb',0,'acas')
+    call SaveInteger(IC_Data,'AItb',1,2)
+    call SaveStr(IC_Data,'AItb',2,"Casting Time")
+    call SaveInteger(IC_Data,'AItb',4,'adur')
+    call SaveInteger(IC_Data,'AItb',5,2)
+    call SaveStr(IC_Data,'AItb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AItb',8,'ahdu')
+    call SaveInteger(IC_Data,'AItb',9,2)
+endfunction
+
+function IC_Data50 takes nothing returns nothing
+    call SaveStr(IC_Data,'AItb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AItb',12,'acdn')
+    call SaveInteger(IC_Data,'AItb',13,2)
+    call SaveStr(IC_Data,'AItb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AItb',16,'amcs')
+    call SaveInteger(IC_Data,'AItb',17,1)
+    call SaveStr(IC_Data,'AItb',18,"Mana cost")
+    call SaveInteger(IC_Data,'AItb',20,'aare')
+    call SaveInteger(IC_Data,'AItb',21,2)
+    call SaveStr(IC_Data,'AItb',22,"Area of effect")
+    call SaveInteger(IC_Data,'AItb',24,'Det1')
+    call SaveInteger(IC_Data,'AItb',25,1)
+    call SaveStr(IC_Data,'AItb',26,"Detection Type")
+    call SaveInteger(IC_Data,'AItb',28,'aran')
+    call SaveInteger(IC_Data,'AItb',29,2)
+    call SaveStr(IC_Data,'AItb',30,"Cast range")
+    call SaveInteger(IC_Data,'AItb',-1,8)
+    call SaveInteger(IC_Data,'AItj',0,'acas')
+    call SaveInteger(IC_Data,'AItj',1,2)
+    call SaveStr(IC_Data,'AItj',2,"Casting Time")
+    call SaveInteger(IC_Data,'AItj',4,'adur')
+    call SaveInteger(IC_Data,'AItj',5,2)
+    call SaveStr(IC_Data,'AItj',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AItj',8,'ahdu')
+    call SaveInteger(IC_Data,'AItj',9,2)
+    call SaveStr(IC_Data,'AItj',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AItj',12,'acdn')
+    call SaveInteger(IC_Data,'AItj',13,2)
+    call SaveStr(IC_Data,'AItj',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AItj',16,'amcs')
+    call SaveInteger(IC_Data,'AItj',17,1)
+    call SaveStr(IC_Data,'AItj',18,"Mana cost")
+    call SaveInteger(IC_Data,'AItj',20,'Iatt')
+    call SaveInteger(IC_Data,'AItj',21,1)
+    call SaveStr(IC_Data,'AItj',22,"Attack Bonus")
+    call SaveInteger(IC_Data,'AItj',24,'aare')
+    call SaveInteger(IC_Data,'AItj',25,2)
+    call SaveStr(IC_Data,'AItj',26,"Area of effect")
+    call SaveInteger(IC_Data,'AItj',28,'aran')
+    call SaveInteger(IC_Data,'AItj',29,2)
+    call SaveStr(IC_Data,'AItj',30,"Cast range")
+    call SaveInteger(IC_Data,'AItj',-1,8)
+    call SaveInteger(IC_Data,'AItp',0,'acas')
+    call SaveInteger(IC_Data,'AItp',1,2)
+    call SaveStr(IC_Data,'AItp',2,"Casting Time")
+    call SaveInteger(IC_Data,'AItp',4,'adur')
+    call SaveInteger(IC_Data,'AItp',5,2)
+    call SaveStr(IC_Data,'AItp',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AItp',8,'ahdu')
+    call SaveInteger(IC_Data,'AItp',9,2)
+    call SaveStr(IC_Data,'AItp',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AItp',12,'acdn')
+    call SaveInteger(IC_Data,'AItp',13,2)
+    call SaveStr(IC_Data,'AItp',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AItp',16,'amcs')
+    call SaveInteger(IC_Data,'AItp',17,1)
+    call SaveStr(IC_Data,'AItp',18,"Mana cost")
+    call SaveInteger(IC_Data,'AItp',20,'aare')
+    call SaveInteger(IC_Data,'AItp',21,2)
+    call SaveStr(IC_Data,'AItp',22,"Area of effect")
+    call SaveInteger(IC_Data,'AItp',24,'aran')
+    call SaveInteger(IC_Data,'AItp',25,2)
+    call SaveStr(IC_Data,'AItp',26,"Cast range")
+    call SaveInteger(IC_Data,'AItp',28,'Itpm')
+    call SaveInteger(IC_Data,'AItp',29,1)
+    call SaveStr(IC_Data,'AItp',30,"Maximum Number of Units")
+    call SaveInteger(IC_Data,'AItp',-1,8)
+    call SaveInteger(IC_Data,'AIv1',0,'acas')
+    call SaveInteger(IC_Data,'AIv1',1,2)
+    call SaveStr(IC_Data,'AIv1',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIv1',4,'adur')
+    call SaveInteger(IC_Data,'AIv1',5,2)
+    call SaveStr(IC_Data,'AIv1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIv1',8,'ahdu')
+    call SaveInteger(IC_Data,'AIv1',9,2)
+    call SaveStr(IC_Data,'AIv1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIv1',12,'acdn')
+    call SaveInteger(IC_Data,'AIv1',13,2)
+    call SaveStr(IC_Data,'AIv1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIv1',16,'amcs')
+    call SaveInteger(IC_Data,'AIv1',17,1)
+    call SaveStr(IC_Data,'AIv1',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIv1',20,'aare')
+    call SaveInteger(IC_Data,'AIv1',21,2)
+    call SaveStr(IC_Data,'AIv1',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIv1',24,'aran')
+    call SaveInteger(IC_Data,'AIv1',25,2)
+    call SaveStr(IC_Data,'AIv1',26,"Cast range")
+    call SaveInteger(IC_Data,'AIv1',-1,7)
+    call SaveInteger(IC_Data,'AIva',0,'acas')
+    call SaveInteger(IC_Data,'AIva',1,2)
+    call SaveStr(IC_Data,'AIva',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIva',4,'adur')
+    call SaveInteger(IC_Data,'AIva',5,2)
+    call SaveStr(IC_Data,'AIva',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIva',8,'ahdu')
+    call SaveInteger(IC_Data,'AIva',9,2)
+    call SaveStr(IC_Data,'AIva',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIva',12,'acdn')
+    call SaveInteger(IC_Data,'AIva',13,2)
+    call SaveStr(IC_Data,'AIva',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIva',16,'amcs')
+    call SaveInteger(IC_Data,'AIva',17,1)
+    call SaveStr(IC_Data,'AIva',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIva',20,'aran')
+    call SaveInteger(IC_Data,'AIva',21,2)
+    call SaveStr(IC_Data,'AIva',22,"Cast range")
+    call SaveInteger(IC_Data,'AIva',24,'Ivam')
+    call SaveInteger(IC_Data,'AIva',25,2)
+    call SaveStr(IC_Data,'AIva',26,"Life Stolen Per Attack")
+    call SaveBoolean(IC_Data,'AIva',27,true)
+    call SaveInteger(IC_Data,'AIva',28,'aare')
+    call SaveInteger(IC_Data,'AIva',29,2)
+    call SaveStr(IC_Data,'AIva',30,"Area of effect")
+    call SaveInteger(IC_Data,'AIva',-1,8)
+    call SaveInteger(IC_Data,'AIvl',0,'acas')
+    call SaveInteger(IC_Data,'AIvl',1,2)
+    call SaveStr(IC_Data,'AIvl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIvl',4,'adur')
+    call SaveInteger(IC_Data,'AIvl',5,2)
+    call SaveStr(IC_Data,'AIvl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIvl',8,'ahdu')
+    call SaveInteger(IC_Data,'AIvl',9,2)
+    call SaveStr(IC_Data,'AIvl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIvl',12,'acdn')
+    call SaveInteger(IC_Data,'AIvl',13,2)
+    call SaveStr(IC_Data,'AIvl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIvl',16,'amcs')
+    call SaveInteger(IC_Data,'AIvl',17,1)
+    call SaveStr(IC_Data,'AIvl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIvl',20,'aare')
+    call SaveInteger(IC_Data,'AIvl',21,2)
+    call SaveStr(IC_Data,'AIvl',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIvl',24,'aran')
+    call SaveInteger(IC_Data,'AIvl',25,2)
+    call SaveStr(IC_Data,'AIvl',26,"Cast range")
+    call SaveInteger(IC_Data,'AIvl',-1,7)
+    call SaveInteger(IC_Data,'AIvu',0,'acas')
+    call SaveInteger(IC_Data,'AIvu',1,2)
+    call SaveStr(IC_Data,'AIvu',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIvu',4,'adur')
+    call SaveInteger(IC_Data,'AIvu',5,2)
+    call SaveStr(IC_Data,'AIvu',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIvu',8,'ahdu')
+    call SaveInteger(IC_Data,'AIvu',9,2)
+    call SaveStr(IC_Data,'AIvu',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIvu',12,'acdn')
+    call SaveInteger(IC_Data,'AIvu',13,2)
+    call SaveStr(IC_Data,'AIvu',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIvu',16,'amcs')
+    call SaveInteger(IC_Data,'AIvu',17,1)
+    call SaveStr(IC_Data,'AIvu',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIvu',20,'aare')
+    call SaveInteger(IC_Data,'AIvu',21,2)
+    call SaveStr(IC_Data,'AIvu',22,"Area of effect")
+    call SaveInteger(IC_Data,'AIvu',24,'aran')
+    call SaveInteger(IC_Data,'AIvu',25,2)
+    call SaveStr(IC_Data,'AIvu',26,"Cast range")
+    call SaveInteger(IC_Data,'AIvu',-1,7)
+    call SaveInteger(IC_Data,'AIx2',0,'acas')
+endfunction
+
+function IC_Data51 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AIx2',1,2)
+    call SaveStr(IC_Data,'AIx2',2,"Casting Time")
+    call SaveInteger(IC_Data,'AIx2',4,'adur')
+    call SaveInteger(IC_Data,'AIx2',5,2)
+    call SaveStr(IC_Data,'AIx2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AIx2',8,'ahdu')
+    call SaveInteger(IC_Data,'AIx2',9,2)
+    call SaveStr(IC_Data,'AIx2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AIx2',12,'acdn')
+    call SaveInteger(IC_Data,'AIx2',13,2)
+    call SaveStr(IC_Data,'AIx2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AIx2',16,'amcs')
+    call SaveInteger(IC_Data,'AIx2',17,1)
+    call SaveStr(IC_Data,'AIx2',18,"Mana cost")
+    call SaveInteger(IC_Data,'AIx2',20,'Iagi')
+    call SaveInteger(IC_Data,'AIx2',21,1)
+    call SaveStr(IC_Data,'AIx2',22,"Agility Bonus")
+    call SaveInteger(IC_Data,'AIx2',24,'Iint')
+    call SaveInteger(IC_Data,'AIx2',25,1)
+    call SaveStr(IC_Data,'AIx2',26,"Intelligence Bonus")
+    call SaveInteger(IC_Data,'AIx2',28,'Istr')
+    call SaveInteger(IC_Data,'AIx2',29,1)
+    call SaveStr(IC_Data,'AIx2',30,"Strength Bonus")
+    call SaveInteger(IC_Data,'AIx2',32,'aare')
+    call SaveInteger(IC_Data,'AIx2',33,2)
+    call SaveStr(IC_Data,'AIx2',34,"Area of effect")
+    call SaveInteger(IC_Data,'AIx2',36,'aran')
+    call SaveInteger(IC_Data,'AIx2',37,2)
+    call SaveStr(IC_Data,'AIx2',38,"Cast range")
+    call SaveInteger(IC_Data,'AIx2',-1,10)
+    call SaveInteger(IC_Data,'ANab',0,'acas')
+    call SaveInteger(IC_Data,'ANab',1,2)
+    call SaveStr(IC_Data,'ANab',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANab',4,'adur')
+    call SaveInteger(IC_Data,'ANab',5,2)
+    call SaveStr(IC_Data,'ANab',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANab',8,'ahdu')
+    call SaveInteger(IC_Data,'ANab',9,2)
+    call SaveStr(IC_Data,'ANab',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANab',12,'acdn')
+    call SaveInteger(IC_Data,'ANab',13,2)
+    call SaveStr(IC_Data,'ANab',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANab',16,'amcs')
+    call SaveInteger(IC_Data,'ANab',17,1)
+    call SaveStr(IC_Data,'ANab',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANab',20,'aare')
+    call SaveInteger(IC_Data,'ANab',21,2)
+    call SaveStr(IC_Data,'ANab',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANab',24,'aran')
+    call SaveInteger(IC_Data,'ANab',25,2)
+    call SaveStr(IC_Data,'ANab',26,"Cast range")
+    call SaveInteger(IC_Data,'ANab',28,'Nab1')
+    call SaveInteger(IC_Data,'ANab',29,2)
+    call SaveStr(IC_Data,'ANab',30,"Movement Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'ANab',31,true)
+    call SaveInteger(IC_Data,'ANab',32,'Nab2')
+    call SaveInteger(IC_Data,'ANab',33,2)
+    call SaveStr(IC_Data,'ANab',34,"Attack Speed Reduction (%)")
+    call SaveBoolean(IC_Data,'ANab',35,true)
+    call SaveInteger(IC_Data,'ANab',36,'Nab3')
+    call SaveInteger(IC_Data,'ANab',37,1)
+    call SaveStr(IC_Data,'ANab',38,"Armor Penalty")
+    call SaveInteger(IC_Data,'ANab',40,'Nab4')
+    call SaveInteger(IC_Data,'ANab',41,2)
+    call SaveStr(IC_Data,'ANab',42,"Primary Damage")
+    call SaveInteger(IC_Data,'ANab',44,'Nab5')
+    call SaveInteger(IC_Data,'ANab',45,2)
+    call SaveStr(IC_Data,'ANab',46,"Secondary Damage")
+    call SaveInteger(IC_Data,'ANab',48,'Nab6')
+    call SaveInteger(IC_Data,'ANab',49,2)
+    call SaveStr(IC_Data,'ANab',50,"Damage Interval")
+    call SaveInteger(IC_Data,'ANab',-1,13)
+    call SaveInteger(IC_Data,'ANbf',0,'acas')
+    call SaveInteger(IC_Data,'ANbf',1,2)
+    call SaveStr(IC_Data,'ANbf',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANbf',4,'adur')
+    call SaveInteger(IC_Data,'ANbf',5,2)
+    call SaveStr(IC_Data,'ANbf',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANbf',8,'ahdu')
+    call SaveInteger(IC_Data,'ANbf',9,2)
+    call SaveStr(IC_Data,'ANbf',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANbf',12,'acdn')
+    call SaveInteger(IC_Data,'ANbf',13,2)
+    call SaveStr(IC_Data,'ANbf',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANbf',16,'amcs')
+    call SaveInteger(IC_Data,'ANbf',17,1)
+    call SaveStr(IC_Data,'ANbf',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANbf',20,'aare')
+    call SaveInteger(IC_Data,'ANbf',21,2)
+    call SaveStr(IC_Data,'ANbf',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANbf',24,'aran')
+    call SaveInteger(IC_Data,'ANbf',25,2)
+    call SaveStr(IC_Data,'ANbf',26,"Cast range")
+    call SaveInteger(IC_Data,'ANbf',28,'Ucs1')
+    call SaveInteger(IC_Data,'ANbf',29,2)
+    call SaveStr(IC_Data,'ANbf',30,"Damage")
+    call SaveInteger(IC_Data,'ANbf',32,'Ucs2')
+    call SaveInteger(IC_Data,'ANbf',33,2)
+    call SaveStr(IC_Data,'ANbf',34,"Max Damage")
+    call SaveInteger(IC_Data,'ANbf',36,'Ucs3')
+    call SaveInteger(IC_Data,'ANbf',37,2)
+    call SaveStr(IC_Data,'ANbf',38,"Distance")
+    call SaveInteger(IC_Data,'ANbf',40,'Ucs4')
+    call SaveInteger(IC_Data,'ANbf',41,2)
+    call SaveStr(IC_Data,'ANbf',42,"Final Area")
+    call SaveInteger(IC_Data,'ANbf',44,'Nbf5')
+    call SaveInteger(IC_Data,'ANbf',45,2)
+    call SaveStr(IC_Data,'ANbf',46,"Damage Per Second")
+    call SaveInteger(IC_Data,'ANbf',-1,12)
+    call SaveInteger(IC_Data,'ANcs',0,'acas')
+    call SaveInteger(IC_Data,'ANcs',1,2)
+    call SaveStr(IC_Data,'ANcs',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANcs',4,'adur')
+    call SaveInteger(IC_Data,'ANcs',5,2)
+    call SaveStr(IC_Data,'ANcs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANcs',8,'ahdu')
+    call SaveInteger(IC_Data,'ANcs',9,2)
+    call SaveStr(IC_Data,'ANcs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANcs',12,'acdn')
+    call SaveInteger(IC_Data,'ANcs',13,2)
+    call SaveStr(IC_Data,'ANcs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANcs',16,'amcs')
+    call SaveInteger(IC_Data,'ANcs',17,1)
+    call SaveStr(IC_Data,'ANcs',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANcs',20,'aare')
+    call SaveInteger(IC_Data,'ANcs',21,2)
+    call SaveStr(IC_Data,'ANcs',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANcs',24,'aran')
+    call SaveInteger(IC_Data,'ANcs',25,2)
+    call SaveStr(IC_Data,'ANcs',26,"Cast range")
+    call SaveInteger(IC_Data,'ANcs',28,'Ncs1')
+    call SaveInteger(IC_Data,'ANcs',29,2)
+    call SaveStr(IC_Data,'ANcs',30,"Damage Amount")
+    call SaveInteger(IC_Data,'ANcs',32,'Ncs2')
+    call SaveInteger(IC_Data,'ANcs',33,2)
+    call SaveStr(IC_Data,'ANcs',34,"Damage Interval")
+    call SaveInteger(IC_Data,'ANcs',36,'Ncs3')
+    call SaveInteger(IC_Data,'ANcs',37,1)
+    call SaveStr(IC_Data,'ANcs',38,"Missile Count")
+    call SaveInteger(IC_Data,'ANcs',40,'Ncs4')
+    call SaveInteger(IC_Data,'ANcs',41,2)
+    call SaveStr(IC_Data,'ANcs',42,"Max Damage")
+    call SaveInteger(IC_Data,'ANcs',44,'Ncs5')
+    call SaveInteger(IC_Data,'ANcs',45,2)
+    call SaveStr(IC_Data,'ANcs',46,"Building Damage Factor")
+    call SaveInteger(IC_Data,'ANcs',48,'Ncs6')
+    call SaveInteger(IC_Data,'ANcs',49,2)
+    call SaveStr(IC_Data,'ANcs',50,"Effect Duration")
+    call SaveInteger(IC_Data,'ANcs',-1,13)
+    call SaveInteger(IC_Data,'ANdh',0,'acas')
+    call SaveInteger(IC_Data,'ANdh',1,2)
+    call SaveStr(IC_Data,'ANdh',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANdh',4,'adur')
+    call SaveInteger(IC_Data,'ANdh',5,2)
+    call SaveStr(IC_Data,'ANdh',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANdh',8,'ahdu')
+    call SaveInteger(IC_Data,'ANdh',9,2)
+    call SaveStr(IC_Data,'ANdh',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANdh',12,'acdn')
+    call SaveInteger(IC_Data,'ANdh',13,2)
+endfunction
+
+function IC_Data52 takes nothing returns nothing
+    call SaveStr(IC_Data,'ANdh',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANdh',16,'amcs')
+    call SaveInteger(IC_Data,'ANdh',17,1)
+    call SaveStr(IC_Data,'ANdh',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANdh',20,'aare')
+    call SaveInteger(IC_Data,'ANdh',21,2)
+    call SaveStr(IC_Data,'ANdh',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANdh',24,'aran')
+    call SaveInteger(IC_Data,'ANdh',25,2)
+    call SaveStr(IC_Data,'ANdh',26,"Cast range")
+    call SaveInteger(IC_Data,'ANdh',28,'Nsi1')
+    call SaveInteger(IC_Data,'ANdh',29,1)
+    call SaveStr(IC_Data,'ANdh',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'ANdh',32,'Nsi2')
+    call SaveInteger(IC_Data,'ANdh',33,2)
+    call SaveStr(IC_Data,'ANdh',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'ANdh',35,true)
+    call SaveInteger(IC_Data,'ANdh',36,'Nsi3')
+    call SaveInteger(IC_Data,'ANdh',37,2)
+    call SaveStr(IC_Data,'ANdh',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'ANdh',40,'Nsi4')
+    call SaveInteger(IC_Data,'ANdh',41,2)
+    call SaveStr(IC_Data,'ANdh',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'ANdh',-1,11)
+    call SaveInteger(IC_Data,'ANdo',0,'acas')
+    call SaveInteger(IC_Data,'ANdo',1,2)
+    call SaveStr(IC_Data,'ANdo',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANdo',4,'adur')
+    call SaveInteger(IC_Data,'ANdo',5,2)
+    call SaveStr(IC_Data,'ANdo',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANdo',8,'ahdu')
+    call SaveInteger(IC_Data,'ANdo',9,2)
+    call SaveStr(IC_Data,'ANdo',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANdo',12,'acdn')
+    call SaveInteger(IC_Data,'ANdo',13,2)
+    call SaveStr(IC_Data,'ANdo',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANdo',16,'amcs')
+    call SaveInteger(IC_Data,'ANdo',17,1)
+    call SaveStr(IC_Data,'ANdo',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANdo',20,'aran')
+    call SaveInteger(IC_Data,'ANdo',21,2)
+    call SaveStr(IC_Data,'ANdo',22,"Cast range")
+    call SaveInteger(IC_Data,'ANdo',24,'Ndo1')
+    call SaveInteger(IC_Data,'ANdo',25,2)
+    call SaveStr(IC_Data,'ANdo',26,"Damage Per Second")
+    call SaveInteger(IC_Data,'ANdo',28,'Ndo2')
+    call SaveInteger(IC_Data,'ANdo',29,1)
+    call SaveStr(IC_Data,'ANdo',30,"Number of Summoned Units")
+    call SaveInteger(IC_Data,'ANdo',32,'Ndo3')
+    call SaveInteger(IC_Data,'ANdo',33,2)
+    call SaveStr(IC_Data,'ANdo',34,"Summoned Unit Duration (seconds)")
+    call SaveInteger(IC_Data,'ANdo',36,'Ndou')
+    call SaveInteger(IC_Data,'ANdo',37,1)
+    call SaveStr(IC_Data,'ANdo',38,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'ANdo',40,'aare')
+    call SaveInteger(IC_Data,'ANdo',41,2)
+    call SaveStr(IC_Data,'ANdo',42,"Area of effect")
+    call SaveInteger(IC_Data,'ANdo',-1,11)
+    call SaveInteger(IC_Data,'ANfb',0,'acas')
+    call SaveInteger(IC_Data,'ANfb',1,2)
+    call SaveStr(IC_Data,'ANfb',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANfb',4,'adur')
+    call SaveInteger(IC_Data,'ANfb',5,2)
+    call SaveStr(IC_Data,'ANfb',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANfb',8,'ahdu')
+    call SaveInteger(IC_Data,'ANfb',9,2)
+    call SaveStr(IC_Data,'ANfb',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANfb',12,'acdn')
+    call SaveInteger(IC_Data,'ANfb',13,2)
+    call SaveStr(IC_Data,'ANfb',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANfb',16,'amcs')
+    call SaveInteger(IC_Data,'ANfb',17,1)
+    call SaveStr(IC_Data,'ANfb',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANfb',20,'aran')
+    call SaveInteger(IC_Data,'ANfb',21,2)
+    call SaveStr(IC_Data,'ANfb',22,"Cast range")
+    call SaveInteger(IC_Data,'ANfb',24,'Htb1')
+    call SaveInteger(IC_Data,'ANfb',25,2)
+    call SaveStr(IC_Data,'ANfb',26,"Damage")
+    call SaveInteger(IC_Data,'ANfb',28,'aare')
+    call SaveInteger(IC_Data,'ANfb',29,2)
+    call SaveStr(IC_Data,'ANfb',30,"Area of effect")
+    call SaveInteger(IC_Data,'ANfb',-1,8)
+    call SaveInteger(IC_Data,'ANfl',0,'acas')
+    call SaveInteger(IC_Data,'ANfl',1,2)
+    call SaveStr(IC_Data,'ANfl',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANfl',4,'adur')
+    call SaveInteger(IC_Data,'ANfl',5,2)
+    call SaveStr(IC_Data,'ANfl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANfl',8,'ahdu')
+    call SaveInteger(IC_Data,'ANfl',9,2)
+    call SaveStr(IC_Data,'ANfl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANfl',12,'acdn')
+    call SaveInteger(IC_Data,'ANfl',13,2)
+    call SaveStr(IC_Data,'ANfl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANfl',16,'amcs')
+    call SaveInteger(IC_Data,'ANfl',17,1)
+    call SaveStr(IC_Data,'ANfl',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANfl',20,'aare')
+    call SaveInteger(IC_Data,'ANfl',21,2)
+    call SaveStr(IC_Data,'ANfl',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANfl',24,'aran')
+    call SaveInteger(IC_Data,'ANfl',25,2)
+    call SaveStr(IC_Data,'ANfl',26,"Cast range")
+    call SaveInteger(IC_Data,'ANfl',28,'Ucs3')
+    call SaveInteger(IC_Data,'ANfl',29,2)
+    call SaveStr(IC_Data,'ANfl',30,"Distance")
+    call SaveInteger(IC_Data,'ANfl',32,'Ucs4')
+    call SaveInteger(IC_Data,'ANfl',33,2)
+    call SaveStr(IC_Data,'ANfl',34,"Final Area")
+    call SaveInteger(IC_Data,'ANfl',36,'Ocl1')
+    call SaveInteger(IC_Data,'ANfl',37,2)
+    call SaveStr(IC_Data,'ANfl',38,"Damage per Target")
+    call SaveInteger(IC_Data,'ANfl',40,'Ocl2')
+    call SaveInteger(IC_Data,'ANfl',41,1)
+    call SaveStr(IC_Data,'ANfl',42,"Number of Targets Hit")
+    call SaveInteger(IC_Data,'ANfl',-1,11)
+    call SaveInteger(IC_Data,'ANhs',0,'acas')
+    call SaveInteger(IC_Data,'ANhs',1,2)
+    call SaveStr(IC_Data,'ANhs',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANhs',4,'adur')
+    call SaveInteger(IC_Data,'ANhs',5,2)
+    call SaveStr(IC_Data,'ANhs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANhs',8,'ahdu')
+    call SaveInteger(IC_Data,'ANhs',9,2)
+    call SaveStr(IC_Data,'ANhs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANhs',12,'acdn')
+    call SaveInteger(IC_Data,'ANhs',13,2)
+    call SaveStr(IC_Data,'ANhs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANhs',16,'amcs')
+    call SaveInteger(IC_Data,'ANhs',17,1)
+    call SaveStr(IC_Data,'ANhs',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANhs',20,'aare')
+    call SaveInteger(IC_Data,'ANhs',21,2)
+    call SaveStr(IC_Data,'ANhs',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANhs',24,'aran')
+    call SaveInteger(IC_Data,'ANhs',25,2)
+    call SaveStr(IC_Data,'ANhs',26,"Cast range")
+    call SaveInteger(IC_Data,'ANhs',28,'Nhs6')
+    call SaveInteger(IC_Data,'ANhs',29,1)
+    call SaveStr(IC_Data,'ANhs',30,"Wave Count")
+    call SaveInteger(IC_Data,'ANhs',32,'Ncs1')
+    call SaveInteger(IC_Data,'ANhs',33,2)
+    call SaveStr(IC_Data,'ANhs',34,"Damage Amount")
+    call SaveInteger(IC_Data,'ANhs',36,'Ncs2')
+    call SaveInteger(IC_Data,'ANhs',37,2)
+    call SaveStr(IC_Data,'ANhs',38,"Damage Interval")
+    call SaveInteger(IC_Data,'ANhs',40,'Ncs3')
+    call SaveInteger(IC_Data,'ANhs',41,1)
+    call SaveStr(IC_Data,'ANhs',42,"Missile Count")
+    call SaveInteger(IC_Data,'ANhs',44,'Ncs4')
+    call SaveInteger(IC_Data,'ANhs',45,2)
+    call SaveStr(IC_Data,'ANhs',46,"Max Damage")
+    call SaveInteger(IC_Data,'ANhs',48,'Ncs5')
+    call SaveInteger(IC_Data,'ANhs',49,2)
+    call SaveStr(IC_Data,'ANhs',50,"Building Damage Factor")
+    call SaveInteger(IC_Data,'ANhs',-1,13)
+    call SaveInteger(IC_Data,'ANht',0,'acas')
+    call SaveInteger(IC_Data,'ANht',1,2)
+    call SaveStr(IC_Data,'ANht',2,"Casting Time")
+endfunction
+
+function IC_Data53 takes nothing returns nothing
+    call SaveInteger(IC_Data,'ANht',4,'adur')
+    call SaveInteger(IC_Data,'ANht',5,2)
+    call SaveStr(IC_Data,'ANht',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANht',8,'ahdu')
+    call SaveInteger(IC_Data,'ANht',9,2)
+    call SaveStr(IC_Data,'ANht',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANht',12,'acdn')
+    call SaveInteger(IC_Data,'ANht',13,2)
+    call SaveStr(IC_Data,'ANht',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANht',16,'amcs')
+    call SaveInteger(IC_Data,'ANht',17,1)
+    call SaveStr(IC_Data,'ANht',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANht',20,'aare')
+    call SaveInteger(IC_Data,'ANht',21,2)
+    call SaveStr(IC_Data,'ANht',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANht',24,'Roa1')
+    call SaveInteger(IC_Data,'ANht',25,2)
+    call SaveStr(IC_Data,'ANht',26,"Damage Increase (%)")
+    call SaveBoolean(IC_Data,'ANht',27,true)
+    call SaveInteger(IC_Data,'ANht',28,'Roa2')
+    call SaveInteger(IC_Data,'ANht',29,1)
+    call SaveStr(IC_Data,'ANht',30,"Defense Increase")
+    call SaveInteger(IC_Data,'ANht',32,'Roa3')
+    call SaveInteger(IC_Data,'ANht',33,2)
+    call SaveStr(IC_Data,'ANht',34,"Life Regeneration Rate")
+    call SaveInteger(IC_Data,'ANht',36,'Roa4')
+    call SaveInteger(IC_Data,'ANht',37,2)
+    call SaveStr(IC_Data,'ANht',38,"Mana Regen")
+    call SaveInteger(IC_Data,'ANht',40,'Roa7')
+    call SaveInteger(IC_Data,'ANht',41,1)
+    call SaveStr(IC_Data,'ANht',42,"Max Units")
+    call SaveInteger(IC_Data,'ANht',44,'aran')
+    call SaveInteger(IC_Data,'ANht',45,2)
+    call SaveStr(IC_Data,'ANht',46,"Cast range")
+    call SaveInteger(IC_Data,'ANht',-1,12)
+    call SaveInteger(IC_Data,'ANic',0,'acas')
+    call SaveInteger(IC_Data,'ANic',1,2)
+    call SaveStr(IC_Data,'ANic',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANic',4,'adur')
+    call SaveInteger(IC_Data,'ANic',5,2)
+    call SaveStr(IC_Data,'ANic',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANic',8,'ahdu')
+    call SaveInteger(IC_Data,'ANic',9,2)
+    call SaveStr(IC_Data,'ANic',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANic',12,'acdn')
+    call SaveInteger(IC_Data,'ANic',13,2)
+    call SaveStr(IC_Data,'ANic',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANic',16,'amcs')
+    call SaveInteger(IC_Data,'ANic',17,1)
+    call SaveStr(IC_Data,'ANic',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANic',20,'aare')
+    call SaveInteger(IC_Data,'ANic',21,2)
+    call SaveStr(IC_Data,'ANic',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANic',24,'Nic1')
+    call SaveInteger(IC_Data,'ANic',25,2)
+    call SaveStr(IC_Data,'ANic',26,"Bonus Damage Multiplier")
+    call SaveInteger(IC_Data,'ANic',28,'Nic2')
+    call SaveInteger(IC_Data,'ANic',29,2)
+    call SaveStr(IC_Data,'ANic',30,"Death Damage Full Amount")
+    call SaveInteger(IC_Data,'ANic',32,'Nic3')
+    call SaveInteger(IC_Data,'ANic',33,2)
+    call SaveStr(IC_Data,'ANic',34,"Death Damage Full Area")
+    call SaveInteger(IC_Data,'ANic',36,'Nic4')
+    call SaveInteger(IC_Data,'ANic',37,2)
+    call SaveStr(IC_Data,'ANic',38,"Death Damage Half Amount")
+    call SaveInteger(IC_Data,'ANic',40,'Nic5')
+    call SaveInteger(IC_Data,'ANic',41,2)
+    call SaveStr(IC_Data,'ANic',42,"Death Damage Half Area")
+    call SaveInteger(IC_Data,'ANic',44,'Nic6')
+    call SaveInteger(IC_Data,'ANic',45,2)
+    call SaveStr(IC_Data,'ANic',46,"Death Damage Delay")
+    call SaveInteger(IC_Data,'ANic',48,'aran')
+    call SaveInteger(IC_Data,'ANic',49,2)
+    call SaveStr(IC_Data,'ANic',50,"Cast range")
+    call SaveInteger(IC_Data,'ANic',-1,13)
+    call SaveInteger(IC_Data,'ANs1',0,'acas')
+    call SaveInteger(IC_Data,'ANs1',1,2)
+    call SaveStr(IC_Data,'ANs1',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANs1',4,'adur')
+    call SaveInteger(IC_Data,'ANs1',5,2)
+    call SaveStr(IC_Data,'ANs1',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANs1',8,'ahdu')
+    call SaveInteger(IC_Data,'ANs1',9,2)
+    call SaveStr(IC_Data,'ANs1',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANs1',12,'acdn')
+    call SaveInteger(IC_Data,'ANs1',13,2)
+    call SaveStr(IC_Data,'ANs1',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANs1',16,'amcs')
+    call SaveInteger(IC_Data,'ANs1',17,1)
+    call SaveStr(IC_Data,'ANs1',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANs1',20,'aran')
+    call SaveInteger(IC_Data,'ANs1',21,2)
+    call SaveStr(IC_Data,'ANs1',22,"Cast range")
+    call SaveInteger(IC_Data,'ANs1',24,'Nsy1')
+    call SaveInteger(IC_Data,'ANs1',25,2)
+    call SaveStr(IC_Data,'ANs1',26,"Spawn Interval")
+    call SaveInteger(IC_Data,'ANs1',28,'Nsy3')
+    call SaveInteger(IC_Data,'ANs1',29,2)
+    call SaveStr(IC_Data,'ANs1',30,"Spawn Unit Duration")
+    call SaveInteger(IC_Data,'ANs1',32,'Nsy4')
+    call SaveInteger(IC_Data,'ANs1',33,2)
+    call SaveStr(IC_Data,'ANs1',34,"Spawn Unit Offset")
+    call SaveInteger(IC_Data,'ANs1',36,'Nsy5')
+    call SaveInteger(IC_Data,'ANs1',37,2)
+    call SaveStr(IC_Data,'ANs1',38,"Leash Range")
+    call SaveInteger(IC_Data,'ANs1',40,'Nsyu')
+    call SaveInteger(IC_Data,'ANs1',41,1)
+    call SaveStr(IC_Data,'ANs1',42,"Factory Unit ID")
+    call SaveInteger(IC_Data,'ANs1',44,'aare')
+    call SaveInteger(IC_Data,'ANs1',45,2)
+    call SaveStr(IC_Data,'ANs1',46,"Area of effect")
+    call SaveInteger(IC_Data,'ANs1',-1,12)
+    call SaveInteger(IC_Data,'ANsg',0,'acas')
+    call SaveInteger(IC_Data,'ANsg',1,2)
+    call SaveStr(IC_Data,'ANsg',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANsg',4,'adur')
+    call SaveInteger(IC_Data,'ANsg',5,2)
+    call SaveStr(IC_Data,'ANsg',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANsg',8,'ahdu')
+    call SaveInteger(IC_Data,'ANsg',9,2)
+    call SaveStr(IC_Data,'ANsg',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANsg',12,'acdn')
+    call SaveInteger(IC_Data,'ANsg',13,2)
+    call SaveStr(IC_Data,'ANsg',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANsg',16,'amcs')
+    call SaveInteger(IC_Data,'ANsg',17,1)
+    call SaveStr(IC_Data,'ANsg',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANsg',20,'aare')
+    call SaveInteger(IC_Data,'ANsg',21,2)
+    call SaveStr(IC_Data,'ANsg',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANsg',24,'Hwe1')
+    call SaveInteger(IC_Data,'ANsg',25,1)
+    call SaveStr(IC_Data,'ANsg',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'ANsg',28,'Hwe2')
+    call SaveInteger(IC_Data,'ANsg',29,1)
+    call SaveStr(IC_Data,'ANsg',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'ANsg',32,'aran')
+    call SaveInteger(IC_Data,'ANsg',33,2)
+    call SaveStr(IC_Data,'ANsg',34,"Cast range")
+    call SaveInteger(IC_Data,'ANsg',-1,9)
+    call SaveInteger(IC_Data,'ANsi',0,'acas')
+    call SaveInteger(IC_Data,'ANsi',1,2)
+    call SaveStr(IC_Data,'ANsi',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANsi',4,'adur')
+    call SaveInteger(IC_Data,'ANsi',5,2)
+    call SaveStr(IC_Data,'ANsi',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANsi',8,'ahdu')
+    call SaveInteger(IC_Data,'ANsi',9,2)
+    call SaveStr(IC_Data,'ANsi',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANsi',12,'acdn')
+    call SaveInteger(IC_Data,'ANsi',13,2)
+    call SaveStr(IC_Data,'ANsi',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANsi',16,'amcs')
+    call SaveInteger(IC_Data,'ANsi',17,1)
+    call SaveStr(IC_Data,'ANsi',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANsi',20,'aare')
+    call SaveInteger(IC_Data,'ANsi',21,2)
+    call SaveStr(IC_Data,'ANsi',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANsi',24,'aran')
+    call SaveInteger(IC_Data,'ANsi',25,2)
+endfunction
+
+function IC_Data54 takes nothing returns nothing
+    call SaveStr(IC_Data,'ANsi',26,"Cast range")
+    call SaveInteger(IC_Data,'ANsi',28,'Nsi1')
+    call SaveInteger(IC_Data,'ANsi',29,1)
+    call SaveStr(IC_Data,'ANsi',30,"Attacks Prevented")
+    call SaveInteger(IC_Data,'ANsi',32,'Nsi2')
+    call SaveInteger(IC_Data,'ANsi',33,2)
+    call SaveStr(IC_Data,'ANsi',34,"Chance To Miss (%)")
+    call SaveBoolean(IC_Data,'ANsi',35,true)
+    call SaveInteger(IC_Data,'ANsi',36,'Nsi3')
+    call SaveInteger(IC_Data,'ANsi',37,2)
+    call SaveStr(IC_Data,'ANsi',38,"Movement Speed Modifier")
+    call SaveInteger(IC_Data,'ANsi',40,'Nsi4')
+    call SaveInteger(IC_Data,'ANsi',41,2)
+    call SaveStr(IC_Data,'ANsi',42,"Attack Speed Modifier")
+    call SaveInteger(IC_Data,'ANsi',-1,11)
+    call SaveInteger(IC_Data,'ANsq',0,'acas')
+    call SaveInteger(IC_Data,'ANsq',1,2)
+    call SaveStr(IC_Data,'ANsq',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANsq',4,'adur')
+    call SaveInteger(IC_Data,'ANsq',5,2)
+    call SaveStr(IC_Data,'ANsq',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANsq',8,'ahdu')
+    call SaveInteger(IC_Data,'ANsq',9,2)
+    call SaveStr(IC_Data,'ANsq',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANsq',12,'acdn')
+    call SaveInteger(IC_Data,'ANsq',13,2)
+    call SaveStr(IC_Data,'ANsq',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANsq',16,'amcs')
+    call SaveInteger(IC_Data,'ANsq',17,1)
+    call SaveStr(IC_Data,'ANsq',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANsq',20,'aare')
+    call SaveInteger(IC_Data,'ANsq',21,2)
+    call SaveStr(IC_Data,'ANsq',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANsq',24,'Hwe1')
+    call SaveInteger(IC_Data,'ANsq',25,1)
+    call SaveStr(IC_Data,'ANsq',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'ANsq',28,'Hwe2')
+    call SaveInteger(IC_Data,'ANsq',29,1)
+    call SaveStr(IC_Data,'ANsq',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'ANsq',32,'aran')
+    call SaveInteger(IC_Data,'ANsq',33,2)
+    call SaveStr(IC_Data,'ANsq',34,"Cast range")
+    call SaveInteger(IC_Data,'ANsq',-1,9)
+    call SaveInteger(IC_Data,'ANss',0,'acas')
+    call SaveInteger(IC_Data,'ANss',1,2)
+    call SaveStr(IC_Data,'ANss',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANss',4,'adur')
+    call SaveInteger(IC_Data,'ANss',5,2)
+    call SaveStr(IC_Data,'ANss',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANss',8,'ahdu')
+    call SaveInteger(IC_Data,'ANss',9,2)
+    call SaveStr(IC_Data,'ANss',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANss',12,'acdn')
+    call SaveInteger(IC_Data,'ANss',13,2)
+    call SaveStr(IC_Data,'ANss',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANss',16,'amcs')
+    call SaveInteger(IC_Data,'ANss',17,1)
+    call SaveStr(IC_Data,'ANss',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANss',20,'aare')
+    call SaveInteger(IC_Data,'ANss',21,2)
+    call SaveStr(IC_Data,'ANss',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANss',24,'aran')
+    call SaveInteger(IC_Data,'ANss',25,2)
+    call SaveStr(IC_Data,'ANss',26,"Cast range")
+    call SaveInteger(IC_Data,'ANss',-1,7)
+    call SaveInteger(IC_Data,'ANst',0,'acas')
+    call SaveInteger(IC_Data,'ANst',1,2)
+    call SaveStr(IC_Data,'ANst',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANst',4,'adur')
+    call SaveInteger(IC_Data,'ANst',5,2)
+    call SaveStr(IC_Data,'ANst',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANst',8,'ahdu')
+    call SaveInteger(IC_Data,'ANst',9,2)
+    call SaveStr(IC_Data,'ANst',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANst',12,'acdn')
+    call SaveInteger(IC_Data,'ANst',13,2)
+    call SaveStr(IC_Data,'ANst',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANst',16,'amcs')
+    call SaveInteger(IC_Data,'ANst',17,1)
+    call SaveStr(IC_Data,'ANst',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANst',20,'aare')
+    call SaveInteger(IC_Data,'ANst',21,2)
+    call SaveStr(IC_Data,'ANst',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANst',24,'aran')
+    call SaveInteger(IC_Data,'ANst',25,2)
+    call SaveStr(IC_Data,'ANst',26,"Cast range")
+    call SaveInteger(IC_Data,'ANst',28,'Nst1')
+    call SaveInteger(IC_Data,'ANst',29,1)
+    call SaveStr(IC_Data,'ANst',30,"Beasts Per Second")
+    call SaveInteger(IC_Data,'ANst',32,'Nst2')
+    call SaveInteger(IC_Data,'ANst',33,2)
+    call SaveStr(IC_Data,'ANst',34,"Beast Collision Radius")
+    call SaveInteger(IC_Data,'ANst',36,'Nst3')
+    call SaveInteger(IC_Data,'ANst',37,2)
+    call SaveStr(IC_Data,'ANst',38,"Damage Amount")
+    call SaveInteger(IC_Data,'ANst',40,'Nst4')
+    call SaveInteger(IC_Data,'ANst',41,2)
+    call SaveStr(IC_Data,'ANst',42,"Damage Radius")
+    call SaveInteger(IC_Data,'ANst',44,'Nst5')
+    call SaveInteger(IC_Data,'ANst',45,2)
+    call SaveStr(IC_Data,'ANst',46,"Damage Delay")
+    call SaveInteger(IC_Data,'ANst',-1,12)
+    call SaveInteger(IC_Data,'ANsw',0,'acas')
+    call SaveInteger(IC_Data,'ANsw',1,2)
+    call SaveStr(IC_Data,'ANsw',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANsw',4,'adur')
+    call SaveInteger(IC_Data,'ANsw',5,2)
+    call SaveStr(IC_Data,'ANsw',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANsw',8,'ahdu')
+    call SaveInteger(IC_Data,'ANsw',9,2)
+    call SaveStr(IC_Data,'ANsw',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANsw',12,'acdn')
+    call SaveInteger(IC_Data,'ANsw',13,2)
+    call SaveStr(IC_Data,'ANsw',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANsw',16,'amcs')
+    call SaveInteger(IC_Data,'ANsw',17,1)
+    call SaveStr(IC_Data,'ANsw',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANsw',20,'aare')
+    call SaveInteger(IC_Data,'ANsw',21,2)
+    call SaveStr(IC_Data,'ANsw',22,"Area of effect")
+    call SaveInteger(IC_Data,'ANsw',24,'Hwe1')
+    call SaveInteger(IC_Data,'ANsw',25,1)
+    call SaveStr(IC_Data,'ANsw',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'ANsw',28,'Hwe2')
+    call SaveInteger(IC_Data,'ANsw',29,1)
+    call SaveStr(IC_Data,'ANsw',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'ANsw',32,'aran')
+    call SaveInteger(IC_Data,'ANsw',33,2)
+    call SaveStr(IC_Data,'ANsw',34,"Cast range")
+    call SaveInteger(IC_Data,'ANsw',-1,9)
+    call SaveInteger(IC_Data,'ANtm',0,'acas')
+    call SaveInteger(IC_Data,'ANtm',1,2)
+    call SaveStr(IC_Data,'ANtm',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANtm',4,'adur')
+    call SaveInteger(IC_Data,'ANtm',5,2)
+    call SaveStr(IC_Data,'ANtm',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANtm',8,'ahdu')
+    call SaveInteger(IC_Data,'ANtm',9,2)
+    call SaveStr(IC_Data,'ANtm',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANtm',12,'acdn')
+    call SaveInteger(IC_Data,'ANtm',13,2)
+    call SaveStr(IC_Data,'ANtm',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANtm',16,'amcs')
+    call SaveInteger(IC_Data,'ANtm',17,1)
+    call SaveStr(IC_Data,'ANtm',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANtm',20,'aran')
+    call SaveInteger(IC_Data,'ANtm',21,2)
+    call SaveStr(IC_Data,'ANtm',22,"Cast range")
+    call SaveInteger(IC_Data,'ANtm',24,'Ntm1')
+    call SaveInteger(IC_Data,'ANtm',25,2)
+    call SaveStr(IC_Data,'ANtm',26,"Gold Cost Factor")
+    call SaveInteger(IC_Data,'ANtm',28,'Ntm2')
+    call SaveInteger(IC_Data,'ANtm',29,2)
+    call SaveStr(IC_Data,'ANtm',30,"Lumber Cost Factor")
+    call SaveInteger(IC_Data,'ANtm',32,'Ntm3')
+    call SaveInteger(IC_Data,'ANtm',33,1)
+    call SaveStr(IC_Data,'ANtm',34,"Max Creep Level")
+    call SaveInteger(IC_Data,'ANtm',36,'aare')
+    call SaveInteger(IC_Data,'ANtm',37,2)
+    call SaveStr(IC_Data,'ANtm',38,"Area of effect")
+endfunction
+
+function IC_Data55 takes nothing returns nothing
+    call SaveInteger(IC_Data,'ANtm',-1,10)
+    call SaveInteger(IC_Data,'ANwk',0,'acas')
+    call SaveInteger(IC_Data,'ANwk',1,2)
+    call SaveStr(IC_Data,'ANwk',2,"Casting Time")
+    call SaveInteger(IC_Data,'ANwk',4,'adur')
+    call SaveInteger(IC_Data,'ANwk',5,2)
+    call SaveStr(IC_Data,'ANwk',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'ANwk',8,'ahdu')
+    call SaveInteger(IC_Data,'ANwk',9,2)
+    call SaveStr(IC_Data,'ANwk',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'ANwk',12,'acdn')
+    call SaveInteger(IC_Data,'ANwk',13,2)
+    call SaveStr(IC_Data,'ANwk',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'ANwk',16,'amcs')
+    call SaveInteger(IC_Data,'ANwk',17,1)
+    call SaveStr(IC_Data,'ANwk',18,"Mana cost")
+    call SaveInteger(IC_Data,'ANwk',20,'Owk1')
+    call SaveInteger(IC_Data,'ANwk',21,2)
+    call SaveStr(IC_Data,'ANwk',22,"Transition Time")
+    call SaveInteger(IC_Data,'ANwk',24,'Owk2')
+    call SaveInteger(IC_Data,'ANwk',25,2)
+    call SaveStr(IC_Data,'ANwk',26,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'ANwk',27,true)
+    call SaveInteger(IC_Data,'ANwk',28,'Owk3')
+    call SaveInteger(IC_Data,'ANwk',29,2)
+    call SaveStr(IC_Data,'ANwk',30,"Backstab Damage")
+    call SaveInteger(IC_Data,'ANwk',32,'aare')
+    call SaveInteger(IC_Data,'ANwk',33,2)
+    call SaveStr(IC_Data,'ANwk',34,"Area of effect")
+    call SaveInteger(IC_Data,'ANwk',36,'aran')
+    call SaveInteger(IC_Data,'ANwk',37,2)
+    call SaveStr(IC_Data,'ANwk',38,"Cast range")
+    call SaveInteger(IC_Data,'ANwk',-1,10)
+    call SaveInteger(IC_Data,'AOae',0,'acas')
+    call SaveInteger(IC_Data,'AOae',1,2)
+    call SaveStr(IC_Data,'AOae',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOae',4,'adur')
+    call SaveInteger(IC_Data,'AOae',5,2)
+    call SaveStr(IC_Data,'AOae',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOae',8,'ahdu')
+    call SaveInteger(IC_Data,'AOae',9,2)
+    call SaveStr(IC_Data,'AOae',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOae',12,'acdn')
+    call SaveInteger(IC_Data,'AOae',13,2)
+    call SaveStr(IC_Data,'AOae',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOae',16,'aare')
+    call SaveInteger(IC_Data,'AOae',17,2)
+    call SaveStr(IC_Data,'AOae',18,"Area of effect")
+    call SaveInteger(IC_Data,'AOae',20,'Oae1')
+    call SaveInteger(IC_Data,'AOae',21,2)
+    call SaveStr(IC_Data,'AOae',22,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'AOae',23,true)
+    call SaveInteger(IC_Data,'AOae',24,'Oae2')
+    call SaveInteger(IC_Data,'AOae',25,2)
+    call SaveStr(IC_Data,'AOae',26,"Attack Speed Increase (%)")
+    call SaveBoolean(IC_Data,'AOae',27,true)
+    call SaveInteger(IC_Data,'AOae',28,'amcs')
+    call SaveInteger(IC_Data,'AOae',29,1)
+    call SaveStr(IC_Data,'AOae',30,"Mana cost")
+    call SaveInteger(IC_Data,'AOae',32,'aran')
+    call SaveInteger(IC_Data,'AOae',33,2)
+    call SaveStr(IC_Data,'AOae',34,"Cast range")
+    call SaveInteger(IC_Data,'AOae',-1,9)
+    call SaveInteger(IC_Data,'AOcl',0,'acas')
+    call SaveInteger(IC_Data,'AOcl',1,2)
+    call SaveStr(IC_Data,'AOcl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOcl',4,'adur')
+    call SaveInteger(IC_Data,'AOcl',5,2)
+    call SaveStr(IC_Data,'AOcl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOcl',8,'ahdu')
+    call SaveInteger(IC_Data,'AOcl',9,2)
+    call SaveStr(IC_Data,'AOcl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOcl',12,'acdn')
+    call SaveInteger(IC_Data,'AOcl',13,2)
+    call SaveStr(IC_Data,'AOcl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOcl',16,'amcs')
+    call SaveInteger(IC_Data,'AOcl',17,1)
+    call SaveStr(IC_Data,'AOcl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOcl',20,'aare')
+    call SaveInteger(IC_Data,'AOcl',21,2)
+    call SaveStr(IC_Data,'AOcl',22,"Area of effect")
+    call SaveInteger(IC_Data,'AOcl',24,'aran')
+    call SaveInteger(IC_Data,'AOcl',25,2)
+    call SaveStr(IC_Data,'AOcl',26,"Cast range")
+    call SaveInteger(IC_Data,'AOcl',28,'Ocl1')
+    call SaveInteger(IC_Data,'AOcl',29,2)
+    call SaveStr(IC_Data,'AOcl',30,"Damage per Target")
+    call SaveInteger(IC_Data,'AOcl',32,'Ocl2')
+    call SaveInteger(IC_Data,'AOcl',33,1)
+    call SaveStr(IC_Data,'AOcl',34,"Number of Targets Hit")
+    call SaveInteger(IC_Data,'AOcl',36,'Ocl3')
+    call SaveInteger(IC_Data,'AOcl',37,2)
+    call SaveStr(IC_Data,'AOcl',38,"Damage Reduction per Target")
+    call SaveInteger(IC_Data,'AOcl',-1,10)
+    call SaveInteger(IC_Data,'AOcr',0,'acas')
+    call SaveInteger(IC_Data,'AOcr',1,2)
+    call SaveStr(IC_Data,'AOcr',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOcr',4,'adur')
+    call SaveInteger(IC_Data,'AOcr',5,2)
+    call SaveStr(IC_Data,'AOcr',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOcr',8,'ahdu')
+    call SaveInteger(IC_Data,'AOcr',9,2)
+    call SaveStr(IC_Data,'AOcr',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOcr',12,'acdn')
+    call SaveInteger(IC_Data,'AOcr',13,2)
+    call SaveStr(IC_Data,'AOcr',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOcr',16,'aare')
+    call SaveInteger(IC_Data,'AOcr',17,2)
+    call SaveStr(IC_Data,'AOcr',18,"Area of effect")
+    call SaveInteger(IC_Data,'AOcr',20,'aran')
+    call SaveInteger(IC_Data,'AOcr',21,2)
+    call SaveStr(IC_Data,'AOcr',22,"Cast range")
+    call SaveInteger(IC_Data,'AOcr',24,'Ocr1')
+    call SaveInteger(IC_Data,'AOcr',25,2)
+    call SaveStr(IC_Data,'AOcr',26,"Chance to Critical Strike")
+    call SaveInteger(IC_Data,'AOcr',28,'Ocr2')
+    call SaveInteger(IC_Data,'AOcr',29,2)
+    call SaveStr(IC_Data,'AOcr',30,"Damage Multiplier")
+    call SaveInteger(IC_Data,'AOcr',32,'Ocr3')
+    call SaveInteger(IC_Data,'AOcr',33,2)
+    call SaveStr(IC_Data,'AOcr',34,"Damage Bonus")
+    call SaveInteger(IC_Data,'AOcr',36,'Ocr4')
+    call SaveInteger(IC_Data,'AOcr',37,2)
+    call SaveStr(IC_Data,'AOcr',38,"Chance to Evade")
+    call SaveInteger(IC_Data,'AOcr',40,'amcs')
+    call SaveInteger(IC_Data,'AOcr',41,1)
+    call SaveStr(IC_Data,'AOcr',42,"Mana cost")
+    call SaveInteger(IC_Data,'AOcr',-1,11)
+    call SaveInteger(IC_Data,'AOhw',0,'acas')
+    call SaveInteger(IC_Data,'AOhw',1,2)
+    call SaveStr(IC_Data,'AOhw',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOhw',4,'adur')
+    call SaveInteger(IC_Data,'AOhw',5,2)
+    call SaveStr(IC_Data,'AOhw',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOhw',8,'ahdu')
+    call SaveInteger(IC_Data,'AOhw',9,2)
+    call SaveStr(IC_Data,'AOhw',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOhw',12,'acdn')
+    call SaveInteger(IC_Data,'AOhw',13,2)
+    call SaveStr(IC_Data,'AOhw',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOhw',16,'amcs')
+    call SaveInteger(IC_Data,'AOhw',17,1)
+    call SaveStr(IC_Data,'AOhw',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOhw',20,'aare')
+    call SaveInteger(IC_Data,'AOhw',21,2)
+    call SaveStr(IC_Data,'AOhw',22,"Area of effect")
+    call SaveInteger(IC_Data,'AOhw',24,'aran')
+    call SaveInteger(IC_Data,'AOhw',25,2)
+    call SaveStr(IC_Data,'AOhw',26,"Cast range")
+    call SaveInteger(IC_Data,'AOhw',28,'Ocl1')
+    call SaveInteger(IC_Data,'AOhw',29,2)
+    call SaveStr(IC_Data,'AOhw',30,"Damage per Target")
+    call SaveInteger(IC_Data,'AOhw',32,'Ocl2')
+    call SaveInteger(IC_Data,'AOhw',33,1)
+    call SaveStr(IC_Data,'AOhw',34,"Number of Targets Hit")
+    call SaveInteger(IC_Data,'AOhw',36,'Ocl3')
+    call SaveInteger(IC_Data,'AOhw',37,2)
+    call SaveStr(IC_Data,'AOhw',38,"Damage Reduction per Target")
+    call SaveInteger(IC_Data,'AOhw',-1,10)
+    call SaveInteger(IC_Data,'AOhx',0,'acas')
+endfunction
+
+function IC_Data56 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AOhx',1,2)
+    call SaveStr(IC_Data,'AOhx',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOhx',4,'adur')
+    call SaveInteger(IC_Data,'AOhx',5,2)
+    call SaveStr(IC_Data,'AOhx',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOhx',8,'ahdu')
+    call SaveInteger(IC_Data,'AOhx',9,2)
+    call SaveStr(IC_Data,'AOhx',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOhx',12,'acdn')
+    call SaveInteger(IC_Data,'AOhx',13,2)
+    call SaveStr(IC_Data,'AOhx',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOhx',16,'amcs')
+    call SaveInteger(IC_Data,'AOhx',17,1)
+    call SaveStr(IC_Data,'AOhx',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOhx',20,'aran')
+    call SaveInteger(IC_Data,'AOhx',21,2)
+    call SaveStr(IC_Data,'AOhx',22,"Cast range")
+    call SaveInteger(IC_Data,'AOhx',24,'Ply1')
+    call SaveInteger(IC_Data,'AOhx',25,1)
+    call SaveStr(IC_Data,'AOhx',26,"Maximum Creep Level")
+    call SaveInteger(IC_Data,'AOhx',28,'aare')
+    call SaveInteger(IC_Data,'AOhx',29,2)
+    call SaveStr(IC_Data,'AOhx',30,"Area of effect")
+    call SaveInteger(IC_Data,'AOhx',-1,8)
+    call SaveInteger(IC_Data,'AOre',0,'acas')
+    call SaveInteger(IC_Data,'AOre',1,2)
+    call SaveStr(IC_Data,'AOre',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOre',4,'adur')
+    call SaveInteger(IC_Data,'AOre',5,2)
+    call SaveStr(IC_Data,'AOre',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOre',8,'ahdu')
+    call SaveInteger(IC_Data,'AOre',9,2)
+    call SaveStr(IC_Data,'AOre',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOre',12,'acdn')
+    call SaveInteger(IC_Data,'AOre',13,2)
+    call SaveStr(IC_Data,'AOre',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOre',16,'Ore1')
+    call SaveInteger(IC_Data,'AOre',17,2)
+    call SaveStr(IC_Data,'AOre',18,"Reincarnation Delay")
+    call SaveInteger(IC_Data,'AOre',20,'amcs')
+    call SaveInteger(IC_Data,'AOre',21,1)
+    call SaveStr(IC_Data,'AOre',22,"Mana cost")
+    call SaveInteger(IC_Data,'AOre',24,'aare')
+    call SaveInteger(IC_Data,'AOre',25,2)
+    call SaveStr(IC_Data,'AOre',26,"Area of effect")
+    call SaveInteger(IC_Data,'AOre',28,'aran')
+    call SaveInteger(IC_Data,'AOre',29,2)
+    call SaveStr(IC_Data,'AOre',30,"Cast range")
+    call SaveInteger(IC_Data,'AOre',-1,8)
+    call SaveInteger(IC_Data,'AOsf',0,'acas')
+    call SaveInteger(IC_Data,'AOsf',1,2)
+    call SaveStr(IC_Data,'AOsf',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOsf',4,'adur')
+    call SaveInteger(IC_Data,'AOsf',5,2)
+    call SaveStr(IC_Data,'AOsf',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOsf',8,'ahdu')
+    call SaveInteger(IC_Data,'AOsf',9,2)
+    call SaveStr(IC_Data,'AOsf',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOsf',12,'acdn')
+    call SaveInteger(IC_Data,'AOsf',13,2)
+    call SaveStr(IC_Data,'AOsf',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOsf',16,'amcs')
+    call SaveInteger(IC_Data,'AOsf',17,1)
+    call SaveStr(IC_Data,'AOsf',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOsf',20,'aare')
+    call SaveInteger(IC_Data,'AOsf',21,2)
+    call SaveStr(IC_Data,'AOsf',22,"Area of effect")
+    call SaveInteger(IC_Data,'AOsf',24,'aran')
+    call SaveInteger(IC_Data,'AOsf',25,2)
+    call SaveStr(IC_Data,'AOsf',26,"Cast range")
+    call SaveInteger(IC_Data,'AOsf',28,'Osf1')
+    call SaveInteger(IC_Data,'AOsf',29,1)
+    call SaveStr(IC_Data,'AOsf',30,"Summoned Unit")
+    call SaveInteger(IC_Data,'AOsf',32,'Osf2')
+    call SaveInteger(IC_Data,'AOsf',33,1)
+    call SaveStr(IC_Data,'AOsf',34,"Number of Summoned Units")
+    call SaveInteger(IC_Data,'AOsf',-1,9)
+    call SaveInteger(IC_Data,'AOsh',0,'acas')
+    call SaveInteger(IC_Data,'AOsh',1,2)
+    call SaveStr(IC_Data,'AOsh',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOsh',4,'adur')
+    call SaveInteger(IC_Data,'AOsh',5,2)
+    call SaveStr(IC_Data,'AOsh',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOsh',8,'ahdu')
+    call SaveInteger(IC_Data,'AOsh',9,2)
+    call SaveStr(IC_Data,'AOsh',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOsh',12,'acdn')
+    call SaveInteger(IC_Data,'AOsh',13,2)
+    call SaveStr(IC_Data,'AOsh',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOsh',16,'amcs')
+    call SaveInteger(IC_Data,'AOsh',17,1)
+    call SaveStr(IC_Data,'AOsh',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOsh',20,'aare')
+    call SaveInteger(IC_Data,'AOsh',21,2)
+    call SaveStr(IC_Data,'AOsh',22,"Area of effect")
+    call SaveInteger(IC_Data,'AOsh',24,'aran')
+    call SaveInteger(IC_Data,'AOsh',25,2)
+    call SaveStr(IC_Data,'AOsh',26,"Cast range")
+    call SaveInteger(IC_Data,'AOsh',28,'Osh1')
+    call SaveInteger(IC_Data,'AOsh',29,2)
+    call SaveStr(IC_Data,'AOsh',30,"Damage")
+    call SaveInteger(IC_Data,'AOsh',32,'Osh2')
+    call SaveInteger(IC_Data,'AOsh',33,2)
+    call SaveStr(IC_Data,'AOsh',34,"Maximum Damage")
+    call SaveInteger(IC_Data,'AOsh',36,'Osh3')
+    call SaveInteger(IC_Data,'AOsh',37,2)
+    call SaveStr(IC_Data,'AOsh',38,"Distance")
+    call SaveInteger(IC_Data,'AOsh',40,'Osh4')
+    call SaveInteger(IC_Data,'AOsh',41,2)
+    call SaveStr(IC_Data,'AOsh',42,"Final Area")
+    call SaveInteger(IC_Data,'AOsh',-1,11)
+    call SaveInteger(IC_Data,'AOsw',0,'acas')
+    call SaveInteger(IC_Data,'AOsw',1,2)
+    call SaveStr(IC_Data,'AOsw',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOsw',4,'adur')
+    call SaveInteger(IC_Data,'AOsw',5,2)
+    call SaveStr(IC_Data,'AOsw',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOsw',8,'ahdu')
+    call SaveInteger(IC_Data,'AOsw',9,2)
+    call SaveStr(IC_Data,'AOsw',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOsw',12,'acdn')
+    call SaveInteger(IC_Data,'AOsw',13,2)
+    call SaveStr(IC_Data,'AOsw',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOsw',16,'amcs')
+    call SaveInteger(IC_Data,'AOsw',17,1)
+    call SaveStr(IC_Data,'AOsw',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOsw',20,'aran')
+    call SaveInteger(IC_Data,'AOsw',21,2)
+    call SaveStr(IC_Data,'AOsw',22,"Cast range")
+    call SaveInteger(IC_Data,'AOsw',24,'Hwe1')
+    call SaveInteger(IC_Data,'AOsw',25,1)
+    call SaveStr(IC_Data,'AOsw',26,"Summoned Unit Type")
+    call SaveInteger(IC_Data,'AOsw',28,'Hwe2')
+    call SaveInteger(IC_Data,'AOsw',29,1)
+    call SaveStr(IC_Data,'AOsw',30,"Summoned Unit Count")
+    call SaveInteger(IC_Data,'AOsw',32,'aare')
+    call SaveInteger(IC_Data,'AOsw',33,2)
+    call SaveStr(IC_Data,'AOsw',34,"Area of effect")
+    call SaveInteger(IC_Data,'AOsw',-1,9)
+    call SaveInteger(IC_Data,'AOvd',0,'acas')
+    call SaveInteger(IC_Data,'AOvd',1,2)
+    call SaveStr(IC_Data,'AOvd',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOvd',4,'adur')
+    call SaveInteger(IC_Data,'AOvd',5,2)
+    call SaveStr(IC_Data,'AOvd',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOvd',8,'ahdu')
+    call SaveInteger(IC_Data,'AOvd',9,2)
+    call SaveStr(IC_Data,'AOvd',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOvd',12,'acdn')
+    call SaveInteger(IC_Data,'AOvd',13,2)
+    call SaveStr(IC_Data,'AOvd',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOvd',16,'amcs')
+    call SaveInteger(IC_Data,'AOvd',17,1)
+    call SaveStr(IC_Data,'AOvd',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOvd',20,'aare')
+    call SaveInteger(IC_Data,'AOvd',21,2)
+    call SaveStr(IC_Data,'AOvd',22,"Area of effect")
+    call SaveInteger(IC_Data,'AOvd',24,'aran')
+    call SaveInteger(IC_Data,'AOvd',25,2)
+    call SaveStr(IC_Data,'AOvd',26,"Cast range")
+endfunction
+
+function IC_Data57 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AOvd',-1,7)
+    call SaveInteger(IC_Data,'AOwk',0,'acas')
+    call SaveInteger(IC_Data,'AOwk',1,2)
+    call SaveStr(IC_Data,'AOwk',2,"Casting Time")
+    call SaveInteger(IC_Data,'AOwk',4,'adur')
+    call SaveInteger(IC_Data,'AOwk',5,2)
+    call SaveStr(IC_Data,'AOwk',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AOwk',8,'ahdu')
+    call SaveInteger(IC_Data,'AOwk',9,2)
+    call SaveStr(IC_Data,'AOwk',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AOwk',12,'acdn')
+    call SaveInteger(IC_Data,'AOwk',13,2)
+    call SaveStr(IC_Data,'AOwk',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AOwk',16,'amcs')
+    call SaveInteger(IC_Data,'AOwk',17,1)
+    call SaveStr(IC_Data,'AOwk',18,"Mana cost")
+    call SaveInteger(IC_Data,'AOwk',20,'Owk1')
+    call SaveInteger(IC_Data,'AOwk',21,2)
+    call SaveStr(IC_Data,'AOwk',22,"Transition Time")
+    call SaveInteger(IC_Data,'AOwk',24,'Owk2')
+    call SaveInteger(IC_Data,'AOwk',25,2)
+    call SaveStr(IC_Data,'AOwk',26,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'AOwk',27,true)
+    call SaveInteger(IC_Data,'AOwk',28,'Owk3')
+    call SaveInteger(IC_Data,'AOwk',29,2)
+    call SaveStr(IC_Data,'AOwk',30,"Backstab Damage")
+    call SaveInteger(IC_Data,'AOwk',32,'aare')
+    call SaveInteger(IC_Data,'AOwk',33,2)
+    call SaveStr(IC_Data,'AOwk',34,"Area of effect")
+    call SaveInteger(IC_Data,'AOwk',36,'aran')
+    call SaveInteger(IC_Data,'AOwk',37,2)
+    call SaveStr(IC_Data,'AOwk',38,"Cast range")
+    call SaveInteger(IC_Data,'AOwk',-1,10)
+    call SaveInteger(IC_Data,'AUan',0,'acas')
+    call SaveInteger(IC_Data,'AUan',1,2)
+    call SaveStr(IC_Data,'AUan',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUan',4,'adur')
+    call SaveInteger(IC_Data,'AUan',5,2)
+    call SaveStr(IC_Data,'AUan',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUan',8,'ahdu')
+    call SaveInteger(IC_Data,'AUan',9,2)
+    call SaveStr(IC_Data,'AUan',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUan',12,'acdn')
+    call SaveInteger(IC_Data,'AUan',13,2)
+    call SaveStr(IC_Data,'AUan',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUan',16,'amcs')
+    call SaveInteger(IC_Data,'AUan',17,1)
+    call SaveStr(IC_Data,'AUan',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUan',20,'aare')
+    call SaveInteger(IC_Data,'AUan',21,2)
+    call SaveStr(IC_Data,'AUan',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUan',24,'aran')
+    call SaveInteger(IC_Data,'AUan',25,2)
+    call SaveStr(IC_Data,'AUan',26,"Cast range")
+    call SaveInteger(IC_Data,'AUan',28,'Uan1')
+    call SaveInteger(IC_Data,'AUan',29,1)
+    call SaveStr(IC_Data,'AUan',30,"Number of Corpses Raised")
+    call SaveInteger(IC_Data,'AUan',-1,8)
+    call SaveInteger(IC_Data,'AUau',0,'acas')
+    call SaveInteger(IC_Data,'AUau',1,2)
+    call SaveStr(IC_Data,'AUau',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUau',4,'adur')
+    call SaveInteger(IC_Data,'AUau',5,2)
+    call SaveStr(IC_Data,'AUau',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUau',8,'ahdu')
+    call SaveInteger(IC_Data,'AUau',9,2)
+    call SaveStr(IC_Data,'AUau',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUau',12,'acdn')
+    call SaveInteger(IC_Data,'AUau',13,2)
+    call SaveStr(IC_Data,'AUau',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUau',16,'aare')
+    call SaveInteger(IC_Data,'AUau',17,2)
+    call SaveStr(IC_Data,'AUau',18,"Area of effect")
+    call SaveInteger(IC_Data,'AUau',20,'Uau1')
+    call SaveInteger(IC_Data,'AUau',21,2)
+    call SaveStr(IC_Data,'AUau',22,"Movement Speed Increase (%)")
+    call SaveBoolean(IC_Data,'AUau',23,true)
+    call SaveInteger(IC_Data,'AUau',24,'Uau2')
+    call SaveInteger(IC_Data,'AUau',25,2)
+    call SaveStr(IC_Data,'AUau',26,"Life Regeneration Increase (%)")
+    call SaveBoolean(IC_Data,'AUau',27,true)
+    call SaveInteger(IC_Data,'AUau',28,'amcs')
+    call SaveInteger(IC_Data,'AUau',29,1)
+    call SaveStr(IC_Data,'AUau',30,"Mana cost")
+    call SaveInteger(IC_Data,'AUau',32,'aran')
+    call SaveInteger(IC_Data,'AUau',33,2)
+    call SaveStr(IC_Data,'AUau',34,"Cast range")
+    call SaveInteger(IC_Data,'AUau',-1,9)
+    call SaveInteger(IC_Data,'AUav',0,'acas')
+    call SaveInteger(IC_Data,'AUav',1,2)
+    call SaveStr(IC_Data,'AUav',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUav',4,'adur')
+    call SaveInteger(IC_Data,'AUav',5,2)
+    call SaveStr(IC_Data,'AUav',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUav',8,'ahdu')
+    call SaveInteger(IC_Data,'AUav',9,2)
+    call SaveStr(IC_Data,'AUav',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUav',12,'acdn')
+    call SaveInteger(IC_Data,'AUav',13,2)
+    call SaveStr(IC_Data,'AUav',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUav',16,'aare')
+    call SaveInteger(IC_Data,'AUav',17,2)
+    call SaveStr(IC_Data,'AUav',18,"Area of effect")
+    call SaveInteger(IC_Data,'AUav',20,'Uav1')
+    call SaveInteger(IC_Data,'AUav',21,2)
+    call SaveStr(IC_Data,'AUav',22,"Attack Damage Stolen (%)")
+    call SaveBoolean(IC_Data,'AUav',23,true)
+    call SaveInteger(IC_Data,'AUav',24,'amcs')
+    call SaveInteger(IC_Data,'AUav',25,1)
+    call SaveStr(IC_Data,'AUav',26,"Mana cost")
+    call SaveInteger(IC_Data,'AUav',28,'aran')
+    call SaveInteger(IC_Data,'AUav',29,2)
+    call SaveStr(IC_Data,'AUav',30,"Cast range")
+    call SaveInteger(IC_Data,'AUav',-1,8)
+    call SaveInteger(IC_Data,'AUcs',0,'acas')
+    call SaveInteger(IC_Data,'AUcs',1,2)
+    call SaveStr(IC_Data,'AUcs',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUcs',4,'adur')
+    call SaveInteger(IC_Data,'AUcs',5,2)
+    call SaveStr(IC_Data,'AUcs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUcs',8,'ahdu')
+    call SaveInteger(IC_Data,'AUcs',9,2)
+    call SaveStr(IC_Data,'AUcs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUcs',12,'acdn')
+    call SaveInteger(IC_Data,'AUcs',13,2)
+    call SaveStr(IC_Data,'AUcs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUcs',16,'amcs')
+    call SaveInteger(IC_Data,'AUcs',17,1)
+    call SaveStr(IC_Data,'AUcs',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUcs',20,'aare')
+    call SaveInteger(IC_Data,'AUcs',21,2)
+    call SaveStr(IC_Data,'AUcs',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUcs',24,'aran')
+    call SaveInteger(IC_Data,'AUcs',25,2)
+    call SaveStr(IC_Data,'AUcs',26,"Cast range")
+    call SaveInteger(IC_Data,'AUcs',28,'Ucs1')
+    call SaveInteger(IC_Data,'AUcs',29,2)
+    call SaveStr(IC_Data,'AUcs',30,"Damage")
+    call SaveInteger(IC_Data,'AUcs',32,'Ucs2')
+    call SaveInteger(IC_Data,'AUcs',33,2)
+    call SaveStr(IC_Data,'AUcs',34,"Max Damage")
+    call SaveInteger(IC_Data,'AUcs',36,'Ucs3')
+    call SaveInteger(IC_Data,'AUcs',37,2)
+    call SaveStr(IC_Data,'AUcs',38,"Distance")
+    call SaveInteger(IC_Data,'AUcs',40,'Ucs4')
+    call SaveInteger(IC_Data,'AUcs',41,2)
+    call SaveStr(IC_Data,'AUcs',42,"Final Area")
+    call SaveInteger(IC_Data,'AUcs',-1,11)
+    call SaveInteger(IC_Data,'AUdc',0,'acas')
+    call SaveInteger(IC_Data,'AUdc',1,2)
+    call SaveStr(IC_Data,'AUdc',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUdc',4,'adur')
+    call SaveInteger(IC_Data,'AUdc',5,2)
+    call SaveStr(IC_Data,'AUdc',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUdc',8,'ahdu')
+    call SaveInteger(IC_Data,'AUdc',9,2)
+    call SaveStr(IC_Data,'AUdc',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUdc',12,'acdn')
+    call SaveInteger(IC_Data,'AUdc',13,2)
+    call SaveStr(IC_Data,'AUdc',14,"Cooldown (seconds)")
+endfunction
+
+function IC_Data58 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AUdc',16,'amcs')
+    call SaveInteger(IC_Data,'AUdc',17,1)
+    call SaveStr(IC_Data,'AUdc',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUdc',20,'aran')
+    call SaveInteger(IC_Data,'AUdc',21,2)
+    call SaveStr(IC_Data,'AUdc',22,"Cast range")
+    call SaveInteger(IC_Data,'AUdc',24,'Udc1')
+    call SaveInteger(IC_Data,'AUdc',25,2)
+    call SaveStr(IC_Data,'AUdc',26,"Amount Healed/Damaged")
+    call SaveInteger(IC_Data,'AUdc',28,'aare')
+    call SaveInteger(IC_Data,'AUdc',29,2)
+    call SaveStr(IC_Data,'AUdc',30,"Area of effect")
+    call SaveInteger(IC_Data,'AUdc',-1,8)
+    call SaveInteger(IC_Data,'AUdd',0,'acas')
+    call SaveInteger(IC_Data,'AUdd',1,2)
+    call SaveStr(IC_Data,'AUdd',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUdd',4,'adur')
+    call SaveInteger(IC_Data,'AUdd',5,2)
+    call SaveStr(IC_Data,'AUdd',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUdd',8,'ahdu')
+    call SaveInteger(IC_Data,'AUdd',9,2)
+    call SaveStr(IC_Data,'AUdd',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUdd',12,'acdn')
+    call SaveInteger(IC_Data,'AUdd',13,2)
+    call SaveStr(IC_Data,'AUdd',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUdd',16,'amcs')
+    call SaveInteger(IC_Data,'AUdd',17,1)
+    call SaveStr(IC_Data,'AUdd',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUdd',20,'aare')
+    call SaveInteger(IC_Data,'AUdd',21,2)
+    call SaveStr(IC_Data,'AUdd',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUdd',24,'aran')
+    call SaveInteger(IC_Data,'AUdd',25,2)
+    call SaveStr(IC_Data,'AUdd',26,"Cast range")
+    call SaveInteger(IC_Data,'AUdd',28,'Udd1')
+    call SaveInteger(IC_Data,'AUdd',29,2)
+    call SaveStr(IC_Data,'AUdd',30,"Max Life Drained per Second (%)")
+    call SaveBoolean(IC_Data,'AUdd',31,true)
+    call SaveInteger(IC_Data,'AUdd',32,'Udd2')
+    call SaveInteger(IC_Data,'AUdd',33,2)
+    call SaveStr(IC_Data,'AUdd',34,"Building Reduction")
+    call SaveInteger(IC_Data,'AUdd',-1,9)
+    call SaveInteger(IC_Data,'AUfn',0,'acas')
+    call SaveInteger(IC_Data,'AUfn',1,2)
+    call SaveStr(IC_Data,'AUfn',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUfn',4,'adur')
+    call SaveInteger(IC_Data,'AUfn',5,2)
+    call SaveStr(IC_Data,'AUfn',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUfn',8,'ahdu')
+    call SaveInteger(IC_Data,'AUfn',9,2)
+    call SaveStr(IC_Data,'AUfn',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUfn',12,'acdn')
+    call SaveInteger(IC_Data,'AUfn',13,2)
+    call SaveStr(IC_Data,'AUfn',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUfn',16,'amcs')
+    call SaveInteger(IC_Data,'AUfn',17,1)
+    call SaveStr(IC_Data,'AUfn',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUfn',20,'aare')
+    call SaveInteger(IC_Data,'AUfn',21,2)
+    call SaveStr(IC_Data,'AUfn',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUfn',24,'aran')
+    call SaveInteger(IC_Data,'AUfn',25,2)
+    call SaveStr(IC_Data,'AUfn',26,"Cast range")
+    call SaveInteger(IC_Data,'AUfn',28,'Ufn1')
+    call SaveInteger(IC_Data,'AUfn',29,2)
+    call SaveStr(IC_Data,'AUfn',30,"Area of Effect Damage")
+    call SaveInteger(IC_Data,'AUfn',32,'Ufn2')
+    call SaveInteger(IC_Data,'AUfn',33,2)
+    call SaveStr(IC_Data,'AUfn',34,"Specific Target Damage")
+    call SaveInteger(IC_Data,'AUfn',-1,9)
+    call SaveInteger(IC_Data,'AUfu',0,'acas')
+    call SaveInteger(IC_Data,'AUfu',1,2)
+    call SaveStr(IC_Data,'AUfu',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUfu',4,'adur')
+    call SaveInteger(IC_Data,'AUfu',5,2)
+    call SaveStr(IC_Data,'AUfu',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUfu',8,'ahdu')
+    call SaveInteger(IC_Data,'AUfu',9,2)
+    call SaveStr(IC_Data,'AUfu',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUfu',12,'acdn')
+    call SaveInteger(IC_Data,'AUfu',13,2)
+    call SaveStr(IC_Data,'AUfu',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUfu',16,'amcs')
+    call SaveInteger(IC_Data,'AUfu',17,1)
+    call SaveStr(IC_Data,'AUfu',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUfu',20,'aran')
+    call SaveInteger(IC_Data,'AUfu',21,2)
+    call SaveStr(IC_Data,'AUfu',22,"Cast range")
+    call SaveInteger(IC_Data,'AUfu',24,'Ufa1')
+    call SaveInteger(IC_Data,'AUfu',25,2)
+    call SaveStr(IC_Data,'AUfu',26,"Armor Duration")
+    call SaveInteger(IC_Data,'AUfu',28,'Ufa2')
+    call SaveInteger(IC_Data,'AUfu',29,2)
+    call SaveStr(IC_Data,'AUfu',30,"Armor Bonus")
+    call SaveInteger(IC_Data,'AUfu',32,'aare')
+    call SaveInteger(IC_Data,'AUfu',33,2)
+    call SaveStr(IC_Data,'AUfu',34,"Area of effect")
+    call SaveInteger(IC_Data,'AUfu',-1,9)
+    call SaveInteger(IC_Data,'AUim',0,'acas')
+    call SaveInteger(IC_Data,'AUim',1,2)
+    call SaveStr(IC_Data,'AUim',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUim',4,'adur')
+    call SaveInteger(IC_Data,'AUim',5,2)
+    call SaveStr(IC_Data,'AUim',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUim',8,'ahdu')
+    call SaveInteger(IC_Data,'AUim',9,2)
+    call SaveStr(IC_Data,'AUim',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUim',12,'acdn')
+    call SaveInteger(IC_Data,'AUim',13,2)
+    call SaveStr(IC_Data,'AUim',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUim',16,'amcs')
+    call SaveInteger(IC_Data,'AUim',17,1)
+    call SaveStr(IC_Data,'AUim',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUim',20,'aare')
+    call SaveInteger(IC_Data,'AUim',21,2)
+    call SaveStr(IC_Data,'AUim',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUim',24,'aran')
+    call SaveInteger(IC_Data,'AUim',25,2)
+    call SaveStr(IC_Data,'AUim',26,"Cast range")
+    call SaveInteger(IC_Data,'AUim',28,'Uim1')
+    call SaveInteger(IC_Data,'AUim',29,2)
+    call SaveStr(IC_Data,'AUim',30,"Wave Distance")
+    call SaveInteger(IC_Data,'AUim',32,'Uim2')
+    call SaveInteger(IC_Data,'AUim',33,2)
+    call SaveStr(IC_Data,'AUim',34,"Wave Time (seconds)")
+    call SaveInteger(IC_Data,'AUim',36,'Uim3')
+    call SaveInteger(IC_Data,'AUim',37,2)
+    call SaveStr(IC_Data,'AUim',38,"Damage Dealt")
+    call SaveInteger(IC_Data,'AUim',40,'Uim4')
+    call SaveInteger(IC_Data,'AUim',41,2)
+    call SaveStr(IC_Data,'AUim',42,"Air Time (seconds)")
+    call SaveInteger(IC_Data,'AUim',-1,11)
+    call SaveInteger(IC_Data,'AUin',0,'acas')
+    call SaveInteger(IC_Data,'AUin',1,2)
+    call SaveStr(IC_Data,'AUin',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUin',4,'adur')
+    call SaveInteger(IC_Data,'AUin',5,2)
+    call SaveStr(IC_Data,'AUin',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUin',8,'ahdu')
+    call SaveInteger(IC_Data,'AUin',9,2)
+    call SaveStr(IC_Data,'AUin',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUin',12,'acdn')
+    call SaveInteger(IC_Data,'AUin',13,2)
+    call SaveStr(IC_Data,'AUin',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUin',16,'amcs')
+    call SaveInteger(IC_Data,'AUin',17,1)
+    call SaveStr(IC_Data,'AUin',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUin',20,'aare')
+    call SaveInteger(IC_Data,'AUin',21,2)
+    call SaveStr(IC_Data,'AUin',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUin',24,'aran')
+    call SaveInteger(IC_Data,'AUin',25,2)
+    call SaveStr(IC_Data,'AUin',26,"Cast range")
+    call SaveInteger(IC_Data,'AUin',28,'Uin1')
+    call SaveInteger(IC_Data,'AUin',29,2)
+    call SaveStr(IC_Data,'AUin',30,"Damage")
+    call SaveInteger(IC_Data,'AUin',32,'Uin2')
+    call SaveInteger(IC_Data,'AUin',33,2)
+    call SaveStr(IC_Data,'AUin',34,"Duration")
+    call SaveInteger(IC_Data,'AUin',36,'Uin3')
+endfunction
+
+function IC_Data59 takes nothing returns nothing
+    call SaveInteger(IC_Data,'AUin',37,2)
+    call SaveStr(IC_Data,'AUin',38,"Impact Delay")
+    call SaveInteger(IC_Data,'AUin',40,'Uin4')
+    call SaveInteger(IC_Data,'AUin',41,1)
+    call SaveStr(IC_Data,'AUin',42,"Summoned Unit")
+    call SaveInteger(IC_Data,'AUin',-1,11)
+    call SaveInteger(IC_Data,'AUls',0,'acas')
+    call SaveInteger(IC_Data,'AUls',1,2)
+    call SaveStr(IC_Data,'AUls',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUls',4,'adur')
+    call SaveInteger(IC_Data,'AUls',5,2)
+    call SaveStr(IC_Data,'AUls',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUls',8,'ahdu')
+    call SaveInteger(IC_Data,'AUls',9,2)
+    call SaveStr(IC_Data,'AUls',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUls',12,'acdn')
+    call SaveInteger(IC_Data,'AUls',13,2)
+    call SaveStr(IC_Data,'AUls',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUls',16,'amcs')
+    call SaveInteger(IC_Data,'AUls',17,1)
+    call SaveStr(IC_Data,'AUls',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUls',20,'aare')
+    call SaveInteger(IC_Data,'AUls',21,2)
+    call SaveStr(IC_Data,'AUls',22,"Area of effect")
+    call SaveInteger(IC_Data,'AUls',24,'Uls1')
+    call SaveInteger(IC_Data,'AUls',25,1)
+    call SaveStr(IC_Data,'AUls',26,"Number of Swarm Units")
+    call SaveInteger(IC_Data,'AUls',28,'Uls2')
+    call SaveInteger(IC_Data,'AUls',29,2)
+    call SaveStr(IC_Data,'AUls',30,"Unit Release Interval (seconds)")
+    call SaveInteger(IC_Data,'AUls',32,'Uls3')
+    call SaveInteger(IC_Data,'AUls',33,1)
+    call SaveStr(IC_Data,'AUls',34,"Max Swarm Units Per Target")
+    call SaveInteger(IC_Data,'AUls',36,'Uls4')
+    call SaveInteger(IC_Data,'AUls',37,2)
+    call SaveStr(IC_Data,'AUls',38,"Damage Return Factor")
+    call SaveInteger(IC_Data,'AUls',40,'Uls5')
+    call SaveInteger(IC_Data,'AUls',41,2)
+    call SaveStr(IC_Data,'AUls',42,"Damage Return Threshold")
+    call SaveInteger(IC_Data,'AUls',44,'Ulsu')
+    call SaveInteger(IC_Data,'AUls',45,1)
+    call SaveStr(IC_Data,'AUls',46,"Swarm Unit Type")
+    call SaveInteger(IC_Data,'AUls',48,'aran')
+    call SaveInteger(IC_Data,'AUls',49,2)
+    call SaveStr(IC_Data,'AUls',50,"Cast range")
+    call SaveInteger(IC_Data,'AUls',-1,13)
+    call SaveInteger(IC_Data,'AUsl',0,'acas')
+    call SaveInteger(IC_Data,'AUsl',1,2)
+    call SaveStr(IC_Data,'AUsl',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUsl',4,'adur')
+    call SaveInteger(IC_Data,'AUsl',5,2)
+    call SaveStr(IC_Data,'AUsl',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUsl',8,'ahdu')
+    call SaveInteger(IC_Data,'AUsl',9,2)
+    call SaveStr(IC_Data,'AUsl',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUsl',12,'acdn')
+    call SaveInteger(IC_Data,'AUsl',13,2)
+    call SaveStr(IC_Data,'AUsl',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUsl',16,'amcs')
+    call SaveInteger(IC_Data,'AUsl',17,1)
+    call SaveStr(IC_Data,'AUsl',18,"Mana cost")
+    call SaveInteger(IC_Data,'AUsl',20,'aran')
+    call SaveInteger(IC_Data,'AUsl',21,2)
+    call SaveStr(IC_Data,'AUsl',22,"Cast range")
+    call SaveInteger(IC_Data,'AUsl',24,'Usl1')
+    call SaveInteger(IC_Data,'AUsl',25,2)
+    call SaveStr(IC_Data,'AUsl',26,"Stun Duration")
+    call SaveInteger(IC_Data,'AUsl',28,'aare')
+    call SaveInteger(IC_Data,'AUsl',29,2)
+    call SaveStr(IC_Data,'AUsl',30,"Area of effect")
+    call SaveInteger(IC_Data,'AUsl',-1,8)
+    call SaveInteger(IC_Data,'AUts',0,'acas')
+    call SaveInteger(IC_Data,'AUts',1,2)
+    call SaveStr(IC_Data,'AUts',2,"Casting Time")
+    call SaveInteger(IC_Data,'AUts',4,'adur')
+    call SaveInteger(IC_Data,'AUts',5,2)
+    call SaveStr(IC_Data,'AUts',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'AUts',8,'ahdu')
+    call SaveInteger(IC_Data,'AUts',9,2)
+    call SaveStr(IC_Data,'AUts',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'AUts',12,'acdn')
+    call SaveInteger(IC_Data,'AUts',13,2)
+    call SaveStr(IC_Data,'AUts',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'AUts',16,'Uts1')
+    call SaveInteger(IC_Data,'AUts',17,2)
+    call SaveStr(IC_Data,'AUts',18,"Returned Damage Factor")
+    call SaveInteger(IC_Data,'AUts',20,'Uts2')
+    call SaveInteger(IC_Data,'AUts',21,2)
+    call SaveStr(IC_Data,'AUts',22,"Received Damage Factor")
+    call SaveInteger(IC_Data,'AUts',24,'Uts3')
+    call SaveInteger(IC_Data,'AUts',25,2)
+    call SaveStr(IC_Data,'AUts',26,"Defense Bonus")
+    call SaveInteger(IC_Data,'AUts',28,'amcs')
+    call SaveInteger(IC_Data,'AUts',29,1)
+    call SaveStr(IC_Data,'AUts',30,"Mana cost")
+    call SaveInteger(IC_Data,'AUts',32,'aare')
+    call SaveInteger(IC_Data,'AUts',33,2)
+    call SaveStr(IC_Data,'AUts',34,"Area of effect")
+    call SaveInteger(IC_Data,'AUts',36,'aran')
+    call SaveInteger(IC_Data,'AUts',37,2)
+    call SaveStr(IC_Data,'AUts',38,"Cast range")
+    call SaveInteger(IC_Data,'AUts',-1,10)
+    call SaveInteger(IC_Data,'Advm',0,'acas')
+    call SaveInteger(IC_Data,'Advm',1,2)
+    call SaveStr(IC_Data,'Advm',2,"Casting Time")
+    call SaveInteger(IC_Data,'Advm',4,'adur')
+    call SaveInteger(IC_Data,'Advm',5,2)
+    call SaveStr(IC_Data,'Advm',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Advm',8,'ahdu')
+    call SaveInteger(IC_Data,'Advm',9,2)
+    call SaveStr(IC_Data,'Advm',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Advm',12,'acdn')
+    call SaveInteger(IC_Data,'Advm',13,2)
+    call SaveStr(IC_Data,'Advm',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Advm',16,'amcs')
+    call SaveInteger(IC_Data,'Advm',17,1)
+    call SaveStr(IC_Data,'Advm',18,"Mana cost")
+    call SaveInteger(IC_Data,'Advm',20,'aare')
+    call SaveInteger(IC_Data,'Advm',21,2)
+    call SaveStr(IC_Data,'Advm',22,"Area of effect")
+    call SaveInteger(IC_Data,'Advm',24,'aran')
+    call SaveInteger(IC_Data,'Advm',25,2)
+    call SaveStr(IC_Data,'Advm',26,"Cast range")
+    call SaveInteger(IC_Data,'Advm',28,'dvm1')
+    call SaveInteger(IC_Data,'Advm',29,2)
+    call SaveStr(IC_Data,'Advm',30,"Life Per Unit")
+    call SaveInteger(IC_Data,'Advm',32,'dvm2')
+    call SaveInteger(IC_Data,'Advm',33,2)
+    call SaveStr(IC_Data,'Advm',34,"Mana Per Unit")
+    call SaveInteger(IC_Data,'Advm',36,'dvm3')
+    call SaveInteger(IC_Data,'Advm',37,2)
+    call SaveStr(IC_Data,'Advm',38,"Life Per Buff")
+    call SaveInteger(IC_Data,'Advm',40,'dvm4')
+    call SaveInteger(IC_Data,'Advm',41,2)
+    call SaveStr(IC_Data,'Advm',42,"Mana Per Buff")
+    call SaveInteger(IC_Data,'Advm',44,'dvm5')
+    call SaveInteger(IC_Data,'Advm',45,2)
+    call SaveStr(IC_Data,'Advm',46,"Summoned Unit Damage")
+    call SaveInteger(IC_Data,'Advm',-1,12)
+    call SaveInteger(IC_Data,'Afbk',0,'acas')
+    call SaveInteger(IC_Data,'Afbk',1,2)
+    call SaveStr(IC_Data,'Afbk',2,"Casting Time")
+    call SaveInteger(IC_Data,'Afbk',4,'adur')
+    call SaveInteger(IC_Data,'Afbk',5,2)
+    call SaveStr(IC_Data,'Afbk',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Afbk',8,'ahdu')
+    call SaveInteger(IC_Data,'Afbk',9,2)
+    call SaveStr(IC_Data,'Afbk',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Afbk',12,'acdn')
+    call SaveInteger(IC_Data,'Afbk',13,2)
+    call SaveStr(IC_Data,'Afbk',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Afbk',16,'amcs')
+    call SaveInteger(IC_Data,'Afbk',17,1)
+    call SaveStr(IC_Data,'Afbk',18,"Mana cost")
+    call SaveInteger(IC_Data,'Afbk',20,'aran')
+    call SaveInteger(IC_Data,'Afbk',21,2)
+    call SaveStr(IC_Data,'Afbk',22,"Cast range")
+    call SaveInteger(IC_Data,'Afbk',24,'fbk1')
+    call SaveInteger(IC_Data,'Afbk',25,2)
+    call SaveStr(IC_Data,'Afbk',26,"Max Mana Drained - Units")
+endfunction
+
+function IC_Data60 takes nothing returns nothing
+    call SaveInteger(IC_Data,'Afbk',28,'fbk2')
+    call SaveInteger(IC_Data,'Afbk',29,2)
+    call SaveStr(IC_Data,'Afbk',30,"Damage Ratio - Units (%)")
+    call SaveBoolean(IC_Data,'Afbk',31,true)
+    call SaveInteger(IC_Data,'Afbk',32,'fbk3')
+    call SaveInteger(IC_Data,'Afbk',33,2)
+    call SaveStr(IC_Data,'Afbk',34,"Max Mana Drained - Heros")
+    call SaveInteger(IC_Data,'Afbk',36,'fbk4')
+    call SaveInteger(IC_Data,'Afbk',37,2)
+    call SaveStr(IC_Data,'Afbk',38,"Damage Ratio - Heros (%)")
+    call SaveBoolean(IC_Data,'Afbk',39,true)
+    call SaveInteger(IC_Data,'Afbk',40,'fbk5')
+    call SaveInteger(IC_Data,'Afbk',41,2)
+    call SaveStr(IC_Data,'Afbk',42,"Summoned Damage")
+    call SaveInteger(IC_Data,'Afbk',44,'aare')
+    call SaveInteger(IC_Data,'Afbk',45,2)
+    call SaveStr(IC_Data,'Afbk',46,"Area of effect")
+    call SaveInteger(IC_Data,'Afbk',-1,12)
+    call SaveInteger(IC_Data,'Afod',0,'acas')
+    call SaveInteger(IC_Data,'Afod',1,2)
+    call SaveStr(IC_Data,'Afod',2,"Casting Time")
+    call SaveInteger(IC_Data,'Afod',4,'adur')
+    call SaveInteger(IC_Data,'Afod',5,2)
+    call SaveStr(IC_Data,'Afod',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Afod',8,'ahdu')
+    call SaveInteger(IC_Data,'Afod',9,2)
+    call SaveStr(IC_Data,'Afod',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Afod',12,'acdn')
+    call SaveInteger(IC_Data,'Afod',13,2)
+    call SaveStr(IC_Data,'Afod',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Afod',16,'amcs')
+    call SaveInteger(IC_Data,'Afod',17,1)
+    call SaveStr(IC_Data,'Afod',18,"Mana cost")
+    call SaveInteger(IC_Data,'Afod',20,'aran')
+    call SaveInteger(IC_Data,'Afod',21,2)
+    call SaveStr(IC_Data,'Afod',22,"Cast range")
+    call SaveInteger(IC_Data,'Afod',24,'Nfd1')
+    call SaveInteger(IC_Data,'Afod',25,2)
+    call SaveStr(IC_Data,'Afod',26,"Graphic Delay")
+    call SaveInteger(IC_Data,'Afod',28,'Nfd2')
+    call SaveInteger(IC_Data,'Afod',29,2)
+    call SaveStr(IC_Data,'Afod',30,"Graphic Duration")
+    call SaveInteger(IC_Data,'Afod',32,'Nfd3')
+    call SaveInteger(IC_Data,'Afod',33,2)
+    call SaveStr(IC_Data,'Afod',34,"Damage")
+    call SaveInteger(IC_Data,'Afod',36,'aare')
+    call SaveInteger(IC_Data,'Afod',37,2)
+    call SaveStr(IC_Data,'Afod',38,"Area of effect")
+    call SaveInteger(IC_Data,'Afod',-1,10)
+    call SaveInteger(IC_Data,'Amls',0,'acas')
+    call SaveInteger(IC_Data,'Amls',1,2)
+    call SaveStr(IC_Data,'Amls',2,"Casting Time")
+    call SaveInteger(IC_Data,'Amls',4,'adur')
+    call SaveInteger(IC_Data,'Amls',5,2)
+    call SaveStr(IC_Data,'Amls',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Amls',8,'ahdu')
+    call SaveInteger(IC_Data,'Amls',9,2)
+    call SaveStr(IC_Data,'Amls',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Amls',12,'acdn')
+    call SaveInteger(IC_Data,'Amls',13,2)
+    call SaveStr(IC_Data,'Amls',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Amls',16,'amcs')
+    call SaveInteger(IC_Data,'Amls',17,1)
+    call SaveStr(IC_Data,'Amls',18,"Mana cost")
+    call SaveInteger(IC_Data,'Amls',20,'aran')
+    call SaveInteger(IC_Data,'Amls',21,2)
+    call SaveStr(IC_Data,'Amls',22,"Cast range")
+    call SaveInteger(IC_Data,'Amls',24,'mls1')
+    call SaveInteger(IC_Data,'Amls',25,2)
+    call SaveStr(IC_Data,'Amls',26,"Damage Per Second")
+    call SaveInteger(IC_Data,'Amls',28,'aare')
+    call SaveInteger(IC_Data,'Amls',29,2)
+    call SaveStr(IC_Data,'Amls',30,"Area of effect")
+    call SaveInteger(IC_Data,'Amls',-1,8)
+    call SaveInteger(IC_Data,'Apo2',0,'acas')
+    call SaveInteger(IC_Data,'Apo2',1,2)
+    call SaveStr(IC_Data,'Apo2',2,"Casting Time")
+    call SaveInteger(IC_Data,'Apo2',4,'adur')
+    call SaveInteger(IC_Data,'Apo2',5,2)
+    call SaveStr(IC_Data,'Apo2',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Apo2',8,'ahdu')
+    call SaveInteger(IC_Data,'Apo2',9,2)
+    call SaveStr(IC_Data,'Apo2',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Apo2',12,'acdn')
+    call SaveInteger(IC_Data,'Apo2',13,2)
+    call SaveStr(IC_Data,'Apo2',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Apo2',16,'amcs')
+    call SaveInteger(IC_Data,'Apo2',17,1)
+    call SaveStr(IC_Data,'Apo2',18,"Mana cost")
+    call SaveInteger(IC_Data,'Apo2',20,'Poi1')
+    call SaveInteger(IC_Data,'Apo2',21,2)
+    call SaveStr(IC_Data,'Apo2',22,"Damage per Second")
+    call SaveInteger(IC_Data,'Apo2',24,'Poi2')
+    call SaveInteger(IC_Data,'Apo2',25,2)
+    call SaveStr(IC_Data,'Apo2',26,"Movement Speed Factor")
+    call SaveInteger(IC_Data,'Apo2',28,'Poi3')
+    call SaveInteger(IC_Data,'Apo2',29,2)
+    call SaveStr(IC_Data,'Apo2',30,"Attack Speed Factor")
+    call SaveInteger(IC_Data,'Apo2',32,'Poi4')
+    call SaveInteger(IC_Data,'Apo2',33,1)
+    call SaveStr(IC_Data,'Apo2',34,"Stacking Type")
+    call SaveInteger(IC_Data,'Apo2',36,'aare')
+    call SaveInteger(IC_Data,'Apo2',37,2)
+    call SaveStr(IC_Data,'Apo2',38,"Area of effect")
+    call SaveInteger(IC_Data,'Apo2',40,'aran')
+    call SaveInteger(IC_Data,'Apo2',41,2)
+    call SaveStr(IC_Data,'Apo2',42,"Cast range")
+    call SaveInteger(IC_Data,'Apo2',-1,11)
+    call SaveInteger(IC_Data,'Arel',0,'acas')
+    call SaveInteger(IC_Data,'Arel',1,2)
+    call SaveStr(IC_Data,'Arel',2,"Casting Time")
+    call SaveInteger(IC_Data,'Arel',4,'adur')
+    call SaveInteger(IC_Data,'Arel',5,2)
+    call SaveStr(IC_Data,'Arel',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Arel',8,'ahdu')
+    call SaveInteger(IC_Data,'Arel',9,2)
+    call SaveStr(IC_Data,'Arel',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Arel',12,'acdn')
+    call SaveInteger(IC_Data,'Arel',13,2)
+    call SaveStr(IC_Data,'Arel',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Arel',16,'amcs')
+    call SaveInteger(IC_Data,'Arel',17,1)
+    call SaveStr(IC_Data,'Arel',18,"Mana cost")
+    call SaveInteger(IC_Data,'Arel',20,'Ihpr')
+    call SaveInteger(IC_Data,'Arel',21,1)
+    call SaveStr(IC_Data,'Arel',22,"Hit Points Regenerated Per Second")
+    call SaveInteger(IC_Data,'Arel',24,'aare')
+    call SaveInteger(IC_Data,'Arel',25,2)
+    call SaveStr(IC_Data,'Arel',26,"Area of effect")
+    call SaveInteger(IC_Data,'Arel',28,'aran')
+    call SaveInteger(IC_Data,'Arel',29,2)
+    call SaveStr(IC_Data,'Arel',30,"Cast range")
+    call SaveInteger(IC_Data,'Arel',-1,8)
+    call SaveInteger(IC_Data,'Aret',0,'acas')
+    call SaveInteger(IC_Data,'Aret',1,2)
+    call SaveStr(IC_Data,'Aret',2,"Casting Time")
+    call SaveInteger(IC_Data,'Aret',4,'adur')
+    call SaveInteger(IC_Data,'Aret',5,2)
+    call SaveStr(IC_Data,'Aret',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Aret',8,'ahdu')
+    call SaveInteger(IC_Data,'Aret',9,2)
+    call SaveStr(IC_Data,'Aret',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Aret',12,'acdn')
+    call SaveInteger(IC_Data,'Aret',13,2)
+    call SaveStr(IC_Data,'Aret',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Aret',16,'amcs')
+    call SaveInteger(IC_Data,'Aret',17,1)
+    call SaveStr(IC_Data,'Aret',18,"Mana cost")
+    call SaveInteger(IC_Data,'Aret',20,'aare')
+    call SaveInteger(IC_Data,'Aret',21,2)
+    call SaveStr(IC_Data,'Aret',22,"Area of effect")
+    call SaveInteger(IC_Data,'Aret',24,'aran')
+    call SaveInteger(IC_Data,'Aret',25,2)
+    call SaveStr(IC_Data,'Aret',26,"Cast range")
+    call SaveInteger(IC_Data,'Aret',-1,7)
+    call SaveInteger(IC_Data,'Aroa',0,'acas')
+    call SaveInteger(IC_Data,'Aroa',1,2)
+    call SaveStr(IC_Data,'Aroa',2,"Casting Time")
+    call SaveInteger(IC_Data,'Aroa',4,'adur')
+    call SaveInteger(IC_Data,'Aroa',5,2)
+endfunction
+
+function IC_Data61 takes nothing returns nothing
+    call SaveStr(IC_Data,'Aroa',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Aroa',8,'ahdu')
+    call SaveInteger(IC_Data,'Aroa',9,2)
+    call SaveStr(IC_Data,'Aroa',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Aroa',12,'acdn')
+    call SaveInteger(IC_Data,'Aroa',13,2)
+    call SaveStr(IC_Data,'Aroa',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Aroa',16,'amcs')
+    call SaveInteger(IC_Data,'Aroa',17,1)
+    call SaveStr(IC_Data,'Aroa',18,"Mana cost")
+    call SaveInteger(IC_Data,'Aroa',20,'aare')
+    call SaveInteger(IC_Data,'Aroa',21,2)
+    call SaveStr(IC_Data,'Aroa',22,"Area of effect")
+    call SaveInteger(IC_Data,'Aroa',24,'Roa1')
+    call SaveInteger(IC_Data,'Aroa',25,2)
+    call SaveStr(IC_Data,'Aroa',26,"Damage Increase (%)")
+    call SaveBoolean(IC_Data,'Aroa',27,true)
+    call SaveInteger(IC_Data,'Aroa',28,'Roa2')
+    call SaveInteger(IC_Data,'Aroa',29,1)
+    call SaveStr(IC_Data,'Aroa',30,"Defense Increase")
+    call SaveInteger(IC_Data,'Aroa',32,'Roa3')
+    call SaveInteger(IC_Data,'Aroa',33,2)
+    call SaveStr(IC_Data,'Aroa',34,"Life Regeneration Rate")
+    call SaveInteger(IC_Data,'Aroa',36,'Roa4')
+    call SaveInteger(IC_Data,'Aroa',37,2)
+    call SaveStr(IC_Data,'Aroa',38,"Mana Regen")
+    call SaveInteger(IC_Data,'Aroa',40,'Roa7')
+    call SaveInteger(IC_Data,'Aroa',41,1)
+    call SaveStr(IC_Data,'Aroa',42,"Max Units")
+    call SaveInteger(IC_Data,'Aroa',44,'aran')
+    call SaveInteger(IC_Data,'Aroa',45,2)
+    call SaveStr(IC_Data,'Aroa',46,"Cast range")
+    call SaveInteger(IC_Data,'Aroa',-1,12)
+    call SaveInteger(IC_Data,'Ashm',0,'acas')
+    call SaveInteger(IC_Data,'Ashm',1,2)
+    call SaveStr(IC_Data,'Ashm',2,"Casting Time")
+    call SaveInteger(IC_Data,'Ashm',4,'adur')
+    call SaveInteger(IC_Data,'Ashm',5,2)
+    call SaveStr(IC_Data,'Ashm',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Ashm',8,'ahdu')
+    call SaveInteger(IC_Data,'Ashm',9,2)
+    call SaveStr(IC_Data,'Ashm',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Ashm',12,'acdn')
+    call SaveInteger(IC_Data,'Ashm',13,2)
+    call SaveStr(IC_Data,'Ashm',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Ashm',16,'amcs')
+    call SaveInteger(IC_Data,'Ashm',17,1)
+    call SaveStr(IC_Data,'Ashm',18,"Mana cost")
+    call SaveInteger(IC_Data,'Ashm',20,'Shm1')
+    call SaveInteger(IC_Data,'Ashm',21,2)
+    call SaveStr(IC_Data,'Ashm',22,"Fade Duration")
+    call SaveInteger(IC_Data,'Ashm',24,'Shm2')
+    call SaveInteger(IC_Data,'Ashm',25,2)
+    call SaveStr(IC_Data,'Ashm',26,"Day/Night Duration")
+    call SaveInteger(IC_Data,'Ashm',28,'Shm3')
+    call SaveInteger(IC_Data,'Ashm',29,2)
+    call SaveStr(IC_Data,'Ashm',30,"Action Duration")
+    call SaveInteger(IC_Data,'Ashm',32,'aare')
+    call SaveInteger(IC_Data,'Ashm',33,2)
+    call SaveStr(IC_Data,'Ashm',34,"Area of effect")
+    call SaveInteger(IC_Data,'Ashm',36,'aran')
+    call SaveInteger(IC_Data,'Ashm',37,2)
+    call SaveStr(IC_Data,'Ashm',38,"Cast range")
+    call SaveInteger(IC_Data,'Ashm',-1,10)
+    call SaveInteger(IC_Data,'Aspo',0,'acas')
+    call SaveInteger(IC_Data,'Aspo',1,2)
+    call SaveStr(IC_Data,'Aspo',2,"Casting Time")
+    call SaveInteger(IC_Data,'Aspo',4,'adur')
+    call SaveInteger(IC_Data,'Aspo',5,2)
+    call SaveStr(IC_Data,'Aspo',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Aspo',8,'ahdu')
+    call SaveInteger(IC_Data,'Aspo',9,2)
+    call SaveStr(IC_Data,'Aspo',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Aspo',12,'acdn')
+    call SaveInteger(IC_Data,'Aspo',13,2)
+    call SaveStr(IC_Data,'Aspo',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Aspo',16,'amcs')
+    call SaveInteger(IC_Data,'Aspo',17,1)
+    call SaveStr(IC_Data,'Aspo',18,"Mana cost")
+    call SaveInteger(IC_Data,'Aspo',20,'Spo1')
+    call SaveInteger(IC_Data,'Aspo',21,2)
+    call SaveStr(IC_Data,'Aspo',22,"Damage Per Second")
+    call SaveInteger(IC_Data,'Aspo',24,'Spo2')
+    call SaveInteger(IC_Data,'Aspo',25,2)
+    call SaveStr(IC_Data,'Aspo',26,"Movement Speed Factor")
+    call SaveInteger(IC_Data,'Aspo',28,'Spo3')
+    call SaveInteger(IC_Data,'Aspo',29,2)
+    call SaveStr(IC_Data,'Aspo',30,"Attack Speed Factor")
+    call SaveInteger(IC_Data,'Aspo',32,'Spo4')
+    call SaveInteger(IC_Data,'Aspo',33,1)
+    call SaveStr(IC_Data,'Aspo',34,"Stacking Type")
+    call SaveInteger(IC_Data,'Aspo',36,'aare')
+    call SaveInteger(IC_Data,'Aspo',37,2)
+    call SaveStr(IC_Data,'Aspo',38,"Area of effect")
+    call SaveInteger(IC_Data,'Aspo',40,'aran')
+    call SaveInteger(IC_Data,'Aspo',41,2)
+    call SaveStr(IC_Data,'Aspo',42,"Cast range")
+    call SaveInteger(IC_Data,'Aspo',-1,11)
+    call SaveInteger(IC_Data,'Asta',0,'acas')
+    call SaveInteger(IC_Data,'Asta',1,2)
+    call SaveStr(IC_Data,'Asta',2,"Casting Time")
+    call SaveInteger(IC_Data,'Asta',4,'adur')
+    call SaveInteger(IC_Data,'Asta',5,2)
+    call SaveStr(IC_Data,'Asta',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Asta',8,'ahdu')
+    call SaveInteger(IC_Data,'Asta',9,2)
+    call SaveStr(IC_Data,'Asta',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Asta',12,'acdn')
+    call SaveInteger(IC_Data,'Asta',13,2)
+    call SaveStr(IC_Data,'Asta',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Asta',16,'amcs')
+    call SaveInteger(IC_Data,'Asta',17,1)
+    call SaveStr(IC_Data,'Asta',18,"Mana cost")
+    call SaveInteger(IC_Data,'Asta',20,'aran')
+    call SaveInteger(IC_Data,'Asta',21,2)
+    call SaveStr(IC_Data,'Asta',22,"Cast range")
+    call SaveInteger(IC_Data,'Asta',24,'Sta1')
+    call SaveInteger(IC_Data,'Asta',25,2)
+    call SaveStr(IC_Data,'Asta',26,"Activation Delay")
+    call SaveInteger(IC_Data,'Asta',28,'Sta2')
+    call SaveInteger(IC_Data,'Asta',29,2)
+    call SaveStr(IC_Data,'Asta',30,"Detection Radius")
+    call SaveInteger(IC_Data,'Asta',32,'Sta3')
+    call SaveInteger(IC_Data,'Asta',33,2)
+    call SaveStr(IC_Data,'Asta',34,"Detonation Radius")
+    call SaveInteger(IC_Data,'Asta',36,'Sta4')
+    call SaveInteger(IC_Data,'Asta',37,2)
+    call SaveStr(IC_Data,'Asta',38,"Stun Duration")
+    call SaveInteger(IC_Data,'Asta',40,'Stau')
+    call SaveInteger(IC_Data,'Asta',41,1)
+    call SaveStr(IC_Data,'Asta',42,"Ward Unit Type")
+    call SaveInteger(IC_Data,'Asta',44,'aare')
+    call SaveInteger(IC_Data,'Asta',45,2)
+    call SaveStr(IC_Data,'Asta',46,"Area of effect")
+    call SaveInteger(IC_Data,'Asta',-1,12)
+    call SaveInteger(IC_Data,'Avul',0,'acas')
+    call SaveInteger(IC_Data,'Avul',1,2)
+    call SaveStr(IC_Data,'Avul',2,"Casting Time")
+    call SaveInteger(IC_Data,'Avul',4,'adur')
+    call SaveInteger(IC_Data,'Avul',5,2)
+    call SaveStr(IC_Data,'Avul',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Avul',8,'ahdu')
+    call SaveInteger(IC_Data,'Avul',9,2)
+    call SaveStr(IC_Data,'Avul',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Avul',12,'acdn')
+    call SaveInteger(IC_Data,'Avul',13,2)
+    call SaveStr(IC_Data,'Avul',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Avul',16,'amcs')
+    call SaveInteger(IC_Data,'Avul',17,1)
+    call SaveStr(IC_Data,'Avul',18,"Mana cost")
+    call SaveInteger(IC_Data,'Avul',20,'aare')
+    call SaveInteger(IC_Data,'Avul',21,2)
+    call SaveStr(IC_Data,'Avul',22,"Area of effect")
+    call SaveInteger(IC_Data,'Avul',24,'aran')
+    call SaveInteger(IC_Data,'Avul',25,2)
+    call SaveStr(IC_Data,'Avul',26,"Cast range")
+    call SaveInteger(IC_Data,'Avul',-1,7)
+    call SaveInteger(IC_Data,'Awrs',0,'acas')
+    call SaveInteger(IC_Data,'Awrs',1,2)
+    call SaveStr(IC_Data,'Awrs',2,"Casting Time")
+endfunction
+
+function IC_Data62 takes nothing returns nothing
+    call SaveInteger(IC_Data,'Awrs',4,'adur')
+    call SaveInteger(IC_Data,'Awrs',5,2)
+    call SaveStr(IC_Data,'Awrs',6,"Duration (seconds)")
+    call SaveInteger(IC_Data,'Awrs',8,'ahdu')
+    call SaveInteger(IC_Data,'Awrs',9,2)
+    call SaveStr(IC_Data,'Awrs',10,"Hero duration (seconds)")
+    call SaveInteger(IC_Data,'Awrs',12,'acdn')
+    call SaveInteger(IC_Data,'Awrs',13,2)
+    call SaveStr(IC_Data,'Awrs',14,"Cooldown (seconds)")
+    call SaveInteger(IC_Data,'Awrs',16,'amcs')
+    call SaveInteger(IC_Data,'Awrs',17,1)
+    call SaveStr(IC_Data,'Awrs',18,"Mana cost")
+    call SaveInteger(IC_Data,'Awrs',20,'aare')
+    call SaveInteger(IC_Data,'Awrs',21,2)
+    call SaveStr(IC_Data,'Awrs',22,"Area of effect")
+    call SaveInteger(IC_Data,'Awrs',24,'Wrs1')
+    call SaveInteger(IC_Data,'Awrs',25,2)
+    call SaveStr(IC_Data,'Awrs',26,"Damage")
+    call SaveInteger(IC_Data,'Awrs',28,'Wrs2')
+    call SaveInteger(IC_Data,'Awrs',29,2)
+    call SaveStr(IC_Data,'Awrs',30,"Terrain Deformation Amplitude")
+    call SaveInteger(IC_Data,'Awrs',32,'Wrs3')
+    call SaveInteger(IC_Data,'Awrs',33,1)
+    call SaveStr(IC_Data,'Awrs',34,"Terrain Deformation Duration (ms)")
+    call SaveInteger(IC_Data,'Awrs',36,'aran')
+    call SaveInteger(IC_Data,'Awrs',37,2)
+    call SaveStr(IC_Data,'Awrs',38,"Cast range")
+    call SaveInteger(IC_Data,'Awrs',-1,10)
+endfunction
+
+function IC_LoadData takes nothing returns nothing
+    set IC_Count = 225
+    set IC_Sections = 23
+    call ExecuteFunc("IC_Data0")
+    call ExecuteFunc("IC_Data1")
+    call ExecuteFunc("IC_Data2")
+    call ExecuteFunc("IC_Data3")
+    call ExecuteFunc("IC_Data4")
+    call ExecuteFunc("IC_Data5")
+    call ExecuteFunc("IC_Data6")
+    call ExecuteFunc("IC_Data7")
+    call ExecuteFunc("IC_Data8")
+    call ExecuteFunc("IC_Data9")
+    call ExecuteFunc("IC_Data10")
+    call ExecuteFunc("IC_Data11")
+    call ExecuteFunc("IC_Data12")
+    call ExecuteFunc("IC_Data13")
+    call ExecuteFunc("IC_Data14")
+    call ExecuteFunc("IC_Data15")
+    call ExecuteFunc("IC_Data16")
+    call ExecuteFunc("IC_Data17")
+    call ExecuteFunc("IC_Data18")
+    call ExecuteFunc("IC_Data19")
+    call ExecuteFunc("IC_Data20")
+    call ExecuteFunc("IC_Data21")
+    call ExecuteFunc("IC_Data22")
+    call ExecuteFunc("IC_Data23")
+    call ExecuteFunc("IC_Data24")
+    call ExecuteFunc("IC_Data25")
+    call ExecuteFunc("IC_Data26")
+    call ExecuteFunc("IC_Data27")
+    call ExecuteFunc("IC_Data28")
+    call ExecuteFunc("IC_Data29")
+    call ExecuteFunc("IC_Data30")
+    call ExecuteFunc("IC_Data31")
+    call ExecuteFunc("IC_Data32")
+    call ExecuteFunc("IC_Data33")
+    call ExecuteFunc("IC_Data34")
+    call ExecuteFunc("IC_Data35")
+    call ExecuteFunc("IC_Data36")
+    call ExecuteFunc("IC_Data37")
+    call ExecuteFunc("IC_Data38")
+    call ExecuteFunc("IC_Data39")
+    call ExecuteFunc("IC_Data40")
+    call ExecuteFunc("IC_Data41")
+    call ExecuteFunc("IC_Data42")
+    call ExecuteFunc("IC_Data43")
+    call ExecuteFunc("IC_Data44")
+    call ExecuteFunc("IC_Data45")
+    call ExecuteFunc("IC_Data46")
+    call ExecuteFunc("IC_Data47")
+    call ExecuteFunc("IC_Data48")
+    call ExecuteFunc("IC_Data49")
+    call ExecuteFunc("IC_Data50")
+    call ExecuteFunc("IC_Data51")
+    call ExecuteFunc("IC_Data52")
+    call ExecuteFunc("IC_Data53")
+    call ExecuteFunc("IC_Data54")
+    call ExecuteFunc("IC_Data55")
+    call ExecuteFunc("IC_Data56")
+    call ExecuteFunc("IC_Data57")
+    call ExecuteFunc("IC_Data58")
+    call ExecuteFunc("IC_Data59")
+    call ExecuteFunc("IC_Data60")
+    call ExecuteFunc("IC_Data61")
+    call ExecuteFunc("IC_Data62")
+endfunction
+// END ITEMS CATALOG DATA
+
+// BEGIN ITEMS CATALOG RUNTIME
+// Gameplay handles are created only during synchronized hydration, never in click callbacks.
+function IC_Plain takes string s returns string
+    local string out = ""
+    local integer i = 0
+    local string c
+    loop
+        exitwhen i >= StringLength(s)
+        set c = SubString(s, i, i+2)
+        if c == "|c" or c == "|C" then
+            set i = i + 10
+        elseif c == "|r" or c == "|R" then
+            set i = i + 2
+        elseif c == "|n" or c == "|N" then
+            set out = out + "\n"
+            set i = i + 2
+        else
+            set c = SubString(s, i, i+1)
+            if c != "\r" then
+                set out = out + c
+            endif
+            set i = i + 1
+        endif
+    endloop
+    return out
+endfunction
+
+function IC_Number takes real value returns string
+    if value == I2R(R2I(value)) then
+        return I2S(R2I(value))
+    endif
+    return R2SW(value, 0, 2)
+endfunction
+
+function IC_Matches takes string text, string query returns boolean
+    local integer i = 0
+    local integer n = StringLength(query)
+    set text = StringCase(text, false)
+    loop
+        exitwhen i+n > StringLength(text)
+        if SubString(text, i, i+n) == query then
+            return true
+        endif
+        set i = i + 1
+    endloop
+    return n == 0
+endfunction
+
+function IC_Short takes string s returns string
+    if StringLength(s) > 24 then
+        return SubString(s, 0, 21) + "..."
+    endif
+    return s
+endfunction
+
+function IC_Cost takes integer idx returns string
+    local string value = I2S(IC_Gold[idx]) + " gold"
+    if IC_Lumber[idx] > 0 then
+        set value = value + " / " + I2S(IC_Lumber[idx]) + " lumber"
+    endif
+    return value
+endfunction
+
+// Wrap by words before pagination, so long tooltips cannot run below the panel.
+function IC_Paginate takes string text returns string
+    local integer i = 0
+    local integer column = 0
+    local integer row = 0
+    local string word = ""
+    local string out = ""
+    local string c
+    set text = IC_Plain(text) + "\n"
+    loop
+        exitwhen i >= StringLength(text)
+        set c = SubString(text,i,i+1)
+        if c == " " or c == "\n" then
+            if column > 0 and column + StringLength(word) > 88 then
+                if row/12 == IC_TextPage then
+                    set out = out + "\n"
+                endif
+                set row = row + 1
+                set column = 0
+            endif
+            if row/12 == IC_TextPage then
+                set out = out + word
+                if c == " " then
+                    set out = out + " "
+                endif
+            endif
+            set column = column + StringLength(word) + 1
+            set word = ""
+            if c == "\n" then
+                if row/12 == IC_TextPage then
+                    set out = out + "\n"
+                endif
+                set row = row + 1
+                set column = 0
+            endif
+        else
+            set word = word + c
+        endif
+        set i = i + 1
+    endloop
+    set IC_TextPages = IMaxBJ(1,(row+11)/12)
+    return out
+endfunction
+
+function IC_SetTile takes integer slot, integer idx returns nothing
+    set IC_TileItem[slot] = idx
+    call BlzFrameSetVisible(IC_Tile[slot], idx > 0)
+    if idx > 0 then
+        call BlzFrameSetTexture(IC_TileArt[slot], IC_Icon[idx], 0, true)
+        call BlzFrameSetText(IC_TileLabel[slot], IC_Short(IC_Name[idx]) + "\n|cffffcc00" + I2S(IC_Gold[idx]) + "g|r")
+    endif
+endfunction
+
+function IC_Render takes nothing returns nothing
+    local integer i = 0
+    local integer j
+    local integer section
+    local integer count = 0
+    local integer idx
+    local integer pages
+    local string text
+    call BlzFrameSetVisible(IC_Browse, IC_Selected == 0)
+    call BlzFrameSetVisible(IC_Detail, IC_Selected > 0)
+    call BlzFrameSetText(IC_Back, "Shops")
+    if IC_Selected == 0 then
+        loop
+            exitwhen i == 24
+            call IC_SetTile(i, 0)
+            set i = i + 1
+        endloop
+        set i = 0
+        loop
+            exitwhen i == 2
+            call BlzFrameSetVisible(IC_SectionArt[i], IC_Query == "")
+            call BlzFrameSetVisible(IC_SectionTitle[i], IC_Query == "")
+            set i = i + 1
+        endloop
+        if IC_Query == "" then
+            set pages = (IC_Sections+1)/2
+            set IC_Page = IMinBJ(IC_Page, pages-1)
+            set i = 0
+            loop
+                exitwhen i == 2
+                set section = IC_Page*2+i+1
+                call BlzFrameSetVisible(IC_SectionArt[i], section <= IC_Sections)
+                call BlzFrameSetVisible(IC_SectionTitle[i], section <= IC_Sections)
+                if section <= IC_Sections then
+                    call BlzFrameSetTexture(IC_SectionArt[i],IC_SectionIcon[section],0,true)
+                    call BlzFrameSetText(IC_SectionTitle[i],IC_SectionName[section])
+                    set j = 0
+                    loop
+                        exitwhen j >= IC_SectionCount[section]
+                        call IC_SetTile(i*12+j,IC_Stock[IC_SectionStart[section]+j])
+                        set j = j + 1
+                    endloop
+                endif
+                set i = i + 1
+            endloop
+            call BlzFrameSetText(IC_Footer,"Shops " + I2S(IC_Page+1) + " / " + I2S(pages) + "   |   Click an item to inspect it")
+        else
+            set i = 1
+            loop
+                exitwhen i > IC_Count
+                if IC_Matches(IC_Name[i],IC_Query) or IC_Matches(IC_Location[i],IC_Query) then
+                    if count/24 == IC_Page then
+                        call IC_SetTile(ModuloInteger(count,24),i)
+                    endif
+                    set count = count + 1
+                endif
+                set i = i + 1
+            endloop
+            set pages = IMaxBJ(1,(count+23)/24)
+            call BlzFrameSetText(IC_Footer,I2S(count) + " matches   |   Page " + I2S(IC_Page+1) + " / " + I2S(pages))
+        endif
+        call BlzFrameSetEnable(IC_Previous, IC_Page > 0)
+        call BlzFrameSetEnable(IC_Next, IC_Page+1 < pages)
+    else
+        set idx = IC_Selected
+        call BlzFrameSetText(IC_Back, "Back")
+        call BlzFrameSetTexture(IC_DetailIcon, IC_Icon[idx], 0, true)
+        call BlzFrameSetText(IC_DetailName, IC_Name[idx])
+        call BlzFrameSetText(IC_DetailCost, IC_Cost(idx) + "   |   " + IC_Location[idx])
+        set i = 0
+        loop
+            exitwhen i == 8
+            call BlzFrameSetVisible(IC_Link[i],false)
+            set IC_LinkItem[i] = 0
+            set i = i + 1
+        endloop
+        call BlzFrameSetText(IC_TabButton[0], "Overview")
+        call BlzFrameSetText(IC_TabButton[1], "Abilities")
+        call BlzFrameSetText(IC_TabButton[2], "Recipe")
+        if IC_Tab == 0 then
+            call BlzFrameSetText(IC_TabButton[0], "|cffffcc00Overview|r")
+            set text = IC_Description[idx]
+            if IC_Note[idx] != "" then
+                set text = text + "\n\n" + IC_Note[idx]
+            endif
+            call BlzFrameSetText(IC_Body, IC_Paginate(text))
+        elseif IC_Tab == 1 then
+            call BlzFrameSetText(IC_TabButton[1], "|cffffcc00Abilities|r")
+            call BlzFrameSetText(IC_Body, IC_Paginate(IC_Stats[idx]))
+        else
+            call BlzFrameSetText(IC_TabButton[2], "|cffffcc00Recipe|r")
+            set IC_TextPages = 1
+            set section = IC_Recipe[idx]
+            if section == 0 then
+                call BlzFrameSetText(IC_Body,"This item is bought directly or granted as a starting item.\nSee Overview for its effects and restrictions.")
+            else
+                call BlzFrameSetText(IC_Body,"Combine the components below. Click any icon for its details.\nTotal acquisition cost: " + I2S(IC_Total[idx]) + " gold.  Result is shown last.")
+                set i = 0
+                loop
+                    exitwhen i >= IC_IngredientCount[section]+1 or i == 8
+                    if i == IC_IngredientCount[section] then
+                        set j = IC_Result[section]
+                    else
+                        set j = IC_Ingredients[section*8+i]
+                    endif
+                    set IC_LinkItem[i] = j
+                    call BlzFrameSetTexture(IC_LinkArt[i],IC_Icon[j],0,true)
+                    if i == IC_IngredientCount[section] then
+                        call BlzFrameSetText(IC_LinkLabel[i],"|cffffcc00Result|r\n"+IC_Short(IC_Name[j]))
+                    else
+                        call BlzFrameSetText(IC_LinkLabel[i],IC_Short(IC_Name[j])+"\n|cffffcc00"+IC_Cost(j)+"|r")
+                    endif
+                    call BlzFrameSetVisible(IC_Link[i],true)
+                    set i = i + 1
+                endloop
+            endif
+        endif
+        call BlzFrameSetText(IC_Footer,"Page " + I2S(IC_TextPage+1) + " / " + I2S(IC_TextPages))
+        call BlzFrameSetEnable(IC_Previous,IC_TextPage > 0)
+        call BlzFrameSetEnable(IC_Next,IC_TextPage+1 < IC_TextPages)
+    endif
+    if not IC_Ready then
+        call BlzFrameSetText(IC_Footer,"Loading item details " + I2S(IC_LoadIndex-1) + " / " + I2S(IC_Count))
+    endif
+endfunction
+
+function IC_Select takes integer idx returns nothing
+    if idx > 0 then
+        if IC_HistoryCount < 32 then
+            set IC_History[IC_HistoryCount] = IC_Selected
+            set IC_HistoryCount = IC_HistoryCount + 1
+        endif
+        set IC_Selected = idx
+        set IC_Tab = 0
+        set IC_TextPage = 0
+    endif
+endfunction
+
+function IC_Click takes nothing returns nothing
+    local framehandle f = BlzGetTriggerFrame()
+    local integer i = 0
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        call BlzFrameSetEnable(f,false)
+        call BlzFrameSetEnable(f,true)
+        call BlzFrameSetFocus(f,false)
+        if f == IC_Close then
+            set FFUI_ItemsOpen = false
+            call BlzFrameSetVisible(FFUI_Items,false)
+        elseif f == IC_Search or f == IC_SearchButton then
+            set IC_Query = StringCase(IC_Plain(BlzFrameGetText(IC_Search)),false)
+            set IC_Selected = 0
+            set IC_HistoryCount = 0
+            set IC_Page = 0
+            set IC_TextPage = 0
+        elseif f == IC_Back then
+            if IC_Selected > 0 and IC_HistoryCount > 0 then
+                set IC_HistoryCount = IC_HistoryCount - 1
+                set IC_Selected = IC_History[IC_HistoryCount]
+            else
+                set IC_Selected = 0
+                set IC_Query = ""
+                set IC_Page = 0
+                call BlzFrameSetText(IC_Search,"")
+            endif
+            set IC_Tab = 0
+            set IC_TextPage = 0
+        elseif f == IC_Previous or f == IC_Next then
+            if IC_Selected > 0 then
+                if f == IC_Previous then
+                    set IC_TextPage = IMaxBJ(0,IC_TextPage-1)
+                else
+                    set IC_TextPage = IMinBJ(IC_TextPages-1,IC_TextPage+1)
+                endif
+            elseif f == IC_Previous then
+                set IC_Page = IMaxBJ(0,IC_Page-1)
+            else
+                set IC_Page = IC_Page+1
+            endif
+        else
+            loop
+                exitwhen i == 3
+                if f == IC_TabButton[i] then
+                    set IC_Tab = i
+                    set IC_TextPage = 0
+                endif
+                set i = i + 1
+            endloop
+            set i = 0
+            loop
+                exitwhen i == 24
+                if f == IC_Tile[i] then
+                    call IC_Select(IC_TileItem[i])
+                endif
+                set i = i + 1
+            endloop
+            set i = 0
+            loop
+                exitwhen i == 8
+                if f == IC_Link[i] then
+                    call IC_Select(IC_LinkItem[i])
+                endif
+                set i = i + 1
+            endloop
+        endif
+        call IC_Render()
+    endif
+    set f = null
+endfunction
+
+function IC_ReadAbility takes ability a returns string
+    local integer id = BlzGetAbilityId(a)
+    local integer count = LoadInteger(IC_Data,id,-1)
+    local integer i = 0
+    local integer field
+    local real value
+    local string label
+    local string out = IC_Plain(GetObjectName(id)) + "\n"
+    loop
+        exitwhen i >= count
+        set field = LoadInteger(IC_Data,id,i*4)
+        if LoadInteger(IC_Data,id,i*4+1) == 1 then
+            set value = I2R(BlzGetAbilityIntegerLevelField(a,ConvertAbilityIntegerLevelField(field),0))
+        else
+            set value = BlzGetAbilityRealLevelField(a,ConvertAbilityRealLevelField(field),0)
+        endif
+        if value != 0 then
+            set label = LoadStr(IC_Data,id,i*4+2)
+            if field == 'Uau2' and not BlzGetAbilityBooleanLevelField(a,ConvertAbilityBooleanLevelField('Uau3'),0) then
+                set out = out + "Health regeneration per second: " + IC_Number(value) + "\n"
+            elseif field == 'Hab1' and not BlzGetAbilityBooleanLevelField(a,ConvertAbilityBooleanLevelField('Hab2'),0) then
+                set out = out + "Mana regeneration per second: " + IC_Number(value) + "\n"
+            elseif LoadBoolean(IC_Data,id,i*4+3) then
+                set out = out + label + ": " + IC_Number(value*100) + "%\n"
+            else
+                set out = out + label + ": " + IC_Number(value) + "\n"
+            endif
+        endif
+        set i = i + 1
+    endloop
+    if count == 0 then
+        set out = out + IC_Plain(BlzGetAbilityExtendedTooltip(id,0)) + "\n"
+    endif
+    return out
+endfunction
+
+function IC_Hydrate takes nothing returns nothing
+    local integer stop = IMinBJ(IC_LoadIndex+2,IC_Count+1)
+    local integer i
+    local item sample
+    local ability a
+    local string text
+    loop
+        exitwhen IC_LoadIndex >= stop
+        set i = IC_LoadIndex
+        set sample = CreateItem(IC_Id[i],0,0)
+        call SetItemVisible(sample,false)
+        set IC_Name[i] = IC_Plain(GetItemName(sample))
+        set IC_Icon[i] = BlzGetItemIconPath(sample)
+        set text = BlzGetItemExtendedTooltip(sample)
+        if text == "" or text == null then
+            set text = BlzGetItemDescription(sample)
+        endif
+        if text != "" and text != null and not IC_Matches(text,"<") then
+            set IC_Description[i] = text
+        endif
+        if IC_Spell[i] != 0 then
+            set text = BlzGetAbilityExtendedTooltip(IC_Spell[i],0)
+            if text != "" and text != null and not IC_Matches(text,"<") then
+                set IC_Description[i] = "Teaches " + IC_Name[i] + ".\n\n" + text
+            endif
+        else
+            set text = ""
+            set i = 0
+            loop
+                set a = BlzGetItemAbilityByIndex(sample,i)
+                exitwhen a == null or i >= 16
+                set text = text + IC_ReadAbility(a) + "\n"
+                set i = i + 1
+            endloop
+            if text != "" then
+                set IC_Stats[IC_LoadIndex] = text + "\nValues shown are for level 1. See Overview for scripted effects and restrictions."
+            endif
+        endif
+        call RemoveItem(sample)
+        set IC_LoadIndex = IC_LoadIndex + 1
+    endloop
+    if IC_LoadIndex > IC_Count then
+        set IC_Ready = true
+        call PauseTimer(IC_LoadTimer)
+        call DestroyTimer(IC_LoadTimer)
+        set IC_LoadTimer = null
+    endif
+    // This updates presentation only; each client keeps its own open page.
+    if FFUI_ItemsOpen and not FFUI_Hidden then
+        call IC_Render()
+    endif
+    set sample = null
+    set a = null
+endfunction
+
+function IC_Label takes framehandle parent, real x, real y, real w, real h, string text returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","",parent,"",0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetText(f,text)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetScale(f,0.85)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function IC_Button takes framehandle parent, trigger click, real x, real y, real w, real h, string text returns framehandle
+    local framehandle f = BlzCreateFrame("ScriptDialogButton",parent,0,0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetText(f,text)
+    call BlzTriggerRegisterFrameEvent(click,f,FRAMEEVENT_CONTROL_CLICK)
+    return f
+endfunction
+
+function IC_Art takes framehandle parent, real x, real y, real size returns framehandle
+    local framehandle f = BlzCreateFrameByType("BACKDROP","",parent,"",0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetSize(f,size,size)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function IC_Init takes nothing returns nothing
+    local trigger click = CreateTrigger()
+    local integer i = 0
+    local real x
+    local real y
+    call IC_LoadData()
+    call BlzFrameSetSize(FFUI_Items,0.740,0.400)
+    call BlzFrameClearAllPoints(FFUI_Items)
+    call BlzFrameSetAbsPoint(FFUI_Items,FRAMEPOINT_TOPLEFT,0.030,0.575)
+    set IC_Header = IC_Label(FFUI_Items,0.020,0.018,0.160,0.025,"|cffffcc00Items|r")
+    call BlzFrameSetScale(IC_Header,1.25)
+    set IC_Search = BlzCreateFrame("EscMenuEditBoxTemplate",FFUI_Items,0,0)
+    call BlzFrameSetPoint(IC_Search,FRAMEPOINT_TOPLEFT,FFUI_Items,FRAMEPOINT_TOPLEFT,0.285,-0.014)
+    call BlzFrameSetSize(IC_Search,0.190,0.028)
+    call BlzFrameSetText(IC_Search,"")
+    call BlzTriggerRegisterFrameEvent(click,IC_Search,FRAMEEVENT_EDITBOX_ENTER)
+    set IC_SearchButton = IC_Button(FFUI_Items,click,0.480,0.014,0.075,0.028,"Search")
+    set IC_Back = IC_Button(FFUI_Items,click,0.559,0.014,0.075,0.028,"Shops")
+    set IC_Close = IC_Button(FFUI_Items,click,0.638,0.014,0.080,0.028,"Close")
+    set IC_Browse = BlzCreateFrameByType("FRAME","",FFUI_Items,"",0)
+    call BlzFrameSetAllPoints(IC_Browse,FFUI_Items)
+    set IC_Detail = BlzCreateFrameByType("FRAME","",FFUI_Items,"",0)
+    call BlzFrameSetAllPoints(IC_Detail,FFUI_Items)
+    loop
+        exitwhen i == 2
+        set IC_SectionArt[i] = IC_Art(IC_Browse,0.022,0.052+i*0.153,0.038)
+        set IC_SectionTitle[i] = IC_Label(IC_Browse,0.070,0.062+i*0.153,0.610,0.026,"")
+        call BlzFrameSetScale(IC_SectionTitle[i],1.0)
+        set i = i + 1
+    endloop
+    set i = 0
+    loop
+        exitwhen i == 24
+        set x = 0.022+ModuloInteger(i,6)*0.116
+        set y = 0.097+(ModuloInteger(i,12)/6)*0.052+(i/12)*0.153
+        set IC_Tile[i] = IC_Button(IC_Browse,click,x,y,0.112,0.049,"")
+        set IC_TileArt[i] = IC_Art(IC_Tile[i],0.004,0.006,0.032)
+        set IC_TileLabel[i] = IC_Label(IC_Tile[i],0.040,0.006,0.068,0.040,"")
+        call BlzFrameSetScale(IC_TileLabel[i],0.65)
+        set i = i + 1
+    endloop
+    set IC_DetailIcon = IC_Art(IC_Detail,0.025,0.060,0.060)
+    set IC_DetailName = IC_Label(IC_Detail,0.100,0.062,0.600,0.028,"")
+    call BlzFrameSetScale(IC_DetailName,1.15)
+    set IC_DetailCost = IC_Label(IC_Detail,0.100,0.095,0.600,0.030,"")
+    set IC_TabButton[0] = IC_Button(IC_Detail,click,0.025,0.132,0.125,0.027,"Overview")
+    set IC_TabButton[1] = IC_Button(IC_Detail,click,0.156,0.132,0.125,0.027,"Abilities")
+    set IC_TabButton[2] = IC_Button(IC_Detail,click,0.287,0.132,0.125,0.027,"Recipe")
+    set IC_Body = IC_Label(IC_Detail,0.025,0.173,0.685,0.174,"")
+    set i = 0
+    loop
+        exitwhen i == 8
+        set x = 0.025+ModuloInteger(i,4)*0.174
+        set y = 0.225+(i/4)*0.060
+        set IC_Link[i] = IC_Button(IC_Detail,click,x,y,0.167,0.054,"")
+        set IC_LinkArt[i] = IC_Art(IC_Link[i],0.005,0.008,0.035)
+        set IC_LinkLabel[i] = IC_Label(IC_Link[i],0.045,0.008,0.118,0.040,"")
+        call BlzFrameSetScale(IC_LinkLabel[i],0.75)
+        set i = i + 1
+    endloop
+    set IC_Previous = IC_Button(FFUI_Items,click,0.020,0.359,0.083,0.027,"Previous")
+    set IC_Next = IC_Button(FFUI_Items,click,0.637,0.359,0.083,0.027,"Next")
+    set IC_Footer = IC_Label(FFUI_Items,0.113,0.367,0.510,0.020,"")
+    call BlzFrameSetTextAlignment(IC_Footer,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_CENTER)
+    call TriggerAddAction(click,function IC_Click)
+    call IC_Render()
+    set IC_LoadTimer = CreateTimer()
+    call TimerStart(IC_LoadTimer,0.03,true,function IC_Hydrate)
+    set click = null
+endfunction
+// END ITEMS CATALOG RUNTIME
+
+function FFUI_Click takes nothing returns nothing
+    local framehandle clicked = BlzGetTriggerFrame()
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        if clicked == FFUI_Toggle then
+            set FFUI_Hidden = not FFUI_Hidden
+            set spellKeysEditing = -1
+            call BlzFrameSetVisible(FFUI_Root, not FFUI_Hidden)
+            if FFUI_Hidden then
+                call BlzFrameSetText(FFUI_Toggle, "|cff00ff00X|r")
+            else
+                call BlzFrameSetText(FFUI_Toggle, "|cffff0000X|r")
+            endif
+        else
+            set FFUI_ItemsOpen = clicked == FFUI_ItemsButton and not FFUI_ItemsOpen
+            set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
+            call BlzFrameSetVisible(DPS_Panel, false)
+            set spellKeysOpen = false
+            set spellKeysEditing = -1
+            call SpellKeysRefresh()
+            call BlzFrameSetVisible(FFUI_Items, FFUI_ItemsOpen)
+            if FFUI_ItemsOpen then
+                call IC_Render()
+            endif
+        endif
+        call BlzFrameSetEnable(clicked, false)
+        call BlzFrameSetEnable(clicked, true)
+        call BlzFrameSetFocus(clicked, false)
+    endif
+    set clicked = null
+endfunction
+
+function FFUI_Create takes nothing returns nothing
+    local trigger click = CreateTrigger()
+    local framehandle f
+    set FFUI_ItemsButton = BlzCreateFrame("ScriptDialogButton", FFUI_Root, 0, 0)
+    call BlzFrameSetSize(FFUI_ItemsButton, 0.073, 0.028)
+    call BlzFrameSetPoint(FFUI_ItemsButton, FRAMEPOINT_LEFT, spellKeysToggle, FRAMEPOINT_RIGHT, 0.003, 0)
+    call BlzFrameSetText(FFUI_ItemsButton, "Items")
+    call BlzFrameSetLevel(FFUI_ItemsButton, 20)
+    set FFUI_Toggle = BlzCreateFrame("ScriptDialogButton", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
+    call BlzFrameSetSize(FFUI_Toggle, 0.028, 0.028)
+    call BlzFrameSetPoint(FFUI_Toggle, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.1665, -0.004)
+    call BlzFrameSetText(FFUI_Toggle, "|cffff0000X|r")
+    call BlzFrameSetLevel(FFUI_Toggle, 22)
+    set FFUI_Items = BlzCreateFrame("EscMenuBackdrop", FFUI_Root, 0, 0)
+    call BlzFrameSetSize(FFUI_Items, 0.414, 0.300)
+    call BlzFrameSetAbsPoint(FFUI_Items, FRAMEPOINT_CENTER, 0.400, 0.348)
+    call BlzFrameSetLevel(FFUI_Items, 21)
+    call IC_Init()
+    call BlzTriggerRegisterFrameEvent(click, FFUI_ItemsButton, FRAMEEVENT_CONTROL_CLICK)
+    call BlzTriggerRegisterFrameEvent(click, FFUI_Toggle, FRAMEEVENT_CONTROL_CLICK)
+    call TriggerAddAction(click, function FFUI_Click)
+    call BlzFrameSetVisible(FFUI_Items, false)
+    set f = null
+    set click = null
+endfunction
+
 function DPS_Create takes nothing returns nothing
-    local framehandle ui = BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
+    local framehandle ui = FFUI_GetRoot()
     local framehandle board = BlzGetFrameByName("Multiboard", 0)
     local framehandle f
     local trigger click = CreateTrigger()
@@ -65646,7 +76509,7 @@ function DPS_Create takes nothing returns nothing
     local real y
     set DPS_Button = BlzCreateFrame("ScriptDialogButton", ui, 0, 0)
     call BlzFrameSetSize(DPS_Button, 0.073, 0.028)
-    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, -0.039, 0.004)
+    call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, -0.039, -0.004)
     call BlzFrameSetVisible(DPS_Button, true)
     call BlzFrameSetText(DPS_Button, "Stats")
     call BlzFrameSetLevel(DPS_Button, 20)
@@ -65715,6 +76578,7 @@ function DPS_Create takes nothing returns nothing
     set board = null
     set f = null
     set click = null
+    call FFUI_Create()
 endfunction
 
 function DPS_Refresh takes nothing returns nothing
