@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-Mini Foots v54 - RJE
+Mini Foots v55 - RJE
 }
 
 STRING 2
@@ -7273,7 +7273,7 @@ STRING 1175
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 7.25s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -27012,7 +27012,7 @@ STRING 4393
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 7.25s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -27024,7 +27024,7 @@ STRING 4394
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 5.25s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
 }
 
@@ -27036,7 +27036,7 @@ STRING 4395
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 8.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -48552,7 +48552,7 @@ STRING 7838
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Charge, Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -48767,7 +48767,7 @@ STRING 7870
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -61666,7 +61666,7 @@ STRING 9928
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 8.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -64049,7 +64049,7 @@ STRING 10303
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 8.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -64117,7 +64117,7 @@ STRING 10312
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 6.25s
+|cff808080Spawn Interval:|r 6.5s
 }
 
 STRING 10313
@@ -64310,7 +64310,7 @@ STRING 10342
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 675
-|cff808080Spawn Interval:|r 5.5s
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 10343
@@ -64412,7 +64412,7 @@ STRING 10358
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6.75s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 10359
@@ -64988,7 +64988,7 @@ STRING 10423
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -65092,7 +65092,7 @@ STRING 10440
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -65135,7 +65135,7 @@ STRING 10446
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 5.25s 
 |cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
 }
 
@@ -65702,7 +65702,7 @@ STRING 10538
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -65950,7 +65950,7 @@ STRING 10577
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -66276,7 +66276,7 @@ STRING 10625
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66322,7 +66322,7 @@ STRING 10631
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66432,7 +66432,7 @@ STRING 10648
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 10649
@@ -66552,7 +66552,7 @@ STRING 10666
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 640
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 5.25s|n|cff808080Abilities:|r Slow
 }
 
 STRING 10667
@@ -66863,7 +66863,7 @@ STRING 10714
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Spawn Interval:|r 8.25s|n|cff808080Abilities:|r Unholy Frenzy
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
@@ -80603,7 +80603,7 @@ STRING 12880
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -80616,7 +80616,7 @@ STRING 12881
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 8.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -80716,7 +80716,7 @@ STRING 12894
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -80729,7 +80729,7 @@ STRING 12895
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -81246,7 +81246,7 @@ STRING 12975
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 5.25s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -84507,7 +84507,7 @@ STRING 13486
 |cffffcc00Gives:|r
 +150 Damage
 +20% Attack Speed
-Frost Attack|n60% Life Steal|n
+Frost Attack|n50% Life Steal|n
 |cffffcc00Requires:|r
 Claws of Attack +25
 Gloves of Haste
@@ -84540,7 +84540,7 @@ STRING 13490
 |cffffcc00Gives:|r
 +150 Damage
 +20% Attack Speed
-Frost Attack|n60% Life Steal|n
+Frost Attack|n50% Life Steal|n
 |cffffcc00Requires:|r
 Claws of Attack +25
 Gloves of Haste
@@ -84553,7 +84553,7 @@ STRING 13491
 {
 |cffffcc00Gives:|r
 +150 Damage
-60% Life Steal
+50% Life Steal
 +20% Attack Speed
 Frost Attack
 }
@@ -85767,7 +85767,7 @@ STRING 13686
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -86509,7 +86509,7 @@ STRING 13798
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 13799
@@ -86718,7 +86718,7 @@ STRING 13832
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 800
-|cff808080Spawn Interval:|r 5.75s
+|cff808080Spawn Interval:|r 6s
 }
 
 STRING 13833
@@ -86759,7 +86759,7 @@ STRING 13838
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 5.25s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -86852,7 +86852,7 @@ STRING 13850
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -104610,7 +104610,7 @@ STRING 17669
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 800
-|cff808080Spawn Interval:|r 5.75s
+|cff808080Spawn Interval:|r 6s
 }
 
 STRING 17670
@@ -105241,7 +105241,7 @@ STRING 17812
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 640
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 5.25s|n|cff808080Abilities:|r Slow
 }
 
 STRING 17818
@@ -105314,7 +105314,7 @@ STRING 17862
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 8.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -105340,7 +105340,7 @@ STRING 17864
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 6.25s
+|cff808080Spawn Interval:|r 6.5s
 }
 
 STRING 17865
@@ -105351,7 +105351,7 @@ STRING 17865
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 675
-|cff808080Spawn Interval:|r 5.5s
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 17866
@@ -105362,7 +105362,7 @@ STRING 17866
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6.75s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 17867
@@ -105373,7 +105373,7 @@ STRING 17867
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 17869
@@ -105384,7 +105384,7 @@ STRING 17869
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 17872
@@ -105449,7 +105449,7 @@ STRING 17913
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Spawn Interval:|r 8.25s|n|cff808080Abilities:|r Unholy Frenzy
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
