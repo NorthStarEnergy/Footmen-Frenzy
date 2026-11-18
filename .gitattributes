@@ -25,3 +25,17 @@ projects/**/src/** -text
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+
+projects/mini/src/** filter=lfs diff=lfs merge=lfs -text
+projects/mini/src/**/*.j -filter -diff -merge -text
+projects/mini/src/**/*.lua -filter -diff -merge -text
+projects/mini/src/**/*.txt -filter -diff -merge -text
+projects/mini/src/**/*.wts -filter -diff -merge -text
+projects/mini/src/**/*.fdf -filter -diff -merge -text
+projects/mini/src/**/*.toc -filter -diff -merge -text
+projects/mini/src/**/*.json -filter -diff -merge -text
+projects/mini/src/**/*.slk -filter -diff -merge -text
+projects/mini/src/**/*.md -filter -diff -merge -text
+projects/mini/src/**/*.ini -filter -diff -merge -text
+projects/mini/src/**/*.csv -filter -diff -merge -text
+projects/mini/src/**/*.xml -filter -diff -merge -text
