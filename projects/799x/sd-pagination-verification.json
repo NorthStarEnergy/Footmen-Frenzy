@@ -1,0 +1,20 @@
+{
+  "all_four_teams": true,
+  "pub_and_private_sd": true,
+  "first_page_non_carry_slots": 11,
+  "random_hero_page": 2,
+  "carry_heroes_on_second_page": true,
+  "page_wrap": true,
+  "picked_heroes_removed": true,
+  "team_stock_tracking_isolated": true,
+  "overflow_reachable": true,
+  "all_pick_layout_unchanged": true,
+  "item_text_and_object_data_unchanged": true,
+  "live_game_testing": false,
+  "map": "Reforged_Footmen_Frenzy_v7.9.9X-T40.w3x",
+  "sha256": "c47224c6aca694b802c369e3598440ea99e35fa1ad6bf8ab7676e69a9bc3656b",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "both_installed_hashes_verified": true,
+  "previous_test_preserved": true
+}
