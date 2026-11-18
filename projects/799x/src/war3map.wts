@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-|cffffcc00Reforged|r Footmen 7.9.9X-T19
+|cffffcc00Reforged|r Footmen 7.9.9X-T39 - RJE
 }
 
 STRING 2
@@ -16,7 +16,7 @@ STRING 2
 
 STRING 3
 {
-RJE
+miRaculix
 }
 
 STRING 4
@@ -1241,7 +1241,7 @@ Increased Mana Regeneration by 150%
 Increased movement speed
 |cffffcc00Requires:|r
 Sobi Mask
-RJE's Amulet of Power
+miRaculix' Amulet of Power
 |cffffcc00Total Cost:|r 200
 }
 
@@ -2789,7 +2789,7 @@ Increased Mana Regeneration by 150%
 Increased movement speed
 |cffffcc00Requires:|r
 Sobi Mask
-RJE's Amulet of Power
+miRaculix' Amulet of Power
 |cffffcc00Total Cost:|r 200
 }
 
@@ -6739,7 +6739,7 @@ Level 5 Summoner Mastery 35 mins
 STRING 1091
 // Units: N027 (Mad Wizard), Propernames (Proper Names)
 {
-|cffffcc00RJE.|r
+|cffffcc00miRaculix.|r
 }
 
 STRING 1092
@@ -12872,7 +12872,7 @@ Ability to cast Speed Scroll
 |cffffcc00Cooldown|r 35s
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 nMedallion of Glim
 |cffffcc00Cost|r 500
 }
@@ -13407,7 +13407,7 @@ Ability to cast Speed Scroll
 |cffffcc00Cooldown|r 35s
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 nMedallion of Glim
 |cffffcc00Cost|r 500
 }
@@ -20728,7 +20728,7 @@ X
 
 STRING 3383
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 3384
@@ -21040,7 +21040,7 @@ STRING 3435
 {
 join our Discord:|cff7878ff tiny.cc/footmen|r
 
-Map by RJE, based on work by miRaculix
+Map by miRaculix
 
 }
 
@@ -29207,12 +29207,12 @@ STRING 4739
 
 STRING 4740
 {
-map by |Cffffcc00RJE|R
+map by |Cffffcc00miRaculix|R
 }
 
 STRING 4741
 {
-Map by |Cffffcc00RJE|R 
+Map by |Cffffcc00miRaculix|R 
 }
 
 STRING 4742
@@ -34645,7 +34645,7 @@ Attack Speed Bonus - [|cffffcc00Level 4|r]
 STRING 5623
 // Items: hslv (RJE's special brew), Name (Name)
 {
-RJE's special brew
+miRaculix' special brew
 }
 
 STRING 5624
@@ -35231,7 +35231,7 @@ STRING 5719
 STRING 5720
 // Items: hslv (RJE's special brew), Tip (Tooltip - Basic)
 {
-Purchase RJE's special brew
+Purchase miRaculix' special brew
 }
 
 STRING 5721
@@ -37335,7 +37335,7 @@ Summon Rocky Golem
 STRING 6059
 // Items: I001 (RJE's Amulet of Power), Tip (Tooltip - Basic)
 {
-RJE's Amulet of Power
+miRaculix' Amulet of Power
 }
 
 STRING 6060
@@ -37702,13 +37702,13 @@ STRING 6119
 STRING 6120
 // Items: I001 (RJE's Amulet of Power), Name (Name)
 {
-RJE's Amulet of Power
+miRaculix' Amulet of Power
 }
 
 STRING 6121
 // Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Name (Name)
 {
-RJE's Amulet of Ultimate Power Recipe
+miRaculix' Amulet of Ultimate Power Recipe
 }
 
 STRING 6122
@@ -37732,13 +37732,13 @@ Heals a target friendly non-mechanical wounded unit for 250 hit points.
 STRING 6125
 // Items: I012 (RJE's Amulet of Ultimate Power), Tip (Tooltip - Basic)
 {
-|cffffcc00Z|r RJE's Amulet of Ultimate Power
+|cffffcc00Z|r miRaculix' Amulet of Ultimate Power
 }
 
 STRING 6126
 // Items: I012 (RJE's Amulet of Ultimate Power), Name (Name)
 {
-RJE's Amulet of Ultimate Power
+miRaculix' Amulet of Ultimate Power
 }
 
 STRING 6127
@@ -47820,13 +47820,13 @@ Regenerates hit points and mana over time.
 STRING 7726
 // Items: I01O (RJE's special brew), Name (Name)
 {
-RJE's special brew
+miRaculix' special brew
 }
 
 STRING 7727
 // Items: I01O (RJE's special brew), Tip (Tooltip - Basic)
 {
-Purchase RJE's special brew
+Purchase miRaculix' special brew
 }
 
 STRING 7728
@@ -61596,7 +61596,7 @@ Fel Hound
 
 STRING 9918
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 9919
@@ -64863,7 +64863,7 @@ STRING 10404
 |cff808080Skill level:|r Hard
 |cff808080Category:|r Hero Killer
 
-|cff808080Pro Tip:|r Invest in a RJE amulet recipe for bonus HP and mana. 
+|cff808080Pro Tip:|r Invest in a miRaculix amulet recipe for bonus HP and mana. 
 |cff8080801st skill:|r Thunderclap
 
 |cffffcc00Attacks land units.|r
@@ -65175,13 +65175,13 @@ STRING 10451
 STRING 10452
 // Items: I00J (RJE's special brew |cffffffffSPT|r), Name (Name)
 {
-RJE's special brew |cffffffffSPT|r
+miRaculix' special brew |cffffffffSPT|r
 }
 
 STRING 10453
 // Items: I00J (RJE's special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
 {
-Purchase RJE's special brew
+Purchase miRaculix' special brew
 }
 
 STRING 10454
@@ -72533,7 +72533,7 @@ Ability to cast Rejuvination
 |cffffcc00Cooldown|r 40s
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 Sobi Mask
 Ring of Regeneration
 |cffffcc00Cost|r 300
@@ -72627,7 +72627,7 @@ Ability to cast Rejuvination
 |cffffcc00Cooldown|r 40s
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 Sobi Mask
 Ring of Regeneration
 |cffffcc00Cost|r 300
@@ -75186,7 +75186,7 @@ STRING 12058
 
 STRING 12059
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 12060
@@ -81599,7 +81599,7 @@ STRING 13028
 +450 MP
 +Movement Speed
 |cffffcc00Requires:|r
-RJE's  Amulet of Power
+miRaculix'  Amulet of Power
 Periapt of Vitality
 Pendant of Mana
 |cffffcc00Total Cost:|r 1050
@@ -81613,7 +81613,7 @@ STRING 13029
 +450 MP
 +Movement Speed
 |cffffcc00Requires:|r
-RJE's  Amulet of Power
+miRaculix'  Amulet of Power
 Periapt of Vitality
 Pendant of Mana
 |cffffcc00Total Cost:|r 1050
@@ -86288,7 +86288,7 @@ STRING 13767
 STRING 13768
 // Items: I013 (Info 1), Ubertip (Tooltip - Extended)
 {
-map created by |cffffff00RJE., RJE|r
+map created by |cffffff00miRaculix., RJE|r
 
 Map Co-Creators:
 |cff00ff00OH.noes |r
@@ -86299,7 +86299,7 @@ Map Co-Creators:
 
 like the map & want to contribute / support, so we can continue releasing new versions?
 |cff7878ffpaypal.me/footmenfrenzy
-patreon.com/RJE|r
+patreon.com/miRaculix|r
 }
 
 STRING 13769
@@ -104095,7 +104095,7 @@ Increased Movement speed
 Item carrier receives a Spell Shield (60s cooldown)
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 Amulet of Spell Shield
 |cffffcc00Cost|r 1000
 }
@@ -104110,7 +104110,7 @@ Increased Movement speed
 Item carrier receives a Spell Shield (60s cooldown)
 
 |cffffcc00Requires:|r
-RJE's Amulet
+miRaculix's Amulet
 Amulet of Spell Shield
 |cffffcc00Cost|r 1000
 }
@@ -104752,7 +104752,7 @@ This upgrade affect creeps, bought from the creep shop.
 STRING 17708
 // Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
 {
-RJE's Amulet of Ultimate Power Recipe
+miRaculix' Amulet of Ultimate Power Recipe
 }
 
 STRING 17709
