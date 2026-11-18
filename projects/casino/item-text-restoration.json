@@ -1,0 +1,27 @@
+{
+  "source_map": "799-CASINO v7.w3x",
+  "sha256": "d6ec9cd89b2574a82019c9b15b63da632dc4781638dc97849069af32ebbd5d32",
+  "reference": "Reforged_Footmen_Frenzy_v7.9.9W-rc6.w3x",
+  "item_text_fields_verified": 374,
+  "title": "799-CASINO v7 - RJE",
+  "item_mechanics_unchanged": true,
+  "gameplay_code_unchanged": true,
+  "jass_title_compiled": true,
+  "archive_roundtrip_verified": true,
+  "installed_test_and_main_hashes_verified": true,
+  "previous_tests_preserved": true,
+  "live_game_testing": false,
+  "preserved_source_files_not_in_installed_map": [
+    "FF_SOURCE_MANIFEST.json",
+    "Models\\OriannaEnchantress\\Credits.txt",
+    "Models\\OriannaLich\\Credits.txt",
+    "Spells\\Veigar\\QuietImpact.mdx",
+    "VeigarPalette.tga",
+    "source_roundtrip\\FF_Runtime.j",
+    "source_roundtrip\\globals.j",
+    "war3map.w3grp",
+    "war3map.w3l",
+    "war3mapImported\\Veigar.mdx",
+    "war3mapImported\\Veigar_Portrait.mdx"
+  ]
+}
