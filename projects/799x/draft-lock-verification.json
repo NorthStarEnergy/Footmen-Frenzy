@@ -1,0 +1,17 @@
+{
+  "first_click_carry_random_accepts": true,
+  "random_credit_spent_only_on_success": true,
+  "repeat_and_reentrant_clicks_blocked": true,
+  "death_or_cleared_hero_reference_cannot_reopen_draft": true,
+  "manual_and_random_picks_share_lock": true,
+  "teammates_keep_random_and_hero_choices": true,
+  "shared_stock_restored_after_engine_decrement": true,
+  "failed_or_empty_pick_not_consumed": true,
+  "live_game_testing": false,
+  "map": "Reforged_Footmen_Frenzy_v7.9.9X-T41.w3x",
+  "sha256": "47b823251da6965c0bc31aebd7014d1b45f505b848938cc53399a87cb97085b1",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "both_installed_hashes_verified": true,
+  "previous_test_preserved": true
+}
