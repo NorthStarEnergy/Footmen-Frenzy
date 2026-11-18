@@ -3531,6 +3531,29 @@ endglobals
 // The channel guard uses active source timers, never a removable buff, to close dispel/application gaps.
 // Item custom values 1..24 store the bound player's zero-based index plus one.
 // This map previously had no item custom-value readers or writers.
+function FF_AmuletComponent takes unit u returns item
+    local item component=GetItemOfTypeFromUnitBJ(u, 'I001')
+    if component != null then
+        return component
+    endif
+    if not (UnitHasItemOfTypeBJ(u, 'I012') or UnitHasItemOfTypeBJ(u, 'I030') or UnitHasItemOfTypeBJ(u, 'I02N') or UnitHasItemOfTypeBJ(u, 'I03Y') or UnitHasItemOfTypeBJ(u, 'I031')) then
+        return null
+    endif
+    set component=GetItemOfTypeFromUnitBJ(u, 'IRb0')
+    if component != null then
+        return component
+    endif
+    set component=GetItemOfTypeFromUnitBJ(u, 'bspd')
+    if component != null then
+        return component
+    endif
+    set component=GetItemOfTypeFromUnitBJ(u, 'I03P')
+    if component != null then
+        return component
+    endif
+    return null
+endfunction
+
 function MF_HeroDisabled takes integer id returns boolean
     return id == 'E000' or id == 'E001' or id == 'E008' or id == 'E009' or id == 'E00E' or id == 'E00J' or id == 'E00K' or id == 'E00L' or id == 'E01G' or id == 'Edmm' or id == 'H00E' or id == 'H00K' or id == 'H00U' or id == 'H015' or id == 'H01Q' or id == 'H02G' or id == 'H02J' or id == 'H02W' or id == 'H04Y' or id == 'H05E' or id == 'H05N' or id == 'HDk1' or id == 'HMu1' or id == 'Hpal' or id == 'N017' or id == 'N018' or id == 'N01C' or id == 'N01G' or id == 'N01H' or id == 'N01I' or id == 'N03J' or id == 'Naka' or id == 'Nal2' or id == 'Nal3' or id == 'Nalc' or id == 'Nalm' or id == 'Nbrn' or id == 'Nfir' or id == 'Nngs' or id == 'Npbm' or id == 'Nswt' or id == 'O00G' or id == 'U00F' or id == 'hSHC' or id == 'test'
 endfunction
@@ -12591,7 +12614,7 @@ function FFR7_ApplyMassSpeed takes unit u returns nothing
 endfunction
 
 function MF_BootBonus takes unit u returns real
-    if UnitHasItemOfTypeBJ(u, 'bspd') then
+    if (UnitHasItemOfTypeBJ(u, 'bspd') or UnitHasItemOfTypeBJ(u, 'IRb0')) then
         return 60.0
     endif
     return 0.0
@@ -29950,13 +29973,13 @@ function FF_GiveRandomBoots takes unit hero returns nothing
     loop
         exitwhen slot < 0
         if UnitItemInSlot(hero, slot) == null then
-            if UnitAddItemToSlotById(hero, 'bspd', slot) then
+            if UnitAddItemToSlotById(hero, 'IRb0', slot) then
                 return
             endif
         endif
         set slot = slot - 1
     endloop
-    call CreateItem('bspd', GetUnitX(hero), GetUnitY(hero))
+    call CreateItem('IRb0', GetUnitX(hero), GetUnitY(hero))
 endfunction
 
 function FFRandom_Sold takes nothing returns nothing
@@ -54977,7 +55000,7 @@ function Trig_miRaculix_Amulett_Func009C takes nothing returns boolean
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00Z') == true ) ) then
         return false
     endif
-    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true ) ) then
+    if ( not ( FF_AmuletComponent(GetTriggerUnit()) != null ) ) then
         return false
     endif
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true ) ) then
@@ -54997,8 +55020,13 @@ function Trig_miRaculix_Amulett_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_miRaculix_Amulett_Actions takes nothing returns nothing
+    local item component=FF_AmuletComponent(GetTriggerUnit())
+    if component == null then
+        return
+    endif
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I00Z'))
-    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I001'))
+    call RemoveItem(component)
+    set component=null
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pmna'))
     call UnitAddItemByIdSwapped('I012', GetTriggerUnit())
@@ -55019,7 +55047,7 @@ function Trig_Druids_Amulet_Func009C takes nothing returns boolean
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02O') == true ) ) then
         return false
     endif
-    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true ) ) then
+    if ( not ( FF_AmuletComponent(GetTriggerUnit()) != null ) ) then
         return false
     endif
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rwiz') == true ) ) then
@@ -55039,8 +55067,13 @@ function Trig_Druids_Amulet_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Druids_Amulet_Actions takes nothing returns nothing
+    local item component=FF_AmuletComponent(GetTriggerUnit())
+    if component == null then
+        return
+    endif
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02O'))
-    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I001'))
+    call RemoveItem(component)
+    set component=null
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rwiz'))
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rlif'))
     call UnitAddItemByIdSwapped('I030', GetTriggerUnit())
@@ -55061,7 +55094,7 @@ function Trig_Amulet_of_Clarity_Func008C takes nothing returns boolean
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02X') == true ) ) then
         return false
     endif
-    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true ) ) then
+    if ( not ( FF_AmuletComponent(GetTriggerUnit()) != null ) ) then
         return false
     endif
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rwiz') == true ) ) then
@@ -55078,8 +55111,13 @@ function Trig_Amulet_of_Clarity_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Amulet_of_Clarity_Actions takes nothing returns nothing
+    local item component=FF_AmuletComponent(GetTriggerUnit())
+    if component == null then
+        return
+    endif
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02X'))
-    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I001'))
+    call RemoveItem(component)
+    set component=null
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rwiz'))
     call UnitAddItemByIdSwapped('I02N', GetTriggerUnit())
     set udg_temp_playergroup=GetForceOfPlayer(GetOwningPlayer(GetTriggerUnit()))
@@ -55099,7 +55137,7 @@ function Trig_Amulet_of_Vigor_Func008C takes nothing returns boolean
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I03Z') == true ) ) then
         return false
     endif
-    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true ) ) then
+    if ( not ( FF_AmuletComponent(GetTriggerUnit()) != null ) ) then
         return false
     endif
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mcou') == true ) ) then
@@ -55116,8 +55154,13 @@ function Trig_Amulet_of_Vigor_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Amulet_of_Vigor_Actions takes nothing returns nothing
+    local item component=FF_AmuletComponent(GetTriggerUnit())
+    if component == null then
+        return
+    endif
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I03Z'))
-    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I001'))
+    call RemoveItem(component)
+    set component=null
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'mcou'))
     call UnitAddItemByIdSwapped('I03Y', GetTriggerUnit())
     set udg_temp_playergroup=GetForceOfPlayer(GetOwningPlayer(GetTriggerUnit()))
@@ -55137,7 +55180,7 @@ function Trig_Guardian_Shield_Func008C takes nothing returns boolean
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02W') == true ) ) then
         return false
     endif
-    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true ) ) then
+    if ( not ( FF_AmuletComponent(GetTriggerUnit()) != null ) ) then
         return false
     endif
     if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00F') == true ) ) then
@@ -55154,9 +55197,14 @@ function Trig_Guardian_Shield_Conditions takes nothing returns boolean
 endfunction
 
 function Trig_Guardian_Shield_Actions takes nothing returns nothing
+    local item component=FF_AmuletComponent(GetTriggerUnit())
+    if component == null then
+        return
+    endif
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02W'))
     call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I00F'))
-    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I001'))
+    call RemoveItem(component)
+    set component=null
     call UnitAddItemByIdSwapped('I031', GetTriggerUnit())
     set udg_temp_playergroup=GetForceOfPlayer(GetOwningPlayer(GetTriggerUnit()))
     call DisplayTextToForce(udg_temp_playergroup, ( "You successfully created: " + GetItemName(GetLastCreatedItem()) ))
@@ -63509,7 +63557,7 @@ endfunction
 function MF_BootUpdate takes nothing returns nothing
     local unit u=GetEnumUnit()
     local integer key=GetHandleId(u)
-    local boolean hasBoots=UnitHasItemOfTypeBJ(u, 'bspd')
+    local boolean hasBoots=(UnitHasItemOfTypeBJ(u, 'bspd') or UnitHasItemOfTypeBJ(u, 'IRb0'))
     if GetUnitTypeId(u) == 0 then
         call GroupRemoveUnit(MF_BootWearers, u)
         call FlushChildHashtable(MF_BootState, key)
@@ -63531,7 +63579,7 @@ function MF_BootTick takes nothing returns nothing
 endfunction
 
 function MF_BootPickup takes nothing returns nothing
-    if GetItemTypeId(GetManipulatedItem()) == 'bspd' then
+    if (GetItemTypeId(GetManipulatedItem()) == 'bspd' or GetItemTypeId(GetManipulatedItem()) == 'IRb0') then
         call GroupAddUnit(MF_BootWearers, GetTriggerUnit())
     endif
 endfunction
@@ -64027,7 +64075,7 @@ function main takes nothing returns nothing
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Mini Foots v55 - RJE")
+    call SetMapName("Mini Foots v56 - RJE")
     call SetMapDescription("Four teams of two. Heroes level 10, tech T2, attack/defense 5/5, one of each creep per team. Full-team mass in the middle.")
     call SetPlayers(8)
     call SetTeams(4)

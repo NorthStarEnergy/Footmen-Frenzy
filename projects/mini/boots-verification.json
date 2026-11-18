@@ -1,0 +1,15 @@
+{
+  "project": "mini",
+  "behavior_cases": 195,
+  "recipes": 5,
+  "random_boot_sale_gold": 75,
+  "normal_amulet_priority": true,
+  "requires_carried_upgrade": true,
+  "live_game_test": false,
+  "map": "Mini Foots v56.w3x",
+  "sha256": "582c7fa930d3baf793022544188a60eaaafb77772c1509b820be709d0246c463",
+  "jass_compiled": true,
+  "archive_roundtrip_verified": true,
+  "installed_hashes_verified": true,
+  "previous_maps_archived": true
+}
