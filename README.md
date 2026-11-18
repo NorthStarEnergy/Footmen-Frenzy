@@ -7,7 +7,7 @@ Four Warcraft III map projects, shared build/install tools, and development hist
 | 799X (12 players) | Shared Fixes v85 | Footmen-Frenzy-12p | Tests/799X |
 | Solo (4 players) | UPDATE09 | Solo-Foots-4p | Tests/Solo Foots |
 | Mini (8 players) | v10 | Mini-Foots-8p | Tests/Mini Foots |
-| FFA + King (8 players) | v17 | FFA-Foots-8p | Tests/FFA Foots |
+| FFA + King (8 players) | v77 | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 
