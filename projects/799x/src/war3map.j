@@ -66935,8 +66935,8 @@ function DraftEligible takes integer team, integer id returns boolean
     return udg_selected_mode != 3 or udg_mode_mirror or CarryTav_shop[team] == null or FFR_Allowed(team, FFR_Index(id))
 endfunction
 
-function DraftPubSD takes nothing returns boolean
-    return udg_mode_pub and udg_selected_mode == 3
+function DraftSD takes nothing returns boolean
+    return udg_selected_mode == 3
 endfunction
 
 function DraftRefreshPub takes integer team returns nothing
@@ -66971,34 +66971,36 @@ function DraftRefreshPub takes integer team returns nothing
         endif
         set i = i + 1
     endloop
-    // Random Hero and Next Page occupy the two fixed command-card cells.
-    set j = IMinBJ(normals,10)
-    set shown = normals + carries
-    if j < 10 and carries > 0 then
-        set shown = shown + 10 - j
-    endif
-    if DraftPage[team]*10 >= shown then
+    // Page one: all eleven non-carry picks plus Next Page.
+    // Page two: carry picks and Random Hero. Keep overflow reachable as well.
+    set j = IMinBJ(normals,11)
+    set shown = carries + normals - j
+    if DraftPage[team] > 1 and (DraftPage[team]-1)*10 >= shown then
         set DraftPage[team] = 0
     endif
     call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
-    if DraftPage[team] == 0 then
+    if DraftPage[team] == 1 then
         call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
     endif
     set i = 0
     loop
-        exitwhen i >= 10
-        set slot = DraftPage[team]*10+i
+        exitwhen i >= 11 or (DraftPage[team] > 0 and i >= 10)
         set id = 0
-        if slot < j then
-            set id = normal[slot]
-        elseif slot >= 10 and slot < 10+carries then
-            set id = carry[slot-10]
-        elseif slot >= 10+carries and slot-carries < normals then
-            set id = normal[slot-carries]
+        if DraftPage[team] == 0 then
+            if i < j then
+                set id = normal[i]
+            endif
+        else
+            set slot = (DraftPage[team]-1)*10+i
+            if slot < carries then
+                set id = carry[slot]
+            elseif slot < shown then
+                set id = normal[j+slot-carries]
+            endif
         endif
         if id != 0 then
             call AddUnitToStock(DraftShop[team],id,1,1)
-            set DraftShown[team*10+i] = id
+            set DraftShown[team*12+i] = id
         endif
         set i = i + 1
     endloop
@@ -67008,20 +67010,17 @@ function DraftRefresh takes integer team returns nothing
     local integer i = 0
     local integer index
     local integer id
-    local integer capacity = 8
-    if DraftPubSD() then
-        set capacity = 10
-    endif
+    local integer capacity = 11
     loop
         exitwhen i >= capacity
-        set index = team*10+i
+        set index = team*12+i
         if DraftShown[index] != 0 then
             call RemoveUnitFromStock(DraftShop[team], DraftShown[index])
             set DraftShown[index] = 0
         endif
         set i = i + 1
     endloop
-    if DraftPubSD() then
+    if DraftSD() then
         call DraftRefreshPub(team)
         return
     endif
@@ -67036,7 +67035,7 @@ function DraftRefresh takes integer team returns nothing
         set id = DraftPool[index]
         if not DraftTaken[index] and DraftEligible(team,id) then
             call AddUnitToStock(DraftShop[team], id, 1, 1)
-            set DraftShown[team*10+i] = id
+            set DraftShown[team*12+i] = id
         endif
         set i = i + 1
     endloop
@@ -67075,7 +67074,7 @@ function DraftSale takes nothing returns nothing
         call StartSoundForPlayerBJ(p, FF_DraftPageClick)
         call RemoveUnit(sold)
         set DraftPage[team] = DraftPage[team] + 1
-        if not DraftPubSD() and DraftPage[team]*8 >= DraftCount[team] then
+        if not DraftSD() and DraftPage[team]*8 >= DraftCount[team] then
             set DraftPage[team] = 0
         endif
         call DraftRefresh(team)
@@ -67119,7 +67118,7 @@ function DraftUpdate takes nothing returns nothing
                 if DraftShop[team] == null then
                     set DraftShop[team] = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'nTDP', DraftX[team], DraftY[team], 270.)
                     call BlzSetUnitName(DraftShop[team], "Team " + I2S(team) + " Hero Tavern")
-                    if DraftPubSD() then
+                    if DraftSD() then
                         call BlzUnitHideAbility(DraftShop[team], 'Ane2', true)
                     endif
                     call SetUnitTypeSlots(DraftShop[team], 12)
