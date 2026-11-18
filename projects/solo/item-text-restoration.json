@@ -1,0 +1,14 @@
+{
+  "source_map": "Solo-Foots-v37-Test.w3x",
+  "sha256": "5453c5510698654d076b1f5f855347cb35f114509bb4a3eee66af9c2444237cc",
+  "reference": "Reforged_Footmen_Frenzy_v7.9.9W-rc6.w3x",
+  "item_text_fields_verified": 374,
+  "title": "Solo Foots v37 - RJE",
+  "item_mechanics_unchanged": true,
+  "gameplay_code_unchanged": true,
+  "jass_title_compiled": true,
+  "archive_roundtrip_verified": true,
+  "installed_test_and_main_hashes_verified": true,
+  "previous_tests_preserved": true,
+  "live_game_testing": false
+}

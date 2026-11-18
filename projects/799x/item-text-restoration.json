@@ -1,0 +1,14 @@
+{
+  "source_map": "Reforged_Footmen_Frenzy_v7.9.9X-T39.w3x",
+  "sha256": "56bb17dfd58df513c8f0ac01692460980925f2ad417178c0662f923199247d41",
+  "reference": "Reforged_Footmen_Frenzy_v7.9.9W-rc6.w3x",
+  "item_text_fields_verified": 390,
+  "title": "|cffffcc00Reforged|r Footmen 7.9.9X-T39 - RJE",
+  "item_mechanics_unchanged": true,
+  "gameplay_code_unchanged": true,
+  "jass_title_compiled": false,
+  "archive_roundtrip_verified": true,
+  "installed_test_and_main_hashes_verified": true,
+  "previous_tests_preserved": true,
+  "live_game_testing": false
+}

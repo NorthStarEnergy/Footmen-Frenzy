@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-Footmen Frenzy 799X v85 - Shared Fixes Test
+|cffffcc00Reforged|r Footmen 7.9.9X-T39 - RJE
 }
 
 STRING 2
@@ -7273,7 +7273,7 @@ STRING 1175
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -8438,7 +8438,7 @@ W
 }
 
 STRING 1363
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
 {
 X
 }
@@ -9513,7 +9513,7 @@ Deals <AOcl,DataA5> damage to a single target, then jumps to <AOcl,DataB5> addti
 }
 
 STRING 1540
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Hotkey (Hotkey)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Hotkey (Hotkey)
 {
 W
 }
@@ -15954,7 +15954,7 @@ S
 }
 
 STRING 2594
-// Items: I01O (miRaculix' special brew), Hotkey (Hotkey)
+// Items: I01O (RJE's special brew), Hotkey (Hotkey)
 {
 S
 }
@@ -20314,7 +20314,7 @@ STRING 3312
 STRING 3313
 // Abilities: AIrl (Healing Salve), EditorSuffix (Editor Suffix)
 {
-(miRa Brew)
+(RJE Brew)
 }
 
 STRING 3314
@@ -20728,7 +20728,7 @@ X
 
 STRING 3383
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 3384
@@ -21038,7 +21038,10 @@ Summon |cffffcc00Zündler|r
 
 STRING 3435
 {
-799X v67 - Pub XP Test|nKill-earned catch-up toward level 7; 70% XP at 7+.|nFirst colo activates double XP below 7.|nPublic draft records: F9 or -draft.|n
+join our Discord:|cff7878ff tiny.cc/footmen|r
+
+Map by miRaculix
+
 }
 
 STRING 3436
@@ -26160,7 +26163,7 @@ STRING 4262
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 720
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift
 }
@@ -27012,7 +27015,7 @@ STRING 4393
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -27022,10 +27025,10 @@ STRING 4394
 |cffffff00Spawned Units:|r Militia
 |cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.5s 
-|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
+|cff808080Spawn Interval:|r 6s 
+|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
 STRING 4395
@@ -27036,7 +27039,7 @@ STRING 4395
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -34640,7 +34643,7 @@ Attack Speed Bonus - [|cffffcc00Level 4|r]
 }
 
 STRING 5623
-// Items: hslv (miRaculix' special brew), Name (Name)
+// Items: hslv (RJE's special brew), Name (Name)
 {
 miRaculix' special brew
 }
@@ -35226,7 +35229,7 @@ STRING 5719
 }
 
 STRING 5720
-// Items: hslv (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: hslv (RJE's special brew), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
@@ -36263,7 +36266,7 @@ collect |cffffff00Gold |rfrom this player. |nIf you have another active Ally, th
 }
 
 STRING 5886
-// Items: hslv (miRaculix' special brew), Description (Description)
+// Items: hslv (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
@@ -37330,7 +37333,7 @@ Summon Rocky Golem
 }
 
 STRING 6059
-// Items: I001 (miRaculix' Amulet of Power), Tip (Tooltip - Basic)
+// Items: I001 (RJE's Amulet of Power), Tip (Tooltip - Basic)
 {
 miRaculix' Amulet of Power
 }
@@ -37690,20 +37693,20 @@ STRING 6118
 }
 
 STRING 6119
-// Items: I001 (miRaculix' Amulet of Power), Ubertip (Tooltip - Extended)
+// Items: I001 (RJE's Amulet of Power), Ubertip (Tooltip - Extended)
 {
 +150 HP
 +100 MP|n|cffd45e19this item now also includes the speed bonus of the 'Boots of Speed'|r
 }
 
 STRING 6120
-// Items: I001 (miRaculix' Amulet of Power), Name (Name)
+// Items: I001 (RJE's Amulet of Power), Name (Name)
 {
 miRaculix' Amulet of Power
 }
 
 STRING 6121
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Name (Name)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Name (Name)
 {
 miRaculix' Amulet of Ultimate Power Recipe
 }
@@ -37727,13 +37730,13 @@ Heals a target friendly non-mechanical wounded unit for 250 hit points.
 }
 
 STRING 6125
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Tip (Tooltip - Basic)
+// Items: I012 (RJE's Amulet of Ultimate Power), Tip (Tooltip - Basic)
 {
 |cffffcc00Z|r miRaculix' Amulet of Ultimate Power
 }
 
 STRING 6126
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Name (Name)
+// Items: I012 (RJE's Amulet of Ultimate Power), Name (Name)
 {
 miRaculix' Amulet of Ultimate Power
 }
@@ -38415,7 +38418,7 @@ STRING 6236
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 725
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -40846,7 +40849,7 @@ STRING 6621
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 720
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift
 }
@@ -46532,7 +46535,7 @@ Train Pack Horse
 }
 
 STRING 7521
-// Items: hslv (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: hslv (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains <hslv,uses> charges.
 }
@@ -47809,19 +47812,19 @@ STRING 7724
 }
 
 STRING 7725
-// Items: I01O (miRaculix' special brew), Description (Description)
+// Items: I01O (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 7726
-// Items: I01O (miRaculix' special brew), Name (Name)
+// Items: I01O (RJE's special brew), Name (Name)
 {
 miRaculix' special brew
 }
 
 STRING 7727
-// Items: I01O (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: I01O (RJE's special brew), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
@@ -48552,7 +48555,7 @@ STRING 7838
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Charge, Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -48767,7 +48770,7 @@ STRING 7870
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -52830,7 +52833,7 @@ Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it
 }
 
 STRING 8514
-// Abilities: XT08 (Headhunter), Hotkey (Hotkey - Normal)
+// Abilities: XT08 (Grunt), Hotkey (Hotkey - Normal)
 {
 W
 }
@@ -61593,7 +61596,7 @@ Fel Hound
 
 STRING 9918
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 9919
@@ -61666,7 +61669,7 @@ STRING 9928
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -64049,7 +64052,7 @@ STRING 10303
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -64086,7 +64089,7 @@ STRING 10308
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2000
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Berserk & Pulverize
 }
@@ -64117,7 +64120,7 @@ STRING 10312
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.25s
 }
 
 STRING 10313
@@ -64305,12 +64308,12 @@ Upgrade to Undead Tier 1
 STRING 10342
 // Units: h00Z (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 570
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cffffff00Spawned Units:|r Ghoul
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 750
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 10343
@@ -64412,7 +64415,7 @@ STRING 10358
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 10359
@@ -64816,7 +64819,7 @@ STRING 10401
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 725
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -64988,7 +64991,7 @@ STRING 10423
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -65092,7 +65095,7 @@ STRING 10440
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -65133,10 +65136,10 @@ STRING 10446
 |cffffff00Spawned Units:|r Militia
 |cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 6.5s 
-|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
+|cff808080Spawn Interval:|r 6s 
+|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
 STRING 10447
@@ -65170,25 +65173,25 @@ STRING 10451
 }
 
 STRING 10452
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Name (Name)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Name (Name)
 {
 miRaculix' special brew |cffffffffSPT|r
 }
 
 STRING 10453
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
 
 STRING 10454
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Description (Description)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 10455
-// Items: I01O (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: I01O (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 1 charge.
 }
@@ -65315,7 +65318,7 @@ STRING 10474
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 650
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Feedback
 }
@@ -65702,7 +65705,7 @@ STRING 10538
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -65950,7 +65953,7 @@ STRING 10577
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -66276,7 +66279,7 @@ STRING 10625
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66322,7 +66325,7 @@ STRING 10631
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66429,10 +66432,10 @@ STRING 10648
 {
 |cffffff00Spawned Units:|r Banshee
 |cff808080Range:|r 635
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 10649
@@ -66549,10 +66552,10 @@ STRING 10666
 {
 |cffffff00Spawned Units:|r Wraith
 |cff808080Range:|r 660
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (10% Magic Resistance)
 |cff808080Health:|r 640
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow
 }
 
 STRING 10667
@@ -66863,7 +66866,7 @@ STRING 10714
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Unholy Frenzy
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
@@ -75183,7 +75186,7 @@ STRING 12058
 
 STRING 12059
 {
-|cff00ff00Footmen Frenzy 7.9.9X
+ 
 }
 
 STRING 12060
@@ -76135,9 +76138,9 @@ STRING 12208
 }
 
 STRING 12209
-// Abilities: A0JY (Mira dust), Name (Name)
+// Abilities: A0JY (RJE dust), Name (Name)
 {
-Mira dust
+RJE dust
 }
 
 STRING 12210
@@ -76800,7 +76803,7 @@ Q
 STRING 12316
 // Abilities: A0JZ (Brilliance Aura), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12317
@@ -77581,7 +77584,7 @@ Mirror Image
 STRING 12438
 // Abilities: A0K0 (Mana Regen), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12439
@@ -77603,7 +77606,7 @@ After a moment of aiming, fire a precise round which instantly shreds through en
 STRING 12441
 // Abilities: A0K1 (Item Move Speed Bonus), EditorSuffix (Editor Suffix)
 {
-(mira amulet clarity)
+(RJE amulet clarity)
 }
 
 STRING 12442
@@ -80603,7 +80606,7 @@ STRING 12880
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -80616,7 +80619,7 @@ STRING 12881
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.5s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -80629,7 +80632,7 @@ STRING 12882
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2000
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Berserk & Pulverize
 }
@@ -80716,7 +80719,7 @@ STRING 12894
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -80729,7 +80732,7 @@ STRING 12895
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -81246,7 +81249,7 @@ STRING 12975
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -81589,7 +81592,7 @@ Abilties - |cffffff00Cleaving|r 70% |r | |cffffff00Immolation|r | |cffffff00Taun
 }
 
 STRING 13028
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -81603,7 +81606,7 @@ Pendant of Mana
 }
 
 STRING 13029
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Description (Description)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Description (Description)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -81617,7 +81620,7 @@ Pendant of Mana
 }
 
 STRING 13030
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
+// Items: I012 (RJE's Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -85767,7 +85770,7 @@ STRING 13686
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -86509,7 +86512,7 @@ STRING 13798
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 13799
@@ -86713,12 +86716,12 @@ Upgrade to Orc Tier 1
 STRING 13832
 // Units: h00H (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
-|cff808080Range:|r 570
+|cffffff00Spawned Units:|r Grunt
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 900
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 13833
@@ -86759,7 +86762,7 @@ STRING 13838
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -86852,7 +86855,7 @@ STRING 13850
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -86914,7 +86917,7 @@ STRING 13859
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1475
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Pulverize|r & |cffffff00Berserk|r
 }
@@ -89668,7 +89671,7 @@ Flame Strike
 }
 
 STRING 14309
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 3 charges.
 }
@@ -90252,27 +90255,27 @@ Unit Level: 2
 }
 
 STRING 14396
-// Abilities: XT08 (Headhunter), Name (Name)
+// Abilities: XT08 (Grunt), Name (Name)
 {
-Headhunter
+Grunt
 }
 
 STRING 14397
-// Abilities: XT08 (Headhunter), Tip (Tooltip - Normal)
+// Abilities: XT08 (Grunt), Tip (Tooltip - Normal)
 {
-Headhunter
+Grunt
 }
 
 STRING 14398
-// Abilities: XT08 (Headhunter), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT08 (Grunt), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Headhunter|r
+|cffffcc00Grunt|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
-Armor: 1
-Damage: 24 + 2d3
-Attack Cooldown: 1.10s
-Attack Range: 600
+Hit Points: 900
+Armor: 3
+Damage: 27 + 1d4
+Attack Cooldown: 1.6s
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91019,9 +91022,9 @@ Summons <A007,DataB6> Treants with 61-63 damage, True Sight and Spell Immunity.
 }
 
 STRING 14508
-// Abilities: XT0I (Burning Archer), Name (Name)
+// Abilities: XT0I (Ghoul), Name (Name)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14509
@@ -91053,21 +91056,21 @@ Deals 460 damage to up to 5 non-mechanical targets.
 }
 
 STRING 14514
-// Abilities: XT0I (Burning Archer), Tip (Tooltip - Normal)
+// Abilities: XT0I (Ghoul), Tip (Tooltip - Normal)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14515
-// Abilities: XT0I (Burning Archer), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0I (Ghoul), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Burning Archer|r
+|cffffcc00Ghoul|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 570
-Armor: 0
-Damage: 36 + 1d3
+Hit Points: 750
+Armor: 2
+Damage: 16 + 2d2
 Attack Cooldown: 1.1s
-Attack Range: 640
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91169,7 +91172,7 @@ Defile - [|cffffcc00Level 1|r]
 }
 
 STRING 14530
-// Abilities: XT0I (Burning Archer), Hotkey (Hotkey - Normal)
+// Abilities: XT0I (Ghoul), Hotkey (Hotkey - Normal)
 {
 T
 }
@@ -91542,9 +91545,9 @@ Unit Level: 2
 }
 
 STRING 14582
-// Abilities: XT0P (Headhunter), Name (Name)
+// Abilities: XT0P (Grunt), Name (Name)
 {
-Headhunter
+Grunt
 }
 
 STRING 14583
@@ -91554,9 +91557,9 @@ V
 }
 
 STRING 14584
-// Abilities: XT0P (Headhunter), Tip (Tooltip - Normal)
+// Abilities: XT0P (Grunt), Tip (Tooltip - Normal)
 {
-Headhunter
+Grunt
 }
 
 STRING 14585
@@ -91581,15 +91584,15 @@ Cold Strike - [|cffffcc00Level 5|r]
 }
 
 STRING 14588
-// Abilities: XT0P (Headhunter), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0P (Grunt), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Headhunter|r
+|cffffcc00Grunt|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
-Armor: 1
-Damage: 24 + 2d3
-Attack Cooldown: 1.10s
-Attack Range: 600
+Hit Points: 900
+Armor: 3
+Damage: 27 + 1d4
+Attack Cooldown: 1.6s
+Attack Range: 110
 Unit Level: 2
 }
 
@@ -91600,7 +91603,7 @@ E
 }
 
 STRING 14590
-// Abilities: XT0P (Headhunter), Hotkey (Hotkey - Normal)
+// Abilities: XT0P (Grunt), Hotkey (Hotkey - Normal)
 {
 T
 }
@@ -92059,32 +92062,32 @@ Unit Level: 2
 }
 
 STRING 14655
-// Abilities: XT0Z (Burning Archer), Name (Name)
+// Abilities: XT0Z (Ghoul), Name (Name)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14656
-// Abilities: XT0Z (Burning Archer), Tip (Tooltip - Normal)
+// Abilities: XT0Z (Ghoul), Tip (Tooltip - Normal)
 {
-Burning Archer
+Ghoul
 }
 
 STRING 14657
-// Abilities: XT0Z (Burning Archer), Ubertip (Tooltip - Normal - Extended)
+// Abilities: XT0Z (Ghoul), Ubertip (Tooltip - Normal - Extended)
 {
-|cffffcc00Burning Archer|r
+|cffffcc00Ghoul|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 570
-Armor: 0
-Damage: 36 + 1d3
-Attack Cooldown: 1.10s
-Attack Range: 640
+Hit Points: 750
+Armor: 2
+Damage: 16 + 2d2
+Attack Cooldown: 1.1s
+Attack Range: 110
 Unit Level: 2
 }
 
 STRING 14658
-// Abilities: XT0Z (Burning Archer), Hotkey (Hotkey - Normal)
+// Abilities: XT0Z (Ghoul), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -103529,7 +103532,7 @@ STRING 17362
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1475
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Pulverize|r & |cffffff00Berserk|r
 }
@@ -104605,12 +104608,12 @@ Darks
 STRING 17669
 // Units: h023 (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Headhunter
-|cff808080Range:|r 570
+|cffffff00Spawned Units:|r Grunt
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 900
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 17670
@@ -104747,7 +104750,7 @@ This upgrade affect creeps, bought from the creep shop.
 }
 
 STRING 17708
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
 {
 miRaculix' Amulet of Ultimate Power Recipe
 }
@@ -105238,10 +105241,10 @@ STRING 17812
 {
 |cffffff00Spawned Units:|r Wraith
 |cff808080Range:|r 660
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (10% Magic Resistance)
 |cff808080Health:|r 640
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow
 }
 
 STRING 17818
@@ -105314,7 +105317,7 @@ STRING 17862
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -105327,7 +105330,7 @@ STRING 17863
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 650
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 6s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Feedback
 }
@@ -105340,18 +105343,18 @@ STRING 17864
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.25s
 }
 
 STRING 17865
 // Units: h02O (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Units:|r Burning Archer
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 570
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cffffff00Spawned Units:|r Ghoul
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 750
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 17866
@@ -105362,7 +105365,7 @@ STRING 17866
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 17867
@@ -105373,7 +105376,7 @@ STRING 17867
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 17869
@@ -105381,10 +105384,10 @@ STRING 17869
 {
 |cffffff00Spawned Units:|r Banshee
 |cff808080Range:|r 635
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 17872
@@ -105449,7 +105452,7 @@ STRING 17913
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Unholy Frenzy
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
