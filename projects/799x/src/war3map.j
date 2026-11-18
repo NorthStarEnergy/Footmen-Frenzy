@@ -7,6 +7,8 @@ globals
     integer array DraftPage
     integer array DraftShown
     boolean array DraftTaken
+    boolean array DraftPicked
+    boolean array DraftBusy
     boolean array DraftPending
     real array DraftX
     real array DraftY
@@ -31993,6 +31995,36 @@ function FF_AutoPick_IsCarryHero takes integer unitId returns boolean
     return false
 endfunction
 
+function DraftCanPick takes integer pn returns boolean
+    if pn < 1 or pn > 12 or DraftBusy[pn] then
+        return false
+    endif
+    if udg_selected_mode == 3 and DraftPicked[pn] then
+        return false
+    endif
+    return udg_player_active[pn] and GetPlayerSlotState(ConvertedPlayer(pn)) == PLAYER_SLOT_STATE_PLAYING and (udg_herO[pn] == null or udg_mode_debugmode)
+endfunction
+
+function DraftClosePlayer takes integer pn returns nothing
+    local integer i = 1
+    local player p = ConvertedPlayer(pn)
+    set DraftPicked[pn] = true
+    set DraftPending[pn] = false
+    if udg_selected_mode == 3 then
+        // Availability is per player: teammates keep the shared tavern stock.
+        call SetPlayerUnitAvailableBJ('hTRZ', false, p)
+        call SetPlayerUnitAvailableBJ('hTNP', false, p)
+        loop
+            exitwhen i > udg_total_hero_count
+            if udg_hero_type[i] != 0 then
+                call SetPlayerUnitAvailableBJ(udg_hero_type[i], false, p)
+            endif
+            set i = i + 1
+        endloop
+    endif
+    set p = null
+endfunction
+
 function FF_AutoPick_Player takes integer playerNumber returns nothing
     local player p
     local integer teamNumber
@@ -32001,7 +32033,7 @@ function FF_AutoPick_Player takes integer playerNumber returns nothing
         return
     endif
     set p=ConvertedPlayer(playerNumber)
-    if ( GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING or udg_herO[playerNumber] != null ) then
+    if ( not DraftCanPick(playerNumber) or udg_herO[playerNumber] != null ) then
         return
     endif
     set teamNumber=udg_teamnumber[playerNumber]
@@ -32047,67 +32079,11 @@ function FF_GiveRandomBoots takes unit hero returns nothing
     call CreateItem('bspd', GetUnitX(hero), GetUnitY(hero))
 endfunction
 
-function FFRandom_Sold takes nothing returns nothing
-    local unit sold = GetSoldUnit()
-    local unit shop = GetSellingUnit()
-    local player p
-    local integer pn
-    local integer team
-    local integer index
-    local integer i = 1
-    local integer count = 0
-    if GetUnitTypeId(sold) != 'hTRZ' then
-        set sold = null
-        set shop = null
-        return
-    endif
-    call SoloSub_ReownToSlot(sold)
-    set p = GetOwningPlayer(sold)
-    set pn = GetConvertedPlayerId(p)
-    set team = udg_teamnumber[pn]
-    call RemoveUnit(sold)
-    if pn >= 1 and pn <= 12 and team >= 1 and team <= 4 and shop == DraftShop[team] and T66_RandomLeft[team] > 0 and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and (udg_herO[pn] == null or udg_mode_debugmode) then
-        set index = 0
-        loop
-            exitwhen i > udg_total_hero_count
-            if udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and (udg_selected_mode != 3 or FFR_Allowed(team, i)) and (udg_hero_category[i] < 12 or not CarryTav_locked[team]) then
-                set count = count + 1
-                if GetRandomInt(1, count) == 1 then
-                    set index = i
-                endif
-            endif
-            set i = i + 1
-        endloop
-        if index > 0 then
-            set T66_RandomLeft[team] = T66_RandomLeft[team] - 1
-            call CreateNUnitsAtLoc(1, udg_hero_type[index], p, udg_loc_tavern, bj_UNIT_FACING)
-            if udg_selected_mode == 3 then
-                call FF_GiveRandomBoots(GetLastCreatedUnit())
-            endif
-            if udg_hero_category[index] >= 12 then
-                call CarryTav_LockTeam(team)
-            endif
-        else
-            call DisplayTextToPlayer(p, 0, 0, "No eligible heroes remain; your Random use was not consumed.")
-        endif
-    else
-        call DisplayTextToPlayer(p, 0, 0, "Use your own team's Carry Altar while eligible to choose a hero. Each team has 3 shared Random uses.")
-    endif
 
-    set sold = null
-    set shop = null
-    set p = null
-endfunction
 
-function FFRandom_Init takes nothing returns nothing
-    local trigger t=CreateTrigger()
-    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SELL)
-    call TriggerAddAction(t,function FFRandom_Sold)
-    set t=null
-endfunction
+
 
 function InitTrig_FF_AutoPick_2m takes nothing returns nothing
-    call FFRandom_Init()
     set gg_trg_FF_AutoPick_2m=CreateTrigger()
     call TriggerRegisterTimerExpireEventBJ(gg_trg_FF_AutoPick_2m, FF_AutoPick_timer)
     call TriggerAddAction(gg_trg_FF_AutoPick_2m, function FF_AutoPick_Actions)
@@ -32874,12 +32850,12 @@ function FF_TestExtraHero takes unit u returns nothing
     set p = null
 endfunction
 
-function Trig_TP_hero_Actions takes nothing returns nothing
+function FF_AcceptStartingHero takes unit candidate returns nothing
     local boolean randomPick = false
     local integer randomIndex = 0
     local integer randomTeam = 0
     local unit randomUnit = null
-    set udg_temp_unit=GetTriggerUnit()
+    set udg_temp_unit=candidate
     // v60: a substitute buys the hero under their own observer id. Give it to
     // the canonical slot before anything reads the owner, or every array this
     // trigger writes (udg_herO, udg_picked_hero, stats, items) lands outside
@@ -32888,6 +32864,12 @@ function Trig_TP_hero_Actions takes nothing returns nothing
     set udg_temp_playernumber=GetConvertedPlayerId(GetOwningPlayer(udg_temp_unit))
     if udg_mode_debugmode and udg_temp_playernumber >= 1 and udg_temp_playernumber <= 12 and udg_herO[udg_temp_playernumber] != null then
         call FF_TestExtraHero(udg_temp_unit)
+        return
+    endif
+    if udg_selected_mode == 3 and DraftPicked[udg_temp_playernumber] then
+        if udg_temp_unit != udg_herO[udg_temp_playernumber] then
+            call RemoveUnit(udg_temp_unit)
+        endif
         return
     endif
     if GetUnitTypeId(udg_temp_unit) == 'H0R0' then
@@ -32947,6 +32929,7 @@ function Trig_TP_hero_Actions takes nothing returns nothing
     if ( Trig_TP_hero_Func007C() ) then
         set udg_tp_kill[udg_temp_playernumber]=true
         set udg_herO[udg_temp_playernumber]=udg_temp_unit
+        call DraftClosePlayer(udg_temp_playernumber)
         call ForGroupBJ(udg_realshops, function Trig_TP_hero_Func007Func004A)
         call SetUnitPositionLoc(udg_temp_unit, udg_temp_point)
         // Starting Items
@@ -33054,6 +33037,51 @@ function Trig_TP_hero_Actions takes nothing returns nothing
     call BlzSetUnitIntegerFieldBJ(udg_herO[udg_X], UNIT_IF_GOLD_BOUNTY_AWARDED_SIDES_PER_DIE, 0)
     call RemoveLocation(udg_temp_point)
     call FF_DebugHeroReady(udg_temp_unit)
+endfunction
+
+function Trig_TP_hero_Actions takes nothing returns nothing
+    call FF_AcceptStartingHero(GetTriggerUnit())
+endfunction
+
+function FFRandom_Pick takes integer pn, integer team returns nothing
+    local integer i = 1
+    local integer count = 0
+    local integer index = 0
+    local player p = ConvertedPlayer(pn)
+    local unit hero = null
+    if not DraftCanPick(pn) or T66_RandomLeft[team] <= 0 then
+        set p = null
+        return
+    endif
+    loop
+        exitwhen i > udg_total_hero_count
+        if udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and (udg_selected_mode != 3 or FFR_Allowed(team, i)) and (udg_hero_category[i] < 12 or not CarryTav_locked[team]) then
+            set count = count + 1
+            if GetRandomInt(1, count) == 1 then
+                set index = i
+            endif
+        endif
+        set i = i + 1
+    endloop
+    if index > 0 then
+        set DraftBusy[pn] = true
+        // Spawn outside the plaza so registration is synchronous, not a later region event.
+        set hero = CreateUnit(p, udg_hero_type[index], DraftX[team], DraftY[team], bj_UNIT_FACING)
+        call FF_AcceptStartingHero(hero)
+        if hero != null and GetUnitTypeId(hero) != 0 and (udg_herO[pn] == hero or udg_mode_debugmode) then
+            set T66_RandomLeft[team] = T66_RandomLeft[team] - 1
+            if udg_selected_mode == 3 then
+                call FF_GiveRandomBoots(hero)
+            endif
+        else
+            call DisplayTextToPlayer(p, 0, 0, "Hero selection failed; your Random use was not consumed. Try again.")
+        endif
+        set DraftBusy[pn] = false
+    else
+        call DisplayTextToPlayer(p, 0, 0, "No eligible heroes remain; your Random use was not consumed.")
+    endif
+    set hero = null
+    set p = null
 endfunction
 
 function T66_HeroSold takes nothing returns nothing
@@ -38183,6 +38211,10 @@ function Trig_repick_command_Func002C takes nothing returns boolean
 endfunction
 
 function Trig_repick_command_Actions takes nothing returns nothing
+    if udg_selected_mode == 3 and DraftPicked[GetConvertedPlayerId(GetTriggerPlayer())] then
+        call DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "Your starting hero is already selected. SD drafting is closed for you.")
+        return
+    endif
     set udg_temp_playergroup=GetForceOfPlayer(GetTriggerPlayer())
     if ( Trig_repick_command_Func002C() ) then
         set udg_temp_unitgroup=GetUnitsOfPlayerMatching(GetTriggerPlayer(), Condition(function Trig_repick_command_Func002Func003002002))
@@ -66979,7 +67011,7 @@ function DraftRefreshPub takes integer team returns nothing
         set DraftPage[team] = 0
     endif
     call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
-    if DraftPage[team] == 1 then
+    if DraftPage[team] == 1 and T66_RandomLeft[team] > 0 then
         call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
     endif
     set i = 0
@@ -67025,7 +67057,7 @@ function DraftRefresh takes integer team returns nothing
         return
     endif
     call RemoveUnitFromStock(DraftShop[team], 'hTRZ')
-    if DraftPage[team] == 0 then
+    if DraftPage[team] == 0 and T66_RandomLeft[team] > 0 then
         call AddUnitToStock(DraftShop[team], 'hTRZ', 1, 1)
     endif
     set i = 0
@@ -67058,34 +67090,40 @@ endfunction
 function DraftSale takes nothing returns nothing
     local unit shop = GetSellingUnit()
     local unit sold = GetSoldUnit()
-    local player p = GetOwningPlayer(sold)
-    local integer pn = GetConvertedPlayerId(p)
-    local integer team = udg_teamnumber[pn]
+    local player p
+    local integer pn
+    local integer team
     local integer id = GetUnitTypeId(sold)
     local integer i = 1
     if GetUnitTypeId(shop) != 'nTDP' then
+        set sold = null
+        set shop = null
         return
     endif
-    if team < 1 or team > 4 or shop != DraftShop[team] or not DraftPending[pn] or (udg_herO[pn] != null and not udg_mode_debugmode) then
+    call SoloSub_ReownToSlot(sold)
+    set p = GetOwningPlayer(sold)
+    set pn = GetConvertedPlayerId(p)
+    set team = udg_teamnumber[pn]
+    if team < 1 or team > 4 or shop != DraftShop[team] or not DraftCanPick(pn) then
         call RemoveUnit(sold)
-        return
-    endif
-    if id == 'hTNP' then
+    elseif id == 'hTNP' then
         call StartSoundForPlayerBJ(p, FF_DraftPageClick)
         call RemoveUnit(sold)
         set DraftPage[team] = DraftPage[team] + 1
         if not DraftSD() and DraftPage[team]*8 >= DraftCount[team] then
             set DraftPage[team] = 0
         endif
-        call DraftRefresh(team)
-        call SelectUnitForPlayerSingle(shop, p)
-    
+    elseif id == 'hTRZ' then
+        call RemoveUnit(sold)
+        call FFRandom_Pick(pn, team)
     elseif IsUnitType(sold, UNIT_TYPE_HERO) then
         if not DraftEligible(team,id) then
             call RemoveUnit(sold)
         else
-            call SetUnitPositionLoc(sold, udg_loc_tavern)
-            if udg_selected_mode == 3 and not udg_mode_debugmode then
+            set DraftBusy[pn] = true
+            call FF_AcceptStartingHero(sold)
+            set DraftBusy[pn] = false
+            if udg_herO[pn] == sold and udg_selected_mode == 3 and not udg_mode_debugmode then
                 loop
                     exitwhen i > DraftCount[team]
                     if DraftPool[team*256+i] == id then
@@ -67095,10 +67133,12 @@ function DraftSale takes nothing returns nothing
                 endloop
             endif
         endif
-        call DraftRefresh(team)
     endif
+    // The engine decrements sold stock after the event; restock on the next tick.
+    call ExecuteFunc("DraftScheduleRefresh")
     set sold = null
     set shop = null
+    set p = null
 endfunction
 
 function DraftUpdate takes nothing returns nothing
@@ -67112,7 +67152,7 @@ function DraftUpdate takes nothing returns nothing
         set p = ConvertedPlayer(pn)
         set team = udg_teamnumber[pn]
         if team >= 1 and team <= 4 then
-            set wants = udg_player_active[pn] and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING and (udg_herO[pn] == null or udg_mode_debugmode)
+            set wants = DraftCanPick(pn)
             if wants then
                 set waiting[team] = waiting[team] + 1
                 if DraftShop[team] == null then
@@ -67146,6 +67186,23 @@ function DraftUpdate takes nothing returns nothing
         endif
         set team = team + 1
     endloop
+endfunction
+
+function DraftAfterSale takes nothing returns nothing
+    local integer team = 1
+    call DestroyTimer(GetExpiredTimer())
+    call DraftUpdate()
+    loop
+        exitwhen team > 4
+        if DraftShop[team] != null then
+            call DraftRefresh(team)
+        endif
+        set team = team + 1
+    endloop
+endfunction
+
+function DraftScheduleRefresh takes nothing returns nothing
+    call TimerStart(CreateTimer(), 0.0, false, function DraftAfterSale)
 endfunction
 
 function DraftStart takes nothing returns nothing
