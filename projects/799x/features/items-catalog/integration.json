@@ -1,0 +1,72 @@
+{
+  "baseline": "Reforged_Footmen_Frenzy_v7.9.9X-T43.w3x",
+  "baseline_sha256": "7d2da95ec4f029136deaeb2ecce37a2565da84a06311f10fb99e404144e3e686",
+  "output": "Reforged_Footmen_Frenzy_v7.9.9X-T44.w3x",
+  "items": 225,
+  "shops": 18,
+  "sections": 23,
+  "recipes": 17,
+  "excluded": [
+    {
+      "shop": "n007",
+      "item": "I032",
+      "reason": "undefined item rawcode"
+    }
+  ],
+  "inherited_costs": {
+    "shas": {
+      "parent": "shas",
+      "gold": 50,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "pnvl": {
+      "parent": "pnvl",
+      "gold": 150,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "sror": {
+      "parent": "sror",
+      "gold": 400,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "I00C": {
+      "parent": "ward",
+      "gold": 500,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "ward": {
+      "parent": "ward",
+      "gold": 500,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "tkno": {
+      "parent": "tkno",
+      "gold": 1250,
+      "source": "retained vanilla cost from audited item data"
+    },
+    "tgxp": {
+      "parent": "tgxp",
+      "gold": 1000,
+      "source": "retained vanilla cost from audited item data"
+    }
+  },
+  "changed_existing_functions": [
+    "SpellKeysClick",
+    "SpellKeysInput",
+    "SpellKeysInit",
+    "zoom__CreateSlider",
+    "DPS_Toggle",
+    "DPS_Create"
+  ],
+  "preserved_existing_functions": 3596,
+  "live_game_tested": false,
+  "output_sha256": "457be6407ac92bdd0b17d01bc4e19f1ba3bf36f1746d02cea232073e685ee0a7",
+  "installed_both_copies": true,
+  "previous_map_preserved": true,
+  "archive_roundtrip": true,
+  "jass_compiled": true,
+  "regeneration_on_integrated_map": true,
+  "workspace": "build/items-catalog/final",
+  "baseline_snapshot": "build/items-catalog/final/projects/799x/release/Reforged_Footmen_Frenzy_v7.9.9X-T43.w3x",
+  "feature_source": "projects/799x/features/items-catalog"
+}
