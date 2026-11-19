@@ -1,0 +1,76 @@
+Footmen Frenzy 799X RC29 — player Wallet
+
+The Casino button and -casino now open the casino for active human players,
+substitutes and observers. A new local player Wallet starts with 1,000 gold.
+Returning players load the balance saved under their existing 799X account
+name, including zero. An unreadable signature on a nonempty save leaves the
+Wallet unavailable. Players use battlefield gold to purchase units and items.
+
+Reading match results
+
+Read ff_result.txt from Warcraft III's CustomMapData directory. Host bots use
+ff_result_<game token>.txt. Import the latest complete snapshot per game.
+The gameend record identifies a final snapshot. Later snapshots may add
+career data. Record names and metric keys are case-sensitive.
+
+Examples from the Wallet verification scenarios, shown as separate snapshots
+
+  casino,enabled=1,starting_wallet=1000
+  wallet,1,known=1,opening=1000,balance=900,starting_grant=1000
+
+Slot 1 opened a new Wallet and staked 100 gold. The opening balance already
+includes the starter grant. Balance is spendable gold at the snapshot.
+Profile escrow reports gold in play. Match awards and game returns have
+their own profile fields.
+
+  wallet,1,known=1,opening=1000,balance=1000,starting_grant=0
+  wallet,1,known=1,opening=0,balance=0,starting_grant=0
+  wallet,1,known=0
+
+The first two examples are returning accounts. The third means no valid
+Wallet balance had synchronized at export time. Treat it as unknown.
+Store Wallet rows by game and physical account slot, including observers.
+Use profile_owner to link a substitute's Wallet to the battlefield player.
+Older map versions omit these new rows.
+
+The existing profile, collection, build, career and career_pool records
+contain combat, per-game wagers and returns, heroes, units, item purchases,
+skins, build order, Pro pooling sent and received, and transfer averages.
+Pool records use battlefield gold. Solo v48 also produces match and Profile
+records in its own matches. Detect Solo using family,solo. The new casino
+configuration and Wallet grant records described above belong to 799X RC29.
+
+Build comparison
+
+RC29 starts from the full RC28 map, SHA-256
+85b639fd873dcfb663a6aec3d143225ae0b40af772f9bca7aee78cc148da7543.
+All 1,311 indexed RC28 payloads are present. Exactly seven changed for
+script, editor source, manifest or version metadata. All 62 imported casino
+assets match the standalone v10 casino. The results tabs, Profile, pooling
+and debug farm passed scripted checks. This release has no live WC3 match
+verification. The comparison covers the local project and overnight archive.
+The partner's independent fork and CI test suite were outside this comparison.
+
+One difference from the chat recollection is the default AFK timing. The
+current 799X map starts its auto-pick timer at 120 seconds from game start.
+With the 90-second pre-mass setting, that puts auto-pick 30 seconds into
+mass. The Single Draft picker first looks up legal, untaken heroes in the
+team tavern pool. Standard Pub disables pooling. The suggested AFK kick is
+a separate integration decision.
+
+Overnight token estimate in US dollars
+
+For the retained local Footmen project sessions from Nov 17 at 5 p.m. to
+Nov 18 at 10:17 a.m. Toronto time, standard short-context API rates value
+the recorded requests with published model prices at approximately $111.90.
+This is a token-only estimate. Service tier, long-context rates, image and
+tool charges, CI hardware and subscription payments are outside the estimate.
+
+Model             Uncached input   Cached input    Output     Estimate
+GPT-6.2 Astra          1,748,091    113,295,488   305,238       $71.51
+GPT-6 Astra              389,938     29,841,280   132,885       $40.38
+
+Totals use unrounded figures. The logs also counted 7,048,263 input tokens
+(6,198,528 cached) and 14,081 output tokens for the automatic review model,
+which has no separately published API price. Those tokens are excluded.
+Rates checked Nov 18, 2026 at https://developers.openai.com/api/docs/pricing

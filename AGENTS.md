@@ -2,6 +2,10 @@
 
 Work autonomously; do not ask for routine confirmation. Preserve user changes and previous map builds.
 
+Mini Foots is shelved at GitHub tag `archive/mini-foots-v61`. Skip Mini Foots in shared changes, builds, installs, and publication until the owner asks to resume.
+
+799-CASINO standalone is retired at local tag `archive/799-casino-v13`. Apply casino changes to 799X, Solo Foots, and FFA Foots. Keep the standalone archives for recovery.
+
 This repository owns all four map projects. Read README.md and the selected projects/<project>/project.json. Use repository-relative paths; do not depend on the former ChatGPT working folders or OneDrive. Historical scripts in development are reference material; the current build entry point is Build-Map.ps1.
 
 Every new validated test build MUST finish by using Build-Map.ps1, which builds, checks, and installs, or tools/Install-Wc3Map.ps1 for an already validated output. Do not report completion before delivery succeeds. Map families: 799x -> 799X; solo -> Solo Foots; mini -> Mini Foots; ffa -> FFA Foots. An FFA filename containing Solo does not change its family.

@@ -28068,9 +28068,9 @@ Vengeance of the Gods - [|cffffcc00Level %d|r]
 }
 
 STRING 4551
-// Units: n04X (Warlock), Name (Name)
+// Units: n04X (Kodo Beast), Name (Name)
 {
-Warlock
+Kodo Beast
 }
 
 STRING 4552
@@ -48416,7 +48416,7 @@ Improved|n   Range,Improved|n   Range,Improved|n   Range,Improved|n   Range,Impr
 }
 
 STRING 7816
-// Units: n04X (Warlock), Casterupgradename (Caster Upgrade Names)
+// Units: n04X (Kodo Beast), Casterupgradename (Caster Upgrade Names)
 {
 Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength
 }
@@ -48424,7 +48424,7 @@ Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Stren
 STRING 7817
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48437,7 +48437,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7818
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48450,7 +48450,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7819
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48463,7 +48463,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7820
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48476,7 +48476,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7821
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -66944,12 +66944,12 @@ Learn Transmute - [|cffffcc00Level %d|r]
 STRING 10714
 // Units: e00G (Elintian Tier 3), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Unit:|r Warlock
-|cff808080Range:|r 650
+|cffffff00Spawned Unit:|r Kodo Beast
+|cff808080Range:|r 475
 |cff808080Damage Type:|r Normal 
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
-|cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Armor Type:|r Heavy (15% Spell Resistance)
+|cff808080Health:|r 775
+|cff808080Spawn Interval:|r 7.5s|n|cff808080Abilities:|r Frenzy, Blink
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
@@ -67238,7 +67238,7 @@ Storm Bolt - [|cffffcc00Level 6|r]
 }
 
 STRING 10761
-// Units: n04X (Warlock), Ubertip (Tooltip - Extended)
+// Units: n04X (Kodo Beast), Ubertip (Tooltip - Extended)
 {
 Powerful ranged attacker
 }
@@ -71937,9 +71937,9 @@ STRING 11521
 }
 
 STRING 11522
-// Units: n04X (Warlock), Tip (Tooltip - Basic)
+// Units: n04X (Kodo Beast), Tip (Tooltip - Basic)
 {
-Train Warlock
+Train Kodo Beast
 }
 
 STRING 11523
@@ -84837,19 +84837,19 @@ Toggle Wraith automatic spawning on or off.
 }
 
 STRING 13486
-// Abilities: A1AP (Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.), Name (Name)
+// Abilities: A1AP (Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.), Name (Name)
 {
-Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.
+Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.
 }
 
 STRING 13487
-// Abilities: A1AP (Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A1AP (Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
 {
-Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.
+Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.
 }
 
 STRING 13488
@@ -90659,13 +90659,13 @@ Wraiths gain a bonus ability, +45 movement speed and +75 attack range.
 STRING 14418
 // Upgrades: Rwl1 (), class (Class)
 {
-Warlock Cold Combat: Cold attack, range, and movement speed.
+Kodo Cold Combat: Cold attack, range, and movement speed.
 }
 
 STRING 14419
 // Upgrades: Rwl1 (), Name (Name)
 {
-Warlock Hexcraft
+Kodo Hexcraft
 }
 
 STRING 14420
@@ -90677,13 +90677,13 @@ V
 STRING 14421
 // Upgrades: Rwl1 (), Tip (Tooltip)
 {
-Research Warlock Hexcraft
+Research Kodo Hexcraft
 }
 
 STRING 14422
 // Upgrades: Rwl1 (), Ubertip (Tooltip - Extended)
 {
-Warlocks gain a bonus ability, +45 movement speed and +75 attack range.
+Kodo Beasts gain a bonus ability, +45 movement speed and +75 attack range.
 }
 
 STRING 14423
@@ -91370,7 +91370,7 @@ Massively increases the attack damage of nearby allied units for set duration. U
 STRING 14546
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -102316,12 +102316,12 @@ Helm of Battlethirst
 STRING 17913
 // Units: e013 (Elintian Tier 3), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Unit:|r Warlock
-|cff808080Range:|r 650
+|cffffff00Spawned Unit:|r Kodo Beast
+|cff808080Range:|r 475
 |cff808080Damage Type:|r Normal 
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
-|cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Armor Type:|r Heavy (15% Spell Resistance)
+|cff808080Health:|r 775
+|cff808080Spawn Interval:|r 7.5s|n|cff808080Abilities:|r Frenzy, Blink
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }

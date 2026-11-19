@@ -2925,7 +2925,205 @@ boolean array ffgs_spawn_enabled_player
     real array FS_FlurryEnd
     constant integer FS_DETONATE = 'AGr8'
     boolean array FS_Landed
+// Permanent terrain record of the starting SD picks.
+integer array SDGroundCount
+integer array SDGroundOffer
+integer array SDGroundHero
+integer array SDGroundPickTeam
+integer array SDGroundColor
+boolean array SDGroundRandom
+boolean array SDGroundRolling
+boolean array SDGroundShown
+boolean SDGroundRevealed = false
+timer SDGroundTimer = null
+hashtable SDGroundStockTable = null
+
 endglobals
+
+function SDGroundEnabled takes nothing returns boolean
+    return udg_selected_mode == 3
+endfunction
+
+function SDGroundRemember takes integer team, integer id returns nothing
+    local integer i = 1
+    if not SDGroundEnabled() or team < 1 or team > 4 or not IsHeroUnitId(id) or id == 'h004' or id == 'H0R0' or id == 'hTRZ' then
+        return
+    endif
+    loop
+        exitwhen i > SDGroundCount[team]
+        if SDGroundOffer[128 * team + i] == id then
+            return
+        endif
+        set i = i + 1
+    endloop
+    if i < 128 then
+        set SDGroundCount[team] = i
+        set SDGroundOffer[128 * team + i] = id
+    endif
+endfunction
+
+function SDGroundImage takes string path, real x, real y, real width, real height, integer layer returns image
+    local image decal = CreateImage("SDDraft\\" + path + ".blp", width, height, 0.0, x - width * 0.5, y - height * 0.5, 0.0, 0.0, 0.0, 0.0, layer)
+    call SetImageRenderAlways(decal, true)
+    call ShowImage(decal, true)
+    return decal
+endfunction
+
+function SDGroundReveal takes nothing returns nothing
+    local integer slot = 0
+    local rect area = Rect(-3250.0, -730.0, -1920.0, 352.0)
+    local fogmodifier vision
+    loop
+        exitwhen slot >= 24
+        if GetPlayerSlotState(Player(slot)) == PLAYER_SLOT_STATE_PLAYING then
+            set vision = CreateFogModifierRect(Player(slot), FOG_OF_WAR_VISIBLE, area, false, false)
+            call FogModifierStart(vision)
+        endif
+        set slot = slot + 1
+    endloop
+    call RemoveRect(area)
+    set area = null
+    set vision = null
+endfunction
+
+function SDGroundDraw takes integer team returns nothing
+    local integer columns = 8
+    local integer count = SDGroundCount[team]
+    local integer rows = (count + columns - 1) / columns
+    local real spacing = RMinBJ(82.0, 418.0 / I2R(rows))
+    local real size = spacing * 0.93
+    local real left = -3248.0 + I2R(ModuloInteger(team - 1, 2)) * 668.0
+    local real top = 314.0 - I2R((team - 1) / 2) * 520.0
+    local integer i = 1
+    local integer id
+    local integer slot
+    local integer marks
+    local real x
+    local real y
+    local real checkSize
+    local image decal
+    if not SDGroundRevealed then
+        set SDGroundRevealed = true
+        call SDGroundReveal()
+    endif
+    set decal = SDGroundImage("Team" + I2S(team), left + I2R(IMinBJ(columns, count)) * spacing * 0.5, top, 200.0, 44.0, 4)
+    loop
+        exitwhen i > count
+        set x = left + size * 0.5 + spacing * I2R(ModuloInteger(i - 1, columns))
+        set y = top - 38.0 - size * 0.5 - spacing * I2R((i - 1) / columns)
+        set id = SDGroundOffer[128 * team + i]
+        set decal = SDGroundImage("Icons\\" + I2S(id), x, y, size, size, 4)
+        set slot = 1
+        set marks = 0
+        loop
+            exitwhen slot > 12
+            if SDGroundPickTeam[slot] == team and ((id == 0 and SDGroundRandom[slot]) or (id != 0 and SDGroundHero[slot] == id)) then
+                set marks = marks + 1
+            endif
+            set slot = slot + 1
+        endloop
+        if marks > 0 then
+            call SetImageColor(decal, 108, 108, 108, 255)
+            set checkSize = RMinBJ(size * 0.52, size * 0.90 / I2R(marks))
+            set x = x - checkSize * I2R(marks - 1) * 0.5
+            set slot = 1
+            loop
+                exitwhen slot > 12
+                if SDGroundPickTeam[slot] == team and ((id == 0 and SDGroundRandom[slot]) or (id != 0 and SDGroundHero[slot] == id)) then
+                    set decal = SDGroundImage("Check" + I2S(SDGroundColor[slot]), x, y - size * 0.20, checkSize, checkSize, 2)
+                    set x = x + checkSize
+                endif
+                set slot = slot + 1
+            endloop
+        endif
+        set i = i + 1
+    endloop
+    set decal = null
+endfunction
+
+function SDGroundUpdate takes nothing returns nothing
+    local integer team = 1
+    local integer slot
+    local boolean picked
+    local boolean waiting
+    local boolean pending = false
+    if SDGroundEnabled() then
+        loop
+            exitwhen team > 4
+            if not SDGroundShown[team] then
+                set slot = 1
+                set picked = false
+                set waiting = false
+                loop
+                    exitwhen slot > 12
+                    if SDGroundPickTeam[slot] == team then
+                        set picked = true
+                    elseif udg_teamnumber[slot] == team and udg_player_active[slot] and GetPlayerSlotState(Player(slot - 1)) == PLAYER_SLOT_STATE_PLAYING then
+                        set waiting = true
+                    endif
+                    set slot = slot + 1
+                endloop
+                if waiting then
+                    set pending = true
+                elseif picked and SDGroundCount[team] > 0 then
+                    set SDGroundShown[team] = true
+                    call SDGroundDraw(team)
+                endif
+            endif
+            set team = team + 1
+        endloop
+    endif
+    if not pending then
+        call DestroyTimer(SDGroundTimer)
+        set SDGroundTimer = null
+    endif
+endfunction
+
+function SDGroundPick takes integer slot, integer id, boolean randomChoice returns nothing
+    if not SDGroundEnabled() or slot < 1 or slot > 12 or SDGroundHero[slot] != 0 then
+        return
+    endif
+    set SDGroundHero[slot] = id
+    set SDGroundPickTeam[slot] = udg_teamnumber[slot]
+    set SDGroundColor[slot] = GetHandleId(GetPlayerColor(Player(slot - 1)))
+    set SDGroundRandom[slot] = randomChoice or SDGroundRolling[slot]
+    if SDGroundTimer == null then
+        set SDGroundTimer = CreateTimer()
+        call TimerStart(SDGroundTimer, 0.25, true, function SDGroundUpdate)
+    endif
+endfunction
+
+function SDGroundStock takes unit shop, integer id returns nothing
+    local integer key
+    local integer count
+    if not SDGroundEnabled() or shop == null or id == 0 or id == 'h004' or id == 'H0R0' then
+        return
+    endif
+    if SDGroundStockTable == null then
+        set SDGroundStockTable = InitHashtable()
+    endif
+    set key = GetHandleId(shop)
+    if not HaveSavedBoolean(SDGroundStockTable, key, id) then
+        set count = LoadInteger(SDGroundStockTable, key, 0) + 1
+        call SaveInteger(SDGroundStockTable, key, 0, count)
+        call SaveInteger(SDGroundStockTable, key, count, id)
+        call SaveBoolean(SDGroundStockTable, key, id, true)
+    endif
+endfunction
+
+function SDGroundImport takes integer team, unit shop returns nothing
+    local integer key = GetHandleId(shop)
+    local integer i = 1
+    if shop == null or SDGroundStockTable == null then
+        return
+    endif
+    loop
+        exitwhen i > LoadInteger(SDGroundStockTable, key, 0)
+        call SDGroundRemember(team, LoadInteger(SDGroundStockTable, key, i))
+        set i = i + 1
+    endloop
+endfunction
+
 
 //= FFGS-SETTINGS-BEGIN
 function FFR9_ApplyAlchemistBounty takes unit u returns nothing
@@ -16767,6 +16965,7 @@ endfunction
 
 function SoloFootsAddHeroTypeToTavern takes integer heroType, unit shop returns nothing
     if heroType != 0 and shop != null and not SoloFootsIsNoMuteHeroType(heroType) then
+        call SDGroundStock(shop, heroType)
         call AddUnitToStockBJ(heroType, shop, 1, 1)
     endif
 endfunction
@@ -17003,6 +17202,7 @@ function Trig_Start_SD_Func013C takes nothing returns boolean
 endfunction
 
 function Trig_Start_SD_Actions takes nothing returns nothing
+    local integer team = 1
     //                                                                                                                                     
     call EnableTrigger(gg_trg_swap_command)
     call EnableTrigger(gg_trg_swap_execute)
@@ -17129,6 +17329,12 @@ function Trig_Start_SD_Actions takes nothing returns nothing
         call ForGroupBJ(udg_temp_unitgroup, function Trig_Start_SD_Func013Func028A)
     endif
     call DestroyGroup(udg_temp_unitgroup)
+    loop
+        exitwhen team > 4
+        call SDGroundImport(team, udg_real_shop[team])
+        call SDGroundImport(team, udg_solo_second_tavern[team])
+        set team = team + 1
+    endloop
     call DestroyGroup(udg_temp_unitgroup2)
     call DestroyGroup(udg_temp_unitgroup3)
     call DestroyGroup(udg_temp_unitgroup4)
@@ -17208,6 +17414,7 @@ function Trig_TP_hero_Actions takes nothing returns nothing
     if ( Trig_TP_hero_Func006C() ) then
         set udg_tp_kill[udg_temp_playernumber]=true
         set udg_herO[udg_temp_playernumber]=udg_temp_unit
+        call SDGroundPick(udg_temp_playernumber, GetUnitTypeId(udg_temp_unit), false)
         call GroupAddUnit(sf_foot_exp_group, udg_temp_unit)
         call SetUnitPositionLoc(udg_temp_unit, udg_temp_point)
         // Starting Items
@@ -38903,6 +39110,7 @@ function FFOD_ApplyUnitTech takes unit u, integer idx, integer pn returns nothin
             call UnitAddAbility(u, 'A0HY')
             call SetUnitMoveSpeed(u, GetUnitDefaultMoveSpeed(u) + 45.00)
             call MF_SetAttackRange(u, udg_unit_range_actual[idx] + 75.00)
+            call SetUnitAcquireRange(u, RMaxBJ(GetUnitAcquireRange(u), udg_unit_range_actual[idx] + 75.00))
         endif
     elseif ( t == 'hdhw' ) or ( t == 'h018' ) then
         if GetPlayerTechCountSimple('Rmo1', p) > 0 then
@@ -40598,11 +40806,11 @@ set udg_unit_bounty_dice_sides[9]=3
 set udg_unit_range[9]=655
 set udg_unit_level[9]=2
 
-// Warlock
+// Kodo Beast
 set udg_spawn_unit[10]='n04X'
-set udg_unit_HP[10]=625
-set udg_unit_armor_type[10]=1
-set udg_unit_armor[10]=0
+set udg_unit_HP[10]=775
+set udg_unit_armor_type[10]=2
+set udg_unit_armor[10]=1
 set udg_unit_att_base[10]=34
 set udg_unit_att_num_dice[10]=1
 set udg_unit_att_dice_sides[10]=2
@@ -40610,7 +40818,7 @@ set udg_unit_att_CD[10]=1.2
 set udg_unit_bounty_base[10]=42
 set udg_unit_bounty_num_dice[10]=1
 set udg_unit_bounty_dice_sides[10]=3
-set udg_unit_range[10]=685
+set udg_unit_range[10]=475
 set udg_unit_level[10]=3
 
 // Mortat Bombers
@@ -41049,11 +41257,11 @@ set udg_unit_bounty_dice_sides[39]=3
 set udg_unit_range[39]=655
 set udg_unit_level[39]=2
 
-// [40] Warlock (from 10)
+// [40] Kodo Beast (from 10)
 set udg_spawn_unit[40]='n04X'
-set udg_unit_HP[40]=625
-set udg_unit_armor_type[40]=1
-set udg_unit_armor[40]=0
+set udg_unit_HP[40]=775
+set udg_unit_armor_type[40]=2
+set udg_unit_armor[40]=1
 set udg_unit_att_base[40]=34
 set udg_unit_att_num_dice[40]=1
 set udg_unit_att_dice_sides[40]=2
@@ -41061,7 +41269,7 @@ set udg_unit_att_CD[40]=1.2
 set udg_unit_bounty_base[40]=42
 set udg_unit_bounty_num_dice[40]=1
 set udg_unit_bounty_dice_sides[40]=3
-set udg_unit_range[40]=685
+set udg_unit_range[40]=475
 set udg_unit_level[40]=3
 
 // [41] Mortar Bomber (from 11)
@@ -41341,7 +41549,7 @@ set udg_base_type[38]='h03W'
 // 39 Banshee
 set udg_base_type[39]='u011'
 
-// 40 Warlock
+// 40 Kodo Beast
 set udg_base_type[40]='e013'
 
 // 41 Mortar Bomber

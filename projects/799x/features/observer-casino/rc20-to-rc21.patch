@@ -1,0 +1,4655 @@
+--- a/war3map.j
++++ b/war3map.j
+@@ -3604,114 +3604,187 @@
+ real array sf_glaive_x
+ real array sf_glaive_y
+ integer sf_page_target_type=0
+-    integer array CP_PK_Cards
+-    integer array CP_PK_Stack
+-    integer array CP_PK_Paid
+-    integer array CP_PK_Total
+-    integer array CP_PK_Street
+-    integer array CP_PK_Turn
+-    integer array CP_PK_Dealer
+-    integer array CP_PK_Hand
+-    integer array CP_PK_LastRaise
+-    integer array CP_PK_Clock
+-    boolean array CP_PK_Acted
+-    boolean array CP_PK_Reveal
+-    string array CP_PK_Note
+-    framehandle array CP_PK_Dialog
+-    framehandle array CP_PK_Text
+-    framehandle array CP_PK_Title
+-    framehandle array CP_PK_HumanLabel
+-    framehandle array CP_PK_BotLabel
+-    framehandle array CP_PK_PotLabel
+-    framehandle array CP_PK_Status
+-    framehandle array CP_PK_CallLabel
+-    framehandle array CP_PK_Face
+-    framehandle array CP_PK_HumanChips
+-    framehandle array CP_PK_BotChips
+-    framehandle array CP_PK_PotChips
+-    framehandle array CP_PK_HumanDealer
+-    framehandle array CP_PK_BotDealer
+-    framehandle array CP_PK_Fold
+-    framehandle array CP_PK_Call
+-    framehandle array CP_PK_Raise
+-    framehandle array CP_PK_Allin
+-    framehandle array CP_PK_Next
+-    framehandle array CP_PK_Hide
+-    integer CP_CAS_seconds = 0
+-    boolean CP_CAS_closed = false
+-    boolean CP_CAS_ended = false
+-    integer array CP_CAS_view
+-    integer array CP_CAS_amount
+-    string array CP_CAS_note
+-    framehandle array CP_CAS_root
+-    framehandle array CP_CAS_title
+-    framehandle array CP_CAS_balance
+-    framehandle array CP_CAS_status
+-    framehandle array CP_CAS_footer
+-    framehandle array CP_CAS_button
+-    framehandle array CP_CAS_content
+-    framehandle array CP_CAS_card
+-    framehandle array CP_CAS_chip
+-    framehandle array CP_CAS_row
+-    framehandle array CP_CAS_bar
+-    framehandle array CP_CAS_track
+-    integer array CP_BJ_table
+-    integer array CP_BJ_seat
+-    integer array CP_BJ_owner
+-    integer array CP_BJ_phase
+-    integer array CP_BJ_clock
+-    integer array CP_BJ_round
+-    integer array CP_BJ_turn
+-    integer array CP_BJ_card
+-    integer array CP_BJ_count
+-    integer array CP_BJ_total
+-    integer array CP_BJ_state
+-    integer array CP_BJ_bet
+-    boolean array CP_BJ_split
+-    integer array CP_BJ_dealerCard
+-    integer array CP_BJ_dealerCount
+-    integer array CP_BJ_dealerTotal
+-    boolean array CP_BJ_reveal
+-    boolean CP_MK_ffa = false
+-    integer array CP_MK_prior
+-    integer array CP_MK_quoteTotal
+-    integer array CP_MK_ownedStake
+-    integer array CP_MK_ownedReturn
+-    integer array CP_MK_pool
+-    integer array CP_MK_volume
+-    boolean array CP_MK_done
+-    integer array CP_MK_winner
+-    boolean array CP_MK_baseScored
+-    integer array CP_MK_tab
+-    integer array CP_MK_pick
+-    integer array CP_MK_page
+-    integer array CP_DU_from
+-    integer array CP_DU_to
+-    integer array CP_DU_target
+-    integer array CP_DU_stake
+-    integer array CP_DU_expire
+-    integer array CP_DU_outgoing
+-    integer array CP_DU_incoming
+-    integer array CP_DU_active
+-    integer array CP_DU_opponent
+-    integer array CP_DU_pick
+-    integer array CP_CasinoLastView
+-    integer array CP_LoanPrincipal
+-    integer array CP_LoanFee
+-    integer array CP_CreditOwner
+-    integer array CP_CreditAmount
+-    integer array CP_CreditOfferMode
+-    integer array CP_CreditOfferRate
+-    integer array CP_CreditOfferPeriod
+-    integer array CP_CreditFee
+-    integer array CP_CreditGeneration
+-    integer array CP_CreditSeen
+-    integer array CP_CreditSelected
+-    integer array CP_CreditDraftMode
+-    integer array CP_CreditDraftRate
+-    integer array CP_CreditDraftPeriod
+-    boolean array CP_CreditRequest
+     boolean array CP_CreditDraftRequest
++    boolean array CasinoPlayed
++    integer PK_Seed = 81731
++    integer array PK_Deck
++    integer array PK_Cards
++    integer array PK_Stack
++    integer array PK_Paid
++    integer array PK_Total
++    integer array PK_Street
++    integer array PK_Turn
++    integer array PK_Dealer
++    integer array PK_Hand
++    integer array PK_LastRaise
++    integer array PK_Actions
++    integer array PK_Clock
++    integer array PK_Wait
++    boolean array PK_Started
++    boolean array PK_Hidden
++    boolean array PK_Acted
++    boolean array PK_Reveal
++    string array PK_Note
++    framehandle array PK_Dialog
++    framehandle array PK_Text
++    framehandle array PK_Title
++    framehandle array PK_HumanLabel
++    framehandle array PK_HumanStack
++    framehandle array PK_BotStack
++    framehandle array PK_BotLabel
++    framehandle array PK_PotLabel
++    framehandle array PK_Status
++    framehandle array PK_CallLabel
++    framehandle array PK_Face
++    framehandle array PK_HumanChips
++    framehandle array PK_BotChips
++    framehandle array PK_PotChips
++    framehandle array PK_HumanDealer
++    framehandle array PK_BotDealer
++    framehandle array PK_Fold
++    framehandle array PK_Call
++    framehandle array PK_Raise
++    framehandle array PK_Allin
++    framehandle array PK_Next
++    framehandle array PK_Hide
++    integer array PK_Count
++    integer array PK_Sort
++    integer array PK_Eval
++
++    integer CAS_seed = 71983
++    integer CAS_bank = 1000000
++    integer CAS_liability = 0
++    integer CAS_seconds = 0
++    integer CAS_winner = 0
++    trigger CAS_baseEvent = null
++    trigger CAS_matchEvent = null
++    unit CAS_baseVictim = null
++    unit CAS_baseKiller = null
++    boolean CAS_warned = false
++    boolean CAS_closed = false
++    boolean CAS_ended = false
++    integer CAS_buildSlot = 0
++    integer array CAS_escrow
++    integer array CAS_returnDue
++    integer array CAS_profitDue
++    integer array CAS_view
++    integer array CAS_amount
++    string array CAS_note
++    framehandle array CAS_root
++    framehandle array CAS_launch
++    framehandle array CAS_title
++    framehandle array CAS_balance
++    framehandle array CAS_status
++    framehandle array CAS_footer
++    framehandle array CAS_button
++    framehandle array CAS_content
++    framehandle array CAS_card
++    framehandle array CAS_felt
++    framehandle array CAS_chip
++    framehandle array CAS_seatTotal
++    framehandle array CAS_row
++    framehandle array CAS_bar
++    framehandle array CAS_track
++    integer array BJ_table
++    integer array BJ_seat
++    integer array BJ_owner
++    integer array BJ_phase
++    integer array BJ_clock
++    integer array BJ_round
++    integer array BJ_turn
++    integer array BJ_shoe
++    integer array BJ_pos
++    boolean array BJ_error
++    integer array BJ_card
++    integer array BJ_count
++    integer array BJ_total
++    integer array BJ_aces
++    integer array BJ_state
++    integer array BJ_bet
++    integer array BJ_reserve
++    boolean array BJ_split
++    integer array BJ_dealerCard
++    integer array BJ_dealerCount
++    integer array BJ_dealerTotal
++    integer array BJ_dealerAces
++    boolean array BJ_reveal
++    string array BJ_result
++    integer MK_n = 0
++    boolean MK_ffa = false
++    timer MK_payTimer = null
++    integer MK_scan = 1
++    integer array MK_prior
++    integer array MK_quoteTotal
++    integer array MK_ownedStake
++    integer array MK_ownedReturn
++    integer array MK_player
++    integer array MK_market
++    integer array MK_target
++    integer array MK_stake
++    integer array MK_return
++    integer array MK_reserve
++    boolean array MK_paid
++    integer array MK_pool
++    integer array MK_volume
++    boolean array MK_done
++    integer array MK_winner
++    boolean array MK_baseScored
++    integer array MK_tab
++    integer array MK_pick
++    integer array MK_page
++    integer DU_n = 0
++    integer array DU_from
++    integer array DU_to
++    integer array DU_target
++    boolean array DU_ffa
++    integer array DU_stake
++    integer array DU_state
++    integer array DU_expire
++    integer array DU_outgoing
++    integer array DU_incoming
++    integer array DU_active
++    integer array DU_opponent
++    integer array DU_pick
++
++    integer array CAS_gold
++    boolean array CAS_ready
++    boolean array CAS_defeated
++
++    integer array CasinoLastView
++    integer array LoanLent
++    integer array LoanOutstanding
++    integer array LoanInterest
++    integer array LoanLender
++    integer array LoanPrincipal
++    integer array LoanFee
++    integer array LoanPendingPrincipal
++    integer array LoanPendingFee
++    integer array LoanIdentity
++    integer array CreditMode
++    integer array CreditRate
++    integer array CreditPeriod
++    integer array CreditElapsed
++    integer array CreditFraction
++    integer array CreditHold
++    integer array CreditOwner
++    integer array CreditAmount
++    integer array CreditOfferMode
++    integer array CreditOfferRate
++    integer array CreditOfferPeriod
++    integer array CreditTarget
++    integer array CreditFee
++    integer array CreditGeneration
++    integer array CreditSeen
++    integer array CreditSelected
++    integer array CreditDraftMode
++    integer array CreditDraftRate
++    integer array CreditDraftPeriod
++    boolean array CreditRequest
++    boolean array CreditDraftRequest
++    string LoanLocalRecord
++    integer array PokerBuyIn
++    integer CasinoLauncherSlot = 0
++    trigger CasinoOpen = null
+ endglobals
+ 
+ // All custom controls share a parent; hiding it also hides refreshed children.
+@@ -6497,6 +6570,34 @@
+     endif
+     // efl-obs (observes and streams), and the retired 1.0 fleet accounts (still ours).
+     return FF_EndsWith(name, "MangoThief#115445") or FF_EndsWith(name, "Vertical#11718") or FF_EndsWith(name, "Industry#11190") or FF_EndsWith(name, "BryanBoitano#1725")
++endfunction
++
++function CAS_User takes integer s returns boolean
++    if s < 1 or s > 24 then
++        return false
++    endif
++    return GetPlayerSlotState(Player(s-1)) == PLAYER_SLOT_STATE_PLAYING and (GetPlayerController(Player(s-1)) == MAP_CONTROL_USER or IsPlayerObserver(Player(s-1))) and not FF_IsBotName(GetPlayerName(Player(s-1)))
++endfunction
++
++function PK_Eligible takes integer p returns boolean
++    if not CAS_User(p+1) or SoloSub_playerForObserver[p] != 0 then
++        return false
++    endif
++    if p < 12 and udg_player_active[p+1] then
++        return false
++    endif
++    return CAS_defeated[p] or IsPlayerObserver(Player(p)) or (p >= 12 and GetPlayerTeam(Player(p)) == 4)
++endfunction
++
++function CAS_Announce takes string msg returns nothing
++    local integer p = 0
++    loop
++        exitwhen p >= 24
++        if PK_Eligible(p) then
++            call DisplayTimedTextToPlayer(Player(p),0,0,10,msg)
++        endif
++        set p = p+1
++    endloop
+ endfunction
+ 
+ function FF_HostBotInGame takes nothing returns boolean
+@@ -26481,955 +26582,102 @@
+     call BlzFrameSetVisible(spellKeysPanel, spellKeysOpen)
+ endfunction
+ 
+-function CP_PreviewClose takes nothing returns nothing
++function FF_CloseProfilePanels takes nothing returns nothing
+     local framehandle f = BlzGetTriggerFrame()
+     if f != null then
+         call BlzFrameSetFocus(f,false)
+     endif
+-    set CP_CAS_view[1] = 0
+     set DPS_Open[GetPlayerId(GetLocalPlayer())] = false
+     set spellKeysOpen = false
+     set spellKeysEditing = -1
+     if spellKeysPanel != null then
+         call BlzFrameSetVisible(spellKeysPanel,false)
+     endif
+-    if CP_CAS_root[1] != null then
+-        call BlzFrameSetVisible(CP_CAS_root[1],false)
+-        call BlzFrameSetVisible(CP_PK_Dialog[0],false)
+-    endif
+     call BlzFrameSetVisible(DPS_Panel,false)
+     set f = null
+ endfunction
+ 
+-function CP_CAS_SafeW takes real width returns real
+-    return width
+-endfunction
+-
+-function CP_CAS_SafeX takes real x returns real
+-    return x
+-endfunction
+-
+-function CP_CAS_Tone takes integer id returns integer
+-    if id == 6 or id == 10 or id == 37 or id == 38 then
+-        return 1
+-    elseif id == 7 or id == 8 or id == 9 or id == 11 or id == 14 or id == 32 or id == 33 or id == 36 then
+-        return 2
+-    elseif id == 12 then
+-        return 3
+-    elseif id == 15 or id == 16 or id == 34 or id == 35 then
+-        return 4
+-    endif
+-    return 0
+-endfunction
+-
+-function CP_CUI_Paint takes framehandle f, integer tone, boolean enabled returns nothing
+-    local integer color = BlzConvertColor(255,255,250,240)
+-    if not enabled then
+-        set color = BlzConvertColor(255,145,158,170)
+-    elseif tone == 1 then
+-        set color = BlzConvertColor(255,255,155,150)
+-    elseif tone == 2 or tone == 3 then
+-        set color = BlzConvertColor(255,169,241,180)
+-    elseif tone == 4 then
+-        set color = BlzConvertColor(255,163,208,255)
+-    elseif tone == 5 then
+-        set color = BlzConvertColor(255,255,213,121)
+-    endif
+-    call BlzFrameSetTextColor(f,color)
+-    if BlzFrameGetEnable(f) != enabled then
+-        call BlzFrameSetEnable(f,enabled)
+-    endif
+-endfunction
+-
+-function CP_CUI_Create takes framehandle parent, integer context, real x, real y, real w, real h, string label, integer tone returns framehandle
+-    local framehandle f = BlzCreateFrame("ScriptDialogButton",parent,0,context)
+-    call BlzFrameSetSize(f,w,h)
+-    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,y)
+-    call BlzFrameSetLevel(f,65)
+-    call BlzFrameSetText(f,label)
+-    call CP_CUI_Paint(f,tone,true)
+-    return f
+-endfunction
+-
+-function CP_CAS_Button takes integer s, integer id, trigger click, real x, real y, real w, string label returns nothing
+-    local framehandle f = CP_CUI_Create(CP_CAS_root[s],s*64+id,CP_CAS_SafeX(x),-y,CP_CAS_SafeW(w),0.027,label,CP_CAS_Tone(id))
+-    if id <= 5 or id == 57 then
+-        call BlzTriggerRegisterFrameEvent(click,f,FRAMEEVENT_CONTROL_CLICK)
+-    else
+-        call BlzFrameSetEnable(f,false)
+-    endif
+-    set CP_CAS_button[s*64+id] = f
+-    set f = null
+-endfunction
+-
+-function CP_CAS_Label takes integer s, real x, real y, real w, real h, real scale returns framehandle
+-    local framehandle f = BlzCreateFrameByType("TEXT","CasinoLabel",CP_CAS_root[s],"",s)
+-    call BlzFrameSetSize(f,CP_CAS_SafeW(w),h)
+-    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(x),-y)
+-    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+-    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
+-    call BlzFrameSetEnable(f,false)
+-    call BlzFrameSetAlpha(f,145)
+-    call BlzFrameSetEnable(f,false)
+-    return f
+-endfunction
+-
+-function CP_CAS_Texture takes integer s, string path, real x, real y, real w, real h returns framehandle
+-    local framehandle f = BlzCreateFrameByType("BACKDROP","CasinoArt",CP_CAS_root[s],"",s)
+-    call BlzFrameSetSize(f,w,h)
+-    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,x,-y)
+-    call BlzFrameSetTexture(f,path,0,true)
+-    call BlzFrameSetEnable(f,false)
+-    call BlzFrameSetAlpha(f,145)
+-    call BlzFrameSetEnable(f,false)
+-    return f
+-endfunction
+-
+-function CP_FF_Pad2 takes integer n returns string
+-    if n < 10 then
+-        return "0" + I2S(n)
+-    endif
+-    return I2S(n)
+-endfunction
+-
+-function CP_CAS_Odds takes integer value returns string
+-    return I2S(value/100)+"."+CP_FF_Pad2(ModuloInteger(value,100))+"x"
+-endfunction
+-
+-function CP_CAS_ShowButton takes integer s, integer id, boolean enabled returns nothing
+-    if not BlzFrameIsVisible(CP_CAS_button[s*64+id]) then
+-        call BlzFrameSetVisible(CP_CAS_button[s*64+id],true)
+-    endif
+-    call CP_CUI_Paint(CP_CAS_button[s*64+id],CP_CAS_Tone(id),false)
+-endfunction
+-
+-function CP_CUI_Text takes framehandle f, string label returns nothing
+-    call BlzFrameSetText(f,label)
+-endfunction
+-
+-function CP_MK_IsOpen takes integer m, integer o returns boolean
+-    return false
+-endfunction
+-
+-function CP_CAS_Name takes integer s returns string
+-    if s < 1 then
+-        return "Computer"
+-    endif
+-    return GetPlayerName(Player(s-1))
+-endfunction
+-
+-function CP_MK_Label takes integer m, integer o returns string
+-    return CP_CAS_Name(o)
+-endfunction
+-
+-function CP_MK_Quote takes integer m, integer o, integer stake returns integer
+-    local integer total = CP_MK_quoteTotal[m]+stake
+-    local integer weight = CP_MK_pool[m*16+o]+CP_MK_prior[m*16+o]+stake
+-    if weight <= 0 then
+-        return 110
+-    endif
+-    return IMinBJ(2000,IMaxBJ(110,R2I(I2R(total)*100.00/I2R(weight))))
+-endfunction
+-
+-function CP_MK_FFA takes nothing returns boolean
+-    return CP_MK_ffa
+-endfunction
+-
+-function CP_MK_Title takes integer m returns string
+-    if m == 1 then
+-        return "FIRST HERO KILL"
+-    elseif m == 2 then
+-        return "SCORES A BASE KILL"
+-    elseif m == 3 then
+-        return "FIRST BASE LOST"
+-    elseif m == 4 then
+-        return "FIRST TO LEVEL 16"
+-    elseif CP_MK_FFA() then
+-        return "PLAYER TO WIN"
+-    endif
+-    return "TEAM TO WIN"
+-endfunction
+-
+-function CP_CAS_User takes integer s returns boolean
+-    return s >= 1 and s <= 24 and GetPlayerController(Player(s-1)) == MAP_CONTROL_USER and GetPlayerSlotState(Player(s-1)) == PLAYER_SLOT_STATE_PLAYING
+-endfunction
+-
+-function CP_MK_Valid takes integer m, integer o returns boolean
+-    return o >= 1 and o <= 12 and CP_CAS_User(o)
+-endfunction
+-
+-function CP_CAS_BetsView takes integer s returns nothing
+-    local integer m = CP_MK_tab[s]
+-    local integer o
+-    local integer i = 0
+-    local integer k = 0
+-    local integer b = s*32
+-    local integer start = CP_MK_page[s]*6
+-    local integer quote
+-    local integer volume
+-    local integer total = CP_MK_volume[m]
+-    local integer tickets = 0
+-    local integer invested = 0
+-    local integer totalReturn = 0
+-    local string label
+-    call BlzFrameSetText(CP_CAS_content[b+7],"|cffe7cb88"+CP_MK_Title(m)+"|r  /  "+I2S(total)+"g")
+-    call BlzFrameSetVisible(CP_CAS_content[b+7],true)
+-    call BlzFrameSetText(CP_CAS_content[b+8],"OUTCOME")
+-    call BlzFrameSetVisible(CP_CAS_content[b+8],true)
+-    call BlzFrameSetText(CP_CAS_content[b+31],"POOL")
+-    call BlzFrameSetVisible(CP_CAS_content[b+31],true)
+-    call BlzFrameSetPoint(CP_CAS_content[b+6],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(0.445),-0.169)
+-    call BlzFrameSetSize(CP_CAS_content[b+6],CP_CAS_SafeW(0.10),0.018)
+-    call BlzFrameSetText(CP_CAS_content[b+6],"ODDS")
+-    call BlzFrameSetVisible(CP_CAS_content[b+6],true)
+-    set o = 1
+-    loop
+-        exitwhen o > 12
+-        if CP_MK_Valid(m,o) then
+-            if k >= start and i < 6 then
+-                set volume = CP_MK_pool[m*16+o]
+-                set label = CP_MK_Label(m,o)
+-                if o == CP_MK_pick[s] then
+-                    set label = "|cffe7cb88> "+label+"|r"
+-                endif
+-                call BlzFrameSetText(CP_CAS_content[b+10+i*3],label)
+-                call BlzFrameSetText(CP_CAS_content[b+11+i*3],I2S(volume)+"g / "+I2S(R2I(I2R(volume)*100.0/I2R(IMaxBJ(1,total))))+"%")
+-                set quote = CP_MK_Quote(m,o,0)
+-                set label = CP_CAS_Odds(quote)
+-                if m == 2 and CP_MK_baseScored[o] then
+-                    set label = "SCORED"
+-                elseif CP_MK_done[m] then
+-                    set label = "SETTLED"
+-                    if m == 2 then
+-                        set label = "NO KILL"
+-                    elseif CP_MK_winner[m] == o then
+-                        set label = "|cffe7cb88WINNER|r"
+-                    endif
+-                elseif CP_CAS_closed or CP_CAS_seconds >= 130 then
+-                    set label = "CLOSED"
+-                endif
+-                call BlzFrameSetText(CP_CAS_content[b+12+i*3],label)
+-                call BlzFrameSetVisible(CP_CAS_content[b+10+i*3],true)
+-                call BlzFrameSetVisible(CP_CAS_content[b+11+i*3],true)
+-                call BlzFrameSetVisible(CP_CAS_content[b+12+i*3],true)
+-                call BlzFrameSetVisible(CP_CAS_track[s*6+i],true)
+-                call BlzFrameSetVisible(CP_CAS_bar[s*6+i],volume > 0)
+-                call BlzFrameSetSize(CP_CAS_bar[s*6+i],IMaxBJ(1,volume)*CP_CAS_SafeW(0.115)/I2R(IMaxBJ(1,total)),0.003)
+-                call CP_CAS_ShowButton(s,26+i,true)
+-                call CP_CUI_Text(CP_CAS_button[s*64+26+i],"PICK")
+-                if o == CP_MK_pick[s] then
+-                    call CP_CUI_Paint(CP_CAS_button[s*64+26+i],5,true)
+-                endif
+-                set i = i+1
+-            endif
+-            set k = k+1
+-        endif
+-        set o = o+1
+-    endloop
+-    set invested = CP_MK_ownedStake[s*96+m*16+CP_MK_pick[s]]
+-    set totalReturn = CP_MK_ownedReturn[s*96+m*16+CP_MK_pick[s]]
+-    set label = "PICK AN OUTCOME"
+-    if CP_MK_Valid(m,CP_MK_pick[s]) then
+-        set quote = CP_MK_Quote(m,CP_MK_pick[s],CP_CAS_amount[s])
+-        set label = CP_MK_Label(m,CP_MK_pick[s])+"  "+CP_CAS_Odds(quote)+"  /  RETURN "+I2S(CP_CAS_amount[s]*quote/100)+"g"
+-        if invested > 0 then
+-            set label = label+"|nLOCKED "+I2S(invested)+"g  /  RETURN "+I2S(totalReturn)+"g"
+-        endif
+-    endif
+-    call BlzFrameSetText(CP_CAS_content[b+9],label)
+-    call BlzFrameSetVisible(CP_CAS_content[b+9],true)
+-    loop
+-        exitwhen i >= 6
+-        call BlzFrameSetVisible(CP_CAS_button[s*64+26+i],false)
+-        set i = i+1
+-    endloop
+-    set i = 20
+-    loop
+-        exitwhen i > 24
+-        call CP_CAS_ShowButton(s,i,true)
+-        if i-19 == m then
+-            call CP_CUI_Paint(CP_CAS_button[s*64+i],4,true)
+-        endif
+-        set i = i+1
+-    endloop
+-    call CP_CAS_ShowButton(s,25,k > 6)
+-    call CP_CAS_ShowButton(s,32,CP_MK_IsOpen(m,CP_MK_pick[s]))
+-endfunction
+-
+-function CP_BJ_Summary takes integer h returns string
+-    local string text = I2S(CP_BJ_total[h])
+-    if CP_BJ_total[h] > 21 then
+-        return "|cffff9090BUST "+text+"|r"
+-    elseif CP_BJ_state[h] == 4 then
+-        return "|cffe7cb88BLACKJACK|r"
+-    elseif CP_BJ_state[h] == 1 then
+-        return text
+-    elseif CP_BJ_state[h] == 0 then
+-        return "--"
+-    endif
+-    return text
+-endfunction
+-
+-function CP_BJ_Value takes integer card returns integer
+-    return IMinBJ(10,ModuloInteger(card,13)+2)
+-endfunction
+-
+-function CP_CAS_CardFace takes framehandle f, integer card, boolean back returns nothing
+-    local string name = "empty"
+-    if back then
+-        set name = "back"
+-    elseif card >= 0 then
+-        set name = "card"+I2S(card)
+-    endif
+-    call BlzFrameSetVisible(f,true)
+-    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
+-endfunction
+-
+-function CP_PK_ChipArt takes framehandle f, integer chips returns nothing
+-    local integer count = 1
+-    if chips >= 500 then
+-        set count = 4
+-    elseif chips >= 200 then
+-        set count = 3
+-    elseif chips >= 50 then
+-        set count = 2
+-    endif
+-    call BlzFrameSetVisible(f,chips > 0)
+-    call BlzFrameSetTexture(f,"PokerUI\\chips"+I2S(count)+".blp",0,true)
+-endfunction
+-
+-function CP_CAS_BlackjackView takes integer s returns nothing
+-    local integer t = CP_BJ_table[s]
+-    local integer h = CP_BJ_seat[s]*2
+-    local integer b = s*32
+-    local integer c = s*18
+-    local integer i = 0
+-    local integer j
+-    local integer own
+-    local integer card
+-    local real startX
+-    local real cardWidth = 0.060
+-    local real cardHeight = 0.082
+-    local real spacing = 0.067
+-    local boolean turn = CP_BJ_phase[t] == 2 and CP_BJ_turn[t]-1 >= h and CP_BJ_turn[t]-1 <= h+1
+-    local string mode = "SOLO + BOTS"
+-    local string phase = "PLACE BET"
+-    local string dealer = "DEALER"
+-    if t == 0 then
+-        set mode = "COMMUNITY"
+-    endif
+-    if CP_BJ_phase[t] == 1 then
+-        set phase = "DEAL IN "+I2S(CP_BJ_clock[t])+"s"
+-    elseif CP_BJ_phase[t] == 2 then
+-        set phase = CP_CAS_Name(CP_BJ_owner[(CP_BJ_turn[t]-1)/2])+" / "+I2S(CP_BJ_clock[t])+"s"
+-        if turn then
+-            set phase = "|cffe7cb88YOUR TURN / "+I2S(CP_BJ_clock[t])+"s|r"
+-        endif
+-    elseif CP_BJ_phase[t] == 3 then
+-        set phase = "DEALER'S TURN"
+-    elseif CP_BJ_phase[t] == 4 then
+-        set phase = "NEXT ROUND"
+-    endif
+-    call BlzFrameSetText(CP_CAS_content[b],mode+"  /  #"+I2S(CP_BJ_round[t]))
+-    call BlzFrameSetVisible(CP_CAS_content[b],true)
+-    call BlzFrameSetText(CP_CAS_content[b+1],phase)
+-    call BlzFrameSetSize(CP_CAS_content[b+1],CP_CAS_SafeW(0.17),0.035)
+-    call BlzFrameSetVisible(CP_CAS_content[b+1],true)
+-    if CP_BJ_reveal[t] then
+-        set dealer = dealer+" / "+I2S(CP_BJ_dealerTotal[t])
+-    endif
+-    call BlzFrameSetText(CP_CAS_content[b+2],dealer)
+-    call BlzFrameSetVisible(CP_CAS_content[b+2],true)
+-    call BlzFrameSetText(CP_CAS_content[b+3],"|cffe7cb88YOU  "+CP_BJ_Summary(h)+"|r|nBET "+I2S(CP_BJ_bet[h]))
+-    call BlzFrameSetVisible(CP_CAS_content[b+3],true)
+-    call BlzFrameSetText(CP_CAS_content[b+4],"2 DECKS|nPAYS 3:2")
+-    call BlzFrameSetVisible(CP_CAS_content[b+4],true)
+-    loop
+-        exitwhen i >= 6
+-        set startX = 0.435-I2R(IMaxBJ(2,IMinBJ(6,CP_BJ_dealerCount[t])))*0.067/2.0
+-        call BlzFrameSetPoint(CP_CAS_card[c+i],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,startX+I2R(i)*0.067,-0.164)
+-        call BlzFrameSetSize(CP_CAS_card[c+i],0.054,0.078)
+-        set card = -1
+-        if i < CP_BJ_dealerCount[t] then
+-            set card = CP_BJ_dealerCard[t*22+i]
+-        endif
+-        call CP_CAS_CardFace(CP_CAS_card[c+i],card,i == 1 and CP_BJ_dealerCount[t] > 1 and not CP_BJ_reveal[t])
+-        call BlzFrameSetVisible(CP_CAS_card[c+i],i < IMaxBJ(2,CP_BJ_dealerCount[t]))
+-        set card = -1
+-        if i < CP_BJ_count[h] then
+-            set card = CP_BJ_card[h*22+i]
+-        endif
+-        set startX = 0.435-I2R(IMaxBJ(2,IMinBJ(6,CP_BJ_count[h])))*0.067/2.0
+-        if CP_BJ_split[h] then
+-            set startX = 0.205
+-            set cardWidth = 0.043
+-            set cardHeight = 0.062
+-            set spacing = 0.028
+-        endif
+-        call BlzFrameSetPoint(CP_CAS_card[c+6+i],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,startX+I2R(i)*spacing,-0.280)
+-        call BlzFrameSetSize(CP_CAS_card[c+6+i],cardWidth,cardHeight)
+-        call CP_CAS_CardFace(CP_CAS_card[c+6+i],card,false)
+-        call BlzFrameSetVisible(CP_CAS_card[c+6+i],i < IMaxBJ(2,CP_BJ_count[h]))
+-        if CP_BJ_split[h] then
+-            set card = -1
+-            if i < CP_BJ_count[h+1] then
+-                set card = CP_BJ_card[(h+1)*22+i]
+-            endif
+-            call CP_CAS_CardFace(CP_CAS_card[c+12+i],card,false)
+-            call BlzFrameSetVisible(CP_CAS_card[c+12+i],i < IMaxBJ(2,CP_BJ_count[h+1]))
+-        endif
+-        set own = CP_BJ_owner[t*6+i]
+-        set j = (t*6+i)*2
+-        if own == 0 then
+-            set phase = "OPEN"
+-        else
+-            set phase = CP_CAS_Name(own)+" / "+CP_BJ_Summary(j)
+-            if CP_BJ_split[j] then
+-                set phase = phase+" + "+CP_BJ_Summary(j+1)
+-            endif
+-        endif
+-        call BlzFrameSetVisible(CP_CAS_row[s*6+i],true)
+-        call BlzFrameSetText(CP_CAS_row[s*6+i],phase)
+-        set i = i+1
+-    endloop
+-    if CP_BJ_split[h] then
+-        call BlzFrameSetText(CP_CAS_content[b+5],"HAND 2 / "+CP_BJ_Summary(h+1))
+-        call BlzFrameSetVisible(CP_CAS_content[b+5],true)
+-    endif
+-    if CP_BJ_count[h] > 6 or CP_BJ_count[h+1] > 6 or CP_BJ_dealerCount[t] > 6 then
+-        call BlzFrameSetPoint(CP_CAS_content[b+6],FRAMEPOINT_TOPLEFT,CP_CAS_root[s],FRAMEPOINT_TOPLEFT,CP_CAS_SafeX(0.19),-0.348)
+-        call BlzFrameSetSize(CP_CAS_content[b+6],CP_CAS_SafeW(0.22),0.018)
+-        call BlzFrameSetText(CP_CAS_content[b+6],"First 6 cards shown")
+-        call BlzFrameSetVisible(CP_CAS_content[b+6],true)
+-    endif
+-    call BlzFrameSetVisible(CP_CAS_chip[s],true)
+-    call CP_PK_ChipArt(CP_CAS_chip[s],CP_BJ_bet[h]+CP_BJ_bet[h+1])
+-    call CP_CAS_ShowButton(s,11,CP_BJ_phase[t] == 0 or CP_BJ_phase[t] == 4 or (CP_BJ_phase[t] == 1 and CP_BJ_bet[h] == 0))
+-    call CP_CAS_ShowButton(s,12,turn)
+-    call CP_CAS_ShowButton(s,13,turn)
+-    call CP_CAS_ShowButton(s,14,turn and CP_BJ_count[CP_BJ_turn[t]-1] == 2)
+-    call CP_CAS_ShowButton(s,15,turn and not CP_BJ_split[h] and CP_BJ_count[h] == 2 and CP_BJ_Value(CP_BJ_card[h*22]) == CP_BJ_Value(CP_BJ_card[h*22+1]) and (ModuloInteger(CP_BJ_card[h*22],13) == 12) == (ModuloInteger(CP_BJ_card[h*22+1],13) == 12))
+-    call CP_CAS_ShowButton(s,16,CP_BJ_phase[t] == 0 or CP_BJ_phase[t] == 4 or CP_BJ_bet[h] == 0)
+-    if t == 0 then
+-        call CP_CUI_Text(CP_CAS_button[s*64+16],"Solo")
+-    else
+-        call CP_CUI_Text(CP_CAS_button[s*64+16],"Community")
+-    endif
+-endfunction
+-
+-function CP_CAS_DuelsView takes integer s returns nothing
+-    local integer b = s*32
+-    local integer id = CP_DU_incoming[s]
+-    local string label = "PICK A PLAYER + WINNER|nEqual stakes. Both must accept."
+-    if CP_DU_active[s] > 0 then
+-        set id = CP_DU_active[s]
+-        set label = "|cffe7cb88LIVE / POT "+I2S(CP_DU_stake[id]*2)+"g|r|n"+CP_CAS_Name(CP_DU_from[id])+": "+CP_MK_Label(5,CP_DU_target[id])+" WINS|n"+CP_CAS_Name(CP_DU_to[id])+": DOES NOT WIN"
+-    elseif id > 0 then
+-        set label = "|cffe7cb88FROM "+CP_CAS_Name(CP_DU_from[id])+"|r|nThey back "+CP_MK_Label(5,CP_DU_target[id])+" TO WIN.|nYou back DOES NOT WIN / "+I2S(CP_DU_stake[id])+"g|nPOT "+I2S(CP_DU_stake[id]*2)+"g / "+I2S(IMaxBJ(0,CP_DU_expire[id]-CP_CAS_seconds))+"s"
+-    elseif CP_DU_outgoing[s] > 0 then
+-        set id = CP_DU_outgoing[s]
+-        set label = "|cffe7cb88WAITING / "+I2S(IMaxBJ(0,CP_DU_expire[id]-CP_CAS_seconds))+"s|r|n"+CP_CAS_Name(CP_DU_to[id])+"|nYou back "+CP_MK_Label(5,CP_DU_target[id])+" TO WIN|nHELD "+I2S(CP_DU_stake[id])+"g"
+-    endif
+-    call BlzFrameSetText(CP_CAS_content[b+28],label)
+-    call BlzFrameSetVisible(CP_CAS_content[b+28],true)
+-    call BlzFrameSetText(CP_CAS_content[b+29],"VS "+CP_CAS_Name(CP_DU_opponent[s])+"  /  BACK "+CP_MK_Label(5,CP_DU_pick[s]))
+-    call BlzFrameSetVisible(CP_CAS_content[b+29],true)
+-    call CP_CAS_ShowButton(s,33,CP_DU_active[s] == 0 and CP_DU_outgoing[s] == 0 and CP_CAS_User(CP_DU_opponent[s]) and CP_MK_Valid(5,CP_DU_pick[s]) and not CP_CAS_ended)
+-    call CP_CAS_ShowButton(s,34,CP_DU_active[s] == 0)
+-    call CP_CAS_ShowButton(s,35,CP_DU_active[s] == 0)
+-    call CP_CAS_ShowButton(s,36,CP_DU_incoming[s] > 0 and CP_DU_active[s] == 0 and not CP_CAS_ended)
+-    call CP_CAS_ShowButton(s,37,CP_DU_incoming[s] > 0)
+-    call CP_CAS_ShowButton(s,38,CP_DU_outgoing[s] > 0)
+-endfunction
+-
+-function CP_CreditTerms takes integer mode, integer rate, integer period, integer fee returns string
+-    if mode == 2 then
+-        return I2S(rate)+"% every "+I2S(period)+" played min on unpaid principal. Earnings repay automatically."
+-    elseif mode == 1 then
+-        return I2S(rate)+"% fixed ("+I2S(fee)+"g). Repay in one payment."
+-    endif
+-    return I2S(fee)+"g fixed fee. Earnings repay automatically."
+-endfunction
+-
+-function CP_CreditView takes integer s returns nothing
+-    local integer id = CP_CreditSelected[s]
+-    local integer owner = CP_CreditOwner[id]
+-    local integer i = 40
+-    local string kind = "Lend"
+-    local string offer = "No offer selected. Use Next to browse."
+-    local string draft
+-    if CP_CreditSeen[s] != CP_CreditGeneration[id] then
+-        set owner = 0
+-    endif
+-    if CP_CreditDraftRequest[s] then
+-        set kind = "Borrow"
+-    endif
+-    set draft = kind+" "+I2S(CP_CAS_amount[s])+"g  /  "+CP_CreditTerms(CP_CreditDraftMode[s],CP_CreditDraftRate[s],CP_CreditDraftPeriod[s],CP_CAS_amount[s]*CP_CreditDraftRate[s]/100)
+-    if owner != 0 then
+-        set offer = GetPlayerName(Player(owner-1))+" offers "+I2S(CP_CreditAmount[id])+"g"
+-        if CP_CreditRequest[id] then
+-            set offer = GetPlayerName(Player(owner-1))+" requests "+I2S(CP_CreditAmount[id])+"g"
+-        endif
+-        set offer = offer+"|n"+CP_CreditTerms(CP_CreditOfferMode[id],CP_CreditOfferRate[id],CP_CreditOfferPeriod[id],CP_CreditFee[id])
+-    endif
+-    call BlzFrameSetText(CP_CAS_content[s*32+28],"YOUR TERMS|n"+draft)
+-    call BlzFrameSetVisible(CP_CAS_content[s*32+28],true)
+-    call BlzFrameSetText(CP_CAS_content[s*32+29],offer)
+-    call BlzFrameSetVisible(CP_CAS_content[s*32+29],true)
+-    loop
+-        exitwhen i > 52
+-        call CP_CAS_ShowButton(s,i,true)
+-        set i = i+1
+-    endloop
+-    call CP_CAS_ShowButton(s,48,CP_CreditDraftMode[s] == 2)
+-    call CP_CAS_ShowButton(s,51,owner != 0 and (owner == s or not CP_CAS_ended))
+-    if owner == s then
+-        call CP_CUI_Text(CP_CAS_button[s*64+51],"Cancel offer")
+-    else
+-        call CP_CUI_Text(CP_CAS_button[s*64+51],"Accept offer")
+-    endif
+-    call CP_CAS_ShowButton(s,52,CP_LoanPrincipal[s]+CP_LoanFee[s] > 0)
+-endfunction
+-
+-function CP_CAS_Render takes integer s returns nothing
+-    local integer i = 0
+-    local integer b = s*32
+-    local string label = "|cffe7cb88RULES|r"
+-    if CP_CAS_root[s] == null then
+-        return
+-    endif
+-    if true then
+-        call BlzFrameSetVisible(CP_CAS_root[s],CP_CAS_view[s] > 0)
+-    endif
+-    if CP_CAS_view[s] == 0 then
+-        return
+-    endif
+-    set i = 0
+-    loop
+-        exitwhen i > 3
+-        if i+1 == CP_CAS_view[s] then
+-            call CP_CUI_Paint(CP_CAS_button[s*64+i],5,true)
+-        else
+-            call CP_CUI_Paint(CP_CAS_button[s*64+i],0,true)
+-        endif
+-        set i = i+1
+-    endloop
+-    set i = 0
+-    loop
+-        exitwhen i >= 32
+-        if CP_CAS_content[b+i] != null then
+-            call BlzFrameSetVisible(CP_CAS_content[b+i],false)
+-        endif
+-        set i = i+1
+-    endloop
+-    set i = 0
+-    loop
+-        exitwhen i >= 18
+-        call BlzFrameSetVisible(CP_CAS_card[s*18+i],false)
+-        set i = i+1
+-    endloop
+-    set i = 0
+-    loop
+-        exitwhen i >= 6
+-        call BlzFrameSetVisible(CP_CAS_row[s*6+i],false)
+-        call BlzFrameSetVisible(CP_CAS_track[s*6+i],false)
+-        call BlzFrameSetVisible(CP_CAS_bar[s*6+i],false)
+-        set i = i+1
+-    endloop
+-    if CP_CasinoLastView[s] != CP_CAS_view[s] then
+-    set i = 11
+-    loop
+-        exitwhen i >= 57
+-        if CP_CAS_button[s*64+i] != null then
+-            call BlzFrameSetVisible(CP_CAS_button[s*64+i],false)
+-        endif
+-        set i = i+1
+-    endloop
+-        set CP_CasinoLastView[s] = CP_CAS_view[s]
+-    endif
+-    call BlzFrameSetVisible(CP_CAS_chip[s],false)
+-    set i = 6
+-    loop
+-        exitwhen i > 10
+-        call BlzFrameSetVisible(CP_CAS_button[s*64+i],CP_CAS_view[s] != 5)
+-        set i = i+1
+-    endloop
+-    if CP_CAS_view[s] == 1 then
+-        call BlzFrameSetTexture(CP_CAS_root[s],"PokerUI\\table.blp",0,true)
+-        set label = "|cffe7cb88BLACKJACK|r"
+-        call CP_CAS_BlackjackView(s)
+-    elseif CP_CAS_view[s] == 2 then
+-        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+-        set label = "|cffe7cb88MATCH BETS|r"
+-        call CP_CAS_BetsView(s)
+-    elseif CP_CAS_view[s] == 3 then
+-        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+-        set label = "|cffe7cb88CHALLENGES|r"
+-        call CP_CAS_DuelsView(s)
+-    elseif CP_CAS_view[s] == 5 then
+-        set label = "|cffe7cb88CREDIT|r"
+-        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+-        call CP_CreditView(s)
+-    else
+-        call BlzFrameSetTexture(CP_CAS_root[s],"CasinoUI\\panel.blp",0,true)
+-        call BlzFrameSetVisible(CP_CAS_content[b+30],true)
+-        call BlzFrameSetText(CP_CAS_content[b+30],"|cffe7cb88BLACKJACK|r|nOpening wager 10-100g / 2 decks / S17 / blackjack 3:2 / win 1:1 / ties push|nDouble first 2 cards. Split once. Split aces: 1 card.|nSplit 21 pays 1:1. Timeout stands. No insurance/surrender.|n|n|cffe7cb88MATCH BETS|r|nClose 2:10 / warning 2:00 / accepted odds stay locked|nBase kill: any enemy base. No first event or draw: refund.|n|n|cffe7cb88CHALLENGES|r|nEqual stakes. Accept to back the opposite result.|n|n|cffe7cb88GOLD|r|nStakes use locally saved account gold. Open bets are at risk if you quit.")
+-    endif
+-    call BlzFrameSetText(CP_CAS_title[s],label)
+-    call BlzFrameSetText(CP_CAS_balance[s],"")
+-    call BlzFrameSetText(CP_CAS_status[s],"")
+-    call BlzFrameSetText(CP_CAS_footer[s],"")
+-endfunction
+-
+-function CP_PreviewClick takes nothing returns nothing
+-    local framehandle f = BlzGetTriggerFrame()
+-    local integer i = 0
+-    if GetTriggerPlayer() == GetLocalPlayer() then
+-        call BlzFrameSetFocus(f,false)
+-        if f == CP_CAS_button[68] or f == CP_PK_Hide[0] then
+-            call CP_PreviewClose()
+-        else
+-            set CP_CAS_view[1] = 1
+-            if f == CP_CAS_button[65] then
+-                set CP_CAS_view[1] = 2
+-            elseif f == CP_CAS_button[66] then
+-                set CP_CAS_view[1] = 3
+-            elseif f == CP_CAS_button[67] then
+-                set CP_CAS_view[1] = 4
+-            elseif f == CP_CAS_button[121] then
+-                set CP_CAS_view[1] = 5
+-            endif
+-            call BlzFrameSetVisible(DPS_Panel,false)
+-            call BlzFrameSetVisible(CP_PK_Dialog[0],f == CP_CAS_button[69])
+-            if f == CP_CAS_button[69] then
+-                call BlzFrameSetVisible(CP_CAS_root[1],false)
+-            else
+-                call CP_CAS_Render(1)
+-                loop
+-                    exitwhen i >= 64
+-                    if CP_CAS_button[64+i] != null and i >= 6 and i != 57 then
+-                        call BlzFrameSetEnable(CP_CAS_button[64+i],false)
+-                    endif
+-                    set i = i+1
+-                endloop
+-            endif
+-        endif
+-    endif
+-    set f = null
+-endfunction
+-
+-function CP_CAS_BuildPlayer takes integer s returns nothing
+-    local integer i = 0
+-    local integer b = s*32
+-    local integer c = s*18
+-    local real x
+-    local real y
+-    local trigger click = CreateTrigger()
+-    set CP_CreditDraftMode[s] = 1
+-    set CP_CreditDraftRate[s] = 5
+-    set CP_CreditDraftPeriod[s] = 5
+-    set CP_CAS_amount[s] = 50
+-    set CP_CAS_note[s] = "Exact bet: -stake 250"
+-    set CP_MK_tab[s] = 1
+-    set CP_BJ_table[s] = s
+-    set CP_BJ_seat[s] = s*6
+-    set CP_BJ_owner[s*6] = s
+-    set CP_BJ_owner[s*6+1] = -1
+-    set CP_BJ_owner[s*6+2] = -1
+-    set CP_CAS_root[s] = BlzCreateFrameByType("BACKDROP","CasinoTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",s)
+-    call BlzFrameSetSize(CP_CAS_root[s],0.70,0.48)
+-    call BlzFrameSetPoint(CP_CAS_root[s],FRAMEPOINT_CENTER,DPS_Panel,FRAMEPOINT_CENTER,0.,0.)
+-    call BlzFrameSetTexture(CP_CAS_root[s],"PokerUI\\table.blp",0,true)
+-    call BlzFrameSetLevel(CP_CAS_root[s],60)
+-    call BlzFrameSetVisible(CP_CAS_root[s],false)
+-    set CP_CAS_title[s] = CP_CAS_Label(s,0.025,0.016,0.53,0.027,1.15)
+-    set CP_CAS_balance[s] = CP_CAS_Label(s,0.025,0.043,0.65,0.024,1.0)
+-    set CP_CAS_status[s] = CP_CAS_Label(s,0.025,0.366,0.65,0.024,1.08)
+-    set CP_CAS_footer[s] = CP_CAS_Label(s,0.025,0.452,0.65,0.024,0.85)
+-    call CP_CAS_Button(s,0,click,0.025,0.073,0.13,"Blackjack")
+-    call CP_CAS_Button(s,1,click,0.16,0.073,0.12,"Match bets")
+-    call CP_CAS_Button(s,2,click,0.285,0.073,0.13,"Duels")
+-    call CP_CAS_Button(s,3,click,0.42,0.073,0.10,"Rules")
+-    call CP_CAS_Button(s,4,click,0.575,0.014,0.10,"X")
+-    call CP_CAS_Button(s,5,click,0.520,0.073,0.075,"Poker")
+-    call CP_CAS_Button(s,57,click,0.600,0.073,0.085,"Credit")
+-    call CP_CAS_Button(s,40,click,0.025,0.174,0.130,"Lend / Borrow")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+40],false)
+-    call CP_CAS_Button(s,41,click,0.160,0.174,0.075,"-10g")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+41],false)
+-    call CP_CAS_Button(s,42,click,0.240,0.174,0.075,"+10g")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+42],false)
+-    call CP_CAS_Button(s,43,click,0.320,0.174,0.085,"+100g")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+43],false)
+-    call CP_CAS_Button(s,44,click,0.410,0.174,0.075,"-1%")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+44],false)
+-    call CP_CAS_Button(s,45,click,0.490,0.174,0.075,"+1%")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+45],false)
+-    call CP_CAS_Button(s,46,click,0.025,0.208,0.130,"Repay type")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+46],false)
+-    call CP_CAS_Button(s,47,click,0.445,0.208,0.120,"Post offer")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+47],false)
+-    call CP_CAS_Button(s,48,click,0.160,0.208,0.130,"Interval +")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+48],false)
+-    call CP_CAS_Button(s,49,click,0.025,0.302,0.120,"Previous")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+49],false)
+-    call CP_CAS_Button(s,50,click,0.150,0.302,0.120,"Next")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+50],false)
+-    call CP_CAS_Button(s,51,click,0.275,0.302,0.150,"Accept offer")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+51],false)
+-    call CP_CAS_Button(s,52,click,0.445,0.302,0.120,"Repay debt")
+-    call BlzFrameSetVisible(CP_CAS_button[s*64+52],false)
+-    call CP_CAS_Button(s,6,click,0.025,0.394,0.075,"-10")
+-    call CP_CAS_Button(s,7,click,0.105,0.394,0.075,"+10")
+-    call CP_CAS_Button(s,8,click,0.185,0.394,0.075,"+50")
+-    call CP_CAS_Button(s,9,click,0.265,0.394,0.075,"2x")
+-    call CP_CAS_Button(s,10,click,0.345,0.394,0.075,"Half")
+-    call CP_CAS_Button(s,11,click,0.43,0.394,0.245,"BET")
+-    call CP_CAS_Button(s,12,click,0.025,0.423,0.10,"Hit")
+-    call CP_CAS_Button(s,13,click,0.13,0.423,0.10,"Stand")
+-    call CP_CAS_Button(s,14,click,0.235,0.423,0.12,"Double")
+-    call CP_CAS_Button(s,15,click,0.36,0.423,0.10,"Split")
+-    call CP_CAS_Button(s,16,click,0.465,0.423,0.21,"Community")
+-    call CP_CAS_Button(s,20,click,0.025,0.110,0.125,"Hero kill")
+-    call CP_CAS_Button(s,21,click,0.155,0.110,0.125,"Base kill")
+-    call CP_CAS_Button(s,22,click,0.285,0.110,0.125,"Base lost")
+-    call CP_CAS_Button(s,23,click,0.415,0.110,0.125,"Level 16")
+-    call CP_CAS_Button(s,24,click,0.545,0.110,0.13,"Win match")
+-    call CP_CAS_Button(s,25,click,0.555,0.336,0.12,"MORE")
+-    call CP_CAS_Button(s,32,click,0.43,0.394,0.245,"BET")
+-    call CP_CAS_Button(s,33,click,0.43,0.394,0.245,"CHALLENGE")
+-    call CP_CAS_Button(s,34,click,0.025,0.298,0.20,"Opponent >")
+-    call CP_CAS_Button(s,35,click,0.235,0.298,0.20,"Winner >")
+-    call CP_CAS_Button(s,36,click,0.025,0.333,0.20,"Accept")
+-    call CP_CAS_Button(s,37,click,0.235,0.333,0.20,"Decline")
+-    call CP_CAS_Button(s,38,click,0.445,0.333,0.23,"Cancel")
+-    set CP_CAS_content[b] = CP_CAS_Label(s,0.025,0.109,0.65,0.023,0.90)
+-    set CP_CAS_content[b+1] = CP_CAS_Label(s,0.025,0.136,0.65,0.022,0.95)
+-    set CP_CAS_content[b+2] = CP_CAS_Label(s,0.195,0.140,0.48,0.023,0.90)
+-    set CP_CAS_content[b+3] = CP_CAS_Label(s,0.025,0.280,0.19,0.055,1.15)
+-    set CP_CAS_content[b+4] = CP_CAS_Label(s,0.025,0.190,0.16,0.040,0.85)
+-    set CP_CAS_content[b+5] = CP_CAS_Label(s,0.43,0.347,0.245,0.018,0.80)
+-    set CP_CAS_content[b+6] = CP_CAS_Label(s,0.19,0.252,0.48,0.020,0.80)
+-    set CP_CAS_content[b+7] = CP_CAS_Label(s,0.025,0.143,0.65,0.021,0.95)
+-    set CP_CAS_content[b+8] = CP_CAS_Label(s,0.035,0.169,0.64,0.018,0.80)
+-    set CP_CAS_content[b+9] = CP_CAS_Label(s,0.025,0.330,0.52,0.035,0.85)
+-    set CP_CAS_content[b+28] = CP_CAS_Label(s,0.04,0.125,0.62,0.115,1.0)
+-    set CP_CAS_content[b+29] = CP_CAS_Label(s,0.04,0.245,0.62,0.045,1.0)
+-    set CP_CAS_content[b+30] = CP_CAS_Label(s,0.04,0.112,0.62,0.25,0.86)
+-    // Unused label 31 is still created for a uniform visibility loop.
+-    set CP_CAS_content[b+31] = CP_CAS_Label(s,0.300,0.169,0.13,0.018,0.8)
+-    loop
+-        exitwhen i >= 6
+-        set y = 0.190+I2R(i)*0.023
+-        set CP_CAS_content[b+10+i*3] = CP_CAS_Label(s,0.035,y,0.255,0.021,0.90)
+-        set CP_CAS_content[b+11+i*3] = CP_CAS_Label(s,0.300,y,0.13,0.021,0.86)
+-        set CP_CAS_content[b+12+i*3] = CP_CAS_Label(s,0.445,y,0.10,0.021,0.93)
+-        set CP_CAS_track[s*6+i] = CP_CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CP_CAS_SafeX(0.300),y+0.018,CP_CAS_SafeW(0.115),0.003)
+-        call BlzFrameSetVertexColor(CP_CAS_track[s*6+i],BlzConvertColor(255,30,55,49))
+-        set CP_CAS_bar[s*6+i] = CP_CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CP_CAS_SafeX(0.300),y+0.018,CP_CAS_SafeW(0.115),0.003)
+-        call BlzFrameSetVertexColor(CP_CAS_bar[s*6+i],BlzConvertColor(255,214,184,106))
+-        call CP_CAS_Button(s,26+i,click,0.555,y-0.003,0.12,"Select")
+-        call BlzFrameSetSize(CP_CAS_button[s*64+26+i],CP_CAS_SafeW(0.12),0.023)
+-        set x = 0.025
+-        if i >= 3 then
+-            set x = 0.355
+-        endif
+-        set CP_CAS_row[s*6+i] = CP_CAS_Label(s,x,0.245+I2R(ModuloInteger(i,3))*0.0115,0.30,0.011,0.73)
+-        set CP_CAS_card[c+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.195+I2R(i)*0.067,0.178,0.054,0.060)
+-        set CP_CAS_card[c+6+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.205+I2R(i)*0.028,0.274,0.050,0.072)
+-        set CP_CAS_card[c+12+i] = CP_CAS_Texture(s,"PokerUI\\empty.blp",0.430+I2R(i)*0.028,0.274,0.050,0.060)
+-        set i = i+1
+-    endloop
+-    set CP_CAS_chip[s] = CP_CAS_Texture(s,"PokerUI\\chips1.blp",0.025,0.322,0.10,0.033)
+-    call TriggerAddAction(click,function CP_PreviewClick)
+-    set click = null
+-endfunction
+-
+-function CP_PK_Button takes integer p, trigger t, real x, real y, real width, string label returns framehandle
+-    local framehandle f = CP_CUI_Create(CP_PK_Dialog[p],p,x,y,width,0.029,label,0)
+-    if label == "X" then
+-        call BlzTriggerRegisterFrameEvent(t,f,FRAMEEVENT_CONTROL_CLICK)
+-    else
+-        call BlzFrameSetEnable(f,false)
+-    endif
+-    return f
+-endfunction
+-
+-function CP_PK_Label takes integer p, real x, real y, real w, real h, real scale returns framehandle
+-    local framehandle f = BlzCreateFrameByType("TEXT","PokerLabel",CP_PK_Dialog[p],"",p)
+-    call BlzFrameSetSize(f,w,h)
+-    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+-    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+-    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
+-    call BlzFrameSetEnable(f,false)
+-    call BlzFrameSetAlpha(f,145)
+-    call BlzFrameSetEnable(f,false)
+-    return f
+-endfunction
+-
+-function CP_PK_BoardCount takes integer p returns integer
+-    if CP_PK_Street[p] == 0 then
+-        return 0
+-    endif
+-    return IMinBJ(5,CP_PK_Street[p]+2)
+-endfunction
+-
+-function CP_PK_Limit takes integer p, integer seat returns integer
+-    local integer x = p*2+seat
+-    local integer y = p*2+1-seat
+-    return IMinBJ(CP_PK_Paid[x]+CP_PK_Stack[x],CP_PK_Paid[y]+CP_PK_Stack[y])
+-endfunction
+-
+-function CP_PK_Render takes integer p returns nothing
+-    local integer x = p*2
+-    local integer b = p*9
+-    local integer i = 0
+-    local integer due = IMaxBJ(0,CP_PK_Paid[x+1]-CP_PK_Paid[x])
+-    local integer top = IMaxBJ(CP_PK_Paid[x],CP_PK_Paid[x+1])
+-    local integer pot = CP_PK_Total[x]+CP_PK_Total[x+1]
+-    local string phase = "PREFLOP"
+-    local string label = "Check"
+-    local string path = ""
+-    local boolean raiseOK = false
+-    local integer callTone = 0
+-    if CP_PK_Street[p] == 1 then
+-        set phase = "FLOP"
+-    elseif CP_PK_Street[p] == 2 then
+-        set phase = "TURN"
+-    elseif CP_PK_Street[p] == 3 then
+-        set phase = "RIVER"
+-    endif
+-    call BlzFrameSetText(CP_PK_Title[p],"|cffe7cb88POKER|r|n|cffabc1ba"+phase+" / #"+I2S(CP_PK_Hand[p])+"|r")
+-    call BlzFrameSetText(CP_PK_HumanLabel[p],"|cffe7cb88YOU|r|n"+I2S(CP_PK_Stack[x]))
+-    call BlzFrameSetText(CP_PK_BotLabel[p],"BOT|n"+I2S(CP_PK_Stack[x+1]))
+-    call BlzFrameSetText(CP_PK_PotLabel[p],"|cffffd579POT  "+I2S(pot)+"|r")
+-    if CP_PK_Note[p] == "Blinds 1/2. Raise button adds one minimum raise." then
+-        call BlzFrameSetText(CP_PK_Text[p],"BLINDS 1/2 / MAX BUY-IN 300g")
+-    else
+-        call BlzFrameSetText(CP_PK_Text[p],CP_PK_Note[p])
+-    endif
+-    call BlzFrameSetText(CP_PK_CallLabel[p],"CALL "+I2S(due))
+-    call CP_PK_ChipArt(CP_PK_HumanChips[p],CP_PK_Stack[x])
+-    call CP_PK_ChipArt(CP_PK_BotChips[p],CP_PK_Stack[x+1])
+-    call CP_PK_ChipArt(CP_PK_PotChips[p],pot)
+-    call BlzFrameSetVisible(CP_PK_HumanDealer[p],CP_PK_Dealer[p] == 0)
+-    call BlzFrameSetVisible(CP_PK_BotDealer[p],CP_PK_Dealer[p] == 1)
+-    loop
+-        exitwhen i >= 9
+-        if i < 2 then
+-            set path = "card"+I2S(CP_PK_Cards[b+i])
+-        elseif i < 4 then
+-            set path = "back"
+-            if CP_PK_Reveal[p] then
+-                set path = "card"+I2S(CP_PK_Cards[b+i])
+-            endif
+-        else
+-            set path = "empty"
+-            if i-4 < CP_PK_BoardCount(p) then
+-                set path = "card"+I2S(CP_PK_Cards[b+i])
+-            endif
+-        endif
+-        call BlzFrameSetTexture(CP_PK_Face[b+i],"PokerUI\\"+path+".blp",0,true)
+-        set i = i+1
+-    endloop
+-    if CP_PK_Turn[p] == 0 then
+-        call BlzFrameSetText(CP_PK_Status[p],"|cffffd579YOUR TURN / "+I2S(CP_PK_Clock[p])+"s|r")
+-            if due > 0 then
+-            set label = "Call "+I2S(due)
+-            set callTone = 3
+-        endif
+-            call CP_CUI_Text(CP_PK_Call[p],label)
+-        if CP_PK_Limit(p,0) > top and (not CP_PK_Acted[x] or due >= CP_PK_LastRaise[p]) then
+-                    set raiseOK = true
+-            call CP_CUI_Text(CP_PK_Raise[p],"Raise "+I2S(IMinBJ(top+CP_PK_LastRaise[p],CP_PK_Limit(p,0))))
+-                    call CP_CUI_Text(CP_PK_Allin[p],"All-in "+I2S(CP_PK_Limit(p,0)))
+-        endif
+-    elseif CP_PK_Turn[p] == 1 then
+-        call BlzFrameSetText(CP_PK_Status[p],"BOT'S TURN")
+-    else
+-        call BlzFrameSetText(CP_PK_Status[p],"NEXT HAND")
+-        endif
+-    call CP_CUI_Paint(CP_PK_Hide[p],0,true)
+-endfunction
+-
+-function CP_PK_Texture takes integer p, string name, real x, real y, real w, real h returns framehandle
+-    local framehandle f = BlzCreateFrameByType("BACKDROP","PokerArtwork",CP_PK_Dialog[p],"",p)
+-    call BlzFrameSetSize(f,w,h)
+-    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CP_PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+-    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
+-    call BlzFrameSetEnable(f,false)
+-    call BlzFrameSetAlpha(f,145)
+-    call BlzFrameSetEnable(f,false)
+-    return f
+-endfunction
+-
+-function CP_PK_Start takes nothing returns nothing
+-    local integer p = 0
+-    local integer i
+-    local trigger click
+-            set CP_PK_Dialog[p] = BlzCreateFrameByType("BACKDROP","PokerTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",p)
+-            call BlzFrameSetSize(CP_PK_Dialog[p],0.70,0.48)
+-            call BlzFrameSetPoint(CP_PK_Dialog[p],FRAMEPOINT_CENTER,DPS_Panel,FRAMEPOINT_CENTER,0.,0.)
+-            call BlzFrameSetTexture(CP_PK_Dialog[p],"PokerUI\\table.blp",0,true)
+-            call BlzFrameSetLevel(CP_PK_Dialog[p],50)
+-            call BlzFrameSetVisible(CP_PK_Dialog[p],false)
+-            set CP_PK_Title[p] = CP_PK_Label(p,0.025,0.018,0.50,0.05,1.15)
+-            set CP_PK_BotLabel[p] = CP_PK_Label(p,0.08,0.085,0.16,0.052,1.35)
+-            set CP_PK_HumanLabel[p] = CP_PK_Label(p,0.08,0.315,0.16,0.052,1.35)
+-            set CP_PK_PotLabel[p] = CP_PK_Label(p,0.34,0.16,0.16,0.027,1.25)
+-            set CP_PK_Status[p] = CP_PK_Label(p,0.46,0.298,0.19,0.027,1.0)
+-            set CP_PK_CallLabel[p] = CP_PK_Label(p,0.46,0.369,0.18,0.025,1.05)
+-            set CP_PK_Text[p] = CP_PK_Label(p,0.025,0.405,0.65,0.027,1.0)
+-            set CP_PK_HumanChips[p] = CP_PK_Texture(p,"chips4",0.46,0.325,0.075,0.045)
+-            set CP_PK_BotChips[p] = CP_PK_Texture(p,"chips4",0.46,0.09,0.075,0.045)
+-            set CP_PK_PotChips[p] = CP_PK_Texture(p,"chips1",0.275,0.158,0.052,0.026)
+-            set CP_PK_HumanDealer[p] = CP_PK_Texture(p,"dealer",0.245,0.335,0.022,0.022)
+-            set CP_PK_BotDealer[p] = CP_PK_Texture(p,"dealer",0.245,0.095,0.022,0.022)
+-            set CP_PK_Face[p*9] = CP_PK_Texture(p,"empty",0.285,0.305,0.06,0.087)
+-            set CP_PK_Face[p*9+1] = CP_PK_Texture(p,"empty",0.353,0.305,0.06,0.087)
+-            set CP_PK_Face[p*9+2] = CP_PK_Texture(p,"back",0.285,0.067,0.058,0.084)
+-            set CP_PK_Face[p*9+3] = CP_PK_Texture(p,"back",0.351,0.067,0.058,0.084)
+-            set i = 0
+-            loop
+-                exitwhen i >= 5
+-                set CP_PK_Face[p*9+4+i] = CP_PK_Texture(p,"empty",0.187+I2R(i)*0.066,0.196,0.06,0.086)
+-                set i = i+1
+-            endloop
+-            set click = CreateTrigger()
+-            set CP_PK_Fold[p] = CP_PK_Button(p,click,0.025,-0.439,0.105,"Fold")
+-            set CP_PK_Call[p] = CP_PK_Button(p,click,0.135,-0.439,0.12,"Check / Call")
+-            set CP_PK_Raise[p] = CP_PK_Button(p,click,0.26,-0.439,0.12,"Raise")
+-            set CP_PK_Allin[p] = CP_PK_Button(p,click,0.385,-0.439,0.13,"All-in")
+-            set CP_PK_Next[p] = CP_PK_Button(p,click,0.52,-0.439,0.155,"Next hand")
+-            set CP_PK_Hide[p] = CP_PK_Button(p,click,0.565,-0.018,0.11,"X")
+-    set CP_PK_Turn[p] = -1
+-    call CP_PK_Render(p)
+-    call BlzFrameSetVisible(CP_PK_Dialog[p],false)
+-    call TriggerAddAction(click,function CP_PreviewClick)
+-endfunction
+-
+-function CP_PreviewBanner takes framehandle parent returns nothing
+-    local framehandle label = BlzCreateFrameByType("TEXT","",parent,"",0)
+-    call BlzFrameSetPoint(label,FRAMEPOINT_TOP,parent,FRAMEPOINT_TOP,0.,-0.018)
+-    call BlzFrameSetText(label,"Coming soon")
+-    call BlzFrameSetScale(label,1.28)
+-    call BlzFrameSetLevel(label,75)
+-    call BlzFrameSetEnable(label,false)
+-    set label = null
+-endfunction
+-
+-function CP_PreviewInit takes framehandle launch returns nothing
+-    local trigger t = CreateTrigger()
+-    call CP_CAS_BuildPlayer(1)
+-    call CP_PK_Start()
+-    call CP_PreviewBanner(CP_CAS_root[1])
+-    call CP_PreviewBanner(CP_PK_Dialog[0])
+-    call BlzFrameSetVertexColor(CP_CAS_root[1],BlzConvertColor(255,145,145,145))
+-    call BlzFrameSetVertexColor(CP_PK_Dialog[0],BlzConvertColor(255,145,145,145))
+-    call BlzTriggerRegisterFrameEvent(t,launch,FRAMEEVENT_CONTROL_CLICK)
+-    call TriggerAddAction(t,function CP_PreviewClick)
+-    set t = null
+-endfunction
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
+ 
+ function SpellKeysClick takes nothing returns nothing
+     local framehandle clicked = BlzGetTriggerFrame()
+@@ -27439,7 +26687,7 @@
+         call BlzFrameSetEnable(clicked, true)
+         call BlzFrameSetFocus(clicked, false)
+         if clicked == spellKeysClose then
+-            call CP_PreviewClose()
++            call FF_CloseProfilePanels()
+             return
+         endif
+         if clicked == spellKeysToggle or clicked == spellKeysClose then
+@@ -61059,6 +60307,15 @@
+ endfunction
+ 
+ function Trig_player_destroyed_Actions takes nothing returns nothing
++    local integer lost = GetPlayerId(GetOwningPlayer(GetDyingUnit()))
++    if lost >= 0 and lost < 12 and udg_player_active[lost+1] then
++        set CAS_defeated[lost] = true
++    endif
++    set CAS_baseVictim = GetDyingUnit()
++    set CAS_baseKiller = GetKillingUnit()
++    call TriggerExecute(CAS_baseEvent)
++    set CAS_baseVictim = null
++    set CAS_baseKiller = null
+     call SoloSub_OnPositionDestroyed(GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit())))
+     // Uncle: Remove Pub Defender:
+     set udg_Pub_Defenders_Remove=true
+@@ -61105,7 +60362,13 @@
+     endif
+     if ( Trig_player_destroyed_Func016C() ) then
+         set udg_player_active[udg_temp_playernumber]=false
++        if udg_temp_playernumber_ally_1 >= 1 and udg_temp_playernumber_ally_1 <= 12 and udg_player_active[udg_temp_playernumber_ally_1] then
++            set CAS_defeated[udg_temp_playernumber_ally_1-1] = true
++        endif
+         set udg_player_active[udg_temp_playernumber_ally_1]=false
++        if udg_temp_playernumber_ally_2 >= 1 and udg_temp_playernumber_ally_2 <= 12 and udg_player_active[udg_temp_playernumber_ally_2] then
++            set CAS_defeated[udg_temp_playernumber_ally_2-1] = true
++        endif
+         set udg_player_active[udg_temp_playernumber_ally_2]=false
+         set SafeRemoval_GraceTicks=0
+         call EnableTrigger(gg_trg_Kill_units_of_inactive_player)
+@@ -63210,16 +62473,82 @@
+ endfunction
+ 
+ // The local wallet never controls gameplay. Sync only publishes a display value.
++function FFPS_Field takes string data, integer wanted returns string
++    local integer i=0
++    local integer start=0
++    local integer field=0
++    local integer n=StringLength(data)
++    loop
++        exitwhen i > n
++        if i == n or SubString(data,i,i+1) == "|" then
++            if field == wanted then
++                return SubString(data,start,i)
++            endif
++            set field=field+1
++            set start=i+1
++        endif
++        set i=i+1
++    endloop
++    return null
++endfunction
++
++function FGA_Number takes string x returns boolean
++    if x == null or x == "" or StringLength(x) > 11 then
++        return false
++    endif
++    return I2S(S2I(x)) == x
++endfunction
++
++function FGA_Token takes string line, integer which returns string
++    local integer i=0
++    local string converted=""
++    loop
++        exitwhen i >= StringLength(line)
++        if SubString(line,i,i+1) == " " then
++            set converted=converted+"|"
++        else
++            set converted=converted+SubString(line,i,i+1)
++        endif
++        set i=i+1
++    endloop
++    return FFPS_Field(converted,which)
++endfunction
++
++function LoanLegacyRecord takes integer s returns string
++    local string payload = "L1"
++    set payload = payload+"|"+I2S(LoanLent[s])
++    set payload = payload+"|"+I2S(LoanOutstanding[s])
++    set payload = payload+"|"+I2S(LoanInterest[s])
++    set payload = payload+"|"+I2S(LoanLender[s])
++    set payload = payload+"|"+I2S(LoanPrincipal[s])
++    set payload = payload+"|"+I2S(LoanFee[s])
++    set payload = payload+"|"+I2S(LoanPendingPrincipal[s])
++    set payload = payload+"|"+I2S(LoanPendingFee[s])
++    return payload+"|"+I2S(StringHash(payload+"|"+I2S(LoanIdentity[s])))
++endfunction
++
++function LoanRecord takes integer s returns string
++    local string legacy = LoanLegacyRecord(s)
++    local string payload = "L2|"+legacy+"|"+I2S(CreditMode[s])+"|"+I2S(CreditRate[s])+"|"+I2S(CreditPeriod[s])+"|"+I2S(CreditElapsed[s])+"|"+I2S(CreditFraction[s])
++    return payload+"|"+I2S(StringHash(payload+"|"+I2S(LoanIdentity[s])))
++endfunction
++
++function LoanSave takes integer s returns nothing
++    if Player(s-1) == GetLocalPlayer() then
++        call s__File_close(s__File_write(s__File_open(WalletPath+".loans.pld"), LoanRecord(s)))
++    endif
++endfunction
++
+ function WalletSave takes nothing returns nothing
+     local integer file = s__File_open(WalletPath)
+-    local string field = I2S(BlzBitXor(WalletBalance, StringHash(WalletAccount + "/wallet/v1")))
++    local string field = I2S(BlzBitXor(WalletBalance+CreditHold[GetPlayerId(GetLocalPlayer())+1], StringHash(WalletAccount + "/wallet/v1")))
+     call s__File_write(file, field + ":" + I2S(StringHash(WalletAccount + ":" + field)))
+     call s__File_close(file)
+ endfunction
+ 
+ function WalletBroadcast takes nothing returns nothing
+     if WalletBalance >= 0 then
+-        call BlzSendSyncData("FFWallet1", I2S(WalletBalance))
++        call BlzSendSyncData("FFWallet1", I2S(WalletBalance)+"|"+LoanLocalRecord)
+     endif
+ endfunction
+ 
+@@ -63250,17 +62579,333 @@
+             set WalletBalance = BlzBitXor(S2I(field), StringHash(WalletAccount + "/wallet/v1"))
+         endif
+     endif
++    set LoanLocalRecord = s__File_readAndClose(s__File_open(WalletPath+".loans.pld"))
++    if LoanLocalRecord == null or LoanLocalRecord == "" then
++        set LoanLocalRecord = LoanRecord(GetPlayerId(client)+1)
++    endif
+     call WalletBroadcast()
++endfunction
++
++function CasinoWalletDelta takes integer s, integer delta returns nothing
++    set CAS_gold[s] = CAS_gold[s] + delta
++    set WalletPublic[s-1] = CAS_gold[s]
++    if GetLocalPlayer() == Player(s-1) and WalletBalance >= 0 then
++        set WalletBalance = CAS_gold[s]
++        call WalletSave()
++    endif
++endfunction
++
++function FGA_Find takes integer identity returns integer
++    local integer s=1
++    local integer found=0
++    if identity == 0 then
++        return 0
++    endif
++    loop
++        exitwhen s > 24
++        if CAS_ready[s] and GetPlayerSlotState(Player(s-1)) == PLAYER_SLOT_STATE_PLAYING and LoanIdentity[s] == identity then
++            if found != 0 then
++                return 0
++            endif
++            set found=s
++        endif
++        set s=s+1
++    endloop
++    return found
++endfunction
++
++function LoanCollect takes integer borrower returns nothing
++    local integer lender = FGA_Find(LoanLender[borrower])
++    local integer principal = LoanPendingPrincipal[borrower]
++    local integer fee = LoanPendingFee[borrower]
++    if lender == 0 or principal+fee == 0 or principal > LoanOutstanding[lender] or fee > 2147483647-LoanInterest[lender] or CAS_gold[lender] > 2147483647-principal-fee then
++        return
++    endif
++    set LoanPendingPrincipal[borrower] = 0
++    set LoanPendingFee[borrower] = 0
++    if LoanPrincipal[borrower]+LoanFee[borrower] == 0 then
++        set LoanLender[borrower] = 0
++    endif
++    set LoanOutstanding[lender] = LoanOutstanding[lender]-principal
++    set LoanInterest[lender] = LoanInterest[lender]+fee
++    call CasinoWalletDelta(lender,principal+fee)
++    call LoanSave(lender)
++    call LoanSave(borrower)
++endfunction
++
++function LoanAward takes integer s, integer amount returns nothing
++    local integer principal = IMinBJ(amount,LoanPrincipal[s])
++    local integer fee = IMinBJ(amount-principal,LoanFee[s])
++    if CreditMode[s] == 1 then
++        call CasinoWalletDelta(s,amount)
++        return
++    endif
++    call CasinoWalletDelta(s,amount-principal-fee)
++    if principal+fee > 0 then
++        set LoanPrincipal[s] = LoanPrincipal[s]-principal
++        set LoanFee[s] = LoanFee[s]-fee
++        set LoanPendingPrincipal[s] = LoanPendingPrincipal[s]+principal
++        set LoanPendingFee[s] = LoanPendingFee[s]+fee
++        call LoanSave(s)
++        call LoanCollect(s)
++    endif
+ endfunction
+ 
+ function WalletReceive takes nothing returns nothing
+     local integer id = GetPlayerId(GetTriggerPlayer())
+     local string data = BlzGetTriggerSyncData()
+-    local integer amount = S2I(data)
+-    if amount >= 0 and data == I2S(amount) then
++    local integer slot = id+1
++    local string balance = FFPS_Field(data,0)
++    local integer amount = S2I(balance)
++    local string ledger = SubString(data,StringLength(balance)+1,StringLength(data))
++    local string field
++    local integer i = 1
++    local string full = ledger
++    local boolean updated = FFPS_Field(full,0) == "L2"
++    if updated then
++        set ledger = SubString(full,3,StringLength(full))
++    endif
++    if WalletKnown[id] or not FGA_Number(balance) or amount < 0 or FFPS_Field(ledger,0) != "L1" then
++        return
++    endif
++    loop
++        exitwhen i > 8
++        set field = FFPS_Field(ledger,i)
++        if not FGA_Number(field) or (i != 4 and S2I(field) < 0) then
++            return
++        endif
++        set i = i+1
++    endloop
++    set LoanLent[slot] = S2I(FFPS_Field(ledger,1))
++    set LoanOutstanding[slot] = S2I(FFPS_Field(ledger,2))
++    set LoanInterest[slot] = S2I(FFPS_Field(ledger,3))
++    set LoanLender[slot] = S2I(FFPS_Field(ledger,4))
++    set LoanPrincipal[slot] = S2I(FFPS_Field(ledger,5))
++    set LoanFee[slot] = S2I(FFPS_Field(ledger,6))
++    set LoanPendingPrincipal[slot] = S2I(FFPS_Field(ledger,7))
++    set LoanPendingFee[slot] = S2I(FFPS_Field(ledger,8))
++    if updated then
++        set CreditMode[slot] = S2I(FFPS_Field(full,11))
++        set CreditRate[slot] = S2I(FFPS_Field(full,12))
++        set CreditPeriod[slot] = S2I(FFPS_Field(full,13))
++        set CreditElapsed[slot] = S2I(FFPS_Field(full,14))
++        set CreditFraction[slot] = S2I(FFPS_Field(full,15))
++    endif
++    if ((updated and full == LoanRecord(slot)) or (not updated and full == LoanLegacyRecord(slot))) and LoanOutstanding[slot] <= LoanLent[slot] then
+         set WalletKnown[id] = true
+         set WalletPublic[id] = amount
+-    endif
++        set CAS_gold[slot] = amount
++        set CAS_ready[slot] = true
++        set i = 1
++        loop
++            exitwhen i > 24
++            if CAS_ready[i] then
++                call LoanCollect(i)
++            endif
++            set i = i+1
++        endloop
++    endif
++endfunction
++
++function CreditOpen takes integer slot returns boolean
++    return slot >= 1 and slot <= 24 and CAS_ready[slot] and GetPlayerSlotState(Player(slot-1)) == PLAYER_SLOT_STATE_PLAYING
++endfunction
++
++function CreditTell takes integer s, string message returns nothing
++    set CAS_note[s] = message
++    call DisplayTimedTextToPlayer(Player(s-1),0,0,5,message)
++endfunction
++
++function CreditCancel takes integer offer returns nothing
++    local integer owner = CreditOwner[offer]
++    if owner == 0 then
++        return
++    endif
++    if not CreditRequest[offer] then
++        set CreditHold[owner] = CreditHold[owner]-CreditAmount[offer]
++        call CasinoWalletDelta(owner,CreditAmount[offer])
++    endif
++    set CreditOwner[offer] = 0
++endfunction
++
++function CreditPost takes integer s, boolean request, integer target, integer amount, integer mode, integer rate, integer period, integer fee returns nothing
++    local integer id = s*2-1
++    set CreditSelected[s] = 0
++    if not PK_Eligible(s-1) or (target != 0 and not PK_Eligible(target-1)) or not CreditOpen(s) or CAS_ended or amount < 1 or amount > 1000000 or fee < 0 or fee > 1000000 or (request and LoanLender[s] != 0) then
++        call CreditTell(s,"Credit unavailable. Check the amount and outstanding debt.")
++        return
++    endif
++    if CreditOwner[id] != 0 then
++        set id = id+1
++    endif
++    if CreditOwner[id] != 0 then
++        call CreditTell(s,"Both offer slots are in use. Cancel an offer first.")
++        return
++    endif
++    if not request then
++        if CAS_gold[s] < amount then
++            call CreditTell(s,"Insufficient available gold to fund this offer.")
++            return
++        endif
++        set CreditHold[s] = CreditHold[s]+amount
++        call CasinoWalletDelta(s,-amount)
++    endif
++    set CreditGeneration[id] = CreditGeneration[id]+1
++    set CreditOwner[id] = s
++    set CreditTarget[id] = target
++    set CreditRequest[id] = request
++    set CreditAmount[id] = amount
++    set CreditOfferMode[id] = mode
++    set CreditOfferRate[id] = rate
++    set CreditOfferPeriod[id] = period
++    set CreditFee[id] = fee
++    set CreditSeen[s] = CreditGeneration[id]
++    set CreditSelected[s] = id
++    call CreditTell(s,"Offer posted. Select your offer to cancel it.")
++endfunction
++
++function CreditAccept takes integer s, integer id returns nothing
++    local integer owner = CreditOwner[id]
++    local integer lender = owner
++    local integer borrower = s
++    local integer amount = CreditAmount[id]
++    if CreditRequest[id] then
++        set lender = s
++        set borrower = owner
++    endif
++    if not PK_Eligible(s-1) or not PK_Eligible(owner-1) or not CreditOpen(s) or not CreditOpen(owner) or owner == s or CAS_ended or (CreditTarget[id] != 0 and CreditTarget[id] != s) then
++        call CreditTell(s,"This offer is unavailable.")
++        return
++    endif
++    if LoanLender[borrower] != 0 or LoanLent[lender] > 2147483647-amount or CAS_gold[borrower]+CreditHold[borrower] > 1000000000-amount or FGA_Find(LoanIdentity[lender]) != lender then
++        call CreditTell(s,"Cannot accept: check existing debt and account limits.")
++        return
++    endif
++    if CreditRequest[id] then
++        if CAS_gold[lender] < amount then
++            call CreditTell(s,"Insufficient available gold to fund this request.")
++            return
++        endif
++        call CasinoWalletDelta(lender,-amount)
++    else
++        set CreditHold[lender] = CreditHold[lender]-amount
++        call CasinoWalletDelta(lender,0)
++    endif
++    set CreditOwner[id] = 0
++    call CasinoWalletDelta(borrower,amount)
++    set LoanLent[lender] = LoanLent[lender]+amount
++    set LoanOutstanding[lender] = LoanOutstanding[lender]+amount
++    set LoanLender[borrower] = LoanIdentity[lender]
++    set LoanPrincipal[borrower] = amount
++    set LoanFee[borrower] = CreditFee[id]
++    set CreditMode[borrower] = CreditOfferMode[id]
++    set CreditRate[borrower] = CreditOfferRate[id]
++    set CreditPeriod[borrower] = CreditOfferPeriod[id]
++    set CreditElapsed[borrower] = 0
++    set CreditFraction[borrower] = 0
++    call LoanSave(borrower)
++    call LoanSave(lender)
++    call CreditTell(lender,"Loan funded: "+I2S(amount)+"g.")
++    call CreditTell(borrower,"Credit received: "+I2S(amount)+"g.")
++    // Other borrowing requests are no longer actionable while this debt is open.
++    set id = borrower*2-1
++    if CreditRequest[id] then
++        call CreditCancel(id)
++    endif
++    if CreditRequest[id+1] then
++        call CreditCancel(id+1)
++    endif
++endfunction
++
++function CreditPay takes integer s returns nothing
++    local integer due = LoanPrincipal[s]+LoanFee[s]
++    local integer payment = IMinBJ(CAS_gold[s],due)
++    local integer principal = IMinBJ(payment,LoanPrincipal[s])
++    if payment <= 0 or (CreditMode[s] == 1 and payment != due) then
++        call CreditTell(s,"Full repayment requires "+I2S(due)+" available gold.")
++        return
++    endif
++    call CasinoWalletDelta(s,-payment)
++    set LoanPrincipal[s] = LoanPrincipal[s]-principal
++    set LoanFee[s] = LoanFee[s]-(payment-principal)
++    set LoanPendingPrincipal[s] = LoanPendingPrincipal[s]+principal
++    set LoanPendingFee[s] = LoanPendingFee[s]+payment-principal
++    call LoanSave(s)
++    call LoanCollect(s)
++    call CreditTell(s,"Repaid "+I2S(payment)+"g.")
++endfunction
++
++function CreditTick takes integer s returns nothing
++    local integer accrued
++    if not PK_Eligible(s-1) then
++        call CreditCancel(s*2-1)
++        call CreditCancel(s*2)
++    endif
++    if not CreditOpen(s) or CAS_ended then
++        call CreditCancel(s*2-1)
++        call CreditCancel(s*2)
++        return
++    endif
++    if CreditMode[s] == 2 and LoanPrincipal[s] > 0 then
++        set CreditElapsed[s] = CreditElapsed[s]+1
++        if CreditElapsed[s] >= CreditPeriod[s]*60 then
++            set CreditElapsed[s] = 0
++            set accrued = CreditFraction[s]+LoanPrincipal[s]*CreditRate[s]
++            set CreditFraction[s] = ModuloInteger(accrued,100)
++            set LoanFee[s] = IMinBJ(1000000000,LoanFee[s]+accrued/100)
++            call LoanSave(s)
++        elseif ModuloInteger(CreditElapsed[s],10) == 0 then
++            call LoanSave(s)
++        endif
++    endif
++endfunction
++
++function FGA_OnCommand takes nothing returns nothing
++    local integer s = GetPlayerId(GetTriggerPlayer())+1
++    local string line = GetEventPlayerChatString()
++    local integer target = S2I(FGA_Token(line,1))
++    local string amount = FGA_Token(line,2)
++    local string fee = FGA_Token(line,3)
++    local integer id = 1
++    local integer match = 0
++    if not PK_Eligible(s-1) then
++        return
++    endif
++    if line == "-accept" then
++        loop
++            exitwhen id > 48
++            if CreditOwner[id] != 0 and CreditTarget[id] == s then
++                if match != 0 then
++                    call CreditTell(s,"Multiple offers. Select the one you want in Credit.")
++                    return
++                endif
++                set match = id
++            endif
++            set id = id+1
++        endloop
++    if match != 0 then
++        call CreditAccept(s,match)
++    endif
++    elseif PK_Eligible(target-1) and CreditOpen(target) and target != s and FGA_Number(amount) and FGA_Number(fee) then
++        call CreditPost(s,false,target,S2I(amount),0,0,0,S2I(fee))
++        if CreditOwner[CreditSelected[s]] == s and CreditTarget[CreditSelected[s]] == target then
++            call CreditTell(target,GetPlayerName(Player(s-1))+" offers "+amount+"g with a "+fee+"g fee. Review in Credit or type -accept.")
++        endif
++    else
++        call CreditTell(s,"Use -loan slot amount fee, or open Casino > Credit.")
++    endif
++endfunction
++
++function LoanStats takes nothing returns string
++    local integer s = GetPlayerId(GetLocalPlayer())+1
++    local string roi = "--"
++    if not CAS_ready[s] then
++        return "Lending record unavailable"
++    endif
++    if LoanLent[s] > 0 then
++        set roi = R2SW(100.0*I2R(LoanInterest[s])/I2R(LoanLent[s]),1,2)+"%"
++    endif
++    return "Lifetime lent: "+I2S(LoanLent[s])+"g|nOutstanding principal: "+I2S(LoanOutstanding[s])+"g|nInterest collected: "+I2S(LoanInterest[s])+"g    ROI: "+roi
+ endfunction
+ 
+ function WalletText takes nothing returns string
+@@ -63270,49 +62915,52 @@
+     return "Account Gold: " + I2S(WalletBalance)
+ endfunction
+ 
+-function WalletCredit takes integer reward returns nothing
+-    set WalletBalance = IMinBJ(WalletBalance, 2147483647 - reward) + reward
+-    call WalletSave()
+-    call WalletBroadcast()
+-    call DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 12, "|cffffcc00+" + I2S(reward) + " account gold|r   " + WalletText())
+-endfunction
++
+ 
+ function WalletPayParticipation takes nothing returns nothing
+-    local integer id = GetPlayerId(GetLocalPlayer())
+-    if WalletMatchStarted and not WalletParticipationPaid and not WalletSettled and WalletBalance >= 0 then
+-        if WalletPlayedSlot[id] > 0 or (id < 12 and FF_gr_participant[id + 1]) then
+-            set WalletParticipationPaid = true
+-            call WalletCredit(200)
+-        endif
+-    endif
++    local integer slot = 1
++    loop
++        exitwhen slot > 24
++        if WalletMatchStarted and (WalletPlayedSlot[slot-1] > 0 or (slot <= 12 and FF_gr_participant[slot])) and CAS_ready[slot] and not CasinoPlayed[slot] then
++            set CasinoPlayed[slot] = true
++            call LoanAward(slot,200)
++            call DisplayTimedTextToPlayer(Player(slot-1),0,0,8,"+200 account gold for playing.")
++        endif
++        set slot = slot+1
++    endloop
+ endfunction
+ 
+ function WalletAward takes integer winnerSlot, integer winnerSide returns nothing
+-    local player client = GetLocalPlayer()
+-    local integer id = GetPlayerId(client)
+-    local integer slot = id + 1
++    local integer slot = 1
++    local integer played
+     local integer reward
+-    if not WalletMatchStarted or WalletSettled or WalletBalance < 0 then
++    if not WalletMatchStarted or WalletSettled then
+         return
+     endif
+     call WalletPayParticipation()
+     set WalletSettled = true
+-    if WalletPlayedSlot[id] > 0 then
+-        set slot = WalletPlayedSlot[id]
+-    endif
+-    if slot <= 12 and FF_gr_participant[slot] then
++    loop
++        exitwhen slot > 24
+         set reward = 0
+-        if slot == winnerSlot or (winnerSide > 0 and FF_gr_IsMember(slot, winnerSide)) then
+-            set reward = 750
+-        endif
+-    elseif IsPlayerObserver(client) or GetPlayerTeam(client) == 4 then
+-        set reward = 50
+-    else
+-        return
+-    endif
+-    if reward > 0 then
+-        call WalletCredit(reward)
+-    endif
++        if CAS_ready[slot] and GetPlayerSlotState(Player(slot-1)) == PLAYER_SLOT_STATE_PLAYING then
++            set played = WalletPlayedSlot[slot-1]
++            if played == 0 then
++                set played = slot
++            endif
++            if played <= 12 and FF_gr_participant[played] then
++                if played == winnerSlot or (winnerSide > 0 and FF_gr_IsMember(played,winnerSide)) then
++                    set reward = 750
++                endif
++            elseif IsPlayerObserver(Player(slot-1)) or GetPlayerTeam(Player(slot-1)) == 4 then
++                set reward = 50
++            endif
++            if reward > 0 then
++                call LoanAward(slot,reward)
++                call DisplayTimedTextToPlayer(Player(slot-1),0,0,8,"+"+I2S(reward)+" account gold.")
++            endif
++        endif
++        set slot = slot+1
++    endloop
+ endfunction
+ 
+ function FF_gr_Poll takes nothing returns nothing
+@@ -63366,6 +63014,8 @@
+     //     one from a side model with the same blind spot. Placements: winner first, then the
+     //     eliminated players in reverse order of leaving.
+     if FFEnd_settled then
++        set CAS_winner = -FFEnd_winnerSlot
++        call TriggerExecute(CAS_matchEvent)
+         call WalletAward(FFEnd_winnerSlot, 0)
+         set FF_gr_ended=true
+         call PauseTimer(FF_gr_pollTimer)
+@@ -63413,9 +63063,13 @@
+     // 3. clean victory: >=2 sides played, exactly one standing. Placement table: 1st = survivor,
+     //    then the dead sides in reverse death order (last to die finished 2nd).
+     if participated >= 2 and alive == 0 then
++        set CAS_winner = 0
++        call TriggerExecute(CAS_matchEvent)
+         call WalletAward(0, 0)
+     endif
+     if participated >= 2 and alive == 1 then
++        set CAS_winner = lastAlive
++        call TriggerExecute(CAS_matchEvent)
+         call WalletAward(0, lastAlive)
+         set FF_gr_ended=true
+         call PauseTimer(FF_gr_pollTimer)
+@@ -65369,11 +65023,7 @@
+             set texture = "BTNHighElvenArcher"
+         endif
+     endif
+-    if CatalogKind == 1 then
+-        call BlzFrameSetText(CatalogTitle, "|cffffcc00Skins|r   " + WalletText())
+-    else
+-        call BlzFrameSetText(CatalogTitle, "|cffffcc00Casino|r   " + WalletText() + "|nCasino games are closed.")
+-    endif
++    call BlzFrameSetText(CatalogTitle, "|cffffcc00Skins|r   " + WalletText())
+     call BlzFrameSetText(CatalogUnit, "Unit: " + unitName)
+     call BlzFrameSetText(CatalogChoice, skin + "   (Preview)")
+     call BlzFrameSetTexture(CatalogPreview, "ReplaceableTextures\\CommandButtons\\" + texture + ".blp", 0, true)
+@@ -65381,6 +65031,14 @@
+ 
+ function CatalogClick takes nothing returns nothing
+     local framehandle f = BlzGetTriggerFrame()
++    if f == CatalogCasino then
++        if PK_Eligible(GetPlayerId(GetTriggerPlayer())) then
++            set CasinoLauncherSlot = GetPlayerId(GetTriggerPlayer())+1
++            call TriggerExecute(CasinoOpen)
++        endif
++        set f = null
++        return
++    endif
+     if GetTriggerPlayer() == GetLocalPlayer() then
+         if f == CatalogBack then
+             set CatalogKind = 0
+@@ -65392,7 +65050,8 @@
+         elseif f == CatalogSkins then
+             set CatalogKind = 1
+         else
+-            set CatalogKind = 2
++            set f = null
++            return
+         endif
+         call BlzFrameSetVisible(CatalogPanel, CatalogKind != 0)
+         call BlzFrameSetVisible(DPS_Table, CatalogKind == 0 and not DPS_Personal)
+@@ -65400,7 +65059,7 @@
+         call BlzFrameSetVisible(DPS_PageButton, CatalogKind == 0)
+         call BlzFrameSetVisible(spellKeysToggle, CatalogKind == 0)
+         call BlzFrameSetVisible(CatalogSkins, CatalogKind == 0)
+-        call BlzFrameSetVisible(CatalogCasino, CatalogKind == 0)
++        call BlzFrameSetVisible(CatalogCasino, CatalogKind == 0 and PK_Eligible(GetPlayerId(GetLocalPlayer())))
+         if CatalogKind != 0 then
+             call CatalogRefresh()
+         endif
+@@ -65425,7 +65084,8 @@
+     call BlzFrameSetSize(CatalogCasino,0.11,0.026)
+     call BlzFrameSetPoint(CatalogCasino,FRAMEPOINT_TOPLEFT,DPS_Panel,FRAMEPOINT_TOPLEFT,0.420,-0.018)
+     call BlzFrameSetText(CatalogCasino,"Casino")
+-    call CP_PreviewInit(CatalogCasino)
++    call BlzTriggerRegisterFrameEvent(click,CatalogCasino,FRAMEEVENT_CONTROL_CLICK)
++    call BlzFrameSetVisible(CatalogCasino,PK_Eligible(GetPlayerId(GetLocalPlayer())))
+     set CatalogPanel = BlzCreateFrameByType("FRAME", "WalletCatalog", DPS_Panel, "", 0)
+     call BlzFrameSetAllPoints(CatalogPanel, DPS_Panel)
+     set CatalogTitle = BlzCreateFrameByType("TEXT", "WalletCatalogTitle", CatalogPanel, "", 0)
+@@ -65446,8 +65106,8 @@
+     local integer p = GetPlayerId(GetTriggerPlayer())
+     local framehandle clicked = BlzGetTriggerFrame()
+     if GetLocalPlayer() == GetTriggerPlayer() then
+-        if BlzGetTriggerFrame() != DPS_Button or CP_CAS_view[1] != 0 then
+-            call CP_PreviewClose()
++        if BlzGetTriggerFrame() != DPS_Button then
++            call FF_CloseProfilePanels()
+             return
+         endif
+         set DPS_Open[p] = not DPS_Open[p]
+@@ -65464,7 +65124,7 @@
+             call BlzFrameSetText(DPS_PageButton, "My Stats")
+             call BlzFrameSetVisible(spellKeysToggle, true)
+             call BlzFrameSetVisible(CatalogSkins, true)
+-            call BlzFrameSetVisible(CatalogCasino, true)
++            call BlzFrameSetVisible(CatalogCasino, PK_Eligible(p))
+         endif
+         call BlzFrameSetVisible(DPS_Panel, DPS_Open[p])
+         call BlzFrameSetEnable(clicked, false)
+@@ -66489,7 +66149,2595 @@
+     call TriggerAddAction(gg_trg_Set_Exp_Bonus_Rate_Upon_Leveling, function Trig_Set_Exp_Bonus_Rate_Upon_Leveling_Actions)
+ endfunction
+ 
++function CUI_Value takes string value returns string
++    return "|cffffe39a"+value+"|r"
++endfunction
++
++function CUI_Text takes framehandle f, string label returns nothing
++    call BlzFrameSetText(f,label)
++endfunction
++
++function CUI_Paint takes framehandle f, integer tone, boolean enabled returns nothing
++    local integer color = BlzConvertColor(255,255,250,240)
++    if not enabled then
++        set color = BlzConvertColor(255,145,158,170)
++    elseif tone == 1 then
++        set color = BlzConvertColor(255,255,155,150)
++    elseif tone == 2 or tone == 3 then
++        set color = BlzConvertColor(255,169,241,180)
++    elseif tone == 4 then
++        set color = BlzConvertColor(255,163,208,255)
++    elseif tone == 5 then
++        set color = BlzConvertColor(255,255,213,121)
++    endif
++    call BlzFrameSetTextColor(f,color)
++    if BlzFrameGetEnable(f) != enabled then
++        call BlzFrameSetEnable(f,enabled)
++    endif
++endfunction
++
++function CUI_Create takes framehandle parent, integer context, real x, real y, real w, real h, string label, integer tone returns framehandle
++    local framehandle f = BlzCreateFrame("ScriptDialogButton",parent,0,context)
++    call BlzFrameSetSize(f,w,h)
++    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,parent,FRAMEPOINT_TOPLEFT,x,y)
++    call BlzFrameSetLevel(f,65)
++    call BlzFrameSetText(f,label)
++    call CUI_Paint(f,tone,true)
++    return f
++endfunction
++
++// Observer Poker v1. All state changes run in synchronized trigger context.
++// Each eligible observer owns an independent heads-up practice table.
++
++
++function PK_Random takes integer bound returns integer
++    // Park-Miller/Schrage avoids signed overflow; separate from battle RNG.
++    local integer hi = PK_Seed / 127773
++    local integer lo = ModuloInteger(PK_Seed, 127773)
++    set PK_Seed = 16807 * lo - 2836 * hi
++    if PK_Seed <= 0 then
++        set PK_Seed = PK_Seed + 2147483647
++    endif
++    return ModuloInteger(PK_Seed, bound)
++endfunction
++
++function PK_Card takes integer c returns string
++    local integer r = ModuloInteger(c, 13)
++    local integer s = c / 13
++    local string ranks = "23456789TJQKA"
++    local string suit = "C"
++    local string color = "|cff8ad6ff"
++    if s == 1 then
++        set suit = "D"
++        set color = "|cffffa757"
++    elseif s == 2 then
++        set suit = "H"
++        set color = "|cffff7777"
++    elseif s == 3 then
++        set suit = "S"
++        set color = "|cffffffff"
++    endif
++    return color + SubString(ranks, r, r + 1) + suit + "|r"
++endfunction
++
++function PK_Score5 takes integer a, integer b, integer c, integer d, integer e returns integer
++    local integer i = 2
++    local integer j = 0
++    local integer r = 0
++    local integer straight = 0
++    local integer run = 0
++    local integer four = 0
++    local integer three = 0
++    local integer pair1 = 0
++    local integer pair2 = 0
++    local integer kick = 0
++    local integer packed = 0
++    local boolean flush = a / 13 == b / 13 and a / 13 == c / 13 and a / 13 == d / 13 and a / 13 == e / 13
++    loop
++        exitwhen i > 14
++        set PK_Count[i] = 0
++        set i = i + 1
++    endloop
++    set PK_Count[ModuloInteger(a,13)+2] = PK_Count[ModuloInteger(a,13)+2]+1
++    set PK_Count[ModuloInteger(b,13)+2] = PK_Count[ModuloInteger(b,13)+2]+1
++    set PK_Count[ModuloInteger(c,13)+2] = PK_Count[ModuloInteger(c,13)+2]+1
++    set PK_Count[ModuloInteger(d,13)+2] = PK_Count[ModuloInteger(d,13)+2]+1
++    set PK_Count[ModuloInteger(e,13)+2] = PK_Count[ModuloInteger(e,13)+2]+1
++    set i = 14
++    loop
++        exitwhen i < 2
++        if PK_Count[i] == 4 then
++            set four = i
++        elseif PK_Count[i] == 3 then
++            set three = i
++        elseif PK_Count[i] == 2 then
++            if pair1 == 0 then
++                set pair1 = i
++            else
++                set pair2 = i
++            endif
++        endif
++        set r = 0
++        loop
++            exitwhen r >= PK_Count[i]
++            set PK_Sort[j] = i
++            set j = j + 1
++            set r = r + 1
++        endloop
++        if PK_Count[i] == 1 then
++            set kick = kick * 15 + i
++        endif
++        set i = i - 1
++    endloop
++    set i = 2
++    loop
++        exitwhen i > 14
++        if PK_Count[i] > 0 then
++            set run = run + 1
++            if run >= 5 then
++                set straight = i
++            endif
++        else
++            set run = 0
++        endif
++        set i = i + 1
++    endloop
++    if straight == 0 and PK_Count[14] > 0 and PK_Count[2] > 0 and PK_Count[3] > 0 and PK_Count[4] > 0 and PK_Count[5] > 0 then
++        set straight = 5
++    endif
++    set i = 0
++    loop
++        exitwhen i >= 5
++        set packed = packed * 15 + PK_Sort[i]
++        set i = i + 1
++    endloop
++    if flush and straight > 0 then
++        return 8 * 759375 + straight
++    elseif four > 0 then
++        return 7 * 759375 + four * 15 + kick
++    elseif three > 0 and pair1 > 0 then
++        return 6 * 759375 + three * 15 + pair1
++    elseif flush then
++        return 5 * 759375 + packed
++    elseif straight > 0 then
++        return 4 * 759375 + straight
++    elseif three > 0 then
++        return 3 * 759375 + three * 225 + kick
++    elseif pair2 > 0 then
++        return 2 * 759375 + pair1 * 225 + pair2 * 15 + kick
++    elseif pair1 > 0 then
++        return 759375 + pair1 * 3375 + kick
++    endif
++    return packed
++endfunction
++
++function PK_Score takes integer p, integer seat, integer board returns integer
++    local integer base = p * 9
++    local integer i = 0
++    local integer a = 0
++    local integer b = 0
++    local integer c = 0
++    local integer d = 0
++    local integer e = 0
++    local integer best = 0
++    local integer value = 0
++    local integer n = board + 2
++    set PK_Eval[0] = PK_Cards[base + seat * 2]
++    set PK_Eval[1] = PK_Cards[base + seat * 2 + 1]
++    loop
++        exitwhen i >= board
++        set PK_Eval[i+2] = PK_Cards[base+4+i]
++        set i = i + 1
++    endloop
++    loop
++        exitwhen a >= n-4
++        set b = a+1
++        loop
++            exitwhen b >= n-3
++            set c = b+1
++            loop
++                exitwhen c >= n-2
++                set d = c+1
++                loop
++                    exitwhen d >= n-1
++                    set e = d+1
++                    loop
++                        exitwhen e >= n
++                        set value = PK_Score5(PK_Eval[a],PK_Eval[b],PK_Eval[c],PK_Eval[d],PK_Eval[e])
++                        set best = IMaxBJ(best,value)
++                        set e = e+1
++                    endloop
++                    set d = d+1
++                endloop
++                set c = c+1
++            endloop
++            set b = b+1
++        endloop
++        set a = a+1
++    endloop
++    return best
++endfunction
++
++function PK_Category takes integer score returns string
++    local integer c = score / 759375
++    if c == 8 then
++        return "straight flush"
++    elseif c == 7 then
++        return "four of a kind"
++    elseif c == 6 then
++        return "full house"
++    elseif c == 5 then
++        return "flush"
++    elseif c == 4 then
++        return "straight"
++    elseif c == 3 then
++        return "three of a kind"
++    elseif c == 2 then
++        return "two pair"
++    elseif c == 1 then
++        return "one pair"
++    endif
++    return "high card"
++endfunction
++
++function PK_BoardCount takes integer p returns integer
++    if PK_Street[p] == 0 then
++        return 0
++    endif
++    return IMinBJ(5,PK_Street[p]+2)
++endfunction
++
++function PK_Limit takes integer p, integer seat returns integer
++    local integer x = p*2+seat
++    local integer y = p*2+1-seat
++    return IMinBJ(PK_Paid[x]+PK_Stack[x],PK_Paid[y]+PK_Stack[y])
++endfunction
++
++function PK_Pay takes integer x, integer amount returns nothing
++    set PK_Stack[x] = PK_Stack[x]-amount
++    set PK_Paid[x] = PK_Paid[x]+amount
++    set PK_Total[x] = PK_Total[x]+amount
++endfunction
++
++
++
++function CAS_Flush takes integer s returns nothing
++    if CAS_returnDue[s] > 0 then
++        call CasinoWalletDelta(s,CAS_returnDue[s])
++    endif
++    if CAS_profitDue[s] > 0 then
++        call LoanAward(s,CAS_profitDue[s])
++    endif
++    set CAS_returnDue[s] = 0
++    set CAS_profitDue[s] = 0
++endfunction
++
++function CAS_Credit takes integer s, integer principal, integer profit returns nothing
++    set CAS_returnDue[s] = CAS_returnDue[s]+principal
++    set CAS_profitDue[s] = CAS_profitDue[s]+profit
++    call CAS_Flush(s)
++endfunction
++
++function CAS_Reserve takes integer s, integer stake, integer liability returns boolean
++    if CAS_ended or not PK_Eligible(s-1) or not CAS_ready[s] then
++        set CAS_note[s] = "Account gold unavailable, or this match has ended."
++        return false
++    endif
++    if stake < 10 or stake > 10000 or ModuloInteger(stake,2) != 0 or CAS_gold[s] < stake then
++        set CAS_note[s] = "Choose a wager of 10 to 10,000 gold within your balance."
++        return false
++    endif
++    if liability < 0 or CAS_bank-CAS_liability < liability then
++        set CAS_note[s] = "This wager exceeds the remaining house backing. Try a smaller amount."
++        return false
++    endif
++    call CasinoWalletDelta(s,-stake)
++    set CAS_escrow[s] = CAS_escrow[s]+stake
++    set CAS_liability = CAS_liability+liability
++    call CAS_Flush(s)
++    return true
++endfunction
++
++function CAS_Settle takes integer s, integer stake, integer payout, integer liability returns nothing
++    set CAS_escrow[s] = CAS_escrow[s]-stake
++    set CAS_liability = CAS_liability-liability
++    set CAS_bank = CAS_bank+stake-payout
++    call CAS_Credit(s,IMinBJ(stake,payout),IMaxBJ(0,payout-stake))
++endfunction
++
++function PK_End takes integer p, integer winner, string note returns nothing
++    local integer x = p*2
++    local integer pot = PK_Total[x]+PK_Total[x+1]
++    if winner == 2 then
++        set PK_Stack[x] = PK_Stack[x]+pot/2
++        set PK_Stack[x+1] = PK_Stack[x+1]+pot/2
++        set PK_Stack[x+1-PK_Dealer[p]] = PK_Stack[x+1-PK_Dealer[p]]+ModuloInteger(pot,2)
++    else
++        set PK_Stack[x+winner] = PK_Stack[x+winner]+pot
++    endif
++    if PokerBuyIn[p] > 0 then
++        call CAS_Settle(p+1,PokerBuyIn[p],PK_Stack[x],PokerBuyIn[p])
++        set PokerBuyIn[p] = 0
++    endif
++    set PK_Total[x] = 0
++    set PK_Total[x+1] = 0
++    set PK_Paid[x] = 0
++    set PK_Paid[x+1] = 0
++    set PK_Turn[p] = -1
++    set PK_Note[p] = note+" (pot "+I2S(pot)+")"
++endfunction
++
++function PK_Showdown takes integer p returns nothing
++    local integer human = PK_Score(p,0,5)
++    local integer bot = PK_Score(p,1,5)
++    set PK_Street[p] = 3
++    set PK_Reveal[p] = true
++    if human > bot then
++        call PK_End(p,0,"You win: "+PK_Category(human))
++    elseif bot > human then
++        call PK_End(p,1,"Computer wins: "+PK_Category(bot))
++    else
++        call PK_End(p,2,"Split pot: "+PK_Category(human))
++    endif
++endfunction
++
++function PK_Advance takes integer p returns nothing
++    local integer x = p*2
++    if PK_Stack[x] == 0 or PK_Stack[x+1] == 0 or PK_Street[p] == 3 then
++        call PK_Showdown(p)
++        return
++    endif
++    set PK_Street[p] = PK_Street[p]+1
++    set PK_Paid[x] = 0
++    set PK_Paid[x+1] = 0
++    set PK_Acted[x] = false
++    set PK_Acted[x+1] = false
++    set PK_LastRaise[p] = 2
++    set PK_Turn[p] = 1-PK_Dealer[p]
++    set PK_Actions[p] = 0
++endfunction
++
++function PK_Deal takes integer p returns nothing
++    local integer i = 0
++    local integer j = 0
++    local integer tmp = 0
++    local integer x = p*2
++    set PK_Note[p] = "Blinds 1/2. Raise button adds one minimum raise."
++    if CAS_amount[p+1] > 300 then
++        set PK_Note[p] = "Maximum buy-in is 300 gold."
++        return
++    endif
++    if not CAS_Reserve(p+1,CAS_amount[p+1],CAS_amount[p+1]) then
++        set PK_Note[p] = CAS_note[p+1]
++        return
++    endif
++    set PokerBuyIn[p] = CAS_amount[p+1]
++    set PK_Stack[x] = PokerBuyIn[p]
++    set PK_Stack[x+1] = PokerBuyIn[p]
++    loop
++        exitwhen i >= 52
++        set PK_Deck[i] = i
++        set i = i+1
++    endloop
++    set i = 51
++    loop
++        exitwhen i <= 0
++        set j = PK_Random(i+1)
++        set tmp = PK_Deck[i]
++        set PK_Deck[i] = PK_Deck[j]
++        set PK_Deck[j] = tmp
++        set i = i-1
++    endloop
++    set i = 0
++    loop
++        exitwhen i >= 9
++        set PK_Cards[p*9+i] = PK_Deck[i]
++        set i = i+1
++    endloop
++    set PK_Hand[p] = PK_Hand[p]+1
++    set PK_Dealer[p] = 1-PK_Dealer[p]
++    set PK_Street[p] = 0
++    set PK_Turn[p] = PK_Dealer[p]
++    set PK_LastRaise[p] = 2
++    set PK_Actions[p] = 0
++    set PK_Clock[p] = 30
++    set PK_Wait[p] = 2
++    set PK_Reveal[p] = false
++    set PK_Paid[x] = 0
++    set PK_Paid[x+1] = 0
++    set PK_Total[x] = 0
++    set PK_Total[x+1] = 0
++    set PK_Acted[x] = false
++    set PK_Acted[x+1] = false
++    set tmp = IMinBJ(PK_Stack[x],PK_Stack[x+1])
++    call PK_Pay(x+PK_Dealer[p],IMinBJ(1,tmp))
++    call PK_Pay(x+1-PK_Dealer[p],IMinBJ(2,tmp))
++    if PK_Paid[x] == PK_Paid[x+1] and (PK_Stack[x] == 0 or PK_Stack[x+1] == 0) then
++        call PK_Showdown(p)
++    endif
++endfunction
++
++function PK_Action takes integer p, integer seat, integer action returns nothing
++    local integer x = p*2+seat
++    local integer y = p*2+1-seat
++    local integer due = IMaxBJ(0,PK_Paid[y]-PK_Paid[x])
++    local integer target = 0
++    local integer raiseSize = 0
++    if not PK_Eligible(p) or PK_Turn[p] != seat then
++        return
++    endif
++    if action == 0 then
++        if seat == 0 then
++            call PK_End(p,1,"You fold. Computer wins")
++        else
++            call PK_End(p,0,"Computer folds. You win")
++        endif
++        return
++    elseif action == 1 then
++        call PK_Pay(x,IMinBJ(due,PK_Stack[x]))
++        if due == 0 then
++            set PK_Note[p] = "Check."
++        else
++            set PK_Note[p] = "Call "+I2S(due)+"."
++        endif
++    else
++        set target = IMaxBJ(PK_Paid[x],PK_Paid[y])+PK_LastRaise[p]
++        if action == 3 then
++            set target = PK_Limit(p,seat)
++        endif
++        set target = IMinBJ(target,PK_Limit(p,seat))
++        set raiseSize = target-IMaxBJ(PK_Paid[x],PK_Paid[y])
++        if raiseSize <= 0 or (PK_Acted[x] and due < PK_LastRaise[p]) then
++            return
++        endif
++        call PK_Pay(x,target-PK_Paid[x])
++        if raiseSize >= PK_LastRaise[p] then
++            set PK_LastRaise[p] = raiseSize
++            set PK_Acted[y] = false
++        endif
++        set PK_Note[p] = "Raise to "+I2S(target)+"."
++    endif
++    set PK_Acted[x] = true
++    set PK_Actions[p] = PK_Actions[p]+1
++    set PK_Turn[p] = 1-seat
++    if PK_Paid[x] == PK_Paid[y] and PK_Acted[x] and PK_Acted[y] then
++        call PK_Advance(p)
++    elseif PK_Paid[x] == PK_Paid[y] and (PK_Stack[x] == 0 or PK_Stack[y] == 0) then
++        call PK_Showdown(p)
++    endif
++    set PK_Clock[p] = 30
++    set PK_Wait[p] = 2
++endfunction
++
++function PK_Texture takes integer p, string name, real x, real y, real w, real h returns framehandle
++    local framehandle f = BlzCreateFrameByType("BACKDROP","PokerArtwork",PK_Dialog[p],"",p)
++    call BlzFrameSetSize(f,w,h)
++    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
++    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
++    call BlzFrameSetEnable(f,false)
++    return f
++endfunction
++
++function PK_Label takes integer p, real x, real y, real w, real h, real scale returns framehandle
++    local framehandle f = BlzCreateFrameByType("TEXT","PokerLabel",PK_Dialog[p],"",p)
++    call BlzFrameSetSize(f,w,h)
++    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
++    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
++    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
++    call BlzFrameSetEnable(f,false)
++    return f
++endfunction
++
++function PK_ChipArt takes framehandle f, integer chips returns nothing
++    local integer count = 1
++    if chips >= 500 then
++        set count = 4
++    elseif chips >= 200 then
++        set count = 3
++    elseif chips >= 50 then
++        set count = 2
++    endif
++    call BlzFrameSetVisible(f,chips > 0)
++    call BlzFrameSetTexture(f,"PokerUI\\chips"+I2S(count)+".blp",0,true)
++endfunction
++
++function PK_Render takes integer p returns nothing
++    local integer x = p*2
++    local integer b = p*9
++    local integer i = 0
++    local integer due = IMaxBJ(0,PK_Paid[x+1]-PK_Paid[x])
++    local integer top = IMaxBJ(PK_Paid[x],PK_Paid[x+1])
++    local integer pot = PK_Total[x]+PK_Total[x+1]
++    local string phase = "PREFLOP"
++    local string label = "Check"
++    local string path = ""
++    local boolean raiseOK = false
++    local integer callTone = 0
++    if PK_Street[p] == 1 then
++        set phase = "FLOP"
++    elseif PK_Street[p] == 2 then
++        set phase = "TURN"
++    elseif PK_Street[p] == 3 then
++        set phase = "RIVER"
++    endif
++    if PK_Hand[p] > 0 then
++        call BlzFrameSetText(PK_Title[p],"POKER|n"+phase+" / #"+CUI_Value(I2S(PK_Hand[p])))
++    else
++        call BlzFrameSetText(PK_Title[p],"POKER")
++    endif
++    call BlzFrameSetText(PK_HumanLabel[p],"YOU")
++    call BlzFrameSetText(PK_BotLabel[p],"BOT")
++    call BlzFrameSetText(PK_HumanStack[p],CUI_Value(I2S(PK_Stack[x])))
++    call BlzFrameSetText(PK_BotStack[p],CUI_Value(I2S(PK_Stack[x+1])))
++    call BlzFrameSetText(PK_PotLabel[p],"POT  "+CUI_Value(I2S(pot)))
++    if PK_Note[p] == "Blinds 1/2. Raise button adds one minimum raise." then
++        call BlzFrameSetText(PK_Text[p],"BLINDS 1/2 / MAX BUY-IN 300g")
++    else
++        call BlzFrameSetText(PK_Text[p],PK_Note[p])
++    endif
++    call BlzFrameSetVisible(PK_CallLabel[p],PK_Turn[p] == 0)
++    call BlzFrameSetText(PK_CallLabel[p],"TO CALL  "+CUI_Value(I2S(due)))
++    call PK_ChipArt(PK_HumanChips[p],PK_Stack[x])
++    call PK_ChipArt(PK_BotChips[p],PK_Stack[x+1])
++    call PK_ChipArt(PK_PotChips[p],pot)
++    call BlzFrameSetVisible(PK_HumanDealer[p],PK_Hand[p] > 0 and PK_Dealer[p] == 0)
++    call BlzFrameSetVisible(PK_BotDealer[p],PK_Hand[p] > 0 and PK_Dealer[p] == 1)
++    loop
++        exitwhen i >= 9
++        if PK_Hand[p] == 0 then
++            set path = "empty"
++        elseif i < 2 then
++            set path = "card"+I2S(PK_Cards[b+i])
++        elseif i < 4 then
++            set path = "back"
++            if PK_Reveal[p] then
++                set path = "card"+I2S(PK_Cards[b+i])
++            endif
++        else
++            set path = "empty"
++            if i-4 < PK_BoardCount(p) then
++                set path = "card"+I2S(PK_Cards[b+i])
++            endif
++        endif
++        call BlzFrameSetTexture(PK_Face[b+i],"PokerUI\\"+path+".blp",0,true)
++        set i = i+1
++    endloop
++    if PK_Turn[p] == 0 then
++        call BlzFrameSetText(PK_Status[p],"YOUR TURN / "+CUI_Value(I2S(PK_Clock[p])+"s"))
++            if due > 0 then
++            set label = "Call "+I2S(due)
++            set callTone = 3
++        endif
++            call CUI_Text(PK_Call[p],label)
++        if PK_Limit(p,0) > top and (not PK_Acted[x] or due >= PK_LastRaise[p]) then
++                    set raiseOK = true
++            call CUI_Text(PK_Raise[p],"Raise "+I2S(IMinBJ(top+PK_LastRaise[p],PK_Limit(p,0))))
++                    call CUI_Text(PK_Allin[p],"All-in "+I2S(PK_Limit(p,0)))
++        endif
++    elseif PK_Turn[p] == 1 then
++        call BlzFrameSetText(PK_Status[p],"BOT'S TURN")
++    else
++        call BlzFrameSetText(PK_Status[p],"NEXT HAND")
++        endif
++    call CUI_Paint(PK_Fold[p],1,PK_Turn[p] == 0)
++    call CUI_Paint(PK_Call[p],callTone,PK_Turn[p] == 0)
++    call CUI_Paint(PK_Raise[p],2,raiseOK)
++    call CUI_Paint(PK_Allin[p],2,raiseOK)
++    call CUI_Text(PK_Next[p],"Deal "+I2S(CAS_amount[p+1])+"g")
++    call CUI_Paint(PK_Next[p],4,PK_Turn[p] == -1 and not CAS_ended and CAS_ready[p+1])
++    call CUI_Paint(PK_Hide[p],0,true)
++    if GetLocalPlayer() == Player(p) then
++        call BlzFrameSetVisible(PK_Dialog[p],not PK_Hidden[p])
++    endif
++endfunction
++
++function PK_Bot takes integer p returns nothing
++    local integer x = p*2+1
++    local integer due = IMaxBJ(0,PK_Paid[x-1]-PK_Paid[x])
++    local integer r1 = ModuloInteger(PK_Cards[p*9+2],13)+2
++    local integer r2 = ModuloInteger(PK_Cards[p*9+3],13)+2
++    local integer strength = 0
++    local integer roll = PK_Random(100)
++    // Uses its own cards and the revealed board only, never human/future cards.
++    if PK_Street[p] == 0 then
++        if r1 == r2 then
++            set strength = 3
++        elseif r1 >= 11 and r2 >= 10 then
++            set strength = 2
++        elseif r1 >= 12 or r2 >= 12 then
++            set strength = 1
++        endif
++    else
++        set strength = PK_Score(p,1,PK_BoardCount(p))/759375
++    endif
++    if due > 0 and strength == 0 and due > 10 and roll < 65 then
++        call PK_Action(p,1,0)
++    elseif PK_Actions[p] < 4 and PK_Limit(p,1) > IMaxBJ(PK_Paid[x],PK_Paid[x-1]) and (not PK_Acted[x] or due >= PK_LastRaise[p]) and ((strength >= 2 and roll < 55) or roll < 8) then
++        call PK_Action(p,1,2)
++    else
++        call PK_Action(p,1,1)
++    endif
++endfunction
++
++function PK_Click takes nothing returns nothing
++    local integer p = GetPlayerId(GetTriggerPlayer())
++    local framehandle clicked = BlzGetTriggerFrame()
++    if not PK_Eligible(p) then
++        return
++    endif
++    if clicked == PK_Hide[p] then
++        set PK_Hidden[p] = true
++    elseif clicked == PK_Next[p] and PK_Turn[p] == -1 then
++        call PK_Deal(p)
++    elseif clicked == PK_Fold[p] then
++        call PK_Action(p,0,0)
++    elseif clicked == PK_Call[p] then
++        call PK_Action(p,0,1)
++    elseif clicked == PK_Raise[p] then
++        call PK_Action(p,0,2)
++    elseif clicked == PK_Allin[p] then
++        call PK_Action(p,0,3)
++    endif
++    call PK_Render(p)
++    set clicked = null
++endfunction
++
++function PK_Chat takes nothing returns nothing
++    local integer p = GetPlayerId(GetTriggerPlayer())
++    if PK_Started[p] and PK_Eligible(p) then
++        set CAS_view[p+1] = 0
++        if GetLocalPlayer() == Player(p) and CAS_root[p+1] != null then
++            call BlzFrameSetVisible(CAS_root[p+1],false)
++        endif
++        set PK_Hidden[p] = false
++        set CAS_amount[p+1] = IMinBJ(300,CAS_amount[p+1])
++        call PK_Render(p)
++    endif
++endfunction
++
++function PK_Tick takes nothing returns nothing
++    local integer p = 0
++    loop
++        exitwhen p >= 24
++        if PK_Started[p] then
++            if not PK_Eligible(p) then
++                set PK_Hidden[p] = true
++                if PK_Turn[p] >= 0 then
++                    call PK_End(p,1,"Folded on leaving the table")
++                endif
++                call BlzFrameSetVisible(PK_Dialog[p],false)
++            elseif PK_Turn[p] == 1 then
++                set PK_Wait[p] = PK_Wait[p]-1
++                if PK_Wait[p] <= 0 then
++                    call PK_Bot(p)
++                    call PK_Render(p)
++                endif
++            elseif PK_Turn[p] == 0 then
++                set PK_Clock[p] = PK_Clock[p]-1
++                if PK_Clock[p] <= 0 then
++                    if PK_Paid[p*2] >= PK_Paid[p*2+1] then
++                        call PK_Action(p,0,1)
++                    else
++                        call PK_Action(p,0,0)
++                    endif
++                endif
++                call PK_Render(p)
++            endif
++        endif
++        set p = p+1
++    endloop
++endfunction
++
++function PK_Button takes integer p, trigger t, real x, real y, real width, string label returns framehandle
++    local framehandle f = CUI_Create(PK_Dialog[p],p,x,y,width,0.029,label,0)
++    call BlzTriggerRegisterFrameEvent(t,f,FRAMEEVENT_CONTROL_CLICK)
++    return f
++endfunction
++
++function PK_Start takes nothing returns nothing
++    local integer p = 0
++    local integer i = 0
++    local trigger click = null
++    local trigger chat = CreateTrigger()
++    loop
++        exitwhen p >= 24
++        if CAS_User(p+1) then
++            set PK_Hidden[p] = true
++            set PK_Started[p] = true
++            set PK_Stack[p*2] = 0
++            set PK_Stack[p*2+1] = 0
++            set PK_Dialog[p] = BlzCreateFrameByType("BACKDROP","PokerTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",p)
++            call BlzFrameSetSize(PK_Dialog[p],0.70,0.48)
++            call BlzFrameSetAbsPoint(PK_Dialog[p],FRAMEPOINT_TOPLEFT,0.05,0.57)
++            call BlzFrameSetTexture(PK_Dialog[p],"PokerUI\\table.blp",0,true)
++            call BlzFrameSetLevel(PK_Dialog[p],50)
++            call BlzFrameSetVisible(PK_Dialog[p],false)
++            set PK_Title[p] = PK_Label(p,0.025,0.014,0.49,0.040,1.12)
++            set PK_BotLabel[p] = PK_Label(p,0.105,0.090,0.085,0.017,0.91)
++            set PK_BotStack[p] = PK_Label(p,0.105,0.109,0.085,0.032,1.48)
++            set PK_HumanLabel[p] = PK_Label(p,0.105,0.314,0.085,0.017,0.91)
++            set PK_HumanStack[p] = PK_Label(p,0.105,0.333,0.085,0.032,1.48)
++            set PK_PotLabel[p] = PK_Label(p,0.532,0.205,0.134,0.038,1.24)
++            set PK_Status[p] = PK_Label(p,0.454,0.312,0.215,0.024,1.05)
++            set PK_CallLabel[p] = PK_Label(p,0.454,0.340,0.215,0.032,1.20)
++            set PK_Text[p] = PK_Label(p,0.025,0.398,0.65,0.037,1.0)
++            set PK_HumanChips[p] = PK_Texture(p,"chips4",0.193,0.330,0.048,0.030)
++            set PK_BotChips[p] = PK_Texture(p,"chips4",0.193,0.106,0.048,0.030)
++            set PK_PotChips[p] = PK_Texture(p,"chips1",0.532,0.245,0.050,0.030)
++            set PK_HumanDealer[p] = PK_Texture(p,"dealer",0.247,0.325,0.022,0.022)
++            set PK_BotDealer[p] = PK_Texture(p,"dealer",0.247,0.113,0.022,0.022)
++            set PK_Face[p*9] = PK_Texture(p,"empty",0.286,0.293,0.060,0.086)
++            set PK_Face[p*9+1] = PK_Texture(p,"empty",0.354,0.293,0.060,0.086)
++            set PK_Face[p*9+2] = PK_Texture(p,"back",0.286,0.081,0.060,0.086)
++            set PK_Face[p*9+3] = PK_Texture(p,"back",0.354,0.081,0.060,0.086)
++            set i = 0
++            loop
++                exitwhen i >= 5
++                set PK_Face[p*9+4+i] = PK_Texture(p,"empty",0.184+I2R(i)*0.068,0.193,0.060,0.086)
++                set i = i+1
++            endloop
++            set click = CreateTrigger()
++            set PK_Fold[p] = PK_Button(p,click,0.025,-0.439,0.105,"Fold")
++            set PK_Call[p] = PK_Button(p,click,0.135,-0.439,0.12,"Check / Call")
++            set PK_Raise[p] = PK_Button(p,click,0.26,-0.439,0.12,"Raise")
++            set PK_Allin[p] = PK_Button(p,click,0.385,-0.439,0.13,"All-in")
++            set PK_Next[p] = PK_Button(p,click,0.52,-0.439,0.155,"Next hand")
++            set PK_Hide[p] = PK_Button(p,click,0.565,-0.018,0.11,"Hide table")
++            call TriggerAddAction(click,function PK_Click)
++            call TriggerRegisterPlayerChatEvent(chat,Player(p),"-poker",true)
++            set PK_Turn[p] = -1
++            set PK_Note[p] = "Blinds 1/2. Set buy-in with -stake (max 300g), then Deal."
++            call PK_Render(p)
++        endif
++        set p = p+1
++    endloop
++    call TriggerAddAction(chat,function PK_Chat)
++    call TimerStart(CreateTimer(),1,true,function PK_Tick)
++    call DestroyTimer(GetExpiredTimer())
++    set click = null
++    set chat = null
++endfunction
++
++function PK_PauseUnit takes nothing returns nothing
++    call PauseUnit(GetEnumUnit(),true)
++endfunction
++
++
++
++function PK_Init takes nothing returns nothing
++    set PK_Seed = GetRandomInt(1,2147483646)
++    call TimerStart(CreateTimer(),2,false,function PK_Start)
++endfunction
++
++// All gameplay state runs on every client. Local branches only show UI / save files.
++function CAS_Random takes integer bound returns integer
++    local integer hi = CAS_seed / 127773
++    local integer lo = ModuloInteger(CAS_seed,127773)
++    set CAS_seed = 16807*lo-2836*hi
++    if CAS_seed <= 0 then
++        set CAS_seed = CAS_seed+2147483647
++    endif
++    return ModuloInteger(CAS_seed,bound)
++endfunction
++
++function CAS_Odds takes integer value returns string
++    return I2S(value/100)+"."+FF_Pad2(ModuloInteger(value,100))+"x"
++endfunction
++
++function CAS_Name takes integer s returns string
++    if s < 1 then
++        return "Computer"
++    endif
++    return GetPlayerName(Player(s-1))
++endfunction
++
++// Two-deck S17. BJ_state: 0 empty, 1 acting, 2 stood, 3 bust, 4 natural, 5 paid.
++// BJ_phase: 0 idle, 1 betting, 2 player turns, 3 dealer, 4 results.
++function BJ_Value takes integer card returns integer
++    return IMinBJ(10,ModuloInteger(card,13)+2)
++endfunction
++
++function BJ_Recount takes integer h returns nothing
++    local integer i = 0
++    local integer c
++    set BJ_total[h] = 0
++    set BJ_aces[h] = 0
++    loop
++        exitwhen i >= BJ_count[h]
++        set c = BJ_card[h*22+i]
++        if ModuloInteger(c,13) == 12 then
++            set BJ_total[h] = BJ_total[h]+11
++            set BJ_aces[h] = BJ_aces[h]+1
++        else
++            set BJ_total[h] = BJ_total[h]+BJ_Value(c)
++        endif
++        set i = i+1
++    endloop
++    loop
++        exitwhen BJ_total[h] <= 21 or BJ_aces[h] == 0
++        set BJ_total[h] = BJ_total[h]-10
++        set BJ_aces[h] = BJ_aces[h]-1
++    endloop
++endfunction
++
++function BJ_Shuffle takes integer t returns nothing
++    local integer i = 0
++    local integer j
++    local integer temp
++    loop
++        exitwhen i >= 104
++        set BJ_shoe[t*104+i] = ModuloInteger(i,52)
++        set i = i+1
++    endloop
++    set i = 103
++    loop
++        exitwhen i <= 0
++        set j = CAS_Random(i+1)
++        set temp = BJ_shoe[t*104+i]
++        set BJ_shoe[t*104+i] = BJ_shoe[t*104+j]
++        set BJ_shoe[t*104+j] = temp
++        set i = i-1
++    endloop
++    set BJ_pos[t] = 0
++    set BJ_error[t] = false
++endfunction
++
++function BJ_Draw takes integer t returns integer
++    local integer card
++    if BJ_pos[t] >= 104 then
++        set BJ_error[t] = true
++        return 0
++    endif
++    set card = BJ_shoe[t*104+BJ_pos[t]]
++    set BJ_pos[t] = BJ_pos[t]+1
++    return card
++endfunction
++
++function BJ_Hit takes integer t, integer h returns nothing
++    if BJ_count[h] >= 22 then
++        set BJ_error[t] = true
++        return
++    endif
++    set BJ_card[h*22+BJ_count[h]] = BJ_Draw(t)
++    set BJ_count[h] = BJ_count[h]+1
++    call BJ_Recount(h)
++    if BJ_total[h] > 21 then
++        set BJ_state[h] = 3
++    elseif BJ_total[h] == 21 then
++        set BJ_state[h] = 2
++    endif
++endfunction
++
++function BJ_DealerHit takes integer t returns nothing
++    local integer card = BJ_Draw(t)
++    set BJ_dealerCard[t*22+BJ_dealerCount[t]] = card
++    set BJ_dealerCount[t] = BJ_dealerCount[t]+1
++    if ModuloInteger(card,13) == 12 then
++        set BJ_dealerTotal[t] = BJ_dealerTotal[t]+11
++        set BJ_dealerAces[t] = BJ_dealerAces[t]+1
++    else
++        set BJ_dealerTotal[t] = BJ_dealerTotal[t]+BJ_Value(card)
++    endif
++    loop
++        exitwhen BJ_dealerTotal[t] <= 21 or BJ_dealerAces[t] == 0
++        set BJ_dealerTotal[t] = BJ_dealerTotal[t]-10
++        set BJ_dealerAces[t] = BJ_dealerAces[t]-1
++    endloop
++endfunction
++
++function BJ_Payout takes integer total, boolean natural, integer dealer, boolean dealerNatural, integer bet returns integer
++    if total > 21 then
++        return 0
++    elseif dealerNatural then
++        if natural then
++            return bet
++        endif
++        return 0
++    elseif natural then
++        return bet*5/2
++    elseif dealer > 21 or total > dealer then
++        return bet*2
++    elseif total == dealer then
++        return bet
++    endif
++    return 0
++endfunction
++
++function BJ_Finish takes integer t, boolean refund returns nothing
++    local integer h = t*12
++    local integer s
++    local integer payout
++    local integer stake
++    loop
++        exitwhen h >= t*12+12
++        if BJ_bet[h] > 0 and BJ_state[h] != 5 then
++            set stake = BJ_bet[h]
++            set s = BJ_owner[h/2]
++            if refund then
++                set payout = stake
++            else
++                set payout = BJ_Payout(BJ_total[h],BJ_state[h] == 4,BJ_dealerTotal[t],BJ_dealerCount[t] == 2 and BJ_dealerTotal[t] == 21,stake)
++            endif
++            // Mark paid before touching the wallet: duplicate finish calls are harmless.
++            set BJ_state[h] = 5
++            if s > 0 then
++                call CAS_Settle(s,stake,payout,BJ_reserve[h])
++                if refund then
++                    set BJ_result[h] = "Round void / returned "+I2S(payout)
++                elseif payout == stake then
++                    set BJ_result[h] = "Push / returned "+I2S(payout)
++                elseif payout > stake then
++                    set BJ_result[h] = "Won +"+I2S(payout-stake)+" / return "+I2S(payout)
++                else
++                    set BJ_result[h] = "Lost "+I2S(stake)
++                endif
++                if ModuloInteger(h,2) == 1 then
++                    set CAS_note[s] = "Hand 1: "+BJ_result[h-1]+"  /  Hand 2: "+BJ_result[h]
++                else
++                    set CAS_note[s] = BJ_result[h]
++                endif
++            endif
++        endif
++        set h = h+1
++    endloop
++    set BJ_reveal[t] = true
++    set BJ_phase[t] = 4
++    set BJ_clock[t] = 5
++    set BJ_turn[t] = 0
++endfunction
++
++function BJ_Next takes integer t returns nothing
++    local integer h = t*12
++    if BJ_error[t] then
++        call BJ_Finish(t,true)
++        return
++    endif
++    loop
++        exitwhen h >= t*12+12
++        if BJ_state[h] == 1 then
++            set BJ_turn[t] = h+1
++            set BJ_clock[t] = 20
++            return
++        endif
++        set h = h+1
++    endloop
++    set BJ_turn[t] = 0
++    set BJ_phase[t] = 3
++    set BJ_reveal[t] = true
++    set BJ_clock[t] = 2
++endfunction
++
++function BJ_Deal takes integer t returns nothing
++    local integer h
++    local integer dealPass = 0
++    // The cut card triggers before the next round; live cards are never recycled.
++    if BJ_pos[t] > 26 then
++        call BJ_Shuffle(t)
++    endif
++    set BJ_round[t] = BJ_round[t]+1
++    set BJ_dealerCount[t] = 0
++    set BJ_dealerTotal[t] = 0
++    set BJ_dealerAces[t] = 0
++    set BJ_reveal[t] = false
++    loop
++        exitwhen dealPass >= 2
++        set h = t*12
++        loop
++            exitwhen h >= t*12+12
++            if BJ_bet[h] > 0 then
++                set BJ_state[h] = 1
++                call BJ_Hit(t,h)
++            endif
++            set h = h+2
++        endloop
++        call BJ_DealerHit(t)
++        set dealPass = dealPass+1
++    endloop
++    set h = t*12
++    loop
++        exitwhen h >= t*12+12
++        if BJ_bet[h] > 0 and BJ_total[h] == 21 then
++            set BJ_state[h] = 4
++        endif
++        set h = h+2
++    endloop
++    set BJ_phase[t] = 2
++    if BJ_error[t] then
++        call BJ_Finish(t,true)
++    elseif BJ_dealerTotal[t] == 21 then
++        call BJ_Finish(t,false)
++    else
++        call BJ_Next(t)
++    endif
++endfunction
++
++function BJ_Reset takes integer t returns nothing
++    local integer h = t*12
++    loop
++        exitwhen h >= t*12+12
++        set BJ_count[h] = 0
++        set BJ_total[h] = 0
++        set BJ_aces[h] = 0
++        set BJ_state[h] = 0
++        set BJ_bet[h] = 0
++        set BJ_reserve[h] = 0
++        set BJ_split[h] = false
++        set BJ_result[h] = ""
++        set h = h+1
++    endloop
++    set BJ_dealerCount[t] = 0
++    set BJ_dealerTotal[t] = 0
++    set BJ_reveal[t] = false
++    set BJ_phase[t] = 0
++endfunction
++
++function BJ_Wager takes integer s returns nothing
++    local integer t = BJ_table[s]
++    local integer h = BJ_seat[s]*2
++    local integer stake = CAS_amount[s]
++    local integer i
++    if stake < 10 or stake > 100 then
++        set CAS_note[s] = "Blackjack opening bet: 10 to 100 gold."
++        return
++    endif
++    if BJ_phase[t] == 4 then
++        call BJ_Reset(t)
++    endif
++    if BJ_phase[t] > 1 or BJ_bet[h] > 0 then
++        set CAS_note[s] = "Your wager is already placed, or a round is in progress."
++        return
++    endif
++    if not CAS_Reserve(s,stake,stake*3/2) then
++        return
++    endif
++    set BJ_bet[h] = stake
++    set BJ_reserve[h] = stake*3/2
++    set BJ_state[h] = 1
++    if BJ_phase[t] == 0 then
++        set BJ_phase[t] = 1
++        set BJ_clock[t] = 12
++        if t > 0 then
++            set BJ_clock[t] = 3
++            set i = 1
++            loop
++                exitwhen i > 2
++                set BJ_bet[(t*6+i)*2] = stake
++                set BJ_state[(t*6+i)*2] = 1
++                set i = i+1
++            endloop
++        endif
++    endif
++    set CAS_note[s] = "Wager locked: "+I2S(stake)+" account gold."
++endfunction
++
++function BJ_Action takes integer s, integer action returns nothing
++    local integer t = BJ_table[s]
++    local integer h = BJ_turn[t]-1
++    local integer stake
++    local integer card
++    if not PK_Eligible(s-1) or BJ_phase[t] != 2 or h < 0 or BJ_owner[h/2] != s or BJ_state[h] != 1 then
++        return
++    endif
++    if action == 1 then
++        call BJ_Hit(t,h)
++    elseif action == 2 then
++        set BJ_state[h] = 2
++    elseif action == 3 then
++        if BJ_count[h] != 2 or BJ_bet[h] > 10000 or (BJ_split[h] and ModuloInteger(BJ_card[h*22],13) == 12) then
++            return
++        endif
++        set stake = BJ_bet[h]
++        if not CAS_Reserve(s,stake,stake*3/2) then
++            return
++        endif
++        set BJ_bet[h] = stake*2
++        set BJ_reserve[h] = BJ_reserve[h]+stake*3/2
++        call BJ_Hit(t,h)
++        if BJ_state[h] == 1 then
++            set BJ_state[h] = 2
++        endif
++    elseif action == 4 then
++        if BJ_count[h] != 2 or BJ_split[h] or ModuloInteger(h,2) != 0 or BJ_Value(BJ_card[h*22]) != BJ_Value(BJ_card[h*22+1]) or (ModuloInteger(BJ_card[h*22],13) == 12) != (ModuloInteger(BJ_card[h*22+1],13) == 12) then
++            return
++        endif
++        set stake = BJ_bet[h]
++        if not CAS_Reserve(s,stake,stake*3/2) then
++            return
++        endif
++        set card = BJ_card[h*22+1]
++        set BJ_count[h] = 1
++        set BJ_count[h+1] = 1
++        set BJ_card[(h+1)*22] = card
++        set BJ_bet[h+1] = stake
++        set BJ_reserve[h+1] = stake*3/2
++        set BJ_split[h] = true
++        set BJ_split[h+1] = true
++        set BJ_state[h+1] = 1
++        call BJ_Hit(t,h)
++        call BJ_Hit(t,h+1)
++        if ModuloInteger(card,13) == 12 then
++            set BJ_state[h] = 2
++            set BJ_state[h+1] = 2
++        endif
++    endif
++    if BJ_error[t] then
++        call BJ_Finish(t,true)
++    elseif BJ_state[h] != 1 then
++        call BJ_Next(t)
++    endif
++endfunction
++
++function BJ_Move takes integer s, boolean community returns nothing
++    local integer old = BJ_table[s]
++    local integer seat = BJ_seat[s]
++    local integer i = 0
++    local integer t = s
++    if BJ_bet[seat*2] > 0 and BJ_state[seat*2] != 5 then
++        set CAS_note[s] = "Finish your current round before switching tables."
++        return
++    endif
++    if community then
++        set t = 0
++        loop
++            exitwhen i >= 6 or BJ_owner[i] == 0 or BJ_owner[i] == s
++            set i = i+1
++        endloop
++        if i == 6 then
++            set CAS_note[s] = "The community table is full (six seats)."
++            return
++        endif
++    endif
++    if old == t then
++        return
++    endif
++    set BJ_owner[seat] = 0
++    set BJ_table[s] = t
++    set BJ_seat[s] = t*6+i
++    set BJ_owner[t*6+i] = s
++    set CAS_note[s] = "Seated. Choose your wager, then click Place wager."
++endfunction
++
++function BJ_Tick takes nothing returns nothing
++    local integer t = 0
++    local integer h
++    local integer s
++    loop
++        exitwhen t > 24
++        if BJ_phase[t] == 1 then
++            set BJ_clock[t] = BJ_clock[t]-1
++            if BJ_clock[t] <= 0 then
++                call BJ_Deal(t)
++            endif
++        elseif BJ_phase[t] == 2 then
++            set h = BJ_turn[t]-1
++            set s = BJ_owner[h/2]
++            set BJ_clock[t] = BJ_clock[t]-1
++            if s < 0 then
++                if BJ_total[h] < 17 then
++                    call BJ_Hit(t,h)
++                else
++                    set BJ_state[h] = 2
++                endif
++                if BJ_state[h] != 1 then
++                    call BJ_Next(t)
++                elseif BJ_error[t] then
++                    call BJ_Finish(t,true)
++                endif
++            elseif BJ_clock[t] <= 0 or not PK_Eligible(s-1) then
++                set BJ_state[h] = 2
++                call BJ_Next(t)
++            endif
++        elseif BJ_phase[t] == 3 then
++            set BJ_clock[t] = BJ_clock[t]-1
++            if BJ_clock[t] <= 0 then
++                if BJ_dealerTotal[t] < 17 then
++                    call BJ_DealerHit(t)
++                    set BJ_clock[t] = 1
++                    if BJ_error[t] then
++                        call BJ_Finish(t,true)
++                    endif
++                else
++                    call BJ_Finish(t,false)
++                endif
++            endif
++        elseif BJ_phase[t] == 4 then
++            set BJ_clock[t] = IMaxBJ(0,BJ_clock[t]-1)
++        endif
++        set t = t+1
++    endloop
++endfunction
++
++// Fixed-price tickets: the displayed quote includes the proposed stake.
++// Every ticket reserves its maximum profit against the finite casino bank.
++function MK_FFA takes nothing returns boolean
++    return MK_ffa
++endfunction
++
++function MK_Valid takes integer m, integer o returns boolean
++    if m == 5 and not MK_FFA() then
++        return o >= 1 and o <= FF_gr_SideCount() and FF_gr_SideParticipated(o)
++    endif
++    return o >= 1 and o <= 12 and FF_gr_participant[o]
++endfunction
++
++function MK_Label takes integer m, integer o returns string
++    if m == 5 and not MK_FFA() then
++        return FF_gr_SideLabel(o)
++    endif
++    return CAS_Name(o)
++endfunction
++
++function MK_Title takes integer m returns string
++    if m == 1 then
++        return "FIRST HERO KILL"
++    elseif m == 2 then
++        return "SCORES A BASE KILL"
++    elseif m == 3 then
++        return "FIRST BASE LOST"
++    elseif m == 4 then
++        return "FIRST TO LEVEL 16"
++    elseif MK_FFA() then
++        return "PLAYER TO WIN"
++    endif
++    return "TEAM TO WIN"
++endfunction
++
++function MK_Contains takes string value, string needle returns boolean
++    local integer i = 0
++    local integer n = StringLength(needle)
++    loop
++        exitwhen i+n > StringLength(value)
++        if SubString(value,i,i+n) == needle then
++            return true
++        endif
++        set i = i+1
++    endloop
++    return false
++endfunction
++
++function MK_Prior takes integer m, integer o returns integer
++    local string name
++    if m == 1 and o >= 1 and o <= 12 and udg_herO[o] != null then
++        set name = StringCase(GetUnitName(udg_herO[o]),false)
++        if MK_Contains(name,"shadow") or MK_Contains(name,"cattle") then
++            return 300
++        endif
++    endif
++    return 100
++endfunction
++
++function MK_Quote takes integer m, integer o, integer stake returns integer
++    local integer total = MK_quoteTotal[m]+stake
++    local integer weight = MK_pool[m*16+o]+MK_prior[m*16+o]+stake
++    if weight <= 0 then
++        return 110
++    endif
++    return IMinBJ(2000,IMaxBJ(110,R2I(I2R(total)*100.00/I2R(weight))))
++endfunction
++
++function MK_Refresh takes nothing returns nothing
++    local integer m = 1
++    local integer i
++    set MK_ffa = FFEnd_ParticipantCount() >= 2 and FFEnd_BlockCount() == 1
++    loop
++        exitwhen m > 5
++        set i = 1
++        set MK_quoteTotal[m] = 0
++        loop
++            exitwhen i > 12
++            if MK_Valid(m,i) then
++                set MK_prior[m*16+i] = MK_Prior(m,i)
++                set MK_quoteTotal[m] = MK_quoteTotal[m]+MK_pool[m*16+i]+MK_prior[m*16+i]
++            endif
++            set i = i+1
++        endloop
++        set m = m+1
++    endloop
++endfunction
++
++function MK_IsOpen takes integer m, integer o returns boolean
++    return not CAS_closed and not CAS_ended and R2I(TimerGetElapsed(FF_gameTimer)) < 130 and not MK_done[m] and not (m == 2 and MK_baseScored[o]) and MK_Valid(m,o)
++endfunction
++
++function MK_Buy takes integer s, integer m, integer o returns nothing
++    local integer stake = CAS_amount[s]
++    local integer quote
++    local integer payout
++    call MK_Refresh()
++    if not MK_IsOpen(m,o) or MK_n >= 4095 then
++        set CAS_note[s] = "This market is closed or has no remaining tickets."
++        return
++    endif
++    set quote = MK_Quote(m,o,stake)
++    set payout = stake*quote/100
++    if not CAS_Reserve(s,stake,payout-stake) then
++        return
++    endif
++    set MK_n = MK_n+1
++    set MK_player[MK_n] = s
++    set MK_market[MK_n] = m
++    set MK_target[MK_n] = o
++    set MK_stake[MK_n] = stake
++    set MK_return[MK_n] = payout
++    set MK_reserve[MK_n] = payout-stake
++    set MK_pool[m*16+o] = MK_pool[m*16+o]+stake
++    set MK_volume[m] = MK_volume[m]+stake
++    set MK_quoteTotal[m] = MK_quoteTotal[m]+stake
++    set MK_ownedStake[s*96+m*16+o] = MK_ownedStake[s*96+m*16+o]+stake
++    set MK_ownedReturn[s*96+m*16+o] = MK_ownedReturn[s*96+m*16+o]+payout
++    set CAS_note[s] = "LOCKED "+CAS_Odds(quote)+" / "+I2S(stake)+" gold on "+MK_Label(m,o)+" / total return "+I2S(payout)
++endfunction
++
++function MK_Pay takes integer ticket, boolean win, boolean refund returns nothing
++    local integer payout = 0
++    local integer s = MK_player[ticket]
++    if MK_paid[ticket] then
++        return
++    endif
++    set MK_paid[ticket] = true
++    if refund then
++        set payout = MK_stake[ticket]
++    elseif win then
++        set payout = MK_return[ticket]
++    endif
++    call CAS_Settle(s,MK_stake[ticket],payout,MK_reserve[ticket])
++    if payout > MK_stake[ticket] then
++        set CAS_note[s] = MK_Title(MK_market[ticket])+": won +"+I2S(payout-MK_stake[ticket])+" gold."
++    elseif refund then
++        set CAS_note[s] = MK_Title(MK_market[ticket])+": void / wager returned."
++    endif
++endfunction
++
++function MK_PayBatch takes nothing returns nothing
++    local integer count = 0
++    local integer m
++    local integer target
++    loop
++        exitwhen MK_scan > MK_n or count >= 64
++        set m = MK_market[MK_scan]
++        set target = MK_target[MK_scan]
++        if not MK_paid[MK_scan] then
++            if m == 2 and (MK_baseScored[target] or MK_done[2]) then
++                call MK_Pay(MK_scan,MK_baseScored[target],false)
++            elseif m != 2 and MK_done[m] then
++                call MK_Pay(MK_scan,MK_winner[m] == target,MK_winner[m] == 0)
++            endif
++        endif
++        set MK_scan = MK_scan+1
++        set count = count+1
++    endloop
++    if MK_scan > MK_n then
++        call PauseTimer(MK_payTimer)
++    endif
++endfunction
++
++function MK_Schedule takes nothing returns nothing
++    set MK_scan = 1
++    call TimerStart(MK_payTimer,0.01,true,function MK_PayBatch)
++endfunction
++
++function MK_Resolve takes integer m, integer target returns nothing
++    if MK_done[m] then
++        return
++    endif
++    set MK_done[m] = true
++    set MK_winner[m] = target
++    call MK_Schedule()
++    if target > 0 then
++        call DisplayTimedTextToForce(GetPlayersAll(),8,"|cffe7cb88"+MK_Title(m)+"|r: "+MK_Label(m,target)+". Bets settled.")
++    endif
++endfunction
++
++function MK_BaseDeath takes nothing returns nothing
++    local unit victim = CAS_baseVictim
++    local unit killer = CAS_baseKiller
++    local integer lost = GetPlayerId(GetOwningPlayer(victim))+1
++    local integer won = 0
++    if lost < 1 or lost > 12 or not FF_gr_participant[lost] then
++        set victim = null
++        set killer = null
++        return
++    endif
++    // This callback is injected at the map's actual base-destruction trigger.
++    call MK_Resolve(3,lost)
++    if killer != null and IsPlayerEnemy(GetOwningPlayer(killer),GetOwningPlayer(victim)) then
++        set won = GetPlayerId(GetOwningPlayer(killer))+1
++    endif
++    if won >= 1 and won <= 12 and FF_gr_participant[won] and not MK_baseScored[won] then
++        set MK_baseScored[won] = true
++        call MK_Schedule()
++    endif
++    set victim = null
++    set killer = null
++endfunction
++
++function MK_HeroDeath takes nothing returns nothing
++    local unit victim = GetTriggerUnit()
++    local unit killer = GetKillingUnit()
++    local integer s
++    local integer v
++    if not MK_done[1] and killer != null and IsUnitType(victim,UNIT_TYPE_HERO) and not IsUnitIllusion(victim) and IsPlayerEnemy(GetOwningPlayer(killer),GetOwningPlayer(victim)) then
++        set s = GetPlayerId(GetOwningPlayer(killer))+1
++        set v = GetPlayerId(GetOwningPlayer(victim))+1
++        if s >= 1 and s <= 12 and v >= 1 and v <= 12 and FF_gr_participant[s] and FF_gr_participant[v] then
++            call MK_Resolve(1,s)
++        endif
++    endif
++    set victim = null
++    set killer = null
++endfunction
++
++function MK_Level takes nothing returns nothing
++    local unit hero = GetTriggerUnit()
++    local integer s = GetPlayerId(GetOwningPlayer(hero))+1
++    if not MK_done[4] and s >= 1 and s <= 12 and FF_gr_participant[s] and hero == udg_herO[s] and GetHeroLevel(hero) >= 16 then
++        call MK_Resolve(4,s)
++    endif
++    set hero = null
++endfunction
++
++// A challenge backs a named team/player to win versus that outcome not winning.
++// Both sides explicitly accept the same target and equal stake; the pot backs itself.
++function DU_Cancel takes integer id returns nothing
++    local integer s = DU_from[id]
++    if DU_state[id] != 1 then
++        return
++    endif
++    set DU_state[id] = 4
++    set DU_outgoing[s] = 0
++    set DU_incoming[DU_to[id]] = 0
++    set CAS_escrow[s] = CAS_escrow[s]-DU_stake[id]
++    call CAS_Credit(s,DU_stake[id],0)
++    set CAS_note[s] = "Challenge declined, cancelled, or expired. Gold returned."
++endfunction
++
++function DU_Offer takes integer s returns nothing
++    local integer to = DU_opponent[s]
++    local integer target = DU_pick[s]
++    local integer stake = CAS_amount[s]
++    if not PK_Eligible(to-1) or to == s or DU_outgoing[s] != 0 or DU_incoming[to] != 0 or DU_active[s] != 0 or DU_active[to] != 0 or not MK_Valid(5,target) or DU_n >= 511 then
++        set CAS_note[s] = "Choose an available opponent and a valid winner. One active challenge per player."
++        return
++    endif
++    if not CAS_Reserve(s,stake,0) then
++        return
++    endif
++    set DU_n = DU_n+1
++    set DU_from[DU_n] = s
++    set DU_to[DU_n] = to
++    set DU_target[DU_n] = target
++    set DU_ffa[DU_n] = MK_FFA()
++    set DU_stake[DU_n] = stake
++    set DU_state[DU_n] = 1
++    set DU_expire[DU_n] = CAS_seconds+30
++    set DU_outgoing[s] = DU_n
++    set DU_incoming[to] = DU_n
++    set CAS_note[s] = "Challenge sent. Your "+I2S(stake)+" gold is held for 30 seconds."
++    set CAS_note[to] = CAS_Name(s)+" challenges you: "+MK_Label(5,target)+" wins, "+I2S(stake)+" gold each. Open Casino / Challenges."
++    call DisplayTimedTextToPlayer(Player(to-1),0,0,15,CAS_note[to])
++endfunction
++
++function DU_Accept takes integer s returns nothing
++    local integer id = DU_incoming[s]
++    local integer proposer
++    if id == 0 or DU_state[id] != 1 then
++        return
++    endif
++    set proposer = DU_from[id]
++    if CAS_seconds >= DU_expire[id] or not PK_Eligible(proposer-1) or DU_active[s] != 0 or DU_active[proposer] != 0 or DU_ffa[id] != MK_FFA() or not MK_Valid(5,DU_target[id]) then
++        call DU_Cancel(id)
++        return
++    endif
++    if not CAS_Reserve(s,DU_stake[id],0) then
++        return
++    endif
++    set DU_state[id] = 2
++    set DU_incoming[s] = 0
++    set DU_outgoing[proposer] = 0
++    set DU_active[s] = id
++    set DU_active[proposer] = id
++    set CAS_note[s] = "Accepted: you win if "+MK_Label(5,DU_target[id])+" does NOT win. Pot "+I2S(DU_stake[id]*2)+"."
++    set CAS_note[proposer] = "Accepted: you win if "+MK_Label(5,DU_target[id])+" wins. Pot "+I2S(DU_stake[id]*2)+"."
++endfunction
++
++function DU_Finish takes integer winner, boolean ffa returns nothing
++    local integer id = 1
++    local integer won
++    local integer stake
++    loop
++        exitwhen id > DU_n
++        if DU_state[id] == 1 then
++            call DU_Cancel(id)
++        elseif DU_state[id] == 2 then
++            set DU_state[id] = 3
++            set stake = DU_stake[id]
++            set CAS_escrow[DU_from[id]] = CAS_escrow[DU_from[id]]-stake
++            set CAS_escrow[DU_to[id]] = CAS_escrow[DU_to[id]]-stake
++            set DU_active[DU_from[id]] = 0
++            set DU_active[DU_to[id]] = 0
++            if winner == 0 or DU_ffa[id] != ffa then
++                call CAS_Credit(DU_from[id],stake,0)
++                call CAS_Credit(DU_to[id],stake,0)
++            else
++                set won = DU_to[id]
++                if DU_target[id] == winner then
++                    set won = DU_from[id]
++                endif
++                call CAS_Credit(won,stake,stake)
++                set CAS_note[won] = "Challenge won: return "+I2S(stake*2)+" gold."
++            endif
++        endif
++        set id = id+1
++    endloop
++endfunction
++
++function CAS_EndMatch takes nothing returns nothing
++    local integer winner = CAS_winner
++    local integer m = 1
++    local integer i = 1
++    local boolean ffa = winner < 0
++    if CAS_ended then
++        return
++    endif
++    set CAS_ended = true
++    loop
++        exitwhen i > 48
++        call CreditCancel(i)
++        set i = i+1
++    endloop
++    set CAS_closed = true
++    if ffa then
++        set winner = -winner
++    endif
++    // Each market that never had an event is void; any-base-kill is a yes proposition.
++    loop
++        exitwhen m > 4
++        if m != 2 then
++            call MK_Resolve(m,0)
++        endif
++        set m = m+1
++    endloop
++    set MK_done[2] = true
++    call MK_Schedule()
++    // Resolve the team/player winner using the map's canonical settlement result.
++    if ffa != MK_FFA() then
++        call MK_Resolve(5,0)
++    else
++        call MK_Resolve(5,winner)
++    endif
++    call DU_Finish(winner,ffa)
++    set i = 0
++    loop
++        exitwhen i > 24
++        if i < 24 and PokerBuyIn[i] > 0 then
++            call CAS_Settle(i+1,PokerBuyIn[i],PokerBuyIn[i],PokerBuyIn[i])
++            set PokerBuyIn[i] = 0
++            set PK_Turn[i] = -1
++            set PK_Note[i] = "Match ended. Open hand refunded."
++            call PK_Render(i)
++        endif
++        if BJ_phase[i] >= 1 and BJ_phase[i] <= 3 then
++            call BJ_Finish(i,true)
++        endif
++        set i = i+1
++    endloop
++endfunction
++
++// Keep labels and controls inside a shared horizontal safe area.
++function CAS_SafeX takes real x returns real
++    return x
++endfunction
++
++function CAS_SafeW takes real width returns real
++    return width
++endfunction
++
++function CAS_Label takes integer s, real x, real y, real w, real h, real scale returns framehandle
++    local framehandle f = BlzCreateFrameByType("TEXT","CasinoLabel",CAS_root[s],"",s)
++    call BlzFrameSetSize(f,CAS_SafeW(w),h)
++    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,CAS_SafeX(x),-y)
++    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
++    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
++    call BlzFrameSetEnable(f,false)
++    return f
++endfunction
++
++function CAS_Texture takes integer s, string path, real x, real y, real w, real h returns framehandle
++    local framehandle f = BlzCreateFrameByType("BACKDROP","CasinoArt",CAS_root[s],"",s)
++    call BlzFrameSetSize(f,w,h)
++    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,x,-y)
++    call BlzFrameSetTexture(f,path,0,true)
++    call BlzFrameSetEnable(f,false)
++    return f
++endfunction
++
++function CAS_Tone takes integer id returns integer
++    if id == 6 or id == 10 or id == 37 or id == 38 then
++        return 1
++    elseif id == 7 or id == 8 or id == 9 or id == 11 or id == 14 or id == 32 or id == 33 or id == 36 then
++        return 2
++    elseif id == 12 then
++        return 3
++    elseif id == 15 or id == 16 or id == 34 or id == 35 then
++        return 4
++    endif
++    return 0
++endfunction
++
++function CAS_Button takes integer s, integer id, trigger click, real x, real y, real w, string label returns nothing
++    local framehandle f = CUI_Create(CAS_root[s],s*64+id,CAS_SafeX(x),-y,CAS_SafeW(w),0.027,label,CAS_Tone(id))
++    call BlzTriggerRegisterFrameEvent(click,f,FRAMEEVENT_CONTROL_CLICK)
++    set CAS_button[s*64+id] = f
++    set f = null
++endfunction
++
++function CAS_ShowButton takes integer s, integer id, boolean enabled returns nothing
++    if GetLocalPlayer() == Player(s-1) and not BlzFrameIsVisible(CAS_button[s*64+id]) then
++        call BlzFrameSetVisible(CAS_button[s*64+id],true)
++    endif
++    call CUI_Paint(CAS_button[s*64+id],CAS_Tone(id),enabled)
++endfunction
++
++function CAS_CardFace takes framehandle f, integer card, boolean back returns nothing
++    local string name = "empty"
++    if back then
++        set name = "back"
++    elseif card >= 0 then
++        set name = "card"+I2S(card)
++    endif
++    call BlzFrameSetVisible(f,true)
++    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
++endfunction
++
++function BJ_Summary takes integer h returns string
++    local string text = I2S(BJ_total[h])
++    if BJ_total[h] > 21 then
++        return "|cffff9090BUST "+text+"|r"
++    elseif BJ_state[h] == 4 then
++        return "|cffe7cb88BLACKJACK 21|r"
++    elseif BJ_state[h] == 1 then
++        return CUI_Value(text)
++    elseif BJ_state[h] == 0 then
++        return "--"
++    endif
++    return CUI_Value(text)
++endfunction
++
++// The narrow seat list reserves space for both totals even when a name wraps.
++function BJ_SeatTotal takes integer hand returns string
++    if BJ_state[hand] == 0 then
++        return "--"
++    elseif BJ_total[hand] > 21 then
++        return "|cffff9090"+I2S(BJ_total[hand])+"|r"
++    endif
++    return CUI_Value(I2S(BJ_total[hand]))
++endfunction
++
++function BJ_CardStart takes real center, integer count, real width, real spacing returns real
++    local integer visible = IMaxBJ(2,IMinBJ(6,count))
++    return center-(width+I2R(visible-1)*spacing)*0.5
++endfunction
++
++function CAS_BlackjackView takes integer s returns nothing
++    local integer t = BJ_table[s]
++    local integer h = BJ_seat[s]*2
++    local integer b = s*32
++    local integer c = s*18
++    local integer i = 0
++    local integer j
++    local integer own
++    local integer card
++    local real dealerX
++    local real handX
++    local real splitX = 0.0
++    local real cardWidth = 0.060
++    local real cardHeight = 0.082
++    local real spacing = 0.067
++    local boolean turn = BJ_phase[t] == 2 and BJ_turn[t]-1 >= h and BJ_turn[t]-1 <= h+1
++    local string mode = "SOLO + BOTS"
++    local string phase = "PLACE BET"
++    local string dealer = "DEALER"
++    local string first = "YOU"
++    local string second = "HAND 2"
++    if t == 0 then
++        set mode = "COMMUNITY"
++    endif
++    if BJ_phase[t] == 1 then
++        set phase = "DEAL IN "+CUI_Value(I2S(BJ_clock[t])+"s")
++    elseif BJ_phase[t] == 2 then
++        set phase = CAS_Name(BJ_owner[(BJ_turn[t]-1)/2])+" / "+CUI_Value(I2S(BJ_clock[t])+"s")
++        if turn then
++            set phase = "YOUR TURN / "+CUI_Value(I2S(BJ_clock[t])+"s")
++        endif
++    elseif BJ_phase[t] == 3 then
++        set phase = "DEALER'S TURN"
++    elseif BJ_phase[t] == 4 then
++        set phase = "NEXT ROUND"
++    endif
++    call BlzFrameSetText(CAS_content[b],mode+"  /  #"+CUI_Value(I2S(BJ_round[t])))
++    call BlzFrameSetVisible(CAS_content[b],true)
++    call BlzFrameSetText(CAS_content[b+1],phase)
++    call BlzFrameSetVisible(CAS_content[b+1],true)
++    if BJ_reveal[t] then
++        set dealer = dealer+"  "+CUI_Value(I2S(BJ_dealerTotal[t]))
++    endif
++    call BlzFrameSetText(CAS_content[b+2],dealer)
++    call BlzFrameSetVisible(CAS_content[b+2],true)
++    set dealerX = BJ_CardStart(0.445,BJ_dealerCount[t],0.054,0.067)
++    if BJ_split[h] then
++        set first = "HAND 1"
++        if turn then
++            if BJ_turn[t]-1 == h then
++                set first = "> HAND 1"
++            else
++                set second = "> HAND 2"
++            endif
++        endif
++        set cardWidth = 0.043
++        set cardHeight = 0.062
++        set spacing = 0.028
++        set handX = BJ_CardStart(0.330,BJ_count[h],cardWidth,spacing)
++        set splitX = BJ_CardStart(0.560,BJ_count[h+1],cardWidth,spacing)
++        call BlzFrameSetSize(CAS_content[b+3],0.230,0.040)
++        call BlzFrameSetText(CAS_content[b+5],second+"  "+BJ_Summary(h+1)+"|nBET  "+CUI_Value(I2S(BJ_bet[h+1])+"g"))
++        call BlzFrameSetVisible(CAS_content[b+5],true)
++    else
++        set handX = BJ_CardStart(0.445,BJ_count[h],cardWidth,spacing)
++        call BlzFrameSetSize(CAS_content[b+3],0.460,0.040)
++    endif
++    call BlzFrameSetText(CAS_content[b+3],first+"  "+BJ_Summary(h)+"|nBET  "+CUI_Value(I2S(BJ_bet[h])+"g"))
++    call BlzFrameSetVisible(CAS_content[b+3],true)
++    call BlzFrameSetText(CAS_content[b+4],"2 DECKS / PAYS 3:2")
++    call BlzFrameSetVisible(CAS_content[b+4],true)
++    loop
++        exitwhen i >= 6
++        call BlzFrameSetPoint(CAS_card[c+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,dealerX+I2R(i)*0.067,-0.140)
++        call BlzFrameSetSize(CAS_card[c+i],0.054,0.078)
++        set card = -1
++        if i < BJ_dealerCount[t] then
++            set card = BJ_dealerCard[t*22+i]
++        endif
++        call CAS_CardFace(CAS_card[c+i],card,i == 1 and BJ_dealerCount[t] > 1 and not BJ_reveal[t])
++        call BlzFrameSetVisible(CAS_card[c+i],i < IMaxBJ(2,BJ_dealerCount[t]))
++        set card = -1
++        if i < BJ_count[h] then
++            set card = BJ_card[h*22+i]
++        endif
++        call BlzFrameSetPoint(CAS_card[c+6+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,handX+I2R(i)*spacing,-0.268)
++        call BlzFrameSetSize(CAS_card[c+6+i],cardWidth,cardHeight)
++        call CAS_CardFace(CAS_card[c+6+i],card,false)
++        call BlzFrameSetVisible(CAS_card[c+6+i],i < IMaxBJ(2,BJ_count[h]))
++        if BJ_split[h] then
++            set card = -1
++            if i < BJ_count[h+1] then
++                set card = BJ_card[(h+1)*22+i]
++            endif
++            call BlzFrameSetPoint(CAS_card[c+12+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,splitX+I2R(i)*spacing,-0.268)
++            call BlzFrameSetSize(CAS_card[c+12+i],cardWidth,cardHeight)
++            call CAS_CardFace(CAS_card[c+12+i],card,false)
++            call BlzFrameSetVisible(CAS_card[c+12+i],i < IMaxBJ(2,BJ_count[h+1]))
++        endif
++        set own = BJ_owner[t*6+i]
++        set j = (t*6+i)*2
++        call BlzFrameSetVisible(CAS_row[s*6+i],true)
++        if own == 0 then
++            call BlzFrameSetText(CAS_row[s*6+i],"Open")
++        else
++            call BlzFrameSetText(CAS_row[s*6+i],CAS_Name(own))
++            set phase = BJ_SeatTotal(j)
++            if BJ_split[j] then
++                set phase = phase+" / "+BJ_SeatTotal(j+1)
++            endif
++            call BlzFrameSetText(CAS_seatTotal[s*6+i],phase)
++            call BlzFrameSetVisible(CAS_seatTotal[s*6+i],true)
++        endif
++        set i = i+1
++    endloop
++    if BJ_count[h] > 6 or BJ_count[h+1] > 6 or BJ_dealerCount[t] > 6 then
++        call BlzFrameSetPoint(CAS_content[b+6],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,CAS_SafeX(0.032),-0.348)
++        call BlzFrameSetSize(CAS_content[b+6],CAS_SafeW(0.173),0.018)
++        call BlzFrameSetTextAlignment(CAS_content[b+6],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
++        call BlzFrameSetText(CAS_content[b+6],"First 6 cards shown")
++        call BlzFrameSetVisible(CAS_content[b+6],true)
++    endif
++    call BlzFrameSetVisible(CAS_chip[s],true)
++    call PK_ChipArt(CAS_chip[s],BJ_bet[h]+BJ_bet[h+1])
++    call CAS_ShowButton(s,11,BJ_phase[t] == 0 or BJ_phase[t] == 4 or (BJ_phase[t] == 1 and BJ_bet[h] == 0))
++    call CAS_ShowButton(s,12,turn)
++    call CAS_ShowButton(s,13,turn)
++    call CAS_ShowButton(s,14,turn and BJ_count[BJ_turn[t]-1] == 2)
++    call CAS_ShowButton(s,15,turn and not BJ_split[h] and BJ_count[h] == 2 and BJ_Value(BJ_card[h*22]) == BJ_Value(BJ_card[h*22+1]) and (ModuloInteger(BJ_card[h*22],13) == 12) == (ModuloInteger(BJ_card[h*22+1],13) == 12))
++    call CAS_ShowButton(s,16,BJ_phase[t] == 0 or BJ_phase[t] == 4 or BJ_bet[h] == 0)
++    if t == 0 then
++        call CUI_Text(CAS_button[s*64+16],"Solo")
++    else
++        call CUI_Text(CAS_button[s*64+16],"Community")
++    endif
++endfunction
++
++function CAS_BetsView takes integer s returns nothing
++    local integer m = MK_tab[s]
++    local integer o
++    local integer i = 0
++    local integer k = 0
++    local integer b = s*32
++    local integer start = MK_page[s]*6
++    local integer quote
++    local integer volume
++    local integer total = MK_volume[m]
++    local integer tickets = 0
++    local integer invested = 0
++    local integer totalReturn = 0
++    local string label
++    call BlzFrameSetText(CAS_content[b+7],"|cffe7cb88"+MK_Title(m)+"|r  /  "+CUI_Value(I2S(total)+"g"))
++    call BlzFrameSetVisible(CAS_content[b+7],true)
++    call BlzFrameSetText(CAS_content[b+8],"OUTCOME")
++    call BlzFrameSetVisible(CAS_content[b+8],true)
++    call BlzFrameSetText(CAS_content[b+31],"POOL")
++    call BlzFrameSetVisible(CAS_content[b+31],true)
++    call BlzFrameSetPoint(CAS_content[b+6],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,CAS_SafeX(0.443),-0.168)
++    call BlzFrameSetSize(CAS_content[b+6],CAS_SafeW(0.095),0.018)
++    call BlzFrameSetTextAlignment(CAS_content[b+6],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_RIGHT)
++    call BlzFrameSetText(CAS_content[b+6],"ODDS")
++    call BlzFrameSetVisible(CAS_content[b+6],true)
++    set o = 1
++    loop
++        exitwhen o > 12
++        if MK_Valid(m,o) then
++            if k >= start and i < 6 then
++                set volume = MK_pool[m*16+o]
++                set label = MK_Label(m,o)
++                if o == MK_pick[s] then
++                    set label = "|cffe7cb88> "+label+"|r"
++                endif
++                call BlzFrameSetText(CAS_content[b+10+i*3],label)
++                call BlzFrameSetText(CAS_content[b+11+i*3],CUI_Value(I2S(volume)+"g")+" / "+I2S(R2I(I2R(volume)*100.0/I2R(IMaxBJ(1,total))))+"%")
++                set quote = MK_Quote(m,o,0)
++                set label = CUI_Value(CAS_Odds(quote))
++                if m == 2 and MK_baseScored[o] then
++                    set label = "SCORED"
++                elseif MK_done[m] then
++                    set label = "SETTLED"
++                    if m == 2 then
++                        set label = "NO KILL"
++                    elseif MK_winner[m] == o then
++                        set label = "|cffe7cb88WINNER|r"
++                    endif
++                elseif CAS_closed or CAS_seconds >= 130 then
++                    set label = "CLOSED"
++                endif
++                call BlzFrameSetText(CAS_content[b+12+i*3],label)
++                call BlzFrameSetVisible(CAS_content[b+10+i*3],true)
++                call BlzFrameSetVisible(CAS_content[b+11+i*3],true)
++                call BlzFrameSetVisible(CAS_content[b+12+i*3],true)
++                call BlzFrameSetVisible(CAS_track[s*6+i],true)
++                call BlzFrameSetVisible(CAS_bar[s*6+i],volume > 0)
++                call BlzFrameSetSize(CAS_bar[s*6+i],IMaxBJ(1,volume)*CAS_SafeW(0.140)/I2R(IMaxBJ(1,total)),0.003)
++                call CAS_ShowButton(s,26+i,true)
++                call CUI_Text(CAS_button[s*64+26+i],"PICK")
++                if o == MK_pick[s] then
++                    call CUI_Paint(CAS_button[s*64+26+i],5,true)
++                endif
++                set i = i+1
++            endif
++            set k = k+1
++        endif
++        set o = o+1
++    endloop
++    set invested = MK_ownedStake[s*96+m*16+MK_pick[s]]
++    set totalReturn = MK_ownedReturn[s*96+m*16+MK_pick[s]]
++    set label = "PICK AN OUTCOME"
++    if MK_Valid(m,MK_pick[s]) then
++        set quote = MK_Quote(m,MK_pick[s],CAS_amount[s])
++        set label = MK_Label(m,MK_pick[s])+"  "+CUI_Value(CAS_Odds(quote))+"  /  RETURN "+CUI_Value(I2S(CAS_amount[s]*quote/100)+"g")
++        if invested > 0 then
++            if MK_done[m] or (m == 2 and MK_baseScored[MK_pick[s]]) then
++                if m != 2 and MK_winner[m] == 0 then
++                    set totalReturn = invested
++                elseif (m == 2 and not MK_baseScored[MK_pick[s]]) or (m != 2 and MK_winner[m] != MK_pick[s]) then
++                    set totalReturn = 0
++                endif
++                set label = MK_Label(m,MK_pick[s])+"|nSETTLED "+CUI_Value(I2S(invested)+"g")+"  /  RETURN "+CUI_Value(I2S(totalReturn)+"g")
++            else
++                set label = label+"|nLOCKED "+CUI_Value(I2S(invested)+"g")+"  /  RETURN "+CUI_Value(I2S(totalReturn)+"g")
++            endif
++        endif
++    endif
++    call BlzFrameSetText(CAS_content[b+9],label)
++    call BlzFrameSetVisible(CAS_content[b+9],true)
++    loop
++        exitwhen i >= 6
++        call BlzFrameSetVisible(CAS_button[s*64+26+i],false)
++        set i = i+1
++    endloop
++    set i = 20
++    loop
++        exitwhen i > 24
++        call CAS_ShowButton(s,i,true)
++        if i-19 == m then
++            call CUI_Paint(CAS_button[s*64+i],4,true)
++        endif
++        set i = i+1
++    endloop
++    call CAS_ShowButton(s,25,k > 6)
++    call CAS_ShowButton(s,32,MK_IsOpen(m,MK_pick[s]))
++endfunction
++
++function CAS_DuelsView takes integer s returns nothing
++    local integer b = s*32
++    local integer id = DU_incoming[s]
++    local string label = "PICK A PLAYER + WINNER|nEqual stakes. Both must accept."
++    if DU_active[s] > 0 then
++        set id = DU_active[s]
++        set label = "LIVE / POT "+CUI_Value(I2S(DU_stake[id]*2)+"g")+"|n"+CAS_Name(DU_from[id])+": "+MK_Label(5,DU_target[id])+" WINS|n"+CAS_Name(DU_to[id])+": DOES NOT WIN"
++    elseif id > 0 then
++        set label = "|cffe7cb88FROM "+CAS_Name(DU_from[id])+"|r|nThey back "+MK_Label(5,DU_target[id])+" TO WIN.|nYou back DOES NOT WIN / "+CUI_Value(I2S(DU_stake[id])+"g")+"|nPOT "+CUI_Value(I2S(DU_stake[id]*2)+"g")+" / "+CUI_Value(I2S(IMaxBJ(0,DU_expire[id]-CAS_seconds))+"s")
++    elseif DU_outgoing[s] > 0 then
++        set id = DU_outgoing[s]
++        set label = "WAITING / "+CUI_Value(I2S(IMaxBJ(0,DU_expire[id]-CAS_seconds))+"s")+"|n"+CAS_Name(DU_to[id])+"|nYou back "+MK_Label(5,DU_target[id])+" TO WIN|nHELD "+CUI_Value(I2S(DU_stake[id])+"g")
++    endif
++    call BlzFrameSetSize(CAS_content[b+28],0.650,0.115)
++    call BlzFrameSetText(CAS_content[b+28],label)
++    call BlzFrameSetVisible(CAS_content[b+28],true)
++    call BlzFrameSetText(CAS_content[b+29],"VS "+CAS_Name(DU_opponent[s])+"  /  BACK "+MK_Label(5,DU_pick[s]))
++    call BlzFrameSetVisible(CAS_content[b+29],true)
++    call CAS_ShowButton(s,33,DU_active[s] == 0 and DU_outgoing[s] == 0 and PK_Eligible(DU_opponent[s]-1) and MK_Valid(5,DU_pick[s]) and not CAS_ended)
++    call CAS_ShowButton(s,34,DU_active[s] == 0)
++    call CAS_ShowButton(s,35,DU_active[s] == 0)
++    call CAS_ShowButton(s,36,DU_incoming[s] > 0 and DU_active[s] == 0 and not CAS_ended)
++    call CAS_ShowButton(s,37,DU_incoming[s] > 0)
++    call CAS_ShowButton(s,38,DU_outgoing[s] > 0)
++endfunction
++
++function CreditTerms takes integer mode, integer rate, integer period, integer fee returns string
++    if mode == 2 then
++        return CUI_Value(I2S(rate)+"%")+" every "+CUI_Value(I2S(period))+" played min on unpaid principal. Earnings repay automatically."
++    elseif mode == 1 then
++        return CUI_Value(I2S(rate)+"%")+" fixed ("+CUI_Value(I2S(fee)+"g")+"). Repay in one payment."
++    endif
++    return CUI_Value(I2S(fee)+"g")+" fixed fee. Earnings repay automatically."
++endfunction
++
++function CreditBrowse takes integer s, integer step returns nothing
++    local integer id = CreditSelected[s]
++    local integer count = 0
++    loop
++        exitwhen count >= 48
++        set id = ModuloInteger(id-1+step+48,48)+1
++        if CreditOwner[id] != 0 and (CreditOwner[id] == s or CreditTarget[id] == 0 or CreditTarget[id] == s) then
++            set CreditSeen[s] = CreditGeneration[id]
++            set CreditSelected[s] = id
++            return
++        endif
++        set count = count+1
++    endloop
++    set CreditSelected[s] = 0
++endfunction
++
++function CreditView takes integer s returns nothing
++    local integer id = CreditSelected[s]
++    local integer owner = CreditOwner[id]
++    local integer i = 40
++    local string kind = "Lend"
++    local string offer = "No offer selected. Use Next to browse."
++    local string draft
++    if CreditSeen[s] != CreditGeneration[id] then
++        set owner = 0
++    endif
++    if CreditDraftRequest[s] then
++        set kind = "Borrow"
++    endif
++    set draft = kind+" "+CUI_Value(I2S(CAS_amount[s])+"g")+"  /  "+CreditTerms(CreditDraftMode[s],CreditDraftRate[s],CreditDraftPeriod[s],CAS_amount[s]*CreditDraftRate[s]/100)
++    if owner != 0 then
++        set offer = GetPlayerName(Player(owner-1))+" offers "+CUI_Value(I2S(CreditAmount[id])+"g")
++        if CreditRequest[id] then
++            set offer = GetPlayerName(Player(owner-1))+" requests "+CUI_Value(I2S(CreditAmount[id])+"g")
++        endif
++        set offer = offer+"|n"+CreditTerms(CreditOfferMode[id],CreditOfferRate[id],CreditOfferPeriod[id],CreditFee[id])
++    endif
++    call BlzFrameSetSize(CAS_content[s*32+28],0.650,0.062)
++    call BlzFrameSetText(CAS_content[s*32+28],"YOUR TERMS|n"+draft)
++    call BlzFrameSetVisible(CAS_content[s*32+28],true)
++    call BlzFrameSetText(CAS_content[s*32+29],offer)
++    call BlzFrameSetVisible(CAS_content[s*32+29],true)
++    loop
++        exitwhen i > 52
++        call CAS_ShowButton(s,i,true)
++        set i = i+1
++    endloop
++    call CAS_ShowButton(s,48,CreditDraftMode[s] == 2)
++    call CAS_ShowButton(s,51,owner != 0 and (owner == s or not CAS_ended))
++    if owner == s then
++        call CUI_Text(CAS_button[s*64+51],"Cancel offer")
++    else
++        call CUI_Text(CAS_button[s*64+51],"Accept offer")
++    endif
++    call CAS_ShowButton(s,52,LoanPrincipal[s]+LoanFee[s] > 0)
++endfunction
++
++function CAS_Render takes integer s returns nothing
++    local integer i = 0
++    local integer b = s*32
++    local string label = "|cffe7cb88RULES|r"
++    if CAS_root[s] == null then
++        return
++    endif
++    if GetLocalPlayer() == Player(s-1) then
++        call BlzFrameSetVisible(CAS_root[s],CAS_view[s] > 0)
++    endif
++    if CAS_view[s] == 0 then
++        return
++    endif
++    set i = 0
++    loop
++        exitwhen i > 3
++        if i+1 == CAS_view[s] then
++            call CUI_Paint(CAS_button[s*64+i],5,true)
++        else
++            call CUI_Paint(CAS_button[s*64+i],0,true)
++        endif
++        set i = i+1
++    endloop
++    set i = 0
++    loop
++        exitwhen i >= 32
++        if CAS_content[b+i] != null then
++            call BlzFrameSetVisible(CAS_content[b+i],false)
++        endif
++        set i = i+1
++    endloop
++    set i = 0
++    loop
++        exitwhen i >= 18
++        call BlzFrameSetVisible(CAS_card[s*18+i],false)
++        set i = i+1
++    endloop
++    set i = 0
++    loop
++        exitwhen i >= 6
++        call BlzFrameSetVisible(CAS_seatTotal[s*6+i],false)
++        call BlzFrameSetVisible(CAS_row[s*6+i],false)
++        call BlzFrameSetVisible(CAS_track[s*6+i],false)
++        call BlzFrameSetVisible(CAS_bar[s*6+i],false)
++        set i = i+1
++    endloop
++    if CasinoLastView[s] != CAS_view[s] then
++    set i = 11
++    loop
++        exitwhen i >= 57
++        if CAS_button[s*64+i] != null then
++            call BlzFrameSetVisible(CAS_button[s*64+i],false)
++        endif
++        set i = i+1
++    endloop
++        set CasinoLastView[s] = CAS_view[s]
++    endif
++    call BlzFrameSetVisible(CAS_felt[s],CAS_view[s] == 1)
++    call BlzFrameSetVisible(CAS_chip[s],false)
++    set i = 6
++    loop
++        exitwhen i > 10
++        call BlzFrameSetVisible(CAS_button[s*64+i],CAS_view[s] != 5)
++        set i = i+1
++    endloop
++    if CAS_view[s] == 1 then
++        set label = "|cffe7cb88BLACKJACK|r"
++        call CAS_BlackjackView(s)
++    elseif CAS_view[s] == 2 then
++        set label = "|cffe7cb88MATCH BETS|r"
++        call CAS_BetsView(s)
++    elseif CAS_view[s] == 3 then
++        set label = "|cffe7cb88CHALLENGES|r"
++        call CAS_DuelsView(s)
++    elseif CAS_view[s] == 5 then
++        set label = "|cffe7cb88CREDIT|r"
++        call CreditView(s)
++    else
++        call BlzFrameSetVisible(CAS_content[b+30],true)
++        call BlzFrameSetText(CAS_content[b+30],"|cffe7cb88BLACKJACK|r|nOpening wager 10-100g / 2 decks / S17 / blackjack 3:2 / win 1:1 / ties push|nDouble first 2 cards. Split once. Split aces: 1 card.|nSplit 21 pays 1:1. Timeout stands. No insurance/surrender.|n|n|cffe7cb88MATCH BETS|r|nClose 2:10 / warning 2:00 / accepted odds stay locked|nBase kill: any enemy base. No first event or draw: refund.|n|n|cffe7cb88CHALLENGES|r|nEqual stakes. Accept to back the opposite result.|n|n|cffe7cb88GOLD|r|nStakes use locally saved account gold. Open bets are at risk if you quit.")
++    endif
++    call BlzFrameSetText(CAS_title[s],label)
++    if CAS_view[s] == 5 then
++        call CUI_Paint(CAS_button[s*64+57],5,true)
++    else
++        call CUI_Paint(CAS_button[s*64+57],0,true)
++    endif
++    set label = "LOADING GOLD"
++    if CAS_ready[s] then
++        set label = "ACCOUNT GOLD "+CUI_Value(I2S(CAS_gold[s]))
++        if CAS_escrow[s] > 0 then
++            set label = label+"  /  HELD "+CUI_Value(I2S(CAS_escrow[s]))
++        endif
++        if CAS_returnDue[s]+CAS_profitDue[s] > 0 then
++            set label = label+"  /  CREDIT "+CUI_Value(I2S(CAS_returnDue[s]+CAS_profitDue[s]))
++        endif
++    endif
++    call BlzFrameSetText(CAS_balance[s],label)
++    set label = "BET "+CUI_Value(I2S(CAS_amount[s])+"g")
++    if CAS_ended then
++        set label = label+"  /  SETTLED"
++    elseif CAS_view[s] == 2 and (CAS_closed or CAS_seconds >= 130) then
++        set label = label+"  /  BETS CLOSED"
++    elseif CAS_view[s] == 2 then
++        set label = label+"  /  CLOSE "+CUI_Value(I2S(130-CAS_seconds)+"s")
++    endif
++    if CAS_view[s] == 5 then
++        set label = "Escrow: "+CUI_Value(I2S(CreditHold[s])+"g")+"     Your debt: "+CUI_Value(I2S(LoanPrincipal[s]+LoanFee[s])+"g")
++    endif
++    call BlzFrameSetText(CAS_status[s],label)
++    call BlzFrameSetText(CAS_footer[s],CAS_note[s])
++endfunction
++
++function CAS_CycleTarget takes integer current returns integer
++    local integer i = 0
++    loop
++        exitwhen i >= 12
++        set current = ModuloInteger(current,12)+1
++        if MK_Valid(5,current) then
++            return current
++        endif
++        set i = i+1
++    endloop
++    return 0
++endfunction
++
++function CasinoStakeMax takes integer s returns integer
++    if CAS_view[s] == 1 then
++        return 100
++    elseif PK_Started[s-1] and not PK_Hidden[s-1] then
++        return 300
++    endif
++    return 10000
++endfunction
++
++function CAS_Click takes nothing returns nothing
++    local integer s = GetPlayerId(GetTriggerPlayer())+1
++    local framehandle f = BlzGetTriggerFrame()
++    local integer id = 0
++    local integer i
++    local integer count
++    local integer target
++    if not PK_Eligible(s-1) then
++        return
++    endif
++    loop
++        exitwhen id >= 64 or CAS_button[s*64+id] == f
++        set id = id+1
++    endloop
++    if f == CAS_launch[s] then
++        set CAS_view[s] = 1
++    elseif id <= 3 then
++        set CAS_view[s] = id+1
++    elseif id == 4 then
++        set CAS_view[s] = 0
++    elseif id == 5 then
++        if PK_Started[s-1] then
++            set CAS_view[s] = 0
++            set CAS_amount[s] = IMinBJ(300,CAS_amount[s])
++            set PK_Hidden[s-1] = false
++            call PK_Render(s-1)
++        else
++            set CAS_note[s] = "Poker practice is available in custom observer slots."
++        endif
++    elseif id == 57 then
++        set CAS_view[s] = 5
++        call CreditBrowse(s,1)
++    elseif id >= 40 and id <= 52 and CAS_view[s] == 5 then
++        if id == 40 then
++            set CreditDraftRequest[s] = not CreditDraftRequest[s]
++        elseif id == 41 then
++            set CAS_amount[s] = IMaxBJ(10,CAS_amount[s]-10)
++        elseif id == 42 then
++            set CAS_amount[s] = IMinBJ(10000,CAS_amount[s]+10)
++        elseif id == 43 then
++            set CAS_amount[s] = IMinBJ(10000,CAS_amount[s]+100)
++        elseif id == 44 then
++            set CreditDraftRate[s] = IMaxBJ(0,CreditDraftRate[s]-1)
++        elseif id == 45 then
++            set CreditDraftRate[s] = IMinBJ(100,CreditDraftRate[s]+1)
++        elseif id == 46 then
++            set CreditDraftMode[s] = 3-CreditDraftMode[s]
++        elseif id == 47 then
++            call CreditPost(s,CreditDraftRequest[s],0,CAS_amount[s],CreditDraftMode[s],CreditDraftRate[s],CreditDraftPeriod[s],CAS_amount[s]*CreditDraftRate[s]/100*(2-CreditDraftMode[s]))
++        elseif id == 48 then
++            set CreditDraftPeriod[s] = ModuloInteger(CreditDraftPeriod[s],10)+1
++        elseif id == 49 then
++            call CreditBrowse(s,-1)
++        elseif id == 50 then
++            call CreditBrowse(s,1)
++        elseif id == 51 then
++            set i = CreditSelected[s]
++            if CreditSeen[s] != CreditGeneration[i] then
++                call CreditTell(s,"Offer changed. Browse again to review the new terms.")
++            elseif CreditOwner[i] == s then
++                call CreditCancel(i)
++            elseif CreditOwner[i] != 0 then
++                call CreditAccept(s,i)
++            endif
++        else
++            call CreditPay(s)
++        endif
++    elseif id == 6 then
++        set CAS_amount[s] = IMaxBJ(10,CAS_amount[s]-10)
++    elseif id == 7 then
++        set CAS_amount[s] = IMinBJ(CasinoStakeMax(s),CAS_amount[s]+10)
++    elseif id == 8 then
++        set CAS_amount[s] = IMinBJ(CasinoStakeMax(s),CAS_amount[s]+50)
++    elseif id == 9 then
++        set CAS_amount[s] = IMinBJ(CasinoStakeMax(s),CAS_amount[s]*2)
++    elseif id == 10 then
++        set CAS_amount[s] = IMaxBJ(10,CAS_amount[s]/4*2)
++    elseif id == 11 then
++        call BJ_Wager(s)
++    elseif id >= 12 and id <= 15 then
++        call BJ_Action(s,id-11)
++    elseif id == 16 then
++        call BJ_Move(s,BJ_table[s] != 0)
++    elseif id >= 20 and id <= 24 then
++        set MK_tab[s] = id-19
++        set MK_page[s] = 0
++        set MK_pick[s] = 0
++    elseif id == 25 then
++        set MK_page[s] = 1-MK_page[s]
++    elseif id >= 26 and id <= 31 then
++        set i = 1
++        set count = 0
++        set target = MK_page[s]*6+id-26
++        loop
++            exitwhen i > 12
++            if MK_Valid(MK_tab[s],i) then
++                if count == target then
++                    set MK_pick[s] = i
++                endif
++                set count = count+1
++            endif
++            set i = i+1
++        endloop
++    elseif id == 32 then
++        call MK_Buy(s,MK_tab[s],MK_pick[s])
++    elseif id == 33 then
++        call DU_Offer(s)
++    elseif id == 34 then
++        set i = 0
++        loop
++            exitwhen i >= 24
++            set DU_opponent[s] = ModuloInteger(DU_opponent[s],24)+1
++            exitwhen DU_opponent[s] != s and PK_Eligible(DU_opponent[s]-1)
++            set i = i+1
++        endloop
++    elseif id == 35 then
++        set DU_pick[s] = CAS_CycleTarget(DU_pick[s])
++    elseif id == 36 then
++        call DU_Accept(s)
++    elseif id == 37 then
++        call DU_Cancel(DU_incoming[s])
++    elseif id == 38 then
++        call DU_Cancel(DU_outgoing[s])
++    endif
++    if CAS_view[s] == 1 then
++        set CAS_amount[s] = IMinBJ(100,CAS_amount[s])
++    endif
++    if CAS_view[s] > 0 and PK_Started[s-1] then
++        set PK_Hidden[s-1] = true
++        call PK_Render(s-1)
++    endif
++    call CAS_Render(s)
++    set f = null
++endfunction
++
++function CasinoFromStats takes nothing returns nothing
++    local integer s = CasinoLauncherSlot
++    if not PK_Eligible(s-1) then
++        return
++    endif
++    set CAS_view[s] = 1
++    set CAS_amount[s] = IMinBJ(100,CAS_amount[s])
++    if CAS_root[s] == null then
++        return
++    endif
++    if PK_Started[s-1] then
++        set PK_Hidden[s-1] = true
++        call PK_Render(s-1)
++    endif
++    if GetLocalPlayer() == Player(s-1) then
++        set DPS_Open[s-1] = false
++        call BlzFrameSetVisible(DPS_Panel,false)
++    endif
++    call CAS_Render(s)
++endfunction
++
++function CAS_Chat takes nothing returns nothing
++    local integer s = GetPlayerId(GetTriggerPlayer())+1
++    local string line = GetEventPlayerChatString()
++    local string amount
++    local integer value
++    if not PK_Eligible(s-1) then
++        return
++    endif
++    if line == "-casino" or line == "-blackjack" then
++        set CAS_view[s] = 1
++    elseif line == "-bets" then
++        set CAS_view[s] = 2
++    elseif line == "-challenges" then
++        set CAS_view[s] = 3
++    elseif SubString(line,0,7) == "-stake " then
++        set amount = SubString(line,7,StringLength(line))
++        set value = S2I(amount)
++        if I2S(value) == amount and value >= 10 and value <= CasinoStakeMax(s) and ModuloInteger(value,2) == 0 then
++            set CAS_amount[s] = value
++            set CAS_note[s] = "Wager set to "+I2S(value)+" gold."
++        else
++            set CAS_note[s] = "Use -stake EVEN_AMOUNT, from 10 to "+I2S(CasinoStakeMax(s))+"."
++        endif
++    endif
++    if CAS_view[s] == 1 then
++        set CAS_amount[s] = IMinBJ(100,CAS_amount[s])
++    endif
++    if CAS_view[s] > 0 and PK_Started[s-1] then
++        set PK_Hidden[s-1] = true
++        call PK_Render(s-1)
++    endif
++    if PK_Started[s-1] and not PK_Hidden[s-1] then
++        call PK_Render(s-1)
++        call DisplayTextToPlayer(Player(s-1),0,0,CAS_note[s])
++    endif
++    call CAS_Render(s)
++endfunction
++
++function CAS_Tick takes nothing returns nothing
++    local integer s = 1
++    local integer id = 1
++    set CAS_seconds = R2I(TimerGetElapsed(FF_gameTimer))
++    if not CAS_closed then
++        call MK_Refresh()
++    endif
++    if CAS_seconds >= 120 and not CAS_warned then
++        set CAS_warned = true
++        call CAS_Announce("|cffe7cb88BETTING LAST CALL|r: all match markets close at 2:10. Open -bets for live odds.")
++    endif
++    if CAS_seconds >= 130 and not CAS_closed then
++        set CAS_closed = true
++        call CAS_Announce("|cffe7cb88MATCH BETTING CLOSED|r. Accepted odds are locked. Player challenges remain available.")
++    endif
++    call BJ_Tick()
++    loop
++        exitwhen id > DU_n
++        if DU_state[id] == 1 and (CAS_seconds >= DU_expire[id] or not PK_Eligible(DU_from[id]-1) or not PK_Eligible(DU_to[id]-1)) then
++            call DU_Cancel(id)
++        endif
++        set id = id+1
++    endloop
++    loop
++        exitwhen s > 24
++        if not PK_Eligible(s-1) then
++            set CAS_view[s] = 0
++            if BJ_table[s] == 0 and BJ_owner[BJ_seat[s]] == s then
++                if BJ_bet[BJ_seat[s]*2] == 0 or BJ_state[BJ_seat[s]*2] == 5 then
++                    call BJ_Move(s,false)
++                endif
++            endif
++        endif
++        call CreditTick(s)
++        if CAS_ready[s] then
++            call CAS_Flush(s)
++        endif
++        if CAS_root[s] != null and CAS_User(s) then
++            if GetLocalPlayer() == Player(s-1) then
++                if CatalogCasino != null then
++                    call BlzFrameSetVisible(CatalogCasino,CatalogKind == 0 and PK_Eligible(s-1))
++                endif
++                call BlzFrameSetVisible(CAS_launch[s],PK_Eligible(s-1))
++            endif
++            call CAS_Render(s)
++        endif
++        set s = s+1
++    endloop
++endfunction
++
++function CAS_BuildPlayer takes integer s returns nothing
++    local integer i = 0
++    local integer b = s*32
++    local integer c = s*18
++    local real y
++    local trigger click = CreateTrigger()
++    set CreditDraftMode[s] = 1
++    set CreditDraftRate[s] = 5
++    set CreditDraftPeriod[s] = 5
++    set CAS_amount[s] = 50
++    set CAS_note[s] = "Exact bet: -stake 250"
++    set MK_tab[s] = 1
++    set BJ_table[s] = s
++    set BJ_seat[s] = s*6
++    set BJ_owner[s*6] = s
++    set BJ_owner[s*6+1] = -1
++    set BJ_owner[s*6+2] = -1
++    call BJ_Shuffle(s)
++    set CAS_root[s] = BlzCreateFrameByType("BACKDROP","CasinoTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",s)
++    call BlzFrameSetSize(CAS_root[s],0.70,0.48)
++    call BlzFrameSetAbsPoint(CAS_root[s],FRAMEPOINT_TOPLEFT,0.05,0.57)
++    call BlzFrameSetTexture(CAS_root[s],"CasinoUI\\panel.blp",0,true)
++    call BlzFrameSetLevel(CAS_root[s],60)
++    call BlzFrameSetVisible(CAS_root[s],false)
++    set CAS_launch[s] = BlzCreateFrame("ScriptDialogButton",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),0,s)
++    call BlzFrameSetLevel(CAS_launch[s],20)
++    call BlzFrameSetSize(CAS_launch[s],0.065,0.025)
++    call BlzFrameSetAbsPoint(CAS_launch[s],FRAMEPOINT_TOPRIGHT,0.790,0.505)
++    call BlzFrameSetText(CAS_launch[s],"Casino")
++    call BlzFrameSetVisible(CAS_launch[s],GetLocalPlayer() == Player(s-1) and PK_Eligible(s-1))
++    call BlzTriggerRegisterFrameEvent(click,CAS_launch[s],FRAMEEVENT_CONTROL_CLICK)
++    set CAS_felt[s] = CAS_Texture(s,"PokerUI\\table.blp",0.208,0.106,0.474,0.252)
++    set CAS_title[s] = CAS_Label(s,0.025,0.016,0.53,0.027,1.15)
++    set CAS_balance[s] = CAS_Label(s,0.025,0.041,0.65,0.026,1.13)
++    set CAS_status[s] = CAS_Label(s,0.025,0.366,0.65,0.024,1.08)
++    set CAS_footer[s] = CAS_Label(s,0.025,0.455,0.65,0.024,0.92)
++    call CAS_Button(s,0,click,0.025,0.073,0.105,"Blackjack")
++    call CAS_Button(s,1,click,0.134,0.073,0.105,"Match bets")
++    call CAS_Button(s,2,click,0.243,0.073,0.105,"Duels")
++    call CAS_Button(s,3,click,0.352,0.073,0.105,"Rules")
++    call CAS_Button(s,4,click,0.575,0.014,0.10,"Hide")
++    call CAS_Button(s,5,click,0.461,0.073,0.105,"Poker")
++    call CAS_Button(s,57,click,0.570,0.073,0.105,"Credit")
++    call CAS_Button(s,40,click,0.025,0.182,0.145,"Lend / Borrow")
++    call BlzFrameSetVisible(CAS_button[s*64+40],false)
++    call CAS_Button(s,41,click,0.176,0.182,0.091,"-10g")
++    call BlzFrameSetVisible(CAS_button[s*64+41],false)
++    call CAS_Button(s,42,click,0.273,0.182,0.091,"+10g")
++    call BlzFrameSetVisible(CAS_button[s*64+42],false)
++    call CAS_Button(s,43,click,0.370,0.182,0.095,"+100g")
++    call BlzFrameSetVisible(CAS_button[s*64+43],false)
++    call CAS_Button(s,44,click,0.471,0.182,0.099,"-1%")
++    call BlzFrameSetVisible(CAS_button[s*64+44],false)
++    call CAS_Button(s,45,click,0.576,0.182,0.099,"+1%")
++    call BlzFrameSetVisible(CAS_button[s*64+45],false)
++    call CAS_Button(s,46,click,0.025,0.215,0.207,"Repay type")
++    call BlzFrameSetVisible(CAS_button[s*64+46],false)
++    call CAS_Button(s,47,click,0.456,0.215,0.219,"Post offer")
++    call BlzFrameSetVisible(CAS_button[s*64+47],false)
++    call CAS_Button(s,48,click,0.238,0.215,0.212,"Interval +")
++    call BlzFrameSetVisible(CAS_button[s*64+48],false)
++    call CAS_Button(s,49,click,0.025,0.310,0.158,"Previous")
++    call BlzFrameSetVisible(CAS_button[s*64+49],false)
++    call CAS_Button(s,50,click,0.189,0.310,0.158,"Next")
++    call BlzFrameSetVisible(CAS_button[s*64+50],false)
++    call CAS_Button(s,51,click,0.353,0.310,0.158,"Accept offer")
++    call BlzFrameSetVisible(CAS_button[s*64+51],false)
++    call CAS_Button(s,52,click,0.517,0.310,0.158,"Repay debt")
++    call BlzFrameSetVisible(CAS_button[s*64+52],false)
++    call CAS_Button(s,6,click,0.025,0.394,0.075,"-10")
++    call CAS_Button(s,7,click,0.105,0.394,0.075,"+10")
++    call CAS_Button(s,8,click,0.185,0.394,0.075,"+50")
++    call CAS_Button(s,9,click,0.265,0.394,0.075,"2x")
++    call CAS_Button(s,10,click,0.345,0.394,0.075,"Half")
++    call CAS_Button(s,11,click,0.43,0.394,0.245,"BET")
++    call CAS_Button(s,12,click,0.025,0.423,0.10,"Hit")
++    call CAS_Button(s,13,click,0.13,0.423,0.10,"Stand")
++    call CAS_Button(s,14,click,0.235,0.423,0.12,"Double")
++    call CAS_Button(s,15,click,0.36,0.423,0.10,"Split")
++    call CAS_Button(s,16,click,0.465,0.423,0.21,"Community")
++    call CAS_Button(s,20,click,0.025,0.110,0.125,"Hero kill")
++    call CAS_Button(s,21,click,0.155,0.110,0.125,"Base kill")
++    call CAS_Button(s,22,click,0.285,0.110,0.125,"Base lost")
++    call CAS_Button(s,23,click,0.415,0.110,0.125,"Level 16")
++    call CAS_Button(s,24,click,0.545,0.110,0.13,"Win match")
++    call CAS_Button(s,25,click,0.555,0.336,0.12,"MORE")
++    call CAS_Button(s,32,click,0.43,0.394,0.245,"BET")
++    call CAS_Button(s,33,click,0.43,0.394,0.245,"CHALLENGE")
++    call CAS_Button(s,34,click,0.025,0.298,0.212,"Opponent >")
++    call CAS_Button(s,35,click,0.244,0.298,0.212,"Winner >")
++    call CAS_Button(s,36,click,0.025,0.333,0.212,"Accept")
++    call CAS_Button(s,37,click,0.244,0.333,0.212,"Decline")
++    call CAS_Button(s,38,click,0.463,0.333,0.212,"Cancel")
++    set CAS_content[b] = CAS_Label(s,0.032,0.111,0.174,0.022,0.92)
++    set CAS_content[b+1] = CAS_Label(s,0.032,0.137,0.174,0.038,1.01)
++    set CAS_content[b+2] = CAS_Label(s,0.215,0.111,0.460,0.025,1.18)
++    set CAS_content[b+3] = CAS_Label(s,0.215,0.224,0.460,0.040,1.12)
++    set CAS_content[b+4] = CAS_Label(s,0.032,0.300,0.174,0.019,0.88)
++    set CAS_content[b+5] = CAS_Label(s,0.445,0.224,0.230,0.040,1.12)
++    set CAS_content[b+6] = CAS_Label(s,0.19,0.252,0.48,0.020,0.80)
++    set CAS_content[b+7] = CAS_Label(s,0.025,0.143,0.65,0.021,0.95)
++    set CAS_content[b+8] = CAS_Label(s,0.032,0.168,0.248,0.018,0.88)
++    set CAS_content[b+9] = CAS_Label(s,0.025,0.330,0.52,0.035,0.85)
++    set CAS_content[b+28] = CAS_Label(s,0.025,0.115,0.650,0.115,1.0)
++    set CAS_content[b+29] = CAS_Label(s,0.025,0.246,0.650,0.050,1.0)
++    set CAS_content[b+30] = CAS_Label(s,0.025,0.112,0.65,0.25,0.88)
++    // Pool heading and values share their right edge.
++    set CAS_content[b+31] = CAS_Label(s,0.290,0.168,0.140,0.018,0.88)
++    call BlzFrameSetTextAlignment(CAS_content[b+2],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_CENTER)
++    call BlzFrameSetTextAlignment(CAS_content[b+3],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_CENTER)
++    call BlzFrameSetTextAlignment(CAS_content[b+5],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_CENTER)
++    call BlzFrameSetTextAlignment(CAS_content[b+31],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_RIGHT)
++    loop
++        exitwhen i >= 6
++        set y = 0.190+I2R(i)*0.023
++        set CAS_content[b+10+i*3] = CAS_Label(s,0.032,y,0.248,0.021,0.96)
++        set CAS_content[b+11+i*3] = CAS_Label(s,0.290,y,0.140,0.018,0.98)
++        set CAS_content[b+12+i*3] = CAS_Label(s,0.443,y,0.095,0.021,1.09)
++        call BlzFrameSetTextAlignment(CAS_content[b+11+i*3],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_RIGHT)
++        call BlzFrameSetTextAlignment(CAS_content[b+12+i*3],TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_RIGHT)
++        call BlzFrameSetTextAlignment(CAS_content[b+10+i*3],TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_LEFT)
++        set CAS_track[s*6+i] = CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CAS_SafeX(0.290),y+0.018,CAS_SafeW(0.140),0.003)
++        call BlzFrameSetVertexColor(CAS_track[s*6+i],BlzConvertColor(255,30,55,49))
++        set CAS_bar[s*6+i] = CAS_Texture(s,"UI\\Widgets\\EscMenu\\Human\\blank-background.blp",CAS_SafeX(0.290),y+0.018,CAS_SafeW(0.140),0.003)
++        call BlzFrameSetVertexColor(CAS_bar[s*6+i],BlzConvertColor(255,214,184,106))
++        call CAS_Button(s,26+i,click,0.555,y-0.003,0.12,"Select")
++        call BlzFrameSetSize(CAS_button[s*64+26+i],CAS_SafeW(0.12),0.023)
++        set CAS_row[s*6+i] = CAS_Label(s,0.032,0.179+I2R(i)*0.019,0.123,0.018,0.90)
++        set CAS_seatTotal[s*6+i] = CAS_Label(s,0.159,0.179+I2R(i)*0.019,0.046,0.018,0.98)
++        call BlzFrameSetTextAlignment(CAS_seatTotal[s*6+i],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_RIGHT)
++        set CAS_card[c+i] = CAS_Texture(s,"PokerUI\\empty.blp",0.195+I2R(i)*0.067,0.178,0.054,0.060)
++        set CAS_card[c+6+i] = CAS_Texture(s,"PokerUI\\empty.blp",0.205+I2R(i)*0.028,0.274,0.050,0.072)
++        set CAS_card[c+12+i] = CAS_Texture(s,"PokerUI\\empty.blp",0.430+I2R(i)*0.028,0.274,0.050,0.060)
++        set i = i+1
++    endloop
++    set CAS_chip[s] = CAS_Texture(s,"PokerUI\\chips1.blp",0.032,0.321,0.060,0.025)
++    call TriggerAddAction(click,function CAS_Click)
++    call CAS_Render(s)
++    if PK_Eligible(s-1) then
++        call DisplayTimedTextToPlayer(Player(s-1),0,0,15,"Casino ready: -blackjack / -bets / -challenges. Account gold wagers. Open Rules for table details.")
++    endif
++    set click = null
++endfunction
++
++function CAS_BuildNext takes nothing returns nothing
++    set CAS_buildSlot = CAS_buildSlot+1
++    if CAS_User(CAS_buildSlot) then
++        call CAS_BuildPlayer(CAS_buildSlot)
++    endif
++    if CAS_buildSlot >= 24 then
++        call DestroyTimer(GetExpiredTimer())
++    endif
++endfunction
++
++function CAS_Init takes nothing returns nothing
++    local trigger loans = CreateTrigger()
++    local trigger chat = CreateTrigger()
++    local trigger death = CreateTrigger()
++    local trigger level = CreateTrigger()
++    local integer p = 0
++    set CAS_seed = GetRandomInt(1,2147483646)
++    set CasinoOpen = CreateTrigger()
++    call TriggerAddAction(CasinoOpen,function CasinoFromStats)
++    set CAS_baseEvent = CreateTrigger()
++    set CAS_matchEvent = CreateTrigger()
++    set MK_payTimer = CreateTimer()
++    call TriggerAddAction(CAS_baseEvent,function MK_BaseDeath)
++    call TriggerAddAction(CAS_matchEvent,function CAS_EndMatch)
++    loop
++        exitwhen p >= 24
++        call TriggerRegisterPlayerChatEvent(loans,Player(p),"-loan ",false)
++        call TriggerRegisterPlayerChatEvent(loans,Player(p),"-accept",true)
++        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-casino",true)
++        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-blackjack",true)
++        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-bets",true)
++        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-challenges",true)
++        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-stake ",false)
++        set p = p+1
++    endloop
++    call TriggerRegisterAnyUnitEventBJ(death,EVENT_PLAYER_UNIT_DEATH)
++    call TriggerRegisterAnyUnitEventBJ(level,EVENT_PLAYER_HERO_LEVEL)
++    call TriggerAddAction(loans,function FGA_OnCommand)
++    set loans = null
++    call TriggerAddAction(chat,function CAS_Chat)
++    call TriggerAddAction(death,function MK_HeroDeath)
++    call TriggerAddAction(level,function MK_Level)
++    call BJ_Shuffle(0)
++    call TimerStart(CreateTimer(),0.20,true,function CAS_BuildNext)
++    call TimerStart(CreateTimer(),1.00,true,function CAS_Tick)
++    set chat = null
++    set death = null
++    set level = null
++endfunction
++
++
+ function InitTrig_FF_Runtime takes nothing returns nothing
++    local integer loanSlot = 1
++    set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
++    set WalletAccount = GetPlayerName(GetLocalPlayer())
++    loop
++        exitwhen loanSlot > 24
++        set LoanIdentity[loanSlot] = StringHash(GetPlayerName(Player(loanSlot-1)))
++        set loanSlot = loanSlot+1
++    endloop
+     call InitTrig_Footy_Bounty_Increase_Delay()
+     call InitTrig_Unit_Experience_System()
+     call InitTrig_Foot_Exp_system()
+@@ -66518,6 +68766,8 @@
+     call FF_Init()
+     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before FF_Editor_RunInitialization")
+     call FF_Editor_RunInitialization()
++    call PK_Init()
++    call CAS_Init()
+     call DPS_Init()
+     call FFLoadTrace_Mark("InitTrig_FF_Runtime: before CreateUnit")
+     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'HOr1', GetRectCenterX(gg_rct_EXILE), GetRectCenterY(gg_rct_EXILE), 270.0)
+@@ -66543,6 +68793,7 @@
+     call TimerStart(CreateTimer(), 2.00, false, function FFLoadTrace_Ready)
+     call ExecuteFunc("MF_InitHeroPolicy")
+     call ExecuteFunc("VG_Init")
++    call ExecuteFunc("FF_InitDebugTwistedFate")
+ endfunction
+ 
+ 
+@@ -67618,7 +69869,6 @@
+ endfunction
+ 
+ function main takes nothing returns nothing
+-    set WalletAccount = GetPlayerName(GetLocalPlayer())
+     call FFLoadTrace_Mark("main: before SetCameraBounds")
+     call SetCameraBounds(- 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), - 3328.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3072.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 3328.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), - 3584.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+     call FFLoadTrace_Mark("main: before SetDayNightModels")
+@@ -67650,16 +69900,14 @@
+     call FFLoadTrace_Mark("main: before InitGlobals")
+     call InitGlobals()
+     call FFLoadTrace_Mark("main: before InitCustomTriggers")
+-    set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
+     call InitCustomTriggers()
+-    call FF_InitDebugTwistedFate()
+ 
+     call FFLoadTrace_Mark("main: completed")
+ 
+ endfunction
+ 
+ function config takes nothing returns nothing
+-    call SetMapName("Reforged Footmen Frenzy v7.9.9X-rc20")
++    call SetMapName("Reforged Footmen Frenzy v7.9.9X-rc21")
+     call SetMapDescription("TRIGSTR_3435")
+     call SetPlayers(24)
+     call SetTeams(24)
