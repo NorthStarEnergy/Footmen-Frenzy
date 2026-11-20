@@ -6,9 +6,9 @@ The curated public wiki is in [`wiki/`](wiki/README.md). Build its self-containe
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | [RC56 Guardian Pylon](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc56%20Guardian%20Pylon.w3x) | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | [RC27 Guardian Pylon](projects/solo/release/Solo%20Foots%201.8-RC27%20Guardian%20Pylon.w3x) | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | [v96 Guardian Pylon](projects/ffa/release/FFA%20Foots%20v96%20Guardian%20Pylon.w3x) | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC57 Witch Doctor Wards](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc57%20Witch%20Doctor%20Wards.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC28 Witch Doctor Wards](projects/solo/release/Solo%20Foots%201.8-RC28%20Witch%20Doctor%20Wards.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v97 Witch Doctor Wards](projects/ffa/release/FFA%20Foots%20v97%20Witch%20Doctor%20Wards.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 
