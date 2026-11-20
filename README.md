@@ -8,9 +8,9 @@ Three active Warcraft III map projects, shared build/install tools, and developm
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | [RC54 Hero Rotation](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc54%20Hero%20Rotation.w3x) | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | [RC25 Hero Rotation](projects/solo/release/Solo%20Foots%201.8-RC25%20Hero%20Rotation.w3x) | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | [v94 Hero Rotation](projects/ffa/release/FFA%20Foots%20v94%20Hero%20Rotation.w3x) | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC56 Guardian Pylon](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc56%20Guardian%20Pylon.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC27 Guardian Pylon](projects/solo/release/Solo%20Foots%201.8-RC27%20Guardian%20Pylon.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v96 Guardian Pylon](projects/ffa/release/FFA%20Foots%20v96%20Guardian%20Pylon.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 
