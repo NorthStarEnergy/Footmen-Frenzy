@@ -6,9 +6,9 @@ The curated public wiki is in [`wiki/`](wiki/README.md). Build its self-containe
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | [RC53 Tavern Page](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc53%20Tavern%20Page.w3x) | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | [RC24 Tavern Page](projects/solo/release/Solo%20Foots%201.8-RC24%20Tavern%20Page.w3x) | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | [v93 Tavern Page](projects/ffa/release/FFA%20Foots%20v93%20Tavern%20Page.w3x) | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC54 Hero Rotation](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc54%20Hero%20Rotation.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC25 Hero Rotation](projects/solo/release/Solo%20Foots%201.8-RC25%20Hero%20Rotation.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v94 Hero Rotation](projects/ffa/release/FFA%20Foots%20v94%20Hero%20Rotation.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 
@@ -52,3 +52,5 @@ The first command checks release hashes, required sources, and Python tool synta
 Imported November 5, 2026 from the existing Footmen Frenzy and Solo working folders. All four release checksums match the installed current maps. Original working folders remain as recovery copies. Generated intermediate maps, downloaded runtimes, caches, old binary archives, unrelated NorthStar/SCADA files, and the unrelated source-folder Git history were not uploaded. Current imported assets are preserved in the baseline maps and extracted source; older binary versions remain in the original local archives. See `development/migration-manifest.json` for the transferred development files.
 
 No new license is asserted over Warcraft III or inherited third-party models, textures, sounds, or scripts. Existing asset ownership and permissions continue to apply.
+
+Info opens match stats for every player. Select **Hotkeys** inside Info to edit spell and item bindings. Shelved heroes, casino, bets, minigames, profiles and skins are in [RJE Development](RJE%20Development/).
