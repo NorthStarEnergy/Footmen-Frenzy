@@ -3341,6 +3341,7 @@ constant real    TFP_FFDP_RIDE_SPEED  = 1400.0 // ally travel along the chain, u
 constant real    TFP_FFDP_RIDE_MAXTIME= 4.0    // hard stop on a ride that cannot converge
 constant real    TFP_FFDP_GRAB_RADIUS = 130.0  // how close an ally must be to be offered the grab
 constant real    TFP_FFDP_SHIELD_AOE  = 130.0  // allies shielded where the lantern lands
+constant real GL_PYLON_RADIUS = 162.5
 constant real    TFP_FFDP_LEASH       = 1500.0 // caster-to-lantern break distance
 constant real    TFP_FFDP_REFRESH     = 0.03   // how often grab abilities are handed out / taken back
 constant real    TFP_FFDP_ALIVE       = 0.405  // life above this == alive
