@@ -17,6 +17,14 @@ globals
     framehandle DPS_Panel = null
     framehandle DPS_Table
     framehandle DPS_ProfileText
+    framehandle FFPoolPanel
+    framehandle FFPoolTitle
+    framehandle FFPoolRecipient
+    framehandle FFPoolReserveButton
+    framehandle FFPoolCloseButton
+    boolean array FFPoolOpen
+    integer array FFPoolTarget
+    integer array FFPoolReserve
     framehandle DPS_PageButton
     boolean DPS_Personal = false
     boolean DPS_ProfileLoaded = false
@@ -46,6 +54,7 @@ globals
     framehandle CatalogBack
     framehandle CatalogSkins
     framehandle CatalogCasino
+    framehandle array BJ_wagerLabel
     integer CatalogKind = 0
     integer CatalogUnitIndex = 0
     integer CatalogVariant = 0
@@ -3615,19 +3624,9 @@ integer sf_page_target_type=0
     integer array PK_Stack
     integer array PK_Paid
     integer array PK_Total
-    integer array PK_Street
-    integer array PK_Turn
-    integer array PK_Dealer
-    integer array PK_Hand
-    integer array PK_LastRaise
-    integer array PK_Actions
-    integer array PK_Clock
-    integer array PK_Wait
     boolean array PK_Started
     boolean array PK_Hidden
     boolean array PK_Acted
-    boolean array PK_Reveal
-    string array PK_Note
     framehandle array PK_Dialog
     framehandle array PK_Text
     framehandle array PK_Title
@@ -3639,11 +3638,8 @@ integer sf_page_target_type=0
     framehandle array PK_Status
     framehandle array PK_CallLabel
     framehandle array PK_Face
-    framehandle array PK_HumanChips
-    framehandle array PK_BotChips
     framehandle array PK_PotChips
     framehandle array PK_HumanDealer
-    framehandle array PK_BotDealer
     framehandle array PK_Fold
     framehandle array PK_Call
     framehandle array PK_Raise
@@ -3654,40 +3650,53 @@ integer sf_page_target_type=0
     integer array PK_Sort
     integer array PK_Eval
 
-    integer CAS_seed = 71983
-    integer CAS_bank = 1000000
-    integer CAS_liability = 0
-    integer CAS_seconds = 0
-    integer CAS_winner = 0
-    trigger CAS_baseEvent = null
-    trigger CAS_matchEvent = null
-    unit CAS_baseVictim = null
-    unit CAS_baseKiller = null
-    boolean CAS_warned = false
-    boolean CAS_closed = false
-    boolean CAS_ended = false
-    integer CAS_buildSlot = 0
-    integer array CAS_escrow
-    integer array CAS_returnDue
-    integer array CAS_profitDue
-    integer array CAS_view
-    integer array CAS_amount
-    string array CAS_note
-    framehandle array CAS_root
-    framehandle array CAS_launch
-    framehandle array CAS_title
-    framehandle array CAS_balance
-    framehandle array CAS_status
-    framehandle array CAS_footer
-    framehandle array CAS_button
-    framehandle array CAS_content
-    framehandle array CAS_card
-    framehandle array CAS_felt
-    framehandle array CAS_chip
-    framehandle array CAS_seatTotal
-    framehandle array CAS_row
-    framehandle array CAS_bar
-    framehandle array CAS_track
+    integer array NS_Selected
+    integer array NS_Dealt
+    framehandle array NS_Selector
+    boolean array NS_BoardRank
+    integer HousePK_Seed = 81731
+    integer array HousePK_Deck
+    integer array HousePK_Cards
+    integer array HousePK_Stack
+    integer array HousePK_Paid
+    integer array HousePK_Total
+    integer array HousePK_Street
+    integer array HousePK_Turn
+    integer array HousePK_Dealer
+    integer array HousePK_Hand
+    integer array HousePK_LastRaise
+    integer array HousePK_Actions
+    integer array HousePK_Clock
+    integer array HousePK_Wait
+    boolean array HousePK_Started
+    boolean array HousePK_Hidden
+    boolean array HousePK_Acted
+    boolean array HousePK_Reveal
+    string array HousePK_Note
+    framehandle array HousePK_Dialog
+    framehandle array HousePK_Text
+    framehandle array HousePK_Title
+    framehandle array HousePK_HumanLabel
+    framehandle array HousePK_HumanStack
+    framehandle array HousePK_BotStack
+    framehandle array HousePK_BotLabel
+    framehandle array HousePK_PotLabel
+    framehandle array HousePK_Status
+    framehandle array HousePK_CallLabel
+    framehandle array HousePK_Face
+    framehandle array HousePK_HumanChips
+    framehandle array HousePK_BotChips
+    framehandle array HousePK_PotChips
+    framehandle array HousePK_HumanDealer
+    framehandle array HousePK_BotDealer
+    framehandle array HousePK_Fold
+    framehandle array HousePK_Call
+    framehandle array HousePK_Raise
+    framehandle array HousePK_Allin
+    framehandle array HousePK_Next
+    framehandle array HousePK_Hide
+    integer array HousePK_Eval
+    integer array HousePokerBuyIn
     integer array BJ_table
     integer array BJ_seat
     integer array BJ_owner
@@ -3712,6 +3721,42 @@ integer sf_page_target_type=0
     integer array BJ_dealerAces
     boolean array BJ_reveal
     string array BJ_result
+    string array BJ_dealerAction
+    sound CAS_winSound = null
+    sound CAS_lossSound = null
+    integer CAS_seed = 71983
+    integer CAS_bank = 1000000
+    integer CAS_liability = 0
+    integer CAS_seconds = 0
+    integer CAS_winner = 0
+    trigger CAS_baseEvent = null
+    trigger CAS_matchEvent = null
+    unit CAS_baseVictim = null
+    unit CAS_baseKiller = null
+    boolean CAS_warned = false
+    boolean CAS_closed = false
+    boolean CAS_ended = false
+    integer CAS_buildSlot = 0
+    integer array CAS_escrow
+    integer array CAS_returnDue
+    integer array CAS_profitDue
+    integer array CAS_view
+    integer array CAS_amount
+    string array CAS_note
+    framehandle array CAS_root
+    framehandle array CAS_title
+    framehandle array CAS_balance
+    framehandle array CAS_status
+    framehandle array CAS_footer
+    framehandle array CAS_button
+    framehandle array CAS_content
+    framehandle array CAS_card
+    framehandle array CAS_felt
+    framehandle array CAS_chip
+    framehandle array CAS_seatTotal
+    framehandle array CAS_row
+    framehandle array CAS_bar
+    framehandle array CAS_track
     integer MK_n = 0
     boolean MK_ffa = false
     timer MK_payTimer = null
@@ -3785,6 +3830,39 @@ integer sf_page_target_type=0
     boolean array CreditRequest
     boolean array CreditDraftRequest
     string LoanLocalRecord
+    integer array PK_Default
+    integer array PK_Version
+    integer array PK_InputVersion
+    string array PK_Feedback
+    framehandle array PK_Input
+    framehandle array PK_Prompt
+    framehandle array PK_Alternate
+    hashtable TF_PendingCard = InitHashtable()
+integer OP_Phase = 0
+    integer OP_Hand = 0
+    integer OP_Button = -1
+    integer OP_Turn = -1
+    integer OP_Street = 0
+    integer OP_Bet = 0
+    integer OP_MinRaise = 10
+    integer OP_Pot = 0
+    integer OP_Clock = 8
+    integer OP_ScoreCursor = 0
+    integer OP_Seats = 0
+    integer OP_Rest = -1
+    boolean OP_Revealed = false
+    boolean array OP_Dealt
+    boolean array OP_Live
+    boolean array OP_Leaving
+    integer array OP_Faced
+    integer array OP_Score
+    integer array OP_Award
+    integer array OP_Page
+    integer array OP_Board
+    framehandle array OP_PageButton
+    timer OP_ScoreTimer = null
+    string OP_Note = "Take a seat. The first hand starts when two players buy in."
+
     integer array PokerBuyIn
     integer CasinoLauncherSlot = 0
     trigger CasinoOpen = null
@@ -3811,6 +3889,21 @@ hashtable PF_data = InitHashtable()
     boolean PF_draw = false
     boolean PF_dirty = false
     integer PF_exportSlot = 0
+    framehandle HUD_root = null
+    framehandle HUD_wallet = null
+    framehandle HUD_gold = null
+    boolean HUD_walletRead = false
+    integer HUD_width = -1
+    integer HUD_height = -1
+    framehandle array PF_menu
+    framehandle array PF_extra
+    framehandle array PF_stripe
+    framehandle array PF_col
+    framehandle PF_sectionTitle = null
+    integer array PF_metricOrder
+    integer array PF_sectionCount
+    integer array PF_menuOrder
+    string array PF_sectionName
     framehandle PF_root = null
     framehandle PF_title = null
     framehandle PF_subtitle = null
@@ -3866,7 +3959,315 @@ hashtable PF_data = InitHashtable()
     integer FFDebugHeroCount = 0
     boolean FFDebugShopsReady = false
     unit array FFDebugShops
+// Permanent terrain record of the starting SD picks.
+integer array SDGroundCount
+integer array SDGroundOffer
+integer array SDGroundHero
+integer array SDGroundPickTeam
+integer array SDGroundColor
+boolean array SDGroundRandom
+boolean array SDGroundRolling
+boolean array SDGroundShown
+boolean SDGroundRevealed = false
+timer SDGroundTimer = null
+
+    // One physical arena. State 0 is free, 1 is an invitation, 2 is a fight.
+    integer AR_state = 0
+    integer array AR_seat
+    integer array AR_pick
+    integer AR_until = 0
+    integer AR_stake = 0
+    integer array AR_held
+    integer AR_offer = 0
+    integer AR_shownOffer = 0 // Local UI value, sent with the Accept click.
+    player array AR_owner
+    unit array AR_hero
+    unit array AR_foot
+    item array AR_scroll
+    fogmodifier array AR_vision
+    rect AR_floor = null
+    timer AR_clock = null
+    trigger AR_orders = null
+    trigger AR_damage = null
+    trigger AR_deaths = null
+    integer array AR_roster
+    integer array AR_skill
+    player array AR_flagFrom
+    player array AR_flagTo
+    alliancetype array AR_flagType
+    boolean array AR_flagBefore
+    integer AR_flagCount = 0
+    // Read and used only by the local camera UI.
+    real AR_oldLeft
+    real AR_oldBottom
+    real AR_oldRight
+    real AR_oldTop
+    real AR_oldX
+    real AR_oldY
+    real AR_oldZoom
+    integer array BJWatchHost
+    integer array BJWatchPage
+    framehandle array BJWatchEye
+    framehandle array BJWatchHistory
+    string array BJWatchLast
+    string array BJWatchPrevious
+    string array BJWatchOlder
+    integer CasinoWalletRetries = 0
+    framehandle array PK_Lower
+    framehandle array PK_Higher
+    integer array HouseStake
+    framehandle array HouseLower
+    framehandle array HouseHigher
+hashtable BladeState=InitHashtable()
+boolean array RandomTaken
 endglobals
+
+// The extension is north of the original map. Match-wide searches keep their original extents.
+function AR_MatchBounds takes nothing returns rect
+    local rect r = GetWorldBounds()
+    call SetRect(r,GetRectMinX(r),GetRectMinY(r),GetRectMaxX(r),GetRectMaxY(r)-4096.)
+    return r
+endfunction
+
+function AR_Fighter takes unit u returns boolean
+    if AR_state != 2 or u == null then
+        return false
+    endif
+    return GetOwningPlayer(u) == AR_owner[0] or GetOwningPlayer(u) == AR_owner[1]
+endfunction
+
+function AR_BarDamage takes nothing returns nothing
+    if AR_Fighter(GetEventDamageSource()) != AR_Fighter(GetTriggerUnit()) then
+        call BlzSetEventDamage(0)
+    endif
+endfunction
+
+function AR_BarOrder takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    local boolean fighter = AR_Fighter(u)
+    local boolean outside
+    if GetTriggerEventId() == EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER then
+        set outside = fighter != RectContainsCoords(AR_floor,GetOrderPointX(),GetOrderPointY())
+    else
+        set outside = fighter != AR_Fighter(GetOrderTargetUnit())
+        if GetOrderTargetUnit() == null then
+            set outside = fighter != RectContainsCoords(AR_floor,GetWidgetX(GetOrderTarget()),GetWidgetY(GetOrderTarget()))
+        endif
+    endif
+    if outside then
+        call PauseUnit(u,true)
+        call IssueImmediateOrder(u,"stop")
+        call PauseUnit(u,false)
+    endif
+    set u = null
+endfunction
+
+function AR_BarEntry takes nothing returns nothing
+    local unit u = GetEnteringUnit()
+    local player p = GetOwningPlayer(u)
+    if not AR_Fighter(u) then
+        if GetPlayerId(p) < 12 then
+            call SetUnitPosition(u,GetPlayerStartLocationX(p),GetPlayerStartLocationY(p))
+        else
+            call SetUnitPosition(u,0,-256)
+        endif
+        call IssueImmediateOrder(u,"stop")
+    endif
+    set u = null
+endfunction
+
+function AR_Init takes nothing returns nothing
+    local trigger entry = CreateTrigger()
+    set AR_floor = Rect(-1024,5376,1024,6912)
+    set AR_clock = CreateTimer()
+    set AR_damage = CreateTrigger()
+    set AR_orders = CreateTrigger()
+    call TriggerRegisterEnterRectSimple(entry,AR_floor)
+    call TriggerAddAction(entry,function AR_BarEntry)
+    call TriggerRegisterAnyUnitEventBJ(AR_damage,EVENT_PLAYER_UNIT_DAMAGING)
+    call TriggerAddAction(AR_damage,function AR_BarDamage)
+    call TriggerRegisterAnyUnitEventBJ(AR_orders,EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+    call TriggerRegisterAnyUnitEventBJ(AR_orders,EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
+    call TriggerAddAction(AR_orders,function AR_BarOrder)
+    call DisableTrigger(AR_damage)
+    call DisableTrigger(AR_orders)
+    // Level-one arena pool. Each hero has a native combat skill and no spawned army.
+    set AR_roster[0] = 'H00A'
+    set AR_skill[0] = 'AHtb'
+    set AR_roster[1] = 'E002'
+    set AR_skill[1] = 'AEer'
+    set AR_roster[2] = 'U003'
+    set AR_skill[2] = 'A00P'
+    set AR_roster[3] = 'U004'
+    set AR_skill[3] = 'AUcs'
+    set AR_roster[4] = 'E005'
+    set AR_skill[4] = 'AEfk'
+    set AR_roster[5] = 'O004'
+    set AR_skill[5] = 'AOcl'
+    set entry = null
+endfunction
+
+function SDGroundEnabled takes nothing returns boolean
+    return udg_selected_mode == 3
+endfunction
+
+function SDGroundRemember takes integer team, integer id returns nothing
+    local integer i = 1
+    if not SDGroundEnabled() or team < 1 or team > 4 or not IsHeroUnitId(id) or id == 'h004' or id == 'H0R0' or id == 'hTRZ' then
+        return
+    endif
+    loop
+        exitwhen i > SDGroundCount[team]
+        if SDGroundOffer[128 * team + i] == id then
+            return
+        endif
+        set i = i + 1
+    endloop
+    if i < 128 then
+        set SDGroundCount[team] = i
+        set SDGroundOffer[128 * team + i] = id
+    endif
+endfunction
+
+function SDGroundImage takes string path, real x, real y, real width, real height, integer layer returns image
+    local image decal = CreateImage("SDDraft\\" + path + ".blp", width, height, 0.0, x - width * 0.5, y - height * 0.5, 0.0, 0.0, 0.0, 0.0, layer)
+    call SetImageRenderAlways(decal, true)
+    call ShowImage(decal, true)
+    return decal
+endfunction
+
+function SDGroundReveal takes nothing returns nothing
+    local integer slot = 0
+    local rect area = Rect(-3250.0, -730.0, -1820.0, 352.0)
+    local fogmodifier vision
+    loop
+        exitwhen slot >= 24
+        if GetPlayerSlotState(Player(slot)) == PLAYER_SLOT_STATE_PLAYING then
+            set vision = CreateFogModifierRect(Player(slot), FOG_OF_WAR_VISIBLE, area, false, false)
+            call FogModifierStart(vision)
+        endif
+        set slot = slot + 1
+    endloop
+    call RemoveRect(area)
+    set area = null
+    set vision = null
+endfunction
+
+function SDGroundDraw takes integer team returns nothing
+    // Draw the board on the indicator layer, with picks on the selection layer above it.
+    local integer portraitLayer = 2
+    local integer checkLayer = 1
+    local integer columns = 8
+    local integer count = SDGroundCount[team] + 1
+    local integer rows = (count + columns - 1) / columns
+    local real spacing = RMinBJ(82.0, 418.0 / I2R(rows))
+    local real size = spacing * 0.93
+    local real left = -3228.0 + I2R(ModuloInteger(team - 1, 2)) * 708.0
+    local real top = 314.0 - I2R((team - 1) / 2) * 520.0
+    local integer i = 1
+    local integer id
+    local integer slot
+    local integer marks
+    local real x
+    local real y
+    local real checkSize
+    local image decal
+    if not SDGroundRevealed then
+        set SDGroundRevealed = true
+        call SDGroundReveal()
+    endif
+    set decal = SDGroundImage("Team" + I2S(team), left + I2R(IMinBJ(columns, count)) * spacing * 0.5, top, 200.0, 44.0, portraitLayer)
+    loop
+        exitwhen i > count
+        set x = left + size * 0.5 + spacing * I2R(ModuloInteger(i - 1, columns))
+        set y = top - 38.0 - size * 0.5 - spacing * I2R((i - 1) / columns)
+        if i < count then
+            set id = SDGroundOffer[128 * team + i]
+            set decal = SDGroundImage("Icons\\" + I2S(id), x, y, size, size, portraitLayer)
+        else
+            set id = 0
+            set decal = SDGroundImage("Random", x, y, size, size, portraitLayer)
+        endif
+        set slot = 1
+        set marks = 0
+        loop
+            exitwhen slot > 12
+            if SDGroundPickTeam[slot] == team and ((id == 0 and SDGroundRandom[slot]) or (id != 0 and SDGroundHero[slot] == id)) then
+                set marks = marks + 1
+            endif
+            set slot = slot + 1
+        endloop
+        if marks > 0 then
+            call SetImageColor(decal, 212, 212, 212, 255)
+            set checkSize = RMinBJ(size * 0.52, size * 0.90 / I2R(marks))
+            set x = x + size * 0.45 - checkSize * (I2R(marks) - 0.5)
+            set slot = 1
+            loop
+                exitwhen slot > 12
+                if SDGroundPickTeam[slot] == team and ((id == 0 and SDGroundRandom[slot]) or (id != 0 and SDGroundHero[slot] == id)) then
+                    set decal = SDGroundImage("Check" + I2S(SDGroundColor[slot]), x, y - size * 0.20, checkSize, checkSize, checkLayer)
+                    set x = x + checkSize
+                endif
+                set slot = slot + 1
+            endloop
+        endif
+        set i = i + 1
+    endloop
+    set decal = null
+endfunction
+
+function SDGroundUpdate takes nothing returns nothing
+    local integer team = 1
+    local integer slot
+    local boolean picked
+    local boolean waiting
+    local boolean pending = false
+    if SDGroundEnabled() then
+        loop
+            exitwhen team > 4
+            if not SDGroundShown[team] then
+                set slot = 1
+                set picked = false
+                set waiting = false
+                loop
+                    exitwhen slot > 12
+                    if SDGroundPickTeam[slot] == team then
+                        set picked = true
+                    elseif udg_teamnumber[slot] == team and udg_player_active[slot] and GetPlayerSlotState(Player(slot - 1)) == PLAYER_SLOT_STATE_PLAYING then
+                        set waiting = true
+                    endif
+                    set slot = slot + 1
+                endloop
+                if waiting then
+                    set pending = true
+                elseif picked and SDGroundCount[team] > 0 then
+                    set SDGroundShown[team] = true
+                    call SDGroundDraw(team)
+                endif
+            endif
+            set team = team + 1
+        endloop
+    endif
+    if not pending then
+        call DestroyTimer(SDGroundTimer)
+        set SDGroundTimer = null
+    endif
+endfunction
+
+function SDGroundPick takes integer slot, integer id, boolean randomChoice returns nothing
+    if not SDGroundEnabled() or slot < 1 or slot > 12 or SDGroundHero[slot] != 0 then
+        return
+    endif
+    set SDGroundHero[slot] = id
+    set SDGroundPickTeam[slot] = udg_teamnumber[slot]
+    set SDGroundColor[slot] = GetHandleId(GetPlayerColor(Player(slot - 1)))
+    set SDGroundRandom[slot] = randomChoice or SDGroundRolling[slot]
+    if SDGroundTimer == null then
+        set SDGroundTimer = CreateTimer()
+        call TimerStart(SDGroundTimer, 0.25, true, function SDGroundUpdate)
+    endif
+endfunction
+
 
 // All custom controls share a parent; hiding it also hides refreshed children.
 function FFUI_GetRoot takes nothing returns framehandle
@@ -4327,7 +4728,14 @@ function AllowAPHeroes takes nothing returns boolean
     return udg_selected_mode == 2 or udg_mode_debugmode
 endfunction
 
+function SD_HeroExcluded takes integer id returns boolean
+    return id == 'HTf1' and udg_selected_mode == 3 and not udg_mode_mirror and not udg_mode_debugmode
+endfunction
+
 function MF_HeroDisabled takes integer id returns boolean
+    if SD_HeroExcluded(id) then
+        return true
+    endif
     if id == 'HMu1' or id == 'HVg1' then
         return true
     endif
@@ -5048,8 +5456,7 @@ function TF33_Close takes unit c, real cooldown returns nothing
     call UnitRemoveAbility(c,'ATf6')
     call UnitRemoveAbility(c,'ATf7')
     call UnitRemoveAbility(c,'ATf8')
-    call ShowUnit(LoadUnitHandle(TF33_H,h,2),false)
-    call RemoveUnit(LoadUnitHandle(TF33_H,h,2))
+    call DestroyEffect(LoadEffectHandle(TF33_H,h,2))
     call BlzUnitHideAbility(c,'ATf2',false)
     if cooldown>0. then
         call BlzStartUnitAbilityCooldown(c,'ATf2',cooldown)
@@ -5063,7 +5470,8 @@ endfunction
 
 function TF33_Show takes unit c returns nothing
     local integer h=GetHandleId(c)
-    local unit orb=LoadUnitHandle(TF33_H,h,2)
+    local effect orb=LoadEffectHandle(TF33_H,h,2)
+    local integer color=LoadInteger(TF33_H,h,4)
     local integer ticks=LoadInteger(TF33_H,h,6)
     local real pulse=0.
     local real scale
@@ -5071,11 +5479,14 @@ function TF33_Show takes unit c returns nothing
         set pulse=Sin(3.14159265*I2R(ticks)/8.)
     endif
     set scale=1.35*(1.+.08*pulse)
-    call SetUnitX(orb,GetUnitX(c))
-    call SetUnitY(orb,GetUnitY(c))
-    call SetUnitFlyHeight(orb,GetUnitFlyHeight(c)+120.+6.*pulse,0.)
-    call SetUnitScale(orb,scale,scale,scale)
-    call TF33_Tint(orb,LoadInteger(TF33_H,h,4))
+    call BlzSetSpecialEffectScale(orb,scale)
+    if color == 1 then
+        call BlzSetSpecialEffectColor(orb,255,45,45)
+    elseif color == 2 then
+        call BlzSetSpecialEffectColor(orb,255,210,30)
+    else
+        call BlzSetSpecialEffectColor(orb,70,159,255)
+    endif
     set orb=null
 endfunction
 
@@ -5112,6 +5523,9 @@ function TF33_SelectTick takes nothing returns nothing
     local integer h=GetHandleId(c)
     local integer ticks=LoadInteger(TF33_H,h,6)+1
     local integer color=LoadInteger(TF33_H,h,4)
+    if HaveSavedInteger(TF_PendingCard,h,3) or HaveSavedInteger(TF_PendingCard,h,0) or LoadBoolean(TF_PendingCard,h,2) then
+        return
+    endif
     if not TFP_TF_Alive(c) or GetUnitAbilityLevel(c,'ATf2')==0 or (LoadBoolean(TF33_H,h,5) and ticks>=200) then
         call TF33_Close(c,0.)
     else
@@ -5133,10 +5547,7 @@ function TF33_SelectTick takes nothing returns nothing
     set t=null
 endfunction
 
-function TF33_Cast takes nothing returns nothing
-    local unit c=GetTriggerUnit()
-    local unit v=GetSpellTargetUnit()
-    local integer id=GetSpellAbilityId()
+function TF33_Cast takes unit c, unit v, integer id returns nothing
     local integer h=GetHandleId(c)
     local integer color
     local integer rank=GetUnitAbilityLevel(c,'ATf2')
@@ -5144,10 +5555,8 @@ function TF33_Cast takes nothing returns nothing
     local timer t
     if id=='ATf2' and not HaveSavedHandle(TF33_H,h,1) then
         set t=CreateTimer()
-        set orb=CreateUnit(GetOwningPlayer(c),'htf1',GetUnitX(c),GetUnitY(c),0.)
-        call SetUnitScale(orb,0.85,0.85,0.85)
+        call SaveEffectHandle(TF33_H,h,2,AddSpecialEffectTarget("war3mapImported\\TFPickedCard.mdx",c,"overhead"))
         call SaveTimerHandle(TF33_H,h,1,t)
-        call SaveUnitHandle(TF33_H,h,2,orb)
         set color=GetRandomInt(0,2)
         call SaveInteger(TF33_H,h,4,color)
         call SaveUnitHandle(TF33_H,GetHandleId(t),0,c)
@@ -5178,6 +5587,70 @@ function TF33_Cast takes nothing returns nothing
     set v=null
     set orb=null
     set t=null
+endfunction
+
+// Capture instant card casts on effect, and swap the command card only once
+// Warcraft has released the casting order. Spell effects may be interrupted
+// after committing, so both completion and cancellation end at SPELL_ENDCAST.
+function TF_IsCardOrder takes integer id returns boolean
+    return id == 'ATf2' or id == 'ATf3' or id == 'ATf4' or id == 'ATf5' or id == 'ATf6' or id == 'ATf7' or id == 'ATf8'
+endfunction
+
+function TF_CardChannel takes nothing returns nothing
+    if TF_IsCardOrder(GetSpellAbilityId()) then
+        call SaveInteger(TF_PendingCard,GetHandleId(GetTriggerUnit()),3,GetSpellAbilityId())
+    endif
+endfunction
+
+function TF_CardEffect takes nothing returns nothing
+    local unit c = GetTriggerUnit()
+    local integer id = GetSpellAbilityId()
+    local integer k = GetHandleId(c)
+    if TF_IsCardOrder(id) then
+        call SaveInteger(TF_PendingCard,k,0,id)
+        call SaveUnitHandle(TF_PendingCard,k,1,GetSpellTargetUnit())
+    endif
+    set c = null
+endfunction
+
+function TF_ApplyCardCast takes nothing returns nothing
+    local timer t = GetExpiredTimer()
+    local integer k = GetHandleId(t)
+    local unit c = LoadUnitHandle(TF_PendingCard,k,0)
+    local unit target = LoadUnitHandle(TF_PendingCard,k,1)
+    local integer id = LoadInteger(TF_PendingCard,k,2)
+    call FlushChildHashtable(TF_PendingCard,k)
+    call RemoveSavedBoolean(TF_PendingCard,GetHandleId(c),2)
+    call DestroyTimer(t)
+    if TFP_TF_Alive(c) then
+        call TF33_Cast(c,target,id)
+    endif
+    set c = null
+    set target = null
+    set t = null
+endfunction
+
+function TF_CardEnd takes nothing returns nothing
+    local unit c = GetTriggerUnit()
+    local integer k = GetHandleId(c)
+    local integer id = GetSpellAbilityId()
+    local timer t
+    local integer key
+    if id != 0 and LoadInteger(TF_PendingCard,k,3) == id then
+        call RemoveSavedInteger(TF_PendingCard,k,3)
+    endif
+    if id != 0 and LoadInteger(TF_PendingCard,k,0) == id then
+        set t = CreateTimer()
+        set key = GetHandleId(t)
+        call SaveUnitHandle(TF_PendingCard,key,0,c)
+        call SaveUnitHandle(TF_PendingCard,key,1,LoadUnitHandle(TF_PendingCard,k,1))
+        call SaveInteger(TF_PendingCard,key,2,id)
+        call FlushChildHashtable(TF_PendingCard,k)
+        call SaveBoolean(TF_PendingCard,k,2,true)
+        call TimerStart(t,0.0,false,function TF_ApplyCardCast)
+    endif
+    set t = null
+    set c = null
 endfunction
 
 function TF45_Odds takes unit u returns real
@@ -5233,6 +5706,7 @@ function TF45_Death takes nothing returns nothing
     local unit dead=GetTriggerUnit()
     local unit killer=GetKillingUnit()
     local integer h=GetHandleId(killer)
+    call FlushChildHashtable(TF_PendingCard,GetHandleId(dead))
     if IsUnitInGroup(dead,TF33_Heroes) then
         call FlushChildHashtable(TF33_G,GetHandleId(dead))
     endif
@@ -5354,7 +5828,7 @@ function TF_CardAttack takes nothing returns nothing
     local integer h=GetHandleId(c)
     local integer rank
     local integer color
-    if BlzGetEventIsAttack() and GetEventDamage()>0.0 and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
+    if BlzGetEventIsAttack() and GetEventDamage()>0.0 and not HaveSavedInteger(TF_PendingCard,h,3) and not HaveSavedInteger(TF_PendingCard,h,0) and not LoadBoolean(TF_PendingCard,h,2) and LoadBoolean(TF33_H,h,5) and TF33_Enemy(c,v) then
         set rank=GetUnitAbilityLevel(c,'ATf2')
         set color=LoadInteger(TF33_H,h,4)
         call TF33_Close(c,7.)
@@ -5400,7 +5874,13 @@ function TF33_Init takes nothing returns nothing
     set TF_BlueDamage[5]=300.0
     set TF_BlueDamage[6]=350.0
     call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    call TriggerAddAction(t,function TF33_Cast)
+    call TriggerAddAction(t,function TF_CardEffect)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_CHANNEL)
+    call TriggerAddAction(t,function TF_CardChannel)
+    set t=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_ENDCAST)
+    call TriggerAddAction(t,function TF_CardEnd)
     set t=CreateTrigger()
     call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_DAMAGED)
     call TriggerAddAction(t,function TF_CardAttack)
@@ -5415,6 +5895,8 @@ function TF33_Init takes nothing returns nothing
     set t=CreateTrigger()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_CHANGE_OWNER)
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_REVIVE_FINISH)
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_HERO_SKILL)
     call TriggerAddAction(t, function TF_ClearGuardOnEvent)
     set t=null
 endfunction
@@ -5597,7 +6079,7 @@ function TFP_destiny___c takes nothing returns boolean
     local fogmodifier fog
     if GetSpellAbilityId()=='ATfb' and not HaveSavedHandle(TF46_H,GetHandleId(c),0) then
         call TF45_Track(c)
-        set bounds=GetWorldBounds()
+        set bounds=AR_MatchBounds()
         set t=CreateTimer()
         set h=GetHandleId(t)
         set g=CreateGroup()
@@ -6653,6 +7135,10 @@ function FF_IsBotName takes string name returns boolean
     return FF_EndsWith(name, "MangoThief#115445") or FF_EndsWith(name, "Vertical#11718") or FF_EndsWith(name, "Industry#11190") or FF_EndsWith(name, "BryanBoitano#1725")
 endfunction
 
+function CasinoAdmin takes integer s returns boolean
+    return s >= 1 and s <= 24 and udg_admin_level[s] >= 90
+endfunction
+
 function CAS_User takes integer s returns boolean
     if s < 1 or s > 24 then
         return false
@@ -6661,7 +7147,7 @@ function CAS_User takes integer s returns boolean
 endfunction
 
 function PK_Eligible takes integer p returns boolean
-    return CAS_User(p+1)
+    return CasinoAdmin(p+1) and CAS_User(p+1)
 endfunction
 
 function CAS_Announce takes string msg returns nothing
@@ -6707,6 +7193,9 @@ endfunction
 
 function GSI_Blocked takes unit u returns boolean
     local integer i = 0
+    if AR_Fighter(u) then
+        return false
+    endif
     loop
         exitwhen i >= bj_MAX_PLAYER_SLOTS
         if GSI_Source[i] != null and TimerGetRemaining(GSI_Expiry[i]) > 0.0 and IsUnitEnemy(u, Player(i)) then
@@ -6826,7 +7315,7 @@ function GSI_Init takes nothing returns nothing
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SELL_ITEM)
     call TriggerAddAction(t, function GSI_Purchase)
     set t = CreateTrigger()
-    set GSI_Bounds = GetWorldBounds()
+    set GSI_Bounds = AR_MatchBounds()
     call TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CHANNEL)
     call TriggerAddAction(t, function GSI_Guard)
     set t = CreateTrigger()
@@ -11827,7 +12316,7 @@ function MU_Init takes nothing returns nothing
     local trigger death = CreateTrigger()
     local trigger enter = CreateTrigger()
     local region world = CreateRegion()
-    local rect bounds = GetWorldBounds()
+    local rect bounds = AR_MatchBounds()
     local group existing = CreateGroup()
     local unit u
     call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 1", 0)
@@ -11974,7 +12463,7 @@ function GD_Pulse takes unit caster, real x, real y returns nothing
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", u, "chest"))
                 endif
             elseif IsUnitEnemy(u, owner) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) then
-                set amount = 60.0 + 30.0 * rank
+                set amount = 45.0 + 22.5 * rank
                 if GetRandomInt(1, 4) == 1 then
                     set amount = 2.0 * amount
                 endif
@@ -12038,7 +12527,7 @@ function GD_Cast takes nothing returns nothing
     set i = GD_Count
     set GD_Caster[i] = caster
     call SaveInteger(GD_Data, GetHandleId(caster), 0, i)
-    // Force Shield (Team colour), by ApeJI, imported unchanged.
+    // Force Shield by ApeJI, with contrasting pentagon edges.
     set GD_Dome[i] = AddSpecialEffect("war3mapImported\\GuardianPentagonDome.mdx", GetUnitX(caster), GetUnitY(caster))
     call BlzSetSpecialEffectScale(GD_Dome[i], 1.27098884)
     call BlzSetSpecialEffectColorByPlayer(GD_Dome[i], Player(1))
@@ -16977,7 +17466,7 @@ function TimerUtils___init takes nothing returns nothing
     endfunction
 
 function s__WorldBounds_WorldBounds___WorldBoundInit__onInit takes nothing returns nothing
-        set s__WorldBounds_world=GetWorldBounds()
+        set s__WorldBounds_world=AR_MatchBounds()
         set s__WorldBounds_maxX=R2I(GetRectMaxX(s__WorldBounds_world))
         set s__WorldBounds_maxY=R2I(GetRectMaxY(s__WorldBounds_world))
         set s__WorldBounds_minX=R2I(GetRectMinX(s__WorldBounds_world))
@@ -23509,7 +23998,6 @@ function Uncle_ClearTextCommands takes nothing returns nothing
 
     loop
         exitwhen i > 24
-            call BlzTriggerRegisterPlayerKeyEvent(t, Player(i), OSKEY_F2, 0, false)
             call TriggerRegisterPlayerChatEvent(t, Player(i), "-clear", true)
             call TriggerRegisterPlayerChatEvent(t, Player(i), "-c", true)
         set i=i + 1
@@ -23756,7 +24244,7 @@ function IndexNewUnit takes nothing returns boolean
 function InitializeUnitIndexer takes nothing returns nothing
         local integer i= 0
         local region re= CreateRegion()
-        local rect r= GetWorldBounds()
+        local rect r= AR_MatchBounds()
     set udg_UnitIndexerEnabled=true
         call RegionAddRect(re, r)
         call TriggerRegisterEnterRegion(CreateTrigger(), re, Filter(function IndexNewUnit))
@@ -32050,12 +32538,17 @@ function SD_TeamCarry takes integer team returns integer
         return 'HGr1'
     elseif team == 3 then
         return 'H043'
+    elseif SD_HeroExcluded('HTf1') then
+        return 'N01L' // Shadow Shifter, also in carry category 16.
     endif
     return 'HTf1'
 endfunction
 
 function Trig_Start_SD_Func022Func030Func001A takes nothing returns nothing
     local integer raw = GetUnitTypeId(GetEnumUnit())
+    if SD_HeroExcluded(raw) then
+        return
+    endif
     if udg_numberofSDcategories >= 12 and (raw == SD_TeamCarry(1) or raw == SD_TeamCarry(2) or raw == SD_TeamCarry(3) or raw == SD_TeamCarry(4)) then
         return
     endif
@@ -32243,7 +32736,9 @@ function Trig_Start_SD_Actions takes nothing returns nothing
         set udg_X=1
         loop
             exitwhen udg_X > udg_total_hero_count
-            call CreateNUnitsAtLoc(1, udg_hero_type[udg_X], Player(PLAYER_NEUTRAL_PASSIVE), GetRectCenter(gg_rct_EXILE), bj_UNIT_FACING)
+            if not SD_HeroExcluded(udg_hero_type[udg_X]) then
+                call CreateNUnitsAtLoc(1, udg_hero_type[udg_X], Player(PLAYER_NEUTRAL_PASSIVE), GetRectCenter(gg_rct_EXILE), bj_UNIT_FACING)
+            endif
             set udg_X=udg_X + 1
         endloop
         set udg_all_heros=GetUnitsInRectOfPlayer(gg_rct_ALL_HERO, Player(PLAYER_NEUTRAL_PASSIVE))
@@ -33222,6 +33717,7 @@ function FF_AcceptStartingHero takes unit candidate returns nothing
     if ( Trig_TP_hero_Func007C() ) then
         set udg_tp_kill[udg_temp_playernumber]=true
         set udg_herO[udg_temp_playernumber]=udg_temp_unit
+        call SDGroundPick(udg_temp_playernumber, GetUnitTypeId(udg_temp_unit), randomPick)
         call DraftClosePlayer(udg_temp_playernumber)
         call TF_ClearPlayerGuard(udg_temp_unit)
         call ForGroupBJ(udg_realshops, function Trig_TP_hero_Func007Func004A)
@@ -33349,7 +33845,7 @@ function FFRandom_Pick takes integer pn, integer team returns nothing
     endif
     loop
         exitwhen i > udg_total_hero_count
-        if udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and (udg_selected_mode != 3 or FFR_Allowed(team, i)) and (udg_hero_category[i] < 12 or not CarryTav_locked[team]) then
+        if udg_hero_type[i] != 0 and not MF_HeroDisabled(udg_hero_type[i]) and (udg_selected_mode != 3 or (not RandomTaken[team*128+i] and FFR_Allowed(team, i))) and (udg_hero_category[i] < 12 or not CarryTav_locked[team]) then
             set count = count + 1
             if GetRandomInt(1, count) == 1 then
                 set index = i
@@ -33361,10 +33857,23 @@ function FFRandom_Pick takes integer pn, integer team returns nothing
         set DraftBusy[pn] = true
         // Spawn outside the plaza so registration is synchronous, not a later region event.
         set hero = CreateUnit(p, udg_hero_type[index], DraftX[team], DraftY[team], bj_UNIT_FACING)
+        set SDGroundRolling[pn] = true
         call FF_AcceptStartingHero(hero)
+        set SDGroundRolling[pn] = false
         if hero != null and GetUnitTypeId(hero) != 0 and (udg_herO[pn] == hero or udg_mode_debugmode) then
             set T66_RandomLeft[team] = T66_RandomLeft[team] - 1
             if udg_selected_mode == 3 then
+                if not udg_mode_debugmode then
+                    set RandomTaken[team*128+index]=true
+                    set i=1
+                    loop
+                        exitwhen i>DraftCount[team]
+                        if DraftPool[team*256+i]==udg_hero_type[index] then
+                            set DraftTaken[team*256+i]=true
+                        endif
+                        set i=i+1
+                    endloop
+                endif
                 call FF_GiveRandomBoots(hero)
             endif
         else
@@ -33595,6 +34104,9 @@ function InitTrig_Multiboard_Show takes nothing returns nothing
 endfunction
 
 function Trig_Multiboard_Update_Conditions takes nothing returns boolean
+    if AR_Fighter(GetTriggerUnit()) then
+        return false
+    endif
     if ( not ( IsUnitEnemy(GetKillingUnitBJ(), GetOwningPlayer(GetDyingUnit())) == true ) ) then
         return false
     endif
@@ -33972,6 +34484,9 @@ endfunction
 
 
 function Trig_set_hero_bounty_Conditions takes nothing returns boolean
+    if AR_Fighter(GetTriggerUnit()) then
+        return false
+    endif
     if ( not ( IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true ) ) then
         return false
     endif
@@ -35168,7 +35683,7 @@ function InitTrig_MH_truesight_add_units takes nothing returns nothing
     set gg_trg_MH_truesight_add_units=CreateTrigger()
     call DisableTrigger(gg_trg_MH_truesight_add_units)
     call TriggerRegisterAnyUnitEventBJ(gg_trg_MH_truesight_add_units, EVENT_PLAYER_UNIT_SUMMON)
-    call TriggerRegisterEnterRectSimple(gg_trg_MH_truesight_add_units, GetEntireMapRect())
+    call TriggerRegisterEnterRectSimple(gg_trg_MH_truesight_add_units, AR_MatchBounds())
     call TriggerAddCondition(gg_trg_MH_truesight_add_units, Condition(function Trig_MH_truesight_add_units_Conditions))
     call TriggerAddAction(gg_trg_MH_truesight_add_units, function Trig_MH_truesight_add_units_Actions)
 endfunction
@@ -35960,6 +36475,9 @@ endfunction
 
 
 function Trig_autorevive_Conditions takes nothing returns boolean
+    if AR_Fighter(GetTriggerUnit()) then
+        return false
+    endif
     if ( not ( IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true ) ) then
         return false
     endif
@@ -36001,6 +36519,9 @@ function InitTrig_autorevive takes nothing returns nothing
 endfunction
 
 function Trig_change_Revive_time_based_on_level_Conditions takes nothing returns boolean
+    if AR_Fighter(GetTriggerUnit()) then
+        return false
+    endif
     if ( not ( IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true ) ) then
         return false
     endif
@@ -37761,7 +38282,7 @@ function Trig_show_commands_Actions takes nothing returns nothing
     local player p= GetTriggerPlayer()
     call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cff00ff00Commands and hotkeys|r")
     call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-help / -cmds / -info / -commands|r: show this list.  |cffffff00-guided / -i|r: guided help.")
-    call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-p / -pool|r: choose your pool target and reserve.  |cffffff00F3|r: send gold above that reserve to that target.")
+    call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-p / -pool|r: choose your pool target and reserve.  |cffffff00F3|r: open pooling settings. X, F3 or F2 saves and closes.")
     call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-clear / -c / F2|r: clear text.  |cffffff00-cam / -scale / -bounds|r: camera controls.")
     call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-players / -status / -kd / -time|r: player, status, score, and time information.")
     call DisplayTimedTextToPlayer(p, 0, 0, 12.00, "|cffffff00-hero / -repick / -swap / -next|r: hero and draft commands.")
@@ -38691,48 +39212,132 @@ function InitTrig_KD takes nothing returns nothing
     call TriggerAddAction(gg_trg_KD, function Trig_KD_Actions)
 endfunction
 
-function F3_SendAllGold_Callback takes nothing returns nothing
-    local player sender = GetTriggerPlayer()
-    local integer senderId = GetConvertedPlayerId(sender)
-    local integer targetId = udg_autopoolto[senderId]
-    local integer requested = GetPlayerState(sender, PLAYER_STATE_RESOURCE_GOLD) - udg_pool_threshold[senderId]
-    local integer amount
-    if not FFR4_PoolingAllowed() then
-        call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "Pooling is disabled in this mode.")
-    elseif targetId < 1 or targetId > 12 or targetId == senderId or not SoloSub_CanReceiveGold(targetId) or not IsPlayerAlly(ConvertedPlayer(targetId), sender) then
-        call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "|cffff0000F3: choose an available teammate with -pool first.|r")
-    elseif requested <= 0 then
-        call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, "|cffffcc00F3: no gold above your reserve to send.|r")
-    else
-        set amount = FFP_Transfer(senderId, targetId, requested)
-        if amount > 0 then
-            call DisplayTimedTextToPlayer(sender, 0, 0, 3.00, I2S(amount) + " |cffffcc00Gold|r sent to " + GetPlayerName(ConvertedPlayer(targetId)))
-            call DisplayTimedTextToPlayer(ConvertedPlayer(targetId), 0, 0, 3.00, I2S(amount) + " |cffffcc00Gold|r received from " + GetPlayerName(sender))
-        endif
-        if not FFR4Pro and FFP_PairSent[senderId * 16 + targetId] >= 5000 then
-            set udg_autopoolto[senderId] = 0
-            call DisplayTimedTextToPlayer(sender, 0, 0, 5.00, "Pooling limit reached: 5000 gold to this ally. Choose another ally with -pool.")
-        endif
-    endif
-    set sender = null
+function FFPoolEligible takes integer slot, integer target returns boolean
+    return target >= 1 and target <= 12 and target != slot and IsPlayerAlly(ConvertedPlayer(target), ConvertedPlayer(slot)) and SoloSub_CanReceiveGold(target)
 endfunction
 
-function F3_SendAllGold_Init takes nothing returns nothing
-    local integer i= 0
-    local trigger t= CreateTrigger()
-    loop
-        exitwhen i > 11
-        call BlzTriggerRegisterPlayerKeyEvent(t, Player(i), OSKEY_F3, 0, false)
-        set i=i + 1
-    endloop
-    call TriggerAddAction(t, function F3_SendAllGold_Callback)
-    set t=null
+function FFPoolRefresh takes integer slot returns nothing
+    local string recipient = "Off"
+    if GetLocalPlayer() == ConvertedPlayer(slot) then
+        if FFPoolTarget[slot] != 0 then
+            set recipient = GetPlayerName(ConvertedPlayer(FFPoolTarget[slot]))
+        endif
+        call BlzFrameSetText(FFPoolRecipient, "Send to: " + recipient)
+        call BlzFrameSetText(FFPoolReserveButton, "Keep: " + I2S(FFPoolReserve[slot]) + " gold")
+        call BlzFrameSetEnable(FFPoolRecipient, FFR4_PoolingAllowed())
+        call BlzFrameSetEnable(FFPoolReserveButton, FFR4_PoolingAllowed())
+        if FFR4_PoolingAllowed() then
+            call BlzFrameSetText(FFPoolTitle, "Pooling")
+        else
+            call BlzFrameSetText(FFPoolTitle, "Pooling (locked)")
+        endif
+        call BlzFrameSetVisible(FFPoolPanel, FFPoolOpen[slot])
+    endif
 endfunction
+
+function FFPoolClose takes integer slot returns nothing
+    if FFR4_PoolingAllowed() then
+        if FFPoolTarget[slot] == 0 or FFPoolEligible(slot, FFPoolTarget[slot]) then
+            set udg_autopoolto[slot] = FFPoolTarget[slot]
+        else
+            set udg_autopoolto[slot] = 0
+        endif
+        set udg_pool_threshold[slot] = FFPoolReserve[slot]
+    endif
+    set FFPoolOpen[slot] = false
+    call FFPoolRefresh(slot)
+endfunction
+
+function FFPoolKey takes nothing returns nothing
+    local integer slot = GetConvertedPlayerId(GetTriggerPlayer())
+    if FFPoolOpen[slot] then
+        call FFPoolClose(slot)
+    elseif BlzGetTriggerPlayerKey() == OSKEY_F3 and slot <= 12 then
+        set FFPoolTarget[slot] = udg_autopoolto[slot]
+        set FFPoolReserve[slot] = udg_pool_threshold[slot]
+        set FFPoolOpen[slot] = true
+        call FFPoolRefresh(slot)
+    elseif BlzGetTriggerPlayerKey() == OSKEY_F2 then
+        call Uncle_ClearTextCommandsCallback()
+    endif
+endfunction
+
+function FFPoolClick takes nothing returns nothing
+    local integer slot = GetConvertedPlayerId(GetTriggerPlayer())
+    local integer target = FFPoolTarget[slot]
+    local framehandle clickedFrame = BlzGetTriggerFrame()
+    if FFPoolOpen[slot] then
+        if clickedFrame == FFPoolCloseButton then
+            call FFPoolClose(slot)
+        elseif FFR4_PoolingAllowed() then
+            if clickedFrame == FFPoolRecipient then
+                loop
+                    set target = ModuloInteger(target + 1, 13)
+                    exitwhen target == 0 or FFPoolEligible(slot, target)
+                endloop
+                set FFPoolTarget[slot] = target
+            elseif FFPoolReserve[slot] == 0 then
+                set FFPoolReserve[slot] = 50
+            elseif FFPoolReserve[slot] == 50 then
+                set FFPoolReserve[slot] = 150
+            elseif FFPoolReserve[slot] == 150 then
+                set FFPoolReserve[slot] = 250
+            elseif FFPoolReserve[slot] == 250 then
+                set FFPoolReserve[slot] = 500
+            else
+                set FFPoolReserve[slot] = 0
+            endif
+            call FFPoolRefresh(slot)
+        endif
+    endif
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        call BlzFrameSetFocus(clickedFrame, false)
+    endif
+    set clickedFrame = null
+endfunction
+
+function FFPoolButton takes trigger click, string label, real x, real y, real width returns framehandle
+    local framehandle b = BlzCreateFrame("ScriptDialogButton", FFPoolPanel, 0, 0)
+    call BlzFrameSetPoint(b, FRAMEPOINT_TOPLEFT, FFPoolPanel, FRAMEPOINT_TOPLEFT, x, -y)
+    call BlzFrameSetSize(b, width, 0.026)
+    call BlzFrameSetText(b, label)
+    call BlzTriggerRegisterFrameEvent(click, b, FRAMEEVENT_CONTROL_CLICK)
+    return b
+endfunction
+
+function FFPoolInit takes nothing returns nothing
+    local trigger keys = CreateTrigger()
+    local trigger click = CreateTrigger()
+    local integer i = 0
+    set FFPoolPanel = BlzCreateFrame("EscMenuBackdrop", FFUI_GetRoot(), 0, 0)
+    call BlzFrameSetAbsPoint(FFPoolPanel, FRAMEPOINT_TOPRIGHT, 0.785, 0.485)
+    call BlzFrameSetSize(FFPoolPanel, 0.225, 0.122)
+    call BlzFrameSetLevel(FFPoolPanel, 30)
+    set FFPoolTitle = BlzCreateFrameByType("TEXT", "FFPoolTitle", FFPoolPanel, "", 0)
+    call BlzFrameSetPoint(FFPoolTitle, FRAMEPOINT_TOPLEFT, FFPoolPanel, FRAMEPOINT_TOPLEFT, 0.018, -0.017)
+    set FFPoolCloseButton = FFPoolButton(click, "X", 0.184, 0.009, 0.027)
+    set FFPoolRecipient = FFPoolButton(click, "", 0.018, 0.040, 0.189)
+    set FFPoolReserveButton = FFPoolButton(click, "", 0.018, 0.074, 0.189)
+    call BlzFrameSetVisible(FFPoolPanel, false)
+    loop
+        exitwhen i >= bj_MAX_PLAYER_SLOTS
+        call BlzTriggerRegisterPlayerKeyEvent(keys, Player(i), OSKEY_F2, 0, false)
+        if i < 12 then
+            call BlzTriggerRegisterPlayerKeyEvent(keys, Player(i), OSKEY_F3, 0, false)
+        endif
+        set i = i + 1
+    endloop
+    call TriggerAddAction(keys, function FFPoolKey)
+    call TriggerAddAction(click, function FFPoolClick)
+    set keys = null
+    set click = null
+endfunction
+
 
 function Trig_Clear_Text_Setup_Actions takes nothing returns nothing
     // The code above this trigger contains the chat commands and hotkeys for clearing text (Clear Text Commands)
     call Uncle_ClearTextCommands()
-    call F3_SendAllGold_Init()
+    call FFPoolInit()
 endfunction
 
 function InitTrig_Clear_Text_Setup takes nothing returns nothing
@@ -40686,54 +41291,146 @@ function Trig_HERO_Throw_Glaive_Func013C takes nothing returns boolean
     return true
 endfunction
 
-function Trig_HERO_Throw_Glaive_Actions takes nothing returns nothing
-    // SET BASE VARIABLES
-    set udg_temp_unit=GetTriggerUnit()
-    set udg_temp_player=GetOwningPlayer(udg_temp_unit)
-    set udg_temp_point_caster=GetUnitLoc(udg_temp_unit)
-    set udg_temp_point=GetSpellTargetLoc()
-    set udg_temp_playernumber=GetConvertedPlayerId(udg_temp_player)
-    set udg_abilitylevel=GetUnitAbilityLevelSwapped(GetSpellAbilityId(), udg_temp_unit)
-    set udg_glaive_start_degree[udg_temp_playernumber]=AngleBetweenPoints(udg_temp_point_caster, udg_temp_point)
-    // SET BASE VARIABLES
-    call CreateNUnitsAtLoc(1, 'h053', udg_temp_player, udg_temp_point_caster, udg_glaive_start_degree[udg_temp_playernumber])
-    set udg_dummy_glaive[udg_temp_playernumber]=GetLastCreatedUnit()
-    if ( Trig_HERO_Throw_Glaive_Func013C() ) then
-        call UnitAddAbilityBJ('A0MB', udg_dummy_glaive[udg_temp_playernumber])
-        call UnitAddAbilityBJ('A0MT', udg_dummy_glaive[udg_temp_playernumber])
-    else
-        if ( Trig_HERO_Throw_Glaive_Func013Func001C() ) then
-            call UnitAddAbilityBJ('A0MD', udg_dummy_glaive[udg_temp_playernumber])
-            call UnitAddAbilityBJ('A0MS', udg_dummy_glaive[udg_temp_playernumber])
-        else
-            if ( Trig_HERO_Throw_Glaive_Func013Func001Func001C() ) then
-                call UnitAddAbilityBJ('A0MC', udg_dummy_glaive[udg_temp_playernumber])
-                call UnitAddAbilityBJ('A0MW', udg_dummy_glaive[udg_temp_playernumber])
-            else
-                if ( Trig_HERO_Throw_Glaive_Func013Func001Func001Func001C() ) then
-                    call UnitAddAbilityBJ('A0ME', udg_dummy_glaive[udg_temp_playernumber])
-                    call UnitAddAbilityBJ('A0MU', udg_dummy_glaive[udg_temp_playernumber])
-                else
-                    if ( Trig_HERO_Throw_Glaive_Func013Func001Func001Func001Func001C() ) then
-                        call UnitAddAbilityBJ('A0MF', udg_dummy_glaive[udg_temp_playernumber])
-                        call UnitAddAbilityBJ('A0MV', udg_dummy_glaive[udg_temp_playernumber])
-                    else
-                        if ( Trig_HERO_Throw_Glaive_Func013Func001Func001Func001Func001Func001C() ) then
-                            call UnitAddAbilityBJ('A0MA', udg_dummy_glaive[udg_temp_playernumber])
-                            call UnitAddAbilityBJ('A0MX', udg_dummy_glaive[udg_temp_playernumber])
-                        else
-                            call DoNothing()
-                        endif
-                    endif
-                endif
-            endif
-        endif
+function BladeArmorExpire takes nothing returns nothing
+    local timer expiry=GetExpiredTimer()
+    local integer key=GetHandleId(expiry)
+    local unit target=LoadUnitHandle(BladeState,key,0)
+    call UnitRemoveAbility(target,LoadInteger(BladeState,key,1))
+    call RemoveSavedHandle(BladeState,GetHandleId(target),10)
+    call FlushChildHashtable(BladeState,key)
+    call DestroyTimer(expiry)
+    set target=null
+    set expiry=null
+endfunction
+
+function BladeArmorHit takes unit target, integer rank returns nothing
+    local integer unitKey=GetHandleId(target)
+    local timer expiry=LoadTimerHandle(BladeState,unitKey,10)
+    local integer armor='BSr1'+rank-1
+    local integer previous
+    if expiry==null then
+        set expiry=CreateTimer()
+        call SaveTimerHandle(BladeState,unitKey,10,expiry)
+        call SaveUnitHandle(BladeState,GetHandleId(expiry),0,target)
     endif
-    set udg_glaive_active[udg_temp_playernumber]=true
-    set udg_glaive_hops[udg_temp_playernumber]=0
-    call EnableTrigger(gg_trg_HERO_Throw_Glaive_Loop)
-    call RemoveLocation(udg_temp_point)
-    call RemoveLocation(udg_temp_point_caster)
+    set previous=LoadInteger(BladeState,GetHandleId(expiry),1)
+    if armor>previous or GetUnitAbilityLevel(target,previous)==0 then
+        if previous!=0 then
+            call UnitRemoveAbility(target,previous)
+        endif
+        call UnitAddAbility(target,armor)
+        call BlzUnitHideAbility(target,armor,true)
+        call SaveInteger(BladeState,GetHandleId(expiry),1,armor)
+    endif
+    call TimerStart(expiry,3.,false,function BladeArmorExpire)
+    set expiry=null
+endfunction
+
+function BladeHitArea takes integer k, unit caster, real x, real y, group hit returns nothing
+    local group scan=CreateGroup()
+    local unit target
+    call GroupEnumUnitsInRange(scan,x,y,LoadReal(BladeState,k,7),null)
+    loop
+        set target=FirstOfGroup(scan)
+        exitwhen target==null
+        call GroupRemoveUnit(scan,target)
+        if IsUnitEnemy(target,GetOwningPlayer(caster)) and GetWidgetLife(target)>0.405 and not IsUnitInGroup(target,hit) and not IsUnitType(target,UNIT_TYPE_FLYING) and not IsUnitType(target,UNIT_TYPE_MECHANICAL) and not IsUnitType(target,UNIT_TYPE_STRUCTURE) and not IsUnitType(target,UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(target) then
+            call GroupAddUnit(hit,target)
+            call BladeArmorHit(target,LoadInteger(BladeState,k,8))
+            call UnitDamageTarget(caster,target,LoadReal(BladeState,k,4),false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS)
+        endif
+    endloop
+    call DestroyGroup(scan)
+    set scan=null
+endfunction
+
+function BladeTick takes nothing returns nothing
+    local timer t=GetExpiredTimer()
+    local integer k=GetHandleId(t)
+    local unit caster=LoadUnitHandle(BladeState,k,0)
+    local unit blade=LoadUnitHandle(BladeState,k,1)
+    local integer step=LoadInteger(BladeState,k,2)+1
+    local real angle=LoadReal(BladeState,k,3)
+    local group hit
+    local real x=GetUnitX(blade)
+    local real y=GetUnitY(blade)
+    local real dx=GetUnitX(caster)-x
+    local real dy=GetUnitY(caster)-y
+    local boolean finish=false
+    if step>=50 then
+        set angle=Atan2(dy,dx)
+        set finish=dx*dx+dy*dy<=400.
+        set hit=LoadGroupHandle(BladeState,k,6)
+    else
+        set hit=LoadGroupHandle(BladeState,k,5)
+    endif
+    if finish then
+        set x=GetUnitX(caster)
+        set y=GetUnitY(caster)
+    else
+        set x=x+20.*Cos(angle)
+        set y=y+20.*Sin(angle)
+    endif
+    call SetUnitX(blade,x)
+    call SetUnitY(blade,y)
+    call BladeHitArea(k,caster,x,y,hit)
+    if step==49 then
+        // Sample the return at the exact turnaround before the blade moves inward.
+        call BladeHitArea(k,caster,x,y,LoadGroupHandle(BladeState,k,6))
+    endif
+    if finish or step>=200 or GetUnitTypeId(caster)==0 then
+        call PauseTimer(t)
+        call DestroyGroup(LoadGroupHandle(BladeState,k,5))
+        call DestroyGroup(LoadGroupHandle(BladeState,k,6))
+        call RemoveUnit(blade)
+        call FlushChildHashtable(BladeState,k)
+        call DestroyTimer(t)
+    else
+        call SaveInteger(BladeState,k,2,step)
+    endif
+    set t=null
+    set hit=null
+    set caster=null
+    set blade=null
+endfunction
+
+function Trig_HERO_Throw_Glaive_Actions takes nothing returns nothing
+    local unit caster=GetTriggerUnit()
+    local real x=GetUnitX(caster)
+    local real y=GetUnitY(caster)
+    local real angle=Atan2(GetSpellTargetY()-y,GetSpellTargetX()-x)
+    local unit blade=CreateUnit(GetOwningPlayer(caster),'h053',x,y,angle*bj_RADTODEG)
+    local integer level=GetUnitAbilityLevel(caster,'A0M9')
+    local timer t=CreateTimer()
+    local integer k=GetHandleId(t)
+    local real damage=36.
+    local real radius=210.
+    if level==1 then
+        set radius=175.
+    elseif level==2 then
+        set radius=200.
+        set damage=54.
+    elseif level==3 then
+        set damage=96.
+    elseif level==4 then
+        set damage=117.
+    elseif level==5 then
+        set damage=147.
+    else
+        set damage=177.
+    endif
+    call SaveInteger(BladeState,k,8,level)
+    call SaveUnitHandle(BladeState,k,0,caster)
+    call SaveUnitHandle(BladeState,k,1,blade)
+    call SaveReal(BladeState,k,3,angle)
+    call SaveReal(BladeState,k,4,damage)
+    call SaveGroupHandle(BladeState,k,5,CreateGroup())
+    call SaveGroupHandle(BladeState,k,6,CreateGroup())
+    call SaveReal(BladeState,k,7,radius)
+    call TimerStart(t,0.02,true,function BladeTick)
+    set t=null
+    set caster=null
+    set blade=null
 endfunction
 
 function InitTrig_HERO_Throw_Glaive takes nothing returns nothing
@@ -40743,169 +41440,7 @@ function InitTrig_HERO_Throw_Glaive takes nothing returns nothing
     call TriggerAddAction(gg_trg_HERO_Throw_Glaive, function Trig_HERO_Throw_Glaive_Actions)
 endfunction
 
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func004C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] < 20 ) ) then
-        return false
-    endif
-    return true
-endfunction
 
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func005C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 20 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func006C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 30 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func007C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 40 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func008C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 45 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func009C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 50 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func010C takes nothing returns boolean
-    if ( not ( udg_glaive_hops[udg_X] >= 55 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func013C takes nothing returns boolean
-    if ( not ( udg_glaive_active[udg_X] == true ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001Func002C takes nothing returns boolean
-    local real dx
-    local real dy
-    if ( not ( udg_glaive_hops[udg_X] >= 57 ) ) then
-        return false
-    endif
-    set dx=GetUnitX(udg_herO[udg_X]) - sf_glaive_x[udg_X]
-    set dy=GetUnitY(udg_herO[udg_X]) - sf_glaive_y[udg_X]
-    if ( not ( SquareRoot(dx * dx + dy * dy) <= 100.00 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001C takes nothing returns boolean
-    local real dx=GetUnitX(udg_herO[udg_X]) - sf_glaive_x[udg_X]
-    local real dy=GetUnitY(udg_herO[udg_X]) - sf_glaive_y[udg_X]
-    if ( ( SquareRoot(dx * dx + dy * dy) > 1300.00 ) ) then
-        return true
-    endif
-    if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001Func002C() ) then
-        return true
-    endif
-    return false
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016C takes nothing returns boolean
-    if ( not Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016Func001C() ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Func001Func001C takes nothing returns boolean
-    if ( not ( GetUnitTypeId(udg_herO[udg_X]) == 'E018' ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_HERO_Throw_Glaive_Loop_Actions takes nothing returns nothing
-    set udg_X=1
-    loop
-        exitwhen udg_X > 12
-        if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001C() ) then
-            // COUNT HOPS
-            set udg_glaive_hops[udg_X]=( udg_glaive_hops[udg_X] + 1 )
-            // SET ANGLE
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func004C() ) then
-                set udg_glaive_degree[udg_X]=( udg_glaive_start_degree[udg_X] - 0.00 )
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func005C() ) then
-                set udg_glaive_degree[udg_X]=( udg_glaive_start_degree[udg_X] + 0.00 )
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func006C() ) then
-                set udg_glaive_degree[udg_X]=( udg_glaive_start_degree[udg_X] + 0.00 )
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func007C() ) then
-                set udg_glaive_degree[udg_X]=( udg_glaive_start_degree[udg_X] + 0.00 )
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func008C() ) then
-                set udg_glaive_degree[udg_X]=( udg_glaive_start_degree[udg_X] + 0.00 )
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func009C() ) then
-                set udg_glaive_degree[udg_X]=bj_RADTODEG * Atan2(GetUnitY(udg_herO[udg_X]) - GetUnitY(udg_dummy_glaive[udg_X]), GetUnitX(udg_herO[udg_X]) - GetUnitX(udg_dummy_glaive[udg_X]))
-            else
-            endif
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func010C() ) then
-                set udg_glaive_degree[udg_X]=bj_RADTODEG * Atan2(GetUnitY(udg_herO[udg_X]) - GetUnitY(udg_dummy_glaive[udg_X]), GetUnitX(udg_herO[udg_X]) - GetUnitX(udg_dummy_glaive[udg_X]))
-            else
-            endif
-            // MOVE GLAIVE
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func013C() ) then
-                set sf_glaive_x[udg_X]=GetUnitX(udg_herO[udg_X])
-                set sf_glaive_y[udg_X]=GetUnitY(udg_herO[udg_X])
-                set udg_glaive_active[udg_X]=false
-            else
-                set sf_glaive_x[udg_X]=sf_glaive_x[udg_X] + 20.00 * Cos(udg_glaive_degree[udg_X] * bj_DEGTORAD)
-                set sf_glaive_y[udg_X]=sf_glaive_y[udg_X] + 20.00 * Sin(udg_glaive_degree[udg_X] * bj_DEGTORAD)
-            endif
-            call SetUnitPosition(udg_dummy_glaive[udg_X], sf_glaive_x[udg_X], sf_glaive_y[udg_X])
-            call SetUnitFacing(udg_dummy_glaive[udg_X], 0.00)
-            // FINISH UP IF EITHER TOO FAR OR CLOSED UP
-            if ( Trig_HERO_Throw_Glaive_Loop_Func001Func001Func016C() ) then
-                call RemoveUnit(udg_dummy_glaive[udg_X])
-                set udg_glaive_active[udg_X]=false
-                call DisableTrigger(GetTriggeringTrigger())
-            else
-            endif
-        else
-            call DoNothing()
-        endif
-        set udg_X=udg_X + 1
-    endloop
-endfunction
-
-function InitTrig_HERO_Throw_Glaive_Loop takes nothing returns nothing
-    set gg_trg_HERO_Throw_Glaive_Loop=CreateTrigger()
-    call DisableTrigger(gg_trg_HERO_Throw_Glaive_Loop)
-    call TriggerRegisterTimerEventPeriodic(gg_trg_HERO_Throw_Glaive_Loop, 0.02)
-    call TriggerAddAction(gg_trg_HERO_Throw_Glaive_Loop, function Trig_HERO_Throw_Glaive_Loop_Actions)
-endfunction
 
 function Trig_Zeus_Setup_Actions takes nothing returns nothing
     // ==================================================
@@ -57418,9 +57953,9 @@ set udg_unit_level[8]=6
 
 // Banshee
 set udg_spawn_unit[9]='uban'
-set udg_unit_HP[9]=530
+set udg_unit_HP[9]=520
 set udg_unit_armor_type[9]=7
-set udg_unit_armor[9]=1
+set udg_unit_armor[9]=0
 set udg_unit_att_base[9]=31
 set udg_unit_att_num_dice[9]=1
 set udg_unit_att_dice_sides[9]=4
@@ -57431,10 +57966,10 @@ set udg_unit_bounty_dice_sides[9]=3
 set udg_unit_range[9]=640
 set udg_unit_level[9]=2
 
-// Warlock
+// Kodo Beast
 set udg_spawn_unit[10]='n04X'
-set udg_unit_HP[10]=625
-set udg_unit_armor_type[10]=1
+set udg_unit_HP[10]=725
+set udg_unit_armor_type[10]=2
 set udg_unit_armor[10]=0
 set udg_unit_att_base[10]=34
 set udg_unit_att_num_dice[10]=1
@@ -57443,7 +57978,7 @@ set udg_unit_att_CD[10]=1.2
 set udg_unit_bounty_base[10]=39
 set udg_unit_bounty_num_dice[10]=1
 set udg_unit_bounty_dice_sides[10]=3
-set udg_unit_range[10]=685
+set udg_unit_range[10]=475
 set udg_unit_level[10]=3
 
 // Mortat Bombers
@@ -57544,7 +58079,7 @@ set udg_unit_armor[17]=2
 set udg_unit_att_base[17]=16
 set udg_unit_att_num_dice[17]=2
 set udg_unit_att_dice_sides[17]=2
-set udg_unit_att_CD[17]=1
+set udg_unit_att_CD[17]=0.909090909
 set udg_unit_bounty_base[17]=34
 set udg_unit_bounty_num_dice[17]=1
 set udg_unit_bounty_dice_sides[17]=3
@@ -57559,7 +58094,7 @@ set udg_unit_armor[18]=0
 set udg_unit_att_base[18]=34
 set udg_unit_att_num_dice[18]=1
 set udg_unit_att_dice_sides[18]=3
-set udg_unit_att_CD[18]=1.222222222
+set udg_unit_att_CD[18]=1
 set udg_unit_bounty_base[18]=37
 set udg_unit_bounty_num_dice[18]=1
 set udg_unit_bounty_dice_sides[18]=2
@@ -57583,7 +58118,7 @@ set udg_unit_level[19]=3
 
 // Wraith
 set udg_spawn_unit[20]='ngh2'
-set udg_unit_HP[20]=660
+set udg_unit_HP[20]=650
 set udg_unit_armor_type[20]=7
 set udg_unit_armor[20]=0
 set udg_unit_att_base[20]=39
@@ -57634,7 +58169,7 @@ set udg_unit_armor[23]=3
 set udg_unit_att_base[23]=27
 set udg_unit_att_num_dice[23]=1
 set udg_unit_att_dice_sides[23]=4
-set udg_unit_att_CD[23]=1.454545455
+set udg_unit_att_CD[23]=1.32231405
 set udg_unit_bounty_base[23]=35
 set udg_unit_bounty_num_dice[23]=1
 set udg_unit_bounty_dice_sides[23]=3
@@ -57695,7 +58230,7 @@ set udg_unit_armor[27]=3
 set udg_unit_att_base[27]=27
 set udg_unit_att_num_dice[27]=1
 set udg_unit_att_dice_sides[27]=4
-set udg_unit_att_CD[27]=1.454545455
+set udg_unit_att_CD[27]=1.32231405
 set udg_unit_bounty_base[27]=35
 set udg_unit_bounty_num_dice[27]=1
 set udg_unit_bounty_dice_sides[27]=3
@@ -57869,9 +58404,9 @@ set udg_unit_level[38]=6
 
 // [39] Banshee (from 9)
 set udg_spawn_unit[39]='uban'
-set udg_unit_HP[39]=530
+set udg_unit_HP[39]=520
 set udg_unit_armor_type[39]=7
-set udg_unit_armor[39]=1
+set udg_unit_armor[39]=0
 set udg_unit_att_base[39]=31
 set udg_unit_att_num_dice[39]=1
 set udg_unit_att_dice_sides[39]=4
@@ -57882,10 +58417,10 @@ set udg_unit_bounty_dice_sides[39]=3
 set udg_unit_range[39]=640
 set udg_unit_level[39]=2
 
-// [40] Warlock (from 10)
+// [40] Kodo Beast (from 10)
 set udg_spawn_unit[40]='n04X'
-set udg_unit_HP[40]=625
-set udg_unit_armor_type[40]=1
+set udg_unit_HP[40]=725
+set udg_unit_armor_type[40]=2
 set udg_unit_armor[40]=0
 set udg_unit_att_base[40]=34
 set udg_unit_att_num_dice[40]=1
@@ -57894,7 +58429,7 @@ set udg_unit_att_CD[40]=1.2
 set udg_unit_bounty_base[40]=39
 set udg_unit_bounty_num_dice[40]=1
 set udg_unit_bounty_dice_sides[40]=3
-set udg_unit_range[40]=685
+set udg_unit_range[40]=475
 set udg_unit_level[40]=3
 
 // [41] Mortar Bomber (from 11)
@@ -57950,7 +58485,7 @@ set udg_unit_armor[44]=2
 set udg_unit_att_base[44]=16
 set udg_unit_att_num_dice[44]=2
 set udg_unit_att_dice_sides[44]=2
-set udg_unit_att_CD[44]=1
+set udg_unit_att_CD[44]=0.909090909
 set udg_unit_bounty_base[44]=34
 set udg_unit_bounty_num_dice[44]=1
 set udg_unit_bounty_dice_sides[44]=3
@@ -57989,7 +58524,7 @@ set udg_unit_level[46]=3
 
 // [47] Wraith (from 20)
 set udg_spawn_unit[47]='ngh2'
-set udg_unit_HP[47]=660
+set udg_unit_HP[47]=650
 set udg_unit_armor_type[47]=7
 set udg_unit_armor[47]=0
 set udg_unit_att_base[47]=39
@@ -58010,7 +58545,7 @@ set udg_unit_armor[48]=0
 set udg_unit_att_base[48]=34
 set udg_unit_att_num_dice[48]=1
 set udg_unit_att_dice_sides[48]=3
-set udg_unit_att_CD[48]=1.222222222
+set udg_unit_att_CD[48]=1
 set udg_unit_bounty_base[48]=37
 set udg_unit_bounty_num_dice[48]=1
 set udg_unit_bounty_dice_sides[48]=2
@@ -58174,7 +58709,7 @@ set udg_base_type[38]='h03W'
 // 39 Banshee
 set udg_base_type[39]='u011'
 
-// 40 Warlock
+// 40 Kodo Beast
 set udg_base_type[40]='e013'
 
 // 41 Mortar Bomber
@@ -62062,7 +62597,7 @@ function FF_Editor_InitTriggers takes nothing returns nothing
     call InitTrig_Parasite()
     call InitTrig_Fire_Wall_notused()
     call InitTrig_HERO_Throw_Glaive()
-    call InitTrig_HERO_Throw_Glaive_Loop()
+
     call InitTrig_Zeus_Setup()
     call InitTrig_HERO_Shock_Zeus()
     call InitTrig_HERO_Zeus_Shock_Damage()
@@ -62492,6 +63027,9 @@ endfunction
 function FF_kl_OnDeath takes nothing returns nothing
     local unit victim = GetTriggerUnit()
     local unit killer = GetKillingUnit()
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     // The counters themselves are the map's; any death may have moved them, and the next tick
     // reads them (the map's trigger has long run by then, whatever the trigger order).
     set FF_kl_dirty = true
@@ -62990,6 +63528,126 @@ function PF_Schema takes nothing returns nothing
     set PF_poolInMetric = 39
     set PF_sentMetric = 40
     set PF_receivedMetric = 41
+    set PF_menuOrder[0] = 0
+    set PF_sectionName[0] = "Overview"
+    set PF_menuOrder[1] = 8
+    set PF_sectionName[8] = "Combat"
+    set PF_menuOrder[2] = 9
+    set PF_sectionName[9] = "Economy"
+    set PF_menuOrder[3] = 10
+    set PF_sectionName[10] = "Army and tech"
+    set PF_menuOrder[4] = 1
+    set PF_sectionName[1] = "Heroes"
+    set PF_menuOrder[5] = 2
+    set PF_sectionName[2] = "Items"
+    set PF_menuOrder[6] = 3
+    set PF_sectionName[3] = "Units"
+    set PF_menuOrder[7] = 4
+    set PF_sectionName[4] = "Skins"
+    set PF_menuOrder[8] = 5
+    set PF_sectionName[5] = "Build order"
+    set PF_menuOrder[9] = 7
+    set PF_sectionName[7] = "Usage"
+    set PF_menuOrder[10] = 6
+    set PF_sectionName[6] = "Casino"
+    set PF_sectionCount[0] = 9
+    set PF_metricOrder[0] = 25
+    set PF_metricOrder[1] = 29
+    set PF_metricOrder[2] = 30
+    set PF_metricOrder[3] = 28
+    set PF_metricOrder[4] = 26
+    set PF_metricOrder[5] = 27
+    set PF_metricOrder[6] = 31
+    set PF_metricOrder[7] = 34
+    set PF_metricOrder[8] = 24
+    set PF_sectionCount[8] = 17
+    set PF_metricOrder[800] = 29
+    set PF_metricOrder[801] = 30
+    set PF_metricOrder[802] = 28
+    set PF_metricOrder[803] = 26
+    set PF_metricOrder[804] = 27
+    set PF_metricOrder[805] = 31
+    set PF_metricOrder[806] = 32
+    set PF_metricOrder[807] = 33
+    set PF_metricOrder[808] = 34
+    set PF_metricOrder[809] = 35
+    set PF_metricOrder[810] = 36
+    set PF_metricOrder[811] = 47
+    set PF_metricOrder[812] = 48
+    set PF_metricOrder[813] = 49
+    set PF_metricOrder[814] = 50
+    set PF_metricOrder[815] = 51
+    set PF_metricOrder[816] = 7
+    set PF_sectionCount[9] = 27
+    set PF_metricOrder[900] = 10
+    set PF_metricOrder[901] = 37
+    set PF_metricOrder[902] = 38
+    set PF_metricOrder[903] = 39
+    set PF_metricOrder[904] = 40
+    set PF_metricOrder[905] = 41
+    set PF_metricOrder[906] = 42
+    set PF_metricOrder[907] = 43
+    set PF_metricOrder[908] = 46
+    set PF_metricOrder[909] = 11
+    set PF_metricOrder[910] = 12
+    set PF_metricOrder[911] = 13
+    set PF_metricOrder[912] = 14
+    set PF_metricOrder[913] = 15
+    set PF_metricOrder[914] = 44
+    set PF_metricOrder[915] = 45
+    set PF_metricOrder[916] = 53
+    set PF_metricOrder[917] = 16
+    set PF_metricOrder[918] = 17
+    set PF_metricOrder[919] = 18
+    set PF_metricOrder[920] = 19
+    set PF_metricOrder[921] = 20
+    set PF_metricOrder[922] = 81
+    set PF_metricOrder[923] = 82
+    set PF_metricOrder[924] = 83
+    set PF_metricOrder[925] = 84
+    set PF_metricOrder[926] = 85
+    set PF_sectionCount[10] = 19
+    set PF_metricOrder[1000] = 0
+    set PF_metricOrder[1001] = 1
+    set PF_metricOrder[1002] = 2
+    set PF_metricOrder[1003] = 3
+    set PF_metricOrder[1004] = 4
+    set PF_metricOrder[1005] = 5
+    set PF_metricOrder[1006] = 6
+    set PF_metricOrder[1007] = 8
+    set PF_metricOrder[1008] = 9
+    set PF_metricOrder[1009] = 52
+    set PF_metricOrder[1010] = 54
+    set PF_metricOrder[1011] = 55
+    set PF_metricOrder[1012] = 56
+    set PF_metricOrder[1013] = 57
+    set PF_metricOrder[1014] = 58
+    set PF_metricOrder[1015] = 59
+    set PF_metricOrder[1016] = 21
+    set PF_metricOrder[1017] = 22
+    set PF_metricOrder[1018] = 23
+    set PF_sectionCount[6] = 21
+    set PF_metricOrder[600] = 64
+    set PF_metricOrder[601] = 66
+    set PF_metricOrder[602] = 65
+    set PF_metricOrder[603] = 60
+    set PF_metricOrder[604] = 61
+    set PF_metricOrder[605] = 62
+    set PF_metricOrder[606] = 63
+    set PF_metricOrder[607] = 67
+    set PF_metricOrder[608] = 68
+    set PF_metricOrder[609] = 69
+    set PF_metricOrder[610] = 70
+    set PF_metricOrder[611] = 71
+    set PF_metricOrder[612] = 72
+    set PF_metricOrder[613] = 73
+    set PF_metricOrder[614] = 74
+    set PF_metricOrder[615] = 75
+    set PF_metricOrder[616] = 76
+    set PF_metricOrder[617] = 77
+    set PF_metricOrder[618] = 78
+    set PF_metricOrder[619] = 79
+    set PF_metricOrder[620] = 80
     set PF_metrics = 81
     set PF_label[0] = "Units trained"
     set PF_key[0] = "trained"
@@ -63669,16 +64327,34 @@ function WalletBroadcast takes nothing returns nothing
     endif
 endfunction
 
+function HUD_WalletValue takes nothing returns string
+    if WalletBalance >= 0 then
+        return I2S(WalletBalance)
+    elseif HUD_walletRead then
+        return "Unavailable"
+    endif
+    return "Loading"
+endfunction
+
+function HUD_ShowWallet takes nothing returns nothing
+    if HUD_wallet != null then
+        call BlzFrameSetText(HUD_wallet,HUD_WalletValue())
+    endif
+endfunction
+
 function WalletLoad takes nothing returns nothing
     local player client = GetLocalPlayer()
     local string saved
     local string field
     local integer i = 0
+    set HUD_walletRead = true
     call DestroyTimer(GetExpiredTimer())
     if WalletAccount == null or WalletAccount == "" or FF_IsBotName(WalletAccount) then
+        call HUD_ShowWallet()
         return
     endif
     if not IsPlayerObserver(client) and (GetPlayerController(client) != MAP_CONTROL_USER or GetPlayerSlotState(client) != PLAYER_SLOT_STATE_PLAYING) then
+        call HUD_ShowWallet()
         return
     endif
     set WalletPath = "FootmenFrenzy\\799X\\wallet-" + I2S(StringHash(WalletAccount)) + ".pld"
@@ -63701,6 +64377,7 @@ function WalletLoad takes nothing returns nothing
     if LoanLocalRecord == null or LoanLocalRecord == "" then
         set LoanLocalRecord = LoanRecord(GetPlayerId(client)+1)
     endif
+    call HUD_ShowWallet()
     call WalletBroadcast()
 endfunction
 
@@ -63709,6 +64386,7 @@ function CasinoWalletDelta takes integer s, integer delta returns nothing
     set WalletPublic[s-1] = CAS_gold[s]
     if GetLocalPlayer() == Player(s-1) and WalletBalance >= 0 then
         set WalletBalance = CAS_gold[s]
+        call HUD_ShowWallet()
         call WalletSave()
     endif
 endfunction
@@ -63831,7 +64509,7 @@ function WalletReceive takes nothing returns nothing
 endfunction
 
 function CreditOpen takes integer slot returns boolean
-    return slot >= 1 and slot <= 24 and CAS_ready[slot] and GetPlayerSlotState(Player(slot-1)) == PLAYER_SLOT_STATE_PLAYING
+    return CasinoAdmin(slot) and CAS_ready[slot] and GetPlayerSlotState(Player(slot-1)) == PLAYER_SLOT_STATE_PLAYING
 endfunction
 
 function CreditTell takes integer s, string message returns nothing
@@ -64367,6 +65045,9 @@ endfunction
 function FF_oc_OnDeath takes nothing returns nothing
     local unit victim= GetTriggerUnit()
     local unit killer
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     if not IsUnitType(victim, UNIT_TYPE_HERO) then
         set victim=null
         return
@@ -64400,7 +65081,7 @@ function FF_oc_OnTick takes nothing returns nothing
     endif
     loop
         exitwhen i >= bj_MAX_PLAYER_SLOTS
-        if FF_oc_mode[i] != 0 then
+        if FF_oc_mode[i] != 0 and not (AR_state == 2 and (i+1 == AR_seat[0] or i+1 == AR_seat[1])) then
             set p=Player(i)
             if FF_oc_CanObserve(p) then
                 if FF_oc_mode[i] == 2 and interrupt then
@@ -64513,6 +65194,9 @@ function FF_st_OnDeath takes nothing returns nothing
     local player kp = null
     local integer ks = 0
     local integer i = FF_st_tmN - 1
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     if killer != null then
         set kp = GetOwningPlayer(killer)
         set ks = FF_st_Slot(kp)
@@ -66043,7 +66727,7 @@ function PF_ObjectData8 takes nothing returns nothing
     call SaveInteger(PF_prices,1,'hSHC',0)
     call SaveStr(PF_prices,3,'hSHC',"ReplaceableTextures\\CommandButtons\\BTNDranaiAkama.blp")
     call SaveInteger(PF_prices,1,'hTNP',0)
-    call SaveStr(PF_prices,3,'hTNP',"ReplaceableTextures\\CommandButtons\\BTNFootsPageTurn.blp")
+    call SaveStr(PF_prices,3,'hTNP',"ReplaceableTextures\\CommandButtons\\BTN_cr_RIGHTbooK.blp")
     call SaveInteger(PF_prices,1,'hTRZ',0)
     call SaveStr(PF_prices,3,'hTRZ',"ReplaceableTextures\\CommandButtons\\BTNSelectHeroOn.blp")
     call SaveInteger(PF_prices,1,'hatw',500)
@@ -67356,6 +68040,9 @@ function DPS_OnDeath takes nothing returns nothing
     local integer ks = 0
     local integer s = 1
     local real now = TimerGetElapsed(FF_gameTimer)
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     if src != null and not IsUnitIllusion(dst) and IsUnitEnemy(dst, GetOwningPlayer(src)) then
         set ks = FF_st_Slot(GetOwningPlayer(src))
         if ks >= 1 and ks <= 12 then
@@ -67792,6 +68479,56 @@ function PF_Clock takes integer seconds returns string
     return I2S(seconds/60)+":"+FF_Pad2(ModuloInteger(seconds,60))
 endfunction
 
+function HUD_Text takes real x, real y, real width, real height, real size, string value returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","",HUD_root,"",0)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,HUD_root,FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetSize(f,width,height)
+    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",size,0)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetEnable(f,false)
+    call BlzFrameSetText(f,value)
+    return f
+endfunction
+
+function HUD_Refresh takes nothing returns nothing
+    local integer width = BlzGetLocalClientWidth()
+    local integer height = BlzGetLocalClientHeight()
+    local integer slot = PF_MySlot()
+    local real left = 0.012
+    if width != HUD_width or height != HUD_height then
+        if height > 0 then
+            set left = left-RMaxBJ(0.0,(0.6*I2R(width)/I2R(height)-0.8)*0.5)
+        endif
+        call BlzFrameClearAllPoints(HUD_root)
+        call BlzFrameSetAbsPoint(HUD_root,FRAMEPOINT_TOPLEFT,left,0.542)
+        set HUD_width = width
+        set HUD_height = height
+    endif
+    call HUD_ShowWallet()
+    if slot <= 12 then
+        call BlzFrameSetText(HUD_gold,I2S(GetPlayerState(Player(slot-1),PLAYER_STATE_RESOURCE_GOLD)))
+    else
+        call BlzFrameSetText(HUD_gold,"--")
+    endif
+endfunction
+
+function HUD_Create takes nothing returns nothing
+    local framehandle label
+    set HUD_root = BlzCreateFrameByType("BACKDROP","FFBalanceHud",FFUI_GetRoot(),"",0)
+    call BlzFrameSetSize(HUD_root,0.166,0.033)
+    call BlzFrameSetTexture(HUD_root,"CasinoUI\\panel.blp",0,true)
+    call BlzFrameSetEnable(HUD_root,false)
+    call BlzFrameSetLevel(HUD_root,110)
+    set label = HUD_Text(0.006,0.002,0.074,0.012,0.008,"WALLET")
+    call BlzFrameSetTextColor(label,BlzConvertColor(255,255,215,132))
+    set HUD_wallet = HUD_Text(0.006,0.014,0.074,0.016,0.011,"")
+    set label = HUD_Text(0.085,0.002,0.075,0.012,0.008,"MATCH GOLD")
+    call BlzFrameSetTextColor(label,BlzConvertColor(255,255,215,132))
+    set HUD_gold = HUD_Text(0.085,0.014,0.075,0.016,0.011,"")
+    call HUD_Refresh()
+    set label = null
+endfunction
+
 function PF_Text takes real x, real y, real width, real height, real font returns framehandle
     local framehandle f = BlzCreateFrameByType("TEXT","",PF_root,"",0)
     call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
@@ -67830,18 +68567,27 @@ function PF_Name takes integer id returns string
     return name
 endfunction
 
-function PF_Card takes integer i, string title, string detail, string art returns nothing
-    call BlzFrameSetText(PF_line[i],title)
-    call BlzFrameSetText(PF_value[i],detail)
+function PF_Row takes integer i, string title, string value, string extra, string art returns nothing
+    local real x = -0.174
+    local real y = 0.162+I2R(i)*0.042
     if art != "" and art != null then
+        set x = -0.141
         call BlzFrameSetTexture(PF_icon[i],art,0,true)
         call BlzFrameSetVisible(PF_icon[i],true)
     endif
+    call BlzFrameClearAllPoints(PF_line[i])
+    call BlzFrameSetPoint(PF_line[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
+    call BlzFrameSetSize(PF_line[i],0.132-x,0.038)
+    call BlzFrameSetText(PF_line[i],title)
+    call BlzFrameSetText(PF_value[i],value)
+    call BlzFrameSetText(PF_extra[i],extra)
+    call BlzFrameSetVisible(PF_stripe[i],ModuloInteger(i,2) == 0)
 endfunction
 
-function PF_Paginate takes integer n returns nothing
-    set PF_pages = IMaxBJ(1,(n+13)/14)
-    set PF_page = IMinBJ(PF_page,PF_pages-1)
+function PF_Columns takes string field, string value, string extra returns nothing
+    call BlzFrameSetText(PF_col[0],field)
+    call BlzFrameSetText(PF_col[1],value)
+    call BlzFrameSetText(PF_col[2],extra)
 endfunction
 
 function PF_Activity takes integer s, integer r, integer ix returns nothing
@@ -67849,126 +68595,128 @@ function PF_Activity takes integer s, integer r, integer ix returns nothing
     local integer id = LoadInteger(PF_data,k+1,ix)
     local integer gold = LoadInteger(PF_data,k+2,ix)
     local integer other = LoadInteger(PF_data,k+3,ix)
-    local string kind = LoadStr(PF_data,k,ix)
-    local string name = LoadStr(PF_prices,4,StringHash(kind))
-    local string art = "UI\\Widgets\\ToolTips\\Human\\ToolTipGoldIcon.blp"
-    local string detail = PF_Clock(LoadInteger(PF_data,k+4,ix))
+    local string name = LoadStr(PF_prices,4,StringHash(LoadStr(PF_data,k,ix)))
+    local string debit = ""
     if id != 0 then
         set name = name+"  "+PF_Name(id)
-        set art = PF_Art(id)
     endif
     if other != 0 then
         set name = name+"  "+GetPlayerName(Player(other-1))
     endif
     if gold >= 0 then
-        set detail = detail+"    "+I2S(gold)+" gold"
+        set debit = I2S(gold)
     endif
-    set detail = detail+"    Balance "+I2S(LoadInteger(PF_data,k+5,ix))
-    call PF_Card(r,name,detail,art)
+    call PF_Row(r,PF_Clock(LoadInteger(PF_data,k+4,ix))+"    "+name,debit,I2S(LoadInteger(PF_data,k+5,ix)),"")
+endfunction
+
+function PF_StatRow takes integer r, integer s, integer id returns nothing
+    local integer amount
+    local integer account = GetPlayerId(GetLocalPlayer())+1
+    local string lifetime = ""
+    if id >= PF_metrics then
+        set amount = PF_priorEco[1]+PF_Economy(s,1)
+        if id == PF_metrics then
+            call PF_Row(r,"Pro matches played","",I2S(amount),"")
+        elseif id == PF_metrics+1 then
+            call PF_Row(r,"Average gold pooled per Pro match","",I2S(PF_Average(PF_priorEco[6]+PF_Economy(s,6),amount)),"")
+        elseif id == PF_metrics+2 then
+            call PF_Row(r,"Average gold received per Pro match","",I2S(PF_Average(PF_priorEco[7]+PF_Economy(s,7),amount)),"")
+        elseif id == PF_metrics+3 then
+            call PF_Row(r,"Total gold pooled","",I2S(PF_priorEco[2]+PF_Economy(s,2)),"")
+        else
+            call PF_Row(r,"Total pooled gold received","",I2S(PF_priorEco[3]+PF_Economy(s,3)),"")
+        endif
+    elseif id == 64 then
+        call PF_Row(r,PF_label[id],HUD_WalletValue(),"","")
+    else
+        if id >= PF_casinoFirst then
+            set s = account
+        endif
+        set amount = PF_Number(s,id)
+        if id >= PF_combatFirst and id < PF_combatFirst+8 and DPS_ProfileLoaded and s == account then
+            set lifetime = I2S(DPS_Prior[id-PF_combatFirst]+amount)
+        endif
+        call PF_Row(r,PF_label[id],I2S(amount),lifetime,"")
+    endif
+endfunction
+
+function PF_UsageRow takes integer s, integer r, integer ix returns nothing
+    local integer kind = FF_US_TECH
+    local integer k
+    local integer id
+    local string uses
+    loop
+        set k = FF_us_CountKey(s,kind)
+        exitwhen ix < FF_us_n[k] or kind == FF_US_TOWER
+        set ix = ix-FF_us_n[k]
+        if kind == FF_US_TECH then
+            set kind = FF_US_SPELL
+        elseif kind == FF_US_SPELL then
+            set kind = FF_US_CMD
+        else
+            set kind = FF_US_TOWER
+        endif
+    endloop
+    set id = LoadInteger(FF_us_ht,FF_us_OrderKey(s,kind),ix)
+    set uses = I2S(LoadInteger(FF_us_ht,k,id))
+    if kind == FF_US_CMD then
+        call PF_Row(r,FF_us_cmd[id],FF_us_catName[kind],uses,"")
+    else
+        call PF_Row(r,PF_Name(id),FF_us_catName[kind],uses,PF_Art(id))
+    endif
 endfunction
 
 function PF_ProfileView takes nothing returns nothing
     local integer s = PF_MySlot()
-    local integer account = GetPlayerId(GetLocalPlayer())+1
     local integer kind = PF_section
-    local integer k = s*10+kind
-    local integer count
+    local integer count = PF_sectionCount[kind]
     local integer i = 0
     local integer ix
     local integer id
     local integer amount
-    local integer start = 0
-    local string detail
-    local string art
-    if kind == 0 then
-        set count = PF_casinoFirst+4
-        if s > 12 then
-            set count = 0
-        endif
-    elseif kind <= 4 then
+    local string empty = "No entries yet this match"
+    call BlzFrameSetText(PF_title,GetPlayerName(GetLocalPlayer()))
+    call BlzFrameSetText(PF_subtitle,"Player profile")
+    call BlzFrameSetText(PF_sectionTitle,PF_sectionName[kind])
+    call PF_Columns("Statistic","This match","Lifetime")
+    if kind >= 1 and kind <= 4 then
         set count = PF_careerCount[kind]
+        call PF_Columns(PF_sectionName[kind],"This match","Lifetime")
+        set empty = "No entries recorded yet"
     elseif kind == 5 then
         set count = PF_logCount[s]
+        call PF_Columns("Time     Action","Gold","Balance")
     elseif kind == 6 then
-        set start = PF_casinoFirst
-        set count = PF_metrics-start
-    else
+        call PF_Columns("Account activity","Amount","")
+    elseif kind == 7 then
         set count = FF_us_n[FF_us_CountKey(s,FF_US_TECH)]+FF_us_n[FF_us_CountKey(s,FF_US_SPELL)]+FF_us_n[FF_us_CountKey(s,FF_US_CMD)]+FF_us_n[FF_us_CountKey(s,FF_US_TOWER)]
+        call PF_Columns("Action","Type","Uses")
+    elseif s > 12 then
+        set count = 0
+        set empty = "Match statistics appear when you control a player."
+    elseif kind == 10 then
+        call PF_Columns("Statistic","This match","")
     endif
-    call PF_Paginate(count)
-    call BlzFrameSetText(PF_title,"|cffffcc68Player Profile|r    "+GetPlayerName(GetLocalPlayer()))
-    call BlzFrameSetText(PF_subtitle,"This match")
-    if kind >= 1 and kind <= 4 then
-        call BlzFrameSetText(PF_subtitle,"This match  /  Lifetime on this computer")
-        if kind == 4 then
-            call BlzFrameSetText(PF_subtitle,"Appearances fielded, including default skins    |    This match  /  Lifetime")
-        endif
-    elseif kind == 5 then
-        call BlzFrameSetText(PF_subtitle,"Build order   /   Oldest first. Gold debits include trades. Purchase lines show known prices.")
-    elseif kind == 6 then
-        call BlzFrameSetText(PF_subtitle,"Casino and credit   /   Wallet")
-    endif
+    set PF_pages = IMaxBJ(1,(count+8)/9)
+    set PF_page = IMinBJ(PF_page,PF_pages-1)
     loop
-        set ix = PF_page*14+i
-        exitwhen i >= 14 or ix >= count
-        if kind == 0 or kind == 6 then
-            set id = start+ix
-            if kind == 0 and id >= PF_casinoFirst then
-                set amount = PF_priorEco[1]+PF_Economy(s,1)
-                if id == PF_casinoFirst then
-                    call PF_Card(i,"Pro matches played",I2S(amount),"")
-                elseif id == PF_casinoFirst+1 then
-                    call PF_Card(i,"Average gold pooled / Pro match",I2S(PF_Average(PF_priorEco[6]+PF_Economy(s,6),amount)),"")
-                elseif id == PF_casinoFirst+2 then
-                    call PF_Card(i,"Average gold received / Pro match",I2S(PF_Average(PF_priorEco[7]+PF_Economy(s,7),amount)),"")
-                else
-                    call PF_Card(i,"Lifetime pooled / received",I2S(PF_priorEco[2]+PF_Economy(s,2))+" / "+I2S(PF_priorEco[3]+PF_Economy(s,3)),"")
-                endif
-            else
-            if kind == 6 then
-                set amount = PF_Number(account,id)
-            else
-                set amount = PF_Number(s,id)
-            endif
-            set detail = I2S(amount)
-            if kind == 0 and id >= PF_combatFirst and id < PF_combatFirst+8 and DPS_ProfileLoaded and s == account then
-                set detail = detail+" this match    /    "+I2S(DPS_Prior[id-PF_combatFirst]+amount)+" lifetime"
-            endif
-            call PF_Card(i,PF_label[id],detail,"")
-            endif
-        elseif kind <= 4 then
+        set ix = PF_page*9+i
+        exitwhen i >= 9 or ix >= count
+        if kind >= 1 and kind <= 4 then
             set id = LoadInteger(PF_local,kind+10,ix)
-            set amount = LoadInteger(PF_data,k,id)
-            set detail = I2S(amount)+" this match    /    "+I2S(amount+LoadInteger(PF_local,kind,id))+" lifetime"
-            call PF_Card(i,PF_Name(id),detail,PF_Art(id))
+            set amount = LoadInteger(PF_data,s*10+kind,id)
+            call PF_Row(i,PF_Name(id),I2S(amount),I2S(amount+LoadInteger(PF_local,kind,id)),PF_Art(id))
         elseif kind == 5 then
             call PF_Activity(s,i,ix)
+        elseif kind == 7 then
+            call PF_UsageRow(s,i,ix)
         else
-            set id = FF_US_TECH
-            loop
-                set k = FF_us_CountKey(s,id)
-                exitwhen ix < FF_us_n[k] or id == FF_US_TOWER
-                set ix = ix-FF_us_n[k]
-                if id == FF_US_TECH then
-                    set id = FF_US_SPELL
-                elseif id == FF_US_SPELL then
-                    set id = FF_US_CMD
-                else
-                    set id = FF_US_TOWER
-                endif
-            endloop
-            set amount = LoadInteger(FF_us_ht,FF_us_OrderKey(s,id),ix)
-            set detail = FF_us_catName[id]+"    "+I2S(LoadInteger(FF_us_ht,k,amount))
-            if id == FF_US_CMD then
-                call PF_Card(i,FF_us_cmd[amount],detail,"")
-            else
-                call PF_Card(i,PF_Name(amount),detail,PF_Art(amount))
-            endif
+            call PF_StatRow(i,s,PF_metricOrder[kind*100+ix])
         endif
         set i = i+1
     endloop
     if count == 0 then
-        call BlzFrameSetText(PF_line[0],"No entries yet")
+        call PF_Row(0,empty,"","","")
     endif
 endfunction
 
@@ -68106,13 +68854,102 @@ function PF_ResultsView takes nothing returns nothing
     call BlzFrameSetText(PF_subtitle,"Final standings    "+PF_Clock(PF_endSecond)+control+"    Wallet earnings   "+I2S(PF_rewards[GetPlayerId(GetLocalPlayer())+1]))
 endfunction
 
+function PF_AlignNumber takes framehandle f returns nothing
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_RIGHT)
+    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.013,0)
+endfunction
+
+function PF_CreateProfile takes trigger t returns nothing
+    local integer i = 0
+    local real y
+    local framehandle f
+    set PF_sectionTitle = PF_Text(-0.182,0.084,0.54,0.040,0.022)
+    call BlzFrameSetFont(PF_sectionTitle,"CasinoUI\\Bold.ttf",0.021,0)
+    set PF_col[0] = PF_Text(-0.174,0.131,0.306,0.023,0.011)
+    set PF_col[1] = PF_Text(0.136,0.131,0.106,0.023,0.011)
+    set PF_col[2] = PF_Text(0.249,0.131,0.108,0.023,0.011)
+    loop
+        exitwhen i >= 3
+        call BlzFrameSetTextColor(PF_col[i],BlzConvertColor(255,232,202,146))
+        if i > 0 then
+            call BlzFrameSetTextAlignment(PF_col[i],TEXT_JUSTIFY_MIDDLE,TEXT_JUSTIFY_RIGHT)
+        endif
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 11
+        set PF_menu[i] = PF_Button(t,-0.366,0.091+I2R(i)*0.041,0.158)
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 9
+        set y = 0.162+I2R(i)*0.042
+        set f = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
+        call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.182,-y)
+        call BlzFrameSetSize(f,0.548,0.038)
+        call BlzFrameSetTexture(f,"ReplaceableTextures\\TeamColor\\TeamColor08.blp",0,true)
+        call BlzFrameSetVertexColor(f,BlzConvertColor(80,149,147,135))
+        set PF_stripe[i] = f
+        set PF_icon[i] = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
+        call BlzFrameSetPoint(PF_icon[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.174,-y-0.006)
+        call BlzFrameSetSize(PF_icon[i],0.026,0.026)
+        set PF_line[i] = PF_Text(-0.174,y,0.306,0.038,0.013)
+        set PF_value[i] = PF_Text(0.136,y,0.106,0.038,0.013)
+        set PF_extra[i] = PF_Text(0.249,y,0.108,0.038,0.013)
+        call PF_AlignNumber(PF_value[i])
+        call PF_AlignNumber(PF_extra[i])
+        call BlzFrameSetTextColor(PF_extra[i],BlzConvertColor(255,232,218,190))
+        set i = i+1
+    endloop
+    set f = null
+endfunction
+
+function PF_RenderNavigation takes nothing returns nothing
+    local integer i = 0
+    local integer section
+    loop
+        exitwhen i >= 6
+        call BlzFrameSetVisible(PF_tab[i],PF_results)
+        if PF_results then
+            call BlzFrameSetText(PF_tab[i],PF_tabName[10+i])
+            call BlzFrameSetEnable(PF_tab[i],i != PF_section)
+        endif
+        set i = i+1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 11
+        call BlzFrameSetVisible(PF_menu[i],not PF_results)
+        if not PF_results then
+            set section = PF_menuOrder[i]
+            if section == PF_section then
+                call BlzFrameSetText(PF_menu[i],"|cffffd784>  "+PF_sectionName[section]+"|r")
+            else
+                call BlzFrameSetText(PF_menu[i],PF_sectionName[section])
+            endif
+        endif
+        set i = i+1
+    endloop
+    call BlzFrameSetVisible(PF_sectionTitle,not PF_results)
+    set i = 0
+    loop
+        exitwhen i >= 3
+        call BlzFrameSetVisible(PF_col[i],not PF_results)
+        set i = i+1
+    endloop
+endfunction
+
 function PF_Render takes nothing returns nothing
     local integer i = 0
     if not PF_visible then
         return
     endif
     loop
-        exitwhen i >= 14
+        exitwhen i >= 9
+        call BlzFrameSetVisible(PF_stripe[i],false)
+        call BlzFrameSetText(PF_extra[i],"")
         call BlzFrameSetText(PF_line[i],"")
         call BlzFrameSetText(PF_value[i],"")
         call BlzFrameSetVisible(PF_icon[i],false)
@@ -68131,18 +68968,7 @@ function PF_Render takes nothing returns nothing
         call BlzFrameSetVisible(PF_portrait[i],false)
         set i = i+1
     endloop
-    set i = 0
-    loop
-        exitwhen i >= 8
-        call BlzFrameSetVisible(PF_tab[i],not PF_results or i < 6)
-        if PF_results then
-            call BlzFrameSetText(PF_tab[i],PF_tabName[10+i])
-        else
-            call BlzFrameSetText(PF_tab[i],PF_tabName[i])
-        endif
-        call BlzFrameSetEnable(PF_tab[i],i != PF_section)
-        set i = i+1
-    endloop
+    call PF_RenderNavigation()
     if PF_results then
         call PF_ResultsView()
     else
@@ -68166,6 +68992,14 @@ function PF_Open takes boolean results returns nothing
     local integer h = BlzGetLocalClientHeight()
     set PF_visible = true
     set PF_results = results
+    call BlzFrameClearAllPoints(PF_subtitle)
+    if results then
+        call BlzFrameSetPoint(PF_subtitle,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.365,-0.069)
+        call BlzFrameSetSize(PF_subtitle,0.735,0.019)
+    else
+        call BlzFrameSetPoint(PF_subtitle,FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,-0.100,-0.051)
+        call BlzFrameSetSize(PF_subtitle,0.370,0.019)
+    endif
     set PF_section = 0
     set PF_page = 0
     if h > 0 then
@@ -68203,8 +69037,11 @@ function PF_Click takes nothing returns nothing
             set PF_page = IMinBJ(PF_pages-1,PF_page+1)
         else
             loop
-                exitwhen i >= 8
-                if f == PF_tab[i] then
+                exitwhen i >= 11
+                if not PF_results and f == PF_menu[i] then
+                    set PF_section = PF_menuOrder[i]
+                    set PF_page = 0
+                elseif PF_results and i < 6 and f == PF_tab[i] then
                     set PF_section = i
                     set PF_page = 0
                 endif
@@ -68228,15 +69065,16 @@ function PF_Create takes nothing returns nothing
     call BlzFrameSetLevel(PF_root,100)
     call BlzFrameSetAbsPoint(PF_root,FRAMEPOINT_TOP,0.4,0.6)
     call BlzFrameSetSize(PF_root,0.8,0.6)
-    set PF_title = PF_Text(-0.365,0.020,0.59,0.033,0.021)
-    set PF_subtitle = PF_Text(-0.365,0.059,0.735,0.021,0.011)
+    set PF_title = PF_Text(-0.100,0.018,0.370,0.035,0.020)
+    call BlzFrameSetFont(PF_title,"CasinoUI\\Bold.ttf",0.020,0)
+    set PF_subtitle = PF_Text(-0.365,0.069,0.735,0.019,0.010)
     set PF_back = PF_Button(t,0.284,0.021,0.081)
     call BlzFrameSetText(PF_back,"Back")
     set PF_continue = PF_Button(t,0.284,0.021,0.081)
     call BlzFrameSetText(PF_continue,"Continue")
     loop
-        exitwhen i >= 8
-        set PF_tab[i] = PF_Button(t,-0.366+I2R(i)*0.092,0.089,0.091)
+        exitwhen i >= 6
+        set PF_tab[i] = PF_Button(t,-0.366+I2R(i)*0.123,0.089,0.118)
         set i = i+1
     endloop
     set i = 0
@@ -68265,19 +69103,7 @@ function PF_Create takes nothing returns nothing
         endloop
         set i = i+1
     endloop
-    set i = 0
-    loop
-        exitwhen i >= 14
-        set x = -0.362+I2R(i/7)*0.369
-        set y = 0.146+I2R(ModuloInteger(i,7))*0.057
-        set PF_icon[i] = BlzCreateFrameByType("BACKDROP","",PF_root,"",i)
-        call BlzFrameSetPoint(PF_icon[i],FRAMEPOINT_TOPLEFT,PF_root,FRAMEPOINT_TOP,x,-y)
-        call BlzFrameSetSize(PF_icon[i],0.039,0.039)
-        set PF_line[i] = PF_Text(x+0.045,y,0.315,0.022,0.013)
-        set PF_value[i] = PF_Text(x+0.045,y+0.022,0.315,0.021,0.010)
-        call BlzFrameSetTextColor(PF_value[i],BlzConvertColor(255,211,188,148))
-        set i = i+1
-    endloop
+    call PF_CreateProfile(t)
     set PF_prev = PF_Button(t,-0.170,0.548,0.085)
     set PF_next = PF_Button(t,0.084,0.548,0.085)
     call BlzFrameSetText(PF_prev,"Previous")
@@ -68341,6 +69167,8 @@ function CatalogClick takes nothing returns nothing
         if PK_Eligible(GetPlayerId(GetTriggerPlayer())) then
             set CasinoLauncherSlot = GetPlayerId(GetTriggerPlayer())+1
             call TriggerExecute(CasinoOpen)
+        else
+            call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 3.0, "Casino is unavailable for this player.")
         endif
         set f = null
         return
@@ -68365,7 +69193,7 @@ function CatalogClick takes nothing returns nothing
         call BlzFrameSetVisible(DPS_PageButton, CatalogKind == 0)
         call BlzFrameSetVisible(spellKeysToggle, CatalogKind == 0)
         call BlzFrameSetVisible(CatalogSkins, CatalogKind == 0)
-        call BlzFrameSetVisible(CatalogCasino, CatalogKind == 0 and PK_Eligible(GetPlayerId(GetLocalPlayer())))
+        call BlzFrameSetVisible(CatalogCasino,CasinoAdmin(GetPlayerId(GetLocalPlayer())+1) and CatalogKind == 0)
         if CatalogKind != 0 then
             call CatalogRefresh()
         endif
@@ -68385,13 +69213,13 @@ endfunction
 function CatalogCreate takes nothing returns nothing
     local trigger click = CreateTrigger()
     call TriggerAddAction(click, function CatalogClick)
-    set CatalogSkins = CatalogButton(DPS_Panel, click, "Skins", 0.305, 0.018)
+    set CatalogSkins = CatalogButton(DPS_Panel, click, "Skins", 0.170, 0.018)
     set CatalogCasino = BlzCreateFrame("ScriptDialogButton",DPS_Panel,0,0)
     call BlzFrameSetSize(CatalogCasino,0.11,0.026)
-    call BlzFrameSetPoint(CatalogCasino,FRAMEPOINT_TOPLEFT,DPS_Panel,FRAMEPOINT_TOPLEFT,0.420,-0.018)
+    call BlzFrameSetPoint(CatalogCasino,FRAMEPOINT_TOPLEFT,DPS_Panel,FRAMEPOINT_TOPLEFT,0.410,-0.018)
     call BlzFrameSetText(CatalogCasino,"Casino")
     call BlzTriggerRegisterFrameEvent(click,CatalogCasino,FRAMEEVENT_CONTROL_CLICK)
-    call BlzFrameSetVisible(CatalogCasino,PK_Eligible(GetPlayerId(GetLocalPlayer())))
+    call BlzFrameSetVisible(CatalogCasino,CasinoAdmin(GetPlayerId(GetLocalPlayer())+1))
     set CatalogPanel = BlzCreateFrameByType("FRAME", "WalletCatalog", DPS_Panel, "", 0)
     call BlzFrameSetAllPoints(CatalogPanel, DPS_Panel)
     set CatalogTitle = BlzCreateFrameByType("TEXT", "WalletCatalogTitle", CatalogPanel, "", 0)
@@ -68431,10 +69259,10 @@ function DPS_Toggle takes nothing returns nothing
             call BlzFrameSetVisible(DPS_Table, true)
             call BlzFrameSetVisible(DPS_ProfileText, false)
             call BlzFrameSetVisible(DPS_PageButton, true)
-            call BlzFrameSetText(DPS_PageButton, "My Profile")
+            call BlzFrameSetText(DPS_PageButton, "Profile")
             call BlzFrameSetVisible(spellKeysToggle, true)
             call BlzFrameSetVisible(CatalogSkins, true)
-            call BlzFrameSetVisible(CatalogCasino, PK_Eligible(p))
+            call BlzFrameSetVisible(CatalogCasino,CasinoAdmin(GetPlayerId(GetLocalPlayer())+1))
         endif
         call BlzFrameSetVisible(DPS_Panel, DPS_Open[p])
         call BlzFrameSetEnable(clicked, false)
@@ -68462,13 +69290,13 @@ function DPS_Create takes nothing returns nothing
     call BlzFrameSetSize(DPS_Button, 0.066, 0.026)
     call BlzFrameSetPoint(DPS_Button, FRAMEPOINT_BOTTOM, BlzGetOriginFrame(ORIGIN_FRAME_MINIMAP, 0), FRAMEPOINT_TOP, 0.0, 0.002)
     call BlzFrameSetVisible(DPS_Button, true)
-    call BlzFrameSetText(DPS_Button, "Profile")
+    call BlzFrameSetText(DPS_Button, "Info")
     call BlzFrameSetLevel(DPS_Button, 20)
     call BlzTriggerRegisterFrameEvent(click, DPS_Button, FRAMEEVENT_CONTROL_CLICK)
     call TriggerAddAction(click, function DPS_Toggle)
     set DPS_Panel = BlzCreateFrame("EscMenuBackdrop", ui, 0, 0)
     call BlzFrameSetSize(DPS_Panel, 0.715, 0.393)
-    call BlzFrameSetAbsPoint(DPS_Panel, FRAMEPOINT_TOPLEFT, 0.0425, 0.565)
+    call BlzFrameSetAbsPoint(DPS_Panel, FRAMEPOINT_TOPLEFT, 0.0425, 0.526)
     call BlzFrameSetLevel(DPS_Panel, 19)
     set DPS_Table = BlzCreateFrameByType("FRAME", "DPS_Table", DPS_Panel, "", 0)
     call BlzFrameSetAllPoints(DPS_Table, DPS_Panel)
@@ -68478,9 +69306,9 @@ function DPS_Create takes nothing returns nothing
     call BlzFrameSetTextAlignment(DPS_ProfileText, TEXT_JUSTIFY_TOP, TEXT_JUSTIFY_LEFT)
     call BlzFrameSetVisible(DPS_ProfileText, false)
     set DPS_PageButton = BlzCreateFrame("ScriptDialogButton", DPS_Panel, 0, 0)
-    call BlzFrameSetSize(DPS_PageButton, 0.084, 0.022)
-    call BlzFrameSetPoint(DPS_PageButton, FRAMEPOINT_TOPRIGHT, DPS_Panel, FRAMEPOINT_TOPRIGHT, -0.060, -0.018)
-    call BlzFrameSetText(DPS_PageButton, "My Profile")
+    call BlzFrameSetSize(DPS_PageButton, 0.110, 0.026)
+    call BlzFrameSetPoint(DPS_PageButton, FRAMEPOINT_TOPLEFT, DPS_Panel, FRAMEPOINT_TOPLEFT, 0.050, -0.018)
+    call BlzFrameSetText(DPS_PageButton, "Profile")
     set pageClick = CreateTrigger()
     call BlzTriggerRegisterFrameEvent(pageClick, DPS_PageButton, FRAMEEVENT_CONTROL_CLICK)
     call TriggerAddAction(pageClick, function DPS_Flip)
@@ -68503,6 +69331,7 @@ function DPS_Create takes nothing returns nothing
         call BlzFrameSetPoint(DPS_Icon[s], FRAMEPOINT_TOPLEFT, DPS_Panel, FRAMEPOINT_TOPLEFT, 0.026, -y)
         call BlzFrameSetSize(DPS_Icon[s], 0.018, 0.018)
         set DPS_Gold[s] = DPS_Text("DPS_Gold", 0.620, y, 0.070, "-")
+        call BlzFrameSetFont(DPS_Gold[s],"CasinoUI\\Bold.ttf",0.011,0)
         set DPS_Cell[s * 10] = DPS_Text("DPS_Name", 0.050, y, 0.150, "")
         set DPS_Cell[s * 10 + 1] = DPS_Text("DPS_Kills", 0.205, y, 0.028, "0")
         set DPS_Cell[s * 10 + 2] = DPS_Text("DPS_Deaths", 0.236, y, 0.028, "0")
@@ -68525,8 +69354,8 @@ function DPS_Create takes nothing returns nothing
     call BlzFrameSetVisible(DPS_Panel, false)
     call CatalogCreate()
     set pageClick = CreateTrigger()
-    set spellKeysToggle = CatalogButton(DPS_Panel, pageClick, "Hotkeys", 0.050, 0.018)
-    call BlzFrameSetSize(spellKeysToggle, 0.073, 0.022)
+    set spellKeysToggle = CatalogButton(DPS_Panel, pageClick, "Hotkeys", 0.290, 0.018)
+    call BlzFrameSetSize(spellKeysToggle, 0.110, 0.026)
     call TriggerAddAction(pageClick, function SpellKeysClick)
     set pageClick = null
     call PF_Create()
@@ -68543,6 +69372,7 @@ function DPS_Refresh takes nothing returns nothing
     local integer i
     local unit hero
     local string name
+    call HUD_Refresh()
     if not DPS_Ready then
         call DPS_Create()
     endif
@@ -68622,6 +69452,7 @@ function DPS_Init takes nothing returns nothing
     call TriggerAddAction(PF_sync,function PF_ReceiveHistory)
     set PF_sync = null
     call TriggerAddAction(sync, function WalletReceive)
+    call HUD_Create()
     call TimerStart(CreateTimer(), 0.00, false, function WalletLoad)
     set sync = null
     set DPS_Damage = InitHashtable()
@@ -68633,6 +69464,726 @@ function DPS_Init takes nothing returns nothing
     set DPS_Timer = CreateTimer()
     call TimerStart(DPS_Timer, 1.0, true, function DPS_Refresh)
     set t = null
+endfunction
+
+function FF_LearnTip_ADk1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ADk1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 110 damage each way and pulls enemies toward you on its return.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 150 damage each way and pulls enemies toward you on its return.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 190 damage each way and pulls enemies toward you on its return.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 230 damage each way and pulls enemies toward you on its return.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 270 damage each way and pulls enemies toward you on its return.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ADk1', "Learn Reaping Axe [|cffffcc00Q|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk1', "Throw a returning axe that deals 310 damage each way and pulls enemies toward you on its return.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ADk2 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ADk2')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 1|nAttacks have a 25% chance to deal 55 magic damage to ground enemies around the target.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 4|nAttacks have a 25% chance to deal 80 magic damage to ground enemies around the target.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 7|nAttacks have a 25% chance to deal 105 magic damage to ground enemies around the target.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 10|nAttacks have a 25% chance to deal 130 magic damage to ground enemies around the target.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 13|nAttacks have a 25% chance to deal 155 magic damage to ground enemies around the target.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ADk2', "Learn Pulverize [|cffffcc00W|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk2', "Requires hero level 16|nAttacks have a 25% chance to deal 180 magic damage to ground enemies around the target.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ADk3 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ADk3')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 1|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 25 damage and healing you for 7 per mark.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 4|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 35 damage and healing you for 10 per mark.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 7|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 45 damage and healing you for 13 per mark.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 10|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 55 damage and healing you for 16 per mark.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 13|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 65 damage and healing you for 19 per mark.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ADk3', "Learn Blood Tithe [|cffffcc00E|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk3', "Requires hero level 16|nReaping Axe and Pulverize mark enemies. Consume up to 6 marks per enemy, dealing 75 damage and healing you for 22 per mark.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ADk4 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ADk4')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 15s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 18s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('ADk4', "Learn Demon Ascension [|cffffcc00R|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk4', "Transform for 21s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ADk5 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ADk5')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 1|nHook enemies in a line for 120 damage, briefly stunning and dragging them toward you.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 4|nHook enemies in a line for 160 damage, briefly stunning and dragging them toward you.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 7|nHook enemies in a line for 200 damage, briefly stunning and dragging them toward you.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 10|nHook enemies in a line for 240 damage, briefly stunning and dragging them toward you.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 13|nHook enemies in a line for 280 damage, briefly stunning and dragging them toward you.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ADk5', "Learn Soul Hook [|cffffcc00E|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ADk5', "Requires hero level 16|nHook enemies in a line for 320 damage, briefly stunning and dragging them toward you.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AMu3 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AMu3')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 1|nFlip heroes and creeps behind you for 50 damage, or swallow a lesser unit. Digestion heals you and restores 200 health to nearby allies when it finishes.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 4|nFlip heroes and creeps behind you for 80 damage, or swallow a lesser unit. Digestion heals you and restores 250 health to nearby allies when it finishes.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 7|nFlip heroes and creeps behind you for 110 damage, or swallow a lesser unit. Digestion heals you and restores 300 health to nearby allies when it finishes.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 10|nFlip heroes and creeps behind you for 140 damage, or swallow a lesser unit. Digestion heals you and restores 350 health to nearby allies when it finishes.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 13|nFlip heroes and creeps behind you for 170 damage, or swallow a lesser unit. Digestion heals you and restores 400 health to nearby allies when it finishes.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AMu3', "Learn Maul [|cffffcc00E|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu3', "Requires hero level 16|nFlip heroes and creeps behind you for 200 damage, or swallow a lesser unit. Digestion heals you and restores 450 health to nearby allies when it finishes.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AMu1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AMu1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 80 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 120 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 160 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 200 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 240 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AMu1', "Learn Infected Cleaver [|cffffcc00Q|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu1', "Throw a cleaver for 280 base damage and a slow. Distance and missing health increase damage. Retrieve it to throw again. Recovering a bloodied blade empowers the next hit.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AMu2 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AMu2')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 35-70 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 50-100 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 65-130 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 80-160 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 95-190 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AMu2', "Learn Poison Gas - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu2', "Drain your health to poison nearby enemies for 110-220 damage per second. The cloud grows stronger over 10 seconds and grants spell resistance.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AMu4 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AMu4')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 15s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 18s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('AMu4', "Learn Undying - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AMu4', "Spend 20% of current health. Transform for 21s, gaining spell immunity, regeneration, cleave, and faster attacks and movement. Lethal damage grants 10 final seconds of life.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_A0DL takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'A0DL')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897985|r damage and stuns marked enemies for 0.5s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979125|r damage and stuns marked enemies for 0.75s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 7|nMark enemies in the orb's path. On arrival, it deals |cffff8979200|r damage and stuns marked enemies for 1s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff8979300|r damage and stuns marked enemies for 1.25s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979475|r damage and stuns marked enemies for 1.5s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AOz1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AOz1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 1|nSend the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 4|nSend the orb through enemies, dealing |cffff897990|r damage and slowing them by 25% for 2s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 7|nSend the orb through enemies, dealing |cffff8979120|r damage and slowing them by 25% for 2s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 10|nSend the orb through enemies, dealing |cffff8979160|r damage and slowing them by 25% for 2s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 13|nSend the orb through enemies, dealing |cffff8979200|r damage and slowing them by 25% for 2s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz1', "Requires hero level 16|nSend the orb through enemies, dealing |cffff8979225|r damage and slowing them by 25% for 2s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AOz2 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AOz2')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 1|nPulse from the orb, dealing |cffff897975|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 4|nPulse from the orb, dealing |cffff8979100|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 7|nPulse from the orb, dealing |cffff8979125|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 10|nPulse from the orb, dealing |cffff8979185|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 13|nPulse from the orb, dealing |cffff8979225|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AOz2', "Learn Felfire Pulse [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz2', "Requires hero level 16|nPulse from the orb, dealing |cffff8979500|r damage and slowing nearby enemies by 25% for 2s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AOz3 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AOz3')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 1|nSend the orb to an ally. It deals |cffff897930|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d100|r and grants movement speed.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 4|nSend the orb to an ally. It deals |cffff897950|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d150|r and grants movement speed.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 7|nSend the orb to an ally. It deals |cffff897975|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d200|r and grants movement speed.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 10|nSend the orb to an ally. It deals |cffff8979100|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d250|r and grants movement speed.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 13|nSend the orb to an ally. It deals |cffff8979125|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d300|r and grants movement speed.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AOz3', "Learn Soul Pact [E] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz3', "Requires hero level 16|nSend the orb to an ally. It deals |cffff8979150|r damage and slows enemies it crosses, then heals nearby allies for |cff86e99d400|r and grants movement speed.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AOz4 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AOz4')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 6|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979200|r damage. Excludes buildings and immune enemies.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 11|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979275|r damage. Excludes buildings and immune enemies.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('AOz4', "Learn Nether Vortex [R] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AOz4', "Requires hero level 16|nAfter 0.5s, pull nearby ground enemies toward the orb for |cffff8979400|r damage. Excludes buildings and immune enemies.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AGr1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AGr1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 1|nRoll a barrel that explodes for |cffff8979100|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 4|nRoll a barrel that explodes for |cffff8979140|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 7|nRoll a barrel that explodes for |cffff8979190|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 10|nRoll a barrel that explodes for |cffff8979260|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 13|nRoll a barrel that explodes for |cffff8979350|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AGr1', "Learn Barrel Roll [|cffffcc00Q|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr1', "Requires hero level 16|nRoll a barrel that explodes for |cffff8979570|r damage, slowing enemies by 25% for 2s. Recast after landing to detonate early.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AGr2 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AGr2')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 1|nFor 5s, gain 5 armor, reduce incoming spell damage by 10% and recover |cff86e99d20|r HP per second.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 4|nFor 5s, gain 7 armor, reduce incoming spell damage by 15% and recover |cff86e99d30|r HP per second.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 7|nFor 5s, gain 9 armor, reduce incoming spell damage by 20% and recover |cff86e99d40|r HP per second.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 10|nFor 5s, gain 11 armor, reduce incoming spell damage by 25% and recover |cff86e99d50|r HP per second.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 13|nFor 5s, gain 13 armor, reduce incoming spell damage by 30% and recover |cff86e99d60|r HP per second.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AGr2', "Learn Drunken Fortitude [|cffffcc00W|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr2', "Requires hero level 16|nFor 5s, gain 15 armor, reduce incoming spell damage by 35% and recover |cff86e99d70|r HP per second.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AGr3 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AGr3')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 1|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 10 damage per second for 4s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 4|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 20 damage per second for 4s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 7|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 30 damage per second for 4s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 10|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 40 damage per second for 4s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 13|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 50 damage per second for 4s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AGr3', "Learn Drunken Haze [|cffffcc00E|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr3', "Requires hero level 16|nSlow enemies and give their attacks a chance to miss. A barrel explosion ignites hazed enemies for 60 damage per second for 4s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AGr4 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AGr4')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 6|nThrow a cask that knocks ground enemies back, deals |cffff8979200|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 11|nThrow a cask that knocks ground enemies back, deals |cffff8979300|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('AGr4', "Learn Explosive Cask [|cffffcc00R|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AGr4', "Requires hero level 16|nThrow a cask that knocks ground enemies back, deals |cffff8979400|r damage and stuns for 0.6s. Ignites hazed enemies and refreshes burning enemies for 4s at your current Drunken Haze rank.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AZd1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AZd1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897967.5|r damage. Pulses have a 25% chance to double.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979112.5|r damage. Pulses have a 25% chance to double.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATf1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATf1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 1|nThrow three piercing cards. Each enemy takes 90 damage once per cast.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 4|nThrow three piercing cards. Each enemy takes 140 damage once per cast.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 7|nThrow three piercing cards. Each enemy takes 200 damage once per cast.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 10|nThrow three piercing cards. Each enemy takes 270 damage once per cast.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 13|nThrow three piercing cards. Each enemy takes 370 damage once per cast.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf1', "Requires hero level 16|nThrow three piercing cards. Each enemy takes 560 damage once per cast.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATf2 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATf2')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 1|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 4|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 7|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 10|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 13|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATf2', "Learn Pick a Card [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf2', "Requires hero level 16|nPress X to start on a random card. Cycle Blue, Red, Gold. Press X again to lock. Red splashes, Gold stuns, and Blue heals nearby allies. Throw with X or attack for a 20% stronger effect. Cooldown after use: 7s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATf6 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATf6')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 100 damage. Heals nearby allied heroes and troops for 100.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 150 damage. Heals nearby allied heroes and troops for 140.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 175 damage. Heals nearby allied heroes and troops for 180.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 225 damage. Heals nearby allied heroes and troops for 220.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 300 damage. Heals nearby allied heroes and troops for 260.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATf6', "Learn Throw Blue Card [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf6', "Throw Blue for 350 damage. Heals nearby allied heroes and troops for 300.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATf7 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATf7')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 150 damage. Deals 75 splash damage within 250.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 250 damage. Deals 110 splash damage within 260.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 300 damage. Deals 140 splash damage within 270.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 350 damage. Deals 185 splash damage within 280.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 450 damage. Deals 225 splash damage within 290.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATf7', "Learn Throw Red Card [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf7', "Throw Red for 500 damage. Deals 250 splash damage within 300.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATf8 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATf8')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 150 damage. Stuns the target for 1s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 200 damage. Stuns the target for 1.5s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 250 damage. Stuns the target for 1.75s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 300 damage. Stuns the target for 2s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 400 damage. Stuns the target for 2.2s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATf8', "Learn Throw Gold Card [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATf8', "Throw Gold for 450 damage. Stuns the target for 2.5s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATfb takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATfb')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 6|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once. Cooldown: 220s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 11|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once. Cooldown: 180s.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('ATfb', "Learn Destiny [R] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfb', "Requires hero level 16|nReveal the map and invisible units for 5s. Press V again and choose a destination to teleport once. Cooldown: 120s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATfd takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATfd')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 1|nPlace a pylon to shield nearby allied heroes for 100 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 4|nPlace a pylon to shield nearby allied heroes for 140 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 7|nPlace a pylon to shield nearby allied heroes for 180 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 10|nPlace a pylon to shield nearby allied heroes for 220 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 13|nPlace a pylon to shield nearby allied heroes for 260 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATfd', "Learn Psionic Recall [|cffffcc00E|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfd', "Requires hero level 16|nPlace a pylon to shield nearby allied heroes for 300 and pull one allied hero to you. The tether heals allies and slows enemies.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AFg1 takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AFg1')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 1|nPlace up to four barriers in 4s. Each blocks movement for 3s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 4|nPlace up to four barriers in 4s. Each blocks movement for 3s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 7|nPlace up to four barriers in 4s. Each blocks movement for 3.5s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 10|nPlace up to four barriers in 4s. Each blocks movement for 4s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 13|nPlace up to four barriers in 4s. Each blocks movement for 5s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AFg1', "Learn Force Field [|cffffcc00W|r] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AFg1', "Requires hero level 16|nPlace up to four barriers in 4s. Each blocks movement for 5s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_ATfg takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'ATfg')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 1|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 4|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 7|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 10|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 13|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 16|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AVge takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AVge')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 1|nCreate a cage for 3s. Enemies that touch its edge are stunned for 1.5s.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 4|nCreate a cage for 3s. Enemies that touch its edge are stunned for 1.75s.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 7|nCreate a cage for 3s. Enemies that touch its edge are stunned for 2s.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 10|nCreate a cage for 3s. Enemies that touch its edge are stunned for 2.25s.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 13|nCreate a cage for 3s. Enemies that touch its edge are stunned for 2.5s.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AVge', "Learn Event Horizon [E] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVge', "Requires hero level 16|nCreate a cage for 3s. Enemies that touch its edge are stunned for 2.75s.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AVgw takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AVgw')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 1|nAfter 1.25s, a meteor deals |cffff8979190|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 4|nAfter 1.25s, a meteor deals |cffff8979280|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 7|nAfter 1.25s, a meteor deals |cffff8979370|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 10|nAfter 1.25s, a meteor deals |cffff8979460|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 13|nAfter 1.25s, a meteor deals |cffff8979550|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AVgw', "Learn Dark Matter [W] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgw', "Requires hero level 16|nAfter 1.25s, a meteor deals |cffff8979640|r damage plus your Intelligence. Enemies at the center take |cffff897950%|r more.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AVgq takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AVgq')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 1|nDeals |cffff8979150 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 4|nDeals |cffff8979220 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    elseif rank == 2 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 7|nDeals |cffff8979290 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    elseif rank == 3 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 4", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 10|nDeals |cffff8979360 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    elseif rank == 4 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 5", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 13|nDeals |cffff8979430 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    elseif rank >= 5 then
+        call BlzSetAbilityResearchTooltip('AVgq', "Learn Baleful Strike [Q] - Level 6", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgq', "Requires hero level 16|nDeals |cffff8979500 + 60% Intelligence + permanent stacks|r as damage. Every enemy unit killed by Veigar grants |cffff8979+1|r permanent Z damage; enemy heroes grant |cffff8979+5|r instead. Stacks survive death and do not reset. The live bonus appears on this ability.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_AVgr takes unit hero returns nothing
+    local integer rank = GetUnitAbilityLevel(hero, 'AVgr')
+    if rank == 0 then
+        call BlzSetAbilityResearchTooltip('AVgr', "Learn Primordial Burst [R] - Level 1", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgr', "Requires hero level 6|nBlasts an enemy hero for |cffff8979550 + 1.2 x your Intelligence + 0.8 x target Intelligence|r damage. Baleful Strike kills permanently strengthen this spell.", 0)
+    elseif rank == 1 then
+        call BlzSetAbilityResearchTooltip('AVgr', "Learn Primordial Burst [R] - Level 2", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgr', "Requires hero level 11|nBlasts an enemy hero for |cffff8979850 + 1.2 x your Intelligence + 0.8 x target Intelligence|r damage. Baleful Strike kills permanently strengthen this spell.", 0)
+    elseif rank >= 2 then
+        call BlzSetAbilityResearchTooltip('AVgr', "Learn Primordial Burst [R] - Level 3", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AVgr', "Requires hero level 16|nBlasts an enemy hero for |cffff89791150 + 1.2 x your Intelligence + 0.8 x target Intelligence|r damage. Baleful Strike kills permanently strengthen this spell.", 0)
+    endif
+endfunction
+
+function FF_LearnTip_Refresh takes nothing returns nothing
+    local unit hero = GetTriggerUnit()
+    if IsUnitType(hero, UNIT_TYPE_HERO) and IsUnitSelected(hero, GetLocalPlayer()) then
+        call FF_LearnTip_ADk1(hero)
+        call FF_LearnTip_ADk2(hero)
+        call FF_LearnTip_ADk3(hero)
+        call FF_LearnTip_ADk4(hero)
+        call FF_LearnTip_ADk5(hero)
+        call FF_LearnTip_AMu3(hero)
+        call FF_LearnTip_AMu1(hero)
+        call FF_LearnTip_AMu2(hero)
+        call FF_LearnTip_AMu4(hero)
+        call FF_LearnTip_A0DL(hero)
+        call FF_LearnTip_AOz1(hero)
+        call FF_LearnTip_AOz2(hero)
+        call FF_LearnTip_AOz3(hero)
+        call FF_LearnTip_AOz4(hero)
+        call FF_LearnTip_AGr1(hero)
+        call FF_LearnTip_AGr2(hero)
+        call FF_LearnTip_AGr3(hero)
+        call FF_LearnTip_AGr4(hero)
+        call FF_LearnTip_AZd1(hero)
+        call FF_LearnTip_ATf1(hero)
+        call FF_LearnTip_ATf2(hero)
+        call FF_LearnTip_ATf6(hero)
+        call FF_LearnTip_ATf7(hero)
+        call FF_LearnTip_ATf8(hero)
+        call FF_LearnTip_ATfb(hero)
+        call FF_LearnTip_ATfd(hero)
+        call FF_LearnTip_AFg1(hero)
+        call FF_LearnTip_ATfg(hero)
+        call FF_LearnTip_AVge(hero)
+        call FF_LearnTip_AVgw(hero)
+        call FF_LearnTip_AVgq(hero)
+        call FF_LearnTip_AVgr(hero)
+    endif
+    set hero = null
+endfunction
+
+function FF_LearnTip_Init takes nothing returns nothing
+    local trigger refresh = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(refresh, EVENT_PLAYER_UNIT_SELECTED)
+    call TriggerRegisterAnyUnitEventBJ(refresh, EVENT_PLAYER_HERO_SKILL)
+    call TriggerAddAction(refresh, function FF_LearnTip_Refresh)
+    set refresh = null
 endfunction
 
 function FF_CompactHeroTooltips_Init takes nothing returns nothing
@@ -68833,17 +70384,17 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897967.5|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897967.5|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979120|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897990|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979112.5|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979150|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979112.5|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
@@ -69064,6 +70615,7 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityExtendedTooltip('ATfg', "Wager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
     call BlzSetAbilityResearchTooltip('ATfg', "Learn Loaded Dice [E] - Level 6", 5)
     call BlzSetAbilityResearchExtendedTooltip('ATfg', "Requires hero level 16|nWager 50 gold to win 50 more. Survival and hero kills raise your odds from 50% to 70%. Death resets them.", 5)
+    call FF_LearnTip_Init()
 endfunction
 
 // Timer slots: caster 0, owner 1, x/y 2/3, direction 4/5, age 6,
@@ -69281,6 +70833,9 @@ function Trig_Unit_Experience_System_Func006C takes nothing returns boolean
 endfunction
 
 function Trig_Unit_Experience_System_Actions takes nothing returns nothing
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     set udg_ExpDeadUnit_Copy=GetDyingUnit()
     set udg_ExpDeadUnit=GetDyingUnit()
     set udg_ExpDeadUnit_T2=GetDyingUnit()
@@ -69390,6 +70945,9 @@ function Trig_Foot_Exp_system_Func002C takes nothing returns boolean
 endfunction
 
 function Trig_Foot_Exp_system_Actions takes nothing returns nothing
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     set udg_ExpDeadUnit_Foot=GetDyingUnit()
     if ( Trig_Foot_Exp_system_Func002C() ) then
         set udg_ExpKillingUnit_Foot=GetKillingUnitBJ()
@@ -69516,7 +71074,7 @@ function CUI_Create takes framehandle parent, integer context, real x, real y, r
 endfunction
 
 // Observer Poker v1. All state changes run in synchronized trigger context.
-// Each eligible observer owns an independent heads-up practice table.
+// One open no-limit table for the match.
 
 
 function PK_Random takes integer bound returns integer
@@ -69640,8 +71198,7 @@ function PK_Score5 takes integer a, integer b, integer c, integer d, integer e r
     return packed
 endfunction
 
-function PK_Score takes integer p, integer seat, integer board returns integer
-    local integer base = p * 9
+function PK_Score takes integer seat returns integer
     local integer i = 0
     local integer a = 0
     local integer b = 0
@@ -69650,12 +71207,12 @@ function PK_Score takes integer p, integer seat, integer board returns integer
     local integer e = 0
     local integer best = 0
     local integer value = 0
-    local integer n = board + 2
-    set PK_Eval[0] = PK_Cards[base + seat * 2]
-    set PK_Eval[1] = PK_Cards[base + seat * 2 + 1]
+    local integer n = 7
+    set PK_Eval[0] = PK_Cards[seat*2]
+    set PK_Eval[1] = PK_Cards[seat*2+1]
     loop
-        exitwhen i >= board
-        set PK_Eval[i+2] = PK_Cards[base+4+i]
+        exitwhen i >= 5
+        set PK_Eval[i+2] = OP_Board[i]
         set i = i + 1
     endloop
     loop
@@ -69709,19 +71266,6 @@ function PK_Category takes integer score returns string
     return "high card"
 endfunction
 
-function PK_BoardCount takes integer p returns integer
-    if PK_Street[p] == 0 then
-        return 0
-    endif
-    return IMinBJ(5,PK_Street[p]+2)
-endfunction
-
-function PK_Limit takes integer p, integer seat returns integer
-    local integer x = p*2+seat
-    local integer y = p*2+1-seat
-    return IMinBJ(PK_Paid[x]+PK_Stack[x],PK_Paid[y]+PK_Stack[y])
-endfunction
-
 function PK_Pay takes integer x, integer amount returns nothing
     set PK_Stack[x] = PK_Stack[x]-amount
     set PK_Paid[x] = PK_Paid[x]+amount
@@ -69755,7 +71299,7 @@ function CAS_Reserve takes integer game, integer s, integer stake, integer liabi
         set CAS_note[s] = "Wallet unavailable, or this match has ended."
         return false
     endif
-    if stake < 10 or stake > 10000 or ModuloInteger(stake,2) != 0 or CAS_gold[s] < stake then
+    if stake < 10 or stake > 10000 or (game != 0 and ModuloInteger(stake,2) != 0) or CAS_gold[s] < stake then
         set CAS_note[s] = "Choose a wager of 10 to 10,000 gold within your balance."
         return false
     endif
@@ -69775,6 +71319,16 @@ function CAS_Reserve takes integer game, integer s, integer stake, integer liabi
     return true
 endfunction
 
+function CAS_ResultSound takes integer s, integer net returns nothing
+    if s > 0 then
+        if net > 0 then
+            call StartSoundForPlayerBJ(Player(s-1),CAS_winSound)
+        elseif net < 0 then
+            call StartSoundForPlayerBJ(Player(s-1),CAS_lossSound)
+        endif
+    endif
+endfunction
+
 function CAS_Settle takes integer game, integer s, integer stake, integer payout, integer liability returns nothing
     set CAS_escrow[s] = CAS_escrow[s]-stake
     set CAS_liability = CAS_liability-liability
@@ -69782,75 +71336,289 @@ function CAS_Settle takes integer game, integer s, integer stake, integer payout
     call CAS_Credit(game,s,IMinBJ(stake,payout),IMaxBJ(0,payout-stake))
 endfunction
 
-function PK_End takes integer p, integer winner, string note returns nothing
-    local integer x = p*2
-    local integer pot = PK_Total[x]+PK_Total[x+1]
-    if winner == 2 then
-        set PK_Stack[x] = PK_Stack[x]+pot/2
-        set PK_Stack[x+1] = PK_Stack[x+1]+pot/2
-        set PK_Stack[x+1-PK_Dealer[p]] = PK_Stack[x+1-PK_Dealer[p]]+ModuloInteger(pot,2)
-    else
-        set PK_Stack[x+winner] = PK_Stack[x+winner]+pot
-    endif
-    if PokerBuyIn[p] > 0 then
-        call CAS_Settle(0,p+1,PokerBuyIn[p],PK_Stack[x],PokerBuyIn[p])
-        set PokerBuyIn[p] = 0
-    endif
-    set PK_Total[x] = 0
-    set PK_Total[x+1] = 0
-    set PK_Paid[x] = 0
-    set PK_Paid[x+1] = 0
-    set PK_Turn[p] = -1
-    set PK_Note[p] = note+" (pot "+I2S(pot)+")"
+// Seat indices are Warcraft player IDs. The five board cards are shared.
+function OP_NextLive takes integer after returns integer
+    local integer n = 0
+    loop
+        exitwhen n >= 24
+        set after = ModuloInteger(after+1,24)
+        if OP_Live[after] then
+            return after
+        endif
+        set n = n+1
+    endloop
+    return -1
 endfunction
 
-function PK_Showdown takes integer p returns nothing
-    local integer human = PK_Score(p,0,5)
-    local integer bot = PK_Score(p,1,5)
-    set PK_Street[p] = 3
-    set PK_Reveal[p] = true
-    if human > bot then
-        call PK_End(p,0,"You win: "+PK_Category(human))
-    elseif bot > human then
-        call PK_End(p,1,"Computer wins: "+PK_Category(bot))
-    else
-        call PK_End(p,2,"Split pot: "+PK_Category(human))
-    endif
-endfunction
-
-function PK_Advance takes integer p returns nothing
-    local integer x = p*2
-    if PK_Stack[x] == 0 or PK_Stack[x+1] == 0 or PK_Street[p] == 3 then
-        call PK_Showdown(p)
+function OP_CashOut takes integer v returns nothing
+    local integer buy = PokerBuyIn[v]
+    local integer chips = PK_Stack[v]
+    if buy <= 0 then
         return
     endif
-    set PK_Street[p] = PK_Street[p]+1
-    set PK_Paid[x] = 0
-    set PK_Paid[x+1] = 0
-    set PK_Acted[x] = false
-    set PK_Acted[x+1] = false
-    set PK_LastRaise[p] = 2
-    set PK_Turn[p] = 1-PK_Dealer[p]
-    set PK_Actions[p] = 0
+    set PokerBuyIn[v] = 0
+    set OP_Seats = OP_Seats-1
+    set PK_Stack[v] = 0
+    set OP_Leaving[v] = false
+    set CAS_escrow[v+1] = CAS_escrow[v+1]-buy
+    call CAS_Credit(0,v+1,IMinBJ(chips,buy),IMaxBJ(0,chips-buy))
+    set PK_Version[v] = PK_Version[v]+1
+    set PK_Feedback[v] = "Cashed out "+I2S(chips)+"g."
 endfunction
 
-function PK_Deal takes integer p returns nothing
+function OP_Join takes integer v, integer amount returns nothing
+    if PokerBuyIn[v] > 0 or CAS_ended or not PK_Eligible(v) then
+        return
+    endif
+    if amount < 100 or amount > 1500 then
+        set PK_Feedback[v] = "Choose a buy-in from 100 to 1,500g."
+        return
+    endif
+    if not CAS_Reserve(0,v+1,amount,0) then
+        set PK_Feedback[v] = CAS_note[v+1]
+        return
+    endif
+    set PokerBuyIn[v] = amount
+    set PK_Stack[v] = amount
+    set PK_Default[v] = amount
+    set OP_Seats = OP_Seats+1
+    set PK_Version[v] = PK_Version[v]+1
+    set PK_Feedback[v] = "Seated with "+I2S(amount)+"g for the next deal."
+    if OP_Phase == 0 then
+        set OP_Dealt[v] = false
+        set OP_Live[v] = false
+        set OP_Award[v] = 0
+    endif
+endfunction
+
+// Settle in layers. Folded contributions fund their layer. A layer with only
+// one contributor is an uncalled bet. Odd chips start left of the button.
+function OP_AwardPots takes nothing returns nothing
+    local integer floor = 0
+    local integer cap
+    local integer v
+    local integer n
+    local integer contributors
+    local integer best
+    local integer winners
+    local integer chips
+    local integer odd
+    local integer sole
+    local integer paid = 0
+    loop
+        set cap = 0
+        set v = 0
+        loop
+            exitwhen v >= 24
+            if PK_Total[v] > floor and (cap == 0 or PK_Total[v] < cap) then
+                set cap = PK_Total[v]
+            endif
+            set v = v+1
+        endloop
+        exitwhen cap == 0
+        set contributors = 0
+        set winners = 0
+        set best = -1
+        set v = 0
+        loop
+            exitwhen v >= 24
+            if PK_Total[v] >= cap then
+                set contributors = contributors+1
+                set sole = v
+                if OP_Live[v] then
+                    if OP_Score[v] > best then
+                        set best = OP_Score[v]
+                        set winners = 1
+                    elseif OP_Score[v] == best then
+                        set winners = winners+1
+                    endif
+                endif
+            endif
+            set v = v+1
+        endloop
+        set chips = contributors*(cap-floor)
+        if contributors == 1 then
+            set OP_Award[sole] = OP_Award[sole]+chips
+        elseif winners == 0 then
+            // All contenders for this excess left. Return their unmatched layer.
+            set v = 0
+            loop
+                exitwhen v >= 24
+                if PK_Total[v] >= cap then
+                    set OP_Award[v] = OP_Award[v]+cap-floor
+                endif
+                set v = v+1
+            endloop
+        else
+            set odd = ModuloInteger(chips,winners)
+            set n = 1
+            loop
+                exitwhen n > 24
+                set v = ModuloInteger(OP_Button+n,24)
+                if PK_Total[v] >= cap and OP_Live[v] and OP_Score[v] == best then
+                    set OP_Award[v] = OP_Award[v]+chips/winners
+                    if odd > 0 then
+                        set OP_Award[v] = OP_Award[v]+1
+                        set odd = odd-1
+                    endif
+                endif
+                set n = n+1
+            endloop
+            set paid = paid+chips
+        endif
+        set floor = cap
+    endloop
+    set OP_Pot = paid
+endfunction
+
+function OP_Finish takes nothing returns nothing
+    local integer v = 0
+    local integer sole = -1
+    local integer winners = 0
+    call OP_AwardPots()
+    loop
+        exitwhen v >= 24
+        if OP_Dealt[v] then
+            call CAS_ResultSound(v+1,OP_Award[v]-PK_Total[v])
+            set PK_Stack[v] = PK_Stack[v]+OP_Award[v]
+            set PK_Total[v] = 0
+            set PK_Paid[v] = 0
+            set PK_Version[v] = PK_Version[v]+1
+            if OP_Award[v] > 0 and OP_Live[v] then
+                set sole = v
+                set winners = winners+1
+            endif
+            if OP_Leaving[v] or PK_Stack[v] == 0 or not PK_Eligible(v) then
+                call OP_CashOut(v)
+            endif
+        endif
+        set v = v+1
+    endloop
+    if winners == 1 then
+        set OP_Note = GetPlayerName(Player(sole))+" wins the "+I2S(OP_Pot)+"g pot."
+    else
+        set OP_Note = "Pot settled. Seat results show each return, including side pots."
+    endif
+    set OP_Phase = 0
+    set OP_Turn = -1
+    set OP_Clock = 10
+endfunction
+
+// Evaluate one player's seven cards per callback, including on a full table.
+function OP_ScoreTick takes nothing returns nothing
+    loop
+        exitwhen OP_ScoreCursor >= 24
+        if OP_Live[OP_ScoreCursor] then
+            set OP_Score[OP_ScoreCursor] = PK_Score(OP_ScoreCursor)
+            set OP_ScoreCursor = OP_ScoreCursor+1
+            return
+        endif
+        set OP_ScoreCursor = OP_ScoreCursor+1
+    endloop
+    call PauseTimer(OP_ScoreTimer)
+    call OP_Finish()
+endfunction
+
+function OP_Showdown takes nothing returns nothing
+    set OP_Phase = 2
+    set OP_Street = 3
+    set OP_Turn = -1
+    set OP_Revealed = true
+    set OP_Note = "Showdown"
+    set OP_ScoreCursor = 0
+    call TimerStart(OP_ScoreTimer,0.05,true,function OP_ScoreTick)
+endfunction
+
+function OP_Wager takes integer v, integer chips returns nothing
+    call PK_Pay(v,chips)
+    set OP_Pot = OP_Pot+chips
+endfunction
+
+// Find the next outstanding action, even if every other stack is all-in.
+function OP_Continue takes integer after returns nothing
+    local integer v = 0
+    local integer live = 0
+    local integer able = 0
+    local integer lone = -1
+    local integer high = 0
+    local integer n = 0
+    loop
+        exitwhen v >= 24
+        if OP_Live[v] then
+            set live = live+1
+            set high = IMaxBJ(high,PK_Paid[v])
+            if PK_Stack[v] > 0 then
+                set able = able+1
+                set lone = v
+            endif
+        endif
+        set v = v+1
+    endloop
+    if live == 1 then
+        call OP_Finish()
+        return
+    endif
+    if able <= 1 then
+        set OP_Bet = high
+        if lone < 0 then
+            call OP_Showdown()
+            return
+        elseif PK_Paid[lone] >= high then
+            call OP_Showdown()
+            return
+        endif
+    endif
+    loop
+        exitwhen n >= 24
+        set after = ModuloInteger(after+1,24)
+        if OP_Live[after] and PK_Stack[after] > 0 and (not PK_Acted[after] or PK_Paid[after] < OP_Bet) then
+            set OP_Turn = after
+            set OP_Clock = 30
+            set PK_Version[after] = PK_Version[after]+1
+            set PK_Feedback[after] = ""
+            return
+        endif
+        set n = n+1
+    endloop
+    if OP_Street == 3 then
+        call OP_Showdown()
+        return
+    endif
+    set OP_Street = OP_Street+1
+    set OP_Bet = 0
+    set OP_MinRaise = 10
+    set v = 0
+    loop
+        exitwhen v >= 24
+        set PK_Paid[v] = 0
+        set PK_Acted[v] = false
+        set OP_Faced[v] = 0
+        set v = v+1
+    endloop
+    set v = OP_Button
+    loop
+        set v = OP_NextLive(v)
+        exitwhen PK_Stack[v] > 0
+    endloop
+    set OP_Turn = v
+    set OP_Clock = 30
+    set PK_Feedback[v] = ""
+    set PK_Version[v] = PK_Version[v]+1
+endfunction
+
+function OP_Deal takes nothing returns nothing
+    local integer v = 0
     local integer i = 0
-    local integer j = 0
-    local integer tmp = 0
-    local integer x = p*2
-    set PK_Note[p] = "Blinds 1/2. Raise button adds one minimum raise."
-    if CAS_amount[p+1] > 300 then
-        set PK_Note[p] = "Maximum buy-in is 300 gold."
-        return
+    local integer j
+    local integer swap
+    local integer small
+    local integer big
+    local integer count = 0
+    // A 52-card deck fits 23 pocket pairs plus a five-card board. If all 24
+    // slots (including observers) buy in, rotate one seat out for each deal.
+    if OP_Seats == 24 then
+        set OP_Rest = ModuloInteger(OP_Rest+1,24)
     endif
-    if not CAS_Reserve(0,p+1,CAS_amount[p+1],CAS_amount[p+1]) then
-        set PK_Note[p] = CAS_note[p+1]
-        return
-    endif
-    set PokerBuyIn[p] = CAS_amount[p+1]
-    set PK_Stack[x] = PokerBuyIn[p]
-    set PK_Stack[x+1] = PokerBuyIn[p]
     loop
         exitwhen i >= 52
         set PK_Deck[i] = i
@@ -69860,90 +71628,147 @@ function PK_Deal takes integer p returns nothing
     loop
         exitwhen i <= 0
         set j = PK_Random(i+1)
-        set tmp = PK_Deck[i]
+        set swap = PK_Deck[i]
         set PK_Deck[i] = PK_Deck[j]
-        set PK_Deck[j] = tmp
+        set PK_Deck[j] = swap
         set i = i-1
     endloop
-    set i = 0
     loop
-        exitwhen i >= 9
-        set PK_Cards[p*9+i] = PK_Deck[i]
-        set i = i+1
+        exitwhen v >= 24
+        set OP_Dealt[v] = PokerBuyIn[v] > 0 and (OP_Seats < 24 or OP_Rest != v)
+        set OP_Live[v] = OP_Dealt[v]
+        if OP_Seats == 24 and v == OP_Rest then
+            set PK_Feedback[v] = "Full deck this hand. Your seat plays the next deal."
+        endif
+        set PK_Acted[v] = false
+        set OP_Faced[v] = 0
+        set OP_Score[v] = 0
+        set OP_Award[v] = 0
+        set PK_Total[v] = 0
+        set PK_Paid[v] = 0
+        if OP_Dealt[v] then
+            set PK_Cards[v*2] = PK_Deck[i]
+            set PK_Cards[v*2+1] = PK_Deck[i+1]
+            set i = i+2
+            set count = count+1
+            set PK_Feedback[v] = ""
+            set PK_Version[v] = PK_Version[v]+1
+        endif
+        set v = v+1
     endloop
-    set PK_Hand[p] = PK_Hand[p]+1
-    set PK_Dealer[p] = 1-PK_Dealer[p]
-    set PK_Street[p] = 0
-    set PK_Turn[p] = PK_Dealer[p]
-    set PK_LastRaise[p] = 2
-    set PK_Actions[p] = 0
-    set PK_Clock[p] = 30
-    set PK_Wait[p] = 2
-    set PK_Reveal[p] = false
-    set PK_Paid[x] = 0
-    set PK_Paid[x+1] = 0
-    set PK_Total[x] = 0
-    set PK_Total[x+1] = 0
-    set PK_Acted[x] = false
-    set PK_Acted[x+1] = false
-    set tmp = IMinBJ(PK_Stack[x],PK_Stack[x+1])
-    call PK_Pay(x+PK_Dealer[p],IMinBJ(1,tmp))
-    call PK_Pay(x+1-PK_Dealer[p],IMinBJ(2,tmp))
-    if PK_Paid[x] == PK_Paid[x+1] and (PK_Stack[x] == 0 or PK_Stack[x+1] == 0) then
-        call PK_Showdown(p)
+    set j = 0
+    loop
+        exitwhen j >= 5
+        set OP_Board[j] = PK_Deck[i+j]
+        set j = j+1
+    endloop
+    set OP_Hand = OP_Hand+1
+    set OP_Button = OP_NextLive(OP_Button)
+    set small = OP_NextLive(OP_Button)
+    if count == 2 then
+        set small = OP_Button
+    endif
+    set big = OP_NextLive(small)
+    set OP_Phase = 1
+    set OP_Revealed = false
+    set OP_Street = 0
+    set OP_Pot = 0
+    set OP_Bet = 10
+    set OP_MinRaise = 10
+    call OP_Wager(small,IMinBJ(5,PK_Stack[small]))
+    call OP_Wager(big,IMinBJ(10,PK_Stack[big]))
+    set OP_Note = "Blinds  /  "+GetPlayerName(Player(small))+" "+I2S(PK_Paid[small])+"g  /  "+GetPlayerName(Player(big))+" "+I2S(PK_Paid[big])+"g"
+    call OP_Continue(big)
+endfunction
+
+function OP_CanRaise takes integer v returns boolean
+    local integer other = 0
+    if OP_Turn != v or PK_Stack[v]+PK_Paid[v] <= OP_Bet or (PK_Acted[v] and OP_Faced[v] > 0 and OP_Bet-OP_Faced[v] < OP_MinRaise) then
+        return false
+    endif
+    loop
+        exitwhen other >= 24
+        if other != v and OP_Live[other] and PK_Stack[other] > 0 then
+            return true
+        endif
+        set other = other+1
+    endloop
+    return false
+endfunction
+
+function OP_Action takes integer v, string move, integer target returns nothing
+    local integer due = IMinBJ(PK_Stack[v],OP_Bet-PK_Paid[v])
+    local integer cap = PK_Stack[v]+PK_Paid[v]
+    local integer raiseBy = target-OP_Bet
+    local string name = GetPlayerName(Player(v))
+    if OP_Phase != 1 or OP_Turn != v or CAS_ended then
+        return
+    endif
+    if move == "f" then
+        set OP_Live[v] = false
+        set OP_Note = name+" folded."
+    elseif move == "c" then
+        call OP_Wager(v,due)
+        if due == 0 then
+            set OP_Note = name+" checked."
+        else
+            set OP_Note = name+" called "+I2S(due)+"g."
+        endif
+    elseif move == "r" then
+        if not OP_CanRaise(v) or raiseBy <= 0 or target > cap or (raiseBy < OP_MinRaise and target != cap) then
+            set PK_Feedback[v] = "Choose a legal raise or call. Minimum full raise to "+I2S(OP_Bet+OP_MinRaise)+"g."
+            return
+        endif
+        call OP_Wager(v,target-PK_Paid[v])
+        set OP_MinRaise = IMaxBJ(OP_MinRaise,raiseBy)
+        set OP_Bet = target
+        set OP_Note = name+" bet to "+I2S(target)+"g."
+    else
+        return
+    endif
+    if PK_Stack[v] == 0 and OP_Live[v] then
+        set OP_Note = OP_Note+"  ALL-IN"
+    endif
+    set PK_Acted[v] = true
+    set OP_Faced[v] = OP_Bet
+    set PK_Version[v] = PK_Version[v]+1
+    set PK_Feedback[v] = ""
+    call OP_Continue(v)
+endfunction
+
+function OP_Leave takes integer v returns nothing
+    if PokerBuyIn[v] == 0 or OP_Leaving[v] then
+        return
+    endif
+    if OP_Phase == 0 or not OP_Dealt[v] then
+        call OP_CashOut(v)
+    else
+        set OP_Leaving[v] = true
+        set PK_Version[v] = PK_Version[v]+1
+        set PK_Feedback[v] = "Leaving after this pot. Your remaining chips will return to your Wallet."
+        if OP_Turn == v then
+            call OP_Action(v,"f",0)
+        endif
     endif
 endfunction
 
-function PK_Action takes integer p, integer seat, integer action returns nothing
-    local integer x = p*2+seat
-    local integer y = p*2+1-seat
-    local integer due = IMaxBJ(0,PK_Paid[y]-PK_Paid[x])
-    local integer target = 0
-    local integer raiseSize = 0
-    if not PK_Eligible(p) or PK_Turn[p] != seat then
-        return
-    endif
-    if action == 0 then
-        if seat == 0 then
-            call PK_End(p,1,"You fold. Computer wins")
-        else
-            call PK_End(p,0,"Computer folds. You win")
+function OP_EndMatch takes nothing returns nothing
+    local integer v = 0
+    call PauseTimer(OP_ScoreTimer)
+    loop
+        exitwhen v >= 24
+        if PokerBuyIn[v] > 0 then
+            set PK_Stack[v] = PK_Stack[v]+PK_Total[v]
+            set PK_Total[v] = 0
+            set PK_Paid[v] = 0
+            call OP_CashOut(v)
         endif
-        return
-    elseif action == 1 then
-        call PK_Pay(x,IMinBJ(due,PK_Stack[x]))
-        if due == 0 then
-            set PK_Note[p] = "Check."
-        else
-            set PK_Note[p] = "Call "+I2S(due)+"."
-        endif
-    else
-        set target = IMaxBJ(PK_Paid[x],PK_Paid[y])+PK_LastRaise[p]
-        if action == 3 then
-            set target = PK_Limit(p,seat)
-        endif
-        set target = IMinBJ(target,PK_Limit(p,seat))
-        set raiseSize = target-IMaxBJ(PK_Paid[x],PK_Paid[y])
-        if raiseSize <= 0 or (PK_Acted[x] and due < PK_LastRaise[p]) then
-            return
-        endif
-        call PK_Pay(x,target-PK_Paid[x])
-        if raiseSize >= PK_LastRaise[p] then
-            set PK_LastRaise[p] = raiseSize
-            set PK_Acted[y] = false
-        endif
-        set PK_Note[p] = "Raise to "+I2S(target)+"."
-    endif
-    set PK_Acted[x] = true
-    set PK_Actions[p] = PK_Actions[p]+1
-    set PK_Turn[p] = 1-seat
-    if PK_Paid[x] == PK_Paid[y] and PK_Acted[x] and PK_Acted[y] then
-        call PK_Advance(p)
-    elseif PK_Paid[x] == PK_Paid[y] and (PK_Stack[x] == 0 or PK_Stack[y] == 0) then
-        call PK_Showdown(p)
-    endif
-    set PK_Clock[p] = 30
-    set PK_Wait[p] = 2
+        set v = v+1
+    endloop
+    set OP_Phase = 0
+    set OP_Turn = -1
+    set OP_Pot = 0
+    set OP_Note = "Match ended. Open wagers returned."
 endfunction
 
 function PK_Texture takes integer p, string name, real x, real y, real w, real h returns framehandle
@@ -69978,191 +71803,350 @@ function PK_ChipArt takes framehandle f, integer chips returns nothing
     call BlzFrameSetTexture(f,"PokerUI\\chips"+I2S(count)+".blp",0,true)
 endfunction
 
-function PK_Render takes integer p returns nothing
-    local integer x = p*2
-    local integer b = p*9
-    local integer i = 0
-    local integer due = IMaxBJ(0,PK_Paid[x+1]-PK_Paid[x])
-    local integer top = IMaxBJ(PK_Paid[x],PK_Paid[x+1])
-    local integer pot = PK_Total[x]+PK_Total[x+1]
-    local string phase = "PREFLOP"
-    local string label = "Check"
-    local string path = ""
-    local boolean raiseOK = false
-    local integer callTone = 0
-    if PK_Street[p] == 1 then
-        set phase = "FLOP"
-    elseif PK_Street[p] == 2 then
-        set phase = "TURN"
-    elseif PK_Street[p] == 3 then
-        set phase = "RIVER"
+function OP_SeatLine takes integer v returns string
+    local string name = SubString(GetPlayerName(Player(v)),0,18)
+    local string line = name+"  "+I2S(PK_Stack[v])+"g"
+    if OP_Turn == v then
+        set line = "|cff8cf2ac> "+line+"|r"
+    elseif OP_Button == v and OP_Dealt[v] then
+        set line = "D  "+line
     endif
-    if PK_Hand[p] > 0 then
-        call BlzFrameSetText(PK_Title[p],"POKER|n"+phase+" / #"+CUI_Value(I2S(PK_Hand[p])))
-    else
-        call BlzFrameSetText(PK_Title[p],"POKER")
+    if OP_Phase == 0 and OP_Award[v] > 0 then
+        set line = line+"  /  returned "+I2S(OP_Award[v])+"g"
+    elseif OP_Phase != 0 and not OP_Dealt[v] then
+        set line = line+"  /  next deal"
+    elseif OP_Dealt[v] and not OP_Live[v] then
+        set line = line+"  /  folded"
+    elseif OP_Phase != 0 and PK_Stack[v] == 0 then
+        set line = line+"  /  all-in "+I2S(PK_Total[v])+"g"
+    elseif OP_Phase == 1 then
+        set line = line+"  /  bet "+I2S(PK_Paid[v])+"g"
     endif
-    call BlzFrameSetText(PK_HumanLabel[p],"YOU")
-    call BlzFrameSetText(PK_BotLabel[p],"BOT")
-    call BlzFrameSetText(PK_HumanStack[p],CUI_Value(I2S(PK_Stack[x])))
-    call BlzFrameSetText(PK_BotStack[p],CUI_Value(I2S(PK_Stack[x+1])))
-    call BlzFrameSetText(PK_PotLabel[p],"POT  "+CUI_Value(I2S(pot)))
-    if PK_Note[p] == "Blinds 1/2. Raise button adds one minimum raise." then
-        call BlzFrameSetText(PK_Text[p],"BLINDS 1/2 / MAX BUY-IN 300g")
-    else
-        call BlzFrameSetText(PK_Text[p],PK_Note[p])
+    if OP_Revealed and OP_Live[v] then
+        set line = line+"  "+PK_Card(PK_Cards[v*2])+PK_Card(PK_Cards[v*2+1])
     endif
-    call BlzFrameSetVisible(PK_CallLabel[p],PK_Turn[p] == 0)
-    call BlzFrameSetText(PK_CallLabel[p],"TO CALL  "+CUI_Value(I2S(due)))
-    call PK_ChipArt(PK_HumanChips[p],PK_Stack[x])
-    call PK_ChipArt(PK_BotChips[p],PK_Stack[x+1])
-    call PK_ChipArt(PK_PotChips[p],pot)
-    call BlzFrameSetVisible(PK_HumanDealer[p],PK_Hand[p] > 0 and PK_Dealer[p] == 0)
-    call BlzFrameSetVisible(PK_BotDealer[p],PK_Hand[p] > 0 and PK_Dealer[p] == 1)
+    return line
+endfunction
+
+function OP_RosterCount takes nothing returns integer
+    local integer v = 0
+    local integer count = 0
     loop
-        exitwhen i >= 9
-        if PK_Hand[p] == 0 then
-            set path = "empty"
-        elseif i < 2 then
-            set path = "card"+I2S(PK_Cards[b+i])
-        elseif i < 4 then
-            set path = "back"
-            if PK_Reveal[p] then
-                set path = "card"+I2S(PK_Cards[b+i])
-            endif
-        else
-            set path = "empty"
-            if i-4 < PK_BoardCount(p) then
-                set path = "card"+I2S(PK_Cards[b+i])
-            endif
+        exitwhen v >= 24
+        if PokerBuyIn[v] > 0 or OP_Dealt[v] then
+            set count = count+1
         endif
-        call BlzFrameSetTexture(PK_Face[b+i],"PokerUI\\"+path+".blp",0,true)
+        set v = v+1
+    endloop
+    return count
+endfunction
+
+function PK_Render takes integer v returns nothing
+    local integer i = 0
+    local integer seen = 0
+    local integer pages = IMaxBJ(1,(OP_RosterCount()+4)/5)
+    local integer page = ModuloInteger(OP_Page[v],pages)
+    local integer amount = PK_Default[v]
+    local integer board = 0
+    local integer due = 0
+    local boolean seated = PokerBuyIn[v] > 0
+    local boolean turn = OP_Turn == v and OP_Phase == 1 and not OP_Leaving[v]
+    local boolean raiseOK = turn and OP_CanRaise(v)
+    local string phase = "Taking seats"
+    local string status = "Join for the next deal"
+    local string roster = ""
+    local string face
+    local string note = PK_Feedback[v]
+    if not PK_Started[v] or GetLocalPlayer() != Player(v) then
+        return
+    endif
+    call BlzFrameSetVisible(PK_Dialog[v],not PK_Hidden[v])
+    if PK_Hidden[v] then
+        return
+    endif
+    loop
+        exitwhen i >= 24
+        if PokerBuyIn[i] > 0 or OP_Dealt[i] then
+            if seen/5 == page then
+                if roster != "" then
+                    set roster = roster+"|n"
+                endif
+                set roster = roster+OP_SeatLine(i)
+            endif
+            set seen = seen+1
+        endif
         set i = i+1
     endloop
-    if PK_Turn[p] == 0 then
-        call BlzFrameSetText(PK_Status[p],"YOUR TURN / "+CUI_Value(I2S(PK_Clock[p])+"s"))
-            if due > 0 then
-            set label = "Call "+I2S(due)
-            set callTone = 3
+    call BlzFrameSetText(PK_BotLabel[v],"TABLE SEATS   "+CUI_Value(I2S(OP_Seats)))
+    call BlzFrameSetText(PK_BotStack[v],roster)
+    call BlzFrameSetVisible(OP_PageButton[v],pages > 1)
+    call CUI_Text(OP_PageButton[v],I2S(page+1)+"/"+I2S(pages)+" >")
+    if OP_Phase == 1 or OP_Phase == 2 then
+        set phase = "Preflop"
+        if OP_Street == 1 then
+            set phase = "Flop"
+        elseif OP_Street == 2 then
+            set phase = "Turn"
+        elseif OP_Street == 3 then
+            set phase = "River"
         endif
-            call CUI_Text(PK_Call[p],label)
-        if PK_Limit(p,0) > top and (not PK_Acted[x] or due >= PK_LastRaise[p]) then
-                    set raiseOK = true
-            call CUI_Text(PK_Raise[p],"Raise "+I2S(IMinBJ(top+PK_LastRaise[p],PK_Limit(p,0))))
-                    call CUI_Text(PK_Allin[p],"All-in "+I2S(PK_Limit(p,0)))
+        if OP_Turn >= 0 then
+            set status = GetPlayerName(Player(OP_Turn))+"'s turn  /  "+I2S(OP_Clock)+"s"
+            if turn then
+                set status = "|cff8cf2acYOUR TURN|r   "+I2S(OP_Clock)+"s"
+            endif
+        else
+            set status = "Showdown"
         endif
-    elseif PK_Turn[p] == 1 then
-        call BlzFrameSetText(PK_Status[p],"BOT'S TURN")
+    elseif CAS_ended then
+        set status = "Match ended"
+    elseif OP_Seats >= 2 then
+        set status = "Next deal in "+I2S(OP_Clock)+"s"
+    elseif seated then
+        set status = "Waiting for second admin"
+        set note = "Solo test: cash out, then open Blackjack > House poker."
+    endif
+    if OP_Street > 0 then
+        set board = OP_Street+2
+    endif
+    call BlzFrameSetText(PK_Title[v],"OPEN HOLD'EM  /  NO LIMIT 5-10g|n"+phase+"  /  Hand "+I2S(OP_Hand))
+    call BlzFrameSetText(PK_Status[v],status)
+    if OP_Phase == 0 and OP_Hand > 0 then
+        call BlzFrameSetText(PK_PotLabel[v],"LAST POT|n"+CUI_Value(I2S(OP_Pot)+"g"))
     else
-        call BlzFrameSetText(PK_Status[p],"NEXT HAND")
+        call BlzFrameSetText(PK_PotLabel[v],"POT|n"+CUI_Value(I2S(OP_Pot)+"g"))
+    endif
+    call PK_ChipArt(PK_PotChips[v],OP_Pot)
+    if seated then
+        call BlzFrameSetText(PK_HumanLabel[v],"YOUR SEAT")
+        call BlzFrameSetText(PK_HumanStack[v],"Stack  "+CUI_Value(I2S(PK_Stack[v])+"g")+"|nBet     "+CUI_Value(I2S(PK_Paid[v])+"g"))
+    else
+        call BlzFrameSetText(PK_HumanLabel[v],"YOUR WALLET")
+        call BlzFrameSetText(PK_HumanStack[v],CUI_Value(I2S(CAS_gold[v+1])+"g"))
+    endif
+    call BlzFrameSetVisible(PK_HumanDealer[v],OP_Dealt[v] and OP_Button == v)
+    set i = 0
+    loop
+        exitwhen i >= 9
+        if i < 2 or i >= 4 then
+            set face = "empty"
+            if i < 2 and OP_Dealt[v] then
+                set face = "card"+I2S(PK_Cards[v*2+i])
+            elseif i >= 4 and i < 4+board then
+                set face = "card"+I2S(OP_Board[i-4])
+            endif
+            call BlzFrameSetTexture(PK_Face[v*9+i],"PokerUI\\"+face+".blp",0,true)
         endif
-    call CUI_Paint(PK_Fold[p],1,PK_Turn[p] == 0)
-    call CUI_Paint(PK_Call[p],callTone,PK_Turn[p] == 0)
-    call CUI_Paint(PK_Raise[p],2,raiseOK)
-    call CUI_Paint(PK_Allin[p],2,raiseOK)
-    call CUI_Text(PK_Next[p],"Deal "+I2S(CAS_amount[p+1])+"g")
-    call CUI_Paint(PK_Next[p],4,PK_Turn[p] == -1 and not CAS_ended and CAS_ready[p+1])
-    call CUI_Paint(PK_Hide[p],0,true)
-    if GetLocalPlayer() == Player(p) then
-        call BlzFrameSetVisible(PK_Dialog[p],not PK_Hidden[p])
+        set i = i+1
+    endloop
+    if turn then
+        set due = IMinBJ(PK_Stack[v],OP_Bet-PK_Paid[v])
+        set amount = IMinBJ(PK_Stack[v]+PK_Paid[v],OP_Bet+OP_MinRaise)
+        call BlzFrameSetText(PK_Prompt[v],"Raise to  /  Min "+I2S(amount)+"g")
+        call BlzFrameSetText(PK_CallLabel[v],"TO CALL   "+CUI_Value(I2S(due)+"g"))
+        if due > 0 then
+            call CUI_Text(PK_Call[v],"Call "+I2S(due)+"g")
+        else
+            call CUI_Text(PK_Call[v],"Check")
+        endif
+    else
+        call BlzFrameSetText(PK_Prompt[v],"Exact buy-in (press Enter)")
+    endif
+    if note == "" then
+        set note = OP_Note
+    endif
+    call BlzFrameSetVisible(PK_Lower[v],not seated and not CAS_ended)
+    call BlzFrameSetVisible(PK_Higher[v],not seated and not CAS_ended)
+    call CUI_Paint(PK_Lower[v],0,PK_Default[v] > 100)
+    call CUI_Paint(PK_Higher[v],0,PK_Default[v] < 1500)
+    if not seated and not CAS_ended then
+        if not CAS_ready[v+1] then
+            set note = "Waiting for your wallet to load."
+        elseif CAS_gold[v+1] < PK_Default[v] then
+            set note = "Buy-in "+I2S(PK_Default[v])+"g / wallet "+I2S(CAS_gold[v+1])+"g. Choose a funded amount."
+        endif
+    endif
+    call BlzFrameSetText(PK_Text[v],note)
+    call BlzFrameSetVisible(PK_CallLabel[v],turn)
+    call BlzFrameSetVisible(PK_Prompt[v],(not seated and not CAS_ended) or raiseOK)
+    call BlzFrameSetVisible(PK_Input[v],(not seated and not CAS_ended) or raiseOK)
+    if PK_InputVersion[v] != PK_Version[v] then
+        set PK_InputVersion[v] = PK_Version[v]
+        call BlzFrameSetText(PK_Input[v],I2S(amount))
+    endif
+    call BlzFrameSetVisible(PK_Next[v],not seated and not CAS_ended)
+    call CUI_Text(PK_Next[v],"Buy in "+I2S(PK_Default[v])+"g")
+    call CUI_Paint(PK_Next[v],4,CAS_ready[v+1] and CAS_gold[v+1] >= PK_Default[v])
+    call BlzFrameSetVisible(PK_Alternate[v],seated)
+    if OP_Phase == 1 and OP_Live[v] and PK_Stack[v] > 0 then
+        call CUI_Text(PK_Alternate[v],"Fold & leave")
+    elseif OP_Phase != 0 and OP_Dealt[v] then
+        call CUI_Text(PK_Alternate[v],"Leave after pot")
+    else
+        call CUI_Text(PK_Alternate[v],"Cash out")
+    endif
+    call CUI_Paint(PK_Alternate[v],1,not OP_Leaving[v])
+    call BlzFrameSetVisible(PK_Fold[v],turn)
+    call BlzFrameSetVisible(PK_Call[v],turn)
+    call BlzFrameSetVisible(PK_Raise[v],turn)
+    call BlzFrameSetVisible(PK_Allin[v],turn)
+    call CUI_Paint(PK_Raise[v],2,raiseOK)
+    call CUI_Paint(PK_Allin[v],2,raiseOK)
+endfunction
+
+function OP_Refresh takes nothing returns nothing
+    local integer v = GetPlayerId(GetLocalPlayer())
+    if v < 24 then
+        call PK_Render(v)
     endif
 endfunction
 
-function PK_Bot takes integer p returns nothing
-    local integer x = p*2+1
-    local integer due = IMaxBJ(0,PK_Paid[x-1]-PK_Paid[x])
-    local integer r1 = ModuloInteger(PK_Cards[p*9+2],13)+2
-    local integer r2 = ModuloInteger(PK_Cards[p*9+3],13)+2
-    local integer strength = 0
-    local integer roll = PK_Random(100)
-    // Uses its own cards and the revealed board only, never human/future cards.
-    if PK_Street[p] == 0 then
-        if r1 == r2 then
-            set strength = 3
-        elseif r1 >= 11 and r2 >= 10 then
-            set strength = 2
-        elseif r1 >= 12 or r2 >= 12 then
-            set strength = 1
-        endif
-    else
-        set strength = PK_Score(p,1,PK_BoardCount(p))/759375
+function PK_Submit takes integer v, string action, string digits returns nothing
+    local integer number = S2I(digits)
+    if not PK_Started[v] or not PK_Eligible(v) or CAS_ended then
+        return
     endif
-    if due > 0 and strength == 0 and due > 10 and roll < 65 then
-        call PK_Action(p,1,0)
-    elseif PK_Actions[p] < 4 and PK_Limit(p,1) > IMaxBJ(PK_Paid[x],PK_Paid[x-1]) and (not PK_Acted[x] or due >= PK_LastRaise[p]) and ((strength >= 2 and roll < 55) or roll < 8) then
-        call PK_Action(p,1,2)
+    if (action == "r" or action == "j" or action == "b") and (I2S(number) != digits or number <= 0) then
+        set PK_Feedback[v] = "Enter a whole amount in gold."
+    elseif action == "j" then
+        call OP_Join(v,number)
+    elseif action == "b" and PokerBuyIn[v] == 0 then
+        if number < 100 or number > 1500 then
+            set PK_Feedback[v] = "Buy-in is 100 to 1,500g."
+        else
+            set PK_Default[v] = number
+            set PK_Feedback[v] = "Buy-in set to "+digits+"g."
+            set PK_Version[v] = PK_Version[v]+1
+        endif
+    elseif action == "l" then
+        call OP_Leave(v)
+    elseif action == "a" then
+        call OP_Action(v,"r",PK_Paid[v]+PK_Stack[v])
     else
-        call PK_Action(p,1,1)
+        call OP_Action(v,action,number)
+    endif
+    call OP_Refresh()
+endfunction
+
+function PK_Sync takes nothing returns nothing
+    local integer v = GetPlayerId(GetTriggerPlayer())
+    local string data = BlzGetTriggerSyncData()
+    local string prefix = I2S(PK_Version[v])+"/"
+    local integer n = StringLength(prefix)
+    if SubString(data,0,n) == prefix then
+        call PK_Submit(v,SubString(data,n,n+1),SubString(data,n+1,StringLength(data)))
     endif
 endfunction
 
 function PK_Click takes nothing returns nothing
-    local integer p = GetPlayerId(GetTriggerPlayer())
-    local framehandle clicked = BlzGetTriggerFrame()
-    if not PK_Eligible(p) then
+    local integer v = GetPlayerId(GetTriggerPlayer())
+    local framehandle f = BlzGetTriggerFrame()
+    local string action = ""
+    if not PK_Eligible(v) or PK_Hidden[v] then
         return
     endif
-    if clicked == PK_Hide[p] then
-        set PK_Hidden[p] = true
-    elseif clicked == PK_Next[p] and PK_Turn[p] == -1 then
-        call PK_Deal(p)
-    elseif clicked == PK_Fold[p] then
-        call PK_Action(p,0,0)
-    elseif clicked == PK_Call[p] then
-        call PK_Action(p,0,1)
-    elseif clicked == PK_Raise[p] then
-        call PK_Action(p,0,2)
-    elseif clicked == PK_Allin[p] then
-        call PK_Action(p,0,3)
+    if f == PK_Hide[v] then
+        set PK_Hidden[v] = true
+        call PK_Render(v)
+        return
+    elseif f == OP_PageButton[v] then
+        set OP_Page[v] = ModuloInteger(OP_Page[v]+1,IMaxBJ(1,(OP_RosterCount()+4)/5))
+        call PK_Render(v)
+        return
+    elseif f == PK_Lower[v] or f == PK_Higher[v] then
+        if f == PK_Lower[v] then
+            call PK_Submit(v,"b",I2S(IMaxBJ(100,PK_Default[v]-100)))
+        else
+            call PK_Submit(v,"b",I2S(IMinBJ(1500,PK_Default[v]+100)))
+        endif
+        return
+    elseif f == PK_Next[v] then
+        set action = "j"
+    elseif f == PK_Alternate[v] then
+        set action = "l"
+    elseif f == PK_Call[v] then
+        set action = "c"
+    elseif f == PK_Fold[v] then
+        set action = "f"
+    elseif f == PK_Allin[v] then
+        set action = "a"
+    elseif f == PK_Raise[v] then
+        set action = "r"
+    elseif f == PK_Input[v] then
+        set action = "b"
+        if OP_Turn == v and OP_Phase == 1 then
+            set action = "r"
+        endif
     endif
-    call PK_Render(p)
-    set clicked = null
+    if action == "j" or action == "p" then
+        call PK_Submit(v,action,I2S(PK_Default[v]))
+        return
+    endif
+    if action != "" and GetLocalPlayer() == Player(v) then
+        call BlzSendSyncData("FFPK40",I2S(PK_Version[v])+"/"+action+BlzFrameGetText(PK_Input[v]))
+        call BlzFrameSetFocus(PK_Input[v],false)
+    endif
+    set f = null
 endfunction
 
 function PK_Chat takes nothing returns nothing
-    local integer p = GetPlayerId(GetTriggerPlayer())
-    if PK_Started[p] and PK_Eligible(p) then
-        set CAS_view[p+1] = 0
-        if GetLocalPlayer() == Player(p) and CAS_root[p+1] != null then
-            call BlzFrameSetVisible(CAS_root[p+1],false)
+    local integer v = GetPlayerId(GetTriggerPlayer())
+    local string line = GetEventPlayerChatString()
+    if PK_Started[v] and PK_Eligible(v) then
+        if line == "-poker" then
+            set HousePK_Hidden[v] = true
+            if GetLocalPlayer() == Player(v) and HousePK_Dialog[v] != null then
+                call BlzFrameSetVisible(HousePK_Dialog[v],false)
+            endif
+            set CAS_view[v+1] = 0
+            if GetLocalPlayer() == Player(v) and CAS_root[v+1] != null then
+                call BlzFrameSetVisible(CAS_root[v+1],false)
+            endif
+            set PK_Hidden[v] = false
+            call PK_Render(v)
+        elseif SubString(line,0,7) == "-raise " then
+            call PK_Submit(v,"r",SubString(line,7,StringLength(line)))
         endif
-        set PK_Hidden[p] = false
-        set CAS_amount[p+1] = IMinBJ(300,CAS_amount[p+1])
-        call PK_Render(p)
     endif
 endfunction
 
 function PK_Tick takes nothing returns nothing
-    local integer p = 0
+    local integer v = 0
+    if CAS_ended then
+        return
+    endif
     loop
-        exitwhen p >= 24
-        if PK_Started[p] then
-            if not PK_Eligible(p) then
-                set PK_Hidden[p] = true
-                if PK_Turn[p] >= 0 then
-                    call PK_End(p,1,"Folded on leaving the table")
-                endif
-                call BlzFrameSetVisible(PK_Dialog[p],false)
-            elseif PK_Turn[p] == 1 then
-                set PK_Wait[p] = PK_Wait[p]-1
-                if PK_Wait[p] <= 0 then
-                    call PK_Bot(p)
-                    call PK_Render(p)
-                endif
-            elseif PK_Turn[p] == 0 then
-                set PK_Clock[p] = PK_Clock[p]-1
-                if PK_Clock[p] <= 0 then
-                    if PK_Paid[p*2] >= PK_Paid[p*2+1] then
-                        call PK_Action(p,0,1)
-                    else
-                        call PK_Action(p,0,0)
-                    endif
-                endif
-                call PK_Render(p)
+        exitwhen v >= 24
+        if PokerBuyIn[v] > 0 and not PK_Eligible(v) then
+            call OP_Leave(v)
+        endif
+        set v = v+1
+    endloop
+    if OP_Phase == 0 then
+        if OP_Seats >= 2 then
+            set OP_Clock = OP_Clock-1
+            if OP_Clock <= 0 then
+                call OP_Deal()
+            endif
+        else
+            set OP_Clock = 8
+        endif
+    elseif OP_Phase == 1 then
+        set v = OP_Turn
+        set OP_Clock = OP_Clock-1
+        if OP_Leaving[v] then
+            call OP_Action(v,"f",0)
+        elseif OP_Clock <= 0 then
+            // An absent player cannot keep posting blinds hand after hand.
+            set OP_Leaving[v] = true
+            if PK_Paid[v] == OP_Bet then
+                call OP_Action(v,"c",0)
+            else
+                call OP_Action(v,"f",0)
             endif
         endif
-        set p = p+1
-    endloop
+    endif
+    call OP_Refresh()
 endfunction
 
 function PK_Button takes integer p, trigger t, real x, real y, real width, string label returns framehandle
@@ -70176,37 +72160,32 @@ function PK_Start takes nothing returns nothing
     local integer i = 0
     local trigger click = null
     local trigger chat = CreateTrigger()
+    local trigger sync = CreateTrigger()
+    call TriggerAddAction(sync,function PK_Sync)
     loop
         exitwhen p >= 24
         if CAS_User(p+1) then
             set PK_Hidden[p] = true
             set PK_Started[p] = true
-            set PK_Stack[p*2] = 0
-            set PK_Stack[p*2+1] = 0
             set PK_Dialog[p] = BlzCreateFrameByType("BACKDROP","PokerTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",p)
             call BlzFrameSetSize(PK_Dialog[p],0.70,0.48)
-            call BlzFrameSetAbsPoint(PK_Dialog[p],FRAMEPOINT_TOPLEFT,0.05,0.57)
+            call BlzFrameSetAbsPoint(PK_Dialog[p],FRAMEPOINT_TOPLEFT,0.05,0.526)
             call BlzFrameSetTexture(PK_Dialog[p],"PokerUI\\table.blp",0,true)
             call BlzFrameSetLevel(PK_Dialog[p],50)
             call BlzFrameSetVisible(PK_Dialog[p],false)
             set PK_Title[p] = PK_Label(p,0.025,0.014,0.49,0.040,1.12)
-            set PK_BotLabel[p] = PK_Label(p,0.105,0.090,0.085,0.017,0.91)
-            set PK_BotStack[p] = PK_Label(p,0.105,0.109,0.085,0.032,1.48)
-            set PK_HumanLabel[p] = PK_Label(p,0.105,0.314,0.085,0.017,0.91)
-            set PK_HumanStack[p] = PK_Label(p,0.105,0.333,0.085,0.032,1.48)
-            set PK_PotLabel[p] = PK_Label(p,0.532,0.205,0.134,0.038,1.24)
+            set PK_BotLabel[p] = PK_Label(p,0.025,0.064,0.270,0.024,1.00)
+            set PK_BotStack[p] = PK_Label(p,0.025,0.090,0.405,0.100,0.98)
+            set PK_HumanLabel[p] = PK_Label(p,0.025,0.308,0.231,0.023,0.91)
+            set PK_HumanStack[p] = PK_Label(p,0.025,0.335,0.155,0.051,1.08)
+            set PK_PotLabel[p] = PK_Label(p,0.537,0.197,0.139,0.048,1.24)
             set PK_Status[p] = PK_Label(p,0.454,0.312,0.215,0.024,1.05)
             set PK_CallLabel[p] = PK_Label(p,0.454,0.340,0.215,0.032,1.20)
             set PK_Text[p] = PK_Label(p,0.025,0.398,0.65,0.037,1.0)
-            set PK_HumanChips[p] = PK_Texture(p,"chips4",0.193,0.330,0.048,0.030)
-            set PK_BotChips[p] = PK_Texture(p,"chips4",0.193,0.106,0.048,0.030)
             set PK_PotChips[p] = PK_Texture(p,"chips1",0.532,0.245,0.050,0.030)
             set PK_HumanDealer[p] = PK_Texture(p,"dealer",0.247,0.325,0.022,0.022)
-            set PK_BotDealer[p] = PK_Texture(p,"dealer",0.247,0.113,0.022,0.022)
             set PK_Face[p*9] = PK_Texture(p,"empty",0.286,0.293,0.060,0.086)
             set PK_Face[p*9+1] = PK_Texture(p,"empty",0.354,0.293,0.060,0.086)
-            set PK_Face[p*9+2] = PK_Texture(p,"back",0.286,0.081,0.060,0.086)
-            set PK_Face[p*9+3] = PK_Texture(p,"back",0.354,0.081,0.060,0.086)
             set i = 0
             loop
                 exitwhen i >= 5
@@ -70214,16 +72193,29 @@ function PK_Start takes nothing returns nothing
                 set i = i+1
             endloop
             set click = CreateTrigger()
+            set PK_Default[p] = 100
+            set PK_Version[p] = 1
+            set PK_Feedback[p] = ""
+            set PK_Prompt[p] = PK_Label(p,0.454,0.081,0.225,0.023,0.96)
+            set PK_Input[p] = BlzCreateFrame("EscMenuEditBoxTemplate",PK_Dialog[p],0,p)
+            call BlzFrameSetSize(PK_Input[p],0.168,0.033)
+            call BlzFrameSetPoint(PK_Input[p],FRAMEPOINT_TOPLEFT,PK_Dialog[p],FRAMEPOINT_TOPLEFT,0.454,-0.107)
+            call BlzFrameSetTextSizeLimit(PK_Input[p],6)
+            call BlzTriggerRegisterFrameEvent(click,PK_Input[p],FRAMEEVENT_EDITBOX_ENTER)
+            call BlzTriggerRegisterPlayerSyncEvent(sync,Player(p),"FFPK40",false)
+            set OP_PageButton[p] = PK_Button(p,click,0.353,-0.060,0.074,"Seats >")
+            set PK_Alternate[p] = PK_Button(p,click,0.455,-0.150,0.190,"Cash out")
+            set PK_Lower[p] = PK_Button(p,click,0.454,-0.149,0.105,"-100g")
+            set PK_Higher[p] = PK_Button(p,click,0.565,-0.149,0.110,"+100g")
             set PK_Fold[p] = PK_Button(p,click,0.025,-0.439,0.105,"Fold")
             set PK_Call[p] = PK_Button(p,click,0.135,-0.439,0.12,"Check / Call")
-            set PK_Raise[p] = PK_Button(p,click,0.26,-0.439,0.12,"Raise")
+            set PK_Raise[p] = PK_Button(p,click,0.26,-0.439,0.12,"Raise to")
             set PK_Allin[p] = PK_Button(p,click,0.385,-0.439,0.13,"All-in")
-            set PK_Next[p] = PK_Button(p,click,0.52,-0.439,0.155,"Next hand")
+            set PK_Next[p] = PK_Button(p,click,0.478,-0.439,0.197,"Join table")
             set PK_Hide[p] = PK_Button(p,click,0.565,-0.018,0.11,"Hide table")
             call TriggerAddAction(click,function PK_Click)
             call TriggerRegisterPlayerChatEvent(chat,Player(p),"-poker",true)
-            set PK_Turn[p] = -1
-            set PK_Note[p] = "Blinds 1/2. Set buy-in with -stake (max 300g), then Deal."
+            call TriggerRegisterPlayerChatEvent(chat,Player(p),"-raise ",false)
             call PK_Render(p)
         endif
         set p = p+1
@@ -70242,6 +72234,7 @@ endfunction
 
 
 function PK_Init takes nothing returns nothing
+    set OP_ScoreTimer = CreateTimer()
     set PK_Seed = GetRandomInt(1,2147483646)
     call TimerStart(CreateTimer(),2,false,function PK_Start)
 endfunction
@@ -70271,30 +72264,833 @@ endfunction
 // Two-deck S17. BJ_state: 0 empty, 1 acting, 2 stood, 3 bust, 4 natural, 5 paid.
 // BJ_phase: 0 idle, 1 betting, 2 player turns, 3 dealer, 4 results.
 function BJ_Value takes integer card returns integer
+    if ModuloInteger(card,13) == 12 then
+        return 11
+    endif
     return IMinBJ(10,ModuloInteger(card,13)+2)
 endfunction
 
-function BJ_Recount takes integer h returns nothing
+// Both seats score the physical cards from scratch, including every soft ace.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function BJ_Payout takes integer total, boolean natural, integer dealer, boolean dealerNatural, integer bet returns integer
+    if total > 21 then
+        return 0
+    elseif dealerNatural then
+        if natural then
+            return bet
+        endif
+        return 0
+    elseif natural then
+        return bet*5/2
+    elseif dealer > 21 or total > dealer then
+        return bet*2
+    elseif total == dealer then
+        return bet
+    endif
+    return 0
+endfunction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Fixed-price tickets: the displayed quote includes the proposed stake.
+// Every ticket reserves its maximum profit against the finite casino bank.
+function NS_Name takes integer id returns string
+    if id == 0 then
+        return "Maya Chen II"
+    elseif id == 1 then
+        return "Elise Park"
+    elseif id == 2 then
+        return "Alex Morgan"
+    elseif id == 3 then
+        return "Miles Bennett"
+    endif
+    return "Ethan Cole"
+endfunction
+
+function HousePK_Random takes integer bound returns integer
+    // Park-Miller/Schrage avoids signed overflow; separate from battle RNG.
+    local integer hi = HousePK_Seed / 127773
+    local integer lo = ModuloInteger(HousePK_Seed, 127773)
+    set HousePK_Seed = 16807 * lo - 2836 * hi
+    if HousePK_Seed <= 0 then
+        set HousePK_Seed = HousePK_Seed + 2147483647
+    endif
+    return ModuloInteger(HousePK_Seed, bound)
+endfunction
+
+function HousePK_Score takes integer p, integer seat, integer board returns integer
+    local integer base = p * 9
     local integer i = 0
-    local integer c
-    set BJ_total[h] = 0
-    set BJ_aces[h] = 0
+    local integer a = 0
+    local integer b = 0
+    local integer c = 0
+    local integer d = 0
+    local integer e = 0
+    local integer best = 0
+    local integer value = 0
+    local integer n = board + 2
+    set HousePK_Eval[0] = HousePK_Cards[base + seat * 2]
+    set HousePK_Eval[1] = HousePK_Cards[base + seat * 2 + 1]
     loop
-        exitwhen i >= BJ_count[h]
-        set c = BJ_card[h*22+i]
-        if ModuloInteger(c,13) == 12 then
-            set BJ_total[h] = BJ_total[h]+11
-            set BJ_aces[h] = BJ_aces[h]+1
+        exitwhen i >= board
+        set HousePK_Eval[i+2] = HousePK_Cards[base+4+i]
+        set i = i + 1
+    endloop
+    loop
+        exitwhen a >= n-4
+        set b = a+1
+        loop
+            exitwhen b >= n-3
+            set c = b+1
+            loop
+                exitwhen c >= n-2
+                set d = c+1
+                loop
+                    exitwhen d >= n-1
+                    set e = d+1
+                    loop
+                        exitwhen e >= n
+                        set value = PK_Score5(HousePK_Eval[a],HousePK_Eval[b],HousePK_Eval[c],HousePK_Eval[d],HousePK_Eval[e])
+                        set best = IMaxBJ(best,value)
+                        set e = e+1
+                    endloop
+                    set d = d+1
+                endloop
+                set c = c+1
+            endloop
+            set b = b+1
+        endloop
+        set a = a+1
+    endloop
+    return best
+endfunction
+
+function HousePK_BoardCount takes integer p returns integer
+    if HousePK_Street[p] == 0 then
+        return 0
+    endif
+    return IMinBJ(5,HousePK_Street[p]+2)
+endfunction
+
+function HousePK_Limit takes integer p, integer seat returns integer
+    local integer x = p*2+seat
+    local integer y = p*2+1-seat
+    return IMinBJ(HousePK_Paid[x]+HousePK_Stack[x],HousePK_Paid[y]+HousePK_Stack[y])
+endfunction
+
+function HousePK_Pay takes integer x, integer amount returns nothing
+    set HousePK_Stack[x] = HousePK_Stack[x]-amount
+    set HousePK_Paid[x] = HousePK_Paid[x]+amount
+    set HousePK_Total[x] = HousePK_Total[x]+amount
+endfunction
+
+function HousePK_End takes integer p, integer winner, string note returns nothing
+    local integer x = p*2
+    local integer pot = HousePK_Total[x]+HousePK_Total[x+1]
+    if winner == 2 then
+        set HousePK_Stack[x] = HousePK_Stack[x]+pot/2
+        set HousePK_Stack[x+1] = HousePK_Stack[x+1]+pot/2
+        set HousePK_Stack[x+1-HousePK_Dealer[p]] = HousePK_Stack[x+1-HousePK_Dealer[p]]+ModuloInteger(pot,2)
+    else
+        set HousePK_Stack[x+winner] = HousePK_Stack[x+winner]+pot
+    endif
+    if HousePokerBuyIn[p] > 0 then
+        call CAS_Settle(0,p+1,HousePokerBuyIn[p],HousePK_Stack[x],HousePokerBuyIn[p])
+        call CAS_ResultSound(p+1,HousePK_Stack[x]-HousePokerBuyIn[p])
+        set HousePokerBuyIn[p] = 0
+    endif
+    set HousePK_Total[x] = 0
+    set HousePK_Total[x+1] = 0
+    set HousePK_Paid[x] = 0
+    set HousePK_Paid[x+1] = 0
+    set HousePK_Turn[p] = -1
+    set HousePK_Note[p] = note+" (pot "+I2S(pot)+")"
+endfunction
+
+function HousePK_Showdown takes integer p returns nothing
+    local integer human = HousePK_Score(p,0,5)
+    local integer bot = HousePK_Score(p,1,5)
+    set HousePK_Street[p] = 3
+    set HousePK_Reveal[p] = true
+    if human > bot then
+        call HousePK_End(p,0,"You win: "+PK_Category(human))
+    elseif bot > human then
+        call HousePK_End(p,1,NS_Name(NS_Dealt[p])+" wins: "+PK_Category(bot))
+    else
+        call HousePK_End(p,2,"Split pot: "+PK_Category(human))
+    endif
+endfunction
+
+function HousePK_Advance takes integer p returns nothing
+    local integer x = p*2
+    if HousePK_Stack[x] == 0 or HousePK_Stack[x+1] == 0 or HousePK_Street[p] == 3 then
+        call HousePK_Showdown(p)
+        return
+    endif
+    set HousePK_Street[p] = HousePK_Street[p]+1
+    set HousePK_Paid[x] = 0
+    set HousePK_Paid[x+1] = 0
+    set HousePK_Acted[x] = false
+    set HousePK_Acted[x+1] = false
+    set HousePK_LastRaise[p] = 2
+    set HousePK_Turn[p] = 1-HousePK_Dealer[p]
+    set HousePK_Actions[p] = 0
+endfunction
+
+function HousePK_Deal takes integer p returns nothing
+    local integer i = 0
+    local integer j = 0
+    local integer tmp = 0
+    local integer x = p*2
+    set HousePK_Note[p] = "Blinds 1/2. Raise button adds one minimum raise."
+    if HouseStake[p] > 300 then
+        set HousePK_Note[p] = "Maximum buy-in is 300 gold."
+        return
+    endif
+    if not CAS_Reserve(0,p+1,HouseStake[p],HouseStake[p]) then
+        set HousePK_Note[p] = CAS_note[p+1]
+        return
+    endif
+    set NS_Dealt[p] = NS_Selected[p]
+    set HousePokerBuyIn[p] = HouseStake[p]
+    set HousePK_Stack[x] = HousePokerBuyIn[p]
+    set HousePK_Stack[x+1] = HousePokerBuyIn[p]
+    loop
+        exitwhen i >= 52
+        set HousePK_Deck[i] = i
+        set i = i+1
+    endloop
+    set i = 51
+    loop
+        exitwhen i <= 0
+        set j = HousePK_Random(i+1)
+        set tmp = HousePK_Deck[i]
+        set HousePK_Deck[i] = HousePK_Deck[j]
+        set HousePK_Deck[j] = tmp
+        set i = i-1
+    endloop
+    set i = 0
+    loop
+        exitwhen i >= 9
+        set HousePK_Cards[p*9+i] = HousePK_Deck[i]
+        set i = i+1
+    endloop
+    set HousePK_Hand[p] = HousePK_Hand[p]+1
+    set HousePK_Dealer[p] = 1-HousePK_Dealer[p]
+    set HousePK_Street[p] = 0
+    set HousePK_Turn[p] = HousePK_Dealer[p]
+    set HousePK_LastRaise[p] = 2
+    set HousePK_Actions[p] = 0
+    set HousePK_Clock[p] = 30
+    set HousePK_Wait[p] = 2
+    set HousePK_Reveal[p] = false
+    set HousePK_Paid[x] = 0
+    set HousePK_Paid[x+1] = 0
+    set HousePK_Total[x] = 0
+    set HousePK_Total[x+1] = 0
+    set HousePK_Acted[x] = false
+    set HousePK_Acted[x+1] = false
+    set tmp = IMinBJ(HousePK_Stack[x],HousePK_Stack[x+1])
+    call HousePK_Pay(x+HousePK_Dealer[p],IMinBJ(1,tmp))
+    call HousePK_Pay(x+1-HousePK_Dealer[p],IMinBJ(2,tmp))
+    if HousePK_Paid[x] == HousePK_Paid[x+1] and (HousePK_Stack[x] == 0 or HousePK_Stack[x+1] == 0) then
+        call HousePK_Showdown(p)
+    endif
+endfunction
+
+function HousePK_Action takes integer p, integer seat, integer action returns nothing
+    local integer x = p*2+seat
+    local integer y = p*2+1-seat
+    local integer due = IMaxBJ(0,HousePK_Paid[y]-HousePK_Paid[x])
+    local integer target = 0
+    local integer raiseSize = 0
+    if not PK_Eligible(p) or HousePK_Turn[p] != seat then
+        return
+    endif
+    if action == 0 then
+        if seat == 0 then
+            call HousePK_End(p,1,"You fold. "+NS_Name(NS_Dealt[p])+" wins")
         else
-            set BJ_total[h] = BJ_total[h]+BJ_Value(c)
+            call HousePK_End(p,0,NS_Name(NS_Dealt[p])+" folds. You win")
+        endif
+        return
+    elseif action == 1 then
+        call HousePK_Pay(x,IMinBJ(due,HousePK_Stack[x]))
+        if due == 0 then
+            set HousePK_Note[p] = "Check."
+        else
+            set HousePK_Note[p] = "Call "+I2S(due)+"."
+        endif
+    else
+        set target = IMaxBJ(HousePK_Paid[x],HousePK_Paid[y])+HousePK_LastRaise[p]
+        if seat == 1 then
+            set target = target-HousePK_LastRaise[p]+IMaxBJ(HousePK_LastRaise[p],(HousePK_Total[x]+HousePK_Total[y]+due)/2)
+        endif
+        if action == 3 then
+            set target = HousePK_Limit(p,seat)
+        endif
+        set target = IMinBJ(target,HousePK_Limit(p,seat))
+        set raiseSize = target-IMaxBJ(HousePK_Paid[x],HousePK_Paid[y])
+        if raiseSize <= 0 or (HousePK_Acted[x] and due < HousePK_LastRaise[p]) then
+            return
+        endif
+        call HousePK_Pay(x,target-HousePK_Paid[x])
+        if raiseSize >= HousePK_LastRaise[p] then
+            set HousePK_LastRaise[p] = raiseSize
+            set HousePK_Acted[y] = false
+        endif
+        set HousePK_Note[p] = "Raise to "+I2S(target)+"."
+    endif
+    set HousePK_Acted[x] = true
+    set HousePK_Actions[p] = HousePK_Actions[p]+1
+    set HousePK_Turn[p] = 1-seat
+    if HousePK_Paid[x] == HousePK_Paid[y] and HousePK_Acted[x] and HousePK_Acted[y] then
+        call HousePK_Advance(p)
+    elseif HousePK_Paid[x] == HousePK_Paid[y] and (HousePK_Stack[x] == 0 or HousePK_Stack[y] == 0) then
+        call HousePK_Showdown(p)
+    endif
+    set HousePK_Clock[p] = 30
+    set HousePK_Wait[p] = 2
+endfunction
+
+function HousePK_Texture takes integer p, string name, real x, real y, real w, real h returns framehandle
+    local framehandle f = BlzCreateFrameByType("BACKDROP","PokerArtwork",HousePK_Dialog[p],"",p)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,HousePK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function HousePK_Label takes integer p, real x, real y, real w, real h, real scale returns framehandle
+    local framehandle f = BlzCreateFrameByType("TEXT","PokerLabel",HousePK_Dialog[p],"",p)
+    call BlzFrameSetSize(f,w,h)
+    call BlzFrameSetPoint(f,FRAMEPOINT_TOPLEFT,HousePK_Dialog[p],FRAMEPOINT_TOPLEFT,x,-y)
+    call BlzFrameSetTextAlignment(f,TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
+    call BlzFrameSetFont(f,"CasinoUI\\Bold.ttf",0.0115*scale,0)
+    call BlzFrameSetEnable(f,false)
+    return f
+endfunction
+
+function HousePK_Render takes integer p returns nothing
+    local integer x = p*2
+    local integer b = p*9
+    local integer i = 0
+    local integer due = IMaxBJ(0,HousePK_Paid[x+1]-HousePK_Paid[x])
+    local integer top = IMaxBJ(HousePK_Paid[x],HousePK_Paid[x+1])
+    local integer pot = HousePK_Total[x]+HousePK_Total[x+1]
+    local string phase = "PREFLOP"
+    local string label = "Check"
+    local string path = ""
+    local boolean raiseOK = false
+    local integer callTone = 0
+    if HousePK_Street[p] == 1 then
+        set phase = "FLOP"
+    elseif HousePK_Street[p] == 2 then
+        set phase = "TURN"
+    elseif HousePK_Street[p] == 3 then
+        set phase = "RIVER"
+    endif
+    if HousePK_Hand[p] > 0 then
+        call BlzFrameSetText(HousePK_Title[p],"POKER|n"+phase+" / #"+CUI_Value(I2S(HousePK_Hand[p])))
+    else
+        call BlzFrameSetText(HousePK_Title[p],"POKER")
+    endif
+    call BlzFrameSetText(HousePK_HumanLabel[p],"YOU")
+    call BlzFrameSetText(HousePK_BotLabel[p],NS_Name(NS_Dealt[p]))
+    if HousePK_Hand[p] == 0 then
+        call BlzFrameSetText(HousePK_BotLabel[p],NS_Name(NS_Selected[p]))
+    endif
+    call CUI_Text(NS_Selector[p],"Opponent > "+NS_Name(NS_Selected[p]))
+    call BlzFrameSetVisible(NS_Selector[p],HousePK_Turn[p] == -1 and not CAS_ended)
+    call BlzFrameSetText(HousePK_HumanStack[p],CUI_Value(I2S(HousePK_Stack[x])))
+    call BlzFrameSetText(HousePK_BotStack[p],CUI_Value(I2S(HousePK_Stack[x+1])))
+    call BlzFrameSetText(HousePK_PotLabel[p],"POT  "+CUI_Value(I2S(pot)))
+    if HousePK_Note[p] == "Blinds 1/2. Raise button adds one minimum raise." then
+        call BlzFrameSetText(HousePK_Text[p],"BLINDS 1/2 / MAX BUY-IN 300g")
+    else
+        call BlzFrameSetText(HousePK_Text[p],HousePK_Note[p])
+    endif
+    call BlzFrameSetVisible(HousePK_CallLabel[p],HousePK_Turn[p] == 0)
+    call BlzFrameSetText(HousePK_CallLabel[p],"TO CALL  "+CUI_Value(I2S(due)))
+    call PK_ChipArt(HousePK_HumanChips[p],HousePK_Stack[x])
+    call PK_ChipArt(HousePK_BotChips[p],HousePK_Stack[x+1])
+    call PK_ChipArt(HousePK_PotChips[p],pot)
+    call BlzFrameSetVisible(HousePK_HumanDealer[p],HousePK_Hand[p] > 0 and HousePK_Dealer[p] == 0)
+    call BlzFrameSetVisible(HousePK_BotDealer[p],HousePK_Hand[p] > 0 and HousePK_Dealer[p] == 1)
+    loop
+        exitwhen i >= 9
+        if HousePK_Hand[p] == 0 then
+            set path = "empty"
+        elseif i < 2 then
+            set path = "card"+I2S(HousePK_Cards[b+i])
+        elseif i < 4 then
+            set path = "back"
+            if HousePK_Reveal[p] then
+                set path = "card"+I2S(HousePK_Cards[b+i])
+            endif
+        else
+            set path = "empty"
+            if i-4 < HousePK_BoardCount(p) then
+                set path = "card"+I2S(HousePK_Cards[b+i])
+            endif
+        endif
+        call BlzFrameSetTexture(HousePK_Face[b+i],"PokerUI\\"+path+".blp",0,true)
+        set i = i+1
+    endloop
+    if HousePK_Turn[p] == 0 then
+        call BlzFrameSetText(HousePK_Status[p],"YOUR TURN / "+CUI_Value(I2S(HousePK_Clock[p])+"s"))
+            if due > 0 then
+            set label = "Call "+I2S(due)
+            set callTone = 3
+        endif
+            call CUI_Text(HousePK_Call[p],label)
+        if HousePK_Limit(p,0) > top and (not HousePK_Acted[x] or due >= HousePK_LastRaise[p]) then
+                    set raiseOK = true
+            call CUI_Text(HousePK_Raise[p],"Raise "+I2S(IMinBJ(top+HousePK_LastRaise[p],HousePK_Limit(p,0))))
+                    call CUI_Text(HousePK_Allin[p],"All-in "+I2S(HousePK_Limit(p,0)))
+        endif
+    elseif HousePK_Turn[p] == 1 then
+        call BlzFrameSetText(HousePK_Status[p],"BOT'S TURN")
+    else
+        call BlzFrameSetText(HousePK_Status[p],"NEXT HAND")
+        endif
+    call CUI_Paint(HousePK_Fold[p],1,HousePK_Turn[p] == 0)
+    call CUI_Paint(HousePK_Call[p],callTone,HousePK_Turn[p] == 0)
+    call CUI_Paint(HousePK_Raise[p],2,raiseOK)
+    call CUI_Paint(HousePK_Allin[p],2,raiseOK)
+    call BlzFrameSetVisible(HouseLower[p],HousePK_Turn[p] == -1 and not CAS_ended)
+    call BlzFrameSetVisible(HouseHigher[p],HousePK_Turn[p] == -1 and not CAS_ended)
+    call CUI_Paint(HouseLower[p],0,HouseStake[p] > 10)
+    call CUI_Paint(HouseHigher[p],0,HouseStake[p] < 300)
+    call CUI_Text(HousePK_Next[p],"Buy in "+I2S(HouseStake[p])+"g")
+    if HousePK_Turn[p] == -1 and not CAS_ended then
+        call BlzFrameSetText(HousePK_HumanStack[p],CUI_Value(I2S(CAS_gold[p+1])+"g"))
+        call BlzFrameSetText(HousePK_HumanLabel[p],"WALLET")
+        if not CAS_ready[p+1] then
+            call BlzFrameSetText(HousePK_Text[p],"Waiting for your wallet to load.")
+        elseif CAS_gold[p+1] < HouseStake[p] then
+            call BlzFrameSetText(HousePK_Text[p],"Your wallet needs "+I2S(HouseStake[p]-CAS_gold[p+1])+"g more for this buy-in.")
+        endif
+    endif
+    call CUI_Paint(HousePK_Next[p],4,HousePK_Turn[p] == -1 and not CAS_ended and CAS_ready[p+1] and CAS_gold[p+1] >= HouseStake[p])
+    call CUI_Paint(HousePK_Hide[p],0,true)
+    if GetLocalPlayer() == Player(p) then
+        call BlzFrameSetVisible(HousePK_Dialog[p],not HousePK_Hidden[p])
+    endif
+endfunction
+
+function NS_Equity takes integer n, integer bucket returns integer
+    local string row
+    if n == 3 then
+        set row = "027043041054037037037037037037037037037037037037031051045063060066066076073081072082059059059059077077077077070076071071078085082082077077077077037058048048092096092092093093093093088088088088090090089091090090090090090090090090090090090090093095094096094094094094094094094094094094094094097097097097093095094094097099098098097097097097100100100100100100100100100100100100100100100100100100100100100100100100100100100100100100100100"
+    elseif n == 4 then
+        set row = "018034028042030030030030030030030030030030030030023045032051057063061067073080075081052052052052028056034056068072066078078084073084072072072072030053036056092093092096091093094092082082082082089082089089082074081086080079076083088088088088088093088094084096082093080089086084089089089089093093093093090092090090095098096096093093093093081083087087100100100100100100100100098098098098100100100100100100100100100100100100100100100100"
+    else
+        set row = "011025017017017017017017017017017017004004004004015037026026052059054054072079078078009009009009026056043043066070067067078084083083021030022022020048034034091093091091088092091091016024018018091091091091086087086086086087087087042041043043086092089089084094087087084090089089038035039039090090090090090091090090096097097097044044046046052073071071100100099099097100098098046059063063100100099099099099098098097097097097075084085085"
+    endif
+    return S2I(SubString(row,bucket*3,bucket*3+3))
+endfunction
+
+// NorthStar's preflop hand score, expressed in percentage points.
+function NS_Preflop takes integer first, integer second returns integer
+    local integer a = ModuloInteger(first,13)+2
+    local integer b = ModuloInteger(second,13)+2
+    local integer value = (a+b-10)*100/24
+    if a == b then
+        return 48+(a-2)*43/10
+    endif
+    if first/13 == second/13 then
+        set value = value+7
+    endif
+    if IAbsBJ(a-b) == 1 then
+        set value = value+4
+    endif
+    if a == 14 or b == 14 then
+        set value = value+4
+    endif
+    return IMinBJ(96,value)
+endfunction
+
+// Group visible hands using the same features as sample_equity.py.
+function NS_Postflop takes integer p, integer n returns integer
+    local integer base = p*9
+    local integer first = HousePK_Cards[base+2]
+    local integer second = HousePK_Cards[base+3]
+    local integer a = ModuloInteger(first,13)+2
+    local integer b = ModuloInteger(second,13)+2
+    local integer top = 0
+    local integer matched = 0
+    local integer pairGroup = 0
+    local integer suitA = 1
+    local integer suitB = 1
+    local integer i = 1
+    local integer j
+    local integer card
+    local integer r
+    local integer boardIn
+    local integer allInWindow
+    local integer draw = 0
+    local integer high = 0
+    local integer score = HousePK_Score(p,1,n)
+    loop
+        exitwhen i > 14
+        set NS_BoardRank[i] = false
+        set i = i+1
+    endloop
+    if first/13 == second/13 then
+        set suitA = 2
+        set suitB = 2
+    endif
+    set i = 0
+    loop
+        exitwhen i >= n
+        set card = HousePK_Cards[base+4+i]
+        set r = ModuloInteger(card,13)+2
+        set top = IMaxBJ(top,r)
+        set NS_BoardRank[r] = true
+        if card/13 == first/13 then
+            set suitA = suitA+1
+        endif
+        if card/13 == second/13 then
+            set suitB = suitB+1
+        endif
+        set i = i+1
+    endloop
+    if a == b or NS_BoardRank[a] then
+        set matched = a
+    endif
+    if NS_BoardRank[b] then
+        set matched = IMaxBJ(matched,b)
+    endif
+    if matched >= top then
+        set pairGroup = 2
+    elseif matched > 0 then
+        set pairGroup = 1
+    endif
+    if n == 5 then
+        if score == PK_Score5(HousePK_Cards[base+4],HousePK_Cards[base+5],HousePK_Cards[base+6],HousePK_Cards[base+7],HousePK_Cards[base+8]) then
+            set pairGroup = 3
+        endif
+    elseif suitA == 4 or suitB == 4 then
+        set draw = 1
+    else
+        set i = 1
+        loop
+            exitwhen i > 10 or draw == 1
+            set j = i
+            set boardIn = 0
+            set allInWindow = 0
+            loop
+                exitwhen j >= i+5
+                set r = j
+                if j == 1 then
+                    set r = 14
+                endif
+                if NS_BoardRank[r] then
+                    set boardIn = boardIn+1
+                    set allInWindow = allInWindow+1
+                elseif a == r or b == r then
+                    set allInWindow = allInWindow+1
+                endif
+                set j = j+1
+            endloop
+            if allInWindow == 4 and boardIn < 4 then
+                set draw = 1
+            endif
+            set i = i+1
+        endloop
+    endif
+    if IMaxBJ(a,b) >= 12 then
+        set high = 1
+    endif
+    return NS_Equity(n,(score/759375)*16+pairGroup*4+draw*2+high)
+endfunction
+
+// Returns fold, check/call, or raise. The table checks raise legality and sizing.
+function NS_Move takes integer p, integer due, integer pot, integer blind, integer roll returns integer
+    local integer id = NS_Dealt[p]
+    local integer n = HousePK_BoardCount(p)
+    local integer price = 100*due/IMaxBJ(1,pot+due)
+    local integer value
+    local integer pressure
+    local integer defend
+    local integer caution = 0
+    local integer first = HousePK_Cards[p*9+2]
+    local integer second = HousePK_Cards[p*9+3]
+    if n == 0 then
+        set value = NS_Preflop(first,second)
+        if HousePK_Dealer[p] == 1 then
+            set value = value+5
+        endif
+        set pressure = IMinBJ(88,IMaxBJ(0,(value-25)*2))
+        set defend = 19+price/2
+        if due > blind then
+            set pressure = IMaxBJ(0,value-53)
+            set defend = 25+price/2+IMinBJ(28,2*due/blind)
+        endif
+    else
+        set value = NS_Postflop(p,n)
+        set defend = price+6
+        // A large bet represents a stronger range than a random pair of cards.
+        if due > 0 then
+            set defend = defend+price/3
+        endif
+        set pressure = IMinBJ(91,IMaxBJ(3,(value-39)*2))
+        if due > 0 then
+            set pressure = IMaxBJ(2,(value-56)*2)
+        endif
+    endif
+    if id == 0 then
+        // Maya flats more, including with some hands strong enough to reraise.
+        set pressure = pressure-9
+        set defend = defend-3
+    elseif id == 1 then
+        // Elise gives up marginal bluff catchers, particularly on the river.
+        set caution = 3
+        if n == 5 then
+            set caution = 9
+        endif
+        set defend = defend+caution
+    elseif id == 2 then
+        // Alex pushes early edges and removes some speculative river bluffs.
+        if n < 4 then
+            set pressure = pressure+8
+        elseif n == 5 and value < 50 then
+            set pressure = 0
+        endif
+    elseif id == 3 then
+        // Miles checks some big hands and rarely fires an empty bluff.
+        if value >= 65 then
+            set pressure = pressure-16
+        elseif value < 45 then
+            set pressure = 1
+        endif
+        set defend = defend-2
+    else
+        // Ethan's easier heads-up adaptation opens wide and overdefends small bets.
+        if n == 0 then
+            set pressure = pressure+17
+            set defend = defend-13
+        elseif price <= 28 then
+            set defend = defend-10
+        endif
+    endif
+    if due > 0 and value < defend and roll >= IMaxBJ(0,18-3*(defend-value)) then
+        return 0
+    endif
+    if roll < pressure then
+        return 2
+    endif
+    return 1
+endfunction
+
+function HousePK_Bot takes integer p returns nothing
+    local integer x = p*2+1
+    local integer top = IMaxBJ(HousePK_Paid[x],HousePK_Paid[x-1])
+    local integer due = IMinBJ(HousePK_Stack[x],top-HousePK_Paid[x])
+    local integer pot = HousePK_Total[x]+HousePK_Total[x-1]
+    local integer move = NS_Move(p,due,pot,2,HousePK_Random(100))
+    if move == 2 and (HousePK_Actions[p] >= 4 or HousePK_Stack[x] <= due or HousePK_Stack[x-1] <= 0 or (HousePK_Acted[x] and due < HousePK_LastRaise[p])) then
+        set move = 1
+    endif
+    call HousePK_Action(p,1,move)
+endfunction
+
+function HousePK_Click takes nothing returns nothing
+    local integer p = GetPlayerId(GetTriggerPlayer())
+    local framehandle clicked = BlzGetTriggerFrame()
+    if not PK_Eligible(p) then
+        return
+    endif
+    if clicked == HousePK_Hide[p] then
+        set HousePK_Hidden[p] = true
+    elseif clicked == HouseLower[p] and HousePK_Turn[p] == -1 then
+        set HouseStake[p] = IMaxBJ(10,HouseStake[p]-10)
+    elseif clicked == HouseHigher[p] and HousePK_Turn[p] == -1 then
+        set HouseStake[p] = IMinBJ(300,HouseStake[p]+10)
+    elseif clicked == NS_Selector[p] and HousePK_Turn[p] == -1 and not CAS_ended then
+        set NS_Selected[p] = ModuloInteger(NS_Selected[p]+1,5)
+    elseif clicked == HousePK_Next[p] and HousePK_Turn[p] == -1 then
+        call HousePK_Deal(p)
+    elseif clicked == HousePK_Fold[p] then
+        call HousePK_Action(p,0,0)
+    elseif clicked == HousePK_Call[p] then
+        call HousePK_Action(p,0,1)
+    elseif clicked == HousePK_Raise[p] then
+        call HousePK_Action(p,0,2)
+    elseif clicked == HousePK_Allin[p] then
+        call HousePK_Action(p,0,3)
+    endif
+    call HousePK_Render(p)
+    set clicked = null
+endfunction
+
+function HousePK_Refund takes integer p returns nothing
+    if HousePokerBuyIn[p] > 0 then
+        call CAS_Settle(0,p+1,HousePokerBuyIn[p],HousePokerBuyIn[p],HousePokerBuyIn[p])
+        set HousePokerBuyIn[p] = 0
+        set HousePK_Turn[p] = -1
+    endif
+endfunction
+
+function HousePK_Tick takes nothing returns nothing
+    local integer p = 0
+    loop
+        exitwhen p >= 24
+        if HousePK_Started[p] then
+            if not PK_Eligible(p) then
+                // Cash out the practice table before any return to active play.
+                if HousePK_Turn[p] >= 0 then
+                    set HousePK_Stack[p*2] = HousePK_Stack[p*2]+HousePK_Total[p*2]
+                    set HousePK_Stack[p*2+1] = HousePK_Stack[p*2+1]+HousePK_Total[p*2+1]
+                    set HousePK_Total[p*2] = 0
+                    set HousePK_Total[p*2+1] = 0
+                    set HousePK_Turn[p] = -1
+                endif
+                call HousePK_Refund(p)
+                call BlzFrameSetVisible(HousePK_Dialog[p],false)
+            elseif HousePK_Turn[p] == 1 then
+                set HousePK_Wait[p] = HousePK_Wait[p]-1
+                if HousePK_Wait[p] <= 0 then
+                    call HousePK_Bot(p)
+                    call HousePK_Render(p)
+                endif
+            elseif HousePK_Turn[p] == 0 then
+                set HousePK_Clock[p] = HousePK_Clock[p]-1
+                if HousePK_Clock[p] <= 0 then
+                    if HousePK_Paid[p*2] >= HousePK_Paid[p*2+1] then
+                        call HousePK_Action(p,0,1)
+                    else
+                        call HousePK_Action(p,0,0)
+                    endif
+                endif
+                call HousePK_Render(p)
+            elseif not HousePK_Hidden[p] then
+                call HousePK_Render(p)
+            endif
+        endif
+        set p = p+1
+    endloop
+endfunction
+
+function HousePK_Button takes integer p, trigger t, real x, real y, real width, string label returns framehandle
+    local framehandle f = CUI_Create(HousePK_Dialog[p],p,x,y,width,0.029,label,0)
+    call BlzTriggerRegisterFrameEvent(t,f,FRAMEEVENT_CONTROL_CLICK)
+    return f
+endfunction
+
+function HousePK_Start takes integer p returns nothing
+    local integer i = 0
+    local trigger click = null
+    if not HousePK_Started[p] then
+        set HousePK_Hidden[p] = true
+        set HousePK_Started[p] = true
+        set HousePK_Stack[p*2] = 0
+        set HousePK_Stack[p*2+1] = 0
+        set HousePK_Dialog[p] = BlzCreateFrameByType("BACKDROP","PokerTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",p)
+        call BlzFrameSetSize(HousePK_Dialog[p],0.70,0.48)
+        call BlzFrameSetAbsPoint(HousePK_Dialog[p],FRAMEPOINT_TOPLEFT,0.05,0.57)
+        call BlzFrameSetTexture(HousePK_Dialog[p],"PokerUI\\table.blp",0,true)
+        call BlzFrameSetLevel(HousePK_Dialog[p],50)
+        call BlzFrameSetVisible(HousePK_Dialog[p],false)
+        set HousePK_Title[p] = HousePK_Label(p,0.025,0.014,0.49,0.040,1.12)
+        set HousePK_BotLabel[p] = HousePK_Label(p,0.035,0.087,0.215,0.022,0.91)
+        set HousePK_BotStack[p] = HousePK_Label(p,0.105,0.109,0.085,0.032,1.48)
+        set HousePK_HumanLabel[p] = HousePK_Label(p,0.105,0.314,0.085,0.017,0.91)
+        set HousePK_HumanStack[p] = HousePK_Label(p,0.105,0.333,0.085,0.032,1.48)
+        set HousePK_PotLabel[p] = HousePK_Label(p,0.532,0.205,0.134,0.038,1.24)
+        set HousePK_Status[p] = HousePK_Label(p,0.454,0.312,0.215,0.024,1.05)
+        set HousePK_CallLabel[p] = HousePK_Label(p,0.454,0.340,0.215,0.032,1.20)
+        set HousePK_Text[p] = HousePK_Label(p,0.025,0.398,0.65,0.037,1.0)
+        set HousePK_HumanChips[p] = HousePK_Texture(p,"chips4",0.193,0.330,0.048,0.030)
+        set HousePK_BotChips[p] = HousePK_Texture(p,"chips4",0.193,0.106,0.048,0.030)
+        set HousePK_PotChips[p] = HousePK_Texture(p,"chips1",0.532,0.245,0.050,0.030)
+        set HousePK_HumanDealer[p] = HousePK_Texture(p,"dealer",0.247,0.325,0.022,0.022)
+        set HousePK_BotDealer[p] = HousePK_Texture(p,"dealer",0.247,0.113,0.022,0.022)
+        set HousePK_Face[p*9] = HousePK_Texture(p,"empty",0.286,0.293,0.060,0.086)
+        set HousePK_Face[p*9+1] = HousePK_Texture(p,"empty",0.354,0.293,0.060,0.086)
+        set HousePK_Face[p*9+2] = HousePK_Texture(p,"back",0.286,0.081,0.060,0.086)
+        set HousePK_Face[p*9+3] = HousePK_Texture(p,"back",0.354,0.081,0.060,0.086)
+        set i = 0
+        loop
+            exitwhen i >= 5
+            set HousePK_Face[p*9+4+i] = HousePK_Texture(p,"empty",0.184+I2R(i)*0.068,0.193,0.060,0.086)
+            set i = i+1
+        endloop
+        set click = CreateTrigger()
+        set HousePK_Fold[p] = HousePK_Button(p,click,0.025,-0.439,0.105,"Fold")
+        set HousePK_Call[p] = HousePK_Button(p,click,0.135,-0.439,0.12,"Check / Call")
+        set HousePK_Raise[p] = HousePK_Button(p,click,0.26,-0.439,0.12,"Raise")
+        set HousePK_Allin[p] = HousePK_Button(p,click,0.385,-0.439,0.13,"All-in")
+        set HousePK_Next[p] = HousePK_Button(p,click,0.52,-0.439,0.155,"Next hand")
+        set NS_Selector[p] = HousePK_Button(p,click,0.307,-0.018,0.248,"Choose opponent")
+        set HouseStake[p] = 100
+        set HouseLower[p] = HousePK_Button(p,click,0.454,-0.107,0.104,"-10g")
+        set HouseHigher[p] = HousePK_Button(p,click,0.563,-0.107,0.112,"+10g")
+        set HousePK_Hide[p] = HousePK_Button(p,click,0.565,-0.018,0.11,"Hide table")
+        call TriggerAddAction(click,function HousePK_Click)
+        set HousePK_Turn[p] = -1
+        set HousePK_Note[p] = "Choose 10-300g, then click Buy in to deal. Blinds 1/2."
+    endif
+    set HousePK_Hidden[p] = false
+    call HousePK_Render(p)
+    set click = null
+endfunction
+
+function BJ_CardSum takes integer groupId, integer count, boolean dealer returns integer
+    local integer i = 0
+    local integer aces = 0
+    local integer total = 0
+    local integer value
+    loop
+        exitwhen i >= count
+        if dealer then
+            set value = BJ_Value(BJ_dealerCard[groupId*22+i])
+        else
+            set value = BJ_Value(BJ_card[groupId*22+i])
+        endif
+        set total = total+value
+        if value == 11 then
+            set aces = aces+1
         endif
         set i = i+1
     endloop
     loop
-        exitwhen BJ_total[h] <= 21 or BJ_aces[h] == 0
-        set BJ_total[h] = BJ_total[h]-10
-        set BJ_aces[h] = BJ_aces[h]-1
+        exitwhen total <= 21 or aces == 0
+        set total = total-10
+        set aces = aces-1
     endloop
+    return total
+endfunction
+
+function BJ_Recount takes integer h returns nothing
+    set BJ_total[h] = BJ_CardSum(h,BJ_count[h],false)
 endfunction
 
 function BJ_Shuffle takes integer t returns nothing
@@ -70346,38 +73142,18 @@ function BJ_Hit takes integer t, integer h returns nothing
 endfunction
 
 function BJ_DealerHit takes integer t returns nothing
-    local integer card = BJ_Draw(t)
-    set BJ_dealerCard[t*22+BJ_dealerCount[t]] = card
-    set BJ_dealerCount[t] = BJ_dealerCount[t]+1
-    if ModuloInteger(card,13) == 12 then
-        set BJ_dealerTotal[t] = BJ_dealerTotal[t]+11
-        set BJ_dealerAces[t] = BJ_dealerAces[t]+1
-    else
-        set BJ_dealerTotal[t] = BJ_dealerTotal[t]+BJ_Value(card)
+    local integer count = BJ_dealerCount[t]
+    local integer before = BJ_CardSum(t,count,true)
+    set BJ_dealerTotal[t] = before
+    if count >= 2 and before >= 17 then
+        return
     endif
-    loop
-        exitwhen BJ_dealerTotal[t] <= 21 or BJ_dealerAces[t] == 0
-        set BJ_dealerTotal[t] = BJ_dealerTotal[t]-10
-        set BJ_dealerAces[t] = BJ_dealerAces[t]-1
-    endloop
-endfunction
-
-function BJ_Payout takes integer total, boolean natural, integer dealer, boolean dealerNatural, integer bet returns integer
-    if total > 21 then
-        return 0
-    elseif dealerNatural then
-        if natural then
-            return bet
-        endif
-        return 0
-    elseif natural then
-        return bet*5/2
-    elseif dealer > 21 or total > dealer then
-        return bet*2
-    elseif total == dealer then
-        return bet
+    set BJ_dealerCard[t*22+count] = BJ_Draw(t)
+    set BJ_dealerCount[t] = count+1
+    set BJ_dealerTotal[t] = BJ_CardSum(t,count+1,true)
+    if count >= 2 then
+        set BJ_dealerAction[t] = "Hit on "+I2S(before)+"  /  now "+I2S(BJ_dealerTotal[t])
     endif
-    return 0
 endfunction
 
 function BJ_Finish takes integer t, boolean refund returns nothing
@@ -70399,6 +73175,7 @@ function BJ_Finish takes integer t, boolean refund returns nothing
             set BJ_state[h] = 5
             if s > 0 then
                 call CAS_Settle(1,s,stake,payout,BJ_reserve[h])
+                call CAS_ResultSound(s,payout-stake)
                 if refund then
                     set BJ_result[h] = "Round void / returned "+I2S(payout)
                 elseif payout == stake then
@@ -70425,12 +73202,16 @@ endfunction
 
 function BJ_Next takes integer t returns nothing
     local integer h = t*12
+    local boolean compare = false
     if BJ_error[t] then
         call BJ_Finish(t,true)
         return
     endif
     loop
         exitwhen h >= t*12+12
+        if BJ_state[h] == 2 and BJ_bet[h] > 0 then
+            set compare = true
+        endif
         if BJ_state[h] == 1 then
             set BJ_turn[t] = h+1
             set BJ_clock[t] = 20
@@ -70439,6 +73220,12 @@ function BJ_Next takes integer t returns nothing
         set h = h+1
     endloop
     set BJ_turn[t] = 0
+    if not compare then
+        set BJ_dealerAction[t] = "No hands left to compare"
+        call BJ_Finish(t,false)
+        return
+    endif
+    set BJ_dealerAction[t] = "Hole card revealed"
     set BJ_phase[t] = 3
     set BJ_reveal[t] = true
     set BJ_clock[t] = 2
@@ -70451,6 +73238,7 @@ function BJ_Deal takes integer t returns nothing
     if BJ_pos[t] > 26 then
         call BJ_Shuffle(t)
     endif
+    set BJ_dealerAction[t] = ""
     set BJ_round[t] = BJ_round[t]+1
     set BJ_dealerCount[t] = 0
     set BJ_dealerTotal[t] = 0
@@ -70482,6 +73270,7 @@ function BJ_Deal takes integer t returns nothing
     if BJ_error[t] then
         call BJ_Finish(t,true)
     elseif BJ_dealerTotal[t] == 21 then
+        set BJ_dealerAction[t] = "Blackjack"
         call BJ_Finish(t,false)
     else
         call BJ_Next(t)
@@ -70508,6 +73297,33 @@ function BJ_Reset takes integer t returns nothing
     set BJ_phase[t] = 0
 endfunction
 
+function BJWatchActive takes integer host returns boolean
+    return host > 0 and PK_Eligible(host-1) and not CAS_ended and BJ_phase[host] >= 1 and (BJ_phase[host] <= 3 or (BJ_phase[host] == 4 and BJ_clock[host] > 0))
+endfunction
+
+function BJWatchRecord takes integer host, string action returns nothing
+    set BJWatchOlder[host] = BJWatchPrevious[host]
+    set BJWatchPrevious[host] = BJWatchLast[host]
+    set BJWatchLast[host] = action
+endfunction
+
+function BJWatchAction takes integer s, integer hand, integer action returns nothing
+    local string detail
+    if action == 1 then
+        set detail = "Hit"
+    elseif action == 2 then
+        set detail = "Stand"
+    elseif action == 3 then
+        set detail = "Double"
+    else
+        set detail = "Split"
+    endif
+    if BJ_split[hand] and action != 4 then
+        set detail = detail+" (hand "+I2S(ModuloInteger(hand,2)+1)+")"
+    endif
+    call BJWatchRecord(s,detail)
+endfunction
+
 function BJ_Wager takes integer s returns nothing
     local integer t = BJ_table[s]
     local integer h = BJ_seat[s]*2
@@ -70518,6 +73334,10 @@ function BJ_Wager takes integer s returns nothing
         return
     endif
     if BJ_phase[t] == 4 then
+        if t == 0 and BJ_clock[t] > 0 then
+            set CAS_note[s] = "Next round opens in "+I2S(BJ_clock[t])+"s."
+            return
+        endif
         call BJ_Reset(t)
     endif
     if BJ_phase[t] > 1 or BJ_bet[h] > 0 then
@@ -70527,6 +73347,9 @@ function BJ_Wager takes integer s returns nothing
     if not CAS_Reserve(1,s,stake,stake*3/2) then
         return
     endif
+    set BJWatchOlder[s] = ""
+    set BJWatchPrevious[s] = ""
+    set BJWatchLast[s] = "Bet "+I2S(stake)+"g"
     set BJ_bet[h] = stake
     set BJ_reserve[h] = stake*3/2
     set BJ_state[h] = 1
@@ -70557,7 +73380,10 @@ function BJ_Action takes integer s, integer action returns nothing
     endif
     if action == 1 then
         call BJ_Hit(t,h)
+        set BJ_clock[t] = 20
+        set CAS_note[s] = "Hit  /  drew "+PK_Card(BJ_card[h*22+BJ_count[h]-1])+"  /  total "+I2S(BJ_total[h])
     elseif action == 2 then
+        set CAS_note[s] = "Standing on "+I2S(BJ_total[h])
         set BJ_state[h] = 2
     elseif action == 3 then
         if BJ_count[h] != 2 or BJ_bet[h] > 10000 or (BJ_split[h] and ModuloInteger(BJ_card[h*22],13) == 12) then
@@ -70567,6 +73393,7 @@ function BJ_Action takes integer s, integer action returns nothing
         if not CAS_Reserve(1,s,stake,stake*3/2) then
             return
         endif
+        set CAS_note[s] = "Doubled  /  wager now "+I2S(stake*2)+"g"
         set BJ_bet[h] = stake*2
         set BJ_reserve[h] = BJ_reserve[h]+stake*3/2
         call BJ_Hit(t,h)
@@ -70581,6 +73408,7 @@ function BJ_Action takes integer s, integer action returns nothing
         if not CAS_Reserve(1,s,stake,stake*3/2) then
             return
         endif
+        set CAS_note[s] = "Split  /  "+I2S(stake)+"g on each hand"
         set card = BJ_card[h*22+1]
         set BJ_count[h] = 1
         set BJ_count[h+1] = 1
@@ -70597,6 +73425,7 @@ function BJ_Action takes integer s, integer action returns nothing
             set BJ_state[h+1] = 2
         endif
     endif
+    call BJWatchAction(s,h,action)
     if BJ_error[t] then
         call BJ_Finish(t,true)
     elseif BJ_state[h] != 1 then
@@ -70604,38 +73433,8 @@ function BJ_Action takes integer s, integer action returns nothing
     endif
 endfunction
 
-function BJ_Move takes integer s, boolean community returns nothing
-    local integer old = BJ_table[s]
-    local integer seat = BJ_seat[s]
-    local integer i = 0
-    local integer t = s
-    if BJ_bet[seat*2] > 0 and BJ_state[seat*2] != 5 then
-        set CAS_note[s] = "Finish your current round before switching tables."
-        return
-    endif
-    if community then
-        set t = 0
-        loop
-            exitwhen i >= 6 or BJ_owner[i] == 0 or BJ_owner[i] == s
-            set i = i+1
-        endloop
-        if i == 6 then
-            set CAS_note[s] = "The community table is full (six seats)."
-            return
-        endif
-    endif
-    if old == t then
-        return
-    endif
-    set BJ_owner[seat] = 0
-    set BJ_table[s] = t
-    set BJ_seat[s] = t*6+i
-    set BJ_owner[t*6+i] = s
-    set CAS_note[s] = "Seated. Choose your wager, then click Place wager."
-endfunction
-
 function BJ_Tick takes nothing returns nothing
-    local integer t = 0
+    local integer t = 1
     local integer h
     local integer s
     loop
@@ -70661,19 +73460,25 @@ function BJ_Tick takes nothing returns nothing
                     call BJ_Finish(t,true)
                 endif
             elseif BJ_clock[t] <= 0 or not PK_Eligible(s-1) then
+                call BJWatchRecord(s,"Auto-stand")
                 set BJ_state[h] = 2
                 call BJ_Next(t)
             endif
         elseif BJ_phase[t] == 3 then
             set BJ_clock[t] = BJ_clock[t]-1
             if BJ_clock[t] <= 0 then
-                if BJ_dealerTotal[t] < 17 then
+                if BJ_CardSum(t,BJ_dealerCount[t],true) < 17 then
                     call BJ_DealerHit(t)
                     set BJ_clock[t] = 1
                     if BJ_error[t] then
                         call BJ_Finish(t,true)
                     endif
                 else
+                    if BJ_dealerTotal[t] > 21 then
+                        set BJ_dealerAction[t] = "Bust on "+I2S(BJ_dealerTotal[t])
+                    else
+                        set BJ_dealerAction[t] = "Stands on "+I2S(BJ_dealerTotal[t])
+                    endif
                     call BJ_Finish(t,false)
                 endif
             endif
@@ -70684,8 +73489,29 @@ function BJ_Tick takes nothing returns nothing
     endloop
 endfunction
 
-// Fixed-price tickets: the displayed quote includes the proposed stake.
-// Every ticket reserves its maximum profit against the finite casino bank.
+function BJ_Summary takes integer h returns string
+    local string text = I2S(BJ_total[h])
+    if BJ_total[h] > 21 then
+        return "|cffff9090BUST "+text+"|r"
+    elseif BJ_state[h] == 4 then
+        return "|cffe7cb88BLACKJACK 21|r"
+    elseif BJ_state[h] == 1 then
+        return CUI_Value(text)
+    elseif BJ_state[h] == 0 then
+        return "--"
+    endif
+    return CUI_Value(text)
+endfunction
+
+function BJ_SeatTotal takes integer hand returns string
+    if BJ_state[hand] == 0 then
+        return "--"
+    elseif BJ_total[hand] > 21 then
+        return "|cffff9090"+I2S(BJ_total[hand])+"|r"
+    endif
+    return CUI_Value(I2S(BJ_total[hand]))
+endfunction
+
 function MK_FFA takes nothing returns boolean
     return MK_ffa
 endfunction
@@ -70818,6 +73644,7 @@ function MK_Pay takes integer ticket, boolean win, boolean refund returns nothin
         set payout = MK_return[ticket]
     endif
     call CAS_Settle(2,s,MK_stake[ticket],payout,MK_reserve[ticket])
+    call CAS_ResultSound(s,payout-MK_stake[ticket])
     if payout > MK_stake[ticket] then
         set CAS_note[s] = MK_Title(MK_market[ticket])+": won +"+I2S(payout-MK_stake[ticket])+" gold."
     elseif refund then
@@ -70861,7 +73688,7 @@ function MK_Resolve takes integer m, integer target returns nothing
     set MK_winner[m] = target
     call MK_Schedule()
     if target > 0 then
-        call DisplayTimedTextToForce(GetPlayersAll(),8,"|cffe7cb88"+MK_Title(m)+"|r: "+MK_Label(m,target)+". Bets settled.")
+        call CAS_Announce("|cffe7cb88"+MK_Title(m)+"|r: "+MK_Label(m,target)+". Bets settled.")
     endif
 endfunction
 
@@ -70893,6 +73720,9 @@ function MK_HeroDeath takes nothing returns nothing
     local unit killer = GetKillingUnit()
     local integer s
     local integer v
+    if AR_Fighter(GetTriggerUnit()) then
+        return
+    endif
     if not MK_done[1] and killer != null and IsUnitType(victim,UNIT_TYPE_HERO) and not IsUnitIllusion(victim) and IsPlayerEnemy(GetOwningPlayer(killer),GetOwningPlayer(victim)) then
         set s = GetPlayerId(GetOwningPlayer(killer))+1
         set v = GetPlayerId(GetOwningPlayer(victim))+1
@@ -70915,6 +73745,430 @@ endfunction
 
 // A challenge backs a named team/player to win versus that outcome not winning.
 // Both sides explicitly accept the same target and equal stake; the pot backs itself.
+function AR_CanPlay takes integer s returns boolean
+    if not PK_Eligible(s-1) then
+        return false
+    endif
+    return GetPlayerController(Player(s-1)) == MAP_CONTROL_USER and not IsPlayerObserver(Player(s-1))
+endfunction
+
+function AR_Next takes integer s, integer fromSlot returns integer
+    local integer i = 0
+    loop
+        exitwhen i >= 24
+        set fromSlot = ModuloInteger(fromSlot,24)+1
+        if fromSlot != s and AR_CanPlay(fromSlot) then
+            return fromSlot
+        endif
+        set i = i+1
+    endloop
+    return 0
+endfunction
+
+function AR_Tell takes integer s, string msg returns nothing
+    set CAS_note[s] = msg
+    call DisplayTimedTextToPlayer(Player(s-1),0,0,12,msg)
+endfunction
+
+function AR_Target takes integer s returns integer
+    if AR_pick[s] != s and AR_CanPlay(AR_pick[s]) then
+        return AR_pick[s]
+    endif
+    return AR_Next(s,0)
+endfunction
+
+function AR_SelectedStake takes integer s returns integer
+    return IMaxBJ(10,IMinBJ(10000,CAS_amount[s])/2*2)
+endfunction
+
+function AR_Terms takes integer stake returns string
+    if stake == 0 then
+        return "Free duel"
+    endif
+    return I2S(stake)+"g each  /  "+I2S(stake*2)+"g pot"
+endfunction
+
+function AR_CanFund takes integer s, integer stake returns boolean
+    return CAS_ready[s] and CAS_gold[s] >= stake
+endfunction
+
+function AR_Invite takes integer s, integer stake returns nothing
+    local integer other = AR_Target(s)
+    if AR_state != 0 or CAS_ended or not AR_CanPlay(s) or not AR_CanPlay(other) or s == other then
+        call AR_Tell(s,"Choose an available player when the arena is free.")
+        return
+    endif
+    if stake != 0 and (stake != AR_SelectedStake(s) or not AR_CanFund(s,stake)) then
+        call AR_Tell(s,"Your Wallet must cover the selected stake.")
+        return
+    endif
+    set AR_offer = AR_offer+1
+    set AR_stake = stake
+    set AR_seat[0] = s
+    set AR_seat[1] = other
+    set AR_state = 1
+    set AR_until = R2I(TimerGetElapsed(FF_gameTimer))+30
+    call AR_Tell(s,"Arena invitation sent to "+CAS_Name(other)+". "+AR_Terms(stake)+".")
+    call AR_Tell(other,CAS_Name(s)+" invites you to the arena. "+AR_Terms(stake)+". Type -arena and click Accept within 30 seconds.")
+endfunction
+
+// Borrow two empty owners so teammates can duel without changing their match alliance,
+// inheriting army upgrades, spending player food, or putting a hero in a player's revive queue.
+function AR_EmptyOwner takes player p, player exclude, group scratch returns boolean
+    if p == exclude then
+        return false
+    endif
+    call GroupEnumUnitsOfPlayer(scratch,p,null)
+    return FirstOfGroup(scratch) == null
+endfunction
+
+function AR_FindOwner takes player exclude returns player
+    local group g = CreateGroup()
+    local player p = Player(bj_PLAYER_NEUTRAL_EXTRA)
+    local integer i = 12
+    if not AR_EmptyOwner(p,exclude,g) then
+        set p = Player(bj_PLAYER_NEUTRAL_VICTIM)
+        if not AR_EmptyOwner(p,exclude,g) then
+            set p = null
+            loop
+                exitwhen i >= 24 or p != null
+                if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_EMPTY and AR_EmptyOwner(Player(i),exclude,g) then
+                    set p = Player(i)
+                endif
+                set i = i+1
+            endloop
+        endif
+    endif
+    call DestroyGroup(g)
+    set g = null
+    return p
+endfunction
+
+function AR_Flag takes player a, player b, alliancetype flag, boolean value returns nothing
+    if GetPlayerAlliance(a,b,flag) != value then
+        set AR_flagFrom[AR_flagCount] = a
+        set AR_flagTo[AR_flagCount] = b
+        set AR_flagType[AR_flagCount] = flag
+        set AR_flagBefore[AR_flagCount] = not value
+        set AR_flagCount = AR_flagCount+1
+        call SetPlayerAlliance(a,b,flag,value)
+    endif
+endfunction
+
+function AR_Control takes integer side returns nothing
+    local player p = AR_owner[side]
+    local player human = Player(AR_seat[side]-1)
+    local integer i = 0
+    loop
+        exitwhen i >= 24
+        if Player(i) != p and Player(i) != AR_owner[1-side] then
+            call AR_Flag(p,Player(i),ALLIANCE_PASSIVE,i != AR_seat[1-side]-1)
+            call AR_Flag(Player(i),p,ALLIANCE_PASSIVE,i != AR_seat[1-side]-1)
+            call AR_Flag(p,Player(i),ALLIANCE_SHARED_CONTROL,Player(i) == human)
+            call AR_Flag(p,Player(i),ALLIANCE_SHARED_ADVANCED_CONTROL,Player(i) == human)
+            call AR_Flag(p,Player(i),ALLIANCE_SHARED_XP,false)
+        endif
+        set i = i+1
+    endloop
+    call AR_Flag(p,AR_owner[1-side],ALLIANCE_PASSIVE,false)
+    call AR_Flag(p,human,ALLIANCE_SHARED_VISION,true)
+endfunction
+
+function AR_EnterCamera takes integer side returns nothing
+    local integer s = AR_seat[side]
+    local player p = Player(s-1)
+    set AR_vision[side] = CreateFogModifierRect(p,FOG_OF_WAR_VISIBLE,AR_floor,false,false)
+    call FogModifierStart(AR_vision[side])
+    set CAS_view[s] = 0
+    set PK_Hidden[s-1] = true
+    set HousePK_Hidden[s-1] = true
+    if GetLocalPlayer() == Player(s-1) and HousePK_Dialog[s-1] != null then
+        call BlzFrameSetVisible(HousePK_Dialog[s-1],false)
+    endif
+    if GetLocalPlayer() == p then
+        set AR_oldLeft = GetCameraBoundMinX()
+        set AR_oldBottom = GetCameraBoundMinY()
+        set AR_oldRight = GetCameraBoundMaxX()
+        set AR_oldTop = GetCameraBoundMaxY()
+        set AR_oldX = GetCameraTargetPositionX()
+        set AR_oldY = GetCameraTargetPositionY()
+        set AR_oldZoom = GetCameraField(CAMERA_FIELD_TARGET_DISTANCE)
+        call BlzFrameSetVisible(CAS_root[s],false)
+        if PK_Dialog[s-1] != null then
+            call BlzFrameSetVisible(PK_Dialog[s-1],false)
+        endif
+        call ResetToGameCamera(0)
+        call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE,AR_oldZoom,0)
+        call SetCameraBoundsToRect(AR_floor)
+        call SetCameraPosition(GetUnitX(AR_hero[side]),GetUnitY(AR_hero[side]))
+        call ClearSelection()
+        call SelectUnit(AR_hero[side],true)
+    endif
+endfunction
+
+function AR_End takes integer winner, string message returns nothing
+    local integer side = 0
+    local integer i = 0
+    local integer s
+    local boolean fighting = AR_state == 2
+    if AR_state == 0 then
+        return
+    endif
+    set AR_state = 0
+    call PauseTimer(AR_clock)
+    if AR_held[0]+AR_held[1] > 0 then
+        if winner != 0 then
+            set message = message+" Pot won: "+I2S(AR_held[0]+AR_held[1])+" Wallet gold."
+        else
+            set message = message+" Reserved gold returned."
+        endif
+    endif
+    if AR_deaths != null then
+        call DestroyTrigger(AR_deaths)
+        set AR_deaths = null
+    endif
+    loop
+        exitwhen side > 1
+        set s = AR_seat[side]
+        if AR_held[side] > 0 then
+            set CAS_escrow[s] = CAS_escrow[s]-AR_held[side]
+            if winner == 0 then
+                call CAS_Credit(3,s,AR_held[side],0)
+            elseif winner == s then
+                call CAS_Credit(3,s,AR_held[side],AR_stake)
+                call CAS_ResultSound(s,AR_stake)
+            else
+                call CAS_ResultSound(s,-AR_held[side])
+            endif
+            set AR_held[side] = 0
+        endif
+        if fighting then
+            if AR_vision[side] != null then
+                call FogModifierStop(AR_vision[side])
+                call DestroyFogModifier(AR_vision[side])
+                set AR_vision[side] = null
+                if GetLocalPlayer() == Player(s-1) then
+                    call SetCameraBounds(AR_oldLeft,AR_oldBottom,AR_oldLeft,AR_oldTop,AR_oldRight,AR_oldTop,AR_oldRight,AR_oldBottom)
+                    call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE,AR_oldZoom,0)
+                    call SetCameraPosition(AR_oldX,AR_oldY)
+                    call ClearSelection()
+                    if udg_herO[s] != null then
+                        call SelectUnit(udg_herO[s],true)
+                    endif
+                endif
+                set FF_oc_followed[s-1] = null
+            endif
+            if AR_scroll[side] != null then
+                call RemoveItem(AR_scroll[side])
+                set AR_scroll[side] = null
+            endif
+            call RemoveUnit(AR_hero[side])
+            set AR_hero[side] = null
+        endif
+        call AR_Tell(s,message)
+        set AR_seat[side] = 0
+        set AR_owner[side] = null
+        set side = side+1
+    endloop
+    set AR_stake = 0
+    if fighting then
+        call DisableTrigger(AR_damage)
+        call DisableTrigger(AR_orders)
+        loop
+            exitwhen i >= 80
+            call RemoveUnit(AR_foot[i])
+            set AR_foot[i] = null
+            set i = i+1
+        endloop
+        loop
+            exitwhen AR_flagCount == 0
+            set AR_flagCount = AR_flagCount-1
+            call SetPlayerAlliance(AR_flagFrom[AR_flagCount],AR_flagTo[AR_flagCount],AR_flagType[AR_flagCount],AR_flagBefore[AR_flagCount])
+        endloop
+    endif
+endfunction
+
+function AR_Withdraw takes integer s returns nothing
+    if s != AR_seat[0] and s != AR_seat[1] then
+        return
+    endif
+    if AR_state == 1 then
+        call AR_End(0,CAS_Name(s)+" closed the arena invitation.")
+    elseif AR_state == 2 then
+        if s == AR_seat[0] then
+            call AR_End(AR_seat[1],CAS_Name(AR_seat[1])+" wins the duel by forfeit.")
+        else
+            call AR_End(AR_seat[0],CAS_Name(AR_seat[0])+" wins the duel by forfeit.")
+        endif
+    endif
+endfunction
+
+function AR_Alive takes unit u returns boolean
+    return GetUnitTypeId(u) != 0 and GetWidgetLife(u) > 0.405 and not IsUnitType(u,UNIT_TYPE_DEAD)
+endfunction
+
+function AR_Contain takes unit u returns nothing
+    local real x = GetUnitX(u)
+    local real y = GetUnitY(u)
+    if not RectContainsCoords(AR_floor,x,y) and AR_Alive(u) then
+        call SetUnitPosition(u,RMaxBJ(-976,RMinBJ(976,x)),RMaxBJ(5424,RMinBJ(6864,y)))
+        call IssueImmediateOrder(u,"stop")
+    endif
+endfunction
+
+function AR_Tick takes nothing returns nothing
+    local integer i = 0
+    local boolean left
+    local boolean right
+    if CAS_ended then
+        call AR_End(0,"The main match ended. The arena is closed.")
+    elseif AR_state == 1 then
+        if R2I(TimerGetElapsed(FF_gameTimer)) >= AR_until or not AR_CanPlay(AR_seat[0]) or not AR_CanPlay(AR_seat[1]) then
+            call AR_End(0,"Arena invitation expired.")
+        endif
+    elseif AR_state == 2 then
+        set left = AR_Alive(AR_hero[0]) and AR_CanPlay(AR_seat[0])
+        set right = AR_Alive(AR_hero[1]) and AR_CanPlay(AR_seat[1])
+        if not left and not right then
+            call AR_End(0,"Arena duel drawn. Both sides were eliminated.")
+        elseif not left then
+            call AR_End(AR_seat[1],CAS_Name(AR_seat[1])+" wins the arena duel!")
+        elseif not right then
+            call AR_End(AR_seat[0],CAS_Name(AR_seat[0])+" wins the arena duel!")
+        else
+            // Global Silence uses a native map-wide buff in addition to the match spell guard.
+            call UnitRemoveAbility(AR_hero[0],'BGs1')
+            call UnitRemoveAbility(AR_hero[0],'BGs2')
+            call UnitRemoveAbility(AR_hero[1],'BGs1')
+            call UnitRemoveAbility(AR_hero[1],'BGs2')
+            call AR_Contain(AR_hero[0])
+            call AR_Contain(AR_hero[1])
+            loop
+                exitwhen i >= 80
+                call AR_Contain(AR_foot[i])
+                set i = i+1
+            endloop
+        endif
+    endif
+endfunction
+
+function AR_HeroDied takes nothing returns nothing
+    // Let the native death event finish so all match event guards still see the arena owners.
+    call TimerStart(AR_clock,0,false,function AR_Tick)
+endfunction
+
+function AR_Army takes integer side, integer roll returns boolean
+    local integer i = 0
+    local integer index
+    local real sign = -1
+    local real facing = 0
+    local unit u
+    local player p = AR_owner[side]
+    local playercolor color = GetPlayerColor(Player(AR_seat[side]-1))
+    if side == 1 then
+        set sign = 1
+        set facing = 180
+    endif
+    set u = CreateUnit(p,AR_roster[roll],sign*880,6144,facing)
+    set AR_hero[side] = u
+    if u == null then
+        return false
+    endif
+    call SetUnitColor(u,color)
+    call RemoveGuardPosition(u)
+    call SuspendHeroXP(u,true)
+    call SelectHeroSkill(u,AR_skill[roll])
+    set AR_scroll[side] = CreateItem('sror',GetUnitX(u),GetUnitY(u))
+    if AR_scroll[side] == null or not UnitAddItem(u,AR_scroll[side]) then
+        set u = null
+        return false
+    endif
+    call SetItemDroppable(AR_scroll[side],false)
+    call SetItemPawnable(AR_scroll[side],false)
+    call SetItemDropOnDeath(AR_scroll[side],false)
+    loop
+        exitwhen i >= 40
+        set index = side*40+i
+        set u = CreateUnit(p,'hfoo',sign*(464+80*(i/8)),6144+80*(ModuloInteger(i,8)-3.5),facing)
+        set AR_foot[index] = u
+        if u == null then
+            return false
+        endif
+        call SetUnitColor(u,color)
+        call SetUnitUseFood(u,false)
+        call RemoveGuardPosition(u)
+        set i = i+1
+    endloop
+    set u = null
+    return true
+endfunction
+
+function AR_Accept takes integer s, integer offer returns nothing
+    local integer roll
+    local integer i = 0
+    if AR_state != 1 or s != AR_seat[1] or offer != AR_offer then
+        return
+    endif
+    call AR_Tick()
+    if AR_state != 1 then
+        return
+    endif
+    set AR_owner[0] = AR_FindOwner(null)
+    set AR_owner[1] = AR_FindOwner(AR_owner[0])
+    if AR_owner[0] == null or AR_owner[1] == null then
+        call AR_End(0,"The arena could not reserve two empty army slots.")
+        return
+    endif
+    if AR_stake > 0 then
+        if not AR_CanFund(AR_seat[0],AR_stake) then
+            call AR_End(0,"Invitation closed. The challenger can no longer cover the stake.")
+            return
+        endif
+        if not AR_CanFund(s,AR_stake) then
+            call AR_Tell(s,"You need "+I2S(AR_stake)+" Wallet gold to accept.")
+            return
+        endif
+        if not CAS_Reserve(3,AR_seat[0],AR_stake,0) then
+            call AR_End(0,"Invitation closed. The challenger's stake was unavailable.")
+            return
+        endif
+        set AR_held[0] = AR_stake
+        if not CAS_Reserve(3,s,AR_stake,0) then
+            call AR_End(0,"Invitation closed. The matching stake was unavailable.")
+            return
+        endif
+        set AR_held[1] = AR_stake
+    endif
+    set AR_state = 2
+    call EnableTrigger(AR_damage)
+    call EnableTrigger(AR_orders)
+    call AR_Control(0)
+    call AR_Control(1)
+    set roll = GetRandomInt(0,5)
+    if not AR_Army(0,roll) or not AR_Army(1,roll) then
+        call AR_End(0,"Arena setup failed. The invitation has been cleared.")
+        return
+    endif
+    set AR_deaths = CreateTrigger()
+    call TriggerRegisterUnitEvent(AR_deaths,AR_hero[0],EVENT_UNIT_DEATH)
+    call TriggerRegisterUnitEvent(AR_deaths,AR_hero[1],EVENT_UNIT_DEATH)
+    call TriggerAddAction(AR_deaths,function AR_HeroDied)
+    call AR_EnterCamera(0)
+    call AR_EnterCamera(1)
+    loop
+        exitwhen i >= 80
+        call IssuePointOrder(AR_foot[i],"attack",GetUnitX(AR_hero[1-i/40]),6144)
+        set i = i+1
+    endloop
+    call AR_Tell(AR_seat[0],"Arena duel! Protect your "+GetUnitName(AR_hero[0])+" and kill the opposing hero.")
+    call AR_Tell(AR_seat[1],"Arena duel! Protect your "+GetUnitName(AR_hero[1])+" and kill the opposing hero.")
+    call TimerStart(AR_clock,0.125,true,function AR_Tick)
+endfunction
+
+function AR_ReceiveAccept takes nothing returns nothing
+    call AR_Accept(GetPlayerId(GetTriggerPlayer())+1,S2I(BlzGetTriggerSyncData()))
+endfunction
+
 function DU_Cancel takes integer id returns nothing
     local integer s = DU_from[id]
     if DU_state[id] != 1 then
@@ -71001,6 +74255,12 @@ function DU_Finish takes integer winner, boolean ffa returns nothing
                     set won = DU_from[id]
                 endif
                 call CAS_Credit(3,won,stake,stake)
+                call CAS_ResultSound(won,stake)
+                if won == DU_from[id] then
+                    call CAS_ResultSound(DU_to[id],-stake)
+                else
+                    call CAS_ResultSound(DU_from[id],-stake)
+                endif
                 set CAS_note[won] = "Challenge won: return "+I2S(stake*2)+" gold."
             endif
         endif
@@ -71017,6 +74277,7 @@ function CAS_EndMatch takes nothing returns nothing
         return
     endif
     set CAS_ended = true
+    call AR_End(0,"The main match ended. The arena is closed.")
     loop
         exitwhen i > 48
         call CreditCancel(i)
@@ -71043,21 +74304,16 @@ function CAS_EndMatch takes nothing returns nothing
         call MK_Resolve(5,winner)
     endif
     call DU_Finish(winner,ffa)
-    set i = 0
+    set i = 1
     loop
         exitwhen i > 24
-        if i < 24 and PokerBuyIn[i] > 0 then
-            call CAS_Settle(0,i+1,PokerBuyIn[i],PokerBuyIn[i],PokerBuyIn[i])
-            set PokerBuyIn[i] = 0
-            set PK_Turn[i] = -1
-            set PK_Note[i] = "Match ended. Open hand refunded."
-            call PK_Render(i)
-        endif
+        call HousePK_Refund(i-1)
         if BJ_phase[i] >= 1 and BJ_phase[i] <= 3 then
             call BJ_Finish(i,true)
         endif
         set i = i+1
     endloop
+    call OP_EndMatch()
 endfunction
 
 // Keep labels and controls inside a shared horizontal safe area.
@@ -71126,171 +74382,19 @@ function CAS_CardFace takes framehandle f, integer card, boolean back returns no
     call BlzFrameSetTexture(f,"PokerUI\\"+name+".blp",0,true)
 endfunction
 
-function BJ_Summary takes integer h returns string
-    local string text = I2S(BJ_total[h])
-    if BJ_total[h] > 21 then
-        return "|cffff9090BUST "+text+"|r"
-    elseif BJ_state[h] == 4 then
-        return "|cffe7cb88BLACKJACK 21|r"
-    elseif BJ_state[h] == 1 then
-        return CUI_Value(text)
-    elseif BJ_state[h] == 0 then
-        return "--"
-    endif
-    return CUI_Value(text)
-endfunction
+
 
 // The narrow seat list reserves space for both totals even when a name wraps.
-function BJ_SeatTotal takes integer hand returns string
-    if BJ_state[hand] == 0 then
-        return "--"
-    elseif BJ_total[hand] > 21 then
-        return "|cffff9090"+I2S(BJ_total[hand])+"|r"
-    endif
-    return CUI_Value(I2S(BJ_total[hand]))
-endfunction
+
 
 function BJ_CardStart takes real center, integer count, real width, real spacing returns real
     local integer visible = IMaxBJ(2,IMinBJ(6,count))
     return center-(width+I2R(visible-1)*spacing)*0.5
 endfunction
 
-function CAS_BlackjackView takes integer s returns nothing
-    local integer t = BJ_table[s]
-    local integer h = BJ_seat[s]*2
-    local integer b = s*32
-    local integer c = s*18
-    local integer i = 0
-    local integer j
-    local integer own
-    local integer card
-    local real dealerX
-    local real handX
-    local real splitX = 0.0
-    local real cardWidth = 0.060
-    local real cardHeight = 0.082
-    local real spacing = 0.067
-    local boolean turn = BJ_phase[t] == 2 and BJ_turn[t]-1 >= h and BJ_turn[t]-1 <= h+1
-    local string mode = "SOLO + BOTS"
-    local string phase = "PLACE BET"
-    local string dealer = "DEALER"
-    local string first = "YOU"
-    local string second = "HAND 2"
-    if t == 0 then
-        set mode = "COMMUNITY"
-    endif
-    if BJ_phase[t] == 1 then
-        set phase = "DEAL IN "+CUI_Value(I2S(BJ_clock[t])+"s")
-    elseif BJ_phase[t] == 2 then
-        set phase = CAS_Name(BJ_owner[(BJ_turn[t]-1)/2])+" / "+CUI_Value(I2S(BJ_clock[t])+"s")
-        if turn then
-            set phase = "YOUR TURN / "+CUI_Value(I2S(BJ_clock[t])+"s")
-        endif
-    elseif BJ_phase[t] == 3 then
-        set phase = "DEALER'S TURN"
-    elseif BJ_phase[t] == 4 then
-        set phase = "NEXT ROUND"
-    endif
-    call BlzFrameSetText(CAS_content[b],mode+"  /  #"+CUI_Value(I2S(BJ_round[t])))
-    call BlzFrameSetVisible(CAS_content[b],true)
-    call BlzFrameSetText(CAS_content[b+1],phase)
-    call BlzFrameSetVisible(CAS_content[b+1],true)
-    if BJ_reveal[t] then
-        set dealer = dealer+"  "+CUI_Value(I2S(BJ_dealerTotal[t]))
-    endif
-    call BlzFrameSetText(CAS_content[b+2],dealer)
-    call BlzFrameSetVisible(CAS_content[b+2],true)
-    set dealerX = BJ_CardStart(0.445,BJ_dealerCount[t],0.054,0.067)
-    if BJ_split[h] then
-        set first = "HAND 1"
-        if turn then
-            if BJ_turn[t]-1 == h then
-                set first = "> HAND 1"
-            else
-                set second = "> HAND 2"
-            endif
-        endif
-        set cardWidth = 0.043
-        set cardHeight = 0.062
-        set spacing = 0.028
-        set handX = BJ_CardStart(0.330,BJ_count[h],cardWidth,spacing)
-        set splitX = BJ_CardStart(0.560,BJ_count[h+1],cardWidth,spacing)
-        call BlzFrameSetSize(CAS_content[b+3],0.230,0.040)
-        call BlzFrameSetText(CAS_content[b+5],second+"  "+BJ_Summary(h+1)+"|nBET  "+CUI_Value(I2S(BJ_bet[h+1])+"g"))
-        call BlzFrameSetVisible(CAS_content[b+5],true)
-    else
-        set handX = BJ_CardStart(0.445,BJ_count[h],cardWidth,spacing)
-        call BlzFrameSetSize(CAS_content[b+3],0.460,0.040)
-    endif
-    call BlzFrameSetText(CAS_content[b+3],first+"  "+BJ_Summary(h)+"|nBET  "+CUI_Value(I2S(BJ_bet[h])+"g"))
-    call BlzFrameSetVisible(CAS_content[b+3],true)
-    call BlzFrameSetText(CAS_content[b+4],"2 DECKS / PAYS 3:2")
-    call BlzFrameSetVisible(CAS_content[b+4],true)
-    loop
-        exitwhen i >= 6
-        call BlzFrameSetPoint(CAS_card[c+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,dealerX+I2R(i)*0.067,-0.140)
-        call BlzFrameSetSize(CAS_card[c+i],0.054,0.078)
-        set card = -1
-        if i < BJ_dealerCount[t] then
-            set card = BJ_dealerCard[t*22+i]
-        endif
-        call CAS_CardFace(CAS_card[c+i],card,i == 1 and BJ_dealerCount[t] > 1 and not BJ_reveal[t])
-        call BlzFrameSetVisible(CAS_card[c+i],i < IMaxBJ(2,BJ_dealerCount[t]))
-        set card = -1
-        if i < BJ_count[h] then
-            set card = BJ_card[h*22+i]
-        endif
-        call BlzFrameSetPoint(CAS_card[c+6+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,handX+I2R(i)*spacing,-0.268)
-        call BlzFrameSetSize(CAS_card[c+6+i],cardWidth,cardHeight)
-        call CAS_CardFace(CAS_card[c+6+i],card,false)
-        call BlzFrameSetVisible(CAS_card[c+6+i],i < IMaxBJ(2,BJ_count[h]))
-        if BJ_split[h] then
-            set card = -1
-            if i < BJ_count[h+1] then
-                set card = BJ_card[(h+1)*22+i]
-            endif
-            call BlzFrameSetPoint(CAS_card[c+12+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,splitX+I2R(i)*spacing,-0.268)
-            call BlzFrameSetSize(CAS_card[c+12+i],cardWidth,cardHeight)
-            call CAS_CardFace(CAS_card[c+12+i],card,false)
-            call BlzFrameSetVisible(CAS_card[c+12+i],i < IMaxBJ(2,BJ_count[h+1]))
-        endif
-        set own = BJ_owner[t*6+i]
-        set j = (t*6+i)*2
-        call BlzFrameSetVisible(CAS_row[s*6+i],true)
-        if own == 0 then
-            call BlzFrameSetText(CAS_row[s*6+i],"Open")
-        else
-            call BlzFrameSetText(CAS_row[s*6+i],CAS_Name(own))
-            set phase = BJ_SeatTotal(j)
-            if BJ_split[j] then
-                set phase = phase+" / "+BJ_SeatTotal(j+1)
-            endif
-            call BlzFrameSetText(CAS_seatTotal[s*6+i],phase)
-            call BlzFrameSetVisible(CAS_seatTotal[s*6+i],true)
-        endif
-        set i = i+1
-    endloop
-    if BJ_count[h] > 6 or BJ_count[h+1] > 6 or BJ_dealerCount[t] > 6 then
-        call BlzFrameSetPoint(CAS_content[b+6],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,CAS_SafeX(0.032),-0.348)
-        call BlzFrameSetSize(CAS_content[b+6],CAS_SafeW(0.173),0.018)
-        call BlzFrameSetTextAlignment(CAS_content[b+6],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_LEFT)
-        call BlzFrameSetText(CAS_content[b+6],"First 6 cards shown")
-        call BlzFrameSetVisible(CAS_content[b+6],true)
-    endif
-    call BlzFrameSetVisible(CAS_chip[s],true)
-    call PK_ChipArt(CAS_chip[s],BJ_bet[h]+BJ_bet[h+1])
-    call CAS_ShowButton(s,11,BJ_phase[t] == 0 or BJ_phase[t] == 4 or (BJ_phase[t] == 1 and BJ_bet[h] == 0))
-    call CAS_ShowButton(s,12,turn)
-    call CAS_ShowButton(s,13,turn)
-    call CAS_ShowButton(s,14,turn and BJ_count[BJ_turn[t]-1] == 2)
-    call CAS_ShowButton(s,15,turn and not BJ_split[h] and BJ_count[h] == 2 and BJ_Value(BJ_card[h*22]) == BJ_Value(BJ_card[h*22+1]) and (ModuloInteger(BJ_card[h*22],13) == 12) == (ModuloInteger(BJ_card[h*22+1],13) == 12))
-    call CAS_ShowButton(s,16,BJ_phase[t] == 0 or BJ_phase[t] == 4 or BJ_bet[h] == 0)
-    if t == 0 then
-        call CUI_Text(CAS_button[s*64+16],"Solo")
-    else
-        call CUI_Text(CAS_button[s*64+16],"Community")
-    endif
-endfunction
+
+
+
 
 function CAS_BetsView takes integer s returns nothing
     local integer m = MK_tab[s]
@@ -71400,6 +74504,63 @@ function CAS_BetsView takes integer s returns nothing
     call CAS_ShowButton(s,32,MK_IsOpen(m,MK_pick[s]))
 endfunction
 
+function AR_View takes integer s returns nothing
+    local integer b = s*32
+    local integer target = AR_Target(s)
+    local integer stake = AR_SelectedStake(s)
+    local boolean canInvite = AR_state == 0 and target != 0 and AR_CanPlay(s) and not CAS_ended
+    local string line = "Kill the opposing hero to win.|nEach side gets the same random hero, 40 footmen and one Scroll of the Beast."
+    local string status
+    if AR_state != 0 then
+        set stake = AR_stake
+    endif
+    if CAS_ended then
+        set status = "The arena is closed."
+    elseif AR_state == 2 then
+        set status = "Fighting: "+CAS_Name(AR_seat[0])+" vs "+CAS_Name(AR_seat[1])
+    elseif AR_state == 1 then
+        set status = CAS_Name(AR_seat[0])+" invited "+CAS_Name(AR_seat[1])+"  /  "+I2S(IMaxBJ(0,AR_until-CAS_seconds))+"s"
+    elseif not AR_CanPlay(s) then
+        set status = "A player slot with unit control is required."
+    elseif target == 0 then
+        set status = "Waiting for another player."
+    else
+        set status = "Opponent: "+CAS_Name(target)
+    endif
+    set line = line+"|n|nBoth Wallets pay on acceptance. The winner takes the pot."
+    call BlzFrameSetText(CAS_content[b+28],line)
+    call BlzFrameSetVisible(CAS_content[b+28],true)
+    call BlzFrameSetText(CAS_content[b+29],status)
+    call BlzFrameSetVisible(CAS_content[b+29],true)
+    call CUI_Text(CAS_button[s*64+39],"Prediction duel")
+    call CAS_ShowButton(s,39,true)
+    call CAS_ShowButton(s,53,AR_state == 0 and target != 0 and AR_CanPlay(s) and not CAS_ended)
+    call CAS_ShowButton(s,54,canInvite)
+    call CUI_Text(CAS_button[s*64+19],"Invite for "+I2S(stake)+"g each")
+    if AR_state == 0 then
+        call CAS_ShowButton(s,19,canInvite and AR_CanFund(s,stake))
+    elseif GetLocalPlayer() == Player(s-1) then
+        call BlzFrameSetVisible(CAS_button[s*64+19],false)
+    endif
+    if stake == 0 then
+        call CUI_Text(CAS_button[s*64+55],"Accept free duel")
+    else
+        call CUI_Text(CAS_button[s*64+55],"Accept for "+I2S(stake)+"g")
+    endif
+    if GetLocalPlayer() == Player(s-1) and AR_state == 1 and s == AR_seat[1] then
+        set AR_shownOffer = AR_offer
+    endif
+    call CAS_ShowButton(s,55,AR_state == 1 and s == AR_seat[1] and not CAS_ended and (stake == 0 or AR_CanFund(s,stake)))
+    if AR_state == 2 then
+        call CUI_Text(CAS_button[s*64+56],"Forfeit")
+    elseif AR_state == 1 and AR_seat[0] == s then
+        call CUI_Text(CAS_button[s*64+56],"Cancel")
+    else
+        call CUI_Text(CAS_button[s*64+56],"Decline")
+    endif
+    call CAS_ShowButton(s,56,AR_state > 0 and (s == AR_seat[0] or s == AR_seat[1]))
+endfunction
+
 function CAS_DuelsView takes integer s returns nothing
     local integer b = s*32
     local integer id = DU_incoming[s]
@@ -71424,6 +74585,8 @@ function CAS_DuelsView takes integer s returns nothing
     call CAS_ShowButton(s,36,DU_incoming[s] > 0 and DU_active[s] == 0 and not CAS_ended)
     call CAS_ShowButton(s,37,DU_incoming[s] > 0)
     call CAS_ShowButton(s,38,DU_outgoing[s] > 0)
+    call CUI_Text(CAS_button[s*64+39],"Arena 1v1")
+    call CAS_ShowButton(s,39,true)
 endfunction
 
 function CreditTerms takes integer mode, integer rate, integer period, integer fee returns string
@@ -71492,9 +74655,222 @@ function CreditView takes integer s returns nothing
     call CAS_ShowButton(s,52,LoanPrincipal[s]+LoanFee[s] > 0)
 endfunction
 
+function BJWatchList takes integer s returns nothing
+    local integer host = 1
+    local integer count = 0
+    local integer index = 0
+    local integer row
+    local integer key
+    local integer pages
+    local integer hand
+    local boolean show
+    local framehandle eye
+    local string name
+    loop
+        exitwhen host > 24
+        if host != s and BJWatchActive(host) then
+            set count = count+1
+        endif
+        set host = host+1
+    endloop
+    set pages = IMaxBJ(1,(count+3)/4)
+    set BJWatchPage[s] = ModuloInteger(BJWatchPage[s],pages)
+    set host = 1
+    loop
+        exitwhen host > 24
+        set key = s*25+host
+        set eye = BJWatchEye[key]
+        if eye != null then
+            set show = false
+            if BJWatchActive(host) then
+                set show = CAS_view[s] == 1 and index/4 == BJWatchPage[s]
+                if show then
+                    set row = ModuloInteger(index,4)
+                    set hand = BJ_seat[host]*2
+                    set name = CAS_Name(host)
+                    if StringLength(name) > 14 then
+                        set name = SubString(name,0,14)+"..."
+                    endif
+                    call BlzFrameSetText(CAS_row[s*6+row],name+"|n"+CUI_Value(I2S(BJ_bet[hand]+BJ_bet[hand+1])+"g"))
+                    call BlzFrameSetVisible(CAS_row[s*6+row],true)
+                    call BlzFrameSetPoint(eye,FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,0.159,-0.174-0.039*I2R(row))
+                endif
+                set index = index+1
+            endif
+            call BlzFrameSetVisible(eye,show)
+        endif
+        set host = host+1
+    endloop
+    call BlzFrameSetVisible(CAS_button[s*64+16],CAS_view[s] == 1 and pages > 1)
+    call CUI_Text(CAS_button[s*64+16],"Games "+I2S(BJWatchPage[s]+1)+"/"+I2S(pages)+" >")
+    call BlzFrameSetVisible(CAS_button[s*64+61],CAS_view[s] == 1 and BJWatchHost[s] > 0)
+    if CAS_view[s] == 1 then
+        call BlzFrameSetText(CAS_content[s*32],"LIVE GAMES  "+I2S(count))
+        call BlzFrameSetVisible(CAS_content[s*32],true)
+        if count == 0 then
+            call BlzFrameSetText(CAS_row[s*6],"No other games")
+            call BlzFrameSetVisible(CAS_row[s*6],true)
+        endif
+    endif
+    set eye = null
+endfunction
+
+function CAS_BlackjackView takes integer s, integer host returns nothing
+    local integer t = BJ_table[host]
+    local integer h = BJ_seat[host]*2
+    local integer b = s*32
+    local integer c = s*18
+    local integer i = 0
+    local integer card
+    local real dealerX
+    local real handX
+    local real splitX = 0.0
+    local real cardWidth = 0.060
+    local real cardHeight = 0.082
+    local real spacing = 0.067
+    local boolean turn = BJ_phase[t] == 2 and BJ_turn[t]-1 >= h and BJ_turn[t]-1 <= h+1
+    local boolean ownTable = host == s
+    local boolean betting = ownTable and not CAS_ended and (BJ_phase[t] == 0 or BJ_phase[t] == 4)
+    local string history = BJWatchOlder[host]
+    local string phase = "PLACE BET"
+    local string dealer = "DEALER"
+    local string first = "YOU"
+    local string second = "HAND 2"
+    if not ownTable then
+        set first = SubString(CAS_Name(host),0,16)
+    endif
+    if BJ_phase[t] == 1 then
+        set phase = "DEAL IN "+CUI_Value(I2S(BJ_clock[t])+"s")
+    elseif BJ_phase[t] == 2 then
+        set phase = CAS_Name(BJ_owner[(BJ_turn[t]-1)/2])+" / "+CUI_Value(I2S(BJ_clock[t])+"s")
+        if turn and ownTable then
+            set phase = "YOUR TURN / "+CUI_Value(I2S(BJ_clock[t])+"s")
+        endif
+    elseif BJ_phase[t] == 3 then
+        set phase = "DEALER'S TURN"
+    elseif BJ_phase[t] == 4 then
+        set phase = "NEXT ROUND"
+    endif
+    call BlzFrameSetText(CAS_content[b+1],phase)
+    call BlzFrameSetVisible(CAS_content[b+1],true)
+    if BJ_reveal[t] then
+        set dealer = dealer+"  "+CUI_Value(I2S(BJ_dealerTotal[t]))+"   /   "+BJ_dealerAction[t]
+    elseif BJ_dealerCount[t] > 0 then
+        set dealer = dealer+"   /   Shows "+PK_Card(BJ_dealerCard[t*22])+"   /   Hole card down"
+    endif
+    call BlzFrameSetText(CAS_content[b+2],dealer)
+    call BlzFrameSetVisible(CAS_content[b+2],true)
+    set dealerX = BJ_CardStart(0.445,BJ_dealerCount[t],0.054,0.067)
+    if BJ_split[h] then
+        set first = "HAND 1"
+        if turn then
+            if BJ_turn[t]-1 == h then
+                set first = "> HAND 1"
+            else
+                set second = "> HAND 2"
+            endif
+        endif
+        set cardWidth = 0.043
+        set cardHeight = 0.062
+        set spacing = 0.028
+        set handX = BJ_CardStart(0.330,BJ_count[h],cardWidth,spacing)
+        set splitX = BJ_CardStart(0.560,BJ_count[h+1],cardWidth,spacing)
+        call BlzFrameSetSize(CAS_content[b+3],0.230,0.040)
+        call BlzFrameSetText(CAS_content[b+5],second+"  "+BJ_Summary(h+1)+"  /  "+I2S(BJ_bet[h+1])+"g")
+        call BlzFrameSetVisible(CAS_content[b+5],true)
+    else
+        set handX = BJ_CardStart(0.445,BJ_count[h],cardWidth,spacing)
+        call BlzFrameSetSize(CAS_content[b+3],0.460,0.040)
+    endif
+    call BlzFrameSetText(CAS_content[b+3],first+"  "+BJ_Summary(h)+"  /  "+I2S(BJ_bet[h])+"g")
+    call BlzFrameSetVisible(CAS_content[b+3],true)
+    loop
+        exitwhen i >= 6
+        call BlzFrameSetPoint(CAS_card[c+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,dealerX+I2R(i)*0.067,-0.140)
+        call BlzFrameSetSize(CAS_card[c+i],0.054,0.078)
+        set card = -1
+        if i < BJ_dealerCount[t] then
+            set card = BJ_dealerCard[t*22+i]
+        endif
+        call CAS_CardFace(CAS_card[c+i],card,i == 1 and BJ_dealerCount[t] > 1 and not BJ_reveal[t])
+        call BlzFrameSetVisible(CAS_card[c+i],i < IMaxBJ(2,BJ_dealerCount[t]))
+        set card = -1
+        if i < BJ_count[h] then
+            set card = BJ_card[h*22+i]
+        endif
+        call BlzFrameSetPoint(CAS_card[c+6+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,handX+I2R(i)*spacing,-0.268)
+        call BlzFrameSetSize(CAS_card[c+6+i],cardWidth,cardHeight)
+        call CAS_CardFace(CAS_card[c+6+i],card,false)
+        call BlzFrameSetVisible(CAS_card[c+6+i],i < IMaxBJ(2,BJ_count[h]))
+        if BJ_split[h] then
+            set card = -1
+            if i < BJ_count[h+1] then
+                set card = BJ_card[(h+1)*22+i]
+            endif
+            call BlzFrameSetPoint(CAS_card[c+12+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,splitX+I2R(i)*spacing,-0.268)
+            call BlzFrameSetSize(CAS_card[c+12+i],cardWidth,cardHeight)
+            call CAS_CardFace(CAS_card[c+12+i],card,false)
+            call BlzFrameSetVisible(CAS_card[c+12+i],i < IMaxBJ(2,BJ_count[h+1]))
+        endif
+        set i = i+1
+    endloop
+    if BJ_count[h] > 6 or BJ_count[h+1] > 6 or BJ_dealerCount[t] > 6 then
+        call BlzFrameSetText(CAS_content[b+4],"First 6 cards shown")
+    elseif BJ_phase[t] >= 2 then
+        call BlzFrameSetText(CAS_content[b+4],"Bots   "+BJ_SeatTotal(h+2)+" / "+BJ_SeatTotal(h+4))
+    else
+        call BlzFrameSetText(CAS_content[b+4],"Private table + 2 bots")
+    endif
+    call BlzFrameSetVisible(CAS_content[b+4],true)
+    call BlzFrameSetVisible(CAS_chip[s],true)
+    if betting then
+        call PK_ChipArt(CAS_chip[s],CAS_amount[s])
+    else
+        call PK_ChipArt(CAS_chip[s],BJ_bet[h]+BJ_bet[h+1])
+    endif
+    if betting then
+        call BlzFrameSetText(BJ_wagerLabel[s],"NEXT BET   "+CUI_Value(I2S(CAS_amount[s])+"g"))
+    else
+        call BlzFrameSetText(BJ_wagerLabel[s],"WAGER   "+CUI_Value(I2S(BJ_bet[h]+BJ_bet[h+1])+"g"))
+    endif
+    set i = 6
+    loop
+        exitwhen i > 10
+        call BlzFrameSetVisible(CAS_button[s*64+i],betting)
+        set i = i+1
+    endloop
+    call CAS_ShowButton(s,11,not CAS_ended and CAS_ready[s] and CAS_gold[s] >= CAS_amount[s] and (BJ_phase[t] == 0 or (BJ_phase[t] == 4 and (t != 0 or BJ_clock[t] == 0)) or (BJ_phase[t] == 1 and BJ_bet[h] == 0)))
+    call CAS_ShowButton(s,12,turn)
+    call CAS_ShowButton(s,13,turn)
+    call CAS_ShowButton(s,14,turn and CAS_gold[s] >= BJ_bet[BJ_turn[t]-1] and BJ_count[BJ_turn[t]-1] == 2)
+    call CAS_ShowButton(s,15,turn and CAS_gold[s] >= BJ_bet[BJ_turn[t]-1] and not BJ_split[h] and BJ_count[h] == 2 and BJ_Value(BJ_card[h*22]) == BJ_Value(BJ_card[h*22+1]) and (ModuloInteger(BJ_card[h*22],13) == 12) == (ModuloInteger(BJ_card[h*22+1],13) == 12))
+    call BlzFrameSetVisible(CAS_button[s*64+11],betting)
+    set i = 12
+    loop
+        exitwhen i > 15
+        call BlzFrameSetVisible(CAS_button[s*64+i],ownTable and turn)
+        set i = i+1
+    endloop
+    if BJWatchPrevious[host] != "" then
+        if history != "" then
+            set history = history+"  >  "
+        endif
+        set history = history+BJWatchPrevious[host]
+    endif
+    if BJWatchLast[host] != "" then
+        if history != "" then
+            set history = history+"  >  "
+        endif
+        set history = history+BJWatchLast[host]
+    endif
+    call BlzFrameSetText(BJWatchHistory[s],history)
+    call BlzFrameSetVisible(BJWatchHistory[s],not betting and (not ownTable or not turn))
+endfunction
+
 function CAS_Render takes integer s returns nothing
     local integer i = 0
     local integer b = s*32
+    local integer host = s
     local string label = "|cffe7cb88RULES|r"
     if CAS_root[s] == null then
         return
@@ -71505,10 +74881,14 @@ function CAS_Render takes integer s returns nothing
     if CAS_view[s] == 0 then
         return
     endif
+    if HousePK_Started[s-1] and not HousePK_Hidden[s-1] then
+        set HousePK_Hidden[s-1] = true
+        call HousePK_Render(s-1)
+    endif
     set i = 0
     loop
         exitwhen i > 3
-        if i+1 == CAS_view[s] then
+        if i+1 == CAS_view[s] or (i == 2 and CAS_view[s] == 6) then
             call CUI_Paint(CAS_button[s*64+i],5,true)
         else
             call CUI_Paint(CAS_button[s*64+i],0,true)
@@ -71539,6 +74919,18 @@ function CAS_Render takes integer s returns nothing
         set i = i+1
     endloop
     if CasinoLastView[s] != CAS_view[s] then
+        set i = 6
+        loop
+            exitwhen i > 10
+            if CAS_view[s] == 1 then
+                call BlzFrameSetSize(CAS_button[s*64+i],0.087,0.037)
+                call BlzFrameSetPoint(CAS_button[s*64+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,0.216+I2R(i-6)*0.093,-0.402)
+            else
+                call BlzFrameSetSize(CAS_button[s*64+i],0.075,0.027)
+                call BlzFrameSetPoint(CAS_button[s*64+i],FRAMEPOINT_TOPLEFT,CAS_root[s],FRAMEPOINT_TOPLEFT,0.025+I2R(i-6)*0.080,-0.394)
+            endif
+            set i = i+1
+        endloop
     set i = 11
     loop
         exitwhen i >= 57
@@ -71549,30 +74941,59 @@ function CAS_Render takes integer s returns nothing
     endloop
         set CasinoLastView[s] = CAS_view[s]
     endif
+    call BlzFrameSetVisible(BJWatchHistory[s],false)
+    if BJWatchHost[s] != 0 then
+        if CAS_view[s] == 1 and BJWatchActive(BJWatchHost[s]) then
+            set host = BJWatchHost[s]
+        else
+            set BJWatchHost[s] = 0
+        endif
+    endif
+    call BJWatchList(s)
     call BlzFrameSetVisible(CAS_felt[s],CAS_view[s] == 1)
+    call BlzFrameSetVisible(BJ_wagerLabel[s],CAS_view[s] == 1)
+    call BlzFrameSetVisible(CAS_status[s],CAS_view[s] != 1)
     call BlzFrameSetVisible(CAS_chip[s],false)
     set i = 6
     loop
         exitwhen i > 10
-        call BlzFrameSetVisible(CAS_button[s*64+i],CAS_view[s] != 5)
+        if CAS_view[s] != 1 then
+            call CUI_Paint(CAS_button[s*64+i],0,true)
+        endif
+        call BlzFrameSetVisible(CAS_button[s*64+i],CAS_view[s] != 5 and (CAS_view[s] != 6 or (AR_state == 0 and not CAS_ended)))
         set i = i+1
     endloop
     if CAS_view[s] == 1 then
         set label = "|cffe7cb88BLACKJACK|r"
-        call CAS_BlackjackView(s)
+        call BlzFrameSetText(BJ_wagerLabel[s],"NEXT BET   "+CUI_Value(I2S(CAS_amount[s])+"g"))
+        call CUI_Text(CAS_button[s*64+11],"Place bet  "+I2S(CAS_amount[s])+"g")
+        call CUI_Paint(CAS_button[s*64+6],0,CAS_amount[s] > 10)
+        call CUI_Paint(CAS_button[s*64+7],0,CAS_amount[s] < 100)
+        call CUI_Paint(CAS_button[s*64+8],0,CAS_amount[s] < 100)
+        call CUI_Paint(CAS_button[s*64+9],0,CAS_amount[s] < 100)
+        call CUI_Paint(CAS_button[s*64+10],0,CAS_amount[s] > 10)
+        if host != s then
+            set label = "Watching  "+SubString(CAS_Name(host),0,20)
+        endif
+        call CAS_BlackjackView(s,host)
     elseif CAS_view[s] == 2 then
         set label = "|cffe7cb88MATCH BETS|r"
         call CAS_BetsView(s)
     elseif CAS_view[s] == 3 then
         set label = "|cffe7cb88CHALLENGES|r"
         call CAS_DuelsView(s)
+    elseif CAS_view[s] == 6 then
+        set label = "|cffe7cb88ARENA 1v1|r"
+        call AR_View(s)
     elseif CAS_view[s] == 5 then
         set label = "|cffe7cb88CREDIT|r"
         call CreditView(s)
     else
         call BlzFrameSetVisible(CAS_content[b+30],true)
-        call BlzFrameSetText(CAS_content[b+30],"|cffe7cb88BLACKJACK|r|nOpening wager 10-100g / 2 decks / S17 / blackjack 3:2 / win 1:1 / ties push|nDouble first 2 cards. Split once. Split aces: 1 card.|nSplit 21 pays 1:1. Timeout stands. No insurance/surrender.|n|n|cffe7cb88MATCH BETS|r|nClose 2:10 / warning 2:00 / accepted odds stay locked|nBase kill: any enemy base. No first event or draw: refund.|n|n|cffe7cb88CHALLENGES|r|nEqual stakes. Accept to back the opposite result.|n|n|cffe7cb88Wallet|r|nStakes come from your Wallet. Open bets are at risk if you quit.")
+        call BlzFrameSetText(CAS_content[b+30],"|cffe7cb88BLACKJACK|r|nPrivate dealer. Bet 10-100g before the deal / 2 decks / S17 / blackjack 3:2 / win 1:1 / ties push|nDouble first 2 cards. Split once. Split aces: 1 card.|nSplit 21 pays 1:1. Timeout stands. No insurance/surrender.|n|n|cffe7cb88MATCH BETS|r|nClose 2:10 / warning 2:00 / accepted odds stay locked|nBase kill: any enemy base. No first event or draw: refund.|n|n|cffe7cb88CHALLENGES|r|nPrediction: equal stakes on opposite results. Arena 1v1: play free or match Wallet stakes. Winner takes the pot.|n|n|cffe7cb88Wallet|r|nStakes come from your Wallet. Open bets are at risk if you quit.")
     endif
+    call BlzFrameSetVisible(CAS_button[s*64+60],CAS_view[s] == 5)
+    call BlzFrameSetVisible(CAS_button[s*64+59],CAS_view[s] == 1)
     call BlzFrameSetText(CAS_title[s],label)
     if CAS_view[s] == 5 then
         call CUI_Paint(CAS_button[s*64+57],5,true)
@@ -71590,7 +75011,7 @@ function CAS_Render takes integer s returns nothing
         endif
     endif
     call BlzFrameSetText(CAS_balance[s],label)
-    set label = "BET "+CUI_Value(I2S(CAS_amount[s])+"g")
+    set label = "SELECTED BET  "+CUI_Value(I2S(CAS_amount[s])+"g")
     if CAS_ended then
         set label = label+"  /  SETTLED"
     elseif CAS_view[s] == 2 and (CAS_closed or CAS_seconds >= 130) then
@@ -71601,8 +75022,28 @@ function CAS_Render takes integer s returns nothing
     if CAS_view[s] == 5 then
         set label = "Escrow: "+CUI_Value(I2S(CreditHold[s])+"g")+"     Your debt: "+CUI_Value(I2S(LoanPrincipal[s]+LoanFee[s])+"g")
     endif
+    if CAS_view[s] == 1 then
+        set label = label+"    /    ON TABLE  "+CUI_Value(I2S(BJ_bet[BJ_seat[s]*2]+BJ_bet[BJ_seat[s]*2+1])+"g")
+    endif
+    if CAS_view[s] == 6 then
+        if AR_state == 0 then
+            set label = "Selected: "+AR_Terms(AR_SelectedStake(s))+"    /    Exact amount: -stake 250"
+        else
+            set label = AR_Terms(AR_stake)
+        endif
+    endif
     call BlzFrameSetText(CAS_status[s],label)
-    call BlzFrameSetText(CAS_footer[s],CAS_note[s])
+    if host == s then
+        call BlzFrameSetText(CAS_footer[s],CAS_note[s])
+    elseif BJ_phase[host] == 4 then
+        set label = BJ_result[BJ_seat[host]*2]
+        if BJ_split[BJ_seat[host]*2] then
+            set label = label+"  /  "+BJ_result[BJ_seat[host]*2+1]
+        endif
+        call BlzFrameSetText(CAS_footer[s],label)
+    else
+        call BlzFrameSetText(CAS_footer[s],"Round "+I2S(BJ_round[host])+"  /  Viewing "+CAS_Name(host))
+    endif
 endfunction
 
 function CAS_CycleTarget takes integer current returns integer
@@ -71622,7 +75063,7 @@ function CasinoStakeMax takes integer s returns integer
     if CAS_view[s] == 1 then
         return 100
     elseif PK_Started[s-1] and not PK_Hidden[s-1] then
-        return 300
+        return 1500
     endif
     return 10000
 endfunction
@@ -71641,21 +75082,59 @@ function CAS_Click takes nothing returns nothing
         exitwhen id >= 64 or CAS_button[s*64+id] == f
         set id = id+1
     endloop
-    if f == CAS_launch[s] then
-        set CAS_view[s] = 1
-    elseif id <= 3 then
+    if CAS_view[s] == 1 then
+        set target = 1
+        loop
+            exitwhen target > 24
+            if f == BJWatchEye[s*25+target] and f != null then
+                if target != s and BJWatchActive(target) then
+                    set BJWatchHost[s] = target
+                endif
+                call CAS_Render(s)
+                return
+            endif
+            set target = target+1
+        endloop
+        if id == 16 then
+            set BJWatchPage[s] = BJWatchPage[s]+1
+            call CAS_Render(s)
+            return
+        elseif id == 61 then
+            set BJWatchHost[s] = 0
+            call CAS_Render(s)
+            return
+        elseif BJWatchHost[s] != 0 and id >= 6 and id <= 15 then
+            return
+        endif
+    endif
+    if id >= 11 and id <= 15 and CAS_view[s] != 1 then
+        return
+    endif
+    if id <= 5 or id == 57 or id == 59 then
+        set BJWatchHost[s] = 0
+    endif
+    if id <= 3 then
         set CAS_view[s] = id+1
     elseif id == 4 then
         set CAS_view[s] = 0
     elseif id == 5 then
         if PK_Started[s-1] then
             set CAS_view[s] = 0
-            set CAS_amount[s] = IMinBJ(300,CAS_amount[s])
             set PK_Hidden[s-1] = false
             call PK_Render(s-1)
         else
             set CAS_note[s] = "Your poker table is still loading."
         endif
+    elseif id == 60 and CAS_view[s] == 5 then
+        if CAS_ready[s] then
+            call DisplayTimedTextToPlayer(Player(s-1),0,0,10,"Wallet: "+I2S(CAS_gold[s])+"g  /  Lifetime lent: "+I2S(LoanLent[s])+"g|nOutstanding principal: "+I2S(LoanOutstanding[s])+"g  /  Interest collected: "+I2S(LoanInterest[s])+"g")
+            if LoanLent[s] > 0 then
+                call DisplayTimedTextToPlayer(Player(s-1),0,0,10,"Lending ROI: "+R2SW(100.*I2R(LoanInterest[s])/I2R(LoanLent[s]),1,2)+"%")
+            endif
+        endif
+    elseif id == 59 and CAS_view[s] == 1 then
+        set CAS_view[s] = 0
+        call HousePK_Start(s-1)
     elseif id == 57 then
         set CAS_view[s] = 5
         call CreditBrowse(s,1)
@@ -71708,8 +75187,6 @@ function CAS_Click takes nothing returns nothing
         call BJ_Wager(s)
     elseif id >= 12 and id <= 15 then
         call BJ_Action(s,id-11)
-    elseif id == 16 then
-        call BJ_Move(s,BJ_table[s] != 0)
     elseif id >= 20 and id <= 24 then
         set MK_tab[s] = id-19
         set MK_page[s] = 0
@@ -71732,6 +75209,24 @@ function CAS_Click takes nothing returns nothing
         endloop
     elseif id == 32 then
         call MK_Buy(s,MK_tab[s],MK_pick[s])
+    elseif id == 19 and CAS_view[s] == 6 then
+        call AR_Invite(s,AR_SelectedStake(s))
+    elseif id == 39 and CAS_view[s] == 3 then
+        set CAS_view[s] = 6
+    elseif id == 39 and CAS_view[s] == 6 then
+        set CAS_view[s] = 3
+    elseif id >= 53 and id <= 56 and CAS_view[s] == 6 then
+        if id == 53 then
+            set AR_pick[s] = AR_Next(s,AR_Target(s))
+        elseif id == 54 then
+            call AR_Invite(s,0)
+        elseif id == 55 then
+            if GetLocalPlayer() == Player(s-1) then
+                call BlzSendSyncData("AR_Accept",I2S(AR_shownOffer))
+            endif
+        else
+            call AR_Withdraw(s)
+        endif
     elseif id == 33 then
         call DU_Offer(s)
     elseif id == 34 then
@@ -71758,6 +75253,15 @@ function CAS_Click takes nothing returns nothing
         set PK_Hidden[s-1] = true
         call PK_Render(s-1)
     endif
+    if id >= 6 and id <= 10 then
+        set CAS_note[s] = "Selected bet is now "+I2S(CAS_amount[s])+"g."
+    elseif id >= 26 and id <= 31 and MK_pick[s] > 0 then
+        set CAS_note[s] = "Selected "+MK_Label(MK_tab[s],MK_pick[s])+"  /  wager "+I2S(CAS_amount[s])+"g"
+    elseif id == 34 then
+        set CAS_note[s] = "Challenge opponent  /  "+CAS_Name(DU_opponent[s])
+    elseif id == 35 then
+        set CAS_note[s] = "Backing  /  "+MK_Label(5,DU_pick[s])
+    endif
     call CAS_Render(s)
     set f = null
 endfunction
@@ -71767,6 +75271,7 @@ function CasinoFromStats takes nothing returns nothing
     if not PK_Eligible(s-1) then
         return
     endif
+    set BJWatchHost[s] = 0
     set CAS_view[s] = 1
     set CAS_amount[s] = IMinBJ(100,CAS_amount[s])
     if CAS_root[s] == null then
@@ -71791,14 +75296,36 @@ function CAS_Chat takes nothing returns nothing
     if not PK_Eligible(s-1) then
         return
     endif
+    if SubString(line,0,7) != "-stake " then
+        set BJWatchHost[s] = 0
+    elseif CAS_view[s] == 1 and BJWatchHost[s] != 0 then
+        return
+    endif
     if line == "-casino" or line == "-blackjack" then
         set CAS_view[s] = 1
     elseif line == "-bets" then
         set CAS_view[s] = 2
+    elseif line == "-arena" then
+        set CAS_view[s] = 6
     elseif line == "-challenges" then
         set CAS_view[s] = 3
     elseif SubString(line,0,7) == "-stake " then
         set amount = SubString(line,7,StringLength(line))
+        if HousePK_Started[s-1] and not HousePK_Hidden[s-1] then
+            set value = S2I(amount)
+            if I2S(value) == amount and value >= 10 and value <= 300 and ModuloInteger(value,2) == 0 then
+                set HouseStake[s-1] = value
+                set HousePK_Note[s-1] = "Next buy-in set to "+I2S(value)+"g."
+            else
+                set HousePK_Note[s-1] = "Choose an even buy-in from 10 to 300g."
+            endif
+            call HousePK_Render(s-1)
+            return
+        endif
+        if PK_Started[s-1] and not PK_Hidden[s-1] then
+            call PK_Submit(s-1,"b",amount)
+            return
+        endif
         set value = S2I(amount)
         if I2S(value) == amount and value >= 10 and value <= CasinoStakeMax(s) and ModuloInteger(value,2) == 0 then
             set CAS_amount[s] = value
@@ -71824,6 +75351,11 @@ endfunction
 function CAS_Tick takes nothing returns nothing
     local integer s = 1
     local integer id = 1
+    local integer clientSlot = GetPlayerId(GetLocalPlayer())+1
+    if CasinoAdmin(clientSlot) and not CAS_ready[clientSlot] and WalletBalance >= 0 and CasinoWalletRetries < 5 and ModuloInteger(CAS_seconds,5) == 0 then
+        set CasinoWalletRetries = CasinoWalletRetries+1
+        call WalletBroadcast()
+    endif
     set CAS_seconds = R2I(TimerGetElapsed(FF_gameTimer))
     if not CAS_closed then
         call MK_Refresh()
@@ -71836,7 +75368,11 @@ function CAS_Tick takes nothing returns nothing
         set CAS_closed = true
         call CAS_Announce("|cffe7cb88MATCH BETTING CLOSED|r. Accepted odds are locked. Player challenges remain available.")
     endif
+    if AR_state == 1 then
+        call AR_Tick()
+    endif
     call BJ_Tick()
+    call HousePK_Tick()
     loop
         exitwhen id > DU_n
         if DU_state[id] == 1 and (CAS_seconds >= DU_expire[id] or not PK_Eligible(DU_from[id]-1) or not PK_Eligible(DU_to[id]-1)) then
@@ -71848,11 +75384,6 @@ function CAS_Tick takes nothing returns nothing
         exitwhen s > 24
         if not PK_Eligible(s-1) then
             set CAS_view[s] = 0
-            if BJ_table[s] == 0 and BJ_owner[BJ_seat[s]] == s then
-                if BJ_bet[BJ_seat[s]*2] == 0 or BJ_state[BJ_seat[s]*2] == 5 then
-                    call BJ_Move(s,false)
-                endif
-            endif
         endif
         call CreditTick(s)
         if CAS_ready[s] then
@@ -71861,9 +75392,8 @@ function CAS_Tick takes nothing returns nothing
         if CAS_root[s] != null and CAS_User(s) then
             if GetLocalPlayer() == Player(s-1) then
                 if CatalogCasino != null then
-                    call BlzFrameSetVisible(CatalogCasino,CatalogKind == 0 and PK_Eligible(s-1))
+                    call BlzFrameSetVisible(CatalogCasino,CasinoAdmin(GetPlayerId(GetLocalPlayer())+1) and CatalogKind == 0)
                 endif
-                call BlzFrameSetVisible(CAS_launch[s],PK_Eligible(s-1))
             endif
             call CAS_Render(s)
         endif
@@ -71872,6 +75402,8 @@ function CAS_Tick takes nothing returns nothing
 endfunction
 
 function CAS_BuildPlayer takes integer s returns nothing
+    local framehandle eye
+    local framehandle icon
     local integer i = 0
     local integer b = s*32
     local integer c = s*18
@@ -71880,32 +75412,27 @@ function CAS_BuildPlayer takes integer s returns nothing
     set CreditDraftMode[s] = 1
     set CreditDraftRate[s] = 5
     set CreditDraftPeriod[s] = 5
-    set CAS_amount[s] = 50
-    set CAS_note[s] = "Exact bet: -stake 250"
-    set MK_tab[s] = 1
     set BJ_table[s] = s
     set BJ_seat[s] = s*6
     set BJ_owner[s*6] = s
     set BJ_owner[s*6+1] = -1
     set BJ_owner[s*6+2] = -1
     call BJ_Shuffle(s)
+    set CAS_amount[s] = 50
+    set CAS_note[s] = "Blackjack accepts even bets from 10 to 100g."
+    set MK_tab[s] = 1
     set CAS_root[s] = BlzCreateFrameByType("BACKDROP","CasinoTable",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),"",s)
     call BlzFrameSetSize(CAS_root[s],0.70,0.48)
-    call BlzFrameSetAbsPoint(CAS_root[s],FRAMEPOINT_TOPLEFT,0.05,0.57)
+    call BlzFrameSetAbsPoint(CAS_root[s],FRAMEPOINT_TOPLEFT,0.05,0.526)
     call BlzFrameSetTexture(CAS_root[s],"CasinoUI\\panel.blp",0,true)
     call BlzFrameSetLevel(CAS_root[s],60)
     call BlzFrameSetVisible(CAS_root[s],false)
-    set CAS_launch[s] = BlzCreateFrame("ScriptDialogButton",BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI,0),0,s)
-    call BlzFrameSetLevel(CAS_launch[s],20)
-    call BlzFrameSetSize(CAS_launch[s],0.065,0.025)
-    call BlzFrameSetAbsPoint(CAS_launch[s],FRAMEPOINT_TOPRIGHT,0.790,0.505)
-    call BlzFrameSetText(CAS_launch[s],"Casino")
-    call BlzFrameSetVisible(CAS_launch[s],GetLocalPlayer() == Player(s-1) and PK_Eligible(s-1))
-    call BlzTriggerRegisterFrameEvent(click,CAS_launch[s],FRAMEEVENT_CONTROL_CLICK)
     set CAS_felt[s] = CAS_Texture(s,"PokerUI\\table.blp",0.208,0.106,0.474,0.252)
     set CAS_title[s] = CAS_Label(s,0.025,0.016,0.53,0.027,1.15)
     set CAS_balance[s] = CAS_Label(s,0.025,0.041,0.65,0.026,1.13)
     set CAS_status[s] = CAS_Label(s,0.025,0.366,0.65,0.024,1.08)
+    set BJWatchHistory[s] = CAS_Label(s,0.216,0.399,0.459,0.045,1.08)
+    call BlzFrameSetVisible(BJWatchHistory[s],false)
     set CAS_footer[s] = CAS_Label(s,0.025,0.455,0.65,0.024,0.92)
     call CAS_Button(s,0,click,0.025,0.073,0.105,"Blackjack")
     call CAS_Button(s,1,click,0.134,0.073,0.105,"Match bets")
@@ -71913,6 +75440,8 @@ function CAS_BuildPlayer takes integer s returns nothing
     call CAS_Button(s,3,click,0.352,0.073,0.105,"Rules")
     call CAS_Button(s,4,click,0.575,0.014,0.10,"Hide")
     call CAS_Button(s,5,click,0.461,0.073,0.105,"Poker")
+    call CAS_Button(s,60,click,0.419,0.014,0.150,"Lending record")
+    call CAS_Button(s,59,click,0.440,0.014,0.130,"House poker")
     call CAS_Button(s,57,click,0.570,0.073,0.105,"Credit")
     call CAS_Button(s,40,click,0.025,0.182,0.145,"Lend / Borrow")
     call BlzFrameSetVisible(CAS_button[s*64+40],false)
@@ -71945,12 +75474,41 @@ function CAS_BuildPlayer takes integer s returns nothing
     call CAS_Button(s,8,click,0.185,0.394,0.075,"+50")
     call CAS_Button(s,9,click,0.265,0.394,0.075,"2x")
     call CAS_Button(s,10,click,0.345,0.394,0.075,"Half")
-    call CAS_Button(s,11,click,0.43,0.394,0.245,"BET")
-    call CAS_Button(s,12,click,0.025,0.423,0.10,"Hit")
-    call CAS_Button(s,13,click,0.13,0.423,0.10,"Stand")
-    call CAS_Button(s,14,click,0.235,0.423,0.12,"Double")
-    call CAS_Button(s,15,click,0.36,0.423,0.10,"Split")
-    call CAS_Button(s,16,click,0.465,0.423,0.21,"Community")
+    call CAS_Button(s,11,click,0.490,0.355,0.185,"Place bet")
+    call BlzFrameSetSize(CAS_button[s*64+11],0.185,0.039)
+    call CAS_Button(s,12,click,0.216,0.402,0.109,"Hit")
+    call CAS_Button(s,13,click,0.332,0.402,0.109,"Stand")
+    call CAS_Button(s,14,click,0.448,0.402,0.109,"Double")
+    call CAS_Button(s,15,click,0.564,0.402,0.109,"Split")
+    loop
+        exitwhen i >= 4
+        call BlzFrameSetSize(CAS_button[s*64+12+i],0.109,0.042)
+        set i = i+1
+    endloop
+    set i = 0
+    call CAS_Button(s,16,click,0.025,0.336,0.167,"More games")
+    call CAS_Button(s,61,click,0.025,0.372,0.167,"My table")
+    call BlzFrameSetVisible(CAS_button[s*64+16],false)
+    call BlzFrameSetVisible(CAS_button[s*64+61],false)
+    set i = 1
+    loop
+        exitwhen i > 24
+        if i != s and GetPlayerSlotState(Player(i-1)) == PLAYER_SLOT_STATE_PLAYING then
+            set eye = CUI_Create(CAS_root[s],s*25+i,0.159,-0.174,0.034,0.034,"",0)
+            set BJWatchEye[s*25+i] = eye
+            set icon = BlzCreateFrameByType("BACKDROP","BlackjackWatchIcon",eye,"",s*25+i)
+            call BlzFrameSetAllPoints(icon,eye)
+            call BlzFrameSetTexture(icon,"CasinoUI\\WatchEye.tga",0,true)
+            call BlzFrameSetEnable(icon,false)
+            call BlzFrameSetLevel(icon,66)
+            call BlzTriggerRegisterFrameEvent(click,eye,FRAMEEVENT_CONTROL_CLICK)
+            call BlzFrameSetVisible(eye,false)
+        endif
+        set i = i+1
+    endloop
+    set eye = null
+    set icon = null
+    set i = 0
     call CAS_Button(s,20,click,0.025,0.110,0.125,"Hero kill")
     call CAS_Button(s,21,click,0.155,0.110,0.125,"Base kill")
     call CAS_Button(s,22,click,0.285,0.110,0.125,"Base lost")
@@ -71964,12 +75522,20 @@ function CAS_BuildPlayer takes integer s returns nothing
     call CAS_Button(s,36,click,0.025,0.333,0.212,"Accept")
     call CAS_Button(s,37,click,0.244,0.333,0.212,"Decline")
     call CAS_Button(s,38,click,0.463,0.333,0.212,"Cancel")
+    call CAS_Button(s,39,click,0.463,0.298,0.212,"Arena 1v1")
+    call CAS_Button(s,19,click,0.430,0.394,0.245,"Invite for gold")
+    call CAS_Button(s,53,click,0.025,0.298,0.212,"Opponent >")
+    call CAS_Button(s,54,click,0.244,0.298,0.212,"Invite free")
+    call CAS_Button(s,55,click,0.025,0.333,0.212,"Accept")
+    call CAS_Button(s,56,click,0.244,0.333,0.212,"Decline")
     set CAS_content[b] = CAS_Label(s,0.032,0.111,0.174,0.022,0.92)
     set CAS_content[b+1] = CAS_Label(s,0.032,0.137,0.174,0.038,1.01)
     set CAS_content[b+2] = CAS_Label(s,0.215,0.111,0.460,0.025,1.18)
-    set CAS_content[b+3] = CAS_Label(s,0.215,0.224,0.460,0.040,1.12)
-    set CAS_content[b+4] = CAS_Label(s,0.032,0.300,0.174,0.019,0.88)
-    set CAS_content[b+5] = CAS_Label(s,0.445,0.224,0.230,0.040,1.12)
+    set CAS_content[b+3] = CAS_Label(s,0.215,0.227,0.460,0.040,1.85)
+    set CAS_content[b+4] = CAS_Label(s,0.025,0.414,0.170,0.033,0.94)
+    set BJ_wagerLabel[s] = CAS_Label(s,0.258,0.359,0.228,0.040,1.60)
+    call BlzFrameSetVisible(BJ_wagerLabel[s],false)
+    set CAS_content[b+5] = CAS_Label(s,0.445,0.227,0.230,0.040,1.85)
     set CAS_content[b+6] = CAS_Label(s,0.19,0.252,0.48,0.020,0.80)
     set CAS_content[b+7] = CAS_Label(s,0.025,0.143,0.65,0.021,0.95)
     set CAS_content[b+8] = CAS_Label(s,0.032,0.168,0.248,0.018,0.88)
@@ -71998,7 +75564,7 @@ function CAS_BuildPlayer takes integer s returns nothing
         call BlzFrameSetVertexColor(CAS_bar[s*6+i],BlzConvertColor(255,214,184,106))
         call CAS_Button(s,26+i,click,0.555,y-0.003,0.12,"Select")
         call BlzFrameSetSize(CAS_button[s*64+26+i],CAS_SafeW(0.12),0.023)
-        set CAS_row[s*6+i] = CAS_Label(s,0.032,0.179+I2R(i)*0.019,0.123,0.018,0.90)
+        set CAS_row[s*6+i] = CAS_Label(s,0.025,0.174+I2R(i)*0.039,0.130,0.037,0.98)
         set CAS_seatTotal[s*6+i] = CAS_Label(s,0.159,0.179+I2R(i)*0.019,0.046,0.018,0.98)
         call BlzFrameSetTextAlignment(CAS_seatTotal[s*6+i],TEXT_JUSTIFY_TOP,TEXT_JUSTIFY_RIGHT)
         set CAS_card[c+i] = CAS_Texture(s,"PokerUI\\empty.blp",0.195+I2R(i)*0.067,0.178,0.054,0.060)
@@ -72006,7 +75572,7 @@ function CAS_BuildPlayer takes integer s returns nothing
         set CAS_card[c+12+i] = CAS_Texture(s,"PokerUI\\empty.blp",0.430+I2R(i)*0.028,0.274,0.050,0.060)
         set i = i+1
     endloop
-    set CAS_chip[s] = CAS_Texture(s,"PokerUI\\chips1.blp",0.032,0.321,0.060,0.025)
+    set CAS_chip[s] = CAS_Texture(s,"PokerUI\\chips1.blp",0.216,0.363,0.038,0.021)
     call TriggerAddAction(click,function CAS_Click)
     call CAS_Render(s)
     if PK_Eligible(s-1) then
@@ -72026,12 +75592,20 @@ function CAS_BuildNext takes nothing returns nothing
 endfunction
 
 function CAS_Init takes nothing returns nothing
+    local trigger arenaAccept = CreateTrigger()
     local trigger loans = CreateTrigger()
     local trigger chat = CreateTrigger()
     local trigger death = CreateTrigger()
     local trigger level = CreateTrigger()
     local integer p = 0
+    set CAS_winSound = CreateSound("Abilities\\Spells\\Items\\ResourceItems\\ReceiveGold.flac",false,false,false,0,0,"")
+    call SetSoundVolume(CAS_winSound,100)
+    set CAS_lossSound = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,0,0,"")
+    call SetSoundVolume(CAS_lossSound,72)
+    set HousePK_Seed = GetRandomInt(1,2147483646)
     set CAS_seed = GetRandomInt(1,2147483646)
+    call AR_Init()
+    call TriggerAddAction(arenaAccept,function AR_ReceiveAccept)
     set CasinoOpen = CreateTrigger()
     call TriggerAddAction(CasinoOpen,function CasinoFromStats)
     set CAS_baseEvent = CreateTrigger()
@@ -72047,6 +75621,8 @@ function CAS_Init takes nothing returns nothing
         call TriggerRegisterPlayerChatEvent(chat,Player(p),"-blackjack",true)
         call TriggerRegisterPlayerChatEvent(chat,Player(p),"-bets",true)
         call TriggerRegisterPlayerChatEvent(chat,Player(p),"-challenges",true)
+        call BlzTriggerRegisterPlayerSyncEvent(arenaAccept,Player(p),"AR_Accept",false)
+        call TriggerRegisterPlayerChatEvent(chat,Player(p),"-arena",true)
         call TriggerRegisterPlayerChatEvent(chat,Player(p),"-stake ",false)
         set p = p+1
     endloop
@@ -72057,7 +75633,6 @@ function CAS_Init takes nothing returns nothing
     call TriggerAddAction(chat,function CAS_Chat)
     call TriggerAddAction(death,function MK_HeroDeath)
     call TriggerAddAction(level,function MK_Level)
-    call BJ_Shuffle(0)
     call TimerStart(CreateTimer(),0.20,true,function CAS_BuildNext)
     call TimerStart(CreateTimer(),1.00,true,function CAS_Tick)
     set chat = null
@@ -72798,6 +76373,9 @@ function VG_Init takes nothing returns nothing
 endfunction
 
 function DraftAddHero takes integer team, integer id returns nothing
+    if SD_HeroExcluded(id) then
+        return
+    endif
     if not HaveSavedBoolean(DraftStock, -team, id) then
         set DraftCount[team] = DraftCount[team] + 1
         set DraftPool[team*256 + DraftCount[team]] = id
@@ -72846,6 +76424,7 @@ function DraftRefreshPub takes integer pn returns nothing
         exitwhen i > DraftCount[team]
         set id = DraftPool[team*256+i]
         if not DraftTaken[team*256+i] and DraftEligible(team,id) then
+            call SDGroundRemember(team, id)
             set category = udg_hero_category[FFR_Index(id)]
             if category >= 12 then
                 set carry[carries] = id
@@ -73145,6 +76724,7 @@ function DraftSale takes nothing returns nothing
             set DraftBusy[pn] = false
             if udg_herO[pn] == sold and udg_selected_mode == 3 and not udg_mode_debugmode then
                 set DraftTaken[team*256+i] = true
+                set RandomTaken[team*128+FFR_Index(id)]=true
             endif
         endif
     endif
@@ -73318,7 +76898,7 @@ function main takes nothing returns nothing
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Reforged Footmen Frenzy v7.9.9X-rc29")
+    call SetMapName("Reforged Footmen Frenzy v7.9.9X-rc53 Tavern Page")
     call SetMapDescription("TRIGSTR_3435")
     call SetPlayers(24)
     call SetTeams(24)
