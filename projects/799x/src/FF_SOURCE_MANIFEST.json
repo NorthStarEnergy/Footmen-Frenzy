@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "1ff29b3b8b9afb1350581856ca3cac6c993191448556a82e649624aac327044a",
-  "runtime_functions": 3965,
+  "compiled_source_sha256": "2953facdb3d098cff8b68b77336d3ea23a2c80a665209257ff3457ccbb8f9bed",
+  "runtime_functions": 4087,
   "editor_generated_functions": [
     "CreateAllUnits",
     "CreateBuildingsForPlayer0",
@@ -51,15 +51,15 @@
     "main"
   ],
   "editor_generated_globals": 165,
-  "globals_sha256": "f74dc3035a4733909e3e52df4001eb271a197f1c528ce01874f7e610ac3fc543",
-  "runtime_sha256": "56d15ed57532db63d9b1e5fc582e6eeb1ab277440c21534666c2ebc9aa25c75a",
+  "globals_sha256": "afab907880f5bd92f18be5afa37f4f56e20ae862b70b25fd3e4daba33ec3f2be",
+  "runtime_sha256": "804417041bc69755c27926be3ef4d9eaf043ba83caebfa3ed2ecc7e61a86103c",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "85b639fd873dcfb663a6aec3d143225ae0b40af772f9bca7aee78cc148da7543",
-  "revision": "799X RC29 player casino and Wallet",
+  "source_map_sha256": "6cb7255bc0095c286a5eaea58742b4b4f650aa96d2058e5f0af5f96aeb64cf35",
+  "revision": "Reforged Footmen Frenzy v7.9.9X-rc53 Tavern Page",
   "engine_playtest": false
 }

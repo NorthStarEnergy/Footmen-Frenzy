@@ -19,6 +19,14 @@ globals
     framehandle DPS_Panel = null
     framehandle DPS_Table
     framehandle DPS_ProfileText
+    framehandle FFPoolPanel
+    framehandle FFPoolTitle
+    framehandle FFPoolRecipient
+    framehandle FFPoolReserveButton
+    framehandle FFPoolCloseButton
+    boolean array FFPoolOpen
+    integer array FFPoolTarget
+    integer array FFPoolReserve
     framehandle DPS_PageButton
     boolean DPS_Personal = false
     boolean DPS_ProfileLoaded = false
@@ -3450,19 +3458,9 @@ integer sf_page_target_type=0
     integer array PK_Stack
     integer array PK_Paid
     integer array PK_Total
-    integer array PK_Street
-    integer array PK_Turn
-    integer array PK_Dealer
-    integer array PK_Hand
-    integer array PK_LastRaise
-    integer array PK_Actions
-    integer array PK_Clock
-    integer array PK_Wait
     boolean array PK_Started
     boolean array PK_Hidden
     boolean array PK_Acted
-    boolean array PK_Reveal
-    string array PK_Note
     framehandle array PK_Dialog
     framehandle array PK_Text
     framehandle array PK_Title
@@ -3474,11 +3472,8 @@ integer sf_page_target_type=0
     framehandle array PK_Status
     framehandle array PK_CallLabel
     framehandle array PK_Face
-    framehandle array PK_HumanChips
-    framehandle array PK_BotChips
     framehandle array PK_PotChips
     framehandle array PK_HumanDealer
-    framehandle array PK_BotDealer
     framehandle array PK_Fold
     framehandle array PK_Call
     framehandle array PK_Raise
@@ -3489,40 +3484,53 @@ integer sf_page_target_type=0
     integer array PK_Sort
     integer array PK_Eval
 
-    integer CAS_seed = 71983
-    integer CAS_bank = 1000000
-    integer CAS_liability = 0
-    integer CAS_seconds = 0
-    integer CAS_winner = 0
-    trigger CAS_baseEvent = null
-    trigger CAS_matchEvent = null
-    unit CAS_baseVictim = null
-    unit CAS_baseKiller = null
-    boolean CAS_warned = false
-    boolean CAS_closed = false
-    boolean CAS_ended = false
-    integer CAS_buildSlot = 0
-    integer array CAS_escrow
-    integer array CAS_returnDue
-    integer array CAS_profitDue
-    integer array CAS_view
-    integer array CAS_amount
-    string array CAS_note
-    framehandle array CAS_root
-    framehandle array CAS_launch
-    framehandle array CAS_title
-    framehandle array CAS_balance
-    framehandle array CAS_status
-    framehandle array CAS_footer
-    framehandle array CAS_button
-    framehandle array CAS_content
-    framehandle array CAS_card
-    framehandle array CAS_felt
-    framehandle array CAS_chip
-    framehandle array CAS_seatTotal
-    framehandle array CAS_row
-    framehandle array CAS_bar
-    framehandle array CAS_track
+    integer array NS_Selected
+    integer array NS_Dealt
+    framehandle array NS_Selector
+    boolean array NS_BoardRank
+    integer HousePK_Seed = 81731
+    integer array HousePK_Deck
+    integer array HousePK_Cards
+    integer array HousePK_Stack
+    integer array HousePK_Paid
+    integer array HousePK_Total
+    integer array HousePK_Street
+    integer array HousePK_Turn
+    integer array HousePK_Dealer
+    integer array HousePK_Hand
+    integer array HousePK_LastRaise
+    integer array HousePK_Actions
+    integer array HousePK_Clock
+    integer array HousePK_Wait
+    boolean array HousePK_Started
+    boolean array HousePK_Hidden
+    boolean array HousePK_Acted
+    boolean array HousePK_Reveal
+    string array HousePK_Note
+    framehandle array HousePK_Dialog
+    framehandle array HousePK_Text
+    framehandle array HousePK_Title
+    framehandle array HousePK_HumanLabel
+    framehandle array HousePK_HumanStack
+    framehandle array HousePK_BotStack
+    framehandle array HousePK_BotLabel
+    framehandle array HousePK_PotLabel
+    framehandle array HousePK_Status
+    framehandle array HousePK_CallLabel
+    framehandle array HousePK_Face
+    framehandle array HousePK_HumanChips
+    framehandle array HousePK_BotChips
+    framehandle array HousePK_PotChips
+    framehandle array HousePK_HumanDealer
+    framehandle array HousePK_BotDealer
+    framehandle array HousePK_Fold
+    framehandle array HousePK_Call
+    framehandle array HousePK_Raise
+    framehandle array HousePK_Allin
+    framehandle array HousePK_Next
+    framehandle array HousePK_Hide
+    integer array HousePK_Eval
+    integer array HousePokerBuyIn
     integer array BJ_table
     integer array BJ_seat
     integer array BJ_owner
@@ -3547,6 +3555,42 @@ integer sf_page_target_type=0
     integer array BJ_dealerAces
     boolean array BJ_reveal
     string array BJ_result
+    string array BJ_dealerAction
+    sound CAS_winSound = null
+    sound CAS_lossSound = null
+    integer CAS_seed = 71983
+    integer CAS_bank = 1000000
+    integer CAS_liability = 0
+    integer CAS_seconds = 0
+    integer CAS_winner = 0
+    trigger CAS_baseEvent = null
+    trigger CAS_matchEvent = null
+    unit CAS_baseVictim = null
+    unit CAS_baseKiller = null
+    boolean CAS_warned = false
+    boolean CAS_closed = false
+    boolean CAS_ended = false
+    integer CAS_buildSlot = 0
+    integer array CAS_escrow
+    integer array CAS_returnDue
+    integer array CAS_profitDue
+    integer array CAS_view
+    integer array CAS_amount
+    string array CAS_note
+    framehandle array CAS_root
+    framehandle array CAS_title
+    framehandle array CAS_balance
+    framehandle array CAS_status
+    framehandle array CAS_footer
+    framehandle array CAS_button
+    framehandle array CAS_content
+    framehandle array CAS_card
+    framehandle array CAS_felt
+    framehandle array CAS_chip
+    framehandle array CAS_seatTotal
+    framehandle array CAS_row
+    framehandle array CAS_bar
+    framehandle array CAS_track
     integer MK_n = 0
     boolean MK_ffa = false
     timer MK_payTimer = null
@@ -3620,6 +3664,40 @@ integer sf_page_target_type=0
     boolean array CreditRequest
     boolean array CreditDraftRequest
     string LoanLocalRecord
+    framehandle array BJ_wagerLabel
+    integer array PK_Default
+    integer array PK_Version
+    integer array PK_InputVersion
+    string array PK_Feedback
+    framehandle array PK_Input
+    framehandle array PK_Prompt
+    framehandle array PK_Alternate
+    hashtable TF_PendingCard = InitHashtable()
+integer OP_Phase = 0
+    integer OP_Hand = 0
+    integer OP_Button = -1
+    integer OP_Turn = -1
+    integer OP_Street = 0
+    integer OP_Bet = 0
+    integer OP_MinRaise = 10
+    integer OP_Pot = 0
+    integer OP_Clock = 8
+    integer OP_ScoreCursor = 0
+    integer OP_Seats = 0
+    integer OP_Rest = -1
+    boolean OP_Revealed = false
+    boolean array OP_Dealt
+    boolean array OP_Live
+    boolean array OP_Leaving
+    integer array OP_Faced
+    integer array OP_Score
+    integer array OP_Award
+    integer array OP_Page
+    integer array OP_Board
+    framehandle array OP_PageButton
+    timer OP_ScoreTimer = null
+    string OP_Note = "Take a seat. The first hand starts when two players buy in."
+
     integer array PokerBuyIn
     integer CasinoLauncherSlot = 0
     trigger CasinoOpen = null
@@ -3646,6 +3724,21 @@ hashtable PF_data = InitHashtable()
     boolean PF_draw = false
     boolean PF_dirty = false
     integer PF_exportSlot = 0
+    framehandle HUD_root = null
+    framehandle HUD_wallet = null
+    framehandle HUD_gold = null
+    boolean HUD_walletRead = false
+    integer HUD_width = -1
+    integer HUD_height = -1
+    framehandle array PF_menu
+    framehandle array PF_extra
+    framehandle array PF_stripe
+    framehandle array PF_col
+    framehandle PF_sectionTitle = null
+    integer array PF_metricOrder
+    integer array PF_sectionCount
+    integer array PF_menuOrder
+    string array PF_sectionName
     framehandle PF_root = null
     framehandle PF_title = null
     framehandle PF_subtitle = null
@@ -3701,4 +3794,63 @@ hashtable PF_data = InitHashtable()
     integer FFDebugHeroCount = 0
     boolean FFDebugShopsReady = false
     unit array FFDebugShops
+    // One physical arena. State 0 is free, 1 is an invitation, 2 is a fight.
+    integer AR_state = 0
+    integer array AR_seat
+    integer array AR_pick
+    integer AR_until = 0
+    integer AR_stake = 0
+    integer array AR_held
+    integer AR_offer = 0
+    integer AR_shownOffer = 0 // Local UI value, sent with the Accept click.
+    player array AR_owner
+    unit array AR_hero
+    unit array AR_foot
+    item array AR_scroll
+    fogmodifier array AR_vision
+    rect AR_floor = null
+    timer AR_clock = null
+    trigger AR_orders = null
+    trigger AR_damage = null
+    trigger AR_deaths = null
+    integer array AR_roster
+    integer array AR_skill
+    player array AR_flagFrom
+    player array AR_flagTo
+    alliancetype array AR_flagType
+    boolean array AR_flagBefore
+    integer AR_flagCount = 0
+    // Read and used only by the local camera UI.
+    real AR_oldLeft
+    real AR_oldBottom
+    real AR_oldRight
+    real AR_oldTop
+    real AR_oldX
+    real AR_oldY
+    real AR_oldZoom
+integer array SDGroundCount
+integer array SDGroundOffer
+integer array SDGroundHero
+integer array SDGroundPickTeam
+integer array SDGroundColor
+boolean array SDGroundRandom
+boolean array SDGroundRolling
+boolean array SDGroundShown
+boolean SDGroundRevealed = false
+timer SDGroundTimer = null
+    integer array BJWatchHost
+    integer array BJWatchPage
+    framehandle array BJWatchEye
+    framehandle array BJWatchHistory
+    string array BJWatchLast
+    string array BJWatchPrevious
+    string array BJWatchOlder
+    integer CasinoWalletRetries = 0
+    framehandle array PK_Lower
+    framehandle array PK_Higher
+    integer array HouseStake
+    framehandle array HouseLower
+    framehandle array HouseHigher
+hashtable BladeState=InitHashtable()
+boolean array RandomTaken
 endglobals
