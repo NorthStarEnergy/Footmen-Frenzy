@@ -1,0 +1,32 @@
+[BMuv : BOae]
+end = new
+fnam string = "Sadism"                  # Name (Editor Only)
+ftip string = "Sadism"                  # Tooltip
+fube string = "Mundo is regenerating health and moving faster." # Tooltip - Extended
+fart string = "ReplaceableTextures\\CommandButtons\\BTNRegenerate.blp" # Icon
+
+[BMwR : Beng]
+end = new
+fnam string = "Cleaver Wound"           # Name (Editor Only)
+ftip string = "Cleaver Wound"           # Tooltip
+fube string = "Movement impaired. Speed Scroll cannot grant haste while wounded." # Tooltip - Extended
+fart string = "ReplaceableTextures\\CommandButtons\\BTNMundoCleaver.blp" # Icon
+ftat string = ""                        # Target
+feat string = ""                        # Effect
+fsat string = ""                        # Special
+fmat string = ""                        # Missile Art
+flig string = ""                        # Lightning
+ftac int = 0                            # Target Attachments
+
+[BMwS : Bslo]
+end = new
+fnam string = "Cleaver Wound"           # Name (Editor Only)
+ftip string = "Cleaver Wound"           # Tooltip
+fube string = "Movement impaired. Speed Scroll cannot grant haste while wounded." # Tooltip - Extended
+fart string = "ReplaceableTextures\\CommandButtons\\BTNMundoCleaver.blp" # Icon
+ftat string = ""                        # Target
+feat string = ""                        # Effect
+fsat string = ""                        # Special
+fmat string = ""                        # Missile Art
+flig string = ""                        # Lightning
+ftac int = 0                            # Target Attachments
