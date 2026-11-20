@@ -3298,7 +3298,7 @@ integer array TFP_s__wildCards___cardDat_gradX
 real array TFP_s___wildCards___cardDat_gradY
 integer array TFP_s__wildCards___cardDat_gradY
 sound FF_DraftPageClick
-unit array FF_DebugFate
+unit array FF_FatePick
 real array TFP_WildDamage
 real array TFP_s__wildCards___cardDat_damage
 real array TFP_s__wildCards___cardDat_traveled
