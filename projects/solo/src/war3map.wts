@@ -1,4 +1,4 @@
-﻿STRING 0
+STRING 0
 // Units: owtw (Multi Shot Tower), Hotkey (Hotkey)
 {
 V
@@ -6,7 +6,7 @@ V
 
 STRING 1
 {
-Solo Foots v1.8 4P - Shared Fixes Update 09
+Solo Foots 1.8-RC24 Tavern Page
 }
 
 STRING 2
@@ -16,7 +16,7 @@ STRING 2
 
 STRING 3
 {
-RJE
+miRaculix
 }
 
 STRING 4
@@ -7275,7 +7275,7 @@ STRING 1175
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.75s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -9521,7 +9521,7 @@ W
 }
 
 STRING 1541
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Hotkey (Hotkey)
 {
 X
 }
@@ -9580,7 +9580,7 @@ Blocks a negative spell that an enemy casts on the Hero once every <ANss,Cool1> 
 }
 
 STRING 1551
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Hotkey (Hotkey)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Hotkey (Hotkey)
 {
 W
 }
@@ -13637,7 +13637,7 @@ Slams the ground, dealing <A010,DataA6> damage to nearby enemy land units and sl
 }
 
 STRING 2212
-// Items: I001 (miRaculix' Amulet of Power), Hotkey (Hotkey)
+// Items: I001 (RJE's Amulet of Power), Hotkey (Hotkey)
 {
 C
 }
@@ -14408,7 +14408,7 @@ E
 }
 
 STRING 2339
-// Items: I01O (miRaculix' special brew), Hotkey (Hotkey)
+// Items: I01O (RJE's special brew), Hotkey (Hotkey)
 {
 C
 }
@@ -20305,7 +20305,7 @@ STRING 3312
 STRING 3313
 // Abilities: AIrl (Healing Salve), EditorSuffix (Editor Suffix)
 {
-(miRa Brew)
+(RJE Brew)
 }
 
 STRING 3314
@@ -20811,9 +20811,9 @@ STRING 3395
 }
 
 STRING 3396
-// Items: I001 (miRaculix' Amulet of Power), Tip (Tooltip - Basic)
+// Items: I001 (RJE's Amulet of Power), Tip (Tooltip - Basic)
 {
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 }
 
 STRING 3397
@@ -21047,7 +21047,9 @@ Summon |cffffcc00Zündler|r
 
 STRING 3435
 {
-Made for 1v1 or FFA games!
+join our Discord:|cff7878ff tiny.cc/footmen|r
+
+Map by miRaculix
 
 }
 
@@ -21127,9 +21129,9 @@ STRING 3447
 }
 
 STRING 3448
-// Items: I001 (miRaculix' Amulet of Power), Name (Name)
+// Items: I001 (RJE's Amulet of Power), Name (Name)
 {
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 }
 
 STRING 3449
@@ -21906,7 +21908,7 @@ STRING 3565
 
 |cff808080Skill level:|r Easy
 |cff808080Category:|r Summoner|n
-|cff808080Pro Tip:|r Boomerang Blade can hit a target multiple times!
+|cff808080Pro Tip:|r Line up both passes of Boomerang Blade for double damage!
 |cff8080801st skill:|r Boomerang Blade
 
 |cffffcc00Attacks land units.|r
@@ -26202,7 +26204,7 @@ STRING 4262
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 720
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift
 }
@@ -27054,7 +27056,7 @@ STRING 4393
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 670
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.75s
 |cff808080Abilities:|r|cffffff00 Phase Shift, 10% MR
 }
 
@@ -27064,10 +27066,10 @@ STRING 4394
 |cffffff00Spawned Units:|r Militia
 |cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 975
-|cff808080Spawn Interval:|r 6.5s 
-|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
+|cff808080Spawn Interval:|r 6s 
+|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
 STRING 4395
@@ -27078,7 +27080,7 @@ STRING 4395
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.75s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -28068,9 +28070,9 @@ Vengeance of the Gods - [|cffffcc00Level %d|r]
 }
 
 STRING 4551
-// Units: n04X (Warlock), Name (Name)
+// Units: n04X (Kodo Beast), Name (Name)
 {
-Warlock
+Kodo Beast
 }
 
 STRING 4552
@@ -34702,7 +34704,7 @@ Attack Speed Bonus - [|cffffcc00Level 4|r]
 }
 
 STRING 5623
-// Items: hslv (miRaculix' special brew), Name (Name)
+// Items: hslv (RJE's special brew), Name (Name)
 {
 miRaculix' special brew
 }
@@ -35287,7 +35289,7 @@ STRING 5719
 }
 
 STRING 5720
-// Items: hslv (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: hslv (RJE's special brew), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
@@ -36325,7 +36327,7 @@ collect |cffffff00Gold |rfrom this player. |nIf you have another active Ally, th
 }
 
 STRING 5886
-// Items: hslv (miRaculix' special brew), Description (Description)
+// Items: hslv (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
@@ -37766,7 +37768,7 @@ Summon |cffffcc00Archangel|r
 }
 
 STRING 6119
-// Items: I001 (miRaculix' Amulet of Power), Ubertip (Tooltip - Extended)
+// Items: I001 (RJE's Amulet of Power), Ubertip (Tooltip - Extended)
 {
 +150 HP
 +100 MP|n|cffd45e19this item now also includes the speed bonus of the 'Boots of Speed'|r
@@ -37779,7 +37781,7 @@ Archangel
 }
 
 STRING 6121
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Name (Name)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Name (Name)
 {
 miRaculix' Amulet of Ultimate Power Recipe
 }
@@ -37803,13 +37805,13 @@ Heals a target friendly non-mechanical wounded unit for 250 hit points.
 }
 
 STRING 6125
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Tip (Tooltip - Basic)
+// Items: I012 (RJE's Amulet of Ultimate Power), Tip (Tooltip - Basic)
 {
 |cffffcc00Z|r miRaculix' Amulet of Ultimate Power
 }
 
 STRING 6126
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Name (Name)
+// Items: I012 (RJE's Amulet of Ultimate Power), Name (Name)
 {
 miRaculix' Amulet of Ultimate Power
 }
@@ -38491,7 +38493,7 @@ STRING 6236
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 725
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -40922,7 +40924,7 @@ STRING 6621
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 720
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift
 }
@@ -46574,7 +46576,7 @@ Train Pack Horse
 }
 
 STRING 7521
-// Items: hslv (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: hslv (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains <hslv,uses> charges.
 }
@@ -47863,19 +47865,19 @@ STRING 7724
 }
 
 STRING 7725
-// Items: I01O (miRaculix' special brew), Description (Description)
+// Items: I01O (RJE's special brew), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 7726
-// Items: I01O (miRaculix' special brew), Name (Name)
+// Items: I01O (RJE's special brew), Name (Name)
 {
 miRaculix' special brew
 }
 
 STRING 7727
-// Items: I01O (miRaculix' special brew), Tip (Tooltip - Basic)
+// Items: I01O (RJE's special brew), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
@@ -48416,7 +48418,7 @@ Improved|n   Range,Improved|n   Range,Improved|n   Range,Improved|n   Range,Impr
 }
 
 STRING 7816
-// Units: n04X (Warlock), Casterupgradename (Caster Upgrade Names)
+// Units: n04X (Kodo Beast), Casterupgradename (Caster Upgrade Names)
 {
 Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Strength
 }
@@ -48424,7 +48426,7 @@ Berserker|n Strength,Berserker|n Strength,Berserker|n Strength,Berserker|n Stren
 STRING 7817
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48437,7 +48439,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7818
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48450,7 +48452,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7819
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48463,7 +48465,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7820
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48476,7 +48478,7 @@ Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren
 STRING 7821
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -48798,7 +48800,7 @@ STRING 7870
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -61686,7 +61688,7 @@ STRING 9928
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (15% Magic Resistance)
 |cff808080Health:|r 900
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 6.75s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack, 15% MR
 }
@@ -64081,7 +64083,7 @@ STRING 10303
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 7.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -64118,7 +64120,7 @@ STRING 10308
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2000
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Berserk & Pulverize
 }
@@ -64149,7 +64151,7 @@ STRING 10312
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.5s
 }
 
 STRING 10313
@@ -64340,11 +64342,11 @@ STRING 10342
 // Units: h00Z (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
 |cffffff00Spawned Units:|r Ghoul
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 550
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 750
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 10343
@@ -64446,7 +64448,7 @@ STRING 10358
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 10359
@@ -64856,7 +64858,7 @@ STRING 10401
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (10% Magic Resistance)
 |cff808080Health:|r 725
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -65075,7 +65077,7 @@ STRING 10423
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -65184,7 +65186,7 @@ STRING 10440
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -65225,10 +65227,10 @@ STRING 10446
 |cffffff00Spawned Units:|r Militia
 |cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Armor Type:|r Heavy (10% Magic Resistance)
 |cff808080Health:|r 975
-|cff808080Spawn Interval:|r 6.5s 
-|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s) & Sundering Blades
+|cff808080Spawn Interval:|r 6s 
+|cff808080Abilities:|r Feedback, Evasion, Bash (10%, units only for 1.5s)
 }
 
 STRING 10447
@@ -65262,25 +65264,25 @@ STRING 10451
 }
 
 STRING 10452
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Name (Name)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Name (Name)
 {
 miRaculix' special brew |cffffffffSPT|r
 }
 
 STRING 10453
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Tip (Tooltip - Basic)
 {
 Purchase miRaculix' special brew
 }
 
 STRING 10454
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Description (Description)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Description (Description)
 {
 Regenerates hit points and mana over time.
 }
 
 STRING 10455
-// Items: I01O (miRaculix' special brew), Ubertip (Tooltip - Extended)
+// Items: I01O (RJE's special brew), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 1 charge.
 }
@@ -65401,7 +65403,7 @@ STRING 10474
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 650
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 6.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Feedback
 }
@@ -65788,7 +65790,7 @@ STRING 10538
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -66036,7 +66038,7 @@ STRING 10577
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -66362,7 +66364,7 @@ STRING 10625
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66408,7 +66410,7 @@ STRING 10631
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -66515,10 +66517,10 @@ STRING 10648
 {
 |cffffff00Spawned Units:|r Banshee
 |cff808080Range:|r 655
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 10649
@@ -66635,10 +66637,10 @@ STRING 10666
 {
 |cffffff00Spawned Units:|r Wraith
 |cff808080Range:|r 700
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (10% Magic Resistance)
 |cff808080Health:|r 690
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow
 }
 
 STRING 10667
@@ -66944,12 +66946,12 @@ Learn Transmute - [|cffffcc00Level %d|r]
 STRING 10714
 // Units: e00G (Elintian Tier 3), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Unit:|r Warlock
-|cff808080Range:|r 650
+|cffffff00Spawned Unit:|r Kodo Beast
+|cff808080Range:|r 475
 |cff808080Damage Type:|r Normal 
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
-|cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Armor Type:|r Heavy (15% Spell Resistance)
+|cff808080Health:|r 775
+|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Frenzy, Blink
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
@@ -67238,7 +67240,7 @@ Storm Bolt - [|cffffcc00Level 6|r]
 }
 
 STRING 10761
-// Units: n04X (Warlock), Ubertip (Tooltip - Extended)
+// Units: n04X (Kodo Beast), Ubertip (Tooltip - Extended)
 {
 Powerful ranged attacker
 }
@@ -71937,9 +71939,9 @@ STRING 11521
 }
 
 STRING 11522
-// Units: n04X (Warlock), Tip (Tooltip - Basic)
+// Units: n04X (Kodo Beast), Tip (Tooltip - Basic)
 {
-Train Warlock
+Train Kodo Beast
 }
 
 STRING 11523
@@ -72631,7 +72633,7 @@ Mad Wizard
 STRING 11622
 // Units: N031 (Mad Wizard), Propernames (Proper Names)
 {
-|cffffcc00miRaculix.|r
+|cffffcc00RJE.|r
 }
 
 STRING 11623
@@ -76382,9 +76384,9 @@ STRING 12208
 }
 
 STRING 12209
-// Abilities: A0JY (Mira dust), Name (Name)
+// Abilities: A0JY (RJE dust), Name (Name)
 {
-Mira dust
+RJE dust
 }
 
 STRING 12210
@@ -77075,7 +77077,7 @@ Q
 STRING 12316
 // Abilities: A0JZ (Brilliance Aura), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12317
@@ -77870,7 +77872,7 @@ Mirror Image
 STRING 12438
 // Abilities: A0K0 (Mana Regen), EditorSuffix (Editor Suffix)
 {
-(miRa amulet)
+(RJE amulet)
 }
 
 STRING 12439
@@ -77892,7 +77894,7 @@ After a moment of aiming, fire a precise round which instantly shreds through en
 STRING 12441
 // Abilities: A0K1 (Item Move Speed Bonus), EditorSuffix (Editor Suffix)
 {
-(mira amulet clarity)
+(RJE amulet clarity)
 }
 
 STRING 12442
@@ -78589,7 +78591,7 @@ STRING 12539
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1350
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(15%), Evasion(10%), and Sundering Blades
 }
@@ -80849,7 +80851,7 @@ STRING 12880
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1900
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Bash(20%), Sundering Blades, Feedback & Evasion(15%)
 }
@@ -80862,7 +80864,7 @@ STRING 12881
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s
+|cff808080Spawn Interval:|r 7.25s
 |cff808080Racial Upgrade:|r |cffffff00Improved Range|r (+Attack Range)
 |cff808080Abilities:|r|cffffff00 Phase Shift,|cffffff00 Poison Attack
 }
@@ -80875,7 +80877,7 @@ STRING 12882
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2000
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Berserk & Pulverize
 }
@@ -80954,7 +80956,7 @@ STRING 12894
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 2150 
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cleaving attack, Cannabilize & Disease Cloud
 }
@@ -80967,7 +80969,7 @@ STRING 12895
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (25% Magic Resistance)
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -81480,7 +81482,7 @@ STRING 12975
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -81803,7 +81805,7 @@ Abilties - |cffffff00Cleaving|r 70% |r | |cffffff00Immolation|r | |cffffff00Taun
 }
 
 STRING 13028
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -81817,7 +81819,7 @@ Pendant of Mana
 }
 
 STRING 13029
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Description (Description)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Description (Description)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -81831,7 +81833,7 @@ Pendant of Mana
 }
 
 STRING 13030
-// Items: I012 (miRaculix' Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
+// Items: I012 (RJE's Amulet of Ultimate Power), Ubertip (Tooltip - Extended)
 {
 |cffffcc00Gives:|r
 +600 HP
@@ -82728,7 +82730,7 @@ Movement Speed Increase: 10%
 Cooldown: 45s
 
 |cffffcc00Requires:|r
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 Circlet of Nobility
 |cffffcc00Total Cost:|r 4000
 
@@ -82754,7 +82756,7 @@ Movement Speed Increase: 10%
 Cooldown: 45s
 
 |cffffcc00Requires:|r
-miRaculix' Amulet of Power
+RJE's Amulet of Power
 Circlet of Nobility
 |cffffcc00Total Cost:|r 4000
 
@@ -84837,19 +84839,19 @@ Toggle Wraith automatic spawning on or off.
 }
 
 STRING 13486
-// Abilities: A1AP (Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.), Name (Name)
+// Abilities: A1AP (Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.), Name (Name)
 {
-Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.
+Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.
 }
 
 STRING 13487
-// Abilities: A1AP (Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A1AP (Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.), Ubertip (Tooltip - Normal - Extended)
 {
-Auto-Spawn: Warlock
-Toggle Warlock automatic spawning on or off.
+Auto-Spawn: Kodo Beast
+Toggle Kodo Beast automatic spawning on or off.
 }
 
 STRING 13488
@@ -86095,7 +86097,7 @@ STRING 13686
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Berserker Strength (+HP & Damage)
 |cff808080Abilities:|r Unholy Frenzy
 }
@@ -86836,7 +86838,7 @@ STRING 13798
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 13799
@@ -87041,11 +87043,11 @@ STRING 13832
 // Units: h00H (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
 |cffffff00Spawned Units:|r Grunt
-|cff808080Range:|r 610
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 900
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 13833
@@ -87086,7 +87088,7 @@ STRING 13838
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 660
-|cff808080Spawn Interval:|r 6.5s
+|cff808080Spawn Interval:|r 6.25s
 |cff808080Abilities:|r |cffffff00Berserk, Troll Regeneration|r
 }
 
@@ -87179,7 +87181,7 @@ STRING 13850
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 820
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.5s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Ensnare|r, |cffffff00Plate Armor|r, |cffffff00Sundering Blades|r & |cffffff00Berserk|r
 
@@ -87241,7 +87243,7 @@ STRING 13859
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1500
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Pulverize|r & |cffffff00Berserk|r
 }
@@ -89997,7 +89999,7 @@ Dark Abominations gain Burrow and +200 maximum health.
 }
 
 STRING 14309
-// Items: I00J (miRaculix' special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
+// Items: I00J (RJE's special brew |cffffffffSPT|r), Ubertip (Tooltip - Extended)
 {
 |cff87ceebNon-Combat Consumable|r|nRegenerates a target unit's hit points by <AIrl,DataA1> and mana points by <AIrl,DataB1> over <AIrl,Dur1> seconds when used. |nContains 3 charges.
 }
@@ -90659,13 +90661,13 @@ Wraiths gain a bonus ability, +45 movement speed and +75 attack range.
 STRING 14418
 // Upgrades: Rwl1 (), class (Class)
 {
-Warlock Cold Combat: Cold attack, range, and movement speed.
+Kodo Cold Combat: Cold attack, range, and movement speed.
 }
 
 STRING 14419
 // Upgrades: Rwl1 (), Name (Name)
 {
-Warlock Hexcraft
+Kodo Hexcraft
 }
 
 STRING 14420
@@ -90677,13 +90679,13 @@ V
 STRING 14421
 // Upgrades: Rwl1 (), Tip (Tooltip)
 {
-Research Warlock Hexcraft
+Research Kodo Hexcraft
 }
 
 STRING 14422
 // Upgrades: Rwl1 (), Ubertip (Tooltip - Extended)
 {
-Warlocks gain a bonus ability, +45 movement speed and +75 attack range.
+Kodo Beasts gain a bonus ability, +45 movement speed and +75 attack range.
 }
 
 STRING 14423
@@ -91370,7 +91372,7 @@ Massively increases the attack damage of nearby allied units for set duration. U
 STRING 14546
 // Upgrades: Robs (Brute Strength), Ubertip (Tooltip - Extended)
 {
-Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBWarlocks|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
+Increases the HP and Base Attack Damage of |cff87CEEBRaiders|r, |cff87CEEBTauren|r, |cff87CEEBDark Tauren|r, |cff87CEEBKodo Beasts|r, |cff87CEEBMortar Bombers|r, and |cff87CEEBDark Mortar Bombers|r
 
 |cff808080Level 1 -|r |cffffff00HP|r 100 |cffffff00Attack Damage|r 3
 |cff808080Level 2 -|r |cffffff00HP|r 45   |cffffff00Attack Damage|r 2
@@ -96031,7 +96033,7 @@ STRING 15915
 // Units: u009 (Dark Abomination), Ubertip (Tooltip - Extended)
 {
 |cff808080Spawned Units:|r Dark Abomination (|cffffcc00Melee|r Normal / |cffffcc00Heavy|r)|n|cff808080Health:|r 2150
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 7s 
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize & Disease Cloud
 
 }
@@ -100192,7 +100194,7 @@ Potion of Stealth
 STRING 17158
 // Abilities: A0M9 (Boomerang Blade), Researchubertip (Tooltip - Learn - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 1 -|r |cffffff00Armor Reduction:|r 1
 |cff808080Level 2 -|r |cffffff00Armor Reduction:|r 2
 |cff808080Level 3 -|r |cffffff00Armor Reduction:|r 3
@@ -100347,7 +100349,7 @@ Initiate, Adept, Master, Elite
 STRING 17217
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 1 -|r |cffffff00Armor Reduction:|r 1
 
 }
@@ -100355,7 +100357,7 @@ Throws out a Boomerang that deals varying damage and lowers the armor of all uni
 STRING 17219
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 2 -|r |cffffff00Armor Reduction:|r 2
 
 }
@@ -100363,7 +100365,7 @@ Throws out a Boomerang that deals varying damage and lowers the armor of all uni
 STRING 17228
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 3 -|r |cffffff00Armor Reduction:|r 3
 
 }
@@ -100371,7 +100373,7 @@ Throws out a Boomerang that deals varying damage and lowers the armor of all uni
 STRING 17230
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 4 -|r |cffffff00Armor Reduction:|r 4
 
 }
@@ -100385,14 +100387,14 @@ Fetch - [|cffffcc00Level 6|r]
 STRING 17236
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 5 -|r |cffffff00Armor Reduction:|r 5
 }
 
 STRING 17237
 // Abilities: A0M9 (Boomerang Blade), Ubertip (Tooltip - Normal - Extended)
 {
-Throws out a Boomerang that deals varying damage and lowers the armor of all units hit, can hit a target multiple times|n
+Throws a blade that hits each enemy once outbound and once returning. Damage per pass: 36/54/96/117/147/177. Each hit reduces armor for 3 seconds and refreshes the duration. The turnaround can hit twice.|n
 |cff808080Level 6 -|r |cffffff00Armor Reduction:|r 6
 }
 
@@ -100537,7 +100539,7 @@ STRING 17362
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy (15% Magic Resistance)
 |cff808080Health:|r 1500
-|cff808080Spawn Interval:|r 9s 
+|cff808080Spawn Interval:|r 7.25s 
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 |cff808080Abilities:|r |cffffff00Pulverize|r & |cffffff00Berserk|r
 }
@@ -101589,11 +101591,11 @@ STRING 17669
 // Units: h023 (Orc Tier 1), Ubertip (Tooltip - Extended)
 {
 |cffffff00Spawned Units:|r Grunt
-|cff808080Range:|r 610
+|cff808080Range:|r Melee
 |cff808080Damage Type:|r Normal
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 535
-|cff808080Spawn Interval:|r 9s
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 900
+|cff808080Spawn Interval:|r 5.75s
 }
 
 STRING 17670
@@ -101652,7 +101654,7 @@ Purchase Claws of Ultimate Devastation
 }
 
 STRING 17708
-// Items: I00Z (miRaculix' Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
+// Items: I00Z (RJE's Amulet of Ultimate Power Recipe), Tip (Tooltip - Basic)
 {
 miRaculix' Amulet of Ultimate Power Recipe
 }
@@ -102143,10 +102145,10 @@ STRING 17812
 {
 |cffffff00Spawned Units:|r Wraith
 |cff808080Range:|r 700
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (10% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (10% Magic Resistance)
 |cff808080Health:|r 690
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Slow
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow
 }
 
 STRING 17818
@@ -102186,7 +102188,7 @@ STRING 17862
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Heavy
 |cff808080Health:|r 1600
-|cff808080Spawn Interval:|r 8s 
+|cff808080Spawn Interval:|r 6.75s 
 |cff808080Spawn Racial Update:|r Undead Frenzy (+Attack Speed & +Movement Speed)
 |cff808080Abilities:|r Unholy Frenzy, Cannabilize, Disease Cloud, Critical Strike & Cleaving Attack
 }
@@ -102199,7 +102201,7 @@ STRING 17863
 |cff808080Damage Type:|r Normal 
 |cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 650
-|cff808080Spawn Interval:|r 6.5s 
+|cff808080Spawn Interval:|r 6.25s 
 |cff808080Spawn Racial Update:|r Animal War Training (+HP & +Attack Speed)
 |cff808080Abilities:|r Feedback
 }
@@ -102212,18 +102214,18 @@ STRING 17864
 |cff808080Damage Type:|r Normal
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s
+|cff808080Spawn Interval:|r 6.5s
 }
 
 STRING 17865
 // Units: h02O (Undead Tier 1), Ubertip (Tooltip - Extended)
 {
 |cffffff00Spawned Units:|r Ghoul
-|cff808080Range:|r 625
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium 
-|cff808080Health:|r 550
-|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Unholy Frenzy & Burning Arrows
+|cff808080Range:|r Melee
+|cff808080Damage Type:|r Normal
+|cff808080Armor Type:|r Heavy
+|cff808080Health:|r 750
+|cff808080Spawn Interval:|r 5.5s
 }
 
 STRING 17866
@@ -102234,7 +102236,7 @@ STRING 17866
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 685
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Unholy Frenzy & Burrow
 }
 
 STRING 17867
@@ -102245,7 +102247,7 @@ STRING 17867
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
 |cff808080Health:|r 530
-|cff808080Spawn Interval:|r 9s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
 STRING 17869
@@ -102253,10 +102255,10 @@ STRING 17869
 {
 |cffffff00Spawned Units:|r Banshee
 |cff808080Range:|r 655
-|cff808080Damage Type:|r Piercing
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
+|cff808080Damage Type:|r Magic
+|cff808080Armor Type:|r Unarmored (15% Magic Resistance)
 |cff808080Health:|r 535
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Slow & Evasion(5%)
+|cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Slow & Evasion(5%)
 }
 
 STRING 17872
@@ -102316,12 +102318,12 @@ Helm of Battlethirst
 STRING 17913
 // Units: e013 (Elintian Tier 3), Ubertip (Tooltip - Extended)
 {
-|cffffff00Spawned Unit:|r Warlock
-|cff808080Range:|r 650
+|cffffff00Spawned Unit:|r Kodo Beast
+|cff808080Range:|r 475
 |cff808080Damage Type:|r Normal 
-|cff808080Armor Type:|r Medium (15% Magic Resistance)
-|cff808080Health:|r 575
-|cff808080Spawn Interval:|r 8s|n|cff808080Abilities:|r Unholy Frenzy
+|cff808080Armor Type:|r Heavy (15% Spell Resistance)
+|cff808080Health:|r 775
+|cff808080Spawn Interval:|r 6.5s|n|cff808080Abilities:|r Frenzy, Blink
 |cff808080Racial Upgrade:|r |cffffff00Berserker Strength|r (+HP & Damage)
 
 }
@@ -102557,3 +102559,576 @@ Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it
 |r|cffffff00Damage |r 350 |r|cffffff00 Stun|r 2.5s
 }
 
+
+
+STRING 18064
+{
+|cff808080Skills:|r |cffd45e19Summon Bear|r, |cffd45e19Hex|r, |cffd45e19Brilliance Aura|r
+|cff808080Ultimate:|r |cffd45e19Transmute|r
+
+|cffff0000STR:|r 17 + 1.9/lvl
+|cff00ff00AGI:|r 20 + 2.7/lvl (primary)
+|cff8080ffINT:|r 17 + 1.5/lvl
+
+|cff808080Skill level:|r Hard
+|cff808080Category:|r Transmute
+
+|cff808080Pro Tip:|r Hex creeps before transmuting to guarantee the gold. 
+|cff8080801st skill:|r Summon Bear
+
+|cffffcc00Attacks land units.|r
+
+}
+
+STRING 18065
+{
+|cff808080Skills:|r |cffd45e19Defile|r, |cffd45e19Corruption|r, |cffd45e19Corrupted Attack|r
+|cff808080Ultimate:|r |cffd45e19Transmute|r
+
+|cffff0000STR:|r 18 + 1.75/lvl
+|cff00ff00AGI:|r 24 + 2.25/lvl (primary)
+|cff8080ffINT:|r 16 + 2/lvl
+
+|cff808080Skill level:|r Advanced
+|cff808080Category:|r Transmute
+
+|cff808080Pro Tip:|r Use corruption during mass to disrupt enemies.
+|cff8080801st skill:|r Corruption
+
+|cffffcc00Attacks land and air units.|r
+
+}
+
+STRING 18066
+{
+|cff808080Skills:|r |cffd45e19Preserve|r, |cffd45e19Devour Magic|r, |cffd45e19Bloodlust|r
+|cff808080Ultimate:|r |cffd45e19Transmute|r
+
+|cffff0000STR:|r 18 + 1.75/lvl
+|cff00ff00AGI:|r 24 + 2.25/lvl (primary)
+|cff8080ffINT:|r 16 + 2/lvl
+
+|cff808080Skill level:|r Easy
+|cff808080Category:|r Transmute
+
+|cff808080Pro Tip:|r Devour buffs and summons while preserving you allied heroes and creeps. Bloodlust friendly units
+|cff8080801st skill:|r Bloodlust
+
+|cffffcc00Attacks land and air units.|r
+
+}
+
+STRING 18067
+{
+|cff808080Skills:|r |cffd45e19Devotion Aura|r, |cffd45e19Unholy Aura|r, |cffd45e19Trueshot Aura|r
+|cff808080Ultimate:|r |cffd45e19Stampede|r
+
+|cffff0000STR:|r10 + 1.25/lvl
+|cff00ff00AGI:|r10 + 0.5/lvl
+|cff8080ffINT:|r 0 + 1/lvl 
+
+|cff808080Skill level:|r Medium
+|cff808080Category:|r Lead 2
+
+|cff808080Pro Tip:|r Invest in health items and stay behind army. 
+|cff8080801st skill:|r Devotion Aura
+
+|cffffcc00Attacks land and air units.|r
+
+}
+
+STRING 18068
+{
+|cff808080Skills:|r |cffd45e19Sentry Wards|r, |cffd45e19Serpent Wards|r, |cffd45e19Healing Ward|r
+|cff808080Ultimate:|r |cffd45e19Transmute|r
+
+|cff808080Skill level:|r Easy
+|cff808080Category:|r Transmute
+
+|cff808080Pro Tip:|r Use Healing Ward during mass to heal allies.
+|cff8080801st skill:|r Healing Ward
+
+|cffffcc00Attacks land and air units.|r
+
+}
+
+STRING 18069
+{
+Skeleton Warrior
+}
+
+STRING 18070
+{
+(Lawyer-Level 4)
+}
+
+STRING 18071
+{
+ (lawyer - Level 5)
+}
+
+STRING 18072
+{
+(level 2 lawyer factory)
+}
+
+STRING 18073
+{
+ (lawyer -Level 3)
+}
+
+STRING 18074
+{
+Versatile spellcaster, Can cast Windwalk, Polymorph, Abolish Magic and Illusion. Also has evasion and spell resistance. |n|n|cffffcc00Attacks land and air units.|r
+}
+
+STRING 18075
+{
+(DR Summon 6)
+}
+
+STRING 18076
+{
+Strikes an area with lightning three times, dealing damage to enemies in a small area and stunning them for 0.1s
+
+|cff808080Level 1 -|r |cffffff00Damage|r 150 | |cffffff00Area|r 500
+}
+
+STRING 18077
+{
+Strikes an area with lightning three times, dealing damage to enemies in a small area and stunning them for 0.1s
+
+|cff808080Level 2 -|r |cffffff00Damage|r 200 | |cffffff00Area|r 525
+}
+
+STRING 18078
+{
+Strikes an area with lightning three times, dealing damage to enemies in a small area and stunning them for 0.1s
+
+|cff808080Level 3 -|r |cffffff00Damage|r 250 | |cffffff00Area|r 550
+}
+
+STRING 18079
+{
+Strikes an area with lightning three times, dealing damage to enemies in a small area and stunning them for 0.1s
+
+|cff808080Level 1 -|r |cffffff00Damage|r 150 | |cffffff00Area|r 500|n|cff808080Level 2 -|r |cffffff00Damage|r 200 | |cffffff00Area|r 525|n|cff808080Level 3 -|r |cffffff00Damage|r 250 | |cffffff00Area|r 550
+}
+
+STRING 18080
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 1.5s
+
+}
+
+STRING 18081
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 1.75s
+
+}
+
+STRING 18082
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2s
+}
+
+STRING 18083
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 0.75s
+|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1s
+|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.25s
+|cff808080Level 4 -|r |cffffff00Damage:|r 205 | |cffffff00Stun:|r 1.5s
+|cff808080Level 5 -|r |cffffff00Damage:|r 245 | |cffffff00Stun:|r 1.75s
+|cff808080Level 6 -|r |cffffff00Damage:|r 285 | |cffffff00Stun:|r 2s
+}
+
+STRING 18084
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 1 -|r |cffffff00Damage:|r  85  | |cffffff00Stun:|r 0.75s
+
+}
+
+STRING 18085
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 2 -|r |cffffff00Damage:|r 125 | |cffffff00Stun:|r 1s
+
+}
+
+STRING 18086
+{
+Charges in the targeted direction, releasing 5 pulses over the duration which stun and damage nearby enemy units. A unit can only be damaged once per cast. |n
+|cff808080Level 3 -|r |cffffff00Damage:|r 165 | |cffffff00Stun:|r 1.25s
+
+}
+
+STRING 18087
+{
+(Chaos Bark)
+}
+
+STRING 18088
+{
+Ancient Ritual
+}
+
+STRING 18089
+{
+Mass Charm - [|cffffcc00Level 2|r]
+}
+
+STRING 18090
+{
+Mass Charm - [|cffffcc00Level 3|r]
+}
+
+STRING 18091
+{
+Charms all units within an AoE|n
+|cff808080Level 2 - |r |cffffff00Area|r 125 | |cffffff00Cooldown|r 25s | |cffffff00Max Level|r 7 
+}
+
+STRING 18092
+{
+Charms all units within an AoE
+
+|cff808080Level 3 - |r |cffffff00Area|r 135 | |cffffff00Cooldown|r 20s | |cffffff00Max Level|r 9
+}
+
+STRING 18093
+{
+Charms all units within an AoE, higher levels increase max unit level, and AoE
+
+|cff808080Level 1 - |r |cffffff00Area|r 100 | |cffffff00Cooldown|r 30s | |cffffff00Max Level|r 4 
+|cff808080Level 2 - |r |cffffff00Area|r 125 | |cffffff00Cooldown|r 25s | |cffffff00Max Level|r 7 
+|cff808080Level 3 - |r |cffffff00Area|r 135 | |cffffff00Cooldown|r 20s | |cffffff00Max Level|r 9
+}
+
+STRING 18094
+{
+Mass Charm - [|cffffcc00Level 1|r]
+}
+
+STRING 18095
+{
+Learn Mass Charm - [|cffffcc00Level %d|r]
+}
+
+STRING 18096
+{
+Charms all units within an AoE
+
+|cff808080Level 1 - |r |cffffff00Area|r 100 | |cffffff00Cooldown|r 30s | |cffffff00Max Level|r 4 
+}
+
+STRING 18097
+{
+Mass Charm
+}
+
+STRING 18098
+{
+[Trigger]
+}
+
+STRING 18099
+{
+(Mass Charm spell)
+}
+
+STRING 18100
+{
+Summons an immovable ward that takes life of nearby enemy non-mechanical units and slows them.
+Ward duration 9s.
+
+|cff808080Level 1 - |r|cffffff00AoE|r <A0F0,Area1> | |cffffff00Slow|r <A0F0,DataA1,%>% | |cffffff00DMG|r <A0F1,DataA1> HP/s
+|cff808080Level 2 - |r|cffffff00AoE|r <A0F0,Area2> | |cffffff00Slow|r <A0F0,DataA2,%>% | |cffffff00DMG|r <A0F1,DataA2> HP/s
+|cff808080Level 3 - |r|cffffff00AoE|r <A0F0,Area3> | |cffffff00Slow|r <A0F0,DataA3,%>% | |cffffff00DMG|r <A0F1,DataA3> HP/s
+|cff808080Level 4 - |r|cffffff00AoE|r <A0F0,Area4> | |cffffff00Slow|r <A0F0,DataA4,%>% | |cffffff00DMG|r <A0F1,DataA4> HP/s
+|cff808080Level 5 - |r|cffffff00AoE|r <A0F0,Area5> | |cffffff00Slow|r <A0F0,DataA5,%>% | |cffffff00DMG|r <A0F1,DataA5> HP/s
+|cff808080Level 6 - |r|cffffff00AoE|r <A0F0,Area6> | |cffffff00Slow|r <A0F0,DataA6,%>% | |cffffff00DMG|r <A0F1,DataA6> HP/s
+}
+
+STRING 18101
+{
+Summons a time warp pulling enemies in until it reaches the target upon reaching its destination it explodes dealing damage throwing enemies backwards 
+
+|cffffcc00Level 1|r - Weak Drag, 250 Damage
+|cffffcc00Level 2|r - Medium Drag, 350 Damage
+|cffffcc00Level 3|r - Strong Drag, 450 Damage
+}
+
+STRING 18102
+{
+Summons a time Warp pulling enemies in until it reaches the target upon reaching its destination it explodes dealing damage throwing enemies backwards 
+
+|cffffcc00Level 1|r - Weak Drag, 250 Damage
+
+}
+
+STRING 18103
+{
+Summons a time warp pulling enemies in until it reaches the target upon reaching its destination it explodes dealing damage throwing enemies backwards 
+
+|cffffcc00Level 2|r - Medium Drag, 350 Damage
+}
+
+STRING 18104
+{
+Summons a time warp pulling enemies in until it reaches the target upon reaching its destination it explodes dealing damage throwing enemies backwards 
+
+|cffffcc00Level 3|r - Strong Drag, 450 Damage
+}
+
+STRING 18105
+{
+Summons 2 Hawks with True Sight.|nHigher levels can attack, and gain new abilities.|nLasts 50 seconds.|n|n|cff808080Level 1 - |rNo Attack|n|cff808080Level 2 -|r |cffffff00DMG|r 26-30|n|cff808080Level 3 -|r|cffffff00 DMG|r 33-42 (+Shadowmeld)|n|cff808080Level 4 - |r|cffffff00DMG|r 43-52 (+ Invisibility)|n|cff808080Level 5 - |r|cffffff00AoE DMG|r 53-62 (+ Invisibility)|n|cff808080Level 6 -|r |cffffff00AoE Chaos DMG|r 53-62 (+ Invisibility)
+}
+
+STRING 18106
+{
+Summons 2 Hawks with True Sight, Shadowmeld, and 33-42 attack.|NLasts 50 seconds.
+}
+
+STRING 18107
+{
+(Death Ward DMG)
+}
+
+STRING 18108
+{
+Blood Mark
+}
+
+STRING 18109
+{
+Allows the caster to become invisible, and move <A0BS,DataB1,%>% faster.
+}
+
+STRING 18110
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns
+
+|r|cffffff00Damage |r 400 |r|cffffff00 Stun|r 2.25s
+}
+
+STRING 18111
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns   
+
+|r|cffffff00Damage |r 500 |r|cffffff00 Stun|r 2.5s
+}
+
+STRING 18112
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns  
+
+|r|cffffff00Damage |r 700 |r|cffffff00 Stun|r 3s
+}
+
+STRING 18113
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns|n        
+|cff808080Level 1 - |r|cffffff00Damage |r 150 |r|cffffff00 Stun|r 1.5s
+|cff808080Level 2 - |r|cffffff00Damage |r 225 |r|cffffff00 Stun|r 1.75s
+|cff808080Level 3 - |r|cffffff00Damage |r 325 |r|cffffff00 Stun|r 2s
+|cff808080Level 4 - |r|cffffff00Damage |r 400 |r|cffffff00 Stun|r 2.25s
+|cff808080Level 5 - |r|cffffff00Damage |r 500 |r|cffffff00 Stun|r 2.5s
+|cff808080Level 6 - |r|cffffff00Damage |r 700 |r|cffffff00 Stun|r 3s
+}
+
+STRING 18114
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns    |n
+|r|cffffff00Damage |r 250 |r|cffffff00 Stun|r 1.75s
+}
+
+STRING 18115
+{
+Shoots a bullet that travels up to 1200 distance, if the bullet hits an enemy it deals damage and stuns
+
+|r|cffffff00Damage |r 325 |r|cffffff00 Stun|r 2s
+}
+
+STRING 18116
+{
+Nearby friendly units gain +9 health per second regeneration, and +50% movement speed.
+}
+
+STRING 18117
+{
+Nearby friendly units gain +6 health per second regeneration, and +40% movement speed.
+}
+
+STRING 18118
+{
+Nearby friendly units gain +4 health per second regeneration, and +20% movement speed.
+}
+
+STRING 18119
+{
+Calls down a powerful storm that deals massive damage to units caught inside for 3 seconds|n
+|cff808080Level 1 -|r |cffffff00AoE:|r 250 | |cffffff00DMG:|r 40 | |cffffff00Wave Interval:|r 0.3
+|cff808080Level 2 -|r |cffffff00AoE:|r 300 | |cffffff00DMG:|r 60 | |cffffff00Wave Interval:|r 0.3
+|cff808080Level 3 -|r |cffffff00AoE:|r 350 | |cffffff00DMG:|r 75 | |cffffff00Wave Interval:|r 0.3
+
+
+
+}
+
+STRING 18120
+{
+Calls down a powerful storm that deals massive damage to units caught inside for 3 seconds|n
+|cff808080Level 1 -|r |cffffff00AoE:|r 250 | |cffffff00DMG:|r 40 | |cffffff00Wave Interval:|r 0.3
+}
+
+STRING 18121
+{
+Calls down a powerful storm that deals massive damage to units caught inside for 3 seconds|n
+|cff808080Level 2 -|r |cffffff00AoE:|r 300 | |cffffff00DMG:|r 60 | |cffffff00Wave Interval:|r 0.3
+
+
+
+}
+
+STRING 18122
+{
+Calls down a powerful storm that deals massive damage to units caught inside for 3 seconds|n
+|cff808080Level 3 -|r |cffffff00AoE:|r 350 | |cffffff00DMG:|r 75 | |cffffff00Wave Interval:|r 0.3
+
+}
+
+STRING 18123
+{
+Throw a decoy bomb at the target point, deploying a trap which continuously taunts nearby enemy units until it explodes 2 seconds later. The explosion deals damage and stuns enemy units.|n
+|cff808080Level 6 - |r|cffffff00Damage:|r 150 | |cffffff00Stun:|r 2s
+}
+
+STRING 18124
+{
+While channeling, nearby enemy units <AEsf,DataA1> damage every 1.25 seconds. Deals 90% less damage to buildings. Lasts for up to 17 seconds.
+}
+
+STRING 18125
+{
+While channeling, nearby enemy units <AEsf,DataA1> damage every 1.25 seconds. Deals 90% less damage to buildings. Lasts for up to 20 seconds.
+}
+
+STRING 18126
+{
+While channeling, nearby enemy units take damage every 1.25 seconds. Deals 90% less damage to buildings. Lasts for up to 15-20 seconds.|n|n|cff808080Level 1 - |r|cffffff00DMG|r <AEsf,DataA1> | |cffffff00Cooldown|r <AEsf,Cool1>|n|cff808080Level 2 - |r|cffffff00DMG|r <AEsf,DataA2> | |cffffff00Cooldown|r <AEsf,Cool2>|n|cff808080Level 3 - |r|cffffff00DMG|r <AEsf,DataA3> | |cffffff00Cooldown|r <AEsf,Cool3>
+}
+
+STRING 18127
+{
+While channeling, nearby enemy units <AEsf,DataA1> damage every 1.25 seconds. Deals 90% less damage to buildings. Lasts for up to 15 seconds.
+}
+
+STRING 18128
+{
+Adds <ANic,DataA4> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB4> damage to other nearby targets.
+}
+
+STRING 18129
+{
+Adds <ANic,DataA5> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB5> damage to other nearby targets.
+}
+
+STRING 18130
+{
+Adds <ANic,DataA6> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB6> damage to other nearby targets.
+}
+
+STRING 18131
+{
+Adds bonus damage to the hero's attacks each time the hero attacks the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal damage to nearby enemies.
+
+|cff808080Level 1 -|r |cffffff00Bonus|r 1.5x | |cffffff00AoE DMG|r 25 | |cffffff00AoE|r 90/180
+|cff808080Level 2 -|r |cffffff00Bonus|r 2.0x | |cffffff00AoE DMG|r 45 | |cffffff00AoE|r 150/230
+|cff808080Level 3 -|r |cffffff00Bonus|r 6.0x | |cffffff00AoE DMG|r 125 | |cffffff00AoE|r 200/280
+|cff808080Level 4 -|r |cffffff00Bonus|r 9.0x | |cffffff00AoE DMG|r 200 | |cffffff00AoE|r 250/330
+|cff808080Level 5 -|r |cffffff00Bonus|r 12.0x | |cffffff00AoE DMG|r 275 | |cffffff00AoE|r 300/380
+|cff808080Level 6 -|r |cffffff00Bonus|r 20.0x | |cffffff00AoE DMG|r 350 | |cffffff00AoE|r 400/480
+}
+
+STRING 18132
+{
+Adds <ANic,DataA2> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB2> damage to other nearby targets.
+}
+
+STRING 18133
+{
+Adds <ANic,DataA3> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB3> damage to other nearby targets.
+}
+
+STRING 18134
+{
+Adds <ANic,DataA1> damage to the hero's attacks for each time the hero attacked the same target. If an enemy dies within 4 seconds of being attacked, they explode and deal <ANic,DataB1> damage to other nearby targets.
+}
+
+STRING 18135
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 4 -|r |cffffff00DMG|r 210 |cffffff00Stun|r 1s
+
+}
+
+STRING 18136
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 5 -|r |cffffff00DMG|r 275 |cffffff00Stun|r 1.25s
+
+}
+
+STRING 18137
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 6 -|r |cffffff00DMG|r 420 |cffffff00Stun|r 1.5s
+}
+
+STRING 18138
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 1 -|r |cffffff00DMG|r 70   |cffffff00Stun|r 0.5s
+|cff808080Level 2 -|r |cffffff00DMG|r 110 |cffffff00Stun|r 0.6s
+|cff808080Level 3 -|r |cffffff00DMG|r 155 |cffffff00Stun|r 0.75s
+|cff808080Level 4 -|r |cffffff00DMG|r 210 |cffffff00Stun|r 1.0s
+|cff808080Level 5 -|r |cffffff00DMG|r 275 |cffffff00Stun|r 1.25s
+|cff808080Level 6 -|r |cffffff00DMG|r 420 |cffffff00Stun|r 1.50s
+}
+
+STRING 18139
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 1 -|r |cffffff00DMG|r 70 |cffffff00Stun|r 0.5s
+
+}
+
+STRING 18140
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 2 -|r |cffffff00DMG|r 110 |cffffff00Stun|r 0.6s
+
+}
+
+STRING 18141
+{
+Casts a Tornado that travels to target location knocking up, stunning and damaging all units in its path.|n
+|cff808080Level 3 -|r |cffffff00DMG|r 155 |cffffff00Stun|r 0.75s
+
+}
+
+STRING 18142
+{
+This unit has Death Ward, it will take damage over time
+}
+
+STRING 18143
+{
+This unit has been Blood Marked
+}

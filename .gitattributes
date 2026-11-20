@@ -26,3 +26,45 @@ projects/**/src/** -text
 *.tga filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.webp filter=lfs diff=lfs merge=lfs -text
+
+projects/799x/src/** filter=lfs diff=lfs merge=lfs -text
+projects/799x/src/**/*.j -filter -diff -merge -text
+projects/799x/src/**/*.lua -filter -diff -merge -text
+projects/799x/src/**/*.txt -filter -diff -merge -text
+projects/799x/src/**/*.wts -filter -diff -merge -text
+projects/799x/src/**/*.fdf -filter -diff -merge -text
+projects/799x/src/**/*.toc -filter -diff -merge -text
+projects/799x/src/**/*.json -filter -diff -merge -text
+projects/799x/src/**/*.slk -filter -diff -merge -text
+projects/799x/src/**/*.md -filter -diff -merge -text
+projects/799x/src/**/*.ini -filter -diff -merge -text
+projects/799x/src/**/*.csv -filter -diff -merge -text
+projects/799x/src/**/*.xml -filter -diff -merge -text
+
+projects/solo/src/** filter=lfs diff=lfs merge=lfs -text
+projects/solo/src/**/*.j -filter -diff -merge -text
+projects/solo/src/**/*.lua -filter -diff -merge -text
+projects/solo/src/**/*.txt -filter -diff -merge -text
+projects/solo/src/**/*.wts -filter -diff -merge -text
+projects/solo/src/**/*.fdf -filter -diff -merge -text
+projects/solo/src/**/*.toc -filter -diff -merge -text
+projects/solo/src/**/*.json -filter -diff -merge -text
+projects/solo/src/**/*.slk -filter -diff -merge -text
+projects/solo/src/**/*.md -filter -diff -merge -text
+projects/solo/src/**/*.ini -filter -diff -merge -text
+projects/solo/src/**/*.csv -filter -diff -merge -text
+projects/solo/src/**/*.xml -filter -diff -merge -text
+
+projects/ffa/src/** filter=lfs diff=lfs merge=lfs -text
+projects/ffa/src/**/*.j -filter -diff -merge -text
+projects/ffa/src/**/*.lua -filter -diff -merge -text
+projects/ffa/src/**/*.txt -filter -diff -merge -text
+projects/ffa/src/**/*.wts -filter -diff -merge -text
+projects/ffa/src/**/*.fdf -filter -diff -merge -text
+projects/ffa/src/**/*.toc -filter -diff -merge -text
+projects/ffa/src/**/*.json -filter -diff -merge -text
+projects/ffa/src/**/*.slk -filter -diff -merge -text
+projects/ffa/src/**/*.md -filter -diff -merge -text
+projects/ffa/src/**/*.ini -filter -diff -merge -text
+projects/ffa/src/**/*.csv -filter -diff -merge -text
+projects/ffa/src/**/*.xml -filter -diff -merge -text
