@@ -1,12 +1,12 @@
 # Footmen Frenzy
 
-Four Warcraft III map projects, shared build/install tools, and development history.
+Three active Warcraft III map projects, shared build/install tools, and development history.
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | Shared Fixes v85 | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | UPDATE09 | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | v17 | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC53 Tavern Page](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc53%20Tavern%20Page.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC24 Tavern Page](projects/solo/release/Solo%20Foots%201.8-RC24%20Tavern%20Page.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v93 Tavern Page](projects/ffa/release/FFA%20Foots%20v93%20Tavern%20Page.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 Mini Foots (8 players) is shelved. Its last published map and editable source are preserved in [the v61 archive](https://github.com/NorthStarEnergy/Footmen-Frenzy/tree/archive/mini-foots-v61/projects/mini).
 

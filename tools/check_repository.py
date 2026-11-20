@@ -1,7 +1,7 @@
 from pathlib import Path
 import hashlib, json, ast
 root = Path(__file__).resolve().parents[1]
-for slug in ['799x', 'solo', 'mini', 'ffa']:
+for slug in ['799x', 'solo', 'ffa']:
     folder = root / 'projects' / slug
     meta = json.loads((folder / 'project.json').read_text())
     release = folder / 'release' / meta['release']
@@ -12,5 +12,5 @@ for slug in ['799x', 'solo', 'mini', 'ffa']:
             raise RuntimeError(f'{slug}: missing source {name}')
     print(f'{slug}: baseline checksum and required source files verified')
 for script in (root / 'tools').glob('*.py'):
-    ast.parse(script.read_text(), filename=str(script))
+    ast.parse(script.read_text(encoding='utf-8-sig'), filename=str(script))
 print('Shared Python tools parse successfully')
