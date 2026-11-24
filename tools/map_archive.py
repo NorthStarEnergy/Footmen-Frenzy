@@ -1,5 +1,6 @@
 """Small Windows StormLib adapter; no third-party Python packages required."""
 import ctypes as c
+import struct
 from pathlib import Path, PureWindowsPath
 
 
@@ -72,3 +73,41 @@ class Archive:
             target.write_bytes(data)
             count += 1
         return count
+
+
+def parse_object_data(data, extended=False):
+    pos = 4
+    tables = []
+    def integer():
+        nonlocal pos
+        value = struct.unpack_from('<i', data, pos)[0]
+        pos += 4
+        return value
+    for _ in range(2):
+        entries = []
+        for _ in range(integer()):
+            ids = data[pos:pos + 8]
+            pos += 8
+            if struct.unpack('<i', data[:4])[0] >= 3:
+                start = pos
+                count = integer()
+                pos += count * 4
+                ids += data[start:pos]
+            mods = []
+            for _ in range(integer()):
+                field = data[pos:pos + 4]
+                pos += 4
+                kind = integer()
+                start = pos
+                if extended:
+                    pos += 8  # Level and data pointer in an ability or upgrade modification.
+                end = data.index(b'\0', pos) + 1 if kind == 3 else pos + 4
+                value = data[start:end]
+                pos = end
+                suffix = data[pos:pos + 4]
+                pos += 4
+                mods.append([field, kind, value, suffix])
+            entries.append([ids, mods])
+        tables.append(entries)
+    assert pos == len(data), (pos, len(data))
+    return [data[:4], tables]
