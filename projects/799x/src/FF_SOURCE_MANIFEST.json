@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "ec17775bbbfbfa67927c6201e2b29598633317d9af76d74fb881a86459351e88",
-  "runtime_functions": 3415,
+  "compiled_source_sha256": "64ca8ee40e486bb6a56f655cae58ccff5aa51895a9cf9406b83f4d634cd5c647",
+  "runtime_functions": 3413,
   "editor_generated_functions": [
     "CreateAllUnits",
     "CreateBuildingsForPlayer0",
@@ -52,14 +52,14 @@
   ],
   "editor_generated_globals": 165,
   "globals_sha256": "d9900e22468363a2a554e25eee7573eca03e110e40dd08cddb999573a8db6d47",
-  "runtime_sha256": "6704975fb4c4b2a35ae05935b8c885df6525d7bc9216ff229b3af89039e04490",
+  "runtime_sha256": "2b2ae0a2753866b4ebdeb1b30df7384404050b4921cc1b943b55e2d9bd8fde37",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "30db53837a14a56d514a18ae9cd3f87b155cf9e82b60f5fb468f4b01f4fe52e3",
-  "revision": "Reforged Footmen Frenzy v7.9.9X-rc56 Guardian Pylon",
+  "source_map_sha256": "3d26234307483108ce0411da853d577c002e7082b8dd9127da2f86f024ee9bc5",
+  "revision": "Reforged Footmen Frenzy v7.9.9X-rc64 Hero Rotation",
   "engine_playtest": false
 }
