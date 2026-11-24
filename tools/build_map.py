@@ -6,9 +6,27 @@ import json
 import os
 import shutil
 import subprocess
-from map_archive import Archive
+from map_archive import Archive, parse_object_data
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def verify_witch_doctor(read):
+    def records(name, extended=False):
+        groups = parse_object_data(read(name), extended)[1]
+        return {(header[4:8] if header[4:8] != bytes(4) else header[:4]): (header[:4], mods)
+                for group in groups for header, mods in group}
+
+    units = records('war3map.w3u')
+    abilities = records('war3map.w3a', extended=True)
+    loadouts = [value.rstrip(b'\0').split(b',') for key, _, value, _ in units[b'H04Y'][1]
+                if key == b'uhab']
+    expected = {b'Ahwd', b'AOsw', b'Aeye', b'ANtm'}
+    # 799X uses different custom ward IDs. Check the underlying spells.
+    if len(loadouts) != 1 or len(loadouts[0]) != 4 or {
+        abilities.get(spell, (spell, ()))[0] for spell in loadouts[0]
+    } != expected:
+        raise ValueError(f'Witch Doctor requires Healing Ward, Serpent Ward, Sentry Ward and Transmute: {loadouts}')
 
 
 def build(project, name, verify_only=False):
@@ -58,6 +76,8 @@ def build(project, name, verify_only=False):
             for entry in changed:
                 archive.add(entry, files[entry])
     with Archive(dll, baseline) as before, Archive(dll, destination) as after:
+        if project in ('799x', 'solo', 'ffa'):
+            verify_witch_doctor(after.read)
         for entry, path in files.items():
             if after.read(entry) != path.read_bytes():
                 raise RuntimeError(f'Roundtrip mismatch: {entry}')
