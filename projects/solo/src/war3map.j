@@ -42270,9 +42270,9 @@ set udg_unit_level[9]=2
 
 // Kodo Beast
 set udg_spawn_unit[10]='n04X'
-set udg_unit_HP[10]=775
+set udg_unit_HP[10]=750
 set udg_unit_armor_type[10]=2
-set udg_unit_armor[10]=1
+set udg_unit_armor[10]=0
 set udg_unit_att_base[10]=34
 set udg_unit_att_num_dice[10]=1
 set udg_unit_att_dice_sides[10]=2
@@ -42381,7 +42381,7 @@ set udg_unit_armor[17]=2
 set udg_unit_att_base[17]=16
 set udg_unit_att_num_dice[17]=2
 set udg_unit_att_dice_sides[17]=2
-set udg_unit_att_CD[17]=0.909090909
+set udg_unit_att_CD[17]=0.865800866
 set udg_unit_bounty_base[17]=34
 set udg_unit_bounty_num_dice[17]=1
 set udg_unit_bounty_dice_sides[17]=3
@@ -42721,9 +42721,9 @@ set udg_unit_level[39]=2
 
 // [40] Kodo Beast (from 10)
 set udg_spawn_unit[40]='n04X'
-set udg_unit_HP[40]=775
+set udg_unit_HP[40]=750
 set udg_unit_armor_type[40]=2
-set udg_unit_armor[40]=1
+set udg_unit_armor[40]=0
 set udg_unit_att_base[40]=34
 set udg_unit_att_num_dice[40]=1
 set udg_unit_att_dice_sides[40]=2
@@ -42787,7 +42787,7 @@ set udg_unit_armor[44]=2
 set udg_unit_att_base[44]=16
 set udg_unit_att_num_dice[44]=2
 set udg_unit_att_dice_sides[44]=2
-set udg_unit_att_CD[44]=0.909090909
+set udg_unit_att_CD[44]=0.865800866
 set udg_unit_bounty_base[44]=34
 set udg_unit_bounty_num_dice[44]=1
 set udg_unit_bounty_dice_sides[44]=3
@@ -57643,7 +57643,7 @@ call ExecuteFunc("TimerUtils___init")
 endfunction
 
 function config takes nothing returns nothing
-    call SetMapName("Solo Foots 1.8-RC24 Tavern Page")
+    call SetMapName("Solo Foots 1.8-RC34 Unit Balance")
     call SetMapDescription("join our Discord:|cff7878ff tiny.cc/footmen|r|n|nMap by RJE, based on work by miRaculix")
     call SetPlayers(16)
     call SetTeams(16)
