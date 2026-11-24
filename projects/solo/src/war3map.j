@@ -14532,7 +14532,7 @@ function Trig_set_hero_numbers_Actions takes nothing returns nothing
     set udg_hero_type[90]='O01L'
     set udg_hero_type[91]='N00H'
     // set hero count
-    set udg_total_hero_count=94
+    set udg_total_hero_count=93
     // ##########################################
     set udg_hero_type[99]='H02W'
     // Hero Showroom
@@ -16431,8 +16431,7 @@ set udg_hero_category[97]=6
 
 set udg_hero_type[92]='HOr1'
 set udg_hero_type[93]='HGr1'
-set udg_hero_type[94]='HTf1'
-set udg_total_hero_count=94
+set udg_total_hero_count=93
 endfunction
 
 function InitTrig_set_hero_stats takes nothing returns nothing
@@ -18602,9 +18601,8 @@ function DraftHostAllPick takes nothing returns nothing
         set p = p + 1
     endloop
     set DraftAllPick = true
-    set udg_total_hero_count=94
+    set udg_total_hero_count=93
     call ExecuteFunc("AddAPHeroesToDraft")
-    call DisplayTextToForce(GetPlayersAll(), "All Pick enabled. Type -tf to choose Twisted Fate before picking a hero.")
 endfunction
 
 function InitTrig_Start_SD takes nothing returns nothing
@@ -24455,7 +24453,7 @@ function Trig_debugmode_Actions takes nothing returns nothing
     call EnableTrigger(gg_trg_debug)
     call EnableTrigger(gg_trg_debug_show_order_ids)
     set udg_mode_debugmode=true
-    set udg_total_hero_count=94
+    set udg_total_hero_count=93
     call ExecuteFunc("AddAPHeroesToDraft")
     if udg_selected_mode == 0 then
         call ConditionalTriggerExecute(gg_trg_MODE_set_pub_game)
@@ -52758,7 +52756,7 @@ function FF_LearnTip_A0DL takes unit hero returns nothing
         call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897985|r damage and stuns marked enemies for 0.5s.", 0)
     elseif rank == 1 then
         call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 0)
-        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979118.75|r damage and stuns marked enemies for 0.75s.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979120|r damage and stuns marked enemies for 0.75s.", 0)
     elseif rank == 2 then
         call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 0)
         call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 7|nMark enemies in the orb's path. On arrival, it deals |cffff8979190|r damage and stuns marked enemies for 1s.", 0)
@@ -52767,10 +52765,10 @@ function FF_LearnTip_A0DL takes unit hero returns nothing
         call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff8979285|r damage and stuns marked enemies for 1.25s.", 0)
     elseif rank == 4 then
         call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 0)
-        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979451.25|r damage and stuns marked enemies for 1.5s.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979375|r damage and stuns marked enemies for 1.5s.", 0)
     elseif rank >= 5 then
         call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 0)
-        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979546.25|r damage and stuns marked enemies for 1.75s.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 0)
     endif
 endfunction
 
@@ -52778,13 +52776,13 @@ function FF_LearnTip_AZd1 takes unit hero returns nothing
     local integer rank = GetUnitAbilityLevel(hero, 'AZd1')
     if rank == 0 then
         call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
-        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897943.875|r damage. Pulses have a 25% chance to double.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 10s, nearby allies gain |cff86e99d50|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897950|r damage. Pulses have a 25% chance to double.", 0)
     elseif rank == 1 then
         call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 0)
-        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897958.5|r damage. Pulses have a 25% chance to double.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 12s, nearby allies gain |cff86e99d75|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897975|r damage. Pulses have a 25% chance to double.", 0)
     elseif rank >= 2 then
         call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 0)
-        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897973.125|r damage. Pulses have a 25% chance to double.", 0)
+        call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d100|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979100|r damage. Pulses have a 25% chance to double.", 0)
     endif
 endfunction
 
@@ -52867,9 +52865,9 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 1|nMark enemies in the orb's path. On arrival, it deals |cffff897985|r damage and stuns marked enemies for 0.5s.", 0)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979118.75|r damage and stuns marked enemies for 0.75s.", 1)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979120|r damage and stuns marked enemies for 0.75s.", 1)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979118.75|r damage and stuns marked enemies for 0.75s.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 4|nMark enemies in the orb's path. On arrival, it deals |cffff8979120|r damage and stuns marked enemies for 0.75s.", 1)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 3", 2)
     call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979190|r damage and stuns marked enemies for 1s.", 2)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 3", 2)
@@ -52879,13 +52877,13 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 4", 3)
     call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 10|nMark enemies in the orb's path. On arrival, it deals |cffff8979285|r damage and stuns marked enemies for 1.25s.", 3)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 5", 4)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979451.25|r damage and stuns marked enemies for 1.5s.", 4)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979375|r damage and stuns marked enemies for 1.5s.", 4)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 5", 4)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979451.25|r damage and stuns marked enemies for 1.5s.", 4)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 13|nMark enemies in the orb's path. On arrival, it deals |cffff8979375|r damage and stuns marked enemies for 1.5s.", 4)
     call BlzSetAbilityTooltip('A0DL', "Time Warp [|cffffcc00Z|r] - Level 6", 5)
-    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979546.25|r damage and stuns marked enemies for 1.75s.", 5)
+    call BlzSetAbilityExtendedTooltip('A0DL', "Mark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 5)
     call BlzSetAbilityResearchTooltip('A0DL', "Learn Time Warp [|cffffcc00Q|r] - Level 6", 5)
-    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979546.25|r damage and stuns marked enemies for 1.75s.", 5)
+    call BlzSetAbilityResearchExtendedTooltip('A0DL', "Requires hero level 16|nMark enemies in the orb's path. On arrival, it deals |cffff8979575|r damage and stuns marked enemies for 1.75s.", 5)
     call BlzSetAbilityTooltip('AOz1', "Felbolt [Z] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('AOz1', "Send the orb through enemies, dealing |cffff897960|r damage and slowing them by 25% for 2s.", 0)
     call BlzSetAbilityResearchTooltip('AOz1', "Learn Felbolt [Q] - Level 1", 0)
@@ -53059,17 +53057,17 @@ function FF_CompactHeroTooltips_Init takes nothing returns nothing
     call BlzSetAbilityResearchTooltip('AGr8', "Learn Detonate Barrel - Level 1", 0)
     call BlzSetAbilityResearchExtendedTooltip('AGr8', "Detonate your landed barrel now.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 1", 0)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897943.875|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 10s, nearby allies gain |cff86e99d50|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897950|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 1", 0)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 15s, nearby allies gain |cff86e99d150|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897943.875|r damage. Pulses have a 25% chance to double.", 0)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 6|nFor 10s, nearby allies gain |cff86e99d50|r HP and 20 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897950|r damage. Pulses have a 25% chance to double.", 0)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 2", 1)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897958.5|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 12s, nearby allies gain |cff86e99d75|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897975|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 2", 1)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 15s, nearby allies gain |cff86e99d175|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897958.5|r damage. Pulses have a 25% chance to double.", 1)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 11|nFor 12s, nearby allies gain |cff86e99d75|r HP and 25 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897975|r damage. Pulses have a 25% chance to double.", 1)
     call BlzSetAbilityTooltip('AZd1', "Guardian Shield [|cffffcc00V|r] - Level 3", 2)
-    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897973.125|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityExtendedTooltip('AZd1', "For 15s, nearby allies gain |cff86e99d100|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979100|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityResearchTooltip('AZd1', "Learn Guardian Shield [|cffffcc00R|r] - Level 3", 2)
-    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d200|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff897973.125|r damage. Pulses have a 25% chance to double.", 2)
+    call BlzSetAbilityResearchExtendedTooltip('AZd1', "Requires hero level 16|nFor 15s, nearby allies gain |cff86e99d100|r HP and 35 mana each second. Using either invulnerability potion ends the shield. Enemies are slowed, lose mana and take |cffff8979100|r damage. Pulses have a 25% chance to double.", 2)
     call BlzSetAbilityTooltip('ATf1', "Wild Cards [Z] - Level 1", 0)
     call BlzSetAbilityExtendedTooltip('ATf1', "Throw three piercing cards. Each enemy takes |cffff897990|r damage once per cast.", 0)
     call BlzSetAbilityResearchTooltip('ATf1', "Learn Wild Cards [Q] - Level 1", 0)
@@ -53313,7 +53311,7 @@ function GD_Pulse takes unit caster, real x, real y returns nothing
             if IsUnitAlly(u, owner) then
                 call SetUnitState(u, UNIT_STATE_MANA, RMinBJ(GetUnitState(u, UNIT_STATE_MAX_MANA), GetUnitState(u, UNIT_STATE_MANA) + mana))
                 if GetWidgetLife(u) < GetUnitState(u, UNIT_STATE_MAX_LIFE) then
-                    set amount = 125.0 + 25.0 * rank
+                    set amount = 25.0 + 25.0 * rank
                     if GetRandomInt(1, 4) == 1 then
                         set amount = 2.0 * amount
                     endif
@@ -53321,7 +53319,7 @@ function GD_Pulse takes unit caster, real x, real y returns nothing
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Weapons\\Bolt\\BoltImpact.mdl", u, "chest"))
                 endif
             elseif IsUnitEnemy(u, owner) and not IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) and not BlzIsUnitInvulnerable(u) then
-                set amount = (45.0 + 22.5 * rank) * 0.65
+                set amount = 25.0 + 25.0 * rank
                 if GetRandomInt(1, 4) == 1 then
                     set amount = 2.0 * amount
                 endif
@@ -53407,7 +53405,13 @@ function GD_Cast takes nothing returns nothing
     call BlzSetSpecialEffectScale(GD_Dome[i], 1.27098884)
     call BlzSetSpecialEffectColorByPlayer(GD_Dome[i], Player(1))
     call BlzPlaySpecialEffect(GD_Dome[i], ANIM_TYPE_STAND)
-    set GD_Left[i] = 300.0
+    if GetUnitAbilityLevel(caster, GD_ABILITY) == 1 then
+        set GD_Left[i] = 200.0
+    elseif GetUnitAbilityLevel(caster, GD_ABILITY) == 2 then
+        set GD_Left[i] = 240.0
+    else
+        set GD_Left[i] = 300.0
+    endif
     call UnitAddAbility(caster, GD_SLOW)
     if GD_Count == 1 then
         call TimerStart(GD_Timer, GD_PERIOD, true, function GD_Tick)
@@ -53541,15 +53545,15 @@ function GTW_Damage takes integer rank returns real
     if rank == 1 then
         return 85.0
     elseif rank == 2 then
-        return 118.75
+        return 120.0
     elseif rank == 3 then
         return 190.0
     elseif rank == 4 then
         return 285.0
     elseif rank == 5 then
-        return 451.25
+        return 375.0
     endif
-    return 546.25
+    return 575.0
 endfunction
 function GTW_Explode takes integer i returns nothing
     local unit caster = GTW_Caster[i]
@@ -57218,33 +57222,7 @@ function GSI_Init takes nothing returns nothing
     set pulse = null
     set t = null
 endfunction
-function FF_PickTwistedFate takes nothing returns nothing
-    local player p = GetTriggerPlayer()
-    local integer pn = GetConvertedPlayerId(p)
-    local unit hero
-    if not (DraftAllPick or udg_selected_mode == 2) or pn > 12 or not udg_player_active[pn] or udg_herO[pn] != null or not DraftPending[pn] or udg_altar_hero_purchases[pn] > 0 then
-        return
-    endif
-    if GetUnitTypeId(FF_FatePick[pn-1]) != 0 then
-        return
-    endif
-    set hero = CreateUnitAtLoc(p, 'HTf1', udg_loc_tavern, bj_UNIT_FACING)
-    set FF_FatePick[pn-1] = hero
-    set hero = null
-    set p = null
-endfunction
 
-function FF_InitTwistedFatePick takes nothing returns nothing
-    local trigger chat = CreateTrigger()
-    local integer slot = 0
-    loop
-        exitwhen slot >= 12
-        call TriggerRegisterPlayerChatEvent(chat, Player(slot), "-tf", true)
-        set slot = slot + 1
-    endloop
-    call TriggerAddAction(chat, function FF_PickTwistedFate)
-    set chat = null
-endfunction
 
 
 
@@ -57639,7 +57617,6 @@ call ExecuteFunc("TimerUtils___init")
     set PF_account = GetPlayerName(GetLocalPlayer())
     set FF_DraftPageClick = CreateSound("Sound\\Interface\\MouseClick1.wav",false,false,false,10,10,"")
     call InitCustomTriggers()
-    call FF_InitTwistedFatePick()
     call FF_Init()
     call FF_MapInit()
     call RunInitializationTriggers()
