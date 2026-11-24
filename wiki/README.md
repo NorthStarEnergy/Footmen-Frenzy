@@ -11,3 +11,5 @@ Deploy **only `build/wiki`** to a dedicated Cloudflare Pages project, then bind 
 The public dataset excludes raw match records, player identifiers, replay files, and recovered HTML pages with dependencies outside the release. Anonymous purchase aggregates retain their original unconfirmed-build labels. The 799W, 799X, and Solo datasets remain separate historical snapshots; this is not current-build gameplay verification.
 
 Images retain their recovered edition/provenance fields. No ownership or new license over Warcraft III or inherited third-party assets is asserted. Binary images use repository Git LFS rules.
+
+Current build guides and hero rotation notes are available in the [public wiki](https://foots.northstarenergy.ca/current-builds.html). Download the offline guides for [799X](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-799x.zip), [SOLO](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-solo.zip), [FFA](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-ffa.zip).

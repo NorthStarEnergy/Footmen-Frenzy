@@ -56,3 +56,5 @@ Imported November 5, 2026 from the existing Footmen Frenzy and Solo working fold
 No new license is asserted over Warcraft III or inherited third-party models, textures, sounds, or scripts. Existing asset ownership and permissions continue to apply.
 
 Info opens match stats for every player. Select **Hotkeys** inside Info to edit spell and item bindings. Shelved heroes, casino, bets, minigames, profiles and skins are in [RJE Development](RJE%20Development/).
+
+Current build guides and hero rotation notes are available in the [public wiki](https://foots.northstarenergy.ca/current-builds.html). Download the offline guides for [799X](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-799x.zip), [SOLO](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-solo.zip), [FFA](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-ffa.zip).
