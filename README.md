@@ -4,9 +4,9 @@ Three active Warcraft III map projects, shared build/install tools, and developm
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | [RC57 Witch Doctor Wards](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc57%20Witch%20Doctor%20Wards.w3x) | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | [RC28 Witch Doctor Wards](projects/solo/release/Solo%20Foots%201.8-RC28%20Witch%20Doctor%20Wards.w3x) | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | [v97 Witch Doctor Wards](projects/ffa/release/FFA%20Foots%20v97%20Witch%20Doctor%20Wards.w3x) | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC64 Hero Rotation](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc64%20Hero%20Rotation.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC33 Hero Rotation](projects/solo/release/Solo%20Foots%201.8-RC33%20Hero%20Rotation.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v102 Hero Rotation](projects/ffa/release/FFA%20Foots%20v102%20Hero%20Rotation.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 ## Get the project
 
@@ -52,3 +52,5 @@ Imported November 5, 2026 from the existing Footmen Frenzy and Solo working fold
 No new license is asserted over Warcraft III or inherited third-party models, textures, sounds, or scripts. Existing asset ownership and permissions continue to apply.
 
 Info opens match stats for every player. Select **Hotkeys** inside Info to edit spell and item bindings. Shelved heroes, casino, bets, minigames, profiles and skins are in [RJE Development](RJE%20Development/).
+
+Current build guides and hero rotation notes are available in the [public wiki](https://foots.northstarenergy.ca/current-builds.html). Download the offline guides for [799X](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-799x.zip), [SOLO](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-solo.zip), [FFA](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc64/Balance-Wiki-ffa.zip).
