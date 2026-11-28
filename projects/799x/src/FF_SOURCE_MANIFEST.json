@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "authority": "war3map.wct: map header and FF Runtime; war3map.wtg: single enabled FF Runtime",
-  "compiled_source_sha256": "91f1ed99777778424b04d464029fc2c9d1e6d81fb540d6103272083293646fad",
+  "compiled_source_sha256": "ba011660503171dfb1e17df09456bcf317d576681ed3f449036dcfca51a88d4a",
   "runtime_functions": 3413,
   "editor_generated_functions": [
     "CreateAllUnits",
@@ -52,14 +52,14 @@
   ],
   "editor_generated_globals": 165,
   "globals_sha256": "d9900e22468363a2a554e25eee7573eca03e110e40dd08cddb999573a8db6d47",
-  "runtime_sha256": "ef40bacbe5ccc85c7373a443de5a6cefbb0a377f6056f183fd7f09f36a5b8a18",
+  "runtime_sha256": "04fa16663d72629a97c96f27a0a3121dc7563ebe2f8405cb52ecb2067f70a48b",
   "rules": [
     "Edit embedded source first, rebuild, and check source against packed war3map.j.",
     "Keep JassHelper enabled.",
     "Do not restore legacy editor trigger files over the authoritative source.",
     "Carry gameplay and skin object files together when merging object edits."
   ],
-  "source_map_sha256": "dae254cf6d4108fd1e40e5475c86529467f2ec9c44104743541186bf58f67f00",
-  "revision": "Reforged Footmen Frenzy v7.9.9X-rc65 Unit Balance",
+  "source_map_sha256": "764b35b41f225ee97681b16e675e18e49ec40cb29cbe5643715ce91ae225ab31",
+  "revision": "Reforged Footmen Frenzy v7.9.9X-rc66 Troop Timing",
   "engine_playtest": false
 }
