@@ -86511,7 +86511,7 @@ STRING 13798
 |cff808080Range:|r 640
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
-|cff808080Health:|r 530
+|cff808080Health:|r 535
 |cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
@@ -90115,7 +90115,7 @@ STRING 14379
 {
 |cffffcc00Archer|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
+Hit Points: 535
 Armor: 0
 Damage: 35 + 1d4
 Attack Cooldown: 1.2s
@@ -90168,7 +90168,7 @@ STRING 14385
 Hit Points: 700
 Armor: 2
 Damage: 47 + 1d2
-Attack Cooldown: 1.2s
+Attack Cooldown: 1.1s
 Attack Range: 700
 Unit Level: 3
 }
@@ -90274,7 +90274,7 @@ STRING 14398
 Hit Points: 900
 Armor: 3
 Damage: 27 + 1d4
-Attack Cooldown: 1.6s
+Attack Cooldown: 1.2s
 Attack Range: 110
 Unit Level: 2
 }
@@ -90800,7 +90800,7 @@ STRING 14475
 {
 |cffffcc00Spellbreaker|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 680
+Hit Points: 700
 Armor: 1
 Damage: 39 + 1d3
 Attack Cooldown: 1.22s
@@ -91068,9 +91068,9 @@ STRING 14515
 |cffF5F5DCBase Stats, without any upgrades:|r
 Hit Points: 750
 Armor: 2
-Damage: 16 + 2d2
+Damage: 16 + 2d3
 Attack Cooldown: 0.866s
-Attack Range: 110
+Attack Range: 120
 Unit Level: 2
 }
 
@@ -91414,7 +91414,7 @@ Hit Points: 1325
 Armor: 2
 Damage: 56 + 1d3
 Attack Cooldown: 1.15s
-Attack Range: 130
+Attack Range: 135
 Unit Level: 4
 }
 
@@ -91536,7 +91536,7 @@ STRING 14581
 {
 |cffffcc00Archer|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 540
+Hit Points: 535
 Armor: 0
 Damage: 35 + 1d4
 Attack Cooldown: 1.2s
@@ -91591,7 +91591,7 @@ STRING 14588
 Hit Points: 900
 Armor: 3
 Damage: 27 + 1d4
-Attack Cooldown: 1.6s
+Attack Cooldown: 1.2s
 Attack Range: 110
 Unit Level: 2
 }
@@ -92080,9 +92080,9 @@ STRING 14657
 |cffF5F5DCBase Stats, without any upgrades:|r
 Hit Points: 750
 Armor: 2
-Damage: 16 + 2d2
+Damage: 16 + 2d3
 Attack Cooldown: 0.866s
-Attack Range: 110
+Attack Range: 120
 Unit Level: 2
 }
 
@@ -92112,7 +92112,7 @@ STRING 14661
 Hit Points: 700
 Armor: 2
 Damage: 47 + 1d2
-Attack Cooldown: 1.2s
+Attack Cooldown: 1.1s
 Attack Range: 700
 Unit Level: 3
 }
@@ -92301,7 +92301,7 @@ STRING 14685
 {
 |cffffcc00Spellbreaker|r
 |cffF5F5DCBase Stats, without any upgrades:|r
-Hit Points: 680
+Hit Points: 700
 Armor: 1
 Damage: 39 + 1d3
 Attack Cooldown: 1.22s
@@ -92348,7 +92348,7 @@ Hit Points: 1325
 Armor: 2
 Damage: 56 + 1d3
 Attack Cooldown: 1.15s
-Attack Range: 130
+Attack Range: 135
 Unit Level: 4
 }
 
@@ -105375,7 +105375,7 @@ STRING 17867
 |cff808080Range:|r 640
 |cff808080Damage Type:|r Piercing
 |cff808080Armor Type:|r Medium 
-|cff808080Health:|r 530
+|cff808080Health:|r 535
 |cff808080Spawn Interval:|r 6.25s|n|cff808080Abilities:|r Elune's Grace (15% Magic Resistance & 20 Piercing Resistance)
 }
 
