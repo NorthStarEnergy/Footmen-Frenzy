@@ -6,9 +6,9 @@ The curated public wiki is in [`wiki/`](wiki/README.md). Build its self-containe
 
 | Project | Current baseline | Branch | WC3 test folder |
 |---|---|---|---|
-| 799X (12 players) | [RC65 Unit Balance](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc65%20Unit%20Balance.w3x) | Footmen-Frenzy-12p | Tests/799X |
-| Solo (4 players) | [RC34 Unit Balance](projects/solo/release/Solo%20Foots%201.8-RC34%20Unit%20Balance.w3x) | Solo-Foots-4p | Tests/Solo Foots |
-| FFA + King (8 players) | [v103 Unit Balance](projects/ffa/release/FFA%20Foots%20v103%20Unit%20Balance.w3x) | FFA-Foots-8p | Tests/FFA Foots |
+| 799X (12 players) | [RC66 Troop Timing](projects/799x/release/Reforged%20Footmen%20Frenzy%20v7.9.9X-rc66%20Troop%20Timing.w3x) | Footmen-Frenzy-12p | Tests/799X |
+| Solo (4 players) | [RC35 Troop Timing](projects/solo/release/Solo%20Foots%201.8-RC35%20Troop%20Timing.w3x) | Solo-Foots-4p | Tests/Solo Foots |
+| FFA + King (8 players) | [v104 Troop Timing](projects/ffa/release/FFA%20Foots%20v104%20Troop%20Timing.w3x) | FFA-Foots-8p | Tests/FFA Foots |
 
 Mini Foots (8 players) is shelved. Its last published map and editable source are preserved in [the v61 archive](https://github.com/NorthStarEnergy/Footmen-Frenzy/tree/archive/mini-foots-v61/projects/mini).
 
@@ -57,4 +57,4 @@ No new license is asserted over Warcraft III or inherited third-party models, te
 
 Info opens match stats for every player. Select **Hotkeys** inside Info to edit spell and item bindings. Shelved heroes, casino, bets, minigames, profiles and skins are in [RJE Development](RJE%20Development/).
 
-Current build guides and unit balance notes are available in the [public wiki](https://foots.northstarenergy.ca/current-builds.html). Download the offline guides for [799X](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc65/Balance-Wiki-799x.zip), [SOLO](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc65/Balance-Wiki-solo.zip), [FFA](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc65/Balance-Wiki-ffa.zip).
+Current build guides and unit balance notes are available in the [public wiki](https://foots.northstarenergy.ca/current-builds.html). Download the offline guides for [799X](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc66/Balance-Wiki-799x.zip), [SOLO](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc66/Balance-Wiki-solo.zip), [FFA](https://github.com/NorthStarEnergy/Footmen-Frenzy/releases/download/balance-wiki-rc66/Balance-Wiki-ffa.zip).
